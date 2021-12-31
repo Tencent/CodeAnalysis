@@ -1,0 +1,598 @@
+[
+  {
+    "name": "golangcilint",
+    "display_name": "GolangciLint",
+    "description": "go static analyzer.",
+    "license": "GPL-3.0",
+    "task_processes": [
+      "analyze",
+      "datahandle",
+      "compile"
+    ],
+    "open_user": true,
+    "open_saas": true,
+    "scan_app": "codelint",
+    "scm_url": null,
+    "run_cmd": null,
+    "envs": null,
+    "show_display_name": true,
+    "checkrule_set": [
+      {
+        "real_name": "bodyclose",
+        "display_name": "BodyClose",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "检查HTTP响应体是否成功结束",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "checks whether HTTP response body is closed successfully.\n参考[官方文档-规则描述及代码示例](https://github.com/timakin/bodyclose)"
+      },
+      {
+        "real_name": "deadcode",
+        "display_name": "DeadCode",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "检测无用代码",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Finds unused code\n参考[官方文档-规则描述及代码示例](http://github.com/tsenart/deadcode)"
+      },
+      {
+        "real_name": "depguard",
+        "display_name": "Depguard",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "检查软件包导入是否在可接受的软件包列表中",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Go linter that checks if package imports are in a list of acceptable packages.\n参考[官方文档-规则描述及代码示例](https://github.com/OpenPeeDeeP/depguard)"
+      },
+      {
+        "real_name": "dogsled",
+        "display_name": "Dogsled",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "检查赋值的空白标识符过多",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Checks assignments with too many blank identifiers (e.g. x, _, _, _, := f())\n参考[官方文档-规则描述及代码示例](https://github.com/alexkohler/dogsled)"
+      },
+      {
+        "real_name": "errcheck",
+        "display_name": "ErrCheck",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "Errcheck是用于检查go程序中未经检查的错误的程序。在某些情况下，这些未经检查的错误可能是关键错误。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Errcheck is a program for checking for unchecked errors in go programs. These unchecked errors can be critical bugs in some cases.\nErrcheck是用于检查go程序中未经检查的错误的程序。在某些情况下，这些未经检查的错误可能是关键错误.\n参考[官方文档-规则描述及代码示例](http://github.com/kisielk/errcheck)"
+      },
+      {
+        "real_name": "funlen",
+        "display_name": "funlen",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "检查过长函数",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Tool for detection of long functions.\n参考[官方文档-规则描述及代码示例](https://github.com/ultraware/funlen)"
+      },
+      {
+        "real_name": "gochecknoglobals",
+        "display_name": "gochecknoglobals",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "检查Go代码中是否没有全局变量",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Checks that no globals are present in Go code.\n参考[官方文档-规则描述及代码示例](https://github.com/leighmcculloch/gochecknoglobals)"
+      },
+      {
+        "real_name": "gochecknoinits",
+        "display_name": "gochecknoinits",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "检查Go代码中是否没有init函数",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Checks that no init functions are present in Go code.\n参考[官方文档-规则描述及代码示例](https://github.com/leighmcculloch/gochecknoinits)"
+      },
+      {
+        "real_name": "gocognit",
+        "display_name": "GoCognit",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "计算并检查功能的认知复杂性",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Computes and checks the cognitive complexity of functions.\n参考[官方文档-规则描述及代码示例](https://github.com/uudashr/gocognit)"
+      },
+      {
+        "real_name": "goconst",
+        "display_name": "GoConst",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "查找可以被常量替换的重复字符串",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Finds repeated strings that could be replaced by a constant.\n参考[官方文档-规则描述及代码示例](http://github.com/jgautheron/goconst/cmd/goconst)"
+      },
+      {
+        "real_name": "gocritic",
+        "display_name": "Gocritic",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "The most opinionated Go source code linter",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "The most opinionated Go source code linter.\n参考[官方文档-规则描述及代码示例](https://github.com/go-critic/go-critic)"
+      },
+      {
+        "real_name": "godox",
+        "display_name": "godox",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "用于检测FIXME，TODO和其他注释关键字的工具",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Tool for detection of FIXME, TODO and other comment keywords.\n参考[官方文档-规则描述及代码示例](https://github.com/matoous/godox)"
+      },
+      {
+        "real_name": "gofmt",
+        "display_name": "GoFmt",
+        "severity": "info",
+        "category": "convention",
+        "rule_title": "检查代码是否格式正确以及是否无法进一步简化",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Gofmt checks whether code was gofmt-ed. By default this tool runs with -s option to check for code simplification\r\n参考[官方文档-规则描述及代码示例](https://golang.org/cmd/gofmt/)"
+      },
+      {
+        "real_name": "goimports",
+        "display_name": "GoImports",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "检查丢失或未引用的软件包导入",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Goimports does everything that gofmt does. Additionally it checks unused imports.\n参考[官方文档-规则描述及代码示例](http://golang.org/x/tools/cmd/goimports)"
+      },
+      {
+        "real_name": "golint",
+        "display_name": "GoLint",
+        "severity": "info",
+        "category": "convention",
+        "rule_title": "Google的linter，侧重于代码风格",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Golint differs from gofmt. Gofmt reformats Go source code, whereas golint prints out style mistakes.\r\n参考[官方文档-规则描述及代码示例](http://github.com/golang/lint/golint)"
+      },
+      {
+        "real_name": "gosec",
+        "display_name": "Gosec",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "通过扫描Go AST来检查代码的安全问题",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Inspects source code for security problems.\n参考[官方文档-规则描述及代码示例](http://github.com/GoASTScanner/gas)"
+      },
+      {
+        "real_name": "gosimple",
+        "display_name": "GoSimple",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "检测可简化的代码",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Linter for Go source code that specializes in simplifying a code\r\n参考[官方文档-规则描述及代码示例](http://honnef.co/go/tools/cmd/gosimple)"
+      },
+      {
+        "real_name": "govet",
+        "display_name": "Govet",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "Vet检查Go源代码并报告可疑结构，例如Printf调用，其参数与格式字符串不一致",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Vet examines Go source code and reports suspicious constructs, such as Printf calls whose arguments do not align with the format string.\nVet检查Go源代码并报告可疑结构，例如Printf调用，其参数与格式字符串不一致.\n参考[官方文档-规则描述及代码示例](https://golang.org/cmd/vet/)"
+      },
+      {
+        "real_name": "ineffassign",
+        "display_name": "IneffAssign",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "检测没有使用到的现有变量的赋值",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Detects when assignments to existing variables are not used\n参考[官方文档-规则描述及代码示例](http://github.com/gordonklaus/ineffassign)"
+      },
+      {
+        "real_name": "interfacer",
+        "display_name": "Interfacer",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "建议可以使用的更精准的接口",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Linter that suggests narrower interface types.\r\n参考[官方文档-规则描述及代码示例](http://mvdan.cc/interfacer)"
+      },
+      {
+        "real_name": "lll",
+        "display_name": "lll",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "检查一行过长",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Reports long lines\n参考[官方文档-规则描述及代码示例](https://github.com/walle/lll)"
+      },
+      {
+        "real_name": "maligned",
+        "display_name": "Maligned",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "检测Go结构的工具，如果结果的字段被排序，将会占用更少的内存",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Tool to detect Go structs that would take less memory if their fields were sorted.\n参考[官方文档-规则描述及代码示例](http://github.com/mdempsky/maligned)"
+      },
+      {
+        "real_name": "misspell",
+        "display_name": "Misspell",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "发现通常拼写错误的英文单词",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Finds commonly misspelled English words in comments\n参考[官方文档-规则描述及代码示例](http://github.com/client9/misspell/cmd/misspell)"
+      },
+      {
+        "real_name": "nakedret",
+        "display_name": "Nakedret",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "在大于指定函数长度的函数中查找空返回",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Finds naked returns in functions greater than a specified function length\n参考[官方文档-规则描述及代码示例](http://github.com/alexkohler/nakedret)"
+      },
+      {
+        "real_name": "prealloc",
+        "display_name": "Prealloc",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "查找可能预先分配的切片声明",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Finds slice declarations that could potentially be preallocated.\n参考[官方文档-规则描述及代码示例](https://github.com/alexkohler/prealloc)"
+      },
+      {
+        "real_name": "scopelint",
+        "display_name": "Scopelint",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "检查go程序中未固定的变量",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Scopelint checks for unpinned variables in go programs.\n参考[官方文档-规则描述及代码示例](https://github.com/kyoh86/scopelint)"
+      },
+      {
+        "real_name": "staticcheck",
+        "display_name": "StaticCheck",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "Staticcheck is a go vet on steroids, applying a ton of static analysis checks",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Staticcheck is a go vet on steroids, applying a ton of static analysis checks.\n\n参考[官方文档-规则描述及代码示例](http://honnef.co/go/tools/cmd/staticcheck)"
+      },
+      {
+        "real_name": "structcheck",
+        "display_name": "StructCheck",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "检测无用的struct域",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Finds unused struct fields\n参考[官方文档-规则描述及代码示例](http://github.com/opennota/check/cmd/structcheck)"
+      },
+      {
+        "real_name": "stylecheck",
+        "display_name": "StyleCheck",
+        "severity": "info",
+        "category": "convention",
+        "rule_title": "可以作为golint的替代工具",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Stylecheck is a replacement for golint.\r\n参考[官方文档-规则描述及代码示例](http://github.com/golang/lint/golint)"
+      },
+      {
+        "real_name": "typecheck",
+        "display_name": "TypeCheck",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "检查类型",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Like the front-end of a Go compiler, parses and type-checks Go code"
+      },
+      {
+        "real_name": "unconvert",
+        "display_name": "UnConvert",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "检测没必要的类型转换",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Remove unnecessary type conversions.\n参考[官方文档-规则描述及代码示例](http://github.com/mdempsky/unconvert)"
+      },
+      {
+        "real_name": "unparam",
+        "display_name": "UnParam",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "检测无用的函数参数",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Reports unused function parameters\n参考[官方文档-规则描述及代码示例](http://mvdan.cc/unparam)"
+      },
+      {
+        "real_name": "unused",
+        "display_name": "UnUsed",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "检测无用的变量",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Checks Go code for unused constants, variables, functions and types\n参考[官方文档-规则描述及代码示例](http://honnef.co/go/tools/cmd/unused)"
+      },
+      {
+        "real_name": "varcheck",
+        "display_name": "VarCheck",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "检测无用的全局变量和常量",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Finds unused global variables and constants.\n参考[官方文档-规则描述及代码示例](http://github.com/opennota/check/cmd/varcheck)"
+      },
+      {
+        "real_name": "whitespace",
+        "display_name": "whitespace",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "用于检测前导和尾随空格的工具",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Tool for detection of leading and trailing whitespace.\n参考[官方文档-规则描述及代码示例](https://github.com/ultraware/whitespace)"
+      },
+      {
+        "real_name": "wsl",
+        "display_name": "wsl",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "强制使用空行",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Whitespace Linter - Forces you to use empty lines!.\n参考[官方文档-规则描述及代码示例](https://github.com/bombsimon/wsl)"
+      }
+    ]
+  }
+]

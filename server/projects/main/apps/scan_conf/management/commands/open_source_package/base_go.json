@@ -1,0 +1,334 @@
+[
+  {
+    "name": "【Go】基础规则包",
+    "description": "Go官方基础规则包，提供常见代码问题扫描。",
+    "revision": null,
+    "open_saas": true,
+    "package_type": "official",
+    "languages": [
+      "Go"
+    ],
+    "labels": [
+      "基础"
+    ],
+    "checkrule_set": [
+      {
+        "checktool": "gometalinter",
+        "checkrule": "nakedret/ret",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled"
+      },
+      {
+        "checktool": "gometalinter",
+        "checkrule": "gosec/calls",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "GosecCalls",
+        "checktool_display_name": "GoMetaLinter"
+      },
+      {
+        "checktool": "gometalinter",
+        "checkrule": "gosec/blacklist",
+        "severity": "error",
+        "rule_params": "",
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "GosecBlacklist",
+        "checktool_display_name": "GoMetaLinter"
+      },
+      {
+        "checktool": "gometalinter",
+        "checkrule": "gosec/crypto",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "GosecCrypto",
+        "checktool_display_name": "GoMetaLinter"
+      },
+      {
+        "checktool": "gometalinter",
+        "checkrule": "gosec/error",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "GosecError",
+        "checktool_display_name": "GoMetaLinter"
+      },
+      {
+        "checktool": "gometalinter",
+        "checkrule": "gosec/escape",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "GosecEscape",
+        "checktool_display_name": "GoMetaLinter"
+      },
+      {
+        "checktool": "gometalinter",
+        "checkrule": "gosec/file",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "GosecFile",
+        "checktool_display_name": "GoMetaLinter"
+      },
+      {
+        "checktool": "gometalinter",
+        "checkrule": "gosec/modulus",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "GosecModulus",
+        "checktool_display_name": "GoMetaLinter"
+      },
+      {
+        "checktool": "gometalinter",
+        "checkrule": "gosec/network",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "GosecNetwork",
+        "checktool_display_name": "GoMetaLinter"
+      },
+      {
+        "checktool": "gometalinter",
+        "checkrule": "gosec/permission",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "GosecPermission",
+        "checktool_display_name": "GoMetaLinter"
+      },
+      {
+        "checktool": "gometalinter",
+        "checkrule": "gosec/sql",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "GosecSql",
+        "checktool_display_name": "GoMetaLinter"
+      },
+      {
+        "checktool": "gometalinter",
+        "checkrule": "gosec/subproc",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "GosecSubproc",
+        "checktool_display_name": "GoMetaLinter"
+      },
+      {
+        "checktool": "gometalinter",
+        "checkrule": "gosec/ssrf",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "GosecSsrf",
+        "checktool_display_name": "GoMetaLinter"
+      },
+      {
+        "checktool": "gometalinter",
+        "checkrule": "gosec/ssh",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "GosecSsh",
+        "checktool_display_name": "GoMetaLinter"
+      },
+      {
+        "checktool": "gometalinter",
+        "checkrule": "safesql/sql",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "SafesqlSql",
+        "checktool_display_name": "GoMetaLinter"
+      },
+      {
+        "checktool": "gometalinter",
+        "checkrule": "staticcheck/append",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "StaticcheckAppend",
+        "checktool_display_name": "GoMetaLinter"
+      },
+      {
+        "checktool": "gometalinter",
+        "checkrule": "staticcheck/boolean",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "StaticcheckBoolean",
+        "checktool_display_name": "GoMetaLinter"
+      },
+      {
+        "checktool": "gometalinter",
+        "checkrule": "staticcheck/break",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "StaticcheckBreak",
+        "checktool_display_name": "GoMetaLinter"
+      },
+      {
+        "checktool": "gometalinter",
+        "checkrule": "staticcheck/compare",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "StaticcheckCompare",
+        "checktool_display_name": "GoMetaLinter"
+      },
+      {
+        "checktool": "gometalinter",
+        "checkrule": "staticcheck/defer",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "StaticcheckDefer",
+        "checktool_display_name": "GoMetaLinter"
+      },
+      {
+        "checktool": "gometalinter",
+        "checkrule": "staticcheck/deprecated",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "StaticcheckDeprecated",
+        "checktool_display_name": "GoMetaLinter"
+      },
+      {
+        "checktool": "gometalinter",
+        "checkrule": "staticcheck/goroutine",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "StaticcheckGoroutine",
+        "checktool_display_name": "GoMetaLinter"
+      },
+      {
+        "checktool": "gometalinter",
+        "checkrule": "staticcheck/httpheader",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "StaticcheckHttpheader",
+        "checktool_display_name": "GoMetaLinter"
+      },
+      {
+        "checktool": "gometalinter",
+        "checkrule": "staticcheck/infinite",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "StaticcheckInfinite",
+        "checktool_display_name": "GoMetaLinter"
+      },
+      {
+        "checktool": "gometalinter",
+        "checkrule": "staticcheck/iowriter",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "StaticcheckIowriter",
+        "checktool_display_name": "GoMetaLinter"
+      },
+      {
+        "checktool": "gometalinter",
+        "checkrule": "staticcheck/overrun",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "StaticcheckOverrun",
+        "checktool_display_name": "GoMetaLinter"
+      },
+      {
+        "checktool": "gometalinter",
+        "checkrule": "staticcheck/resource",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "StaticcheckResource",
+        "checktool_display_name": "GoMetaLinter"
+      },
+      {
+        "checktool": "gometalinter",
+        "checkrule": "staticcheck/return",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "StaticcheckReturn",
+        "checktool_display_name": "GoMetaLinter"
+      },
+      {
+        "checktool": "gometalinter",
+        "checkrule": "staticcheck/routine",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "StaticcheckRoutine",
+        "checktool_display_name": "GoMetaLinter"
+      },
+      {
+        "checktool": "gometalinter",
+        "checkrule": "staticcheck/signal",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "StaticcheckSignal",
+        "checktool_display_name": "GoMetaLinter"
+      },
+      {
+        "checktool": "gometalinter",
+        "checkrule": "staticcheck/sleep",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "StaticcheckSleep",
+        "checktool_display_name": "GoMetaLinter"
+      },
+      {
+        "checktool": "gometalinter",
+        "checkrule": "staticcheck/timeticker",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "StaticcheckTimeticker",
+        "checktool_display_name": "GoMetaLinter"
+      }
+    ]
+  }
+]

@@ -1,0 +1,81 @@
+[
+    {
+        "name": "【Java】减包扫描",
+        "description": "扫描无用代码和资源。",
+        "revision": null,
+        "package_type": "official",
+        "languages": [
+            "java"
+        ],
+        "labels": [
+            "推荐"
+        ],
+        "checkrule_set": [
+            {
+                "checktool": "findbugs",
+                "checkrule": "SE_NONFINAL_SERIALVERSIONID",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "findbugs",
+                "checkrule": "SE_NONLONG_SERIALVERSIONID",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "findbugs",
+                "checkrule": "UWF_NULL_FIELD",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "findbugs",
+                "checkrule": "BIT_SIGNED_CHECK_HIGH_BIT",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "androidlint",
+                "checkrule": "UnusedResources",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "pmd",
+                "checkrule": "rulesets/java/typeresolution.xml/UnusedImports",
+                "severity": "error",
+                "rule_params": "",
+                "state": "enabled"
+            },
+            {
+                "checktool": "pmd",
+                "checkrule": "rulesets/java/unusedcode.xml/UnusedPrivateField",
+                "severity": "error",
+                "rule_params": "",
+                "state": "enabled"
+            },
+            {
+                "checktool": "pmd",
+                "checkrule": "rulesets/java/unusedcode.xml/UnusedLocalVariable",
+                "severity": "error",
+                "rule_params": "",
+                "state": "enabled"
+            },
+            {
+                "checktool": "pmd",
+                "checkrule": "rulesets/java/unusedcode.xml/UnusedPrivateMethod",
+                "severity": "error",
+                "rule_params": "",
+                "state": "enabled"
+            }
+        ],
+        "open_saas": false,
+        "envs": null
+    }
+]

@@ -1,0 +1,13 @@
+{
+  "name": "@micro-frontend/shared",
+  "version": "1.0.0",
+  "description": "shared",
+  "keywords": [
+    "shared"
+  ],
+  "license": "MIT",
+  "scripts": {},
+  "devDependencies": {
+    "assets-webpack-plugin": "^7.1.1"
+  }
+}

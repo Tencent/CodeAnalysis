@@ -1,0 +1,81 @@
+[
+    {
+        "name": "【Android】隐私合规检查",
+        "description": "检查Android隐私API使用是否合规。",
+        "revision": null,
+        "package_type": "official",
+        "languages": [
+            "java"
+        ],
+        "labels": [
+            "安全"
+        ],
+        "checkrule_set": [
+            {
+                "checktool": "regexscan",
+                "checkrule": "Dynamic_permissions",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "regexscan",
+                "checkrule": "camera1API",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "regexscan",
+                "checkrule": "LocationAPI",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "regexscan",
+                "checkrule": "RecordAPI",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "regexscan",
+                "checkrule": "FileShare",
+                "severity": "info",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "regexscan",
+                "checkrule": "FileRWMode",
+                "severity": "info",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "regexscan",
+                "checkrule": "targetsdk_specialpermission",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "regexscan",
+                "checkrule": "MessageAPI",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "regexscan",
+                "checkrule": "ContactsAPI",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            }
+        ],
+        "open_saas": false,
+        "envs": null
+    }
+]

@@ -1,0 +1,3951 @@
+[
+    {
+        "name": "shellcheck",
+        "display_name": "ShellCheck",
+        "description": "shell脚本检查，默认检查.sh后缀文件",
+        "license": "GPLv3",
+        "libscheme_set": [],
+        "task_processes": [
+            "analyze",
+            "datahandle"
+        ],
+        "scan_app": "codelint",
+        "scm_url": "https://github.com/TCATools/shellcheck.git",
+        "run_cmd": "python shellcheck.py",
+        "envs": "",
+        "build_flag": false,
+        "checkrule_set": [
+            {
+                "real_name": "SC1007",
+                "display_name": "SC1007",
+                "severity": "warning",
+                "category": "usability",
+                "rule_title": "SC1007",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1007",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1008",
+                "display_name": "SC1008",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC1008",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1008",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1010",
+                "display_name": "SC1010",
+                "severity": "warning",
+                "category": "usability",
+                "rule_title": "SC1010",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1010",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1011",
+                "display_name": "SC1011",
+                "severity": "warning",
+                "category": "usability",
+                "rule_title": "SC1011",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1011",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1012",
+                "display_name": "SC1012",
+                "severity": "warning",
+                "category": "usability",
+                "rule_title": "SC1012",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1012",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1013",
+                "display_name": "SC1013",
+                "severity": "warning",
+                "category": "usability",
+                "rule_title": "SC1013",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1013",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1014",
+                "display_name": "SC1014",
+                "severity": "warning",
+                "category": "usability",
+                "rule_title": "SC1014",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1014",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1017",
+                "display_name": "SC1017",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC1017",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1017",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1018",
+                "display_name": "SC1018",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC1018",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1018",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1019",
+                "display_name": "SC1019",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC1019",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1019",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1020",
+                "display_name": "SC1020",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC1020",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1020",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1021",
+                "display_name": "SC1021",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC1021",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1021",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1026",
+                "display_name": "SC1026",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC1026",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1026",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1027",
+                "display_name": "SC1027",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC1027",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1027",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1028",
+                "display_name": "SC1028",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC1028",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1028",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1029",
+                "display_name": "SC1029",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC1029",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1029",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1033",
+                "display_name": "SC1033",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC1033",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1033",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1034",
+                "display_name": "SC1034",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC1034",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1034",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1035",
+                "display_name": "SC1035",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC1035",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1035",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1036",
+                "display_name": "SC1036",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC1036",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1036",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1037",
+                "display_name": "SC1037",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC1037",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1037",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1038",
+                "display_name": "SC1038",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC1038",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1038",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1039",
+                "display_name": "SC1039",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC1039",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1039",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1040",
+                "display_name": "SC1040",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC1040",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1040",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1041",
+                "display_name": "SC1041",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC1041",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1041",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1042",
+                "display_name": "SC1042",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC1042",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1042",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1043",
+                "display_name": "SC1043",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC1043",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1043",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1044",
+                "display_name": "SC1044",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC1044",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1044",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1045",
+                "display_name": "SC1045",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC1045",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1045",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1046",
+                "display_name": "SC1046",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC1046",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1046",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1047",
+                "display_name": "SC1047",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC1047",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1047",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1048",
+                "display_name": "SC1048",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC1048",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1048",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1049",
+                "display_name": "SC1049",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC1049",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1049",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1050",
+                "display_name": "SC1050",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC1050",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1050",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1051",
+                "display_name": "SC1051",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC1051",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1051",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1052",
+                "display_name": "SC1052",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC1052",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1052",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1053",
+                "display_name": "SC1053",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC1053",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1053",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1054",
+                "display_name": "SC1054",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC1054",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1054",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1055",
+                "display_name": "SC1055",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC1055",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1055",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1056",
+                "display_name": "SC1056",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC1056",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1056",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1057",
+                "display_name": "SC1057",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC1057",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1057",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1058",
+                "display_name": "SC1058",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC1058",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1058",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1059",
+                "display_name": "SC1059",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC1059",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1059",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1060",
+                "display_name": "SC1060",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC1060",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1060",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1061",
+                "display_name": "SC1061",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC1061",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1061",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1062",
+                "display_name": "SC1062",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC1062",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1062",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1063",
+                "display_name": "SC1063",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC1063",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1063",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1064",
+                "display_name": "SC1064",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC1064",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1064",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1065",
+                "display_name": "SC1065",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC1065",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1065",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1066",
+                "display_name": "SC1066",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC1066",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1066",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1067",
+                "display_name": "SC1067",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC1067",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1067",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1068",
+                "display_name": "SC1068",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC1068",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1068",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1069",
+                "display_name": "SC1069",
+                "severity": "warning",
+                "category": "usability",
+                "rule_title": "SC1069",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1069",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1070",
+                "display_name": "SC1070",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC1070",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1070",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1071",
+                "display_name": "SC1071",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC1071",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1071",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1072",
+                "display_name": "SC1072",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC1072",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1072",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1073",
+                "display_name": "SC1073",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC1073",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1073",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1074",
+                "display_name": "SC1074",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC1074",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1074",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1075",
+                "display_name": "SC1075",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC1075",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1075",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1076",
+                "display_name": "SC1076",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC1076",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1076",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1077",
+                "display_name": "SC1077",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC1077",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1077",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1078",
+                "display_name": "SC1078",
+                "severity": "warning",
+                "category": "usability",
+                "rule_title": "SC1078",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1078",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1080",
+                "display_name": "SC1080",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC1080",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1080",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1081",
+                "display_name": "SC1081",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC1081",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1081",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1082",
+                "display_name": "SC1082",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC1082",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1082",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1083",
+                "display_name": "SC1083",
+                "severity": "warning",
+                "category": "usability",
+                "rule_title": "SC1083",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1083",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1084",
+                "display_name": "SC1084",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC1084",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1084",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1085",
+                "display_name": "SC1085",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC1085",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1085",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1086",
+                "display_name": "SC1086",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC1086",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1086",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1087",
+                "display_name": "SC1087",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC1087",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1087",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1088",
+                "display_name": "SC1088",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC1088",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1088",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1089",
+                "display_name": "SC1089",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC1089",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1089",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1090",
+                "display_name": "SC1090",
+                "severity": "warning",
+                "category": "usability",
+                "rule_title": "SC1090",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1090",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1092",
+                "display_name": "SC1092",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC1092",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1092",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1094",
+                "display_name": "SC1094",
+                "severity": "warning",
+                "category": "usability",
+                "rule_title": "SC1094",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1094",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1095",
+                "display_name": "SC1095",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC1095",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1095",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1097",
+                "display_name": "SC1097",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC1097",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1097",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1098",
+                "display_name": "SC1098",
+                "severity": "warning",
+                "category": "usability",
+                "rule_title": "SC1098",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1098",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1099",
+                "display_name": "SC1099",
+                "severity": "warning",
+                "category": "usability",
+                "rule_title": "SC1099",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1099",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1100",
+                "display_name": "SC1100",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC1100",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1100",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1101",
+                "display_name": "SC1101",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC1101",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1101",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1102",
+                "display_name": "SC1102",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC1102",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1102",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1103",
+                "display_name": "SC1103",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC1103",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1103",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1104",
+                "display_name": "SC1104",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC1104",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1104",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1105",
+                "display_name": "SC1105",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC1105",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1105",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1106",
+                "display_name": "SC1106",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC1106",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1106",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1107",
+                "display_name": "SC1107",
+                "severity": "warning",
+                "category": "usability",
+                "rule_title": "SC1107",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1107",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1108",
+                "display_name": "SC1108",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC1108",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1108",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1109",
+                "display_name": "SC1109",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC1109",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1109",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1110",
+                "display_name": "SC1110",
+                "severity": "warning",
+                "category": "usability",
+                "rule_title": "SC1110",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1110",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1111",
+                "display_name": "SC1111",
+                "severity": "warning",
+                "category": "usability",
+                "rule_title": "SC1111",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1111",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1112",
+                "display_name": "SC1112",
+                "severity": "warning",
+                "category": "usability",
+                "rule_title": "SC1112",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1112",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1113",
+                "display_name": "SC1113",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC1113",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1113",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1114",
+                "display_name": "SC1114",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC1114",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1114",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1115",
+                "display_name": "SC1115",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC1115",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1115",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1116",
+                "display_name": "SC1116",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC1116",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1116",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1118",
+                "display_name": "SC1118",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC1118",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1118",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1119",
+                "display_name": "SC1119",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC1119",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1119",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1120",
+                "display_name": "SC1120",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC1120",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1120",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1121",
+                "display_name": "SC1121",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC1121",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1121",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1122",
+                "display_name": "SC1122",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC1122",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1122",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1123",
+                "display_name": "SC1123",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC1123",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1123",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1124",
+                "display_name": "SC1124",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC1124",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1124",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1125",
+                "display_name": "SC1125",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC1125",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1125",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1126",
+                "display_name": "SC1126",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC1126",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1126",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1127",
+                "display_name": "SC1127",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC1127",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1127",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1128",
+                "display_name": "SC1128",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC1128",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1128",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1129",
+                "display_name": "SC1129",
+                "severity": "warning",
+                "category": "usability",
+                "rule_title": "SC1129",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1129",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1131",
+                "display_name": "SC1131",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC1131",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1131",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1132",
+                "display_name": "SC1132",
+                "severity": "warning",
+                "category": "usability",
+                "rule_title": "SC1132",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1132",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1133",
+                "display_name": "SC1133",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC1133",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1133",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1134",
+                "display_name": "SC1134",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC1134",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1134",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1136",
+                "display_name": "SC1136",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC1136",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1136",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1137",
+                "display_name": "SC1137",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC1137",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1137",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC1138",
+                "display_name": "SC1138",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC1138",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC1138",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2010",
+                "display_name": "SC2010",
+                "severity": "warning",
+                "category": "usability",
+                "rule_title": "SC2010",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2010",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2011",
+                "display_name": "SC2011",
+                "severity": "warning",
+                "category": "usability",
+                "rule_title": "SC2011",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2011",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2027",
+                "display_name": "SC2027",
+                "severity": "warning",
+                "category": "usability",
+                "rule_title": "SC2027",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2027",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2033",
+                "display_name": "SC2033",
+                "severity": "warning",
+                "category": "usability",
+                "rule_title": "SC2033",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2033",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2034",
+                "display_name": "SC2034",
+                "severity": "warning",
+                "category": "usability",
+                "rule_title": "SC2034",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2034",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2036",
+                "display_name": "SC2036",
+                "severity": "warning",
+                "category": "usability",
+                "rule_title": "SC2036",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2036",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2037",
+                "display_name": "SC2037",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC2037",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2037",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2038",
+                "display_name": "SC2038",
+                "severity": "warning",
+                "category": "usability",
+                "rule_title": "SC2038",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2038",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2041",
+                "display_name": "SC2041",
+                "severity": "warning",
+                "category": "usability",
+                "rule_title": "SC2041",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2041",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2042",
+                "display_name": "SC2042",
+                "severity": "warning",
+                "category": "usability",
+                "rule_title": "SC2042",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2042",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2043",
+                "display_name": "SC2043",
+                "severity": "warning",
+                "category": "usability",
+                "rule_title": "SC2043",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2043",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2045",
+                "display_name": "SC2045",
+                "severity": "warning",
+                "category": "usability",
+                "rule_title": "SC2045",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2045",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2046",
+                "display_name": "SC2046",
+                "severity": "warning",
+                "category": "usability",
+                "rule_title": "SC2046",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2046",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2048",
+                "display_name": "SC2048",
+                "severity": "warning",
+                "category": "usability",
+                "rule_title": "SC2048",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2048",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2049",
+                "display_name": "SC2049",
+                "severity": "warning",
+                "category": "usability",
+                "rule_title": "SC2049",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2049",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2050",
+                "display_name": "SC2050",
+                "severity": "warning",
+                "category": "usability",
+                "rule_title": "SC2050",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2050",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2053",
+                "display_name": "SC2053",
+                "severity": "warning",
+                "category": "usability",
+                "rule_title": "SC2053",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2053",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2054",
+                "display_name": "SC2054",
+                "severity": "warning",
+                "category": "usability",
+                "rule_title": "SC2054",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2054",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2055",
+                "display_name": "SC2055",
+                "severity": "warning",
+                "category": "usability",
+                "rule_title": "SC2055",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2055",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2056",
+                "display_name": "SC2056",
+                "severity": "warning",
+                "category": "usability",
+                "rule_title": "SC2056",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2056",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2057",
+                "display_name": "SC2057",
+                "severity": "warning",
+                "category": "usability",
+                "rule_title": "SC2057",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2057",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2058",
+                "display_name": "SC2058",
+                "severity": "warning",
+                "category": "usability",
+                "rule_title": "SC2058",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2058",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2060",
+                "display_name": "SC2060",
+                "severity": "warning",
+                "category": "usability",
+                "rule_title": "SC2060",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2060",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2061",
+                "display_name": "SC2061",
+                "severity": "warning",
+                "category": "usability",
+                "rule_title": "SC2061",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2061",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2062",
+                "display_name": "SC2062",
+                "severity": "warning",
+                "category": "usability",
+                "rule_title": "SC2062",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2062",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2063",
+                "display_name": "SC2063",
+                "severity": "warning",
+                "category": "usability",
+                "rule_title": "SC2063",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2063",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2064",
+                "display_name": "SC2064",
+                "severity": "warning",
+                "category": "usability",
+                "rule_title": "SC2064",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2064",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2065",
+                "display_name": "SC2065",
+                "severity": "warning",
+                "category": "usability",
+                "rule_title": "SC2065",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2065",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2066",
+                "display_name": "SC2066",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC2066",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2066",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2067",
+                "display_name": "SC2067",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC2067",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2067",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2068",
+                "display_name": "SC2068",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC2068",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2068",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2069",
+                "display_name": "SC2069",
+                "severity": "warning",
+                "category": "usability",
+                "rule_title": "SC2069",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2069",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2070",
+                "display_name": "SC2070",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC2070",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2070",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2071",
+                "display_name": "SC2071",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC2071",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2071",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2072",
+                "display_name": "SC2072",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC2072",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2072",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2073",
+                "display_name": "SC2073",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC2073",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2073",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2074",
+                "display_name": "SC2074",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC2074",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2074",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2075",
+                "display_name": "SC2075",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC2075",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2075",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2076",
+                "display_name": "SC2076",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC2076",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2076",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2077",
+                "display_name": "SC2077",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC2077",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2077",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2078",
+                "display_name": "SC2078",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC2078",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2078",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2079",
+                "display_name": "SC2079",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC2079",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2079",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2080",
+                "display_name": "SC2080",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC2080",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2080",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2081",
+                "display_name": "SC2081",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC2081",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2081",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2082",
+                "display_name": "SC2082",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC2082",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2082",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2083",
+                "display_name": "SC2083",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC2083",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2083",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2084",
+                "display_name": "SC2084",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC2084",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2084",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2087",
+                "display_name": "SC2087",
+                "severity": "warning",
+                "category": "usability",
+                "rule_title": "SC2087",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2087",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2089",
+                "display_name": "SC2089",
+                "severity": "warning",
+                "category": "usability",
+                "rule_title": "SC2089",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2089",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2090",
+                "display_name": "SC2090",
+                "severity": "warning",
+                "category": "usability",
+                "rule_title": "SC2090",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2090",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2091",
+                "display_name": "SC2091",
+                "severity": "warning",
+                "category": "usability",
+                "rule_title": "SC2091",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2091",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2092",
+                "display_name": "SC2092",
+                "severity": "warning",
+                "category": "usability",
+                "rule_title": "SC2092",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2092",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2093",
+                "display_name": "SC2093",
+                "severity": "warning",
+                "category": "usability",
+                "rule_title": "SC2093",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2093",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2096",
+                "display_name": "SC2096",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC2096",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2096",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2099",
+                "display_name": "SC2099",
+                "severity": "warning",
+                "category": "usability",
+                "rule_title": "SC2099",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2099",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2100",
+                "display_name": "SC2100",
+                "severity": "warning",
+                "category": "usability",
+                "rule_title": "SC2100",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2100",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2104",
+                "display_name": "SC2104",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC2104",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2104",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2105",
+                "display_name": "SC2105",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC2105",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2105",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2107",
+                "display_name": "SC2107",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC2107",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2107",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2108",
+                "display_name": "SC2108",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC2108",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2108",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2109",
+                "display_name": "SC2109",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC2109",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2109",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2110",
+                "display_name": "SC2110",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC2110",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2110",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2111",
+                "display_name": "SC2111",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC2111",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2111",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2114",
+                "display_name": "SC2114",
+                "severity": "warning",
+                "category": "usability",
+                "rule_title": "SC2114",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2114",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2115",
+                "display_name": "SC2115",
+                "severity": "warning",
+                "category": "usability",
+                "rule_title": "SC2115",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2115",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2118",
+                "display_name": "SC2118",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC2118",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2118",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2120",
+                "display_name": "SC2120",
+                "severity": "warning",
+                "category": "usability",
+                "rule_title": "SC2120",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2120",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2121",
+                "display_name": "SC2121",
+                "severity": "warning",
+                "category": "usability",
+                "rule_title": "SC2121",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2121",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2122",
+                "display_name": "SC2122",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC2122",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2122",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2123",
+                "display_name": "SC2123",
+                "severity": "warning",
+                "category": "usability",
+                "rule_title": "SC2123",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2123",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2125",
+                "display_name": "SC2125",
+                "severity": "warning",
+                "category": "usability",
+                "rule_title": "SC2125",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2125",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2127",
+                "display_name": "SC2127",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC2127",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2127",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2128",
+                "display_name": "SC2128",
+                "severity": "warning",
+                "category": "usability",
+                "rule_title": "SC2128",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2128",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2142",
+                "display_name": "SC2142",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC2142",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2142",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2144",
+                "display_name": "SC2144",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC2144",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2144",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2145",
+                "display_name": "SC2145",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC2145",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2145",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2146",
+                "display_name": "SC2146",
+                "severity": "warning",
+                "category": "usability",
+                "rule_title": "SC2146",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2146",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2148",
+                "display_name": "SC2148",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC2148",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2148",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2151",
+                "display_name": "SC2151",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC2151",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2151",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2152",
+                "display_name": "SC2152",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC2152",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2152",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2153",
+                "display_name": "SC2153",
+                "severity": "warning",
+                "category": "usability",
+                "rule_title": "SC2153",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2153",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2154",
+                "display_name": "SC2154",
+                "severity": "warning",
+                "category": "usability",
+                "rule_title": "SC2154",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2154",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2157",
+                "display_name": "SC2157",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC2157",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2157",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2158",
+                "display_name": "SC2158",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC2158",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2158",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2159",
+                "display_name": "SC2159",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC2159",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2159",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2163",
+                "display_name": "SC2163",
+                "severity": "warning",
+                "category": "usability",
+                "rule_title": "SC2163",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2163",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2164",
+                "display_name": "SC2164",
+                "severity": "warning",
+                "category": "usability",
+                "rule_title": "SC2164",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2164",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2168",
+                "display_name": "SC2168",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC2168",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2168",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2170",
+                "display_name": "SC2170",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC2170",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2170",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2171",
+                "display_name": "SC2171",
+                "severity": "warning",
+                "category": "usability",
+                "rule_title": "SC2171",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2171",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2173",
+                "display_name": "SC2173",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC2173",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2173",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2182",
+                "display_name": "SC2182",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC2182",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2182",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2183",
+                "display_name": "SC2183",
+                "severity": "warning",
+                "category": "usability",
+                "rule_title": "SC2183",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2183",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2189",
+                "display_name": "SC2189",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC2189",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2189",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2198",
+                "display_name": "SC2198",
+                "severity": "warning",
+                "category": "usability",
+                "rule_title": "SC2198",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2198",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2199",
+                "display_name": "SC2199",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC2199",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2199",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2200",
+                "display_name": "SC2200",
+                "severity": "warning",
+                "category": "usability",
+                "rule_title": "SC2200",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2200",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2201",
+                "display_name": "SC2201",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC2201",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2201",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2202",
+                "display_name": "SC2202",
+                "severity": "warning",
+                "category": "usability",
+                "rule_title": "SC2202",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2202",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2203",
+                "display_name": "SC2203",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC2203",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2203",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2204",
+                "display_name": "SC2204",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC2204",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2204",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2208",
+                "display_name": "SC2208",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC2208",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2208",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2211",
+                "display_name": "SC2211",
+                "severity": "warning",
+                "category": "usability",
+                "rule_title": "SC2211",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2211",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2216",
+                "display_name": "SC2216",
+                "severity": "warning",
+                "category": "usability",
+                "rule_title": "SC2216",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2216",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2218",
+                "display_name": "SC2218",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC2218",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2218",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2221",
+                "display_name": "SC2221",
+                "severity": "warning",
+                "category": "usability",
+                "rule_title": "SC2221",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2221",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2224",
+                "display_name": "SC2224",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC2224",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2224",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2225",
+                "display_name": "SC2225",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC2225",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2225",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2226",
+                "display_name": "SC2226",
+                "severity": "warning",
+                "category": "usability",
+                "rule_title": "SC2226",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2226",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2239",
+                "display_name": "SC2239",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC2239",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2239",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2241",
+                "display_name": "SC2241",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC2241",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2241",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2242",
+                "display_name": "SC2242",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC2242",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2242",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2246",
+                "display_name": "SC2246",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC2246",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2246",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2253",
+                "display_name": "SC2253",
+                "severity": "warning",
+                "category": "usability",
+                "rule_title": "SC2253",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2253",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2255",
+                "display_name": "SC2255",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC2255",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2255",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            },
+            {
+                "real_name": "SC2259",
+                "display_name": "SC2259",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "SC2259",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "shell"
+                ],
+                "solution": "https://github.com/koalaman/shellcheck/wiki/SC2259",
+                "owner": null,
+                "labels": [],
+                "description": "",
+                "disable": false
+            }
+        ],
+        "open_user": true,
+        "open_saas": false,
+        "virtual_name": "124",
+        "show_display_name": true
+    }
+]

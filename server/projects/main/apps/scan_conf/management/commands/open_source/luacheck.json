@@ -1,0 +1,930 @@
+[
+  {
+    "name": "luacheck",
+    "display_name": "LuaCheck",
+    "description": "lua static analyzer",
+    "license": "MIT",
+    "task_processes": [
+      "analyze",
+      "datahandle"
+    ],
+    "open_user": true,
+    "open_saas": true,
+    "scan_app": "codelint",
+    "scm_url": null,
+    "run_cmd": null,
+    "envs": null,
+    "show_display_name": true,
+    "checkrule_set": [
+      {
+        "real_name": "E011",
+        "display_name": "SyntaxError",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "语法错误",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Lua"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [
+          "推荐",
+          "基础"
+        ],
+        "description": "语法错误。\n[详情可见网址](http://luacheck.readthedocs.io/en/stable/warnings.html)"
+      },
+      {
+        "real_name": "E021",
+        "display_name": "InvalidInlineOption",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "无效的内置选项",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Lua"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [
+          "推荐",
+          "基础"
+        ],
+        "description": "无效的内置选项。\n[详情可见网址](http://luacheck.readthedocs.io/en/stable/warnings.html)"
+      },
+      {
+        "real_name": "E022",
+        "display_name": "UnpairedInlinePushDirective",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "不成对的内联push指令",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Lua"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [
+          "推荐",
+          "基础"
+        ],
+        "description": "不成对的内联push指令。\n[详情可见网址](http://luacheck.readthedocs.io/en/stable/warnings.html)"
+      },
+      {
+        "real_name": "E023",
+        "display_name": "UnpairedInlinePopDirective",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "不成对的内联pop指令",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Lua"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [
+          "推荐",
+          "基础"
+        ],
+        "description": "不成对的内联pop指令。\n[详情可见网址](http://luacheck.readthedocs.io/en/stable/warnings.html)"
+      },
+      {
+        "real_name": "W111",
+        "display_name": "SetUndefinedGlobalVariable",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "未定义的全局变量",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Lua"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "设置了一个未定义的全局变量。\n[详情可见网址](http://luacheck.readthedocs.io/en/stable/warnings.html)"
+      },
+      {
+        "real_name": "W112",
+        "display_name": "MutateUndefinedGlobalVariable",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "未定义的全局变量",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Lua"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "转换成了一个未定义的全局变量。\n[详情可见网址](http://luacheck.readthedocs.io/en/stable/warnings.html)"
+      },
+      {
+        "real_name": "W113",
+        "display_name": "AccessUndefinedGlobalVariable",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "未定义的全局变量",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Lua"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "访问了一个未定义的全局变量。\n[详情可见网址](http://luacheck.readthedocs.io/en/stable/warnings.html)"
+      },
+      {
+        "real_name": "W121",
+        "display_name": "SetReadOnlyGlobalVariable",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "只读的全局变量",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Lua"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [
+          "推荐",
+          "基础"
+        ],
+        "description": "设置了一个只读的全局变量。\n[详情可见网址](http://luacheck.readthedocs.io/en/stable/warnings.html)"
+      },
+      {
+        "real_name": "W122",
+        "display_name": "SetReadOnlyFieldOfGlobalVariable",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "全局变量的只读字段",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Lua"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [
+          "推荐",
+          "基础"
+        ],
+        "description": "设置了一个全局变量的只读字段。\n[详情可见网址](http://luacheck.readthedocs.io/en/stable/warnings.html)"
+      },
+      {
+        "real_name": "W131",
+        "display_name": "UnusedImplicitlyDefinedGlobalVariable",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "未使用的隐式定义的全局变量",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Lua"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [
+          "推荐"
+        ],
+        "description": "未使用的隐式定义的全局变量。\n[详情可见网址](http://luacheck.readthedocs.io/en/stable/warnings.html)"
+      },
+      {
+        "real_name": "W142",
+        "display_name": "SetUndefinedFieldOfGlobalVariable",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "全局变量的未定义字段",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Lua"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [
+          "推荐"
+        ],
+        "description": "设置了一个全局变量的未定义字段。\n[详情可见网址](http://luacheck.readthedocs.io/en/stable/warnings.html)"
+      },
+      {
+        "real_name": "W143",
+        "display_name": "AccessUndefinedFieldOfGlobalVariable",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "全局变量的未定义字段",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Lua"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "访问了一个全局变量的未定义字段。\n[详情可见网址](http://luacheck.readthedocs.io/en/stable/warnings.html)"
+      },
+      {
+        "real_name": "W211",
+        "display_name": "UnusedLocalVariable",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "没有用到的局部变量",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Lua"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [
+          "推荐",
+          "基础"
+        ],
+        "description": "没有用到的局部变量。\n[详情可见网址](http://luacheck.readthedocs.io/en/stable/warnings.html)"
+      },
+      {
+        "real_name": "W212",
+        "display_name": "UnusedArgument",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "没有用到的方法参数",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Lua"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [
+          "推荐",
+          "基础"
+        ],
+        "description": "没有用到的方法参数。\n[详情可见网址](http://luacheck.readthedocs.io/en/stable/warnings.html)"
+      },
+      {
+        "real_name": "W213",
+        "display_name": "UnusedLoopVariable",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "没有用到的循环语句中的变量",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Lua"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [
+          "推荐",
+          "基础"
+        ],
+        "description": "没有用到的循环语句中的变量。\n[详情可见网址](http://luacheck.readthedocs.io/en/stable/warnings.html)"
+      },
+      {
+        "real_name": "W221",
+        "display_name": "LocalVariableAccessedButNeverSet",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "被访问的局部变量还没有被设置过",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Lua"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [
+          "推荐",
+          "基础"
+        ],
+        "description": "被访问的局部变量还没有被设置过。\n[详情可见网址](http://luacheck.readthedocs.io/en/stable/warnings.html)"
+      },
+      {
+        "real_name": "W231",
+        "display_name": "LocalVariableSetButNeverAccessed",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "已经设置过了的局部变量没有被访问过",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Lua"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [
+          "推荐",
+          "基础"
+        ],
+        "description": "已经设置过了的局部变量没有被访问过。\n[详情可见网址](http://luacheck.readthedocs.io/en/stable/warnings.html)"
+      },
+      {
+        "real_name": "W232",
+        "display_name": "ArgumentSetButNeverAccessed",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "被设置过的参数没有被访问过",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Lua"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [
+          "推荐",
+          "基础"
+        ],
+        "description": "被设置过的参数没有被访问过。\n[详情可见网址](http://luacheck.readthedocs.io/en/stable/warnings.html)"
+      },
+      {
+        "real_name": "W233",
+        "display_name": "LoopVariableSetButNeverAccessed",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "已经设置过了的循环语句中的变量没有被访问过",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Lua"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [
+          "推荐",
+          "基础"
+        ],
+        "description": "已经设置过了的循环语句中的变量没有被访问过。\n[详情可见网址](http://luacheck.readthedocs.io/en/stable/warnings.html)"
+      },
+      {
+        "real_name": "W241",
+        "display_name": "LocalVariableMutatedButNeverAccessed",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "已经被转化过的局部变量没有被访问过",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Lua"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [
+          "推荐",
+          "基础"
+        ],
+        "description": "已经被转化过的局部变量没有被访问过。\n[详情可见网址](http://luacheck.readthedocs.io/en/stable/warnings.html)"
+      },
+      {
+        "real_name": "W311",
+        "display_name": "ValueAssignedToLocalVariableUnused",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "被赋值过的局部变量没有被使用过",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Lua"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [
+          "推荐",
+          "基础"
+        ],
+        "description": "被赋值过的局部变量没有被使用过。\n[详情可见网址](http://luacheck.readthedocs.io/en/stable/warnings.html)"
+      },
+      {
+        "real_name": "W312",
+        "display_name": "ValueOfArgumentUnused",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "参数值没有被使用过",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Lua"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [
+          "推荐",
+          "基础"
+        ],
+        "description": "参数值没有被使用过。\n[详情可见网址](http://luacheck.readthedocs.io/en/stable/warnings.html)"
+      },
+      {
+        "real_name": "W313",
+        "display_name": "ValueOfLoopVariableUnused",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "循环语句中的变量值没有被使用过",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Lua"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [
+          "推荐",
+          "基础"
+        ],
+        "description": "循环语句中的变量值没有被使用过。\n[详情可见网址](http://luacheck.readthedocs.io/en/stable/warnings.html)"
+      },
+      {
+        "real_name": "W314",
+        "display_name": "ValueOfFieldInTableLiteralUnused",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "表格字段中字段的值未使用",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Lua"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [
+          "推荐",
+          "基础"
+        ],
+        "description": "表格字段中字段的值未使用。\n[详情可见网址](http://luacheck.readthedocs.io/en/stable/warnings.html)"
+      },
+      {
+        "real_name": "W321",
+        "display_name": "AccessingUninitializedLocalVariable",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "正在访问一个为初始化的局部变量",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Lua"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [
+          "推荐",
+          "基础"
+        ],
+        "description": "正在访问一个为初始化的局部变量。\n[详情可见网址](http://luacheck.readthedocs.io/en/stable/warnings.html)"
+      },
+      {
+        "real_name": "W331",
+        "display_name": "ValueAssignedToLocalVariableMutatedButNeverAccessed",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "已被赋值过的局部变量被转换了，但没有被访问过",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Lua"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [
+          "推荐",
+          "基础"
+        ],
+        "description": "已被赋值过的局部变量被转换了，但没有被访问过。\n[详情可见网址](http://luacheck.readthedocs.io/en/stable/warnings.html)"
+      },
+      {
+        "real_name": "W341",
+        "display_name": "MutatingUninitializedLocalVariable",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "正转换一个未初始化的局部变量",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Lua"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [
+          "推荐",
+          "基础"
+        ],
+        "description": "正转换一个未初始化的局部变量。\n[详情可见网址](http://luacheck.readthedocs.io/en/stable/warnings.html)"
+      },
+      {
+        "real_name": "W411",
+        "display_name": "RedefiningLocalVariable",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "正在重定义一个局部变量",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Lua"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [
+          "推荐",
+          "基础"
+        ],
+        "description": "正在重定义一个局部变量。\n[详情可见网址](http://luacheck.readthedocs.io/en/stable/warnings.html)"
+      },
+      {
+        "real_name": "W412",
+        "display_name": "RedefiningArgument",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "正在重定义一个参数",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Lua"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [
+          "推荐",
+          "基础"
+        ],
+        "description": "正在重定义一个参数。\n[详情可见网址](http://luacheck.readthedocs.io/en/stable/warnings.html)"
+      },
+      {
+        "real_name": "W413",
+        "display_name": "RedefiningLoopVariable",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "正在重定义一个循环语句的变量",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Lua"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [
+          "推荐",
+          "基础"
+        ],
+        "description": "正在重定义一个循环语句的变量。\n[详情可见网址](http://luacheck.readthedocs.io/en/stable/warnings.html)"
+      },
+      {
+        "real_name": "W421",
+        "display_name": "ShadowingLocalVariable",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "正在覆盖一个局部变量",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Lua"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "正在覆盖一个局部变量。\n[详情可见网址](http://luacheck.readthedocs.io/en/stable/warnings.html)"
+      },
+      {
+        "real_name": "W422",
+        "display_name": "ShadowingArgument",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "正在覆盖一个参数",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Lua"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [
+          "推荐",
+          "基础"
+        ],
+        "description": "正在覆盖一个参数。\n[详情可见网址](http://luacheck.readthedocs.io/en/stable/warnings.html)"
+      },
+      {
+        "real_name": "W423",
+        "display_name": "ShadowingLoopVariable",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "正在覆盖一个循环语句变量",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Lua"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [
+          "推荐",
+          "基础"
+        ],
+        "description": "正在覆盖一个循环语句变量。\n[详情可见网址](http://luacheck.readthedocs.io/en/stable/warnings.html)"
+      },
+      {
+        "real_name": "W431",
+        "display_name": "ShadowingUpvalue",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "正在覆盖一个upvalue",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Lua"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [
+          "推荐",
+          "基础"
+        ],
+        "description": "正在覆盖一个upvalue。\n[详情可见网址](http://luacheck.readthedocs.io/en/stable/warnings.html)"
+      },
+      {
+        "real_name": "W432",
+        "display_name": "ShadowingUpvalueArgument",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "正在覆盖一个upvalue参数",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Lua"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [
+          "推荐",
+          "基础"
+        ],
+        "description": "正在覆盖一个upvalue参数。\n[详情可见网址](http://luacheck.readthedocs.io/en/stable/warnings.html)"
+      },
+      {
+        "real_name": "W433",
+        "display_name": "ShadowingUpvalueLoopVariable",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "正在覆盖一个upvalue循环语句变量",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Lua"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [
+          "推荐",
+          "基础"
+        ],
+        "description": "正在覆盖一个upvalue循环语句变量。\n[详情可见网址](http://luacheck.readthedocs.io/en/stable/warnings.html)"
+      },
+      {
+        "real_name": "W511",
+        "display_name": "Unreachableode",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "无用代码",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Lua"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [
+          "推荐",
+          "基础"
+        ],
+        "description": "无用代码。\n[详情可见网址](http://luacheck.readthedocs.io/en/stable/warnings.html)"
+      },
+      {
+        "real_name": "W512",
+        "display_name": "LoopExecutedAtMostOnce",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "只被执行一次的循环",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Lua"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [
+          "推荐",
+          "基础"
+        ],
+        "description": "只被执行一次的循环。\n[详情可见网址](http://luacheck.readthedocs.io/en/stable/warnings.html)"
+      },
+      {
+        "real_name": "W521",
+        "display_name": "UnusedLabel",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "无用标签",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Lua"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [
+          "推荐",
+          "基础"
+        ],
+        "description": "无用标签。\n[详情可见网址](http://luacheck.readthedocs.io/en/stable/warnings.html)"
+      },
+      {
+        "real_name": "W531",
+        "display_name": "LeftHandSideOfAssignmentTooShort",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "赋值语句左边太短了",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "Lua"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "赋值语句左边太短了。\r\n[详情可见网址](http://luacheck.readthedocs.io/en/stable/warnings.html)"
+      },
+      {
+        "real_name": "W532",
+        "display_name": "LeftHandSideOfAssignmentTooLong",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "赋值语句左边太长了",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "Lua"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "赋值语句左边太长了。\r\n[详情可见网址](http://luacheck.readthedocs.io/en/stable/warnings.html)"
+      },
+      {
+        "real_name": "W541",
+        "display_name": "AnEmptyDoEndBlock",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "一个空do end代码块",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "Lua"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [
+          "推荐",
+          "基础"
+        ],
+        "description": "一个空do end代码块。\r\n[详情可见网址](http://luacheck.readthedocs.io/en/stable/warnings.html)"
+      },
+      {
+        "real_name": "W542",
+        "display_name": "AnEmptyIfBranch",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "一个空的if分支",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "Lua"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [
+          "推荐",
+          "基础"
+        ],
+        "description": "一个空的if分支。\r\n[详情可见网址](http://luacheck.readthedocs.io/en/stable/warnings.html)"
+      },
+      {
+        "real_name": "W551",
+        "display_name": "AnEmptyStatement",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "一个空语句",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "Lua"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [
+          "推荐",
+          "基础"
+        ],
+        "description": "一个空语句。\r\n[详情可见网址](http://luacheck.readthedocs.io/en/stable/warnings.html)"
+      },
+      {
+        "real_name": "W611",
+        "display_name": "ALineNothingButWhitespace",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "发现一行代码只有空格",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "Lua"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "发现一行代码只有空格。\r\n[详情可见网址](http://luacheck.readthedocs.io/en/stable/warnings.html)"
+      },
+      {
+        "real_name": "W612",
+        "display_name": "ALineContainsTrailingWhitespace",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "发现一行代码中有尾随的空格",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "Lua"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "发现一行代码中有尾随的空格。\r\n[详情可见网址](http://luacheck.readthedocs.io/en/stable/warnings.html)"
+      },
+      {
+        "real_name": "W613",
+        "display_name": "TrailingWhitespaceInString",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "字符创中有尾随的空格",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "Lua"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "字符创中有尾随的空格。\r\n[详情可见网址](http://luacheck.readthedocs.io/en/stable/warnings.html)"
+      },
+      {
+        "real_name": "W614",
+        "display_name": "TrailingWhitespaceInComment",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "注释中有尾随的空格",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "Lua"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "注释中有尾随的空格。\r\n[详情可见网址](http://luacheck.readthedocs.io/en/stable/warnings.html)"
+      },
+      {
+        "real_name": "W621",
+        "display_name": "InconsistentIndentation",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "不一致的缩进方式",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "Lua"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "不一致的缩进方式，混用了SPACE和TAB。\r\n[详情可见网址](http://luacheck.readthedocs.io/en/stable/warnings.html)"
+      },
+      {
+        "real_name": "W631",
+        "display_name": "TooLongLine",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "一行太长了",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "Lua"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "一行太长了。\r\n[详情可见网址](http://luacheck.readthedocs.io/en/stable/warnings.html)"
+      }
+    ]
+  }
+]

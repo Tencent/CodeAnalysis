@@ -1,0 +1,387 @@
+[
+  {
+    "name": "【Lua】基础规则包",
+    "description": "Lua官方基础规则包，提供常见代码问题扫描。",
+    "revision": null,
+    "open_saas": true,
+    "package_type": "official",
+    "languages": [
+      "Lua"
+    ],
+    "labels": [
+      "基础"
+    ],
+    "checkrule_set": [
+      {
+        "checktool": "luacheck",
+        "checkrule": "E011",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "SyntaxError",
+        "checktool_display_name": "LuaCheck"
+      },
+      {
+        "checktool": "luacheck",
+        "checkrule": "E021",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "InvalidInlineOption",
+        "checktool_display_name": "LuaCheck"
+      },
+      {
+        "checktool": "luacheck",
+        "checkrule": "E022",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "UnpairedInlinePushDirective",
+        "checktool_display_name": "LuaCheck"
+      },
+      {
+        "checktool": "luacheck",
+        "checkrule": "E023",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "UnpairedInlinePopDirective",
+        "checktool_display_name": "LuaCheck"
+      },
+      {
+        "checktool": "luacheck",
+        "checkrule": "W121",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "SetReadOnlyGlobalVariable",
+        "checktool_display_name": "LuaCheck"
+      },
+      {
+        "checktool": "luacheck",
+        "checkrule": "W122",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "SetReadOnlyFieldOfGlobalVariable",
+        "checktool_display_name": "LuaCheck"
+      },
+      {
+        "checktool": "luacheck",
+        "checkrule": "W131",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "UnusedImplicitlyDefinedGlobalVariable",
+        "checktool_display_name": "LuaCheck"
+      },
+      {
+        "checktool": "luacheck",
+        "checkrule": "W142",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "SetUndefinedFieldOfGlobalVariable",
+        "checktool_display_name": "LuaCheck"
+      },
+      {
+        "checktool": "luacheck",
+        "checkrule": "W211",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "UnusedLocalVariable",
+        "checktool_display_name": "LuaCheck"
+      },
+      {
+        "checktool": "luacheck",
+        "checkrule": "W212",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "UnusedArgument",
+        "checktool_display_name": "LuaCheck"
+      },
+      {
+        "checktool": "luacheck",
+        "checkrule": "W213",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "UnusedLoopVariable",
+        "checktool_display_name": "LuaCheck"
+      },
+      {
+        "checktool": "luacheck",
+        "checkrule": "W221",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "LocalVariableAccessedButNeverSet",
+        "checktool_display_name": "LuaCheck"
+      },
+      {
+        "checktool": "luacheck",
+        "checkrule": "W231",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "LocalVariableSetButNeverAccessed",
+        "checktool_display_name": "LuaCheck"
+      },
+      {
+        "checktool": "luacheck",
+        "checkrule": "W232",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "ArgumentSetButNeverAccessed",
+        "checktool_display_name": "LuaCheck"
+      },
+      {
+        "checktool": "luacheck",
+        "checkrule": "W233",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "LoopVariableSetButNeverAccessed",
+        "checktool_display_name": "LuaCheck"
+      },
+      {
+        "checktool": "luacheck",
+        "checkrule": "W241",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "LocalVariableMutatedButNeverAccessed",
+        "checktool_display_name": "LuaCheck"
+      },
+      {
+        "checktool": "luacheck",
+        "checkrule": "W311",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "ValueAssignedToLocalVariableUnused",
+        "checktool_display_name": "LuaCheck"
+      },
+      {
+        "checktool": "luacheck",
+        "checkrule": "W312",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "ValueOfArgumentUnused",
+        "checktool_display_name": "LuaCheck"
+      },
+      {
+        "checktool": "luacheck",
+        "checkrule": "W313",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "ValueOfLoopVariableUnused",
+        "checktool_display_name": "LuaCheck"
+      },
+      {
+        "checktool": "luacheck",
+        "checkrule": "W314",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "ValueOfFieldInTableLiteralUnused",
+        "checktool_display_name": "LuaCheck"
+      },
+      {
+        "checktool": "luacheck",
+        "checkrule": "W321",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "AccessingUninitializedLocalVariable",
+        "checktool_display_name": "LuaCheck"
+      },
+      {
+        "checktool": "luacheck",
+        "checkrule": "W331",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "ValueAssignedToLocalVariableMutatedButNeverAccessed",
+        "checktool_display_name": "LuaCheck"
+      },
+      {
+        "checktool": "luacheck",
+        "checkrule": "W341",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "MutatingUninitializedLocalVariable",
+        "checktool_display_name": "LuaCheck"
+      },
+      {
+        "checktool": "luacheck",
+        "checkrule": "W411",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "RedefiningLocalVariable",
+        "checktool_display_name": "LuaCheck"
+      },
+      {
+        "checktool": "luacheck",
+        "checkrule": "W412",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "RedefiningArgument",
+        "checktool_display_name": "LuaCheck"
+      },
+      {
+        "checktool": "luacheck",
+        "checkrule": "W413",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "RedefiningLoopVariable",
+        "checktool_display_name": "LuaCheck"
+      },
+      {
+        "checktool": "luacheck",
+        "checkrule": "W422",
+        "severity": "warning",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "ShadowingArgument",
+        "checktool_display_name": "LuaCheck"
+      },
+      {
+        "checktool": "luacheck",
+        "checkrule": "W423",
+        "severity": "warning",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "ShadowingLoopVariable",
+        "checktool_display_name": "LuaCheck"
+      },
+      {
+        "checktool": "luacheck",
+        "checkrule": "W431",
+        "severity": "warning",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "ShadowingUpvalue",
+        "checktool_display_name": "LuaCheck"
+      },
+      {
+        "checktool": "luacheck",
+        "checkrule": "W432",
+        "severity": "warning",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "ShadowingUpvalueArgument",
+        "checktool_display_name": "LuaCheck"
+      },
+      {
+        "checktool": "luacheck",
+        "checkrule": "W433",
+        "severity": "warning",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "ShadowingUpvalueLoopVariable",
+        "checktool_display_name": "LuaCheck"
+      },
+      {
+        "checktool": "luacheck",
+        "checkrule": "W511",
+        "severity": "warning",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "Unreachableode",
+        "checktool_display_name": "LuaCheck"
+      },
+      {
+        "checktool": "luacheck",
+        "checkrule": "W512",
+        "severity": "warning",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "LoopExecutedAtMostOnce",
+        "checktool_display_name": "LuaCheck"
+      },
+      {
+        "checktool": "luacheck",
+        "checkrule": "W521",
+        "severity": "warning",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "UnusedLabel",
+        "checktool_display_name": "LuaCheck"
+      },
+      {
+        "checktool": "luacheck",
+        "checkrule": "W541",
+        "severity": "warning",
+        "rule_params": "",
+        "state": "enabled",
+        "checkrule_category": "convention",
+        "checkrule_display_name": "AnEmptyDoEndBlock",
+        "checktool_display_name": "LuaCheck"
+      },
+      {
+        "checktool": "luacheck",
+        "checkrule": "W542",
+        "severity": "warning",
+        "rule_params": "",
+        "state": "enabled",
+        "checkrule_category": "convention",
+        "checkrule_display_name": "AnEmptyIfBranch",
+        "checktool_display_name": "LuaCheck"
+      },
+      {
+        "checktool": "luacheck",
+        "checkrule": "W551",
+        "severity": "warning",
+        "rule_params": "",
+        "state": "enabled",
+        "checkrule_category": "convention",
+        "checkrule_display_name": "AnEmptyStatement",
+        "checktool_display_name": "LuaCheck"
+      }
+    ]
+  }
+]

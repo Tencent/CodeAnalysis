@@ -1,0 +1,4391 @@
+[
+  {
+    "name": "cppcheck",
+    "display_name": "CppCheck",
+    "description": "C/C++ Static Analyzer",
+    "license": "GPL-3.0",
+    "task_processes": [
+      "analyze",
+      "datahandle"
+    ],
+    "scan_app": "codelint",
+    "scm_url": null,
+    "run_cmd": null,
+    "envs": null,
+    "build_flag": false,
+    "show_display_name": true,
+    "checkrule_set": [
+      {
+        "real_name": "accessMoved",
+        "display_name": "accessMoved",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "访问移动变量v。",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "访问移动变量v。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "allocaCalled",
+        "display_name": "allocaCalled",
+        "severity": "info",
+        "category": "other",
+        "rule_title": null,
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": null,
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "argumentSize",
+        "display_name": "argumentSize",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "数组“ array”太小，函数“ function”期望更大。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "数组“ array”太小，函数“ function”期望更大。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "arithOperationsOnVoidPointer",
+        "display_name": "arithOperationsOnVoidPointer",
+        "severity": "info",
+        "category": "usability",
+        "rule_title": "void型指针检查",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "'varname' is of type 'vartype'. When using void pointers in calculations, the behaviour is undefined. Arithmetic operations on 'void *' is a GNU C extension, which defines the 'sizeof(void)' to be 1.\n\n“ varname”的类型为“ vartype”。在计算中使用空指针时，行为是不确定的。对'void *'的算术运算是GNU C扩展，它将'sizeof（void）'定义为1。",
+        "disable": false
+      },
+      {
+        "real_name": "arrayIndexOutOfBounds",
+        "display_name": "arrayIndexOutOfBounds",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "数组越界",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Array 'array[2]' index array[1][1] out of bounds.\n\n对数组'array [2]' 使用 array[1][1]造成越界。",
+        "disable": false
+      },
+      {
+        "real_name": "arrayIndexOutOfBoundsCond",
+        "display_name": "arrayIndexOutOfBoundsCond",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "在索引20处访问数组'x [10]'，该数组超出范围。否则条件“ y == 20”是多余的。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "在索引20处访问数组'x [10]'，该数组超出范围。否则条件“ y == 20”是多余的。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "arrayIndexThenCheck",
+        "display_name": "arrayIndexThenCheck",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "检查数组长度在访问数组之前",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Defensive programming: The variable 'index' is used as an array index before it is checked that is within limits. This can mean that the array might be accessed out of bounds. Reorder conditions such as '(a[i] && i < 10)' to '(i < 10 && a[i])'. That way the array will not be accessed if the index is out of limits.\n\n在检查数组index是否在限制范围内之前，将其用作数组索引。这可能意味着可能会超出范围访问数组。将诸如“（a [i] && i <10）”的条件重新排序为“（i <10 && a [i]）”。这样，如果索引超出限制，将无法访问数组。",
+        "disable": false
+      },
+      {
+        "real_name": "assertWithSideEffect",
+        "display_name": "assertWithSideEffect",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "声明语句调用可能具有所需副作用的函数：“函数”。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "非纯函数：在assert语句内部调用“函数”。声明语句从发行版本中删除，因此不会执行assert语句中的代码。如果发行版中也需要代码，则这是一个错误。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "assignBoolToFloat",
+        "display_name": "assignBoolToFloat",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "分配给浮点变量的布尔值。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "分配给浮点变量的布尔值。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "assignBoolToPointer",
+        "display_name": "assignBoolToPointer",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "分配给指针的布尔值。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "分配给指针的布尔值。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "assignIfError",
+        "display_name": "assignIfError",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "分配和比较不匹配，比较”始终为假。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "分配和比较不匹配，比较”始终为假。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "AssignmentAddressToInteger",
+        "display_name": "AssignmentAddressToInteger",
+        "severity": "info",
+        "category": "usability",
+        "rule_title": "将指针分配给整数是不可移植的。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "将指针分配给整数（int / long / etc）不能跨不同的平台和编译器移植。例如，在32位Windows和Linux中，它们的宽度相同，但是在64位Windows和Linux中，它们的宽度不同。在最坏的情况下，您最终会将64位地址分配给32位整数。安全的方法是仅以指针类型（或uintptr_t之类的typedef）存储地址。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "assignmentInAssert",
+        "display_name": "assignmentInAssert",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "声明语句修改“ var”。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "变量“ var”被修改为插入断言语句。声明语句从发行版本中删除，因此不会执行assert语句中的代码。如果发行版中也需要代码，则这是一个错误。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "AssignmentIntegerToAddress",
+        "display_name": "AssignmentIntegerToAddress",
+        "severity": "info",
+        "category": "usability",
+        "rule_title": "给指针分配整数是不可移植的。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "为指针分配整数（int / long / etc）不能在不同平台和编译器之间移植。例如，在32位Windows和Linux中，它们的宽度相同，但是在64位Windows和Linux中，它们的宽度不同。在最坏的情况下，您最终将64位整数分配给32位指针。安全的方法是仅以指针类型（或uintptr_t之类的typedef）存储地址。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "autoVariables",
+        "display_name": "autoVariables",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "分配给功能参数的局部自变量的地址。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "危险分配-为功能参数分配了本地auto变量的地址。本地auto变量是从堆栈中保留的，该堆栈在函数结束时释放。因此，函数结束后，指向局部变量的指针无效。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "autovarInvalidDeallocation",
+        "display_name": "autovarInvalidDeallocation",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "auto变量的取消分配导致不确定的行为。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "auto变量的取消分配导致不确定的行为。您应该只释放动态分配的内存。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "badBitmaskCheck",
+        "display_name": "badBitmaskCheck",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "运算符“ |”的结果如果一个操作数不为零，则始终为true。您打算使用“＆”吗？",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "运算符“ |”的结果如果一个操作数不为零，则始终为true。您打算使用“＆”吗？",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "bitwiseOnBoolean",
+        "display_name": "bitwiseOnBoolean",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "布尔变量“ varname”用于按位运算。你的意思是 '＆＆'？",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "布尔变量“ varname”用于按位运算。你的意思是 '＆＆'？",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "boostForeachError",
+        "display_name": "boostForeachError",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "BOOST_FOREACH缓存end（）迭代器。如果您在其中修改容器，则它是未定义的行为。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "BOOST_FOREACH缓存end（）迭代器。如果您在其中修改容器，则它是未定义的行为。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "bufferAccessOutOfBounds",
+        "display_name": "bufferAccessOutOfBounds",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "缓冲区越界",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Buffer is accessed out of bounds: buffer\n\n缓冲区超出范围：缓冲区",
+        "disable": false
+      },
+      {
+        "real_name": "bufferNotZeroTerminated",
+        "display_name": "bufferNotZeroTerminated",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "调用strncpy（）之后，缓冲区'buffer'不会以null结尾。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "调用strncpy（）之后，缓冲区'buffer'不会以null结尾。如果代码假定缓冲区为空终止，则这将在代码后面引起错误。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "CastAddressToIntegerAtReturn",
+        "display_name": "CastAddressToIntegerAtReturn",
+        "severity": "info",
+        "category": "usability",
+        "rule_title": "在具有整数返回类型的函数中返回地址值不可移植。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "在具有整数（int / long / etc）返回类型的函数中返回地址值不能在不同平台和编译器之间移植。例如，在32位Windows和Linux中，它们的宽度相同，但是在64位Windows和Linux中，它们的宽度不同。在最坏的情况下，您最终会将64位地址转换为32位整数。安全的方法是始终返回整数。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "CastIntegerToAddressAtReturn",
+        "display_name": "CastIntegerToAddressAtReturn",
+        "severity": "info",
+        "category": "usability",
+        "rule_title": "在具有指针返回类型的函数中返回整数是不可移植的。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "在具有指针返回类型的函数中返回整数（int / long / etc）不能在不同平台和编译器之间移植。例如，在32位Windows和Linux中，它们的宽度相同，但是在64位Windows和Linux中，它们的宽度不同。在最坏的情况下，您最终将64位整数转换为32位指针。安全的方法是始终返回一个指针。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "catchExceptionByValue",
+        "display_name": "catchExceptionByValue",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "应该通过引用捕获异常。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "异常是按值捕获的。它可以作为（const）引用捕获，通常在C ++中建议使用。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "charBitOp",
+        "display_name": "charBitOp",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "在位操作中使用'char'变量时，符号扩展会产生意外的结果。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "在位操作中使用'char'变量时，符号扩展会产生意外的结果。例如：\\ 012 char c = 0x80; \\ 012 int i = 0 | c; \\ 012 if（i＆0x8000）\\ 012 printf（“ expected”）; \\ 012“ unexpected”将被打印在屏幕上。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "charLiteralWithCharPtrCompare",
+        "display_name": "charLiteralWithCharPtrCompare",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "Char文字与指针“ foo”相比。您打算取消引用吗？",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "Char文字与指针“ foo”相比。您打算取消引用吗？",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "checkCastIntToCharAndBack",
+        "display_name": "checkCastIntToCharAndBack",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "将func_name（）返回值存储在char变量中，然后与EOF进行比较。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "将func_name（）返回值保存在char变量中时，会损失精度。当func_name（）返回EOF时，该值将被截断。将char变量与EOF进行比较可能会产生意外结果。例如，循环“ while（EOF！=（c = func_name（））;”）在某些编译器/平台和其他编译器/平台上永远循环，当文件包含匹配字符时，它将停止。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "clarifyCalculation",
+        "display_name": "clarifyCalculation",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "澄清“ +”和“？”的计算优先级。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "可疑计算。请使用括号来说明代码。代码“ a + b？c：d”应写为“（a + b）？c：d”或“ a +（b？c：d）”。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "clarifyCondition",
+        "display_name": "clarifyCondition",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "可疑情况（任务+比较）；用括号澄清表达。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "可疑情况（任务+比较）；用括号澄清表达。",
+        "disable": false
+      },
+      {
+        "real_name": "clarifyStatement",
+        "display_name": "clarifyStatement",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "无效的语句",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "A statement like '*A++;' might not do what you intended. Postfix 'operator++' is executed before 'operator*'. Thus, the dereference is meaningless. Did you intend to write '(*A)++;'?\n\n像“ *A++;”这样的语句可能无法达到您的预期。后缀'operator++'在'operator*'之前执行。因此，‘*’是没有意义的。您是否打算写'(*A)++;'",
+        "disable": false
+      },
+      {
+        "real_name": "commaSeparatedReturn",
+        "display_name": "commaSeparatedReturn",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "在return语句中使用逗号。逗号很容易被误读为';'。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "在return语句中使用逗号。在return语句中使用逗号时，很容易将其误认为是分号。例如，在下面的代码中，如果条件为true，则返回'b'的值，但是很容易想到返回了'a + 1'：\\ 012如果（x）\\ 012返回a + \\\\ 012 b ++; \\ 012但是，在宏中使用逗号可能很有用。当在返回语句中使用此类宏时，Cppcheck不会发出警告，这样的代码被误解的可能性较小。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "compareBoolExpressionWithInt",
+        "display_name": "compareBoolExpressionWithInt",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "布尔表达式与0或1以外的整数的比较。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "布尔表达式与0或1以外的整数的比较。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "comparisonError",
+        "display_name": "comparisonError",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "表达式'（X＆0x6）== 0x1'始终为false。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "The expression '(X & 0x6) == 0x1' is always false. Check carefully constants and operators used, these errors might be hard to spot sometimes. In case of complex expression it might help to split it to separate expressions.",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "comparisonFunctionIsAlwaysTrueOrFalse",
+        "display_name": "comparisonFunctionIsAlwaysTrueOrFalse",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "将两个相同的变量与isless（varName，varName）进行比较始终得出false。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "函数isless旨在比较两个变量。对两个参数使用一个变量（varName）调用此函数将导致一条语句始终为false。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "comparisonOfBoolWithBoolError",
+        "display_name": "comparisonOfBoolWithBoolError",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "使用关系（<，>，<=或> =）运算符比较具有布尔值的变量。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "变量“ var_name”的类型为“ bool”，并且使用关系（<，>，<=或> =）运算符比较“ bool”值可能会导致意外结果。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "comparisonOfFuncReturningBoolError",
+        "display_name": "comparisonOfFuncReturningBoolError",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "使用关系（<，>，<=或> =）运算符返回布尔值的函数的比较。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "函数“ func_name”的返回类型为“ bool”，结果为“ bool”类型。使用关系运算符（<，>，<=或> =）比较'bool'值可能会导致意外结果。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "comparisonOfTwoFuncsReturningBoolError",
+        "display_name": "comparisonOfTwoFuncsReturningBoolError",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "使用关系运算符（<，>，<=或> =）返回布尔值的两个函数的比较。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "函数“ func_name1”和函数“ func_name2”的返回类型为“ bool”，结果为“ bool”类型。使用关系运算符（<，>，<=或> =）比较'bool'值可能会导致意外结果。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "ConfigurationNotChecked",
+        "display_name": "ConfigurationNotChecked",
+        "severity": "info",
+        "category": "convention",
+        "rule_title": "由于“ X”的值未知，因此跳过配置“ X”。如果要检查，请使用-D。您可以使用-U明确跳过它。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "由于“ X”的值未知，因此跳过配置“ X”。如果要检查，请使用-D。您可以使用-U明确跳过它。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "constStatement",
+        "display_name": "constStatement",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "冗余代码：找到了一个以常数类型开头的语句。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "冗余代码：找到了一个以常数类型开头的语句。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "copyCtorAndEqOperator",
+        "display_name": "copyCtorAndEqOperator",
+        "severity": "info",
+        "category": "other",
+        "rule_title": null,
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": null,
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "copyCtorPointerCopying",
+        "display_name": "copyCtorPointerCopying",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "指向已分配内存的指针“ var”的值在复制构造函数中复制，而不是分配新的内存。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "指向已分配内存的指针“ var”的值在复制构造函数中复制，而不是分配新的内存。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "coutCerrMisusage",
+        "display_name": "coutCerrMisusage",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "Invalid usage of output stream: '<< std::cout'.",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "输出流的无效用法：“ << std :: cout”。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "cstyleCast",
+        "display_name": "cstyleCast",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "C型指针转换",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "检测到C型指针转换。 C ++提供了四种不同类型的强制转换作为替代：static_cast，const_cast，dynamic_cast和reinterpret_cast。 C风格的强制类型转换可以auto评估其中的任何一种，因此，如果程序员明确声明期望使用哪种类型的强制类型转换，则认为它更安全。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "deadpointer",
+        "display_name": "deadpointer",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "死指针用法。如果指针“ pointer”在第0行被分配了“＆x”，则该指针将失效。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "Dead pointer usage. Pointer 'pointer' is dead if it has been assigned '&x' at line 0.\n\n死指针用法。如果指针“ pointer”在第0行被分配了“＆x”，则该指针将失效。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "deallocDealloc",
+        "display_name": "deallocDealloc",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "取消分配释放的指针：varname",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "取消分配释放的指针：varname",
+        "disable": false
+      },
+      {
+        "real_name": "deallocret",
+        "display_name": "deallocret",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "释放/释放后返回/取消引用“ p”",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "释放/释放后返回/取消引用“ p”",
+        "disable": false
+      },
+      {
+        "real_name": "deallocuse",
+        "display_name": "deallocuse",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "释放/释放后取消引用“ varname”",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "释放/释放后取消引用“ varname”",
+        "disable": false
+      },
+      {
+        "real_name": "derefInvalidIterator",
+        "display_name": "derefInvalidIterator",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "可能会取消引用无效的迭代器：i",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "请确保在取消引用迭代器之前（而不是之后）检查迭代器是否有效。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "divideSizeof",
+        "display_name": "divideSizeof",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "sizeof（）结果对指针类型的除法。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "sizeof（）结果对指针类型的除法。 sizeof（）返回指针的大小，而不是它指向的内存区域的大小。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "doubleFree",
+        "display_name": "doubleFree",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "内存多次释放",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Memory pointed to by 'varname' is freed twice.\n\n“ varname”指向的内存被释放两次。",
+        "disable": false
+      },
+      {
+        "real_name": "duplicateBranch",
+        "display_name": "duplicateBranch",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "找到“ if”和“ else”的重复分支。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Finding the same code in an 'if' and related 'else' branch is suspicious and might indicate a cut and paste or logic error. Please examine this code carefully to determine if it is correct.\n\n在“ if”分支和相关的“ else”分支中找到相同的代码是可疑的，可能表示剪切和粘贴或逻辑错误。请仔细检查此代码以确定它是否正确。",
+        "disable": false
+      },
+      {
+        "real_name": "duplicateBreak",
+        "display_name": "duplicateBreak",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "连续的return，break，continue，goto或throw语句是不必要的。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Consecutive return, break, continue, goto or throw statements are unnecessary. The second statement can never be executed, and so should be removed.\n\n连续的return，break，continue，goto或throw语句是不必要的。第二条语句永远无法执行，因此应将其删除。",
+        "disable": false
+      },
+      {
+        "real_name": "duplicateExpression",
+        "display_name": "duplicateExpression",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "'&&'两侧的表达式相同。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Finding the same expression on both sides of an operator is suspicious and might indicate a cut and paste or logic error. Please examine this code carefully to determine if it is correct.\n\n在运算符的两边都找到相同的表达式是可疑的，可能表示剪切和粘贴或逻辑错误。请仔细检查此代码以确定它是否正确。",
+        "disable": false
+      },
+      {
+        "real_name": "duplicateExpressionTernary",
+        "display_name": "duplicateExpressionTernary",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "三元运算符的两个分支中的表达式相同。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Finding the same expression in both branches of ternary operator is suspicious as the same code is executed regardless of the condition.\n\n在三元运算符的两个分支中找到相同的表达式是可疑的，因为无论条件如何，都会执行相同的代码。",
+        "disable": false
+      },
+      {
+        "real_name": "duplInheritedMember",
+        "display_name": "duplInheritedMember",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "类“ class”使用其父类“ class”中定义的名称“ variable”定义成员变量。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "The class 'class' defines member variable with name 'variable' also defined in its parent class 'class'.\n\n类“ class”使用其父类“ class”中定义的名称“ variable”定义成员变量。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "eraseDereference",
+        "display_name": "eraseDereference",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "使用了无效的迭代器“ iter”。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "迭代器“ iter”在分配之前是无效的。取消引用或与另一个迭代器进行比较是无效操作。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "exceptDeallocThrow",
+        "display_name": "exceptDeallocThrow",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "异常以无效状态抛出，“ p”指向释放的内存。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "异常以无效状态抛出，“ p”指向释放的内存。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "exceptRethrowCopy",
+        "display_name": "exceptRethrowCopy",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "抛出捕获的异常的副本，而不是重新抛出原始异常。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "用'throw varname;'抛出异常创建不必要的“ varname”副本。要在不进行不必要的复制或切片的情况下抛出捕获的异常，请使用裸露的“ throw;”。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "exceptThrowInDestructor",
+        "display_name": "exceptThrowInDestructor",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "类类不安全，析构函数引发异常",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "类Class是不安全的，因为其析构函数会引发异常。如果使用Class并引发在外部范围中捕获的异常，则程序将终止。",
+        "disable": false
+      },
+      {
+        "real_name": "fflushOnInputStream",
+        "display_name": "fflushOnInputStream",
+        "severity": "info",
+        "category": "usability",
+        "rule_title": "在输入流“ stdin”上调用fflush（）可能会在非Linux系统上导致未定义的行为。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "在输入流“ stdin”上调用fflush（）可能会在非Linux系统上导致未定义的行为。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "funcArgNamesDifferent",
+        "display_name": "funcArgNamesDifferent",
+        "severity": "info",
+        "category": "other",
+        "rule_title": null,
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": null,
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "funcArgOrderDifferent",
+        "display_name": "funcArgOrderDifferent",
+        "severity": "info",
+        "category": "other",
+        "rule_title": null,
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": null,
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "functionConst",
+        "display_name": "functionConst",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "从技术上讲，成员函数'class :: function'可以是const。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "成员函数'class :: function'可以成为const函数。使此函数为“ const”应该不会导致编译器错误。即使可以从技术上使该函数成为const函数，从概念上讲也可能没有意义。首先考虑一下您的设计和函数的任务-它是一个不能更改对象内部状态的函数吗？",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "functionStatic",
+        "display_name": "functionStatic",
+        "severity": "warning",
+        "category": "performance",
+        "rule_title": "从技术上讲，成员函数'class :: function'可以是静态的。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "成员函数'class :: function'可以成为静态函数。将函数设为静态可以带来性能优势，因为没有“ this”实例传递给函数。此更改不应引起编译器错误，但不一定在概念上有意义。首先考虑一下您的设计和函数的任务-它是一个不能访问类实例成员的函数吗？",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "ignoredReturnValue",
+        "display_name": "ignoredReturnValue",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "不使用函数malloc（）的返回值。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "不使用函数malloc（）的返回值。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "incompleteArrayFill",
+        "display_name": "incompleteArrayFill",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "数组“缓冲区”未完全填充。您是否忘记了将'memset（）'的大小乘以'sizeof（* buffer）'？",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "数组“缓冲区”未完全填充。函数'memset（）'需要以字节为单位的大小，但是给定数组的元素大于一个字节。您是否忘记将大小乘以'sizeof（* buffer）'？",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "incorrectLogicOperator",
+        "display_name": "incorrectLogicOperator",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "逻辑析取始终为true：foo> 3 && foo <4。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "逻辑析取始终为true：foo> 3 && foo <4。这些条件是否必要？您打算改用&&吗？数字正确吗？您是否在比较正确的变量？",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "incorrectStringBooleanError",
+        "display_name": "incorrectStringBooleanError",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "字符串文字“ Hello World”到bool的转换始终为true。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "字符串文字“ Hello World”到bool的转换始终为true。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "incorrectStringCompare",
+        "display_name": "incorrectStringCompare",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "字符串文字“ Hello World”与substr（）的长度参数不匹配。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "字符串文字“ Hello World”与substr（）的长度参数不匹配。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "incrementboolean",
+        "display_name": "incrementboolean",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "C ++标准不建议使用后缀运算符++递增类型为'bool'的变量。您应该为其分配值“ true”。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "后缀增量运算符的操作数可以是bool类型，但是C ++ Standard（附件D-1）已弃用该操作数，并且该操作数始终设置为true。您应该为其分配值“ true”。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "initializerList",
+        "display_name": "initializerList",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "成员变量'class :: variable'在初始化列表中的错误位置。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "成员变量'class :: variable'在初始化列表中的错误位置。成员将按照声明的顺序进行初始化，而不是按照其在初始化列表中的顺序进行初始化。保持初始化程序列表与声明成员的顺序相同，可以防止依赖于顺序的初始化错误。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "insecureCmdLineArgs",
+        "display_name": "insecureCmdLineArgs",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "较长的命令行参数可能导致缓冲区溢出。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "较长的命令行参数可能导致缓冲区溢出。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "integerOverflow",
+        "display_name": "integerOverflow",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "表达式“”的有符号整数溢出。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "表达式“”的有符号整数溢出。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "invalidFunctionArg",
+        "display_name": "invalidFunctionArg",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "无效的func_name（）参数nr 1",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "无效的func_name（）参数nr 1",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "invalidFunctionArgBool",
+        "display_name": "invalidFunctionArgBool",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "无效的func_name（）参数nr1。需要一个非布尔值。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "无效的func_name（）参数nr1。需要一个非布尔值。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "invalidIterator1",
+        "display_name": "invalidIterator1",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "无效的迭代器：迭代器",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "无效的迭代器：迭代器",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "invalidIterator2",
+        "display_name": "invalidIterator2",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "在push_back | push_front | insert（）之后，迭代器“ iterator”可能无效。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "在push_back | push_front | insert（）之后，迭代器“ iterator”可能无效。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "invalidLengthModifierError",
+        "display_name": "invalidLengthModifierError",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "格式字符串（编号1）中的“ I”是长度修饰符，没有转换说明符就不能使用。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "格式字符串（编号1）中的“ I”是长度修饰符，没有转换说明符就不能使用。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "invalidPointer",
+        "display_name": "invalidPointer",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "push_back（）之后的指针'pointer'无效。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "push_back（）之后的指针'pointer'无效。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "invalidPointerCast",
+        "display_name": "invalidPointerCast",
+        "severity": "info",
+        "category": "usability",
+        "rule_title": "在float *和double *之间转换，它们具有不兼容的二进制数据表示形式。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "在float *和double *之间转换，它们具有不兼容的二进制数据表示形式。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "invalidPrintfArgType_float",
+        "display_name": "invalidPrintfArgType_float",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "格式字符串（编号1）中的％f需要'double'，但参数类型为Unknown。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "格式字符串（编号1）中的％f需要'double'，但参数类型为Unknown。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "invalidPrintfArgType_int",
+        "display_name": "invalidPrintfArgType_int",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "格式字符串（编号1）中的％X需要'unsigned int'，但参数类型为Unknown。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "格式字符串（编号1）中的％X需要'unsigned int'，但参数类型为Unknown。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "invalidPrintfArgType_n",
+        "display_name": "invalidPrintfArgType_n",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "格式字符串（编号1）中的％n需要'int *'，但参数类型为Unknown。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "格式字符串（编号1）中的％n需要'int *'，但参数类型为Unknown。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "invalidPrintfArgType_p",
+        "display_name": "invalidPrintfArgType_p",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "格式字符串（编号1）中的％p需要一个地址，但参数类型为Unknown。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "格式字符串（编号1）中的％p需要一个地址，但参数类型为Unknown。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "invalidPrintfArgType_s",
+        "display_name": "invalidPrintfArgType_s",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "格式字符串（编号1）中的％s需要'char *'，但参数类型为Unknown。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "格式字符串（编号1）中的％s需要'char *'，但参数类型为Unknown。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "invalidPrintfArgType_sint",
+        "display_name": "invalidPrintfArgType_sint",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "格式字符串（编号1）中的％i需要'int'，但参数类型为Unknown11。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "格式字符串（编号1）中的％i需要'int'，但参数类型为Unknown11。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "invalidPrintfArgType_uint",
+        "display_name": "invalidPrintfArgType_uint",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "格式字符串（编号1）中的％u需要'unsigned int'，但参数类型为Unknown。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "格式字符串（编号1）中的％u需要'unsigned int'，但参数类型为Unknown。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "invalidscanf",
+        "display_name": "invalidscanf",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "没有字段宽度限制的scanf（）可能会因大量输入数据而崩溃。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "没有字段宽度限制的scanf（）可能会因大量输入数据而崩溃。添加字段宽度说明符以解决此问题：\\ 012％s =>％20s \\ 012 \\ 012可能会崩溃的示例程序：\\ 012 \\ 012＃include <stdio.h> \\ 012int main（）\\ 012 {\\ 012 char c [5]; \\ 012 scanf（“％s”，c）; \\ 012返回0; \\ 012} \\ 012 \\ 012输入5个或更多字符可能会使程序崩溃。此处的正确用法是'scanf（“％4s”，c）;'，因为最大字段宽度不包括终止的空字节。\\ ",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "invalidScanfArgType_float",
+        "display_name": "invalidScanfArgType_float",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "格式字符串（编号1）中的％f需要'float *'，但参数类型为Unknown。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "格式字符串（编号1）中的％f需要'float *'，但参数类型为Unknown。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "invalidScanfArgType_int",
+        "display_name": "invalidScanfArgType_int",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "格式字符串（编号1）中的％d需要'int *'，但参数类型为Unknown。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "格式字符串（编号1）中的％d需要'int *'，但参数类型为Unknown。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "invalidScanfArgType_s",
+        "display_name": "invalidScanfArgType_s",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "格式字符串（编号1）中的％s需要一个'char *'，但参数类型为Unknown。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "格式字符串（编号1）中的％s需要一个'char *'，但参数类型为Unknown。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "invalidScanfFormatWidth",
+        "display_name": "invalidScanfFormatWidth",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "格式字符串（编号10）中指定的宽度5大于目标缓冲区'[0]'，请使用％-1s防止溢出。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "格式字符串（编号10）中指定的宽度5大于目标缓冲区'[0]'，请使用％-1s防止溢出。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "invalidScanfFormatWidth_smaller",
+        "display_name": "invalidScanfFormatWidth_smaller",
+        "severity": "info",
+        "category": "other",
+        "rule_title": null,
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": null,
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "invalidTestForOverflow",
+        "display_name": "invalidTestForOverflow",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "溢出'x + u <x'的测试无效。除非有溢出，否则条件始终为false，并且溢出为UB。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "溢出'x + u <x'的测试无效。除非有溢出，否则条件始终为false，并且溢出为UB。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "IOWithoutPositioning",
+        "display_name": "IOWithoutPositioning",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "在不调用定位功能（fseek，fsetpos或倒带）或两次刷新之间进行读取和写入操作的情况下，将导致未定义的行为。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "在不调用定位功能（fseek，fsetpos或倒带）或两次刷新之间进行读取和写入操作的情况下，将导致未定义的行为。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "iterators",
+        "display_name": "iterators",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "同一迭代器用于不同的容器“ container1”和“ container2”。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "同一迭代器用于不同的容器“ container1”和“ container2”。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "knownConditionTrueFalse",
+        "display_name": "knownConditionTrueFalse",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "条件“ x”始终为真",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "条件“ x”始终为真",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "leakNoVarFunctionCall",
+        "display_name": "leakNoVarFunctionCall",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "使用funcName分配时，funcName不会释放它。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "使用funcName分配时，funcName不会释放它。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "leakReturnValNotUsed",
+        "display_name": "leakReturnValNotUsed",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "未存储分配函数'funcName'的返回值。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "Return value of allocation function 'funcName' is not stored.\n\n未存储分配函数'funcName'的返回值。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "leakUnsafeArgAlloc",
+        "display_name": "leakUnsafeArgAlloc",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "不安全的分配。如果funcName（）抛出，内存可能会泄漏。使用make_shared <int>（）代替。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "不安全的分配。如果funcName（）抛出，内存可能会泄漏。使用make_shared <int>（）代替。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "literalWithCharPtrCompare",
+        "display_name": "literalWithCharPtrCompare",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "字符串文字与变量'foo'的比较。您是否打算改用strcmp（）？",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "字符串文字与变量'foo'的比较。您是否打算改用strcmp（）？",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "mallocOnClassError",
+        "display_name": "mallocOnClassError",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "用malloc（）分配的类实例的内存，但类包含std :: string。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "用malloc（）分配的类实例的内存，但对std :: string进行分类。这是不安全的，因为没有调用构造函数，并且类成员保持未初始化状态。考虑使用“新”代替。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "mallocOnClassWarning",
+        "display_name": "mallocOnClassWarning",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "用malloc（）分配的类实例的内存，但类提供了构造函数。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "用malloc（）分配的类实例的内存，但类提供了构造函数。这是不安全的，因为没有调用构造函数，并且类成员保持未初始化状态。考虑使用“新”代替。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "memleak",
+        "display_name": "memleak",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "内存泄漏",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Memory leak: varname\n\n内存泄漏：varname",
+        "disable": false
+      },
+      {
+        "real_name": "memleakOnRealloc",
+        "display_name": "memleakOnRealloc",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "内存重新分配",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Common realloc mistake: 'varname' nulled but not freed upon failure\n\n常见的重新分配错误：“ varname”为空，但失败后不会释放",
+        "disable": false
+      },
+      {
+        "real_name": "memsetClass",
+        "display_name": "memsetClass",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "在包含类名的类上使用“ memfunc”。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "在包含类名的类上使用'memfunc'是不安全的，因为省略了构造函数，析构函数和复制运算符调用。这些对于此非POD类型是必需的，以确保创建有效的对象。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "memsetClassFloat",
+        "display_name": "memsetClassFloat",
+        "severity": "info",
+        "category": "usability",
+        "rule_title": "在包含浮点数的类上使用memset（）。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "在包含浮点数的类上使用memset（）。这不是可移植的，因为memset（）将内存块的每个字节设置为特定值，并且浮点值的实际表示形式是由实现定义的。注意：如果是IEEE754-1985兼容的实现，则将所有位设置为零会导致值0.0。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "memsetClassReference",
+        "display_name": "memsetClassReference",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "在包含引用的类上使用“ memfunc”。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "在包含引用的类上使用“ memfunc”。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "memsetFloat",
+        "display_name": "memsetFloat",
+        "severity": "info",
+        "category": "usability",
+        "rule_title": "第二个memset（）参数'varname'是一个float，其表示形式是实现定义的。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "第二个memset（）参数'varname'是一个float，其表示形式是实现定义的。 memset（）用于将内存块的每个字节设置为特定值，并且浮点值的实际表示形式由实现定义。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "memsetValueOutOfRange",
+        "display_name": "memsetValueOutOfRange",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "第二个memset（）参数'varname'不适合'unsigned char'。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "第二个memset（）参数'varname'不适合'unsigned char'。第二个参数以“ int”形式传递，但是函数使用此值的“ unsigned char”转换来填充内存块。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "memsetZeroBytes",
+        "display_name": "memsetZeroBytes",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "调用memset（）填充0个字节。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "调用memset（）填充0个字节。第二个和第三个参数可能相反。函数memset（void * ptr，int value，size_t num）将ptr指向的内存块的前num个字节设置为指定值。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "mismatchAllocDealloc",
+        "display_name": "mismatchAllocDealloc",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "分配和取消分配不匹配：varname",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "分配和取消分配不匹配：varname",
+        "disable": false
+      },
+      {
+        "real_name": "mismatchingBitAnd",
+        "display_name": "mismatchingBitAnd",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "位掩码不匹配。结果始终为0（X = Y＆0xf0; Z = X＆0x1; => Z = 0）。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "Mismatching bitmasks. Result is always 0 (X = Y & 0xf0; Z = X & 0x1; => Z=0).",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "mismatchingContainers",
+        "display_name": "mismatchingContainers",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "不同容器的迭代器一起使用。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "不同容器的迭代器一起使用。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "mismatchSize",
+        "display_name": "mismatchSize",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "The allocated size sz is not a multiple of the underlying type's size.",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "分配的大小sz不是基础类型的大小的倍数。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "missingInclude",
+        "display_name": "missingInclude",
+        "severity": "info",
+        "category": "convention",
+        "rule_title": "包含文件：“”未找到。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "包含文件：“”未找到。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "missingIncludeSystem",
+        "display_name": "missingIncludeSystem",
+        "severity": "info",
+        "category": "convention",
+        "rule_title": "包含文件：<>找不到。请注意：Cppcheck不需要标准库头即可获得正确的结果。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "包含文件：<>找不到。请注意：Cppcheck不需要标准库头即可获得正确的结果。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "moduloAlwaysTrueFalse",
+        "display_name": "moduloAlwaysTrueFalse",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "模结果的比较是预先确定的，因为它总是小于1。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "模结果的比较是预先确定的，因为它总是小于1。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "multiCondition",
+        "display_name": "multiCondition",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "表达式始终为false，因为“ else if”条件与第1行的先前条件匹配。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "表达式始终为false，因为“ else if”条件与第1行的先前条件匹配。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "multiplySizeof",
+        "display_name": "multiplySizeof",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "将sizeof（）乘以sizeof（）表示逻辑错误。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "将sizeof（）乘以sizeof（）表示逻辑错误。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "nanInArithmeticExpression",
+        "display_name": "nanInArithmeticExpression",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "在计算中使用NaN / Inf。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "在计算中使用NaN / Inf。尽管确实没有发生任何不好的情况，但这是可疑的。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "negativeArraySize",
+        "display_name": "negativeArraySize",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "声明数组“”为负数是未定义的行为",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "声明数组“”为负数是未定义的行为",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "negativeIndex",
+        "display_name": "negativeIndex",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "数组索引-1超出范围。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "数组索引-1超出范围。",
+        "disable": false
+      },
+      {
+        "real_name": "negativeMemoryAllocationSize",
+        "display_name": "negativeMemoryAllocationSize",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "内存分配大小为负数。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "内存分配大小为负。负分配大小没有指定的行为。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "noConstructor",
+        "display_name": "noConstructor",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "The class 'classname' does not have a constructor.",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "The class 'classname' does not have a constructor although it has private member variables. Member variables of builtin types are left uninitialized when the class is instantiated. That may cause bugs or undefined behavior.",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "noCopyConstructor",
+        "display_name": "noCopyConstructor",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "'class class' does not have a copy constructor which is recommended since the class contains a pointer to allocated memory.",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "'class class'没有建议使用的复制构造函数，因为该类包含指向已分配内存的指针。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "noExplicitConstructor",
+        "display_name": "noExplicitConstructor",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "类'classname'具有一个带有1个参数的构造函数，该参数不是显式的。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "Class 'classname' has a constructor with 1 argument that is not explicit. Such constructors should in general be explicit for type safety reasons. Using the explicit keyword in the constructor means some mistakes when using the class can be avoided.",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "nullPointer",
+        "display_name": "nullPointer",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "空指针取消引用",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Null pointer dereference。空指针解引用。",
+        "disable": false
+      },
+      {
+        "real_name": "nullPointerDefaultArg",
+        "display_name": "nullPointerDefaultArg",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "Possible null pointer dereference if the default parameter value is used: pointer",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "如果使用默认参数值，则可能会取消引用空指针：",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "nullPointerRedundantCheck",
+        "display_name": "nullPointerRedundantCheck",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "Either the condition is redundant or there is possible null pointer dereference: pointer.",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "条件是多余的，或者可能存在空指针取消引用：指针。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "operatorEq",
+        "display_name": "operatorEq",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "'class::operator=' should return 'class &'.",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "class :: operator =不符合标准的C / C ++行为。为了符合标准的C / C ++行为，请返回对self的引用（例如：'class＆class :: operator =（..）{.. return * this;}'。出于安全原因，最好不修复此问题如果您认为安全永远比合规性重要，那么请忽略/禁止显示此信息。有关此主题的更多详细信息，请参阅Scott Meyers撰写的“ Effective C ++”一书。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "operatorEqMissingReturnStatement",
+        "display_name": "operatorEqMissingReturnStatement",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "非void函数中的“ return”语句不会导致未定义的行为。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "No 'return' statement in non-void function causes undefined behavior.",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "operatorEqRetRefThis",
+        "display_name": "operatorEqRetRefThis",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "'operator=' should return reference to 'this' instance.",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "'operator=' should return reference to 'this' instance.",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "operatorEqShouldBeLeftUnimplemented",
+        "display_name": "operatorEqShouldBeLeftUnimplemented",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "'operator=' should either return reference to 'this' instance or be declared private and left unimplemented.",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "'operator ='应该返回对'this'实例的引用，或者被声明为private且未实现。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "operatorEqToSelf",
+        "display_name": "operatorEqToSelf",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "'operator ='应该检查是否分配给self以避免动态内存出现问题。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "'operator=' should check for assignment to self to ensure that each block of dynamically allocated memory is owned and managed by only one instance of the class.",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "operatorEqVarError",
+        "display_name": "operatorEqVarError",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "Member variable 'classname::' is not assigned a value in 'classname::operator='.",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "Member variable 'classname::' is not assigned a value in 'classname::operator='.",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "oppositeInnerCondition",
+        "display_name": "oppositeInnerCondition",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "嵌套“ if”块中的相反条件导致死代码块。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "Opposite conditions in nested 'if' blocks lead to a dead code block.",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "outOfBounds",
+        "display_name": "outOfBounds",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "越界检查",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "index is out of bounds: Supplied size 2 is larger than actual size 1.\n\n索引超出范围：提供的大小2大于实际大小1。",
+        "disable": false
+      },
+      {
+        "real_name": "passedByValue",
+        "display_name": "passedByValue",
+        "severity": "warning",
+        "category": "performance",
+        "rule_title": "功能参数“ parametername”应通过引用传递。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "Parameter 'parametername' is passed by value. It could be passed as a (const) reference which is usually faster and recommended in C++.",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "pointerArithBool",
+        "display_name": "pointerArithBool",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "Converting pointer arithmetic result to bool. The bool is always true unless there is undefined behaviour.",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "将指针算术结果转换为bool。布尔结果始终为true，除非存在指针算术溢出，并且溢出是未定义的行为。可能会忘记取消引用。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "pointerLessThanZero",
+        "display_name": "pointerLessThanZero",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "A pointer can not be negative so it is either pointless or an error to check if it is.",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "A pointer can not be negative so it is either pointless or an error to check if it is.",
+        "disable": false
+      },
+      {
+        "real_name": "pointerOutOfBounds",
+        "display_name": "pointerOutOfBounds",
+        "severity": "info",
+        "category": "usability",
+        "rule_title": "指针越界",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Undefined behaviour, pointer arithmetic '' is out of bounds. From chapter 6.5.6 in the C specification:\\012\"When an expression that has integer type is added to or subtracted from a pointer, ..\" and then \"If both the pointer operand and the result point to elements of the same array object, or one past the last element of the array object, the evaluation shall not produce an overflow; otherwise, the behavior is undefined.\"\n\n当使用指针进行算数运算操作时，如果指针指向首位或末尾则操作有可能导致指针溢出。",
+        "disable": false
+      },
+      {
+        "real_name": "pointerPositive",
+        "display_name": "pointerPositive",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "A pointer can not be negative so it is either pointless or an error to check if it is not.",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "A pointer can not be negative so it is either pointless or an error to check if it is not.",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "pointerSize",
+        "display_name": "pointerSize",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "Size of pointer 'varname' used instead of size of its data.",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "Size of pointer 'varname' used instead of size of its data. This is likely to lead to a buffer overflow. You probably intend to write 'sizeof(*varname)'.",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "possibleBufferAccessOutOfBounds",
+        "display_name": "possibleBufferAccessOutOfBounds",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "Possible buffer overflow if strlen(source) is larger than or equal to sizeof(destination).",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Possible buffer overflow if strlen(source) is larger than or equal to sizeof(destination). The source buffer is larger than the destination buffer so there is the potential for overflowing the destination buffer.",
+        "disable": false
+      },
+      {
+        "real_name": "postfixOperator",
+        "display_name": "postfixOperator",
+        "severity": "warning",
+        "category": "performance",
+        "rule_title": "Prefer prefix ++/-- operators for non-primitive types.",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "Prefix ++/-- operators should be preferred for non-primitive types. Pre-increment/decrement can be more efficient than post-increment/decrement. Post-increment/decrement usually involves keeping a copy of the previous value around and adds a little extra code.",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "preprocessorErrorDirective",
+        "display_name": "preprocessorErrorDirective",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "#error message",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "#error message",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "publicAllocationError",
+        "display_name": "publicAllocationError",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "Possible leak in public function. The pointer 'varname' is not deallocated before it is allocated.",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "Possible leak in public function. The pointer 'varname' is not deallocated before it is allocated.",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "raceAfterInterlockedDecrement",
+        "display_name": "raceAfterInterlockedDecrement",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "Race condition: non-interlocked access after InterlockedDecrement(). Use InterlockedDecrement() return value instead.",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "Race condition: non-interlocked access after InterlockedDecrement(). Use InterlockedDecrement() return value instead.",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "reademptycontainer",
+        "display_name": "reademptycontainer",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "Reading from empty STL container 'var'",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "Reading from empty STL container 'var'",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "readWriteOnlyFile",
+        "display_name": "readWriteOnlyFile",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "Read operation on a file that was opened only for writing.",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "Read operation on a file that was opened only for writing.",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "redundantAssignInSwitch",
+        "display_name": "redundantAssignInSwitch",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "Variable 'var' is reassigned a value before the old one has been used. 'break;' missing?",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "Variable 'var' is reassigned a value before the old one has been used. 'break;' missing?",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "redundantAssignment",
+        "display_name": "redundantAssignment",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "Variable 'var' is reassigned a value before the old one has been used.",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "Variable 'var' is reassigned a value before the old one has been used.",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "redundantCondition",
+        "display_name": "redundantCondition",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "条件永远为真",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Redundant condition: If x > 11 the condition x > 10 is always true.\n\n在 x > 11 的前提下 x > 10 永远为真",
+        "disable": false
+      },
+      {
+        "real_name": "redundantCopy",
+        "display_name": "redundantCopy",
+        "severity": "warning",
+        "category": "performance",
+        "rule_title": "Buffer 'var' is being written before its old content has been used.",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Buffer 'var' is being written before its old content has been used.",
+        "disable": false
+      },
+      {
+        "real_name": "redundantCopyInSwitch",
+        "display_name": "redundantCopyInSwitch",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "Buffer 'var' is being written before its old content has been used. 'break;' missing?",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "Buffer 'var' is being written before its old content has been used. 'break;' missing?",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "redundantCopyLocalConst",
+        "display_name": "redundantCopyLocalConst",
+        "severity": "warning",
+        "category": "performance",
+        "rule_title": "Use const reference for 'varname' to avoid unnecessary data copying.",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "The const variable 'varname' is assigned a copy of the data. You can avoid the unnecessary data copying by converting 'varname' to const reference.",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "redundantIfRemove",
+        "display_name": "redundantIfRemove",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "Redundant checking of STL container element existence before removing it.",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "Redundant checking of STL container element existence before removing it. It is safe to call the remove method on a non-existing element.",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "redundantPointerOp",
+        "display_name": "redundantPointerOp",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "Redundant pointer operation on varname - it's already a pointer.",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "Redundant pointer operation on varname - it's already a pointer.",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "resourceLeak",
+        "display_name": "resourceLeak",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "Resource leak: varname",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Resource leak: varname",
+        "disable": false
+      },
+      {
+        "real_name": "returnAddressOfAutoVariable",
+        "display_name": "returnAddressOfAutoVariable",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "Address of an auto-variable returned.",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "Address of an auto-variable returned.",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "returnAddressOfFunctionParameter",
+        "display_name": "returnAddressOfFunctionParameter",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "Address of function parameter 'parameter' returned.",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "Address of the function parameter 'parameter' becomes invalid after the function exits because function parameters are stored on the stack which is freed when the function exits. Thus the returned value is invalid.",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "returnLocalVariable",
+        "display_name": "returnLocalVariable",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "Pointer to local array variable returned.",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Pointer to local array variable returned.",
+        "disable": false
+      },
+      {
+        "real_name": "returnReference",
+        "display_name": "returnReference",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "Reference to auto variable returned.",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "Reference to auto variable returned.",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "returnTempReference",
+        "display_name": "returnTempReference",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "Reference to temporary returned.",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "Reference to temporary returned.",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "seekOnAppendedFile",
+        "display_name": "seekOnAppendedFile",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "Repositioning operation performed on a file opened in append mode has no effect.",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "Repositioning operation performed on a file opened in append mode has no effect.",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "selfAssignment",
+        "display_name": "selfAssignment",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "Redundant assignment of 'varname' to itself.",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Redundant assignment of 'varname' to itself.",
+        "disable": false
+      },
+      {
+        "real_name": "selfInitialization",
+        "display_name": "selfInitialization",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "Member variable 'var' is initialized by itself.",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "Member variable 'var' is initialized by itself.",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "shiftNegative",
+        "display_name": "shiftNegative",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "Shifting a negative value is undefined behaviour",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "Shifting a negative value is undefined behaviour",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "shiftNegativeLHS",
+        "display_name": "shiftNegativeLHS",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "Shifting a negative value is technically undefined behaviour",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "Shifting a negative value is technically undefined behaviour",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "shiftTooManyBits",
+        "display_name": "shiftTooManyBits",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "Shifting 32-bit value by 64 bits is undefined behaviour",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "Shifting 32-bit value by 64 bits is undefined behaviour",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "signConversion",
+        "display_name": "signConversion",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "Suspicious code: sign conversion of var in calculation, even though var can have a negative value",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "Suspicious code: sign conversion of var in calculation, even though var can have a negative value",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "signedCharArrayIndex",
+        "display_name": "signedCharArrayIndex",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "Signed 'char' type used as array index.",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "Signed 'char' type used as array index. If the value can be greater than 127 there will be a buffer underflow because of sign extension.",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "sizeArgumentAsChar",
+        "display_name": "sizeArgumentAsChar",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "The size argument is given as a char constant.",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "The size argument is given as a char constant.",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "sizeofCalculation",
+        "display_name": "sizeofCalculation",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "Found calculation inside sizeof().",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "Found calculation inside sizeof().",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "sizeofDereferencedVoidPointer",
+        "display_name": "sizeofDereferencedVoidPointer",
+        "severity": "info",
+        "category": "usability",
+        "rule_title": "'*varname' is of type 'void', the behaviour of 'sizeof(void)' is not covered by the ISO C standard.",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "'*varname' is of type 'void', the behaviour of 'sizeof(void)' is not covered by the ISO C standard. A value for 'sizeof(void)' is defined only as part of a GNU C extension, which defines 'sizeof(void)' to be 1.",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "sizeofDivisionMemfunc",
+        "display_name": "sizeofDivisionMemfunc",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "Division by result of sizeof(). memset() expects a size in bytes, did you intend to multiply instead?",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "Division by result of sizeof(). memset() expects a size in bytes, did you intend to multiply instead?",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "sizeofsizeof",
+        "display_name": "sizeofsizeof",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "Calling 'sizeof' on 'sizeof'.",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "Calling sizeof for 'sizeof looks like a suspicious code and most likely there should be just one 'sizeof'. The current code is equivalent to 'sizeof(size_t)'",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "sizeofVoid",
+        "display_name": "sizeofVoid",
+        "severity": "info",
+        "category": "usability",
+        "rule_title": "Behaviour of 'sizeof(void)' is not covered by the ISO C standard.",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "Behaviour of 'sizeof(void)' is not covered by the ISO C standard. A value for 'sizeof(void)' is defined only as part of a GNU C extension, which defines 'sizeof(void)' to be 1.",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "sizeofwithnumericparameter",
+        "display_name": "sizeofwithnumericparameter",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "Suspicious usage of 'sizeof' with a numeric constant as parameter.",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "It is unusual to use a constant value with sizeof. For example, 'sizeof(10)' returns 4 (in 32-bit systems) or 8 (in 64-bit systems) instead of 10. 'sizeof('A')' and 'sizeof(char)' can return different results.",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "sizeofwithsilentarraypointer",
+        "display_name": "sizeofwithsilentarraypointer",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "Using 'sizeof' on array given as function argument returns size of a pointer.",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "Using 'sizeof' for array given as function argument returns the size of a pointer. It does not return the size of the whole array in bytes as might be expected. For example, this code:\\012     int f(char a[100]) {\\012         return sizeof(a);\\012     }\\012returns 4 (in 32-bit systems) or 8 (in 64-bit systems) instead of 100 (the size of the array in bytes).",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "sprintfOverlappingData",
+        "display_name": "sprintfOverlappingData",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "Undefined behavior: Variable 'varname' is used as parameter and destination in s[n]printf().",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "变量“ varname”在s [n] printf（）中既用作参数又用作目标。源缓冲区和目标缓冲区重叠。引用glibc（C-library）“如果在重叠的对象之间进行复制，调用sprintf（）或snprintf（）的结果，结果是不确定的。”",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "staticStringCompare",
+        "display_name": "staticStringCompare",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "Unnecessary comparison of static strings.",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "比较的字符串“ str1”和“ str2”始终不相等。因此，比较是不必要的，并且看起来很可疑。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "stlBoundaries",
+        "display_name": "stlBoundaries",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "Dangerous comparison using operator< on iterator.",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "Iterator compared with operator<. This is dangerous since the order of items in the container is not guaranteed. One should use operator!= instead to compare iterators.",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "stlcstr",
+        "display_name": "stlcstr",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "危险使用c_str（）。在此调用之后，c_str（）返回的值无效。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "Dangerous usage of c_str(). The c_str() return value is only valid until its string is deleted.",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "stlcstrParam",
+        "display_name": "stlcstrParam",
+        "severity": "warning",
+        "category": "performance",
+        "rule_title": "Passing the result of c_str() to a function that takes std::string as argument no. 0 is slow and redundant.",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "The conversion from const char* as returned by c_str() to std::string creates an unnecessary string copy. Solve that by directly passing the string.",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "stlcstrReturn",
+        "display_name": "stlcstrReturn",
+        "severity": "warning",
+        "category": "performance",
+        "rule_title": "在返回std :: string的函数中返回c_str（）的结果是缓慢且多余的。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "The conversion from const char* as returned by c_str() to std::string creates an unnecessary string copy. Solve that by directly returning the string.",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "stlIfFind",
+        "display_name": "stlIfFind",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "Suspicious condition. The result of find() is an iterator, but it is not properly checked.",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "Suspicious condition. The result of find() is an iterator, but it is not properly checked.",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "stlIfStrFind",
+        "display_name": "stlIfStrFind",
+        "severity": "warning",
+        "category": "performance",
+        "rule_title": "Inefficient usage of string::find() in condition; string::compare() would be faster.",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "Either inefficient or wrong usage of string::find(). string::compare() will be faster if string::find's result is compared with 0, because it will not scan the whole string. If your intention is to check that there are no findings in the string, you should compare with std::string::npos.",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "StlMissingComparison",
+        "display_name": "StlMissingComparison",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "缺少边界会检查循环中是否有额外的迭代器增量。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "The iterator incrementing is suspicious - it is incremented at line  and then at line . The loop might unintentionally skip an element in the container. There is no comparison between these increments to prevent that the iterator is incremented beyond the end.",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "stlOutOfBounds",
+        "display_name": "stlOutOfBounds",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "当i == foo.size（）时，foo [i]超出范围。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "当i == foo.size（）时，foo [i]超出范围。",
+        "disable": false
+      },
+      {
+        "real_name": "stlSize",
+        "display_name": "stlSize",
+        "severity": "warning",
+        "category": "performance",
+        "rule_title": "检查“列表”是否为空的效率低下。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "检查“列表”的空度可能效率不高。使用list.empty（）而不是list.size（）可以更快。 list.size（）可以采用线性时间，但是list.empty（）可以保证采用恒定时间。",
+        "disable": false
+      },
+      {
+        "real_name": "stringCompare",
+        "display_name": "stringCompare",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "比较相同的字符串变量。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "比较的字符串“ varname1”和“ varname2”是相同的。这可能是一个逻辑错误。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "stringLiteralWrite",
+        "display_name": "stringLiteralWrite",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "直接或间接修改字符串文字是未定义的行为。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "直接或间接修改字符串文字是未定义的行为。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "strncatUsage",
+        "display_name": "strncatUsage",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "危险使用strncat-第3个参数是要附加的最大字符数。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "最多，strncat会附加第3个参数的字符数并添加一个终止的空字节。\\ 012使用strncat的安全方法是从缓冲区的剩余空间中减去一个，并将其用作第3个参数。 .cplusplus.com / reference / cstring / strncat / \\ ",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "strPlusChar",
+        "display_name": "strPlusChar",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "异常的指针算法。将'char'类型的值添加到字符串文字中。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "异常的指针算法。将'char'类型的值添加到字符串文字中。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "suspiciousCase",
+        "display_name": "suspiciousCase",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "在switch（）中发现可疑的案例标签。运算符'||'可能无法按预期工作。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "使用“ ||”之类的运算符如果标签是可疑的。您是否打算使用按位运算符，多个大小写标签或if / else代替？",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "suspiciousEqualityComparison",
+        "display_name": "suspiciousEqualityComparison",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "发现可疑'=='操作，是否想要使用赋值语句",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Found suspicious equality comparison. Did you intend to assign a value instead?\n\n发现可疑'=='操作，是否想要使用赋值语句",
+        "disable": false
+      },
+      {
+        "real_name": "suspiciousSemicolon",
+        "display_name": "suspiciousSemicolon",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "可疑使用;在“”语句的末尾。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "可疑使用;在“”语句的末尾。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "syntaxError",
+        "display_name": "syntaxError",
+        "severity": "info",
+        "category": "other",
+        "rule_title": null,
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": null,
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "terminateStrncpy",
+        "display_name": "terminateStrncpy",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "调用strncpy（）后，缓冲区“ buffer”不得为空终止。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "如果源字符串的大小适合或超过给定的大小，则strncpy（）不会在缓冲区末尾添加零。如果代码假定buffer为null终止，则这会在代码后面引起bug。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "thisSubtraction",
+        "display_name": "thisSubtraction",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "可疑的指针减法。您打算写“->”吗？",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Suspicious pointer subtraction. Did you intend to write '->'?\n\n可疑的指针减法。您打算写“->”吗？",
+        "disable": false
+      },
+      {
+        "real_name": "throwInNoexceptFunction",
+        "display_name": "throwInNoexceptFunction",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "在函数中引发的异常声明为不引发异常。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "在函数中引发的异常声明为不引发异常。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "toomanyconfigs",
+        "display_name": "toomanyconfigs",
+        "severity": "info",
+        "category": "convention",
+        "rule_title": "#ifdef配置太多-cppcheck仅检查12个配置。使用--force检查所有配置。有关更多详细信息，请使用--enable = information。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "由于#ifdef配置太多，该文件的检查将被中断。可以通过--force命令行选项或从GUI首选项强制检查所有#ifdef配置。但是，这可能会增加检查时间。有关更多详细信息，请使用--enable = information。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "truncLongCastAssignment",
+        "display_name": "truncLongCastAssignment",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "将int结果分配给long变量。如果该变量很长以避免信息丢失，那么您就有信息丢失了。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "将int结果分配给long变量。如果该变量很长以避免信息丢失，那么信息就会丢失。为避免信息丢失，必须将计算操作数强制转换为long，例如'l = a * b;'。 =>'l =（long）a * b;'。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "truncLongCastReturn",
+        "display_name": "truncLongCastReturn",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "返回int结果为long值。如果返回值很长，以避免信息丢失，那么您就会丢失信息。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "返回int结果为long值。如果返回值很长，以避免信息丢失，那么信息就会丢失。为避免信息丢失，必须将计算操作数强制转换为long，例如“ return a * b;”。 =>'返回（long）a * b'。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "unassignedVariable",
+        "display_name": "unassignedVariable",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "变量未分配值。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Variable 'varname' is not assigned a value.\n\n变量“ varname”未分配值。",
+        "disable": false
+      },
+      {
+        "real_name": "unhandledExceptionSpecification",
+        "display_name": "unhandledExceptionSpecification",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "调用函数foo（）时出现未处理的异常说明。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "调用函数foo（）时出现未处理的异常说明。在函数调用周围使用try / catch，或者也为funcname（）添加异常规范。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "uninitdata",
+        "display_name": "uninitdata",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "内存已分配但未初始化：varname",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "内存已分配但未初始化：varname",
+        "disable": false
+      },
+      {
+        "real_name": "uninitMemberVar",
+        "display_name": "uninitMemberVar",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "成员变量未在构造函数中初始化。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Member variable 'classname::varname' is not initialized in the constructor.\n\n成员变量'classname :: varname'未在构造函数中初始化。",
+        "disable": false
+      },
+      {
+        "real_name": "uninitstring",
+        "display_name": "uninitstring",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "字符串变量未初始化",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Dangerous usage of 'varname' (strncpy doesn't always null-terminate it).\n\n例如：\n在strncpy函数中, 不会因为参数没有被初始化而终止。那么传入没有初始化的字符串则会非常危险。",
+        "disable": false
+      },
+      {
+        "real_name": "uninitStructMember",
+        "display_name": "uninitStructMember",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "未初始化的结构成员",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Uninitialized struct member: a.b\n\n未初始化的结构成员：a.b",
+        "disable": false
+      },
+      {
+        "real_name": "uninitvar",
+        "display_name": "uninitvar",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "未初始化的变量：varname",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "未初始化的变量：varname",
+        "disable": false
+      },
+      {
+        "real_name": "unknownEvaluationOrder",
+        "display_name": "unknownEvaluationOrder",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "表达式'x = x ++;'取决于副作用的评估顺序",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "表达式'x = x ++;'取决于副作用的评估顺序",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "unknownSignCharArrayIndex",
+        "display_name": "unknownSignCharArrayIndex",
+        "severity": "info",
+        "category": "usability",
+        "rule_title": "'char'类型用作数组索引。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "'char'类型用作数组索引。大于127的值将被处理，具体取决于目标平台上'char'是签名的还是未签名的。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "unpreciseMathCall",
+        "display_name": "unpreciseMathCall",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "表达式“ 1-erf（x）”可以替换为“ erfc（x）”，以避免精度下降。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "表达式“ 1-erf（x）”可以替换为“ erfc（x）”，以避免精度下降。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "unreachableCode",
+        "display_name": "unreachableCode",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "死代码",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Statements following return, break, continue, goto or throw will never be executed.\n\nreturn，break，continue，goto或throw之后的语句将永远不会执行。",
+        "disable": false
+      },
+      {
+        "real_name": "unreadVariable",
+        "display_name": "unreadVariable",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "变量定义后未使用",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "Variable 'varname' is assigned a value that is never used.\n\n变量“varname”被分配后未使用",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "unsafeClassCanLeak",
+        "display_name": "unsafeClassCanLeak",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "类'class'是不安全的，'class :: varname'可能因错误使用而泄漏。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "类'class'是不安全的，错误使用会导致'class :: varname'的内存/资源泄漏。例如，可以通过在析构函数中添加适当的清理来解决此问题。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "unsignedLessThanZero",
+        "display_name": "unsignedLessThanZero",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "检查无符号变量“ varname”是否小于零。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "无符号变量'varname'永远不会为负，因此它要么毫无意义，要么检查它是否错误。",
+        "disable": false
+      },
+      {
+        "real_name": "unsignedPositive",
+        "display_name": "unsignedPositive",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "无符号变量“ varname”不能为负，因此无需对其进行测试。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "无符号变量“ varname”不能为负，因此无需对其进行测试。",
+        "disable": false
+      },
+      {
+        "real_name": "unusedAllocatedMemory",
+        "display_name": "unusedAllocatedMemory",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "变量“ varname”分配了从未使用过的内存。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "Variable 'varname' is allocated memory that is never used.\n\n变量“ varname”分配了从未使用过的内存。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "unusedFunction",
+        "display_name": "unusedFunction",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "定义未使用的函数",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "The function 'funcName' is never used.\n\n永远不会使用该函数。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "unusedLabel",
+        "display_name": "unusedLabel",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "标签“”未使用。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "Label '' is not used.\n\n标签“”未使用。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "unusedLabelSwitch",
+        "display_name": "unusedLabelSwitch",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "标签“”未使用。这应该是封闭的switch（）的“案例”吗？",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "Label '' is not used. Should this be a 'case' of the enclosing switch()?\n\n标签“”未使用。这应该是封闭的switch（）的“案例”吗？",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "unusedPrivateFunction",
+        "display_name": "unusedPrivateFunction",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "未使用的私有函数：“ classname :: funcname”",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "Unused private function: 'classname::funcname'\n\n未使用的私有函数：“ classname :: funcname”",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "unusedScopedObject",
+        "display_name": "unusedScopedObject",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "'varname'对象的实例立即被销毁。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Instance of 'varname' object is destroyed immediately.\n\n'varname'对象的实例立即被销毁。",
+        "disable": false
+      },
+      {
+        "real_name": "unusedStructMember",
+        "display_name": "unusedStructMember",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "struct成员'structname :: variable'从未使用。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "struct成员'structname :: variable'从未使用。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "unusedVariable",
+        "display_name": "unusedVariable",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "未使用的变量：varname",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Unused variable: varname\n\n未使用的变量：varname",
+        "disable": false
+      },
+      {
+        "real_name": "useAutoPointerArray",
+        "display_name": "useAutoPointerArray",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "使用操作符“删除”销毁“ auto_ptr”指向的对象。您不应该将'auto_ptr'用于通过运算符'new []'获得的指针。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "使用操作符“删除”销毁“ auto_ptr”指向的对象。这意味着您仅应对通过操作符“ new”获得的指针使用“ auto_ptr”。这不包括由运算符'new []'分配并且必须由运算符'delete []'释放的数组。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "useAutoPointerContainer",
+        "display_name": "useAutoPointerContainer",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "如果将“ auto_ptr”指针存储在STL容器中，则可能会随机失去对指针的访问权限。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "容器的元素必须能够被复制，但是'auto_ptr'不满足该要求。您应该考虑使用“ shared_ptr”或“ unique_ptr”。它适合在容器中使用，因为它们不再复制其值，而是将其移动。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "useAutoPointerCopy",
+        "display_name": "useAutoPointerCopy",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "将“ auto_ptr”指针复制到另一个指针不会创建两个相等的对象，因为一个指针已经失去了对指针的所有权。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "'std :: auto_ptr'具有严格所有权的语义，这意味着'auto_ptr'实例是负责对象生存期的唯一实体。如果复制了“ auto_ptr”，则源将丢失引用。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "useAutoPointerMalloc",
+        "display_name": "useAutoPointerMalloc",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "使用操作符“删除”销毁“ auto_ptr”指向的对象。您不应将“ auto_ptr”用于通过函数“ malloc”获得的指针。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "使用操作符“删除”销毁“ auto_ptr”指向的对象。您不应将“ auto_ptr”用于通过函数“ malloc”获得的指针。这意味着您仅应对通过操作符“ new”获得的指针使用“ auto_ptr”。这不包括使用C库分配函数（例如'malloc'），必须由相应的C库函数将其释放。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "useClosedFile",
+        "display_name": "useClosedFile",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "未打开的已使用文件。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "未打开的已使用文件。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "useInitializationList",
+        "display_name": "useInitializationList",
+        "severity": "warning",
+        "category": "performance",
+        "rule_title": "变量“变量”在构造函数主体中分配。考虑在初始化列表中执行初始化。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "创建类的对象时，所有成员变量的构造函数都按照声明变量的顺序连续调用，即使您没有将它们显式写入初始化列表也是如此。通过将值传递给初始化列表中的构造函数，可以避免分配“变量”值。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "uselessAssignmentArg",
+        "display_name": "uselessAssignmentArg",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "没有用到函数参数",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "Assignment of function parameter has no effect outside the function.\n\n函数的参数没有任何实际作用",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "uselessAssignmentPtrArg",
+        "display_name": "uselessAssignmentPtrArg",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "函数参数对外部没有任何作用是否忘记使用引用了",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "Assignment of function parameter has no effect outside the function. Did you forget dereferencing it?\n\n函数参数对外部没有任何作用是否忘记使用引用了",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "uselessCallsCompare",
+        "display_name": "uselessCallsCompare",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "调用“ str.find(str)”效率不高，因为它始终返回0。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "'std::string::find()' returns zero when given itself as parameter (str.find(str)). As it is currently the code is inefficient. It is possible either the string searched ('str') or searched for ('str') is wrong.\n\n如果将字符串本身作为'std::string::find()'（str.find（str））本身返回零。由于目前是这样，代码效率低下。搜索的字符串（'str'）或搜索的字符串（'str'）可能错误。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "uselessCallsEmpty",
+        "display_name": "uselessCallsEmpty",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "函数“ empty()”的无效调用。您是否打算改为调用“ clear()”？",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "Ineffective call of function 'empty()'. Did you intend to call 'clear()' instead?\n\n函数“ empty()”的无效调用。您是否打算改为调用“ clear()”？",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "uselessCallsRemove",
+        "display_name": "uselessCallsRemove",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "std::remove()的返回值被忽略。元素保留在容器中。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "The return value of std::remove() is ignored. This function returns an iterator to the end of the range containing those elements that should be kept. Elements past new end remain valid but with unspecified values. Use the erase method of the container to delete them.\n\nstd :: remove（）的返回值将被忽略。此函数将迭代器返回到包含应保留的那些元素的范围的末尾。超出新末端的元素将保持有效，但具有未指定的值。使用容器的擦除方法将其删除。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "uselessCallsSubstr",
+        "display_name": "uselessCallsSubstr",
+        "severity": "warning",
+        "category": "performance",
+        "rule_title": "函数'substr'的无效调用，因为它返回对象的副本。请改用operator =。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "Ineffective call of function 'substr' because it returns a copy of the object. Use operator= instead. \n\n 函数'substr'的无效调用，因为它返回对象的副本。请改用operator =。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "uselessCallsSwap",
+        "display_name": "uselessCallsSwap",
+        "severity": "warning",
+        "category": "performance",
+        "rule_title": "通过调用“ str.swap（str）”与自身交换对象效率低下",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "The 'swap()' function has no logical effect when given itself as parameter (str.swap(str)). As it is currently the code is inefficient. Is the object or the parameter wrong here?\n\n当将自身作为参数（str.swap（str））时，'swap（）'函数没有逻辑作用。由于目前是这样，代码效率低下。这里的对象或参数是否错误？",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "varFuncNullUB",
+        "display_name": "varFuncNullUB",
+        "severity": "info",
+        "category": "usability",
+        "rule_title": "在最后一个键入参数之后向可变参数函数传递NULL会导致未定义的行为。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "Passing NULL after the last typed argument to a variadic function leads to undefined behaviour.\\012The C99 standard, in section 7.15.1.1, states that if the type used by va_arg() is not compatible with the type of the actual next argument (as promoted according to the default argument promotions), the behavior is undefined.\\012The value of the NULL macro is an implementation-defined null pointer constant (7.17), which can be any integer constant expression with the value 0, or such an expression casted to (void*) (6.3.2.3). This includes values like 0, 0L, or even 0LL.\\012In practice on common architectures, this will cause real crashes if sizeof(int) != sizeof(void*), and NULL is defined to 0 or any other null pointer constant that promotes to int.\\012To reproduce you might be able to use this little code example on 64bit platforms. If the output includes \"ERROR\", the sentinel had only 4 out of 8 bytes initialized to zero and was not detected as the final argument to stop argument processing via va_arg(). Changing the 0 to (void*)0 or 0L will make the \"ERROR\" output go away.\\012#include <stdarg.h>\\012#include <stdio.h>\\012\\012void f(char *s, ...) {\\012    va_list ap;\\012    va_start(ap,s);\\012    for (;;) {\\012        char *p = va_arg(ap,char*);\\012        printf(\"%018p, %s\\n\", p, (long)p & 255 ? p : \"\");\\012        if(!p) break;\\012    }\\012    va_end(ap);\\012}\\012\\012void g() {\\012    char *s2 = \"x\";\\012    char *s3 = \"ERROR\";\\012\\012    // changing 0 to 0L for the 7th argument (which is intended to act as sentinel) makes the error go away on x86_64\\012    f(\"first\", s2, s2, s2, s2, s2, 0, s3, (char*)0);\\012}\\012\\012void h() {\\012    int i;\\012    volatile unsigned char a[1000];\\012    for (i = 0; i<sizeof(a); i++)\\012        a[i] = -1;\\012}\\012\\012int main() {\\012    h();\\012    g();\\012    return 0;\\012}\n\n在变量函数的最后一个键入的参数之后传递NULL导致未定义的行为。\\012 C99标准在7.15.1.1节中声明，如果va_arg（）使用的类型与实际的下一个参数的类型不兼容（如\\012 NULL宏的值是实现定义的空指针常量（7.17），可以是任何值为0的整数常量表达式，也可以是此类强制转换的表达式至（void *）（6.3.2.3）。这包括0、0L甚至0LL之类的值。\\012在常见体系结构上，如果sizeof（int）！= sizeof（void *），并且NULL定义为0或任何其他空指针常量，这将导致实际崩溃提升为int。\\012要重现，您可以在64位平台上使用此小代码示例。如果输出包括“ ERROR”，则哨兵只有8个字节中的4个被初始化为零，并且未被检测为通过va_arg（）停止参数处理的最终参数。将0更改为（void *）0或0L将使“ ERROR”输出消失。\\012＃include <stdarg.h> \\012＃include <stdio.h> \\012 \\012void f（char * s，。 ..）{\\012 va_list ap; \\012 va_start（ap，s）; \\012 for（;;）{\\012 char * p = va_arg（ap，char *）; \\012 printf（“％018p，％s \\ n“，p，（long）p＆255？p：”“）; \\012 if（！p）break; \\ 012} \\012 va_end（ap）; \\012} \\012 \\012void g（）{\\012 char * s2 =“ x”; \\012 char * s3 =“ ERROR”; \\012 \\012 //将第7个参数（旨在用作哨兵）的0更改为0L使错误在x86_64上消失\\012 f（“ first”，s2，s2，s2，s2，s2，0，s3，（char *）0）; \\012} \\012 \\012void h（）{\\012 int i; \\012 volatile unsigned char a [1000]; \\012（i = 0; i <sizeof（a）; i ++）\\012 a [i] = -1; \\012} \\012 \\012int main（）{\\012 h（）; \\012 g（）; \\012返回0; \\012}",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "variableScope",
+        "display_name": "variableScope",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "变量“ varname”的范围可以缩小。",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "The scope of the variable 'varname' can be reduced. \r\nWarning: Be careful when fixing this message, especially when there are inner loops. \r\nHere is an example where cppcheck will write that the scope for 'i' can be reduced:\r\n\r\nvoid f(int x)\r\n{\r\n   int i = 0;\r\n    if (x) {\r\n        // it's safe to move 'int i = 0;' here\r\n        for (int n = 0; n < 10; ++n) {\r\n            // it is possible but not safe to move 'int i = 0;' here\r\n          do_something(&i);\r\n        }\r\n    }\r\n}\r\n\r\nWhen you see this message it is always safe to reduce the variable scope 1 level.\n\n变量“ varname”的范围可以缩小。\r\n警告：更正此消息时要特别小心，尤其是在存在内部循环时。\r\n这是一个示例，其中cppcheck将写出可以减小'i'的范围：\r\n\r\n无效f（int x）\r\n{\r\n   int i = 0;\r\n    如果（x）{\r\n        //移动'int i = 0;'是安全的这里\r\n        对于（int n = 0; n <10; ++ n）{\r\n            //可以但不安全地移动'int i = 0;'这里\r\n          do_something（＆i）;\r\n        }\r\n    }\r\n}\r\n\r\n当您看到此消息时，减小变量作用域1级别始终是安全的。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "va_end_missing",
+        "display_name": "va_end_missing",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "va_list'vl'已打开，但未被va_end（）关闭。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "va_list 'vl' was opened but not closed by va_end().\n\nva_list'vl'已打开，但未被va_end（）关闭。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "va_list_usedBeforeStarted",
+        "display_name": "va_list_usedBeforeStarted",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "va_list'vl'在调用va_start（）之前使用。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "va_list 'vl' used before va_start() was called.\n\nva_list'vl'在调用va_start（）之前使用。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "va_start_referencePassed",
+        "display_name": "va_start_referencePassed",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "使用引用arg1作为va_start（）的参数会导致未定义的行为。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "Using reference 'arg1' as parameter for va_start() results in undefined behaviour.\n\n使用引用arg1作为va_start（）的参数会导致未定义的行为。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "va_start_subsequentCalls",
+        "display_name": "va_start_subsequentCalls",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "va_start（）或va_copy（）随后在“ vl”上调用，而中间没有va_end（）。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "va_start() or va_copy() called subsequently on 'vl' without va_end() in between.\n\nva_start（）或va_copy（）随后在“ vl”上调用，而中间没有va_end（）。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "va_start_wrongParameter",
+        "display_name": "va_start_wrongParameter",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "赋予va_start（）的'arg1'不是函数的最后命名参数。您是否打算通过“ arg2”？",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "赋予va_start（）的'arg1'不是函数的最后命名参数。您是否打算通过“ arg2”？",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "virtualDestructor",
+        "display_name": "virtualDestructor",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "由“派生”类继承的“基本”类没有虚拟析构函数。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "由“派生”类继承的“基本”类没有虚拟析构函数。如果通过删除指向基类的指针来破坏派生类的实例，则仅执行基类的析构函数。因此，派生类管理的动态内存可能会泄漏。可以通过在基类中添加虚拟析构函数来避免这种情况。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "writeReadOnlyFile",
+        "display_name": "writeReadOnlyFile",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "对仅用于读取而打开的文件进行写操作。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "对仅用于读取而打开的文件进行写操作。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "wrongmathcall",
+        "display_name": "wrongmathcall",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "将值'＃'传递给＃（）会导致实现定义的结果。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "将值'＃'传递给＃（）会导致实现定义的结果。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "wrongPipeParameterSize",
+        "display_name": "wrongPipeParameterSize",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "如果用作pipe（）的参数，则缓冲区“ varname”的大小必须为2个整数。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "pipe（）/ pipe2（）系统命令采用一个参数，该参数是正好两个整数的数组。\\ 012变量'varname'是大小尺寸的数组，该数组不匹配。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "wrongPrintfScanfArgNum",
+        "display_name": "wrongPrintfScanfArgNum",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "printf格式字符串需要3个参数，但仅给出2个。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "printf格式字符串需要3个参数，但仅给出2个。",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "wrongPrintfScanfParameterPositionError",
+        "display_name": "wrongPrintfScanfParameterPositionError",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "printf：引用参数2而给定1个参数",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "printf：引用参数2而给定1个参数",
+        "disable": false,
+        "labels": []
+      },
+      {
+        "real_name": "zerodiv",
+        "display_name": "zerodiv",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "除零",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Division by zero\n\n被零除。",
+        "disable": false
+      },
+      {
+        "real_name": "zerodivcond",
+        "display_name": "zerodivcond",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "条件要么是多余的，要么在行0处被零除。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "条件要么是多余的，要么在行0处被零除。",
+        "disable": false,
+        "labels": []
+      }
+    ],
+    "open_user": true,
+    "open_saas": true
+  }
+]

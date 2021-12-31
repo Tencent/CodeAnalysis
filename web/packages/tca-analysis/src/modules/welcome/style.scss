@@ -1,0 +1,16 @@
+
+@import '@src/common/style/color.scss';
+
+.welcome-container {
+    margin-top: 168px;
+    text-align: center;
+    .header {
+        .desc {
+            margin: 12px 0 30px;
+            color: $grey-7;
+        }
+    }
+    .footer {
+        margin-top: 53px;
+    }
+}

@@ -1,0 +1,741 @@
+[
+  {
+    "name": "infer_objectivec",
+    "display_name": "InferObjectiveC",
+    "description": "Objectivec static analyzer.（需要编译，目前只支持Xcode8及以下版本）",
+    "license": "MIT",
+    "task_processes": [
+      "analyze",
+      "datahandle",
+      "compile"
+    ],
+    "open_user": true,
+    "scan_app": "codelint",
+    "scm_url": null,
+    "run_cmd": null,
+    "envs": null,
+    "show_display_name": true,
+    "checkrule_set": [
+      {
+        "real_name": "ARRAY_OUT_OF_BOUNDS_L1",
+        "display_name": "ArrayOutOfBoundsL1",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "数组越界。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "数组越界。"
+      },
+      {
+        "real_name": "ARRAY_OUT_OF_BOUNDS_L2",
+        "display_name": "ArrayOutOfBoundsL2",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "数组越界。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "数组越界。"
+      },
+      {
+        "real_name": "ARRAY_OUT_OF_BOUNDS_L3",
+        "display_name": "ArrayOutOfBoundsL3",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "数组越界。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "数组越界。"
+      },
+      {
+        "real_name": "ASSIGN_POINTER_WARNING",
+        "display_name": "AssignPointerWarning",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "当一个只想oc对象的指针被赋予一个assign属性时候(类似于-Ware-unsafe-retained-assign编译标志)，这个规则便会被触发。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "若果不持有该对象的强引用，就会很容易意外创建并使用一个悬挂指针。\n(详细网址)[http://fbinfer.com/docs/linters-bug-types.html#ASSIGN_POINTER_WARNING]"
+      },
+      {
+        "real_name": "BAD_POINTER_COMPARISON",
+        "display_name": "BadPointerComparsion",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "当一个盒装的基本类型，比如NSNumber *，被强制用于与boolean类型比较时候，这个规则便会被触发。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "示例代码：void foo(NSNumber * n){if(n){...}}\n当指针n非nil时候，上面代码if语句中true分支便会执行。但是开发的意思可能是想要n为非0时候才会执行该段代码。infer需要开发明确的将n与nil比较，或者调用一个访问器来阐明意图。\n(详细网址)[http://fbinfer.com/docs/linters-bug-types.html#BAD_POINTER_COMPARISON]"
+      },
+      {
+        "real_name": "BUFFER_OVERRUN_L1",
+        "display_name": "BufferOverrunL1",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "缓存溢出",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "缓存溢出。"
+      },
+      {
+        "real_name": "BUFFER_OVERRUN_L2",
+        "display_name": "BufferOverrunL2",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "缓存溢出",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "缓存溢出。"
+      },
+      {
+        "real_name": "BUFFER_OVERRUN_L3",
+        "display_name": "BufferOverrunL3",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "缓存溢出",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "缓存溢出。"
+      },
+      {
+        "real_name": "BUFFER_OVERRUN_L4",
+        "display_name": "BufferOverrunL4",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "缓存溢出",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "缓存溢出。"
+      },
+      {
+        "real_name": "BUFFER_OVERRUN_L5",
+        "display_name": "BufferOverrunL5",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "缓存溢出",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "缓存溢出。"
+      },
+      {
+        "real_name": "BUFFER_OVERRUN_S2",
+        "display_name": "BufferOverrunS2",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "缓存溢出",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "缓存溢出。"
+      },
+      {
+        "real_name": "CLASS_CAST_EXCEPTION",
+        "display_name": "ClassCastException",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "类型转换异常。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "类型转换异常。"
+      },
+      {
+        "real_name": "COMPONENT_FACTORY_FUNCTION",
+        "display_name": "ComponentFactoryFunction",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "检测iOS组件ComponentKit。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "检测iOS组件ComponentKit。\n(详细网址)[http://fbinfer.com/docs/linters-bug-types.html#COMPONENT_FACTORY_FUNCTION]"
+      },
+      {
+        "real_name": "COMPONENT_INITIALIZER_WITH_SIDE_EFFECTS",
+        "display_name": "ComponentInitializerWithSideEffects",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "检测iOS组件ComponentKit。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "检测iOS组件ComponentKit。\n(详细网址)[http://fbinfer.com/docs/linters-bug-types.html#COMPONENT_INITIALIZER_WITH_SIDE_EFFECTS]"
+      },
+      {
+        "real_name": "COMPONENT_WITH_MULTIPLE_FACTORY_METHODS",
+        "display_name": "ComponentWithMultipleFactoryMethods",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "检测iOS组件ComponentKit。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "检测iOS组件ComponentKit。\n(详细网址)[http://fbinfer.com/docs/linters-bug-types.html#COMPONENT_WITH_MULTIPLE_FACTORY_METHODS]"
+      },
+      {
+        "real_name": "COMPONENT_WITH_UNCONVENTIONAL_SUPERCLASS",
+        "display_name": "ComponentWithUnconventionalSuperclass",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "检测iOS组件ComponentKit。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "检测iOS组件ComponentKit。\n(详细网址)[http://fbinfer.com/docs/linters-bug-types.html#COMPONENT_WITH_UNCONVENTIONAL_SUPERCLASS]"
+      },
+      {
+        "real_name": "CONDITION_ALWAYS_FALSE",
+        "display_name": "ConditionAlwaysFalse",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "判断条件总是为False。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "判断条件总是为False。"
+      },
+      {
+        "real_name": "CONDITION_ALWAYS_TRUE",
+        "display_name": "ConditionAlwaysTrue",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "判断条件总是为True。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "判断条件总是为True。"
+      },
+      {
+        "real_name": "CXX_REFERENCE_CAPTURED_IN_OBJC_BLOCK",
+        "display_name": "CppReferenceCaptureInObjcBlock",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "infer检测一个oc块中捕获的c++引用。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "基本这样oc块中捕获的c++引用的操作都是错误的，原因是c++引用不是托管指针（比如ARC指针），所以指针可能会在块被执行时候消失。一种解决方案是做一个本地副本的引用，并将之传递给块。\n(详细网址)[http://fbinfer.com/docs/linters-bug-types.html#CXX_REFERENCE_CAPTURED_IN_OBJC_BLOCK]"
+      },
+      {
+        "real_name": "DANGLING_POINTER_DEREFERENCE",
+        "display_name": "DanglingPointerDereference",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "挂起的指针解引用",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "挂起的指针解引用。"
+      },
+      {
+        "real_name": "DIRECT_ATOMIC_PROPERTY_ACCESS",
+        "display_name": "DirectAtomicPropertyAccess",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "当直接使用ivar访问原子属性时，这个规则便会被触发。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "这样操作会使得原子属性不再是原子，所以潜在的会发生资源竞赛问题。解决方案是通过该属性的getter、setter方法来访问该属性。\n(详细网址)[http://fbinfer.com/docs/linters-bug-types.html#DIRECT_ATOMIC_PROPERTY_ACCESS]"
+      },
+      {
+        "real_name": "DISCOURAGED_WEAK_PROPERTY_CUSTOM_SETTER",
+        "display_name": "DiscouragedWeakPropertyCustomSetter",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "当oc类中有弱属性的自定义setter方法时候，这个规则便会被触发。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "当使用自动引用计数（ARC，-fobj-arc）进行编译时候，ARC可以将该属性设置为nil，而不调用setter方法。注意，自定义setter只调用一次。\n(详细网址)[http://fbinfer.com/docs/linters-bug-types.html#DISCOURAGED_WEAK_PROPERTY_CUSTOM_SETTER]"
+      },
+      {
+        "real_name": "DIVIDE_BY_ZERO",
+        "display_name": "DivideByzero",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "除以0异常.",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "除以0。"
+      },
+      {
+        "real_name": "GLOBAL_VARIABLE_INITIALIZED_WITH_FUNCTION_OR_METHOD_CALL",
+        "display_name": "GlobalVariableInitializedWithFunctionOrMethodCall",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "当全局变量初始化过程中包含方法函数的调用时候，这个规则便会被触发。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "因为某些方法函数资源消耗是十分昂贵的，添加了这些方法之后，初始化的启动时间会被极大拖慢。\n(详细网址)[http://fbinfer.com/docs/linters-bug-types.html#GLOBAL_VARIABLE_INITIALIZED_WITH_FUNCTION_OR_METHOD_CALL]"
+      },
+      {
+        "real_name": "INFERBO_ALLOC_IS_ZERO",
+        "display_name": "InferboAllocIsZero",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "Alloc分配的空间为0",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Alloc分配的空间为0"
+      },
+      {
+        "real_name": "INFERBO_ALLOC_MAY_BE_BIG",
+        "display_name": "InferboAllocMayBeBig",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "Alloc分配的空间可能很大",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Alloc分配的空间可能很大"
+      },
+      {
+        "real_name": "INFERBO_ALLOC_MAY_BE_NEGATIVE",
+        "display_name": "InferboAllocMayBeNegative",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "Alloc分配的空间可能为负",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Alloc分配的空间可能为负"
+      },
+      {
+        "real_name": "IVAR_NOT_NULL_CHECKED",
+        "display_name": "IvarNotNullChecked",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "类似空指针解引用。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "与Null解引用类似，但infer没有找到可能发生错误的追踪信息，只发现如果变量为nil发生了空指针解引用时候，便会触发这个规则。\n[详细网址](http://fbinfer.com/docs/infer-bug-types.html#IVAR_NOT_NULL_CHECKED)"
+      },
+      {
+        "real_name": "MEMORY_LEAK",
+        "display_name": "MemoryLeak",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "内存泄漏",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "infer会报告cpp中的内存泄漏问题。infer在使用malloc创建对象却未将对象释放掉的情况，触发该规则。\n[详细网址](http://fbinfer.com/docs/infer-bug-types.html#MEMORY_LEAK)"
+      },
+      {
+        "real_name": "MUTABLE_LOCAL_VARIABLE_IN_COMPONENT_FILE",
+        "display_name": "MutableLocalVariableInComponentFile",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "检测iOS组件ComponentKit。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "检测iOS组件ComponentKit。\n(详细网址)[http://fbinfer.com/docs/linters-bug-types.html#MUTABLE_LOCAL_VARIABLE_IN_COMPONENT_FILE]"
+      },
+      {
+        "real_name": "NULLABLE_DEREFERENCE",
+        "display_name": "NullableDereference",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "疑似为空的指针解引用",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "infer会报告java中的疑似为空的指针解引用bug。这个规则针对空指针被执行解引用操作，从而导致Java程序crash掉。这是典型的空指针异常规则，可以通过对函数返回值进行空检查来解决，或者确保返回值不为null。\n[详细网址](http://fbinfer.com/docs/infer-bug-types.html#NULL_DEREFERENCE)"
+      },
+      {
+        "real_name": "NULL_DEREFERENCE",
+        "display_name": "NullDereference",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "空指针解引用",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "infer会报告cpp中的空指针解引用bug。这个规则针对空指针被执行解引用操作，从而导致程序crash掉。这是典型的空指针异常规则，可以通过对函数返回值进行空检查来解决，或者确保返回值不为null。\n[详细网址](http://fbinfer.com/docs/infer-bug-types.html#NULL_DEREFERENCE)"
+      },
+      {
+        "real_name": "PARAMETER_NOT_NULL_CHECKED",
+        "display_name": "ParameterNotNullChecked",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "类似空指针解引用。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "与Null解引用类似，但infer没有找到可能发生错误的追踪信息，只发现如果方法的实参为nil可能会发生了空指针解引用时候，便会触发这个规则。\n[详细网址](http://fbinfer.com/docs/infer-bug-types.html#PARAMETER_NOT_NULL_CHECKED)"
+      },
+      {
+        "real_name": "POINTER_TO_CONST_OBJC_CLASS",
+        "display_name": "PointerToConstObjcClass",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "当有const Class *，这个规则便会被触发。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "const Class *代表一个只想oc类的指针，其中的ivar不能被改变。与Class *const相反，后者表示指针的指向不变。\n(详细网址)[http://fbinfer.com/docs/linters-bug-types.html#POINTER_TO_CONST_OBJC_CLASS]"
+      },
+      {
+        "real_name": "POINTER_TO_INTEGRAL_IMPLICIT_CAST",
+        "display_name": "PointerToIntegralImplicitCast",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "指针隐式转换为整型",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "指针隐式转换为整型"
+      },
+      {
+        "real_name": "PREMATURE_NIL_TERMINATION_ARGUMENT",
+        "display_name": "PrematureNilTerminationArgument",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "提前遇到参数列表的nil终止符。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "在很多可变参数函数方法中，nil会被用来做为输入对象列表的结束符。这类似于c字符串的nil终止符。如果一个参数，它不是方法的最后一个参数，但值为nil的话，infer便会报告error，因为这可能会导致一个意想不到的行为。\n[详细网址](http://fbinfer.com/docs/infer-bug-types.html#PREMATURE_NIL_TERMINATION_ARGUMENT)"
+      },
+      {
+        "real_name": "REGISTERED_OBSERVER_BEING_DEALLOCATED",
+        "display_name": "RegisteredObserverBeingDeallocated",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "当一个对象注册为NSNotificationCenter的观察者但从不注销的时候，这个规则便会被触发。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "如果该对象未被注销，通知中心仍然可以在对象被释放之后发送通知，会导致crash。\n(详细网址)[http://fbinfer.com/docs/linters-bug-types.html#REGISTERED_OBSERVER_BEING_DEALLOCATED]"
+      },
+      {
+        "real_name": "RESOURCE_LEAK",
+        "display_name": "ResourceLeak",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "资源泄漏",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "infer会报告cpp中的资源泄漏问题。一般来说，资源是文件，套接字，连接等实体，使用后需要关闭。常见的错误写法是跳过了close()方法的异常。\nJava中的某些对象（资源）应该在停止使用时关闭，而关闭失败则是资源泄漏。资源包括输入流，输出流，读取器，编写器，套接字，http连接，游标和json解析器。\n[详细网址](http://fbinfer.com/docs/infer-bug-types.html#RESOURCE_LEAK)"
+      },
+      {
+        "real_name": "RETAIN_CYCLE",
+        "display_name": "RetainCycle",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "保留循环。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "保留循环指的是对象A保留对象B的引用的同时，对象B也保留对象A的引用。可以通过使用__weak变量或弱反馈属性来修复ARC中的保留周期，即指向对象层次结构中直接或间接父项的链接。\n[详细网址](http://fbinfer.com/docs/infer-bug-types.html#RETAIN_CYCLE)"
+      },
+      {
+        "real_name": "STATIC_INITIALIZATION_ORDER_FIASCO",
+        "display_name": "StaticInitializationOrederFiasco",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "当静态变量A初始化的时候，从另一个编译单元（通常是另一个.cpp文件）访问静态变量B的话，触发该规则。目前还无法保证B是否已经初始化。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "建议修复方法是：确保静态变量B已经初始化。"
+      },
+      {
+        "real_name": "STRONG_DELEGATE_WARNING",
+        "display_name": "StrongDelegateWarning",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "当有一个delegate属性或者一个强声明的变量时候，这个规则便会被触发。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "delegate通常是弱的，否则会导致保留循环retain cycle。\n(详细网址)[http://fbinfer.com/docs/linters-bug-types.html#STRONG_DELEGATE_WARNING]"
+      },
+      {
+        "real_name": "UNAVAILABLE_API_IN_SUPPORTED_IOS_SDK",
+        "display_name": "UnavailableApiInSupportedIosSdk",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "当使用了高版本iOS SDK的Api时候，这个规则便会被触发。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "要启用这个检查，需要向infer传递option：--iphoneos-target-sdk-version version，否则会导致crash。当然，你也可以选择一个不同的Api或者在一个if语句里面使用。\n(详细网址)[http://fbinfer.com/docs/linters-bug-types.html#UNAVAILABLE_API_IN_SUPPORTED_IOS_SDK]"
+      },
+      {
+        "real_name": "UNINITIALIZED_VALUE",
+        "display_name": "UnintializedValue",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "变量未初始化问题。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "变量声明之后，未进行初始化操作就被使用了。所以报出未初始化警告。"
+      },
+      {
+        "real_name": "USE_AFTER_FREE",
+        "display_name": "UseAfterFree",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "释放后使用",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "释放后使用"
+      },
+      {
+        "real_name": "USE_AFTER_LIFETIME",
+        "display_name": "UseAfterLifetime",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "生命周期结束后使用",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "生命周期结束后使用"
+      }
+    ]
+  }
+]

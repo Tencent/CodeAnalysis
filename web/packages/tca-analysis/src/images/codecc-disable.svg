@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="40px" height="40px" viewBox="0 0 40 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 57.1 (83088) - https://sketch.com -->
+    <title>复杂度2</title>
+    <desc>Created with Sketch.</desc>
+    <g id="代码分析-" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="概览" transform="translate(-970.000000, -250.000000)">
+            <g id="编组-25" transform="translate(260.000000, 139.000000)">
+                <g id="编组-21" transform="translate(430.000000, 81.000000)">
+                    <g id="编组-5备份">
+                        <g id="编组-6">
+                            <g id="编组-20" transform="translate(280.000000, 30.000000)">
+                                <circle id="椭圆形" fill="#606C80" opacity="0.104352679" cx="20" cy="20" r="20"></circle>
+                                <g id="逻辑回归" transform="translate(11.000000, 11.000000)">
+                                    <circle id="椭圆形" stroke="#606C80" stroke-width="2" cx="9" cy="9" r="8"></circle>
+                                    <circle id="椭圆形" fill="#606C80" cx="9" cy="9" r="2"></circle>
+                                </g>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,1197 @@
+[
+    {
+        "name": "scalastyle",
+        "display_name": "ScalaStyle",
+        "description": "scala语言代码风格分析工具",
+        "license": "Apache License 2.0",
+        "libscheme_set": [],
+        "task_processes": [
+            "analyze",
+            "datahandle"
+        ],
+        "scan_app": "codelint",
+        "scm_url": null,
+        "run_cmd": null,
+        "envs": null,
+        "build_flag": false,
+        "checkrule_set": [
+            {
+                "real_name": "org.scalastyle.file.FileLengthChecker",
+                "display_name": "FileLengthChecker",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "FileLengthChecker",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "scala"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Check the number of lines in a file",
+                "disable": false
+            },
+            {
+                "real_name": "org.scalastyle.file.FileLineLengthChecker",
+                "display_name": "FileLineLengthChecker",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "FileLineLengthChecker",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "scala"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Check the number of characters in a line",
+                "disable": false
+            },
+            {
+                "real_name": "org.scalastyle.file.FileTabChecker",
+                "display_name": "FileTabChecker",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "FileTabChecker",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "scala"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Check that there are no tabs in a file",
+                "disable": false
+            },
+            {
+                "real_name": "org.scalastyle.file.HeaderMatchesChecker",
+                "display_name": "HeaderMatchesChecker",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "HeaderMatchesChecker",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "scala"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Check the first lines of each file matches the text",
+                "disable": false
+            },
+            {
+                "real_name": "org.scalastyle.file.IndentationChecker",
+                "display_name": "IndentationChecker",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "IndentationChecker",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "scala"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Checks that lines are indented by a multiple of the tab size",
+                "disable": false
+            },
+            {
+                "real_name": "org.scalastyle.file.NewLineAtEofChecker",
+                "display_name": "NewLineAtEofChecker",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "NewLineAtEofChecker",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "scala"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Checks that a file ends with a newline character",
+                "disable": false
+            },
+            {
+                "real_name": "org.scalastyle.file.NoNewLineAtEofChecker",
+                "display_name": "NoNewLineAtEofChecker",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "NoNewLineAtEofChecker",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "scala"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Checks that a file does not end with a newline character",
+                "disable": false
+            },
+            {
+                "real_name": "org.scalastyle.file.RegexChecker",
+                "display_name": "RegexChecker",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "RegexChecker",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "scala"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Checks that a regular expression cannot be matched, if found reports this",
+                "disable": false
+            },
+            {
+                "real_name": "org.scalastyle.file.WhitespaceEndOfLineChecker",
+                "display_name": "WhitespaceEndOfLineChecker",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "WhitespaceEndOfLineChecker",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "scala"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Check that there is no trailing whitespace at the end of lines",
+                "disable": false
+            },
+            {
+                "real_name": "org.scalastyle.scalariform.BlockImportChecker",
+                "display_name": "BlockImportChecker",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "BlockImportChecker",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "scala"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Checks that block imports are not used.",
+                "disable": false
+            },
+            {
+                "real_name": "org.scalastyle.scalariform.ClassNamesChecker",
+                "display_name": "ClassNamesChecker",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "ClassNamesChecker",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "scala"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Check that class names match a regular expression",
+                "disable": false
+            },
+            {
+                "real_name": "org.scalastyle.scalariform.ClassTypeParameterChecker",
+                "display_name": "ClassTypeParameterChecker",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "ClassTypeParameterChecker",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "scala"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Checks that type parameter to a class matches a regular expression",
+                "disable": false
+            },
+            {
+                "real_name": "org.scalastyle.scalariform.CovariantEqualsChecker",
+                "display_name": "CovariantEqualsChecker",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "CovariantEqualsChecker",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "scala"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Check that classes and objects do not define equals without overriding equals(java.lang.Object).",
+                "disable": false
+            },
+            {
+                "real_name": "org.scalastyle.scalariform.CyclomaticComplexityChecker",
+                "display_name": "CyclomaticComplexityChecker",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "CyclomaticComplexityChecker",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "scala"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Checks that the cyclomatic complexity of a method does exceed a value",
+                "disable": false
+            },
+            {
+                "real_name": "org.scalastyle.scalariform.DeprecatedJavaChecker",
+                "display_name": "DeprecatedJavaChecker",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "DeprecatedJavaChecker",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "scala"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Checks that Java @Deprecated is not used, Scala @deprecated should be used instead",
+                "disable": false
+            },
+            {
+                "real_name": "org.scalastyle.scalariform.DisallowSpaceAfterTokenChecker",
+                "display_name": "DisallowSpaceAfterTokenChecker",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "DisallowSpaceAfterTokenChecker",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "scala"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Disallow space after certain token(s)",
+                "disable": false
+            },
+            {
+                "real_name": "org.scalastyle.scalariform.DisallowSpaceBeforeTokenChecker",
+                "display_name": "DisallowSpaceBeforeTokenChecker",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "DisallowSpaceBeforeTokenChecker",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "scala"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Disallow space before certain token(s)",
+                "disable": false
+            },
+            {
+                "real_name": "org.scalastyle.scalariform.EmptyClassChecker",
+                "display_name": "EmptyClassChecker",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "EmptyClassChecker",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "scala"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "If a class/trait has no members, the braces are unnecessary",
+                "disable": false
+            },
+            {
+                "real_name": "org.scalastyle.scalariform.EmptyInterpolatedStringChecker",
+                "display_name": "EmptyInterpolatedStringChecker",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "EmptyInterpolatedStringChecker",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "scala"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "The interpolation for this string literal is not necessary",
+                "disable": false
+            },
+            {
+                "real_name": "org.scalastyle.scalariform.EnsureSingleSpaceAfterTokenChecker",
+                "display_name": "EnsureSingleSpaceAfterTokenChecker",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "EnsureSingleSpaceAfterTokenChecker",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "scala"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Ensure single space after certain token(s)",
+                "disable": false
+            },
+            {
+                "real_name": "org.scalastyle.scalariform.EnsureSingleSpaceBeforeTokenChecker",
+                "display_name": "EnsureSingleSpaceBeforeTokenChecker",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "EnsureSingleSpaceBeforeTokenChecker",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "scala"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Ensure single space before certain token(s)",
+                "disable": false
+            },
+            {
+                "real_name": "org.scalastyle.scalariform.EqualsHashCodeChecker",
+                "display_name": "EqualsHashCodeChecker",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "EqualsHashCodeChecker",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "scala"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Check that if a class implements either equals or hashCode, it should implement the other",
+                "disable": false
+            },
+            {
+                "real_name": "org.scalastyle.scalariform.FieldNamesChecker",
+                "display_name": "FieldNamesChecker",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "FieldNamesChecker",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "scala"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Check that field names match a regular expression",
+                "disable": false
+            },
+            {
+                "real_name": "org.scalastyle.scalariform.ForBraceChecker",
+                "display_name": "ForBraceChecker",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "ForBraceChecker",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "scala"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Checks that braces are used in for comprehensions",
+                "disable": false
+            },
+            {
+                "real_name": "org.scalastyle.scalariform.IfBraceChecker",
+                "display_name": "IfBraceChecker",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "IfBraceChecker",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "scala"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Checks that if statements have braces",
+                "disable": false
+            },
+            {
+                "real_name": "org.scalastyle.scalariform.IllegalImportsChecker",
+                "display_name": "IllegalImportsChecker",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "IllegalImportsChecker",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "scala"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Check that a class does not import certain classes",
+                "disable": false
+            },
+            {
+                "real_name": "org.scalastyle.scalariform.ImportGroupingChecker",
+                "display_name": "ImportGroupingChecker",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "ImportGroupingChecker",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "scala"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Checks that imports are grouped together, not throughout the file",
+                "disable": false
+            },
+            {
+                "real_name": "org.scalastyle.scalariform.ImportOrderChecker",
+                "display_name": "ImportOrderChecker",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "ImportOrderChecker",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "scala"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Checks that imports are grouped and ordered according to the style configuration.",
+                "disable": false
+            },
+            {
+                "real_name": "org.scalastyle.scalariform.LowercasePatternMatchChecker",
+                "display_name": "LowercasePatternMatchChecker",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "LowercasePatternMatchChecker",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "scala"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Checks that a case statement pattern match is not lower case, as this can cause confusion",
+                "disable": false
+            },
+            {
+                "real_name": "org.scalastyle.scalariform.MagicNumberChecker",
+                "display_name": "MagicNumberChecker",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "MagicNumberChecker",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "scala"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Checks for use of magic numbers",
+                "disable": false
+            },
+            {
+                "real_name": "org.scalastyle.scalariform.MethodArgumentNamesChecker",
+                "display_name": "MethodArgumentNamesChecker",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "MethodArgumentNamesChecker",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "scala"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Check that method argument names match a regular expression",
+                "disable": false
+            },
+            {
+                "real_name": "org.scalastyle.scalariform.MethodLengthChecker",
+                "display_name": "MethodLengthChecker",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "MethodLengthChecker",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "scala"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Checks that methods do not exceed a maximum length",
+                "disable": false
+            },
+            {
+                "real_name": "org.scalastyle.scalariform.MethodNamesChecker",
+                "display_name": "MethodNamesChecker",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "MethodNamesChecker",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "scala"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Check that method names match a regular expression",
+                "disable": false
+            },
+            {
+                "real_name": "org.scalastyle.scalariform.MultipleStringLiteralsChecker",
+                "display_name": "MultipleStringLiteralsChecker",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "MultipleStringLiteralsChecker",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "scala"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Checks that a string literal does not appear multiple times",
+                "disable": false
+            },
+            {
+                "real_name": "org.scalastyle.scalariform.NamedArgumentChecker",
+                "display_name": "NamedArgumentChecker",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "NamedArgumentChecker",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "scala"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Checks that argument literals are named",
+                "disable": false
+            },
+            {
+                "real_name": "org.scalastyle.scalariform.NoCloneChecker",
+                "display_name": "NoCloneChecker",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "NoCloneChecker",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "scala"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Check that classes and objects do not define the clone() method",
+                "disable": false
+            },
+            {
+                "real_name": "org.scalastyle.scalariform.NoFinalizeChecker",
+                "display_name": "NoFinalizeChecker",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "NoFinalizeChecker",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "scala"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Check that classes and objects do not define the finalize() method",
+                "disable": false
+            },
+            {
+                "real_name": "org.scalastyle.scalariform.NonASCIICharacterChecker",
+                "display_name": "NonASCIICharacterChecker",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "NonASCIICharacterChecker",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "scala"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Some editors are unfriendly to non ascii characters.",
+                "disable": false
+            },
+            {
+                "real_name": "org.scalastyle.scalariform.NotImplementedErrorUsage",
+                "display_name": "NotImplementedErrorUsage",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "NotImplementedErrorUsage",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "scala"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Checks that the code does not have ??? operators.",
+                "disable": false
+            },
+            {
+                "real_name": "org.scalastyle.scalariform.NoWhitespaceAfterLeftBracketChecker",
+                "display_name": "NoWhitespaceAfterLeftBracketChecker",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "NoWhitespaceAfterLeftBracketChecker",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "scala"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "No whitespace after left bracket ¡®[¡¯",
+                "disable": false
+            },
+            {
+                "real_name": "org.scalastyle.scalariform.NoWhitespaceBeforeLeftBracketChecker",
+                "display_name": "NoWhitespaceBeforeLeftBracketChecker",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "NoWhitespaceBeforeLeftBracketChecker",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "scala"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "No whitespace before left bracket ¡®[¡¯",
+                "disable": false
+            },
+            {
+                "real_name": "org.scalastyle.scalariform.NoWhitespaceBeforeRightBracketChecker",
+                "display_name": "NoWhitespaceBeforeRightBracketChecker",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "NoWhitespaceBeforeRightBracketChecker",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "scala"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "No whitespace before right bracket ¡®¡¯]¡¯¡¯",
+                "disable": false
+            },
+            {
+                "real_name": "org.scalastyle.scalariform.NullChecker",
+                "display_name": "NullChecker",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "NullChecker",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "scala"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Check that null is not used",
+                "disable": false
+            },
+            {
+                "real_name": "org.scalastyle.scalariform.NumberOfMethodsInTypeChecker",
+                "display_name": "NumberOfMethodsInTypeChecker",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "NumberOfMethodsInTypeChecker",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "scala"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Check that a class / trait / object does not have too many methods",
+                "disable": false
+            },
+            {
+                "real_name": "org.scalastyle.scalariform.NumberOfTypesChecker",
+                "display_name": "NumberOfTypesChecker",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "NumberOfTypesChecker",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "scala"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Checks that there are not too many types declared in a file",
+                "disable": false
+            },
+            {
+                "real_name": "org.scalastyle.scalariform.ObjectNamesChecker",
+                "display_name": "ObjectNamesChecker",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "ObjectNamesChecker",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "scala"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Check that object names match a regular expression",
+                "disable": false
+            },
+            {
+                "real_name": "org.scalastyle.scalariform.OverrideJavaChecker",
+                "display_name": "OverrideJavaChecker",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "OverrideJavaChecker",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "scala"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Checks that Java @Override is not used",
+                "disable": false
+            },
+            {
+                "real_name": "org.scalastyle.scalariform.PackageNamesChecker",
+                "display_name": "PackageNamesChecker",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "PackageNamesChecker",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "scala"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Check that package names match a regular expression",
+                "disable": false
+            },
+            {
+                "real_name": "org.scalastyle.scalariform.PackageObjectNamesChecker",
+                "display_name": "PackageObjectNamesChecker",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "PackageObjectNamesChecker",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "scala"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Check that package object names match a regular expression",
+                "disable": false
+            },
+            {
+                "real_name": "org.scalastyle.scalariform.ParameterNumberChecker",
+                "display_name": "ParameterNumberChecker",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "ParameterNumberChecker",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "scala"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Maximum number of parameters for a method",
+                "disable": false
+            },
+            {
+                "real_name": "org.scalastyle.scalariform.PatternMatchAlignChecker",
+                "display_name": "PatternMatchAlignChecker",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "PatternMatchAlignChecker",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "scala"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Check that pattern match arrows align",
+                "disable": false
+            },
+            {
+                "real_name": "org.scalastyle.scalariform.ProcedureDeclarationChecker",
+                "display_name": "ProcedureDeclarationChecker",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "ProcedureDeclarationChecker",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "scala"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Use a : Unit = for procedure declarations",
+                "disable": false
+            },
+            {
+                "real_name": "org.scalastyle.scalariform.PublicMethodsHaveTypeChecker",
+                "display_name": "PublicMethodsHaveTypeChecker",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "PublicMethodsHaveTypeChecker",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "scala"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Check that a method has an explicit return type, it is not inferred",
+                "disable": false
+            },
+            {
+                "real_name": "org.scalastyle.scalariform.RedundantIfChecker",
+                "display_name": "RedundantIfChecker",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "RedundantIfChecker",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "scala"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Checks that if expressions are not redundant, i.e. easily replaced by a variant of the condition",
+                "disable": false
+            },
+            {
+                "real_name": "org.scalastyle.scalariform.ReturnChecker",
+                "display_name": "ReturnChecker",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "ReturnChecker",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "scala"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Check that return is not used",
+                "disable": false
+            },
+            {
+                "real_name": "org.scalastyle.scalariform.ScalaDocChecker",
+                "display_name": "ScalaDocChecker",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "ScalaDocChecker",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "scala"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Checks that the ScalaDoc on documentable members is well-formed",
+                "disable": false
+            },
+            {
+                "real_name": "org.scalastyle.scalariform.SimplifyBooleanExpressionChecker",
+                "display_name": "SimplifyBooleanExpressionChecker",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "SimplifyBooleanExpressionChecker",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "scala"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Boolean expression can be simplified",
+                "disable": false
+            },
+            {
+                "real_name": "org.scalastyle.scalariform.SpaceAfterCommentStartChecker",
+                "display_name": "SpaceAfterCommentStartChecker",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "SpaceAfterCommentStartChecker",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "scala"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Checks a space after the start of the comment.",
+                "disable": false
+            },
+            {
+                "real_name": "org.scalastyle.scalariform.SpacesAfterPlusChecker",
+                "display_name": "SpacesAfterPlusChecker",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "SpacesAfterPlusChecker",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "scala"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Check that the plus sign is followed by a space",
+                "disable": false
+            },
+            {
+                "real_name": "org.scalastyle.scalariform.SpacesBeforePlusChecker",
+                "display_name": "SpacesBeforePlusChecker",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "SpacesBeforePlusChecker",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "scala"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Check that the plus sign is preceded by a space",
+                "disable": false
+            },
+            {
+                "real_name": "org.scalastyle.scalariform.StructuralTypeChecker",
+                "display_name": "StructuralTypeChecker",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "StructuralTypeChecker",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "scala"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Check that structural types are not used.",
+                "disable": false
+            },
+            {
+                "real_name": "org.scalastyle.scalariform.TodoCommentChecker",
+                "display_name": "TodoCommentChecker",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "TodoCommentChecker",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "scala"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Check for use of TODO/FIXME single line comments",
+                "disable": false
+            },
+            {
+                "real_name": "org.scalastyle.scalariform.TokenChecker",
+                "display_name": "TokenChecker",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "TokenChecker",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "scala"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Checks that a regular expression cannot be matched in a token, if found reports this",
+                "disable": false
+            },
+            {
+                "real_name": "org.scalastyle.scalariform.UnderscoreImportChecker",
+                "display_name": "UnderscoreImportChecker",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "UnderscoreImportChecker",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "scala"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Avoid wildcard imports",
+                "disable": false
+            },
+            {
+                "real_name": "org.scalastyle.scalariform.UppercaseLChecker",
+                "display_name": "UppercaseLChecker",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "UppercaseLChecker",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "scala"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Checks that if a long literal is used, then an uppercase L is used",
+                "disable": false
+            },
+            {
+                "real_name": "org.scalastyle.scalariform.VarFieldChecker",
+                "display_name": "VarFieldChecker",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "VarFieldChecker",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "scala"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Checks that classes and objects do not define mutable fields",
+                "disable": false
+            },
+            {
+                "real_name": "org.scalastyle.scalariform.VarLocalChecker",
+                "display_name": "VarLocalChecker",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "VarLocalChecker",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "scala"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Checks that functions do not define mutable variables",
+                "disable": false
+            },
+            {
+                "real_name": "org.scalastyle.scalariform.WhileChecker",
+                "display_name": "WhileChecker",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "WhileChecker",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "scala"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Checks that while is not used",
+                "disable": false
+            },
+            {
+                "real_name": "org.scalastyle.scalariform.XmlLiteralChecker",
+                "display_name": "XmlLiteralChecker",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "XmlLiteralChecker",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "scala"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Check that XML literals are not used",
+                "disable": false
+            }
+        ],
+        "open_user": true,
+        "open_saas": false,
+        "virtual_name": "135",
+        "show_display_name": true
+    }
+]

@@ -1,0 +1,20 @@
+[
+  {
+    "name": "cpd",
+    "display_name": "Cpd",
+    "description": "重复代码扫描工具，支持C/C++、C#、Java、JavaScript、Objective-C/C++、PHP、Python、Ruby、Go、Swift和kotlin。",
+    "license": "BSD",
+    "task_processes": [
+      "analyze",
+      "datahandle"
+    ],
+    "open_user": true,
+    "open_saas": true,
+    "scan_app": "codemetric",
+    "scm_url": null,
+    "run_cmd": null,
+    "envs": null,
+    "show_display_name": true,
+    "checkrule_set": []
+  }
+]

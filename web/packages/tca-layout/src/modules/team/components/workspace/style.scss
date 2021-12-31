@@ -1,0 +1,46 @@
+@import "@src/common/style/color.scss";
+
+.workspace {
+  :global(.ant-tabs-tab) {
+    padding: 16px;
+
+    &:first-child {
+      color: $grey-8;
+      font-size: 18px;
+      font-weight: bold;
+      margin-right: 10px;
+      cursor: text;
+
+      & > div {
+        padding: 0 28px 0 14px;
+        border-right: 1px solid $grey-3;
+
+        &:active,
+        &:focus {
+          color: $grey-8 !important;
+        }
+      }
+    }
+  }
+
+  :global(.ant-tabs-content) {
+    padding: 0 20px;
+  }
+
+  :global(.ant-table-thead > tr:first-child > th) {
+    border-top: none;
+  }
+}
+
+.repo-list {
+  .repo-name {
+    font-size: 15px;
+    font-weight: bold;
+  }
+
+  .repo-url {
+    font-size: 12px;
+    color: $grey-7;
+    margin-top: 2px;
+  }
+}

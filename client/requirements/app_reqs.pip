@@ -1,0 +1,37 @@
+# notices 1: In ubuntu,to setup psutil, pls setup python-dev first] sudo apt-get install python-dev)
+# notices 2: In Windows, Use Pip to setup psutil, you should upgrade your pip version.. (like 8.1.2 is OK)
+# a cross-platform library for retrieving information onrunning processes \
+# and system utilization(CPU, memory, disks, network)
+# LICENSE: BSD 3-Clause
+psutil
+
+# required for crypto
+# LICENSE: MIT
+pyaes
+
+# required for yaml parser
+pyyaml==5.3.1
+
+# required for connecting mongodb
+# LICENSE: Apache 2.0 and others
+pymongo
+
+# required for large json
+# LICENSE: BSD 3-Clause and others
+ijson
+
+# required for parsering html files
+# LICENSE: MIT
+html5lib
+
+# requried for export excel files
+# LICENSE: MIT
+openpyxl
+
+# required for auth
+# LICENSE: MIT
+rsa==4.7.2
+
+# required for load tool
+# License: MPL v2.0, MIT
+tqdm

@@ -1,0 +1,677 @@
+[
+  {
+    "name": "infer_java",
+    "display_name": "InferJava",
+    "description": "Java static analyzer.（需要编译）",
+    "license": "MIT",
+    "task_processes": [
+      "analyze",
+      "datahandle",
+      "compile"
+    ],
+    "open_user": true,
+    "scan_app": "codelint",
+    "scm_url": null,
+    "run_cmd": null,
+    "envs": null,
+    "show_display_name": true,
+    "checkrule_set": [
+      {
+        "real_name": "ARRAY_OUT_OF_BOUNDS_L1",
+        "display_name": "ArrayOutOfBoundsL1",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "数组越界。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "数组越界。"
+      },
+      {
+        "real_name": "ARRAY_OUT_OF_BOUNDS_L2",
+        "display_name": "ArrayOutOfBoundsL2",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "数组越界。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "数组越界。"
+      },
+      {
+        "real_name": "ARRAY_OUT_OF_BOUNDS_L3",
+        "display_name": "ArrayOutOfBoundsL3",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "数组越界。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "数组越界。"
+      },
+      {
+        "real_name": "BUFFER_OVERRUN_L1",
+        "display_name": "BufferOverrunL1",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "缓存溢出",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "缓存溢出。"
+      },
+      {
+        "real_name": "BUFFER_OVERRUN_L2",
+        "display_name": "BufferOverrunL2",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "缓存溢出",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "缓存溢出。"
+      },
+      {
+        "real_name": "BUFFER_OVERRUN_L3",
+        "display_name": "BufferOverrunL3",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "缓存溢出",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "缓存溢出。"
+      },
+      {
+        "real_name": "BUFFER_OVERRUN_L4",
+        "display_name": "BufferOverrunL4",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "缓存溢出",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "缓存溢出。"
+      },
+      {
+        "real_name": "BUFFER_OVERRUN_L5",
+        "display_name": "BufferOverrunL5",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "缓存溢出",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "缓存溢出。"
+      },
+      {
+        "real_name": "BUFFER_OVERRUN_S2",
+        "display_name": "BufferOverrunS2",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "缓存溢出",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "缓存溢出。"
+      },
+      {
+        "real_name": "CHECKERS_FRAGMENT_RETAINS_VIEW",
+        "display_name": "CheckersFragmentRetainsView",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "该规则在Fragment类型无法使onDestroyView中的一个或多个声明的View字段无效时触发。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "此规则是Android特定的。在对性能敏感的应用程序中，Fragment应该初始化onCreateView中的所有View，并在onDestroyView中使其无效。 如果Fragment被放置在后端堆栈上，并且无法取消onDestroyView中的View，则它将保留对该View的无用引用，直到Fragment被恢复或销毁为止，该View才会被清理。\n修复意见：在onDestroyView中取消有问题的View。\n[详细网址](http://fbinfer.com/docs/checkers-bug-types.html)"
+      },
+      {
+        "real_name": "CHECKERS_IMMUTABLE_CAST",
+        "display_name": "CheckersImmutableCast",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "当一个不可变的集合类型对象被return，而该函数的返回值是可变类型时候，触发报错。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "可能会导致运行时错误。建议修复方法是：修改return返回值类型为不可变类型，或者对不可变的类型进行拷贝到一个可变类型对象中。"
+      },
+      {
+        "real_name": "CLASS_CAST_EXCEPTION",
+        "display_name": "ClassCastException",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "类型转换异常。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "类型转换异常。"
+      },
+      {
+        "real_name": "CONDITION_ALWAYS_FALSE",
+        "display_name": "ConditionAlwaysFalse",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "判断条件总是为False。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "判断条件总是为False。"
+      },
+      {
+        "real_name": "CONDITION_ALWAYS_TRUE",
+        "display_name": "ConditionAlwaysTrue",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "判断条件总是为True。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "判断条件总是为True。"
+      },
+      {
+        "real_name": "CONTEXT_LEAK",
+        "display_name": "ContextLeak",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "针对Android的上下文泄漏问题",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "这种规则是Android的特定规则。在Android应用程序中，Context（除了Application特殊情况外）的子类型是临时组件，可以根据Android框架的判断来创建和销毁。一旦框架决定销毁一个Context，它不能再次使用，应该由垃圾收集器释放。但是，开发可以通过保留对Context被销毁后的引用（从而防止收集）来创建内存泄漏。当确定Context在public非子Application Context类型的方法的末尾处存在静态字段和一个字符之间的引用链时，infer便会触发这个规则。\n[详细网址](http://fbinfer.com/docs/infer-bug-types.html#CONTEXT_LEAK)"
+      },
+      {
+        "real_name": "CREATE_INTENT_FROM_URI",
+        "display_name": "CreateIntentFromUri",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "从Uri创建intent",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "从Uri创建intent"
+      },
+      {
+        "real_name": "DANGLING_POINTER_DEREFERENCE",
+        "display_name": "DanglingPointerDereference",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "挂起的指针解引用",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "挂起的指针解引用。"
+      },
+      {
+        "real_name": "DEADLOCK",
+        "display_name": "Deadlock",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "检测死锁",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "检测死锁"
+      },
+      {
+        "real_name": "DIVIDE_BY_ZERO",
+        "display_name": "DivideByzero",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "除以0异常.",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "除以0。"
+      },
+      {
+        "real_name": "ERADICATE_CONDITION_REDUNDANT",
+        "display_name": "EradicateConditionRedundant",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "该规则检测冗余条件。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "当x不能为null时候，条件(x!=null)或(x==null)，第一个条件永远是真，第二个条件永远是假。修复建议是：理清思路，修改代码。[详细网址](http://fbinfer.com/docs/eradicate-warnings.html)"
+      },
+      {
+        "real_name": "ERADICATE_FIELD_NOT_INITIALIZED",
+        "display_name": "EradicateFieldNotInitialized",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "构造函数不会初始化未被@Nullable注释的字段。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "修复建议是：使用非空值赋值该字段。如果null是该字段的有效值，就需要使用@Nullable注释。[详细网址](http://fbinfer.com/docs/eradicate-warnings.html)"
+      },
+      {
+        "real_name": "ERADICATE_FIELD_NOT_NULLABLE",
+        "display_name": "EradicateFieldNotNullable",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "字段可能为null。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "比如例子中的赋值代码：x.f=v;\n这里v为null以及x.f未注释@NUllable时候，就会报出该错误。\n修复建议是：首选修复方案是通过更改代码或者更改注释来确保不会在字段上面存储null，次选方案是可以在该字段上面标记@Nullable注释。此注释可能会在使用该字段的其他代码中触发更多的警告，因为该代码必须要处理null。[详细网址](http://fbinfer.com/docs/eradicate-warnings.html)"
+      },
+      {
+        "real_name": "ERADICATE_INCONSISTENT_SUBCLASS_PARAMETER_ANNOTATION",
+        "display_name": "EradicateInconsistentSubclassParameterAnnotation",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "该规则检测重写方法的参数被注释了@NUllable，而父类中的相应方法却不是的情况。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "修复建议是：根据共同点，选择一致的注释。[详细网址](http://fbinfer.com/docs/eradicate-warnings.html)"
+      },
+      {
+        "real_name": "ERADICATE_INCONSISTENT_SUBCLASS_RETURN_ANNOTATION",
+        "display_name": "EradicateInconsistentSubclassReturnAnnotation",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "该规则检测重写方法的返回类型被注释了@NUllable，而父类中的相应方法却不是的情况。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "修复建议是：根据共同点，选择一致的注释。[详细网址](http://fbinfer.com/docs/eradicate-warnings.html)"
+      },
+      {
+        "real_name": "ERADICATE_NULL_FIELD_ACCESS",
+        "display_name": "EradicateNullFieldAccess",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "x.field形式的对象字段访问时，x可能为null。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "修复建议是：可以通过修改代码或者更改注释，确保x不为null。或者使用防御式编程，当x可能为null时候，使用x前先对x进行空检查。请尽可能的了解程序的调用链。[详细网址](http://fbinfer.com/docs/eradicate-warnings.html)"
+      },
+      {
+        "real_name": "ERADICATE_NULL_METHOD_CALL",
+        "display_name": "EradicateNullMethodCall",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "x.m()形式的对象方法调用时，x可能为null。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "修复建议是：可以通过修改代码或者更改注释，确保x不为null。或者使用防御式编程，当x可能为null时候，使用x前先对x进行空检查。请尽可能的了解程序的调用链。[详细网址](http://fbinfer.com/docs/eradicate-warnings.html)"
+      },
+      {
+        "real_name": "ERADICATE_PARAMETER_NOT_NULLABLE",
+        "display_name": "EradicateParameterNotNullable",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "方法参数不可为null。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "示例：方法调用x.m(..., v, ...),其中v可能为null，并且方法m中相应参数没有使用@Nullable注释，这样便会触发该错误。修复建议是：确保null不会传给该方法，或者添加@Nullable注释。[详细网址](http://fbinfer.com/docs/eradicate-warnings.html)"
+      },
+      {
+        "real_name": "ERADICATE_RETURN_NOT_NULLABLE",
+        "display_name": "EradicateReturnNotNullable",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "方法可能返回null。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "函数方法返回为null，并且返回值没有被@Nullable注释。修复建议是：确保null不会传给该方法，或者添加@Nullable注释。[详细网址](http://fbinfer.com/docs/eradicate-warnings.html)"
+      },
+      {
+        "real_name": "ERADICATE_RETURN_OVER_ANNOTATED",
+        "display_name": "EradicateReturnOverAnnotated",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "该规则检测过度注释的情况。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "比如方法m用@Nullable注释，但m方法却不会返回null。修复建议是：理清思路，修改代码。[详细网址](http://fbinfer.com/docs/eradicate-warnings.html)"
+      },
+      {
+        "real_name": "FIELD_SHOULD_BE_NULLABLE",
+        "display_name": "FieldShouldBeNullable",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "当一个字段未被标记为@Nullable，但在方法中为null或者在判断语句中与null测试时候，触发报错。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "修复建议是：可以在字段声明时候添加@Nullable注释，或者这个字段永远不能为null的话，就请重构代码确保不会被赋值为null或者与null比较。[详细网址](http://fbinfer.com/docs/checkers-bug-types.html)"
+      },
+      {
+        "real_name": "INTERFACE_NOT_THREAD_SAFE",
+        "display_name": "InterfaceNotThreadSafe",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "这个错误表明调用了一个没有使用@ThreadSafe注释标记的线程安全上下文的接口方法。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "修复建议是：将@ThreadSafe注释添加到接口或者接口方法上。[详细网址](http://fbinfer.com/docs/checkers-bug-types.html)"
+      },
+      {
+        "real_name": "LOGGING_PRIVATE_DATA",
+        "display_name": "LoggingPrivateData",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "打印输出了私有数据",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "打印输出了私有数据"
+      },
+      {
+        "real_name": "NULLABLE_DEREFERENCE",
+        "display_name": "NullableDereference",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "疑似为空的指针解引用",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "infer会报告java中的疑似为空的指针解引用bug。这个规则针对空指针被执行解引用操作，从而导致Java程序crash掉。这是典型的空指针异常规则，可以通过对函数返回值进行空检查来解决，或者确保返回值不为null。\n[详细网址](http://fbinfer.com/docs/infer-bug-types.html#NULL_DEREFERENCE)"
+      },
+      {
+        "real_name": "NULL_DEREFERENCE",
+        "display_name": "NullDereference",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "空指针解引用",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "infer会报告java中的空指针解引用bug。这个规则针对空指针被执行解引用操作，从而导致Java程序crash掉。这是典型的空指针异常规则，可以通过对函数返回值进行空检查来解决，或者确保返回值不为null。\n[详细网址](http://fbinfer.com/docs/infer-bug-types.html#NULL_DEREFERENCE)"
+      },
+      {
+        "real_name": "QUANDARY_TAINT_ERROR",
+        "display_name": "QuandaryTaintError",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "该规则针对简单的污点分析。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "检查信息泄漏等，进行污点检验。"
+      },
+      {
+        "real_name": "RESOURCE_LEAK",
+        "display_name": "ResourceLeak",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "资源泄漏",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "infer会报告Java中的资源泄漏问题。一般来说，资源是文件，套接字，连接等实体，使用后需要关闭。常见的错误写法是跳过了close()方法的异常。\nJava中的某些对象（资源）应该在停止使用时关闭，而关闭失败则是资源泄漏。资源包括输入流，输出流，读取器，编写器，套接字，http连接，游标和json解析器。\n[详细网址](http://fbinfer.com/docs/infer-bug-types.html#RESOURCE_LEAK)"
+      },
+      {
+        "real_name": "THREAD_SAFETY_VIOLATION",
+        "display_name": "ThreadSafetyViolation",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "线程安全违规",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "RacerD静态分析Java代码来检测潜在的并发错误。专注于线程安全类之间的竞争。主要包括空指针异常，资源泄漏，注释可达性，缺少锁守卫和并发竞争条件。[详细网址](http://fbinfer.com/docs/racerd.html)"
+      },
+      {
+        "real_name": "UNINITIALIZED_VALUE",
+        "display_name": "UnintializedValue",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "变量未初始化问题。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "变量声明之后，未进行初始化操作就被使用了。所以报出未初始化警告。"
+      },
+      {
+        "real_name": "UNSAFE_GUARDED_BY_ACCESS",
+        "display_name": "UnsafeGuardedByAccess",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "不安全的访问保护",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "infer会报告Java中的并发问题。当已被注释@GuardedBy(lock)的字段或方法被访问时，若该字段或方法没有持有锁，infer便会报告该问题。而在很多情况下，锁是this。以下是一个简单的示例：\nimport javax.annotation.concurrent.GuardedBy;\nclass GB{\n@GuardedBy(\"this\")\nint y;\nvoid foo(){  y = 22; }\nvoid goo(){  synchronized (this) {y = 82;} }\n}\ninfer会对foo函数中对y的访问报出警告，而不是goo函数中的。\ninfer可以区分不同的锁。一个棘手的例子就是同个文件中出现的不同this关键字意味着不同的对象，即是说这个this不是那个this。\nclass Outer{\n@GuardedBy(\"this\")\nObject y;\nObject foo(){\nreturn new Object () {\nvoid m0() {\nsynchronized (this){ y = null; }\n}\nvoid m1() {\nsynchronized (Outer.this){ y = null; }\n}\n};\n}\n}\n在匿名内部类中this的使用，意味着对象创建时候闭包被创建，此时使用到的y不是this保护的y。这是一个bug，修复方法是m1()的那个样子。\n[详细网址](http://fbinfer.com/docs/infer-bug-types.html#UNSAFE_GUARDED_BY_ACCESS)"
+      },
+      {
+        "real_name": "UNTRUSTED_DESERIALIZATION",
+        "display_name": "UntrustedDeserialization",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "不可信的反序列化",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "不可信的反序列化"
+      },
+      {
+        "real_name": "UNTRUSTED_FILE",
+        "display_name": "UntrustedFile",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "不可信的文件",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "不可信的文件"
+      }
+    ]
+  }
+]

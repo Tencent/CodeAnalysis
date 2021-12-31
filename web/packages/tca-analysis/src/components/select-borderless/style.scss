@@ -1,0 +1,101 @@
+@import '@src/common/style/color.scss';
+
+.select-borderless {
+    position: relative;
+    display: inline-block;
+    padding: 0 8px;
+    height: 28px;
+    line-height: 28px;
+    cursor: pointer;
+    transition: all 0.3s;
+
+    &:hover {
+        background-color: $grey-1;
+    }
+
+    .selection {
+        display: inline-block;
+        margin-right: 6px;
+        max-width: 300px;
+        vertical-align: top;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    :global(.ant-select) {
+        width: auto !important;
+        vertical-align: middle;
+    }
+
+    :global(.ant-select-selection-search) {
+        display: none;
+    }
+
+    :global(.ant-select-arrow) {
+        right: 0;
+        font-size: 14px;
+    }
+
+    :global(.ant-select-selection-item) {
+        width: 0;
+        height: 0;
+        margin: 0;
+        padding: 0 !important;
+        border: none;
+    }
+
+    :global(.ant-select-single .ant-select-selector) {
+        padding-left: 2px;
+
+        :global(.ant-select-selection-placeholder) {
+            line-height: unset;
+        }
+    }
+
+    :global(.ant-select-single.ant-select-show-arrow .ant-select-selection-placeholder) {
+        padding: 0;
+    }
+
+    :global(.ant-select-multiple .ant-select-selector::after) {
+        display: none;
+    }
+
+    :global(.ant-select-borderless.ant-select-open .ant-select-arrow) {
+        color: $grey-8;
+    }
+
+    :global(.ant-select-borderless:not(.ant-select-disabled)) {
+        &:hover {
+            color: $grey-8;
+
+            :global(.ant-select-arrow) {
+                color: $grey-8;
+            }
+        }
+    }
+
+    .dropdown {
+        left: 0 !important;
+        top: 28px !important;
+        min-width: 160px !important;
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+
+    .clear-item {
+        padding: 8px 12px;
+        color: $grey-7;
+        cursor: pointer;
+        transition: all 0.3s;
+
+        svg {
+            font-size: 16px;
+            margin-right: 6px;
+            color: $grey-6;
+        }
+
+        &:hover {
+            background-color: $grey-1;
+        }
+    }
+}

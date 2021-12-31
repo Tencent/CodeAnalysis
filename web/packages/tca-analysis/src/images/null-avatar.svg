@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 57.1 (83088) - https://sketch.com -->
+    <title>默认头像</title>
+    <desc>Created with Sketch.</desc>
+    <g id="代码分析-" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="代码度量-圈复杂度列表" transform="translate(-1282.000000, -529.000000)">
+            <g id="编组-14" transform="translate(270.000000, 215.000000)">
+                <g id="编组-13" transform="translate(1.002639, 40.000000)">
+                    <g id="编组-4复制-14" transform="translate(0.000000, 264.000000)">
+                        <g id="default-avatar" transform="translate(1010.997361, 10.000000)">
+                            <circle id="Oval-4" fill="#DFE3E9" cx="12" cy="12" r="12"></circle>
+                            <path d="M8,10 C8,7.791 9.844,6 12,6 C14.156,6 16,7.791 16,10 L16,11 C16,13.209 14.156,15 12,15 C9.844,15 8,13.209 8,11 L8,10 Z" id="Path" fill="#FFFFFF"></path>
+                            <path d="M12,22 C9.71941884,22 7.62724574,21.124 6,19.674 C6.78643962,18.091 8.32838619,17 10.1252929,17 L13.8747071,17 C15.6716138,17 17.2135604,18.091 18,19.674 C16.3727543,21.124 14.2805812,22 12,22 Z" id="Path" fill="#FFFFFF"></path>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

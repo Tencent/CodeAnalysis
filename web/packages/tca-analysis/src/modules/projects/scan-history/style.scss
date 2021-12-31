@@ -1,0 +1,56 @@
+@import '@src/common/style/color.scss';
+
+.scans {
+	:global(.ant-table-thead>tr:first-child>th) {
+		border-top: none;
+	}
+
+	.copy-icon {
+		svg {
+			color: $grey-6;
+			margin-left: 8px;
+			transition: color 0.3s;
+			cursor: pointer;
+
+			&:hover {
+				color: $grey-8;
+			}
+		}
+	}
+
+	.status {
+		display: flex;
+		align-items: center;
+
+		img {
+			margin-right: 6px;
+		}
+	}
+
+	.running {
+		margin-left: 6px;
+		vertical-align: middle;
+	}
+}
+
+.result {
+	.module {
+		font-size: 13px;
+		padding-bottom: 16px;
+		margin-bottom: 20px;
+		border-bottom: 1px solid $grey-2;
+
+		&:last-child {
+			border-bottom: none;
+		}
+
+		h4 {
+			font-size: 16px;
+		}
+
+		.no-data {
+			color: $grey-6;
+			text-align: center;
+		}
+	}
+}

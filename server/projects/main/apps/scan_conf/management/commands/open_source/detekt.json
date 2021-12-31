@@ -1,0 +1,2532 @@
+[
+  {
+    "name": "detekt",
+    "display_name": "Detekt",
+    "description": "kotlin static analyzer",
+    "license": "Apache 2.0",
+    "task_processes": [
+      "analyze",
+      "datahandle"
+    ],
+    "open_user": true,
+    "open_saas": true,
+    "scan_app": "codelint",
+    "scm_url": null,
+    "run_cmd": null,
+    "envs": null,
+    "show_display_name": true,
+    "checkrule_set": [
+      {
+        "real_name": "ChainWrapping",
+        "display_name": "ChainWrapping",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "在包装链式调用时，?.和?:应放在下一行。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "集成ktlint的规则。可以参考ktlint[官网](https://ktlint.github.io)"
+      },
+      {
+        "real_name": "ClassNaming",
+        "display_name": "ClassNaming",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "本规则针对命名。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "类和对象的命名应该匹配这个正则式：^[A-Z$][a-zA-Z$]*$"
+      },
+      {
+        "real_name": "CollapsibleIfStatements",
+        "display_name": "CollapsibleIfStatements",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "本规则针对可合并的if语句。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "发现两个if语句可以合并，提高可读性。"
+      },
+      {
+        "real_name": "CommentOverPrivateFunction",
+        "display_name": "CommentOverPrivateFunction",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "本规则针对私有函数的注释。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "不应该在私有函数上写注释，建议给函数命名一个表达性强的名字。如果有必要的话，可以将函数筛分为一些更小的、可以自解释的函数。"
+      },
+      {
+        "real_name": "CommentOverPrivateMethod",
+        "display_name": "CommentOverPrivateMethod",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "本规则针对私有函数的注释。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "私有函数不应该有注释。"
+      },
+      {
+        "real_name": "CommentOverPrivateProperty",
+        "display_name": "CommentOverPrivateProperty",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "本规则针对私有属性上的注释。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "私有属性的命名应该是自解释的，不应该为其添加注释。"
+      },
+      {
+        "real_name": "CommentSpacing",
+        "display_name": "CommentSpacing",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "检查注释是否有正确的空格。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "集成ktlint的规则。可以参考ktlint[官网](https://ktlint.github.io)"
+      },
+      {
+        "real_name": "ComplexCondition",
+        "display_name": "ComplexCondition",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "本规则针对复杂的判断条件。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "如果需要，复杂的条件应该被简化并提取成命名方法。"
+      },
+      {
+        "real_name": "ComplexInterface",
+        "display_name": "ComplexInterface",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "本规则针对复杂的接口。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "一个接口包含太多的函数和属性。接口应遵循单一责任原则，以鼓励此接口的实现不会同时处理太多事情。建议将大型接口拆分成较小的接口，更容易理解。"
+      },
+      {
+        "real_name": "ComplexMethod",
+        "display_name": "ComplexMethod",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "本规则针对复杂的方法。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "函数源代码的线性独立路径的数量。独立路径的数量越多，方法就越复杂。建议将复杂的函数筛分为一些更小的、更精简的、更容易理解的函数。"
+      },
+      {
+        "real_name": "ConstantNaming",
+        "display_name": "ConstantNaming",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "本规则针对常量命名。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "常量的命名应该匹配这个正则式：^([A-Z_]*|serialVersionUID)$"
+      },
+      {
+        "real_name": "ConstructoeParameterNaming",
+        "display_name": "ConstructoeParameterNaming",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "本规则针对构造函数命名",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "构造函数是否符合命名规范"
+      },
+      {
+        "real_name": "DataClassContainsFunctions",
+        "display_name": "DataClassContainsFunctions",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "本规则针对数据类的函数。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "数据类应主要用于存储数据，不应有任何额外的功能。 编译器会自动生成equals，toString和hashCode函数。"
+      },
+      {
+        "real_name": "DataClassShoudBeImmutable",
+        "display_name": "DataClassShoudBeImmutable",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "检测数据类中的可变属性",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "详情请看[官网](https://github.com/arturbosch/detekt/blob/master/docs/pages/documentation/style.md#dataclassshouldbeimmutable)"
+      },
+      {
+        "real_name": "DuplicateCaseInWhenExpression",
+        "display_name": "DuplicateCaseInWhenExpression",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "本规则针对在when表达式中出现重复的case的情况。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [
+          "推荐",
+          "基础"
+        ],
+        "description": "本规则针对在when表达式中出现重复的case的情况。当when表达式中出现重复的case，本规则就会报出错误。需要将重复case合并。"
+      },
+      {
+        "real_name": "EmptyCatchBlock",
+        "display_name": "EmptyCatchBlock",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "本规则针对空的catch代码块。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "检测到空的catch代码块时，报出警告。"
+      },
+      {
+        "real_name": "EmptyClassBlock",
+        "display_name": "EmptyClassBlock",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "本规则针对空的类代码块。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "检测到空的类代码块时，报出警告。"
+      },
+      {
+        "real_name": "EmptyDefaultConstructor",
+        "display_name": "EmptyDefaultConstructor",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "本规则针对空的默认构造器。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "检测到空的默认构造器时，报出警告。"
+      },
+      {
+        "real_name": "EmptyDoWhileBlock",
+        "display_name": "EmptyDoWhileBlock",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "本规则针对空的DoWhile代码块。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "检测到空的DoWhile代码块时，报出警告。"
+      },
+      {
+        "real_name": "EmptyElseBlock",
+        "display_name": "EmptyElseBlock",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "本规则针对空的else代码块。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "检测到空的else代码块时，报出警告。"
+      },
+      {
+        "real_name": "EmptyFinallyBlock",
+        "display_name": "EmptyFinallyBlock",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "本规则针对空的finally代码块。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "检测到空的finally代码块时，报出警告。"
+      },
+      {
+        "real_name": "EmptyForBlock",
+        "display_name": "EmptyForBlock",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "本规则针对空的for代码块。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "检测到空的for代码块时，报出警告。"
+      },
+      {
+        "real_name": "EmptyFunctionBlock",
+        "display_name": "EmptyFunctionBlock",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "本规则针对空的函数代码块。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "检测到空的函数代码块时，报出警告。"
+      },
+      {
+        "real_name": "EmptyIfBlock",
+        "display_name": "EmptyIfBlock",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "本规则针对空的if代码块。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "检测到if代码块时，报出警告。"
+      },
+      {
+        "real_name": "EmptyInitBlock",
+        "display_name": "EmptyInitBlock",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "本规则针对空的init代码块。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "检测到空的init代码块时，报出警告。"
+      },
+      {
+        "real_name": "EmptyKtFile",
+        "display_name": "EmptyKtFile",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "本规则针对空的kotlin文件。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "当检测到空的kotlin文件时，报出警告。"
+      },
+      {
+        "real_name": "EmptySecondaryConstructor",
+        "display_name": "EmptySecondaryConstructor",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "本规则针对空的次级构造器。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "检测到空的次级构造器时，报出警告。"
+      },
+      {
+        "real_name": "EmptyWhenBlock",
+        "display_name": "EmptyWhenBlock",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "本规则针对空的when代码块。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "检测到空的when代码块时，报出警告。"
+      },
+      {
+        "real_name": "EmptyWhileBlock",
+        "display_name": "EmptyWhileBlock",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "本规则针对空的while代码块。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "检测到空的while代码块时，报出警告。"
+      },
+      {
+        "real_name": "EndOfSentenceFormat",
+        "display_name": "EndOfSentenceFormat",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "本规则针对KDoc评论第一句的结尾。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "本规则针对KDoc评论第一句的结尾。它应该以适当的标点符号或正确的URL结尾。\n详情请查看[官网](https://arturbosch.github.io/detekt/comments.html#endofsentenceformat)"
+      },
+      {
+        "real_name": "EnumNaming",
+        "display_name": "EnumNaming",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "本规则针对枚举类型的命名。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "枚举类型的命名应匹配这个正则式：^[A-Z$][a-zA-Z_$]*$"
+      },
+      {
+        "real_name": "EqualsAlwaysReturnsTrueOrFalse",
+        "display_name": "EqualsAlwaysReturnsTrueOrFalse",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "本规则针对equals方法总是返回true或false情况",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "拥有一个总是返回true或false的equals方法不是一个好主意，这样不符合equals方法的初衷。"
+      },
+      {
+        "real_name": "EqualsNullCall",
+        "display_name": "EqualsNullCall",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "本规则针对以null作为参数调用Equals()方法。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "以null作为参数调用Equals()方法。考虑使用==来跟比较null。"
+      },
+      {
+        "real_name": "EqualsOnSignatureLine",
+        "display_name": "EqualsOnSignatureLine",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "当用于表达式样式函数时，需要等号与函数签名的其余部分位于同一行。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "详情请看[官网](https://github.com/arturbosch/detekt/blob/master/docs/pages/documentation/style.md#equalsonsignatureline)"
+      },
+      {
+        "real_name": "EqualsWithHashCodeExist",
+        "display_name": "EqualsWithHashCodeExist",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "本规则针对重写equals方法时覆盖hashcode的情况。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [
+          "推荐",
+          "基础"
+        ],
+        "description": "重写equals时，总是覆盖hashCode。 所有基于哈希的集合都取决于满足equals-contract的对象。 两个相等的对象必须产生相同的哈希码。 当继承equals或hashcode时，覆盖继承并调用super方法进行说明。"
+      },
+      {
+        "real_name": "ExceptionRaisedInUnexpectedLocation",
+        "display_name": "ExceptionRaisedInUnexpectedLocation",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "本规则针对预期外抛出的异常。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [
+          "推荐",
+          "基础"
+        ],
+        "description": "预期中，这个方法不应抛出异常，这将会导致结果出错。"
+      },
+      {
+        "real_name": "ExplicitGarbageCollectionCall",
+        "display_name": "ExplicitGarbageCollectionCall",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "本规则针对代码尝试设置JVM参数的情况。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [
+          "推荐",
+          "基础"
+        ],
+        "description": "不要试图认为你比JVM更聪明。你的代码应该能够独立工作，不管垃圾回收器是否在有效工作。当你面临内存问题时候，你应该修改你的代码，而不是尝试去修改JVM的参数。"
+      },
+      {
+        "real_name": "ExplicitItLambdaParameter",
+        "display_name": "ExplicitItLambdaParameter",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "检查Lambda表达式，使之更简洁",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "详情请看[官网](https://github.com/arturbosch/detekt/blob/master/docs/pages/documentation/style.md#explicititlambdaparameter)"
+      },
+      {
+        "real_name": "ExpressionBodySyntax",
+        "display_name": "ExpressionBodySyntax",
+        "severity": "info",
+        "category": "other",
+        "rule_title": null,
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "详情请看[官网](https://arturbosch.github.io/detekt/style.html#expressionbodysyntax)"
+      },
+      {
+        "real_name": "FeatureEnvy",
+        "display_name": "FeatureEnvy",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "本规则代码气味中的依赖情结。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "依赖情结FeatureEnvy：函数对某个类的兴趣高过于对自己所处类的兴趣.这种仰慕之情最通常的焦点便是数据。建议把这个函数移动到另一个类中。"
+      },
+      {
+        "real_name": "Filename",
+        "display_name": "Filename",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "检查顶层class名是否匹配文件名。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "集成ktlint的规则。可以参考ktlint[官网](https://ktlint.github.io)"
+      },
+      {
+        "real_name": "FinalNewline",
+        "display_name": "FinalNewline",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "检查文件最后需要另起一空行。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "集成ktlint的规则。可以参考ktlint[官网](https://ktlint.github.io)"
+      },
+      {
+        "real_name": "ForbiddenClassName",
+        "display_name": "ForbiddenClassName",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "本规则针对被禁止的类。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "包含指定模式字符串的命名会被禁止。"
+      },
+      {
+        "real_name": "ForbiddenComment",
+        "display_name": "ForbiddenComment",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "本规则针对禁止注释。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "设置一个禁止注释的标记。默认值为TODO：, FIXME：或STOPSHIP："
+      },
+      {
+        "real_name": "ForbiddenImport",
+        "display_name": "ForbiddenImport",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "本规则针对禁止import。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "标记禁止import。禁止import可能是不稳定/实验api的导入，因此您可能希望将其标记为禁止，以便获得有关使用的警告。"
+      },
+      {
+        "real_name": "ForbiddenVoid",
+        "display_name": "ForbiddenVoid",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "用于检测void用法",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "禁止使用void"
+      },
+      {
+        "real_name": "ForEachOnRange",
+        "display_name": "ForEachOnRange",
+        "severity": "error",
+        "category": "performance",
+        "rule_title": "本规则针对在ranges()函数上使用ForEach的情况。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [
+          "推荐",
+          "基础"
+        ],
+        "description": "在ranges()函数上使用ForEach过于消耗性能，建议使用简单的循环语句。"
+      },
+      {
+        "real_name": "FunctionMaxLength",
+        "display_name": "FunctionMaxLength",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "本规则针对函数名最长字符数。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "当函数命名超出一定字符数时，报出警告。"
+      },
+      {
+        "real_name": "FunctionMinLength",
+        "display_name": "FunctionMinLength",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "本规则针对函数名最短字符数。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "当检测到函数命名小于指定字符数时，报出警告。"
+      },
+      {
+        "real_name": "FunctionNaming",
+        "display_name": "FunctionNaming",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "本规则针对函数命名。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "函数命名应匹配这个正则式：^[a-z$][a-zA-Z$0-9]*$"
+      },
+      {
+        "real_name": "FunctionOnlyReturningConstant",
+        "display_name": "FunctionOnlyReturningConstant",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "本规则针对只返回一个常数的函数。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "函数不应该只会返回常数，建议定义一个常数。"
+      },
+      {
+        "real_name": "ImportOrdering",
+        "display_name": "ImportOrdering",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "检查import的顺序。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "在每个分组中按字母顺序排列，大写字母在小写字母之前（例如a之前的Z）。在每个主要分组（android，com，junit，net，org，java，javax）之间用空行分隔。\n集成ktlint的规则。可以参考ktlint[官网](https://ktlint.github.io)"
+      },
+      {
+        "real_name": "Indentation",
+        "display_name": "Indentation",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "检查缩进。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "集成ktlint的规则。可以参考ktlint[官网](https://ktlint.github.io)"
+      },
+      {
+        "real_name": "InstanceOfCheckForException",
+        "display_name": "InstanceOfCheckForException",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "本规则针对异常的不正确检查。",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [
+          "推荐",
+          "基础"
+        ],
+        "description": "不应该使用多个catch块检查了通用异常类型之后又检查特定的异常类型。"
+      },
+      {
+        "real_name": "InvalidLoopCondition",
+        "display_name": "InvalidLoopCondition",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "本规则针对无用的循环条件。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [
+          "推荐",
+          "基础"
+        ],
+        "description": "如果for循环条件在第一次迭代之前为false，循环将永远不会被执行。"
+      },
+      {
+        "real_name": "InvalidRange",
+        "display_name": "InvalidRange",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "本规则针对代码的无效range。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "报告range是空的。 这可能是一个错误，如果它被用作例如循环条件。 这个循环永远不会被触发。 这可能是由于像（10..9）这样的无效rang会导致循环永远不会被输入。详情清查看[官网](https://arturbosch.github.io/detekt/potential-bugs.html#invalidrange)"
+      },
+      {
+        "real_name": "IteratorHasNextCallsNextMethod",
+        "display_name": "IteratorHasNextCallsNextMethod",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "本规则针对迭代器hasNext()函数中调用next()方法的情况。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [
+          "推荐",
+          "基础"
+        ],
+        "description": "迭代器实现的hasNext()方法不应该调用next()方法。不能在hasNext()方法内更改迭代器的状态。 hasNext()方法不应该有任何副作用。"
+      },
+      {
+        "real_name": "IteratorNotThrowingNoSuchElementException",
+        "display_name": "IteratorNotThrowingNoSuchElementException",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "本规则针对迭代器没有元素返回时没有抛出异常的情况。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [
+          "推荐",
+          "基础"
+        ],
+        "description": "当没有更多的元素返回时，Iterator实现的next()方法应该抛出一个NoSuchElementException，"
+      },
+      {
+        "real_name": "LabeledExpression",
+        "display_name": "LabeledExpression",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "本规则针对带标签的表达式。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "带标签的表达式会增加复杂性并影响可维护性。"
+      },
+      {
+        "real_name": "LargeClass",
+        "display_name": "LargeClass",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "本规则针对大类。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "一个类应该只有一个职责。过大的类会同时处理多个事情。应该将大类拆分为一些更小的类，以便理解。"
+      },
+      {
+        "real_name": "LateinitUsage",
+        "display_name": "LateinitUsage",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "本规则针对的是lateinit的使用。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "使用lateinit进行属性初始化容易出错，请尝试使用构造函数进行初始化。"
+      },
+      {
+        "real_name": "LongMethod",
+        "display_name": "LongMethod",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "本规则针对过长方法。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "一个方法应该只能处理一个事情，过长方法会同时处理多个事情。建议拆分为一些更小的方法，以便理解。"
+      },
+      {
+        "real_name": "LongParameterList",
+        "display_name": "LongParameterList",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "本规则针对多参数的函数。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "函数参数多于某个阈值（默认为6）"
+      },
+      {
+        "real_name": "LoopWithTooManyJumpStatements",
+        "display_name": "LoopWithTooManyJumpStatements",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "本规则针对循环中过多的跳转语句。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "循环包含多个break或continue语句。应重构代码以提高可读性。"
+      },
+      {
+        "real_name": "MagicNumber",
+        "display_name": "MagicNumber",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "本规则针对魔术数。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "报告魔术数字。 魔数是一个数字字面值，并没有被定义为一个常量，因此这个数字的目的是不清楚的。 最好将这样的数字声明为常数，并给它们一个正确的名称。 默认情况下，-1，0，1和2不被认为是魔术数字。"
+      },
+      {
+        "real_name": "MandatoryBracesIfStatements",
+        "display_name": "MandatoryBracesIfStatements",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "这个规则检测多行if语句，这些语句没有大括号。 添加大括号可以提高可读性并避免可能的错误。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "详情请看[官网](https://arturbosch.github.io/detekt/style.html#mandatorybracesifstatements)"
+      },
+      {
+        "real_name": "MatchingDeclarationName",
+        "display_name": "MatchingDeclarationName",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "检查声明命名匹配",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "如果Kotlin文件包含单个非私有类（可能包含相关的顶级声明），则其名称应与该类的名称相同，并附加.kt扩展名。 如果文件包含多个类或仅包含顶级声明，请选择描述该文件包含的名称，并相应地命名该文件。 使用带大写第一个字母的驼峰（例如ProcessDeclarations.kt）。详情请看[官网](https://arturbosch.github.io/detekt/naming.html#matchingdeclarationname)"
+      },
+      {
+        "real_name": "MaximumLineLength",
+        "display_name": "MaximumLineLength",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "检查一行长度。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "集成ktlint的规则。可以参考ktlint[官网](https://ktlint.github.io)"
+      },
+      {
+        "real_name": "MaxLineLength",
+        "display_name": "MaxLineLength",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "本规则针对最大行的长度。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "检测到的行长度大于代码样式中定义的最大行长度。"
+      },
+      {
+        "real_name": "MayBeConst",
+        "display_name": "MayBeConst",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "本规则针对可能是常量的情况。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "此规则标识并报告可能是const val的属性（val）。 使用const val可以提高生成的字节码的性能，并提高与Java的互操作性。详情请看[官网](https://arturbosch.github.io/detekt/style.html#maybeconst)"
+      },
+      {
+        "real_name": "MemberNameEqualsClassName",
+        "display_name": "MemberNameEqualsClassName",
+        "severity": "error",
+        "category": "convention",
+        "rule_title": "检查类名与其方法名重复的情况",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "此规则报告与包含类或对象相同的成员。 这可能会导致混淆。 该成员应该被重命名或更改为构造函数。 创建该类实例的工厂函数不受此规则的限制。详情请看[官网](https://arturbosch.github.io/detekt/naming.html#membernameequalsclassname)"
+      },
+      {
+        "real_name": "MethodNameEqualsClassName",
+        "display_name": "MethodNameEqualsClassName",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "本规则针对方法名与类名同名的情况。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "一个方法以类命名。这可能会导致混乱。重命名方法或将其更改为构造函数。"
+      },
+      {
+        "real_name": "MethodOverloading",
+        "display_name": "MethodOverloading",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "本规则针对重载的函数方法。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "重载的方法往往可能难以维护。建议重构这些方法并尝试使用可选参数来避免重载。"
+      },
+      {
+        "real_name": "MissingWhenCase",
+        "display_name": "MissingWhenCase",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "用于检查when语句是否存在漏掉的case",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "最好处理所有情况或者使用else语句覆盖未处理情况"
+      },
+      {
+        "real_name": "ModifierOrder",
+        "display_name": "ModifierOrder",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "本规则针对修饰符顺序。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "修饰符顺序应为：PUBLIC_KEYWORD, PROTECTED_KEYWORD, PRIVATE_KEYWORD, INTERNAL_KEYWORD,FINAL_KEYWORD, OPEN_KEYWORD, ABSTRACT_KEYWORD,SUSPEND_KEYWORD, TAILREC_KEYWORD,OVERRIDE_KEYWORD,CONST_KEYWORD, LATEINIT_KEYWORD,INNER_KEYWORD, EXTERNAL_KEYWORD,ENUM_KEYWORD, ANNOTATION_KEYWORD, SEALED_KEYWORD, DATA_KEYWORD,COMPANION_KEYWORD,INLINE_KEYWORD,INFIX_KEYWORD,OPERATOR_KEYWORD"
+      },
+      {
+        "real_name": "ModifierOrdering",
+        "display_name": "ModifierOrdering",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "检查修饰符顺序。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "集成ktlint的规则。可以参考ktlint[官网](https://ktlint.github.io)"
+      },
+      {
+        "real_name": "NestedBlockDepth",
+        "display_name": "NestedBlockDepth",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "本规则针对代码块的嵌套。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "过多的嵌套会导致隐藏的复杂度。建议提取代码到函数，以便理解。"
+      },
+      {
+        "real_name": "NestedClassesVisibility",
+        "display_name": "NestedClassesVisibility",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "本规则针对嵌套类型的可视化。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "嵌套类型通常用于实现私有功能，因此这不应该是Public的。"
+      },
+      {
+        "real_name": "NewLineAtEndOfFile",
+        "display_name": "NewLineAtEndOfFile",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "本规则针对文件末尾有新行的情况。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "检查文件是否以行分隔符来结尾。"
+      },
+      {
+        "real_name": "NoBlankLineBeforeRbrace",
+        "display_name": "NoBlankLineBeforeRbrace",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "检查在\"}\"前没有空行。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "集成ktlint的规则。可以参考ktlint[官网](https://ktlint.github.io)"
+      },
+      {
+        "real_name": "NoConsecutiveBlankLines",
+        "display_name": "NoConsecutiveBlankLines",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "检查没有连续的空行。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "集成ktlint的规则。可以参考ktlint[官网](https://ktlint.github.io)"
+      },
+      {
+        "real_name": "NoEmptyClassBody",
+        "display_name": "NoEmptyClassBody",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "检查空类体。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "集成ktlint的规则。可以参考ktlint[官网](https://ktlint.github.io)"
+      },
+      {
+        "real_name": "NoItParamInMultilineLambda",
+        "display_name": "NoItParamInMultilineLambda",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "检查多行Lambda下的it参数。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "集成ktlint的规则。可以参考ktlint[官网](https://ktlint.github.io)"
+      },
+      {
+        "real_name": "NoLineBreakAfterElse",
+        "display_name": "NoLineBreakAfterElse",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "Reports line breaks after else",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "集成ktlint的规则。可以参考ktlint[官网](https://ktlint.github.io)"
+      },
+      {
+        "real_name": "NoLineBreakBeforeAssignment",
+        "display_name": "NoLineBreakBeforeAssignment",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "Reports line breaks after Assignment",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "集成ktlint的规则。可以参考ktlint[官网](https://ktlint.github.io)"
+      },
+      {
+        "real_name": "NoMultipleSpaces",
+        "display_name": "NoMultipleSpaces",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "检查多空格。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "集成ktlint的规则。可以参考ktlint[官网](https://ktlint.github.io)"
+      },
+      {
+        "real_name": "NoSemicolons",
+        "display_name": "NoSemicolons",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "检查分号。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "集成ktlint的规则。可以参考ktlint[官网](https://ktlint.github.io)"
+      },
+      {
+        "real_name": "NoTabs",
+        "display_name": "NoTabs",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "本规则针对文件tab的情况。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "此规则报告是否在Kotlin文件中使用制表符。 根据Google的Kotlin风格指南，源文件中允许的唯一空白字符是行终止符序列和ASCII水平空格字符（0x20）。详情请看[官网](https://arturbosch.github.io/detekt/style.html#notabs)"
+      },
+      {
+        "real_name": "NotImplementedDeclaration",
+        "display_name": "NotImplementedDeclaration",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "本规则针对没有实现声明的情况。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [
+          "推荐",
+          "基础"
+        ],
+        "description": "只有在需要方法存根时才应使用NotImplementedDeclaration。这将延迟开发此功能的功能。因此，NotImplementedDeclaration应仅作为临时声明。在发布之前，应该删除这种类型的声明。"
+      },
+      {
+        "real_name": "NoTrailingSpaces",
+        "display_name": "NoTrailingSpaces",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "检查尾随分号。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "集成ktlint的规则。可以参考ktlint[官网](https://ktlint.github.io)"
+      },
+      {
+        "real_name": "NoUnitReturn",
+        "display_name": "NoUnitReturn",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "检查'Unit'返回类型。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "集成ktlint的规则。可以参考ktlint[官网](https://ktlint.github.io)"
+      },
+      {
+        "real_name": "NoUnusedImports",
+        "display_name": "NoUnusedImports",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "检查无用import。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "集成ktlint的规则。可以参考ktlint[官网](https://ktlint.github.io)"
+      },
+      {
+        "real_name": "NoWildcardImports",
+        "display_name": "NoWildcardImports",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "检查通配符import。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "集成ktlint的规则。可以参考ktlint[官网](https://ktlint.github.io)"
+      },
+      {
+        "real_name": "ObjectPropertyNaming",
+        "display_name": "ObjectPropertyNaming",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "检查属性命名",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "报告何时使用不符合指定命名约定的对象内的属性名称。详情请看[官网](https://arturbosch.github.io/detekt/naming.html#objectpropertynaming)"
+      },
+      {
+        "real_name": "OptionalAbstractKeyword",
+        "display_name": "OptionalAbstractKeyword",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "本规则针对可选的抽象修饰符。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "接口中不必要的abstrct修饰符。"
+      },
+      {
+        "real_name": "OptionalUnit",
+        "display_name": "OptionalUnit",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "此规则检测并报告在函数上指定Unit返回类型的实例。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "没有必要在funtion上定义Unit的返回类型。 此规则检测并报告在函数上指定Unit返回类型的实例。详情请看[官网](https://arturbosch.github.io/detekt/style.html#optionalunit)"
+      },
+      {
+        "real_name": "OptionalWhenBraces",
+        "display_name": "OptionalWhenBraces",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "本规则针对when表达式中可选的括号。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "本规则针对when表达式中可选的括号。"
+      },
+      {
+        "real_name": "PackageDeclarationStyle",
+        "display_name": "PackageDeclarationStyle",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "本规则针对包声明风格。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "违反包声明风格。在包和导入声明后应该有一个空白行"
+      },
+      {
+        "real_name": "PackageNaming",
+        "display_name": "PackageNaming",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "本规则针对包的命名。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "包的命名应匹配这个正则式：^[a-z]+(\\.[a-z][a-z0-9]*)*$"
+      },
+      {
+        "real_name": "ParameterListWrapping",
+        "display_name": "ParameterListWrapping",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "Detects mis-aligned parameter lists",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "集成ktlint的规则。可以参考ktlint[官网](https://ktlint.github.io)"
+      },
+      {
+        "real_name": "prefertooverpairsyntax",
+        "display_name": "prefertooverpairsyntax",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "This rule detects the usage of the Pair constructor to create pairs of values.",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "详情请看[官网](https://arturbosch.github.io/detekt/style.html#prefertooverpairsyntax)"
+      },
+      {
+        "real_name": "PrintExceptionStackTrace",
+        "display_name": "PrintExceptionStackTrace",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "本规则针对没有打印异常的堆栈的情况。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "没有打印出异常的堆栈情况，可以使用logger替代。"
+      },
+      {
+        "real_name": "PrintStackTrace",
+        "display_name": "PrintStackTrace",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "本规则针对打印堆栈跟踪的情况。",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [
+          "推荐",
+          "基础"
+        ],
+        "description": "不要打印堆栈跟踪。这些调试语句应该用记录器替换或删除。"
+      },
+      {
+        "real_name": "ProtectedMemberInFinalClass",
+        "display_name": "ProtectedMemberInFinalClass",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "本规则针对final类的保护可见的成员是私有的情况。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "规则针对final类的保护可见的成员是私有的情况。建议使用private或者internal作为修饰符。"
+      },
+      {
+        "real_name": "RedundantElseWhen",
+        "display_name": "RedundantElseInWhen",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "检测是否有多余else案例",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "当所有case都涵盖后应该拒绝else使用"
+      },
+      {
+        "real_name": "RedundantVisibilityModifierRule",
+        "display_name": "RedundantVisibilityModifierRule",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "本规则针对冗余的显式修饰符。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "检查冗余可见性修饰符。Public是类的默认可见性。Public修饰符是多余的。"
+      },
+      {
+        "real_name": "RethrowCaughtException",
+        "display_name": "RethrowCaughtException",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "本规则针对重复抛出一样类型异常的情况。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [
+          "推荐",
+          "基础"
+        ],
+        "description": "不要重复抛出一样的异常类型。"
+      },
+      {
+        "real_name": "ReturnCount",
+        "display_name": "ReturnCount",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "本规则针对return语句数。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "限制方法中的return语句数。"
+      },
+      {
+        "real_name": "ReturnFromFinally",
+        "display_name": "ReturnFromFinally",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "本规则针对在finally代码块中返回函数返回值的情况。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [
+          "推荐",
+          "基础"
+        ],
+        "description": "不要在finally代码块中返回函数返回值，这会导致异常丢失。"
+      },
+      {
+        "real_name": "SafeCast",
+        "display_name": "SafeCast",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "本规则针对安全的类型转换。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "使用安全类型转换，而不是"
+      },
+      {
+        "real_name": "SerialVersionUIDInSerializableClass",
+        "display_name": "SerialVersionUIDInSerializableClass",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "本规则针对没有正确定义serialVersionUID字段的实现Serializable接口的类。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "实现Serializable接口的类没有定义正确的serialVersionUID字段。serialVersionUID字段应该是协同对象内的常量长值。"
+      },
+      {
+        "real_name": "SpacingAroundColon",
+        "display_name": "SpacingAroundColon",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "检查冒号周围空格",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "集成ktlint的规则。可以参考ktlint[官网](https://ktlint.github.io)"
+      },
+      {
+        "real_name": "SpacingAroundComma",
+        "display_name": "SpacingAroundComma",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "检查逗号周围空格",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "集成ktlint的规则。可以参考ktlint[官网](https://ktlint.github.io)"
+      },
+      {
+        "real_name": "SpacingAroundCurly",
+        "display_name": "SpacingAroundCurly",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "检查大括号周围空格",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "集成ktlint的规则。可以参考ktlint[官网](https://ktlint.github.io)"
+      },
+      {
+        "real_name": "SpacingAroundKeyword",
+        "display_name": "SpacingAroundKeyword",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "检查关键字周围空格",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "集成ktlint的规则。可以参考ktlint[官网](https://ktlint.github.io)"
+      },
+      {
+        "real_name": "SpacingAroundOperators",
+        "display_name": "SpacingAroundOperators",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "检查运算符周围空格",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "集成ktlint的规则。可以参考ktlint[官网](https://ktlint.github.io)"
+      },
+      {
+        "real_name": "SpacingAroundRangeOperator",
+        "display_name": "SpacingAroundRangeOperator",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "检查range运算符周围空格",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "集成ktlint的规则。可以参考ktlint[官网](https://ktlint.github.io)"
+      },
+      {
+        "real_name": "SpacingBetweenPackageAndImports",
+        "display_name": "SpacingBetweenPackageAndImports",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "This rule verifies spacing between package and import statements as well as between import statements and class declarations.",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "详情请看[官网](https://arturbosch.github.io/detekt/style.html#prefertooverpairsyntax)"
+      },
+      {
+        "real_name": "SpreadOperator",
+        "display_name": "SpreadOperator",
+        "severity": "warning",
+        "category": "performance",
+        "rule_title": "本规则针对spread运算符的使用。",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "spread运算符 * 的使用，会导致在调用函数之前，创建数组的副本，这是一个很高的性能损失。"
+      },
+      {
+        "real_name": "StringLiteralDuplication",
+        "display_name": "StringLiteralDuplication",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "本规则针对同一字符串字面量的多次出现。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "检测到单个kt文件中的同一字符串字面量的多次出现。建议提炼为属性或常量。"
+      },
+      {
+        "real_name": "StringTemplate",
+        "display_name": "StringTemplate",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "检查字符串周围空格",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "集成ktlint的规则。可以参考ktlint[官网](https://ktlint.github.io)"
+      },
+      {
+        "real_name": "SwallowedException",
+        "display_name": "SwallowedException",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "本规则针对被吞的异常。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [
+          "推荐",
+          "基础"
+        ],
+        "description": "被捕获的异常被吞噬掉了。这可能会导致原来的异常丢失。"
+      },
+      {
+        "real_name": "ThrowingExceptionFromFinally",
+        "display_name": "ThrowingExceptionFromFinally",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "本规则针对在finally代码块中抛出异常的情况。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [
+          "推荐",
+          "基础"
+        ],
+        "description": "不要在finally代码块中抛出异常，这可能会导致异常丢失，并且不方便开发分析异常。"
+      },
+      {
+        "real_name": "ThrowingExceptionInMain",
+        "display_name": "ThrowingExceptionInMain",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "本规则针对在main函数中抛出异常的情况。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [
+          "推荐",
+          "基础"
+        ],
+        "description": "main函数中不应该抛出异常。"
+      },
+      {
+        "real_name": "ThrowingExceptionsWithoutMessageOrCause",
+        "display_name": "ThrowingExceptionsWithoutMessageOrCause",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "本规则针对异常构造器的调用。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "检测到异常的默认构造函数的调用。不应该调用其中一个构造函数重载。 这允许提供更有意义的异常。"
+      },
+      {
+        "real_name": "ThrowingNewInstanceOfSameException",
+        "display_name": "ThrowingNewInstanceOfSameException",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "本规则针对同一异常的多次抛出。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [
+          "推荐",
+          "基础"
+        ],
+        "description": "避免在catch代码块中捕获同一异常的新实例。"
+      },
+      {
+        "real_name": "ThrowsCount",
+        "display_name": "ThrowsCount",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "本规则针对throws的数目。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "限制方法中throws的数目。"
+      },
+      {
+        "real_name": "TooGenericExceptionCaught",
+        "display_name": "TooGenericExceptionCaught",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "本规则针对过于频繁地捕获异常的情况。",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "过于频繁地捕获异常。针对报错来抛出特定异常会更好些。"
+      },
+      {
+        "real_name": "TooGenericExceptionThrown",
+        "display_name": "TooGenericExceptionThrown",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "本规则针对过于频繁抛出异常的情况。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "过于频繁地抛出异常。针对报错来抛出特定异常会更好些。"
+      },
+      {
+        "real_name": "TooManyFunctions",
+        "display_name": "TooManyFunctions",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "本规则针对过多函数。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "一个类，文件，接口中有过多的函数。建议将明显相同的功能提取到一个函数。"
+      },
+      {
+        "real_name": "TopLevelPropertyNaming",
+        "display_name": "TopLevelPropertyNaming",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "检查顶层的属性命名",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "详情请看[官网](https://arturbosch.github.io/detekt/naming.html#toplevelpropertynaming)"
+      },
+      {
+        "real_name": "TrailingWhitespace",
+        "display_name": "TrailingWhitespace",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "本规则针对行末的空格。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "详情请看[官网](https://arturbosch.github.io/detekt/style.html#trailingwhitespace)"
+      },
+      {
+        "real_name": "UnconditionalJumpStatementInLoop",
+        "display_name": "UnconditionalJumpStatementInLoop",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "本规则针对循环中的无条件跳转语句。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [
+          "推荐",
+          "基础"
+        ],
+        "description": "循环中的无条件跳转语句没有被使用到。而且循环本身只执行一次。"
+      },
+      {
+        "real_name": "UndocumentedPublicClass",
+        "display_name": "UndocumentedPublicClass",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "本规则针对没有注释的公有类。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Public的类、接口和对象需要注释文档。"
+      },
+      {
+        "real_name": "UndocumentedPublicFunction",
+        "display_name": "UndocumentedPublicFunction",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "本规则针对公有的函数。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Public的函数需要注释文档。"
+      },
+      {
+        "real_name": "UnnecessaryAbstractClass",
+        "display_name": "UnnecessaryAbstractClass",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "本规则针对非必要的抽象类。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "若抽象类是不必要的，我们可以对其重构。抽象类应具有抽象和具体的属性或功能。 没有具体成员的抽象类可以重构到一个接口。 没有抽象成员的抽象类可以重构到一个具体的类。"
+      },
+      {
+        "real_name": "UnnecessaryInheritance",
+        "display_name": "UnnecessaryInheritance",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "本规则针对不必要的继承。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "检查继承的父类型是否必要。"
+      },
+      {
+        "real_name": "UnnecessaryParentheses",
+        "display_name": "UnnecessaryParentheses",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "本规则针对不必要的括号。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "这些括号是不必要的，可以删除。"
+      },
+      {
+        "real_name": "UnnecessaryTemporaryInstantiation",
+        "display_name": "UnnecessaryTemporaryInstantiation",
+        "severity": "error",
+        "category": "performance",
+        "rule_title": "本规则针对非必要临时实例。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [
+          "推荐",
+          "基础"
+        ],
+        "description": "在将原始类型转换为字符串类型时候，应避免创建临时实例。"
+      },
+      {
+        "real_name": "UnreachableCode",
+        "display_name": "UnreachableCode",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "本规则针对无法访问到的代码。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [
+          "推荐",
+          "基础"
+        ],
+        "description": "检测到无法访问的代码。应该删除这段代码。"
+      },
+      {
+        "real_name": "UnsafeCallOnNullableType",
+        "display_name": "UnsafeCallOnNullableType",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "本规则针对可空值的不安全调用。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "如果可空的值为null，它将在运行时抛出NullPointerException。"
+      },
+      {
+        "real_name": "UnsafeCast",
+        "display_name": "UnsafeCast",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "本规则针对不安全的类型转换。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "如果类型转换不可行，类型转换运算会抛出异常。"
+      },
+      {
+        "real_name": "UntilInsteadOfRangeTo",
+        "display_name": "UntilInsteadOfRangeTo",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "报告调用'..'运算符而不是调用'until'。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "报告调用'..'运算符而不是调用'until'。'until'适用于上范围值被描述为某个值减1的情况。'until'有助于防止逐个错误。详情请看[官网](https://arturbosch.github.io/detekt/style.html#untilinsteadofrangeto)"
+      },
+      {
+        "real_name": "UnusedImports",
+        "display_name": "UnusedImports",
+        "severity": "info",
+        "category": "other",
+        "rule_title": null,
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "详情请看[官网](https://arturbosch.github.io/detekt/style.html#unusedimports)"
+      },
+      {
+        "real_name": "UnusedPrivateMember",
+        "display_name": "UnusedPrivateMember",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "本规则针对无用私有成员。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "详情请看[官网](https://arturbosch.github.io/detekt/style.html#unusedprivatemember)"
+      },
+      {
+        "real_name": "UseDataClass",
+        "display_name": "UseDataClass",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "本规则针对应该使用数据类的情况。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "那些只是存储数据而不做其他事情的类，应该被数据类取代。"
+      },
+      {
+        "real_name": "UselessPostfixExpression",
+        "display_name": "UselessPostfixExpression",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "本规则针对没有被使用到的后缀表达式。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "一个递增或递减的后缀表达式没有被使用到，表达式中的变量值将被替换为原始值。"
+      },
+      {
+        "real_name": "UtilityClassWithPublicConstructor",
+        "display_name": "UtilityClassWithPublicConstructor",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "本规则针对具有公共构造函数的Utility类。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "这种类的声明不必要，因为它只包含Utility函数，建议使用对象声明。"
+      },
+      {
+        "real_name": "VariableMaxLength",
+        "display_name": "VariableMaxLength",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "本规则针对变量名最大字符数。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "变量名的字符数应不大于指定数目。"
+      },
+      {
+        "real_name": "VariableMinLength",
+        "display_name": "VariableMinLength",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "本规则针对变量名的最小字符数。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "变量名的字符数应不大于指定数目。"
+      },
+      {
+        "real_name": "VariableNaming",
+        "display_name": "VariableNaming",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "本规则针对变量的命名。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "变量的命名应匹配这个正则式：^(_)?[a-z$][a-zA-Z$0-9]*$"
+      },
+      {
+        "real_name": "WildcardImport",
+        "display_name": "WildcardImport",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "本规则针对通配符import。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "通配符导入应使用全限定类名替换为导入。 通配符导入可能导致命名冲突。 库更新可以引入与您的类的命名冲突，从而导致编译错误。"
+      },
+      {
+        "real_name": "WrongEqualsTypeParameter",
+        "display_name": "WrongEqualsTypeParameter",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "本规则针对错误的equals()方法参数。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "kotlin"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [
+          "推荐",
+          "基础"
+        ],
+        "description": "发现equals()参数类型有错，可以使用Any?来重写equals()方法。"
+      }
+    ]
+  }
+]

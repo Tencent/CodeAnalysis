@@ -1,0 +1,268 @@
+[
+  {
+    "name": "【JavaScript】推荐规则包",
+    "description": "JavaScritp官方推荐规则包。",
+    "revision": null,
+    "package_type": "official",
+    "languages": [
+      "js"
+    ],
+    "labels": [
+      "推荐"
+    ],
+    "checkrule_set": [
+      {
+        "checktool": "eslint",
+        "checkrule": "no-unsafe-finally",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "no-unsafe-finally",
+        "checktool_display_name": "Eslint"
+      },
+      {
+        "checktool": "eslint",
+        "checkrule": "no-invalid-regexp",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "no-invalid-regexp",
+        "checktool_display_name": "Eslint"
+      },
+      {
+        "checktool": "eslint",
+        "checkrule": "no-func-assign",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "no-func-assign",
+        "checktool_display_name": "Eslint"
+      },
+      {
+        "checktool": "eslint",
+        "checkrule": "no-control-regex",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "no-control-regex",
+        "checktool_display_name": "Eslint"
+      },
+      {
+        "checktool": "eslint",
+        "checkrule": "no-const-assign",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "no-const-assign",
+        "checktool_display_name": "Eslint"
+      },
+      {
+        "checktool": "eslint",
+        "checkrule": "no-dupe-class-members",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "no-dupe-class-members",
+        "checktool_display_name": "Eslint"
+      },
+      {
+        "checktool": "eslint",
+        "checkrule": "no-delete-var",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "no-delete-var",
+        "checktool_display_name": "Eslint"
+      },
+      {
+        "checktool": "eslint",
+        "checkrule": "no-self-assign",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "no-self-assign",
+        "checktool_display_name": "Eslint"
+      },
+      {
+        "checktool": "eslint",
+        "checkrule": "no-case-declarations",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "no-case-declarations",
+        "checktool_display_name": "Eslint"
+      },
+      {
+        "checktool": "eslint",
+        "checkrule": "no-dupe-args",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "no-dupe-args",
+        "checktool_display_name": "Eslint"
+      },
+      {
+        "checktool": "eslint",
+        "checkrule": "no-dupe-keys",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "no-dupe-keys",
+        "checktool_display_name": "Eslint"
+      },
+      {
+        "checktool": "eslint",
+        "checkrule": "no-global-assign",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "no-global-assign",
+        "checktool_display_name": "Eslint"
+      },
+      {
+        "checktool": "eslint",
+        "checkrule": "no-unused-vars",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "no-unused-vars",
+        "checktool_display_name": "Eslint"
+      },
+      {
+        "checktool": "eslint",
+        "checkrule": "no-undef",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "no-undef",
+        "checktool_display_name": "Eslint"
+      },
+      {
+        "checktool": "eslint",
+        "checkrule": "no-unreachable",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "no-unreachable",
+        "checktool_display_name": "Eslint"
+      },
+      {
+        "checktool": "eslint",
+        "checkrule": "no-debugger",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "no-debugger",
+        "checktool_display_name": "Eslint"
+      },
+      {
+        "checktool": "eslint",
+        "checkrule": "eqeqeq",
+        "severity": "error",
+        "rule_params": "",
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "eqeqeq",
+        "checktool_display_name": "Eslint"
+      },
+      {
+        "checktool": "eslint",
+        "checkrule": "guard-for-in",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "guard-for-in",
+        "checktool_display_name": "Eslint"
+      },
+      {
+        "checktool": "eslint",
+        "checkrule": "no-loop-func",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "no-loop-func",
+        "checktool_display_name": "Eslint"
+      },
+      {
+        "checktool": "eslint",
+        "checkrule": "no-unsafe-negation",
+        "severity": "error",
+        "rule_params": "",
+        "state": "enabled",
+        "checkrule_category": "security",
+        "checkrule_display_name": "no-unsafe-negation",
+        "checktool_display_name": "Eslint"
+      },
+      {
+        "checktool": "eslint",
+        "checkrule": "no-eval",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "no-eval",
+        "checktool_display_name": "Eslint"
+      },
+      {
+        "checktool": "eslint",
+        "checkrule": "no-new-wrappers",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "no-new-wrappers",
+        "checktool_display_name": "Eslint"
+      },
+      {
+        "checktool": "eslint",
+        "checkrule": "prefer-promise-reject-errors",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "prefer-promise-reject-errors",
+        "checktool_display_name": "Eslint"
+      },
+      {
+        "checktool": "eslint",
+        "checkrule": "no-return-await",
+        "severity": "error",
+        "rule_params": "",
+        "state": "enabled",
+        "checkrule_category": "performance",
+        "checkrule_display_name": "no-return-await",
+        "checktool_display_name": "Eslint"
+      },
+      {
+        "checktool": "eslint",
+        "checkrule": "no-ex-assign",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "no-ex-assign",
+        "checktool_display_name": "Eslint"
+      }
+    ],
+    "open_saas": false,
+    "envs": null
+  }
+]

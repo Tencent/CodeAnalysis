@@ -1,0 +1,27 @@
+# python
+__pycache__
+*.py[co]
+*$py.class
+.python-version
+ENV/
+venv/
+env/
+
+# editor
+.idea/
+.vscode/
+
+# Test data
+*.log
+log/
+docker_data/
+mysql/
+staticroot/
+jobdata/
+data/
+celerybeat-schedule
+*/.DS_Store
+dump.rdb
+db.sqlite3
+file-master.pid
+

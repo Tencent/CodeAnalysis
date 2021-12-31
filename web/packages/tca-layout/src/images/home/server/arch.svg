@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="56px" height="56px" viewBox="0 0 56 56" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>icon复制 5</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="21.3382119%" y1="35.0350222%" x2="81.2593877%" y2="64.6882766%" id="linearGradient-1">
+            <stop stop-color="#349CFF" offset="0%"></stop>
+            <stop stop-color="#005DEA" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="28.3868295%" y1="0%" x2="73.5719585%" y2="99.0755044%" id="linearGradient-2">
+            <stop stop-color="#349CFF" offset="0%"></stop>
+            <stop stop-color="#005DEA" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="16.5633495%" y1="50%" x2="109.713676%" y2="50%" id="linearGradient-3">
+            <stop stop-color="#E2EEFF" offset="0%"></stop>
+            <stop stop-color="#A2BFE8" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="11.4904306%" y1="76.4540292%" x2="86.901819%" y2="76.4540292%" id="linearGradient-4">
+            <stop stop-color="#349CFF" offset="0%"></stop>
+            <stop stop-color="#005EEA" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="21.3382119%" y1="33.2584846%" x2="81.2593877%" y2="66.4319663%" id="linearGradient-5">
+            <stop stop-color="#349CFF" offset="0%"></stop>
+            <stop stop-color="#005DEA" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="16.0421164%" y1="75.6910904%" x2="87.9769212%" y2="75.6910904%" id="linearGradient-6">
+            <stop stop-color="#455B79" offset="0%"></stop>
+            <stop stop-color="#030D1C" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="13.6839956%" y1="15.606845%" x2="99.7028238%" y2="100%" id="linearGradient-7">
+            <stop stop-color="#455B79" offset="0%"></stop>
+            <stop stop-color="#061A38" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="OA官网" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="介绍页-代码分析-指定代码库分支" transform="translate(-300.000000, -1629.000000)">
+            <rect fill="#FFFFFF" x="0" y="0" width="1440" height="2635"></rect>
+            <g id="特性" transform="translate(0.000000, 1418.000000)">
+                <rect id="矩形" fill="#FFFFFF" x="0" y="0" width="1440" height="827"></rect>
+                <g id="全面的构建类型" transform="translate(140.000000, 196.000000)">
+                    <rect id="矩形" fill="#D8D8D8" opacity="0" x="0" y="0" width="376" height="252"></rect>
+                    <g id="icon复制-5" transform="translate(160.000000, 15.000000)">
+                        <g id="icon">
+                            <line x1="42.1666667" y1="20.0597015" x2="50.9166667" y2="15.4626866" id="直线" stroke="url(#linearGradient-1)" stroke-width="1.65925926"></line>
+                            <polygon id="路径-22" stroke="url(#linearGradient-2)" stroke-width="1.65925926" points="28 2.50746269 50.5 14.899416 50.5 40.8098637 28 54.3283582 5.5 40.8098637 5.5 14.899416"></polygon>
+                            <polygon id="路径-22" fill="url(#linearGradient-3)" points="28 9.19402985 44.6666667 18.3880597 44.6666667 37.6119403 28 47.641791 11.3333333 37.6119403 11.3333333 18.3880597"></polygon>
+                            <polygon id="路径-21" fill="url(#linearGradient-4)" points="11.3333333 18.3880597 28 27.8971251 28 47.641791 11.3333333 37.6119403 11.3333333 38.4477612"></polygon>
+                            <line x1="28" y1="28" x2="6.75" y2="16.2985075" id="直线" stroke="url(#linearGradient-5)" stroke-width="1.65925926"></line>
+                            <polygon id="路径-21" fill="url(#linearGradient-6)" transform="translate(36.333333, 33.014925) scale(-1, 1) translate(-36.333333, -33.014925) " points="28 18.3880597 44.6666667 27.8883697 44.6666667 47.641791 28 37.6119403"></polygon>
+                            <ellipse id="椭圆形" fill="url(#linearGradient-7)" cx="28.4166667" cy="2.08955224" rx="2.08333333" ry="2.08955224"></ellipse>
+                            <ellipse id="椭圆形" fill="url(#linearGradient-7)" cx="28" cy="27.5820896" rx="2.08333333" ry="2.08955224"></ellipse>
+                            <ellipse id="椭圆形" fill="url(#linearGradient-7)" cx="50.9166667" cy="15.4626866" rx="2.08333333" ry="2.08955224"></ellipse>
+                            <ellipse id="椭圆形" fill="url(#linearGradient-7)" cx="50.9166667" cy="40.5373134" rx="2.08333333" ry="2.08955224"></ellipse>
+                            <ellipse id="椭圆形" fill="url(#linearGradient-7)" cx="5.08333333" cy="41.3731343" rx="2.08333333" ry="2.08955224"></ellipse>
+                            <ellipse id="椭圆形" fill="url(#linearGradient-7)" cx="5.08333333" cy="15.4626866" rx="2.08333333" ry="2.08955224"></ellipse>
+                            <ellipse id="椭圆形" fill="url(#linearGradient-7)" cx="28.4166667" cy="53.9104478" rx="2.08333333" ry="2.08955224"></ellipse>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

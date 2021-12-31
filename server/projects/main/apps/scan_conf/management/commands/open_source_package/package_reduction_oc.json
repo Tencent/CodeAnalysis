@@ -1,0 +1,67 @@
+[
+    {
+        "name": "【Objective-C】减包扫描",
+        "description": "扫描无用代码和资源",
+        "revision": null,
+        "package_type": "official",
+        "languages": [
+            "oc"
+        ],
+        "labels": [
+            "推荐"
+        ],
+        "checkrule_set": [
+            {
+                "checktool": "unusedresource",
+                "checkrule": "UnusedPicture",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "clangwarning",
+                "checkrule": "unused-getter-return-value",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "clangwarning",
+                "checkrule": "unused-const-variable",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "clangwarning",
+                "checkrule": "unused-function",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "clangwarning",
+                "checkrule": "unused-variable",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "clangwarning",
+                "checkrule": "unused-value",
+                "severity": "info",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "clangwarning",
+                "checkrule": "unused-comparison",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            }
+        ],
+        "open_saas": false,
+        "envs": null
+    }
+]

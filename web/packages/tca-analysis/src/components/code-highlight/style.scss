@@ -1,0 +1,23 @@
+.code-high-light-row {
+  display: flex;
+  align-items: center;
+  font-family: "Source Code Pro,Menlo,Consolas,Monaco,monospace";
+  :global(.hljs) {
+    padding: 4px 0;
+    background-color: transparent;
+  }
+  .code-line {
+    flex: 0 0 50px;
+    text-align: right;
+    font-size: 13px;
+    padding-right: 10px;
+  }
+  .code-content {
+    flex: 1 1 auto;
+    border-left: 4px solid transparent;
+    padding-left: 10px;
+    :global(pre) {
+      margin: 0;
+    }
+  }
+}

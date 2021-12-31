@@ -1,0 +1,40 @@
+@import "@src/common/style/color.scss";
+
+.dropdownContainer {
+  display: inline-block;
+
+  .content {
+    padding: 4px;
+    border-radius: 2px;
+    transition: all 0.3s;
+    cursor: pointer;
+
+    .label {
+      color: $grey-7;
+    }
+
+    .cur-text {
+      display: inline-block;
+    }
+
+    .caret-down-icon {
+      color: $grey-6;
+    }
+
+    &:hover {
+      background-color: $grey-1;
+
+      .caret-down-icon {
+        color: $grey-8;
+      }
+    }
+  }
+
+  .clear {
+    color: $grey-7;
+
+    .clear-icon {
+      margin-right: 0!important;
+    }
+  }
+}

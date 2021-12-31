@@ -1,0 +1,130 @@
+#!/usr/bin/env python
+# -*- encoding: utf-8 -*-
+"""
+cobra: Cobra是一款源代码安全审计工具，支持检测多种开发语言源代码中的大部分显著的安全问题和漏洞。
+"""
+
+import json
+import os
+import shutil
+
+from task.scmmgr import SCMMgr
+from util.logutil import LogPrinter
+from util.pathlib import PathMgr
+from util.pathfilter import FilterPathUtil
+from task.codelintmodel import CodeLintModel
+from util.subprocc import SubProcController
+from task.basic.common import subprocc_log
+from util.exceptions import AnalyzeTaskError
+
+
+class Cobra(CodeLintModel):
+    def __init__(self, params):
+        CodeLintModel.__init__(self, params)
+        self.sensitive_word_maps = {"Cobra": "Tool", "cobra": "Tool"}
+
+    def analyze(self, params):
+        """
+        分析执行函数
+        :param params:
+        :return:
+        """
+        source_dir = params.source_dir
+        work_dir = params.work_dir
+        incr_scan = params["incr_scan"]
+        rules = params["rules"]
+        path_filter = FilterPathUtil(params)
+
+        error_output = os.path.join(work_dir, "result.json")
+        COBRA_HOME = os.environ.get("COBRA_HOME")
+
+        # 增量扫描和过滤
+        relpos = len(source_dir) + 1
+        if incr_scan:
+            diffs = SCMMgr(params).get_scm_diff()
+            toscans = [os.path.join(source_dir, diff.path) for diff in diffs if diff.state != "del"]
+        else:
+            toscans = [path for path in PathMgr().get_dir_files(source_dir)]
+
+        toscans = path_filter.get_include_files(toscans, relpos)
+        toscans = [path[relpos:].replace(os.sep, "/") for path in toscans]
+
+        LogPrinter.info(f"待扫描文件数是: {len(toscans)}")
+        toscan_dir = os.path.join(work_dir, "toscan_dir")
+        for path in toscans:
+            file_path = os.path.join(toscan_dir, path)
+            if not os.path.exists(os.path.dirname(file_path)):
+                os.makedirs(os.path.dirname(file_path))
+            shutil.copyfile(os.path.join(params.source_dir, path), file_path)
+
+        scan_cmd = [
+            "python",
+            "cobra.py",
+            "-t",
+            toscan_dir,
+            "-f",
+            "json",
+            "-o",
+            error_output,
+            "-d",
+        ]
+        if rules:
+            scan_cmd.extend(["-r", ",".join(rules)])
+
+        SubProcController(
+            scan_cmd, cwd=COBRA_HOME, stdout_line_callback=self.analyze_callback, stderr_line_callback=self.print_log
+        ).wait()
+
+        # 扫描完成之后，删除拷贝的代码
+        PathMgr().rmpath(toscan_dir)
+
+        if not os.path.exists(error_output):
+            LogPrinter.error("扫描结果不存在，请确认cobra是否安装成功，可以使用data/tools/cobra-v2.0.0-alpha.5/install.sh脚本进行安装！")
+            return []
+        with open(error_output, "r") as f:
+            raw_warning_json = json.loads(f.read())
+        issues = []
+        column = 0
+        for (_, value) in raw_warning_json.items():
+            vulns = value["vulnerabilities"]
+            for vuln in vulns:
+                path = vuln["file_path"]
+                if path_filter.should_filter_path(path):
+                    continue
+                line = int(vuln["line_number"])
+                rule = "CVI-" + vuln["id"]
+                if rule.startswith("CVI-999"):
+                    rule = "CVI-999XXX"
+
+                msg = vuln["solution"] + "\n" + vuln["analysis"]
+                issues.append({"path": path, "rule": rule, "msg": msg, "line": line, "column": column})
+
+        return issues
+
+    def analyze_callback(self, line):
+        """
+        输出回调处理
+        :param line:
+        :return:
+        """
+        subprocc_log(line)
+        if line.find("brew install findutils pleases!") != -1:
+            raise AnalyzeTaskError("请确认cobra是否安装成功，可以使用data/tools/cobra-v2.0.0-alpha.5/install.sh脚本进行安装")
+
+    def check_tool_usable(self, tool_params):
+        """
+        这里判断机器上是否可以正常执行cobra脚本，不行的话便把任务发布给其他公线机器执行
+        :return:
+        """
+        if SubProcController(["python", "--version"]).wait() != 0:
+            return []
+        if SubProcController(["python", "cobra.py", "--help"], cwd=os.environ.get("COBRA_HOME")).wait() != 0:
+            LogPrinter.error("cobra不可用，建议客户使用data/tools/cobra-v2.0.0-alpha.5/install.sh脚本进行安装！")
+            return []
+        return ["analyze"]
+
+
+tool = Cobra
+
+if __name__ == "__main__":
+    pass

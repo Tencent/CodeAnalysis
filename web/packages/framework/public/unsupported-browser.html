@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1">
+  <title>__TITLE__ - 不支持当前浏览器</title>
+  <meta name="Keywords" content="__KEYWORDS__">
+  <meta name="Description" content="__DESCRIPTION__">
+  <link rel="icon" type="image/x-icon" href="__FAVICON__">
+  <link rel="shortcut icon" type="image/x-icon" href="__FAVICON__">
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: PingFang SC, Helvetica Neue, Hiragino Sans GB, Segoe UI, Microsoft YaHei, sans-serif;
+      font-size: 14px;
+      line-height: 1.5;
+      color: #202d40;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      position: absolute;
+      left: 50%;
+      top: 45%;
+      transform: translate(-50%, -45%);
+    }
+
+    .container h1 {
+      margin-bottom: 30px;
+      font-size: 60px;
+      font-weight: 500;
+      text-align: center;
+    }
+
+    .container .summary {
+      margin-bottom: 50px;
+      font-size: 18px;
+    }
+
+    .browser-list {
+      list-style: none;
+      text-align: center;
+    }
+
+    .browser-list li {
+      display: inline-block;
+      width: 174px;
+    }
+
+    .browser-item {
+      padding: 0 50px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>不支持当前浏览器</h1>
+    <p class="summary">请您使用最新版本的 Chrome、Firefox、Safari 浏览器，获得最佳使用体验</p>
+    <ul class="browser-list">
+      <li>
+        <div class="browser-item">
+          <img src="static/images/chrome.svg" alt="Chrome">
+          <span>Chrome</span>
+        </div>
+      </li>
+      <li>
+        <div class="browser-item">
+          <img src="static/images/firefox.svg" alt="Firefox">
+          <span>Firefox</span>
+        </div>
+      </li>
+      <li>
+        <div class="browser-item">
+          <img src="static/images/safari.svg" alt="Safari">
+          <span>Safari</span>
+        </div>
+      </li>
+    </ul>
+  </div>
+</body>
+
+</html>

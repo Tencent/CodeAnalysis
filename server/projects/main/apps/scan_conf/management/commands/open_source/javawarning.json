@@ -1,0 +1,690 @@
+[
+    {
+        "name": "javawarning",
+        "display_name": "JavaWarning",
+        "description": "Java编译警告扫描（需要编译）\n若需接入，需额外配置。",
+        "license": "自研工具",
+        "libscheme_set": [],
+        "task_processes": [
+            "analyze",
+            "datahandle",
+            "compile"
+        ],
+        "scan_app": "codelint",
+        "scm_url": null,
+        "run_cmd": null,
+        "envs": null,
+        "build_flag": true,
+        "checkrule_set": [
+            {
+                "real_name": "boxing",
+                "display_name": "boxing",
+                "severity": "warning",
+                "category": "correctness",
+                "rule_title": "warnings relative to boxing/unboxing operations",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "java"
+                ],
+                "solution": "建议解决项目编译警告。",
+                "owner": null,
+                "labels": [
+                    "通用"
+                ],
+                "description": "warnings relative to boxing/unboxing operations.\nBoxing and unboxing conversions",
+                "disable": false
+            },
+            {
+                "real_name": "cast",
+                "display_name": "cast",
+                "severity": "warning",
+                "category": "correctness",
+                "rule_title": "warnings relative to cast operations",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "java"
+                ],
+                "solution": "建议解决项目编译警告。",
+                "owner": null,
+                "labels": [
+                    "通用"
+                ],
+                "description": "warnings relative to cast operations.\nUnnecessary cast or 'instanceof' operation",
+                "disable": false
+            },
+            {
+                "real_name": "classfile",
+                "display_name": "classfile",
+                "severity": "warning",
+                "category": "correctness",
+                "rule_title": "warnings relative to classfile contents",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "java"
+                ],
+                "solution": "建议解决项目编译警告。",
+                "owner": null,
+                "labels": [
+                    "通用"
+                ],
+                "description": "warnings relative to classfile contents.\n参考[文献](https://docs.oracle.com/javase/7/docs/technotes/tools/solaris/javac.html)",
+                "disable": false
+            },
+            {
+                "real_name": "dep-ann",
+                "display_name": "dep-ann",
+                "severity": "warning",
+                "category": "correctness",
+                "rule_title": "warnings relative to deprecated annotation",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "java"
+                ],
+                "solution": "建议解决项目编译警告。",
+                "owner": null,
+                "labels": [
+                    "通用"
+                ],
+                "description": "warnings relative to deprecated annotation.\nMissing '@Deprecated' annotation",
+                "disable": false
+            },
+            {
+                "real_name": "deprecation",
+                "display_name": "deprecation",
+                "severity": "warning",
+                "category": "correctness",
+                "rule_title": "warnings relative to deprecation",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "java"
+                ],
+                "solution": "建议解决项目编译警告。",
+                "owner": null,
+                "labels": [
+                    "通用"
+                ],
+                "description": "warnings relative to deprecation.\nDeprecated API",
+                "disable": false
+            },
+            {
+                "real_name": "divzero",
+                "display_name": "divzero",
+                "severity": "error",
+                "category": "correctness",
+                "rule_title": "warnings relative to division by constant integer 0",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "java"
+                ],
+                "solution": "建议解决项目编译警告。",
+                "owner": null,
+                "labels": [
+                    "通用"
+                ],
+                "description": "warnings relative to division by constant integer 0.For example:\n int divideByZero = 42 / 0;\n参考[文献](https://docs.oracle.com/javase/7/docs/technotes/tools/solaris/javac.html)",
+                "disable": false
+            },
+            {
+                "real_name": "empty",
+                "display_name": "empty",
+                "severity": "warning",
+                "category": "correctness",
+                "rule_title": "warnings relative to empty statements after if statements.",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "java"
+                ],
+                "solution": "建议解决项目编译警告。",
+                "owner": null,
+                "labels": [
+                    "通用"
+                ],
+                "description": "warnings relative to empty statements after if statements.\n参考[文献](https://docs.oracle.com/javase/7/docs/technotes/tools/solaris/javac.html)",
+                "disable": false
+            },
+            {
+                "real_name": "fallthrough",
+                "display_name": "fallthrough",
+                "severity": "warning",
+                "category": "correctness",
+                "rule_title": "warnings relative to missing breaks in switch statements",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "java"
+                ],
+                "solution": "建议解决项目编译警告。",
+                "owner": null,
+                "labels": [
+                    "通用"
+                ],
+                "description": "warnings relative to missing breaks in switch statements.\n'switch' case fall-through",
+                "disable": false
+            },
+            {
+                "real_name": "finally",
+                "display_name": "finally",
+                "severity": "warning",
+                "category": "correctness",
+                "rule_title": "warnings relative to finally block that don't return",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "java"
+                ],
+                "solution": "建议解决项目编译警告。",
+                "owner": null,
+                "labels": [
+                    "通用"
+                ],
+                "description": "warnings relative to finally block that don't return.\n'finally' does not complete normally",
+                "disable": false
+            },
+            {
+                "real_name": "hiding",
+                "display_name": "hiding",
+                "severity": "warning",
+                "category": "correctness",
+                "rule_title": "warnings relative to locals that hide variable",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "java"
+                ],
+                "solution": "建议解决项目编译警告。",
+                "owner": null,
+                "labels": [
+                    "通用"
+                ],
+                "description": "warnings relative to locals that hide variable.\nLocal variable declaration hides another field or variable",
+                "disable": false
+            },
+            {
+                "real_name": "incomplete-switch",
+                "display_name": "incomplete-switch",
+                "severity": "warning",
+                "category": "correctness",
+                "rule_title": "warnings relative to missing entries in a switch statement (enum case)",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "java"
+                ],
+                "solution": "建议解决项目编译警告。",
+                "owner": null,
+                "labels": [
+                    "通用"
+                ],
+                "description": "warnings relative to missing entries in a switch statement (enum case).\nIncomplete 'switch' cases on enum",
+                "disable": false
+            },
+            {
+                "real_name": "javadoc",
+                "display_name": "javadoc",
+                "severity": "warning",
+                "category": "correctness",
+                "rule_title": "warnings relative to javadoc warnings",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "java"
+                ],
+                "solution": "建议解决项目编译警告。",
+                "owner": null,
+                "labels": [
+                    "通用"
+                ],
+                "description": "warnings relative to javadoc warnings.\nAll options in [Java Compiler Javadoc Preferences](https://rtist.hcldoc.com/help/index.jsp?topic=%2Forg.eclipse.jdt.doc.user%2Freference%2Fpreferences%2Fjava%2Fcompiler%2Fref-preferences-javadoc.htm)",
+                "disable": false
+            },
+            {
+                "real_name": "nls",
+                "display_name": "nls",
+                "severity": "warning",
+                "category": "correctness",
+                "rule_title": "warnings relative to non-nls string literals",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "java"
+                ],
+                "solution": "建议解决项目编译警告。",
+                "owner": null,
+                "labels": [
+                    "通用"
+                ],
+                "description": "warnings relative to non-nls string literals.\nNon-externalized strings",
+                "disable": false
+            },
+            {
+                "real_name": "null",
+                "display_name": "null",
+                "severity": "warning",
+                "category": "correctness",
+                "rule_title": "warnings relative to null analysis",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "java"
+                ],
+                "solution": "建议解决项目编译警告。",
+                "owner": null,
+                "labels": [
+                    "通用"
+                ],
+                "description": "warnings relative to null analysis.\nAll options in [Java Compile Errors/Warnings Preferences for Null Analysis](https://rtist.hcldoc.com/help/index.jsp?topic=%2Forg.eclipse.jdt.doc.user%2Freference%2Fpreferences%2Fjava%2Fcompiler%2Fref-preferences-errors-warnings.htm&anchor=null_analysis)",
+                "disable": false
+            },
+            {
+                "real_name": "options",
+                "display_name": "options",
+                "severity": "warning",
+                "category": "correctness",
+                "rule_title": "warnings relative to the use of command line options.",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "java"
+                ],
+                "solution": "建议解决项目编译警告。",
+                "owner": null,
+                "labels": [
+                    "通用"
+                ],
+                "description": "warnings relative to the use of command line options.\n参考[文献](https://docs.oracle.com/javase/7/docs/technotes/tools/solaris/javac.html)",
+                "disable": false
+            },
+            {
+                "real_name": "overrides",
+                "display_name": "overrides",
+                "severity": "warning",
+                "category": "correctness",
+                "rule_title": "warnings relative to regarding method overrides",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "java"
+                ],
+                "solution": "建议解决项目编译警告。",
+                "owner": null,
+                "labels": [
+                    "通用"
+                ],
+                "description": "warnings relative to regarding method overrides.\n参考[文献](https://docs.oracle.com/javase/7/docs/technotes/tools/solaris/javac.html)",
+                "disable": false
+            },
+            {
+                "real_name": "path",
+                "display_name": "path",
+                "severity": "warning",
+                "category": "correctness",
+                "rule_title": "Warn about invalid path elements and nonexistent path directories on the command line (with regards to the class path, the source path, and other paths)",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "java"
+                ],
+                "solution": "建议解决项目编译警告。",
+                "owner": null,
+                "labels": [
+                    "通用"
+                ],
+                "description": "Warn about invalid path elements and nonexistent path directories on the command line (with regards to the class path, the source path, and other paths). \n参考[文献](https://docs.oracle.com/javase/7/docs/technotes/tools/solaris/javac.html)",
+                "disable": false
+            },
+            {
+                "real_name": "processing",
+                "display_name": "processing",
+                "severity": "warning",
+                "category": "correctness",
+                "rule_title": "Warn about issues regarding annotation processing.",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "java"
+                ],
+                "solution": "建议解决项目编译警告。",
+                "owner": null,
+                "labels": [
+                    "通用"
+                ],
+                "description": "Warn about issues regarding annotation processing.\n参考[文献](https://docs.oracle.com/javase/7/docs/technotes/tools/solaris/javac.html)",
+                "disable": false
+            },
+            {
+                "real_name": "rawtypes",
+                "display_name": "rawtypes",
+                "severity": "warning",
+                "category": "correctness",
+                "rule_title": "warnings relative to usage of raw types",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "java"
+                ],
+                "solution": "建议解决项目编译警告。",
+                "owner": null,
+                "labels": [
+                    "通用"
+                ],
+                "description": "warnings relative to usage of raw types.\nUsage of a raw type",
+                "disable": false
+            },
+            {
+                "real_name": "removal",
+                "display_name": "removal",
+                "severity": "warning",
+                "category": "correctness",
+                "rule_title": "warnings relative to usage of terminally deprecated API",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "java"
+                ],
+                "solution": "建议解决项目编译警告。",
+                "owner": null,
+                "labels": [
+                    "通用"
+                ],
+                "description": "warnings relative to usage of terminally deprecated API.\nForbidden reference (access rules)\nDiscouraged reference (access rules)",
+                "disable": false
+            },
+            {
+                "real_name": "resource",
+                "display_name": "resource",
+                "severity": "warning",
+                "category": "correctness",
+                "rule_title": "warnings relative to usage of resources of type Closeable",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "java"
+                ],
+                "solution": "建议解决项目编译警告。",
+                "owner": null,
+                "labels": [
+                    "通用"
+                ],
+                "description": "warnings relative to usage of resources of type Closeable.\nResource leak\nPotential resource leak\nResource not managed via try-with-resource",
+                "disable": false
+            },
+            {
+                "real_name": "restriction",
+                "display_name": "restriction",
+                "severity": "warning",
+                "category": "correctness",
+                "rule_title": "warnings relative to usage of discouraged or forbidden references",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "java"
+                ],
+                "solution": "建议解决项目编译警告。",
+                "owner": null,
+                "labels": [
+                    "通用"
+                ],
+                "description": "warnings relative to usage of discouraged or forbidden references.\nForbidden reference (access rules)\nDiscouraged reference (access rules)",
+                "disable": false
+            },
+            {
+                "real_name": "serial",
+                "display_name": "serial",
+                "severity": "warning",
+                "category": "correctness",
+                "rule_title": "warnings relative to missing serialVersionUID field for a serializable class",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "java"
+                ],
+                "solution": "建议解决项目编译警告。",
+                "owner": null,
+                "labels": [
+                    "通用"
+                ],
+                "description": "warnings relative to missing serialVersionUID field for a serializable class.\nSerializable class without serialVersionUID",
+                "disable": false
+            },
+            {
+                "real_name": "static",
+                "display_name": "static",
+                "severity": "warning",
+                "category": "correctness",
+                "rule_title": "Warn about issues relating to use of statics.",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "java"
+                ],
+                "solution": "建议解决项目编译警告。",
+                "owner": null,
+                "labels": [
+                    "通用"
+                ],
+                "description": "Warn about issues relating to use of statics.\n参考[文献](https://docs.oracle.com/javase/7/docs/technotes/tools/solaris/javac.html)",
+                "disable": false
+            },
+            {
+                "real_name": "static-access",
+                "display_name": "static-access",
+                "severity": "warning",
+                "category": "correctness",
+                "rule_title": "warnings relative to incorrect static access",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "java"
+                ],
+                "solution": "建议解决项目编译警告。",
+                "owner": null,
+                "labels": [
+                    "通用"
+                ],
+                "description": "warnings relative to incorrect static access.\nNon-static access to a static member\nIndirect access to a static member",
+                "disable": false
+            },
+            {
+                "real_name": "static-method",
+                "display_name": "static-method",
+                "severity": "warning",
+                "category": "correctness",
+                "rule_title": "warnings relative to methods that could be declared as static",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "java"
+                ],
+                "solution": "建议解决项目编译警告。",
+                "owner": null,
+                "labels": [
+                    "通用"
+                ],
+                "description": "warnings relative to methods that could be declared as static.\nMethod can be static\nMethod can potentially be static",
+                "disable": false
+            },
+            {
+                "real_name": "super",
+                "display_name": "super",
+                "severity": "warning",
+                "category": "correctness",
+                "rule_title": "warnings relative to overriding a method without super invocations",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "java"
+                ],
+                "solution": "建议解决项目编译警告。",
+                "owner": null,
+                "labels": [
+                    "通用"
+                ],
+                "description": "warnings relative to overriding a method without super invocations",
+                "disable": false
+            },
+            {
+                "real_name": "sync-override",
+                "display_name": "sync-override",
+                "severity": "warning",
+                "category": "correctness",
+                "rule_title": "warnings because of missing synchronize when overriding a synchronized method",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "java"
+                ],
+                "solution": "建议解决项目编译警告。",
+                "owner": null,
+                "labels": [
+                    "通用"
+                ],
+                "description": "warnings because of missing synchronize when overriding a synchronized method.\nMissing synchronized modifier on inherited method",
+                "disable": false
+            },
+            {
+                "real_name": "synthetic-access",
+                "display_name": "synthetic-access",
+                "severity": "warning",
+                "category": "correctness",
+                "rule_title": "warnings relative to unoptimized access from inner classes",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "java"
+                ],
+                "solution": "建议解决项目编译警告。",
+                "owner": null,
+                "labels": [
+                    "通用"
+                ],
+                "description": "warnings relative to unoptimized access from inner classes",
+                "disable": false
+            },
+            {
+                "real_name": "try",
+                "display_name": "try",
+                "severity": "warning",
+                "category": "correctness",
+                "rule_title": "Warn about issues relating to use of try blocks, including try-with-resources statements.",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "java"
+                ],
+                "solution": "建议解决项目编译警告。",
+                "owner": null,
+                "labels": [
+                    "通用"
+                ],
+                "description": "Warn about issues relating to use of try blocks, including try-with-resources statements.\n参考[文献](https://docs.oracle.com/javase/7/docs/technotes/tools/solaris/javac.html)",
+                "disable": false
+            },
+            {
+                "real_name": "unchecked",
+                "display_name": "unchecked",
+                "severity": "warning",
+                "category": "correctness",
+                "rule_title": "warnings relative to unchecked operations",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "java"
+                ],
+                "solution": "建议解决项目编译警告。",
+                "owner": null,
+                "labels": [
+                    "通用"
+                ],
+                "description": "warnings relative to unchecked operations.\nUnchecked generic type operation",
+                "disable": false
+            },
+            {
+                "real_name": "unlikely-arg-type",
+                "display_name": "unlikely-arg-type",
+                "severity": "warning",
+                "category": "correctness",
+                "rule_title": "warnings relative to unlikely argument types",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "java"
+                ],
+                "solution": "建议解决项目编译警告。",
+                "owner": null,
+                "labels": [
+                    "通用"
+                ],
+                "description": "warnings relative to unlikely argument types.\nUnqualified access to instance field",
+                "disable": false
+            },
+            {
+                "real_name": "unqualified-field-access",
+                "display_name": "unqualified-field-access",
+                "severity": "warning",
+                "category": "correctness",
+                "rule_title": "warnings relative to field access unqualified",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "java"
+                ],
+                "solution": "建议解决项目编译警告。",
+                "owner": null,
+                "labels": [
+                    "通用"
+                ],
+                "description": "warnings relative to field access unqualified.\nUnqualified access to instance field",
+                "disable": false
+            },
+            {
+                "real_name": "unused",
+                "display_name": "unused",
+                "severity": "warning",
+                "category": "correctness",
+                "rule_title": "warnings relative to unused code and dead code",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "java"
+                ],
+                "solution": "建议解决项目编译警告。",
+                "owner": null,
+                "labels": [
+                    "通用"
+                ],
+                "description": "warnings relative to unused code and dead code.\nDead code\nUnused object allocation\nValue of local variable is not used\nValue of method parameter is not used\nValue of exception parameter is not used\nUnused type parameter\nUnused import\nUnused private member\nUnused 'break' or 'continue' label",
+                "disable": false
+            },
+            {
+                "real_name": "varargs",
+                "display_name": "varargs",
+                "severity": "warning",
+                "category": "correctness",
+                "rule_title": "Warn about unsafe usages of variable arguments (varargs) methods, in particular, those that contain non-reifiable arguments.",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "java"
+                ],
+                "solution": "建议解决项目编译警告。",
+                "owner": null,
+                "labels": [
+                    "通用"
+                ],
+                "description": "Warn about unsafe usages of variable arguments (varargs) methods, in particular, those that contain non-reifiable arguments. \n参考[文献](https://docs.oracle.com/javase/7/docs/technotes/tools/solaris/javac.html)",
+                "disable": false
+            }
+        ],
+        "open_user": true,
+        "open_saas": false,
+        "virtual_name": "125",
+        "show_display_name": true
+    }
+]

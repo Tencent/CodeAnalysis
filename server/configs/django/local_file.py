@@ -1,0 +1,63 @@
+# -*- coding: utf-8 -*-
+"""
+服务: FTPServer
+"""
+import os
+
+DEBUG = True if os.environ.get("FILE_DEBUG_MODE") == "true" else False
+
+SECRET_KEY = os.environ.get("FILE_SECRET_KEY", "4uf)0sfdth1bn7t450_6)_^+pcx4qa8_nw5l1!g3gp%0loq5p^")
+
+# 服务域名
+SITE_URL = os.environ.get("FILE_SITE_URL")
+
+# sentry 上报路径， 如希望独立上报后台异常，可换用其他 sentry dsn
+SENTRY_DSN = os.environ.get("FILE_SENTRY_DSN")
+
+# 数据库配置
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.mysql",
+        "NAME": os.environ.get("FILE_DB_NAME", "codedog_file"),
+        "USER": os.environ.get("FILE_DB_USER"),
+        "PASSWORD": os.environ.get("FILE_DB_PASSWORD"),
+        "HOST": os.environ.get("FILE_DB_HOST"),
+        "PORT": os.environ.get("FILE_DB_PORT"),
+        # "OPTIONS": {"charset":"utf8mb4"},
+    },
+}
+
+# 存储引擎配置
+# 本地存储
+STORAGE = {
+    "CLIENT": os.environ.get("FILE_STORAGE_CLIENT", "LOCAL"),  # 存储方式
+    "OPTIONS": {
+        "DEFAULT_STORAGE_ROOT_DIR": os.environ.get("FILE_STORAGE_DIR", "data/ftp/"),  
+    }
+}
+
+# COS
+# STORAGE = {
+#     "CLIENT": os.environ.get("FILE_STORAGE_CLIENT", "COS"),  # 存储方式
+#     "OPTIONS": {
+#         "TENCENT_COS_APPID": os.environ.get("TENCENT_COS_APPID", ""),
+#         "TENCENT_COS_SECRETID": os.environ.get("TENCENT_COS_SECRETID", ""),
+#         "TENCENT_COS_SECRETKEY": os.environ.get("TENCENT_COS_SECRETKEY", ""),
+#         "TENCENT_COS_REGION": os.environ.get("TENCENT_COS_REGION", ""),
+#         "TENCENT_COS_ROOT_BUCKET": os.environ.get("TENCENT_COS_ROOT_BUCKET", "bucket-appid"),
+#     }
+# }
+
+# MINIO
+# STORAGE = {
+#     "CLIENT": os.environ.get("FILE_STORAGE_CLIENT", "MINIO"),  # 存储方式
+#     "OPTIONS": {
+#         "MINIO_ENTRYPOINT": os.environ.get("FILE_MINIO_ENTRYPOINT", "<MinIO 服务host>"),
+#         "MINIO_ACCESS_KEY": os.environ.get("FILE_MINIO_ACCESS_KEY", "<MinIO access key>"),
+#         "MINIO_SECRET_KEY": os.environ.get("FILE_MINIO_SECRET_KEY", "<MinIO secret key>"),
+#     }
+# }
+
+# API Ticket
+API_TICKET_SALT = os.environ.get("API_TICKET_SALT")
+API_TICKET_TOKEN = os.environ.get("API_TICKET_TOKEN")

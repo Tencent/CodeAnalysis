@@ -1,0 +1,1144 @@
+[
+  {
+    "name": "cpplint",
+    "display_name": "CppLint",
+    "description": "cpp static analyzer\ncpplint version 1.4.5",
+    "license": "BSD",
+    "task_processes": [
+      "analyze",
+      "datahandle"
+    ],
+    "scan_app": "codelint",
+    "scm_url": null,
+    "run_cmd": null,
+    "envs": null,
+    "build_flag": false,
+    "show_display_name": true,
+    "checkrule_set": [
+      {
+        "real_name": "build/c++11",
+        "display_name": "build/c++11",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "检查未批准的C++特性的使用",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Unapproved C++11 header, class or function.\r\n\r\n1.检查对C++11标准提到的右值引用的使用，如果检查到使用右值引用，给出警告（未批准的C++特性）。\r\n2. 检查是否使用了默认的lambda捕获，如果使用了，给出警告（未批准的C++特性）。\r\n3. 检查是否include了未批准的C++特性的头文件，如cfenv、condition_variable等。如果检查到了，给出警告。\r\n4. 检查是否使用了std: : alignment_of或std: : aligned_union，如果使用了，给出警告。",
+        "disable": false
+      },
+      {
+        "real_name": "build/c++14",
+        "display_name": "build/c++14",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "检查是否使用了未经批准的C++14头文件",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Unapproved C++14 header.\r\n\r\n1.检查是否使用了未经批准的C++14头文件，如果使用了，给出警告。",
+        "disable": false
+      },
+      {
+        "real_name": "build/c++tr1",
+        "display_name": "build/c++tr1",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "检查是否使用了未经批准的C++TR1头文件",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Unapproved C++ TR1 header.\r\n\r\n1.检查是否使用了未经批准的C++TR1头文件，如果使用了，给出警告。",
+        "disable": false
+      },
+      {
+        "real_name": "build/class",
+        "display_name": "build/class",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "检查类声明是否完整",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Failed to find complete declaration of class.\r\n\r\n1.检查类声明是否完整，即类声明的结束部位是否含有“}”。如果没有，给出类声明不完整警告。",
+        "disable": false
+      },
+      {
+        "real_name": "build/deprecated",
+        "display_name": "build/deprecated",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "检查是否使用了“>?”或者“<?”操作符",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "\r\n\\>? and <? (max and min) operators are non-standard and deprecated.\r\n\r\n1. 检查是否使用了“>?”或者“<?”操作符。如果使用了，给出警告，并建议使用max或者min代替之。",
+        "disable": false
+      },
+      {
+        "real_name": "build/endif_comment",
+        "display_name": "build/endif_comment",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "检查#endif后面是否跟有注释",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Uncommented text after #endif is non-standard. Use a comment.\r\n\r\n1.检查#endif后面是否跟有注释，如果没有注释，给出警告。",
+        "disable": false
+      },
+      {
+        "real_name": "build/explicit_make_pair",
+        "display_name": "build/explicit_make_pair",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "检测make_pair中是否使用模板参数",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "For C++11-compatibility, omit template arguments from make_pair OR use pair directly OR if appropriate, construct a pair directly.\r\n\r\n1.为了C++11的兼容性，省略make_pair中的模板参数，或者直接使用pair，或者直接构造一个pair。如果检测到make_pair中使用了模板参数，给出警告。",
+        "disable": false
+      },
+      {
+        "real_name": "build/forward_decl",
+        "display_name": "build/forward_decl",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "检查是否使用了类似“class AA: : tt;”这种格式的前向声明",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Inner-style forward declarations are invalid. Remove this line.\r\n\r\n1.在作用域内（如namespace作用域），检查是否使用了类似“class AA: : tt;”这种格式的前向声明。如果有这种前向声明，给出警告。",
+        "disable": false
+      },
+      {
+        "real_name": "build/header_guard",
+        "display_name": "build/header_guard",
+        "severity": "info",
+        "category": "correctness",
+        "rule_title": "检查头文件格式",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Header guard has wrong style.\r\n\r\n1.检查两点: \r\n(1)头文件中是否含有#ifndef、#define\r\n(2)#ifndef和#define中的内容是否一样。\r\n如果上述两条有一条满足，给出警告。\r\n2. 检查#ifndef的格式是否正确，正确的命名格式是：PATH_FILE_H_。如果格式有出入，给出警告。\r\n3. 检查#endif的格式是否正确，正确的格式是#endif // PATH_FILE_H_。如果不满足这种格式，给出警告。\r\n4. 对上一点3的补充检查：检查#endif后面的注释，如果没有/* */或者//...格式注释，给出警告。",
+        "disable": false
+      },
+      {
+        "real_name": "build/include",
+        "display_name": "build/include",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "检查include的头文件不正确",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Incorrect include header file.\r\n\r\n1.检查每一个C++源文件是否都有一个对应的.h头文件，如果没有，给出警告。\r\n2. 检查include的头文件是否加上路径，如果没有，给出警告。\r\n3. 检查是否include了多次同一个头文件，如果是，给出警告。\r\n4. 不要include其他包里面的.cc文件。如果include了，给出警告。",
+        "disable": false
+      },
+      {
+        "real_name": "build/include_alpha",
+        "display_name": "build/include_alpha",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "检查相同目录下头文件是否按字母序升序引用",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Include not in alphabetical order.\r\n\r\n1.检查相同目录下头文件是否按字母序升序引用，如果没有，给出警告。",
+        "disable": false
+      },
+      {
+        "real_name": "build/include_order",
+        "display_name": "build/include_order",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "检查include文件的顺序",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Include order should be: .h, c system, c++ system, other.\r\n\r\n1.检查include文件的顺序：本文件相应头文件，C系统文件，C++系统文件，其他库文件。",
+        "disable": false
+      },
+      {
+        "real_name": "build/include_subdir",
+        "display_name": "build/include_subdir",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "检查命名.h文件时是否包含目录",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Include the directory when naming .h files.\r\n\r\n命名.h文件时包含目录。",
+        "disable": false
+      },
+      {
+        "real_name": "build/include_what_you_use",
+        "display_name": "build/include_what_you_use",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "检查是否添加必要的标准模版库",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Add #include required_header_unstripped for template.\r\n\r\n1.检查是否添加必要的标准模版库，如果没有，给出警告。",
+        "disable": false
+      },
+      {
+        "real_name": "build/namespaces",
+        "display_name": "build/namespaces",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "检查命名空间的不当使用",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Failed to find complete declaration of namespace.Do not use namespace using-directives.Use using-declarations instead.Do not use unnamed namespaces in header files.\r\n\r\n1. 检查命名空间定义是否有结束标记，如果没有，给出警告。\r\n2. 检查是否使用了using编译指令，如果使用了，给出警告，提示用户使用using声明指令。\r\n3. 检查在.h文件中是否使用了不具名的命名控件，如果使用了，给出警告。",
+        "disable": false
+      },
+      {
+        "real_name": "build/printf_format",
+        "display_name": "build/printf_format",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "检查是否使用了未定义的字符转义序列",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "%, [, (, and { are undefined character escapes. Unescape them.\r\n\r\n1. 检查是否使用了未定义的字符转义序列，如\\%,\\[,\\(和\\{。如果检查到这些转义序列，给出警告。",
+        "disable": false
+      },
+      {
+        "real_name": "build/storage_class",
+        "display_name": "build/storage_class",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "存储类型的关键字（static、extern、typedef、etc）应该放在其他关键词（如const、volatile、void等）前面",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Storage class (static, extern, typedef, etc) should be first.\r\n\r\n1. 存储类型的关键字（static、extern、typedef、etc）应该放在其他关键词（如const、volatile、void等）前面。如果没有放到前面，给出警告。",
+        "disable": false
+      },
+      {
+        "real_name": "legal/copyright",
+        "display_name": "legal/copyright",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "检查文件中是否包含“Copyright [year]”",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "No copyright message found.You should have a line: Copyright [year] <Copyright Owner>\r\n\r\n1. 检查文件中是否包含“Copyright [year]<Copyright Owner>”，如果不包含，给出警告。",
+        "disable": false
+      },
+      {
+        "real_name": "readability/alt_tokens",
+        "display_name": "readability/alt_tokens",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "检查符号（&&、/、//、^、~、&、&=、|=、^=、!、!=）的使用",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Use another operator instead.\r\n\r\n1. 检查符号（and、bitor、or、xor、compl、bitand、and_eq、or_eq、xor_eq、not和not_eq）的使用，建议使用（&&、/、//、^、~、&、&=、|=、^=、!、!=）代替以上几类符号。",
+        "disable": false
+      },
+      {
+        "real_name": "readability/braces",
+        "display_name": "readability/braces",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "检查大括号的不当使用",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Improper ues of braces.\r\n\r\n1. 检查if ... elseif ... elseif这种结构，如果其中有if或者else if使用了大括号({})，则其他的if或者else if没有使用大括号（{}），则给出警告。\r\n2. 检查if或else体中有多条语句时，是否有大括号{}。如果没有，则给出警告。\r\n3. 检查else是否和与之匹配的if有同样的缩进，如果没有，给出警告；同时建议用户，对于嵌套关系比较模糊的情况，使用{}标示。\r\n4. 检查右大括号}后面是否有“;”，如果有，给出警告。PS：对于namespace、class等正确的情况，不会给出警告。\r\n5. 检查if是否在单独一行，如果不在单独一行，给出警告。",
+        "disable": false
+      },
+      {
+        "real_name": "readability/casting",
+        "display_name": "readability/casting",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "检查不当的类型转换",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Using improper casting style.\r\n\r\n1.对基本类型，检查是否使用了过时的类型转换，建议使用static_cast()代替(type)这种转换方式。检查的类型有：int,float,double,bool,char,int32,uint32,int64,uint64.\r\n2. 检查是否在类型转换前面使用了取址操作符。如果使用了，给出警告。如以下语句就会收到警告：&down_cast(obj)->member_;', alt_error_msg)",
+        "disable": false
+      },
+      {
+        "real_name": "readability/check",
+        "display_name": "readability/check",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "检查ASSERT和CHECK断言的使用",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Consider using CHECK_EQ instead of CHECK(a == b).\r\n\r\n1.检查ASSERT和CHECK断言的使用，建议使用ASSERT_EQ和CHECK_EQ等方式，而不是使用ASSERT_TRUE(condition)这种形式。",
+        "disable": false
+      },
+      {
+        "real_name": "readability/constructors",
+        "display_name": "readability/constructors",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "检查宏DISALLOW_COPY_AND_ASSIGN和DISALLOW_IMPLICIT_CONSTRUCTORS的不当使用",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Improper Constructors.\r\n\r\n1. 检查宏DISALLOW_COPY_AND_ASSIGN和DISALLOW_IMPLICIT_CONSTRUCTORS的作用域是否正确，正确的作用域为private。\r\n2. 检查宏DISALLOW_COPY_AND_ASSIGN和DISALLOW_IMPLICIT_CONSTRUCTORS的位置是否正确，正确的位置是在类的结束位置。",
+        "disable": false
+      },
+      {
+        "real_name": "readability/fn_size",
+        "display_name": "readability/fn_size",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "检查函数的大小",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Too large size of function. Or Lint failed to find start of function body.\r\n\r\n1. 建议编写小巧、功能集中的函数，大于50行开始给出警告，具体警告等级和代码行数关系为：50 => 0, 100 => 1, 200 => 2, 400 => 3, 800 => 4, 1600 => 5；测试代码量可以加倍。\r\n2. 检查到函数定义，但是没有找到函数体的时候，给出警告。",
+        "disable": false
+      },
+      {
+        "real_name": "readability/inheritance",
+        "display_name": "readability/inheritance",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "检查到final或overrider修饰的函数是否有virtual修饰",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "virtual or override is redundant.\r\n\r\n1. 在函数的后面如果有关键字final或者overrider，表示该函数不可以为虚函数，如果检查到final或overrider修饰的函数有virtual修饰，会给出警告。",
+        "disable": false
+      },
+      {
+        "real_name": "readability/multiline_comment",
+        "display_name": "readability/multiline_comment",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "检查多行注释的不当使用",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Improper multiline comment style.\r\n\r\n1. 多行注释，如果没有搜索到注释结束标识符，给出警告。\r\n2. 检测到了多行注释/* */，lint工具可能会对此给出警告，建议使用//代替之。",
+        "disable": false
+      },
+      {
+        "real_name": "readability/multiline_string",
+        "display_name": "readability/multiline_string",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "检测是否字符串分多行显示",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Multi-line string found.  This lint script doesn't do well with such strings, and may give bogus warnings.\r\n\r\n1. 检测到有字符串分多行显示时，“...”这种连接多行字符串的方式在lint中会得到警告，建议使用C++11的raw strings或者concatenation代替。",
+        "disable": false
+      },
+      {
+        "real_name": "readability/namespace",
+        "display_name": "readability/namespace",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "检查使用using std;",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Improper namespace style\r\n\r\n检查使用using std; 建议使用具体命名空间，如：using std: string",
+        "disable": false
+      },
+      {
+        "real_name": "readability/nolint",
+        "display_name": "readability/nolint",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "检查文件中是否有未知的NOLINT错误分类",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Unknown NOLINT error category.\r\n\r\n1. 检查文件中是否有未知的NOLINT错误分类\r\n2. 检查未知的分类GLOBAL_NOLINT；",
+        "disable": false
+      },
+      {
+        "real_name": "readability/nul",
+        "display_name": "readability/nul",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "检查文件中是否存在'\\0'字符",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Line contains NUL byte.\r\n\r\n1. 检查文件中是否存在'\\0'字符，即NUL字符，如果存在，给出警告。",
+        "disable": false
+      },
+      {
+        "real_name": "readability/todo",
+        "display_name": "readability/todo",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "检查TODO注释的格式是否正确",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Missing username in TODO; it should look like '// TODO(my_username): Stuff.'.\r\n\r\n1. 检查TODO注释的格式是否正确，建议格式为“// TODO(my_username): Stuff.”",
+        "disable": false
+      },
+      {
+        "real_name": "readability/utf8",
+        "display_name": "readability/utf8",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "检查文件中是否包含非法的UTF-8字符",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Line contains invalid UTF-8 (or Unicode replacement character).\r\n\r\n1. 检查文件中是否包含非法的UTF-8字符，如果存在，给出警告。",
+        "disable": false
+      },
+      {
+        "real_name": "runtime/arrays",
+        "display_name": "runtime/arrays",
+        "severity": "fatal",
+        "category": "correctness",
+        "rule_title": "检查是否使用变量来初始化数组",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Do not use variable-length arrays.  Use an appropriately named ('k' followed by CamelCase) compile-time constant for the size.\r\n\r\n1. 检查是否使用变量来初始化数组。如果发现了，给出警告，并建议使用编译时常量来初始化数组。",
+        "disable": false
+      },
+      {
+        "real_name": "runtime/casting",
+        "display_name": "runtime/casting",
+        "severity": "fatal",
+        "category": "correctness",
+        "rule_title": "检查是否在类型转换前面使用了取址操作符",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Are you taking an address of a cast? This is dangerous: could be a temp var. Take the address before doing the cast, rather than after.\r\n\r\n1. 检查是否在类型转换前面使用了取址操作符。如果使用了，给出警告，因为这种用法有可能获取临时变量的地址。如以下语句就会收到警告：&down_cast<Obj*>(obj)->member_;', alt_error_msg)",
+        "disable": false
+      },
+      {
+        "real_name": "runtime/explicit",
+        "display_name": "runtime/explicit",
+        "severity": "fatal",
+        "category": "correctness",
+        "rule_title": "检查explicit关键字的不当使用",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Improper explicit.\r\n\r\n1. 检查只有一个参数的构造函数是否使用了explicit关键字。如果没有使用，给出警告。\r\n2. 检查没有参数的构造函数是否使用了explicit关键字。如果使用了，给出警告。 3. 检查有多个参数的构造函数是否使用了explicit关键字。如果使用了，给出警告。",
+        "disable": false
+      },
+      {
+        "real_name": "runtime/indentation_namespace",
+        "display_name": "runtime/indentation_namespace",
+        "severity": "fatal",
+        "category": "correctness",
+        "rule_title": "检查是否在namespace中存在缩进",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Do not indent within a namespace.\r\n\r\n1. 检查是否在namespace中存在缩进。如果有，给出警告。",
+        "disable": false
+      },
+      {
+        "real_name": "runtime/init",
+        "display_name": "runtime/init",
+        "severity": "fatal",
+        "category": "correctness",
+        "rule_title": "检查是否存在使用变量自身初始化自己的情况",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "You seem to be initializing a member variable with itself.\r\n\r\n1. 检查是否存在使用变量自身初始化自己的情况。如果存在这种情况，给出警告。",
+        "disable": false
+      },
+      {
+        "real_name": "runtime/int",
+        "display_name": "runtime/int",
+        "severity": "fatal",
+        "category": "correctness",
+        "rule_title": "检查int的不当使用",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Use 'unsigned short' for ports, not 'short'. Use int16/int64/etc, rather than the C type.\r\n\r\n1. 检查port前面是否使用了unsigned short修饰。如果不是，给出警告。\r\n2. 检查是否使用了short、long、long long。如果发现使用了这些，给出警告，并建议使用int16、int64等代替之。",
+        "disable": false
+      },
+      {
+        "real_name": "runtime/invalid_increment",
+        "display_name": "runtime/invalid_increment",
+        "severity": "fatal",
+        "category": "correctness",
+        "rule_title": "检查是否有使用（*++、*--）的情况",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Changing pointer instead of value (or unused value of operator*).\r\n\r\n1. 检查是否有使用（*++、*--）的情况。如果使用了这种情况，给出警告，提示这种情况会同时改变指针的位置。",
+        "disable": false
+      },
+      {
+        "real_name": "runtime/member_string_references",
+        "display_name": "runtime/member_string_references",
+        "severity": "fatal",
+        "category": "correctness",
+        "rule_title": "检查是否定义了const xxx&这种类型的类数据成员",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "const string& members are dangerous. It is much better to use alternatives, such as pointers or simple constants.\r\n\r\n1. 检查是否定义了const xxx&这种类型的类数据成员。如果存在，给出警告，建议使用指针代替之。",
+        "disable": false
+      },
+      {
+        "real_name": "runtime/memset",
+        "display_name": "runtime/memset",
+        "severity": "fatal",
+        "category": "correctness",
+        "rule_title": "检查memset的不当使用",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Did you mean \"memset(%s, 0, %s)\"?\r\n\r\n1. 检查memset是否有书写错误。如果检查到类似于memset(buf, sizeof(buf), 0)，则是一个潜在的memset bug，给出警告。",
+        "disable": false
+      },
+      {
+        "real_name": "runtime/operator",
+        "display_name": "runtime/operator",
+        "severity": "fatal",
+        "category": "correctness",
+        "rule_title": "操作符&比较危险，建议不要用",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Unary operator& is dangerous. Do not use it.\r\n\r\n1. 检查是否重载了操作符&。如果重载了，鉴于该操作符的危险性，给出警告。",
+        "disable": false
+      },
+      {
+        "real_name": "runtime/printf",
+        "display_name": "runtime/printf",
+        "severity": "fatal",
+        "category": "correctness",
+        "rule_title": "检查printf的不当使用",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Improper runtime printf.\r\n\r\n1. 检查使用printf时，潜在的格式化bugs。如果发现，给出警告。\r\n2. 当检查到snprintf函数中存在数字（size）参数时，建议使用sizeof（变量）代替数字。\r\n3. 检查是否使用了sprintf。如果使用了，给出警告，并建议使用snprintf代替之。\r\n4. 检查是否使用了strcpy或strcat。如果使用了，给出警告，并建议使用snprintf代替之。",
+        "disable": false
+      },
+      {
+        "real_name": "runtime/printf_format",
+        "display_name": "runtime/printf_format",
+        "severity": "fatal",
+        "category": "correctness",
+        "rule_title": "检查printf打印语句的格式",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "%q in format strings is deprecated. Use %ll instead. %N$ formats are unconventional. Try rewriting to avoid them.\r\n\r\n1. 检查在使用printf打印语句时，是否使用了“%qd”。如果使用了，给出警告，建议使用“%lld”。\r\n2. 检查在使用printf打印语句时，是否使用了“%1$d”这种格式。如果使用了，给出警告。",
+        "disable": false
+      },
+      {
+        "real_name": "runtime/references",
+        "display_name": "runtime/references",
+        "severity": "fatal",
+        "category": "correctness",
+        "rule_title": "检查是否使用了非const型的指针",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Is this a non-const reference? If so, make const or use a pointer: ReplaceAll(' *<', '<', parameter)\r\n\r\n1. 在函数参数中，查找是否使用了非const型的指针。如果发现了这种类型的指针，则给出警告，并建议使用const型或者指针代替之。",
+        "disable": false
+      },
+      {
+        "real_name": "runtime/string",
+        "display_name": "runtime/string",
+        "severity": "fatal",
+        "category": "correctness",
+        "rule_title": "检查是否使用了static或global修饰的string常量",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "For a static/global string constant, use a C style string instead.\r\n\r\n1. 检查是否使用了static或global修饰的string常量。如果检测到了，给出警告，并建议使用C风格字符串代替。",
+        "disable": false
+      },
+      {
+        "real_name": "runtime/threadsafe_fn",
+        "display_name": "runtime/threadsafe_fn",
+        "severity": "fatal",
+        "category": "correctness",
+        "rule_title": "检查是否使用了在POSIX标准中非线程安全的函数",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Unsafe thread function.\r\n\r\n1. 检查是否使用了在POSIX标准中非线程安全的函数，如果使用了，给出警告。",
+        "disable": false
+      },
+      {
+        "real_name": "runtime/vlog",
+        "display_name": "runtime/vlog",
+        "severity": "fatal",
+        "category": "correctness",
+        "rule_title": "检查VLog的不当使用",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "VLOG() should be used with numeric verbosity level. Use LOG() if you want symbolic severity levels.\r\n\r\n1. VLOG()接受数值等级参数，如果使用符号等级参数，请使用LOG()",
+        "disable": false
+      },
+      {
+        "real_name": "whitespace/blank_line",
+        "display_name": "whitespace/blank_line",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "检查不合适的空行",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Improper blank line.\r\n\r\n1. 检查代码块开始处是否有空行。如果在代码块开始的时候有空行，给出警告。\r\n2. 检查代码块结束处是否有空行。如果有空行，给出警告。\r\n3. 检查public\\protected\\private后面是否有空行。如果有空行，给出警告。",
+        "disable": false
+      },
+      {
+        "real_name": "whitespace/braces",
+        "display_name": "whitespace/braces",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "检查大括号的格式",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Improper braces and whitespace\r\n\r\n1. 检查“[”符号前面是否有空白。如果有，给出警告。\r\n2. 检查“{”符号前面是否留有空白。如果没有，给出警告。\r\n3. 检查“}else”这种情况的else前面是否留有空白。如果没有，给出警告。\r\n4. 检查“{”是否接在语句最后，即“{”是否直接跟在语句的后面，而不是单独起一行。如果单独占一行，给出警告。",
+        "disable": false
+      },
+      {
+        "real_name": "whitespace/comma",
+        "display_name": "whitespace/comma",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "在逗号“,”之后需要有空格",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Missing space after ,\r\n\r\n1. 在逗号“,”之后需要有空格。如果没有，给出警告。",
+        "disable": false
+      },
+      {
+        "real_name": "whitespace/comments",
+        "display_name": "whitespace/comments",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "检查注释的空格",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "At least two spaces is best between code and comments. Should have a space between // and comment\r\n\r\n1. 检查代码和注释之间的空格数量，建议最少空2格。如果没有，给出警告。\r\n2. 检查在注释内容和注释符号//之间的空格。如果没有空格，给出警告。",
+        "disable": false
+      },
+      {
+        "real_name": "whitespace/empty_conditional_body",
+        "display_name": "whitespace/empty_conditional_body",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "检查是否存在空条件体（对应于if）",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Empty conditional bodies should use {}\r\n\r\n1. 检查是否存在空条件体（对应于if）。如果存在，给出警告，建议使用{}。",
+        "disable": false
+      },
+      {
+        "real_name": "whitespace/empty_if_body",
+        "display_name": "whitespace/empty_if_body",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "检查if条件体是否为空",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "1. 检查if语块是否有效，是否有else分支，如果没有，给出警告。",
+        "disable": false
+      },
+      {
+        "real_name": "whitespace/empty_loop_body",
+        "display_name": "whitespace/empty_loop_body",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "检查是否存在空循环体",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Empty loop bodies should use {} or continue.\r\n\r\n1. 检查是否存在空循环体(对应for、while)。如果存在，给出警告，建议使用{}。",
+        "disable": false
+      },
+      {
+        "real_name": "whitespace/ending_newline",
+        "display_name": "whitespace/ending_newline",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "检查文件结尾是否有空白行",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Could not find a newline character at the end of the file.\r\n\r\n1. 检查文件结尾是否有空白行，如果没有，提示用户添加一行空白行。",
+        "disable": false
+      },
+      {
+        "real_name": "whitespace/end_of_line",
+        "display_name": "whitespace/end_of_line",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "检查每一行的末尾是否有空格",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Line ends in whitespace. Consider deleting these extra spaces.\r\n\r\n1. 检查每一行的末尾是否有空格。如果有空格，给出警告，建议删除这些空格。",
+        "disable": false
+      },
+      {
+        "real_name": "whitespace/forcolon",
+        "display_name": "whitespace/forcolon",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "检查for循环中冒号前后是否有空格",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Missing space around colon in range-based for loop.\r\n\r\n1. 检查for循环中冒号前后是否有空格，如果没有，给出警告。",
+        "disable": false
+      },
+      {
+        "real_name": "whitespace/indent",
+        "display_name": "whitespace/indent",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "检查缩进",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Improper indent.\r\n\r\n1. 检查每一行开始的缩进数量是否合法。如果出现奇数个缩进的情况，给出警告。建议使用2个空格缩进。\r\n2. 结束的括号（如)、}）应该和开始的括号对齐。如果不对其，给出警告。\r\n3. 检查public、private、protected、signals和slots的缩进是否合理。建议缩进一个空格，如果不是，给出警告。",
+        "disable": false
+      },
+      {
+        "real_name": "whitespace/line_length",
+        "display_name": "whitespace/line_length",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "检查每一行代码的长度",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": "适当换行",
+        "owner": null,
+        "labels": [],
+        "description": "Line too long.\n默认阈值为100，可以通过规则参数max自定义阈值，比如设置：max=120",
+        "disable": false
+      },
+      {
+        "real_name": "whitespace/newline",
+        "display_name": "whitespace/newline",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "检查不当的换行风格",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Improper newline.\r\n\r\n1. 检查一行上是否有多条语句。如果出现，给出警告。\r\n2. 检查else语句的位置，建议和}在一行上。如果不在一行上，给出警告。\r\n3. 检查是否出现“else{”这种语句。如果出现，给出警告，建议将{放到下一行。\r\n4. 检查{是否和do\\while在同一行上。如果出现，给出警告，建议将{放到下一行。\r\n5. 检查在换行的时候，是否使用了回车\\r。如果使用了，给出警告，建议使用\\n换行。",
+        "disable": false
+      },
+      {
+        "real_name": "whitespace/operators",
+        "display_name": "whitespace/operators",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "检查运算符的空格",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Improper use of whitespace near operators.\r\n\r\n1. 检查“=”号两边是否有空格。如果没有，给出警告。\r\n2. 检查“==|!=|<=|>=||”双目运算符两边是否有空格。如果没有，给出警告。\r\n3. 检查“<|>|<<|>>|!|~|--|++”等单目运算符两边是否有空格。如果没有，给出警告。\r\n4. 检查“&&”两边是否有空格。如果没有，给出警告。",
+        "disable": false
+      },
+      {
+        "real_name": "whitespace/parens",
+        "display_name": "whitespace/parens",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "检查括号的空格",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Improper use of whitespace near parens.\r\n\r\n1. 检查函数名和开始的括号(之间是否有空格，如果有空格，给出警告。\r\n2. 检查函数的结束括号)是否和函数名在同一行上。如果不在同一行，在下一行的话给出警告。\r\n3. 检查函数的结束括号）前面是否有空格，如果有空格，给出警告。\r\n4. 检查if\\for\\while\\switch和开始的括号(之间是否有空格，如果没有空格，给出警告。\r\n5. 检查if\\for\\while\\switch后面的括号()之间的空格是否对称。如果不对称。给出警告（如if( foo )这种情况）。\r\n6. 检查if\\for\\while\\switch后面的括号()内侧的空格情况，建议可以有0个或者1个空格。如果不是0个或者1个，给出警告。",
+        "disable": false
+      },
+      {
+        "real_name": "whitespace/semicolon",
+        "display_name": "whitespace/semicolon",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "检查分号的空格",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Improper use of whitespace near semicolon.\r\n\r\n1. 在分号“;”之后需要有空格。如果没有，给出警告。\r\n2. 检查使用分号“;”表示空状态的语句。如果检查到了，给出警告，并提示使用{}代替。\r\n3. 检查每行最后一个分号“;”，看其前面是否有空格。如果有空格，给出警告。",
+        "disable": false
+      },
+      {
+        "real_name": "whitespace/tab",
+        "display_name": "whitespace/tab",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "检查文中是否使用了Tab",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Improper use of tab.\r\n\r\n1. 检查文中是否使用了Tab。如果使用了，给出警告，建议使用空格代替。",
+        "disable": false
+      },
+      {
+        "real_name": "whitespace/todo",
+        "display_name": "whitespace/todo",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "检查TODO注释前后的空格数量",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Improper use of whitespace near TODO.\r\n\r\n1. 检查TODO注释前后的空格数量，如果没有空格，会给出警告；如果多余1个空格，也给出警告。",
+        "disable": false
+      }
+    ],
+    "open_user": true,
+    "open_saas": true
+  }
+]

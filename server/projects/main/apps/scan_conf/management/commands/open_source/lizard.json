@@ -1,0 +1,20 @@
+[
+  {
+    "name": "lizard",
+    "display_name": "Lizard",
+    "description": "圈复杂度扫描工具，支持C/C++、C#、Java、JavaScript、Objective-C/C++、PHP、Python、Ruby、Swift、Go和Lua。\n在函数内或者函数前添加\"#lizard forgives\"注释，可以忽略检测该函数。",
+    "license": "Unlimited",
+    "task_processes": [
+      "analyze",
+      "datahandle"
+    ],
+    "open_user": true,
+    "open_saas": true,
+    "scan_app": "codemetric",
+    "scm_url": null,
+    "run_cmd": null,
+    "envs": null,
+    "show_display_name": true,
+    "checkrule_set": []
+  }
+]

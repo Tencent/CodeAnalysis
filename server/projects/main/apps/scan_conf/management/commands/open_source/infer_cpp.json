@@ -1,0 +1,485 @@
+[
+  {
+    "name": "infer_cpp",
+    "display_name": "InferCpp",
+    "description": "Cpp static analyzer.（需要编译）",
+    "license": "MIT",
+    "task_processes": [
+      "analyze",
+      "datahandle",
+      "compile"
+    ],
+    "open_user": true,
+    "scan_app": "codelint",
+    "scm_url": null,
+    "run_cmd": null,
+    "envs": null,
+    "show_display_name": true,
+    "checkrule_set": [
+      {
+        "real_name": "ARRAY_OUT_OF_BOUNDS_L1",
+        "display_name": "ArrayOutOfBoundsL1",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "数组越界。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "数组越界。"
+      },
+      {
+        "real_name": "ARRAY_OUT_OF_BOUNDS_L2",
+        "display_name": "ArrayOutOfBoundsL2",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "数组越界。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "数组越界。"
+      },
+      {
+        "real_name": "ARRAY_OUT_OF_BOUNDS_L3",
+        "display_name": "ArrayOutOfBoundsL3",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "数组越界。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "数组越界。"
+      },
+      {
+        "real_name": "BUFFER_OVERRUN_L1",
+        "display_name": "BufferOverrunL1",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "缓存溢出",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "缓存溢出。"
+      },
+      {
+        "real_name": "BUFFER_OVERRUN_L2",
+        "display_name": "BufferOverrunL2",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "缓存溢出",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "缓存溢出。"
+      },
+      {
+        "real_name": "BUFFER_OVERRUN_L3",
+        "display_name": "BufferOverrunL3",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "缓存溢出",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "缓存溢出。"
+      },
+      {
+        "real_name": "BUFFER_OVERRUN_L4",
+        "display_name": "BufferOverrunL4",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "缓存溢出",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "缓存溢出。"
+      },
+      {
+        "real_name": "BUFFER_OVERRUN_L5",
+        "display_name": "BufferOverrunL5",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "缓存溢出",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "缓存溢出。"
+      },
+      {
+        "real_name": "BUFFER_OVERRUN_S2",
+        "display_name": "BufferOverrunS2",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "缓存溢出",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "缓存溢出。"
+      },
+      {
+        "real_name": "CLASS_CAST_EXCEPTION",
+        "display_name": "ClassCastException",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "类型转换异常。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "类型转换异常。"
+      },
+      {
+        "real_name": "CONDITION_ALWAYS_FALSE",
+        "display_name": "ConditionAlwaysFalse",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "判断条件总是为False。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "判断条件总是为False。"
+      },
+      {
+        "real_name": "CONDITION_ALWAYS_TRUE",
+        "display_name": "ConditionAlwaysTrue",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "判断条件总是为True。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "判断条件总是为True。"
+      },
+      {
+        "real_name": "DANGLING_POINTER_DEREFERENCE",
+        "display_name": "DanglingPointerDereference",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "挂起的指针解引用",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "挂起的指针解引用。"
+      },
+      {
+        "real_name": "DEAD_STORE",
+        "display_name": "DeadStore",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "当赋值给变量的值从没有被使用到，触发该规则。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "建议修复方法是：删除掉冗余代码。"
+      },
+      {
+        "real_name": "DIVIDE_BY_ZERO",
+        "display_name": "DivideByzero",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "除以0异常.",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "除以0。"
+      },
+      {
+        "real_name": "EMPTY_VECTOR_ACCESS",
+        "display_name": "EmptyVectorAccess",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "空Vector访问。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "此错误类型尽在c++版本11以上才会报告。代码试图访问一个被认为为空的vector的元素，这样会在运行时导致未定义的错误。\n[详细网址](http://fbinfer.com/docs/infer-bug-types.html#EMPTY_VECTOR_ACCESS)"
+      },
+      {
+        "real_name": "INFERBO_ALLOC_IS_ZERO",
+        "display_name": "InferboAllocIsZero",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "Alloc分配的空间为0",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Alloc分配的空间为0"
+      },
+      {
+        "real_name": "INFERBO_ALLOC_MAY_BE_BIG",
+        "display_name": "InferboAllocMayBeBig",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "Alloc分配的空间可能很大",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Alloc分配的空间可能很大"
+      },
+      {
+        "real_name": "INFERBO_ALLOC_MAY_BE_NEGATIVE",
+        "display_name": "InferboAllocMayBeNegative",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "Alloc分配的空间可能为负",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Alloc分配的空间可能为负"
+      },
+      {
+        "real_name": "MEMORY_LEAK",
+        "display_name": "MemoryLeak",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "内存泄漏",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "infer会报告cpp中的内存泄漏问题。infer在使用malloc创建对象却未将对象释放掉的情况，触发该规则。\n[详细网址](http://fbinfer.com/docs/infer-bug-types.html#MEMORY_LEAK)"
+      },
+      {
+        "real_name": "NULLABLE_DEREFERENCE",
+        "display_name": "NullableDereference",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "疑似为空的指针解引用",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "infer会报告java中的疑似为空的指针解引用bug。这个规则针对空指针被执行解引用操作，从而导致Java程序crash掉。这是典型的空指针异常规则，可以通过对函数返回值进行空检查来解决，或者确保返回值不为null。\n[详细网址](http://fbinfer.com/docs/infer-bug-types.html#NULL_DEREFERENCE)"
+      },
+      {
+        "real_name": "NULL_DEREFERENCE",
+        "display_name": "NullDereference",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "空指针解引用",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "infer会报告cpp中的空指针解引用bug。这个规则针对空指针被执行解引用操作，从而导致程序crash掉。这是典型的空指针异常规则，可以通过对函数返回值进行空检查来解决，或者确保返回值不为null。\n[详细网址](http://fbinfer.com/docs/infer-bug-types.html#NULL_DEREFERENCE)"
+      },
+      {
+        "real_name": "POINTER_TO_INTEGRAL_IMPLICIT_CAST",
+        "display_name": "PointerToIntegralImplicitCast",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "指针隐式转换为整型",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "指针隐式转换为整型"
+      },
+      {
+        "real_name": "PREMATURE_NIL_TERMINATION_ARGUMENT",
+        "display_name": "PrematureNilTerminationArgument",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "提前遇到参数列表的nil终止符。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "在很多可变参数函数方法中，nil会被用来做为输入对象列表的结束符。这类似于c字符串的nil终止符。如果一个参数，它不是方法的最后一个参数，但值为nil的话，infer便会报告error，因为这可能会导致一个意想不到的行为。\n[详细网址](http://fbinfer.com/docs/infer-bug-types.html#PREMATURE_NIL_TERMINATION_ARGUMENT)"
+      },
+      {
+        "real_name": "RESOURCE_LEAK",
+        "display_name": "ResourceLeak",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "资源泄漏",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "infer会报告cpp中的资源泄漏问题。一般来说，资源是文件，套接字，连接等实体，使用后需要关闭。常见的错误写法是跳过了close()方法的异常。\nJava中的某些对象（资源）应该在停止使用时关闭，而关闭失败则是资源泄漏。资源包括输入流，输出流，读取器，编写器，套接字，http连接，游标和json解析器。\n[详细网址](http://fbinfer.com/docs/infer-bug-types.html#RESOURCE_LEAK)"
+      },
+      {
+        "real_name": "STATIC_INITIALIZATION_ORDER_FIASCO",
+        "display_name": "StaticInitializationOrederFiasco",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "当静态变量A初始化的时候，从另一个编译单元（通常是另一个.cpp文件）访问静态变量B的话，触发该规则。目前还无法保证B是否已经初始化。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "建议修复方法是：确保静态变量B已经初始化。"
+      },
+      {
+        "real_name": "UNINITIALIZED_VALUE",
+        "display_name": "UnintializedValue",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "变量未初始化问题。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "变量声明之后，未进行初始化操作就被使用了。所以报出未初始化警告。"
+      },
+      {
+        "real_name": "USE_AFTER_FREE",
+        "display_name": "UseAfterFree",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "释放后使用",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "释放后使用"
+      },
+      {
+        "real_name": "USE_AFTER_LIFETIME",
+        "display_name": "UseAfterLifetime",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "生命周期结束后使用",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "cpp"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "生命周期结束后使用"
+      }
+    ]
+  }
+]

@@ -1,0 +1,15 @@
+.title_with_border {
+  border-left: 4px solid #03a9f4;
+  padding-left: 5px;
+  line-height: 28px;
+  margin-top: 40px;
+}
+
+.title_with_border:first-child {
+  margin-top: 0;
+}
+
+.title {
+  font-size: 14px;
+  font-weight: 500;
+}

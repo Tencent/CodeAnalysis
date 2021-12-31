@@ -1,0 +1,179 @@
+[
+    {
+        "name": "【C/C++】减包扫描",
+        "description": "扫描无用代码和资源",
+        "revision": null,
+        "package_type": "official",
+        "languages": [
+            "cpp"
+        ],
+        "labels": [
+            "推荐"
+        ],
+        "checkrule_set": [
+            {
+                "checktool": "cppcheck",
+                "checkrule": "uselessAssignmentArg",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "cppcheck",
+                "checkrule": "uselessAssignmentPtrArg",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "cppcheck",
+                "checkrule": "unusedPrivateFunction",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "cppcheck",
+                "checkrule": "unusedScopedObject",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "cppcheck",
+                "checkrule": "unusedLabelSwitch",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "cppcheck",
+                "checkrule": "unusedLabel",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "cppcheck",
+                "checkrule": "uselessCallsCompare",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "cppcheck",
+                "checkrule": "uselessCallsSwap",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "cppcheck",
+                "checkrule": "uselessCallsSubstr",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "cppcheck",
+                "checkrule": "uselessCallsEmpty",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "cppcheck",
+                "checkrule": "uselessCallsRemove",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "cppcheck",
+                "checkrule": "unusedFunction",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "cppcheck",
+                "checkrule": "unusedVariable",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "cppcheck",
+                "checkrule": "unusedAllocatedMemory",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "cppcheck",
+                "checkrule": "unusedStructMember",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "cppcheck",
+                "checkrule": "duplInheritedMember",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "cppcheck",
+                "checkrule": "leakReturnValNotUsed",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "cppcheck",
+                "checkrule": "duplicateBranch",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "cppcheck",
+                "checkrule": "duplicateExpression",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "cppcheck",
+                "checkrule": "duplicateExpressionTernary",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "cppcheck",
+                "checkrule": "duplicateBreak",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "cppcheck",
+                "checkrule": "deadpointer",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "unusedresource",
+                "checkrule": "UnusedPicture",
+                "severity": "error",
+                "rule_params": "res_suffix = .jpg;.jpeg;.gif;.png;.imageset;.bmp\r\ncode_suffix = .h;.m;.mm;.cpp;.swift;.json;.html;.css;.plist;.xib;.storyboard",
+                "state": "enabled"
+            }
+        ],
+        "open_saas": false,
+        "envs": null
+    }
+]

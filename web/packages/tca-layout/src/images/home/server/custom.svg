@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="56px" height="56px" viewBox="0 0 56 56" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 59.1 (86144) - https://sketch.com -->
+    <title>icon</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="50%" y1="24.6160168%" x2="93.1207161%" y2="97.5663076%" id="linearGradient-1">
+            <stop stop-color="#E2EEFF" offset="0%"></stop>
+            <stop stop-color="#A6C3EC" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="16.0421164%" y1="75.6910904%" x2="87.9769212%" y2="75.6910904%" id="linearGradient-2">
+            <stop stop-color="#455B79" offset="0%"></stop>
+            <stop stop-color="#030D1C" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="11.4904306%" y1="76.4540292%" x2="86.901819%" y2="76.4540292%" id="linearGradient-3">
+            <stop stop-color="#349CFF" offset="0%"></stop>
+            <stop stop-color="#005EEA" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="OA官网" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="介绍页-代码分析-指定代码库分支" transform="translate(-300.000000, -1926.000000)">
+            <rect fill="#FFFFFF" x="0" y="0" width="1440" height="2635"></rect>
+            <g id="特性" transform="translate(0.000000, 1418.000000)">
+                <rect id="矩形" fill="#FFFFFF" x="0" y="0" width="1440" height="827"></rect>
+                <g id="图形化编排" transform="translate(140.000000, 493.000000)">
+                    <rect id="矩形" fill="#D8D8D8" opacity="0" x="0" y="0" width="376" height="254"></rect>
+                    <g id="icon" transform="translate(160.000000, 15.000000)">
+                        <rect id="矩形" fill="#FFFFFF" x="0" y="0" width="56" height="56"></rect>
+                        <g id="分组-17" transform="translate(4.000000, 8.800000)">
+                            <rect id="矩形" fill="url(#linearGradient-1)" x="0" y="0" width="48" height="41.6"></rect>
+                            <rect id="矩形" fill="url(#linearGradient-2)" x="0" y="0" width="48" height="8.8"></rect>
+                            <g id="分组-11" transform="translate(3.200000, 16.000000)">
+                                <polygon id="路径-2" fill="#202D40" points="12 0.8 4.8 8 12 15.2 19.2 8"></polygon>
+                                <polygon id="路径-2" fill="url(#linearGradient-3)" points="8 0 0 8 8 16 16 8"></polygon>
+                            </g>
+                            <rect id="矩形" fill="#202D40" x="24.8" y="29.6" width="9.6" height="2.4"></rect>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

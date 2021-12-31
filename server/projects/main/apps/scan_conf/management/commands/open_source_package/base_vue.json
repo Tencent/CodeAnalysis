@@ -1,0 +1,178 @@
+[
+  {
+    "name": "【Vue】基础规则包",
+    "description": "Vue官方基础规则包，提供常见代码问题扫描。",
+    "revision": null,
+    "package_type": "official",
+    "languages": [
+      "js"
+    ],
+    "labels": [
+      "基础"
+    ],
+    "checkrule_set": [
+      {
+        "checktool": "eslint_vue",
+        "checkrule": "vue/comment-directive",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "vue/comment-directive",
+        "checktool_display_name": "EslintVue"
+      },
+      {
+        "checktool": "eslint_vue",
+        "checkrule": "vue/jsx-uses-vars",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "vue/jsx-uses-vars",
+        "checktool_display_name": "EslintVue"
+      },
+      {
+        "checktool": "eslint_vue",
+        "checkrule": "vue/no-async-in-computed-properties",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "performance",
+        "checkrule_display_name": "vue/no-async-in-computed-properties",
+        "checktool_display_name": "EslintVue"
+      },
+      {
+        "checktool": "eslint_vue",
+        "checkrule": "vue/no-dupe-keys",
+        "severity": "warning",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "convention",
+        "checkrule_display_name": "vue/no-dupe-keys",
+        "checktool_display_name": "EslintVue"
+      },
+      {
+        "checktool": "eslint_vue",
+        "checkrule": "vue/no-duplicate-attributes",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "vue/no-duplicate-attributes",
+        "checktool_display_name": "EslintVue"
+      },
+      {
+        "checktool": "eslint_vue",
+        "checkrule": "vue/no-parsing-error",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "vue/no-parsing-error",
+        "checktool_display_name": "EslintVue"
+      },
+      {
+        "checktool": "eslint_vue",
+        "checkrule": "vue/no-reserved-keys",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "vue/no-reserved-keys",
+        "checktool_display_name": "EslintVue"
+      },
+      {
+        "checktool": "eslint_vue",
+        "checkrule": "vue/no-shared-component-data",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "vue/no-shared-component-data",
+        "checktool_display_name": "EslintVue"
+      },
+      {
+        "checktool": "eslint_vue",
+        "checkrule": "vue/no-side-effects-in-computed-properties",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "vue/no-side-effects-in-computed-properties",
+        "checktool_display_name": "EslintVue"
+      },
+      {
+        "checktool": "eslint_vue",
+        "checkrule": "vue/no-template-key",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "vue/no-template-key",
+        "checktool_display_name": "EslintVue"
+      },
+      {
+        "checktool": "eslint_vue",
+        "checkrule": "vue/no-textarea-mustache",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "vue/no-textarea-mustache",
+        "checktool_display_name": "EslintVue"
+      },
+      {
+        "checktool": "eslint_vue",
+        "checkrule": "vue/no-unused-components",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "vue/no-unused-components",
+        "checktool_display_name": "EslintVue"
+      },
+      {
+        "checktool": "eslint_vue",
+        "checkrule": "vue/no-unused-vars",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "vue/no-unused-vars",
+        "checktool_display_name": "EslintVue"
+      },
+      {
+        "checktool": "eslint_vue",
+        "checkrule": "vue/no-use-v-if-with-v-for",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "vue/no-use-v-if-with-v-for",
+        "checktool_display_name": "EslintVue"
+      },
+      {
+        "checktool": "customfilescan",
+        "checkrule": "FileTooLong",
+        "severity": "info",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "convention",
+        "checkrule_display_name": "FileTooLong",
+        "checktool_display_name": "CustomFileScan"
+      },
+      {
+        "checktool": "customscan",
+        "checkrule": "FunctionTooLong",
+        "severity": "info",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "convention",
+        "checkrule_display_name": "FunctionTooLong",
+        "checktool_display_name": "CustomScan"
+      }
+    ],
+    "open_saas": false,
+    "envs": null
+  }
+]

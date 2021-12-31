@@ -1,0 +1,43 @@
+@import '@src/common/style/color.scss';
+
+.latest-scan {
+    padding-top: 16px;
+
+    .bold {
+        font-size: 20px;
+        padding: 0 4px;
+    }
+
+    .success {
+        color: $green-5;
+    }
+
+    .error {
+        color: $red-4;
+    }
+
+    .default,
+    .running {
+        color: $blue-5;
+    }
+
+    .running {
+        margin-left: 4px;
+        animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+     
+        100% {
+          transform: rotate(360deg);
+        }
+     }
+
+    .desc {
+        color: $grey-7;
+        margin-left: 16px;
+    }
+}

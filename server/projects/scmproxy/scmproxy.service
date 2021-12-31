@@ -1,0 +1,13 @@
+[Unit]
+Description=Scm proxy
+After=printer.target network.target multi-user.target
+
+[Service]
+Type=simple
+WorkingDirectory=/data/scmproxy
+ExecStart=/bin/nohup /usr/local/bin/python3 proxyserver.py > /data/scmproxy/requests.log 2>&1 &
+Restart=always
+RestartSec=30
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,74 @@
+.buffet-container {
+    position: fixed;
+    right: 10px;
+    bottom: 10px;
+    font-size: 12px;
+    z-index: 2000;
+    .dot {
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        background-color: rgba(234, 57, 57, 0.7);
+        cursor: pointer;
+        &:hover {
+            background-color: rgb(234, 57, 57);
+            width: 20px;
+            height: 20px;
+        }
+    }
+
+    .content {
+        background-color: #fff6de;
+        padding: 10px;
+        border-radius: 4px;
+        border-left: 2px solid #3580dc;
+        box-shadow: 2px 3px 4px 3px rgba(219, 231, 234, 0.8);
+    }
+
+    .header {
+        margin-bottom: 10px;
+        border-bottom: 1px solid #ec9c49;
+        line-height: 20px;
+        vertical-align: middle;
+        padding-bottom: 6px;
+    }
+
+    .label {
+        margin-right: 10px;
+        display: inline-block;
+    }
+
+    .clean {
+        float: right;
+        cursor: pointer;
+    }
+
+    .icon {
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background-color: #b6b7bb;
+        display: inline-block;
+        margin-right: 4px;
+        &.current {
+            background-color: #0f0;
+        }
+    }
+
+    .product {
+        display: table-row;
+        .version,
+        .name,
+        .commit,
+        .time {
+            display: table-cell;
+            padding: 2px 6px;
+            vertical-align: middle;
+        }
+        .version {
+            .icon {
+                display: block;
+            }
+        }
+    }
+}

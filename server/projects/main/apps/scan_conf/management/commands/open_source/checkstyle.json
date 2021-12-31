@@ -1,0 +1,2707 @@
+[
+  {
+    "name": "checkstyle",
+    "display_name": "CheckStyle",
+    "description": "CheckStyle是SourceForge下的一个项目，提供了一个帮助JAVA开发人员遵守某些编码规范的工具。",
+    "license": "LGPL",
+    "task_processes": [
+      "analyze",
+      "datahandle"
+    ],
+    "open_user": true,
+    "open_saas": true,
+    "scan_app": "codelint",
+    "scm_url": null,
+    "run_cmd": null,
+    "envs": null,
+    "show_display_name": true,
+    "checkrule_set": [
+      {
+        "real_name": "AbbreviationAsWordInName",
+        "display_name": "AbbreviationAsWordInName",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "验证缩写（连续大写字母）长度在标识符名称中，它还允许强制执行camel case命名",
+        "rule_params": "ignoreFinal=false\r\nallowedAbbreviationLength=1",
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "验证缩写（连续大写字母）长度在标识符名称中，它还允许强制执行camel case命名",
+        "labels": []
+      },
+      {
+        "real_name": "AbstractClassName",
+        "display_name": "AbstractClassName",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "抽象类名称",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "检查抽象类的名称是否遵守命名规约。",
+        "labels": []
+      },
+      {
+        "real_name": "AnnotationLocation",
+        "display_name": "AnnotationLocation",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "注解使用位置",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "这项检查可以控制要使用的注解的位置。",
+        "labels": []
+      },
+      {
+        "real_name": "AnnotationLocation_AnnotationLocationMostCases",
+        "display_name": "AnnotationLocation_AnnotationLocationMostCases",
+        "severity": "info",
+        "category": "convention",
+        "rule_title": "注解使用位置",
+        "rule_params": "id=AnnotationLocationMostCases\r\ntokens=CLASS_DEF, INTERFACE_DEF, ENUM_DEF, METHOD_DEF, CTOR_DEF",
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "注解使用位置",
+        "labels": []
+      },
+      {
+        "real_name": "AnnotationLocation_AnnotationLocationVariables",
+        "display_name": "AnnotationLocation_AnnotationLocationVariables",
+        "severity": "info",
+        "category": "convention",
+        "rule_title": "注解使用位置",
+        "rule_params": "id=AnnotationLocationVariables\r\ntokens=VARIABLE_DEF\r\nallowSamelineMultipleAnnotations=true",
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "注解使用位置",
+        "labels": []
+      },
+      {
+        "real_name": "AnnotationUseStyle",
+        "display_name": "AnnotationUseStyle",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "注解使用风格",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "这项检查可以控制要使用的注解的样式。",
+        "labels": []
+      },
+      {
+        "real_name": "AnonInnerLength",
+        "display_name": "AnonInnerLength",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "匿名内部类长度",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "解释：如果一个匿名内部类变得非常长，那么就很难读懂它，并且难以跟踪方法的流程。因此，过长的匿名内部类通常应当被重构为一个具名内部类。",
+        "labels": []
+      },
+      {
+        "real_name": "ArrayTrailingComma",
+        "display_name": "ArrayTrailingComma",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "//一切...",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "//一切...",
+        "labels": []
+      },
+      {
+        "real_name": "ArrayTypeStyle",
+        "display_name": "ArrayTypeStyle",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "数组类型风格",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "检查数组定义的风格。有的开发者使用Java风格：public static void main(String[] args)；有的开发者使用C风格：public static void main(String args[])。",
+        "labels": []
+      },
+      {
+        "real_name": "AtclauseOrder",
+        "display_name": "AtclauseOrder",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "检查文档标签顺序",
+        "rule_params": "tagOrder=@param, @return, @throws, @deprecated\r\ntarget=CLASS_DEF, INTERFACE_DEF, ENUM_DEF, METHOD_DEF, CTOR_DEF, VARIABLE_DEF",
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "检查文档标签顺序，默认：@author, @version, @param, @return, @throws, @exception, @see, @since, @serial, @serialField, @serialData, @deprecated",
+        "labels": []
+      },
+      {
+        "real_name": "AvoidEscapedUnicodeCharacters",
+        "display_name": "AvoidEscapedUnicodeCharacters",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "限制使用Unicode转义",
+        "rule_params": "allowEscapesForControlCharacters = true\r\nallowByTailComment = true\r\nallowNonPrintableEscapes = true",
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "限制使用Unicode转义",
+        "labels": []
+      },
+      {
+        "real_name": "AvoidInlineConditionals",
+        "display_name": "AvoidInlineConditionals",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "避免内联条件语句",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "解释：有些开发者发现内联条件语句很难读懂，因此他们公司的编码标准会禁止使用内联条件语句。",
+        "labels": []
+      },
+      {
+        "real_name": "AvoidNestedBlocks",
+        "display_name": "AvoidNestedBlocks",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "避免嵌套代码块",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "解释：内嵌代码块通常是调试过程的残留物，它们会使读者产生混淆。",
+        "labels": []
+      },
+      {
+        "real_name": "AvoidStarImport",
+        "display_name": "AvoidStarImport",
+        "severity": "info",
+        "category": "convention",
+        "rule_title": "必须导入类的完整路径",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "必须导入类的完整路径，即不能使用*导入所需的类",
+        "labels": []
+      },
+      {
+        "real_name": "AvoidStaticImport",
+        "display_name": "AvoidStaticImport",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "避免静态导入",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "解释：导入静态成员可能会导致类成员之间的命名冲突。导入静态成员可能会导致代码的可读性很差，因为读者可能会搞不清楚成员到底位于哪个类中。",
+        "labels": []
+      },
+      {
+        "real_name": "BooleanExpressionComplexity",
+        "display_name": "BooleanExpressionComplexity",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "布尔表达式复杂度",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "注意，&和|运算符并不仅仅是整数的位运算符，它们还是布尔运算符&&和||的非快捷版本。",
+        "labels": []
+      },
+      {
+        "real_name": "CatchParameterName",
+        "display_name": "CatchParameterName",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "检查catch参数名称是否符合format属性指定的格式",
+        "rule_params": "format=^[a-z]([a-z0-9][a-zA-Z0-9]*)?$",
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "检查catch参数名称是否符合format属性指定的格式",
+        "labels": []
+      },
+      {
+        "real_name": "Checker",
+        "display_name": "Checker",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "检查器",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "每个风格检查器配置的根模块。不能被删除。",
+        "labels": []
+      },
+      {
+        "real_name": "ClassDataAbstractionCoupling",
+        "display_name": "ClassDataAbstractionCoupling",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "类的数据抽象耦合",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "这项度量会测量给定类中的其他类的实例化操作的次数。这种类型的耦合并不是由于继承或者面向对象范型而产生的。一般而言，任何将其他抽象数据类型作为成员的抽象数据类型都具有数据抽象耦合；因此，如果一个类中的某个局部变量是另一个类的实例（对象），那么就存在数据抽象耦合（DAC）。DAC越高，系统的数据结构（类）就会越复杂。",
+        "labels": []
+      },
+      {
+        "real_name": "ClassFanOutComplexity",
+        "display_name": "ClassFanOutComplexity",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "类的扇出复杂度",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "一个给定类所依赖的其他类的数量。这个数量的平方还可以用于表示函数式程序（基于文件）中需要维护总量的最小值。",
+        "labels": []
+      },
+      {
+        "real_name": "ClassTypeParameterName",
+        "display_name": "ClassTypeParameterName",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "类的类型参数名称",
+        "rule_params": "format=(^[A-Z][0-9]?)$|([A-Z][a-zA-Z0-9]*[T]$)",
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "检查类的类型参数名称是否遵守命名规约。",
+        "labels": []
+      },
+      {
+        "real_name": "CommentsIndentation",
+        "display_name": "CommentsIndentation",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "控制注释和周围代码之间的缩进",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "控制注释和周围代码之间的缩进",
+        "labels": []
+      },
+      {
+        "real_name": "ConstantName",
+        "display_name": "ConstantName",
+        "severity": "info",
+        "category": "convention",
+        "rule_title": "检查常数名",
+        "rule_params": "format=(^[A-Z0-9_]{0,29}$)",
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "常量（静态，最终字段）",
+        "labels": []
+      },
+      {
+        "real_name": "CovariantEquals",
+        "display_name": "CovariantEquals",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "共变equals方法",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "解释：错误地定义了一个共变equals()方法，而没有覆盖equals(java.lang.Object)方法，可能会产生不可预料的运行时行为。",
+        "labels": []
+      },
+      {
+        "real_name": "CustomImportOrder",
+        "display_name": "CustomImportOrder",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "检查导入声明组是否按指定的顺序显示",
+        "rule_params": "sortImportsInGroupAlphabetically=true\r\nseparateLineBetweenGroups=true\r\ncustomImportOrderRules=STATIC###THIRD_PARTY_PACKAGE",
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "检查导入声明组是否按用户指定的顺序显示",
+        "labels": []
+      },
+      {
+        "real_name": "CyclomaticComplexity",
+        "display_name": "CyclomaticComplexity",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "循环复杂度",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "检查循环复杂度是否超出了指定的限值。该复杂度由构造器、方法、静态初始化程序、实例初始化程序中的if、while、do、for、?:、catch、switch、case等语句，以及&&和||运算符的数量所测量。它是遍历代码的可能路径的一个最小数量测量，因此也是需要的测试用例的数量。通常1-4是很好的结果，5-7较好，8-10就需要考虑重构代码了，如果大于11，则需要马上重构代码！",
+        "labels": []
+      },
+      {
+        "real_name": "DeclarationOrder",
+        "display_name": "DeclarationOrder",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "声明顺序检查",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "4. 方法",
+        "labels": []
+      },
+      {
+        "real_name": "DefaultComesLast",
+        "display_name": "DefaultComesLast",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "默认分支置于最后",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "解释：Java允许default位于switch语句中的任何地方。但是，如果default位于最后一个case分支之后，那么代码的可读性会更强。",
+        "labels": []
+      },
+      {
+        "real_name": "DescendantToken",
+        "display_name": "DescendantToken",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "后续标记检查",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "警告：这是一项非常强大和灵活的检查，但是与此同时，它偏向于底层技术，并且非常依赖于具体实现，因为，它的结果依赖于我们用来构建抽象语法树的语法。因此，当其他检查项目提供了你想要用的功能时，我们建议你使用这些检查项目。总之，这项检查只能在抽象语法树的层面上工作，它并不了解任何语言结构。",
+        "labels": []
+      },
+      {
+        "real_name": "DesignForExtension",
+        "display_name": "DesignForExtension",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "设计扩展性",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "解释：这种API设计风格可以保护父类不会被子类破坏。不利之处在于子类的灵活性会受到限制，特别是它们不能够阻止父类代码的执行，但是这也意味着子类不会由于忘记调用父类的方法而破坏父类的状态。（个人理解：不允许类的方法被子类覆盖）",
+        "labels": []
+      },
+      {
+        "real_name": "EmptyBlock",
+        "display_name": "EmptyBlock",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "空代码块",
+        "rule_params": "option=TEXT\r\ntokens=LITERAL_TRY, LITERAL_FINALLY, LITERAL_IF, LITERAL_ELSE, LITERAL_SWITCH",
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "检查空代码块。",
+        "labels": []
+      },
+      {
+        "real_name": "EmptyCatchBlock",
+        "display_name": "EmptyCatchBlock",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "检查空的catch块，几乎没有跳过违规的选项",
+        "rule_params": "exceptionVariableName=expected",
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "检查空的catch块，几乎没有跳过违规的选项",
+        "labels": []
+      },
+      {
+        "real_name": "EmptyForInitializerPad",
+        "display_name": "EmptyForInitializerPad",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "空白for初始化语句填充符",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "; <j; i ++，j--）",
+        "labels": []
+      },
+      {
+        "real_name": "EmptyForIteratorPad",
+        "display_name": "EmptyForIteratorPad",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "空白for迭代器填充符",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": ")",
+        "labels": []
+      },
+      {
+        "real_name": "EmptyLineSeparator",
+        "display_name": "EmptyLineSeparator",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "检查空行分隔符",
+        "rule_params": "allowNoEmptyLineBetweenFields=true",
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "检查空行分隔符",
+        "labels": []
+      },
+      {
+        "real_name": "EmptyStatement",
+        "display_name": "EmptyStatement",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "空语句",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "检测代码中是否有空语句（也就是单独的;符号）。",
+        "labels": []
+      },
+      {
+        "real_name": "EqualsAvoidNull",
+        "display_name": "EqualsAvoidNull",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "避免调用空引用的equals方法",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "因为很难确定正在拼接的是哪种类型的对象，所以所有的IDENT拼接都会被认为是不安全的。",
+        "labels": []
+      },
+      {
+        "real_name": "EqualsHashCode",
+        "display_name": "EqualsHashCode",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "equals方法和hashCode方法",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "解释：equals()方法和hashCode()方法约定，相等的对象必然具有相同的哈希码。因此，只要你覆盖了equals()方法，你就必须同时覆盖hashCode()方法，以确保可以在基于哈希的集合中使用你的类。",
+        "labels": []
+      },
+      {
+        "real_name": "ExecutableStatementCount",
+        "display_name": "ExecutableStatementCount",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "可执行语句数量",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "将可执行语句的数量限制为一个指定的限值。",
+        "labels": []
+      },
+      {
+        "real_name": "ExplicitInitialization",
+        "display_name": "ExplicitInitialization",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "显式初始化",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "解释：每个实例变量都会被初始化两次，并且初始化为相同的值。在执行代码中指定的任何初始化操作之前，Java会初始化每个实例变量为它的默认值（0或null）。因此在这种情况下，x会被初始化为0两次，bar会被初始化为null两次。因此，这样稍微有些效率低下。这种编码风格是C/C++编码风格的延续，它表明开发者并不是真正有把握Java能够初始化实例变量为它的默认值。",
+        "labels": []
+      },
+      {
+        "real_name": "FallThrough",
+        "display_name": "FallThrough",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "跨越分支",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "注意：这项检查假设case分支代码中没有不可达的代码。",
+        "labels": []
+      },
+      {
+        "real_name": "FileLength",
+        "display_name": "FileLength",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "检查文件的长度（行）",
+        "rule_params": "max=2500",
+        "custom": true,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "解释：如果一个源码文件变得非常长，那么就会难以理解。因此，过长的类通常应当被重构成若干个较小的独立的类，每个类专注于一个特定的任务。\r\n默认最长2000，暂定2500",
+        "labels": []
+      },
+      {
+        "real_name": "FileTabCharacter",
+        "display_name": "FileTabCharacter",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "文件制表符",
+        "rule_params": "eachLine=true",
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "根据Apache Jakarta的编码标准：在一个分布式开发环境中，当提交的消息被发送到一个邮件列表中时，如果你使用了制表符，那么这些消息会变得几乎不可能阅读。",
+        "labels": []
+      },
+      {
+        "real_name": "FinalClass",
+        "display_name": "FinalClass",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "final类",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "检查一个只有私有构造器的类是否被声明为final。",
+        "labels": []
+      },
+      {
+        "real_name": "FinalLocalVariable",
+        "display_name": "FinalLocalVariable",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "final局部变量",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "当配置为检查参数时，这项检查会忽略接口方法和抽象方法中的参数。",
+        "labels": []
+      },
+      {
+        "real_name": "FinalParameters",
+        "display_name": "FinalParameters",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "final参数",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "解释：在方法算法的执行期间改变参数值会使读者产生混淆，因此应当避免这种情况的发生。有个很好的方法可以使得Java的编译器预防这种编码风格，那就是将方法的参数声明为final的。",
+        "labels": []
+      },
+      {
+        "real_name": "GenericWhitespace",
+        "display_name": "GenericWhitespace",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "范型标记空格",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "List <List <Integer>> y = new ArrayList <List <Integer>>（）;",
+        "labels": []
+      },
+      {
+        "real_name": "Header",
+        "display_name": "Header",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "文件头",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "因为年份信息会随着时间改变，通过将ignoreLines属性设置为4，你就可以告诉风格检查忽略第4行。",
+        "labels": []
+      },
+      {
+        "real_name": "HiddenField",
+        "display_name": "HiddenField",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "隐藏字段",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "检查局部变量或参数是否会遮蔽在相同类中定义的字段。",
+        "labels": []
+      },
+      {
+        "real_name": "HideUtilityClassConstructor",
+        "display_name": "HideUtilityClassConstructor",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "隐藏工具类构造器",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "}",
+        "labels": []
+      },
+      {
+        "real_name": "IllegalCatch",
+        "display_name": "IllegalCatch",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "非法异常捕捉",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "解释：缺乏经验的开发者经常会简单地捕捉Exception异常，试图处理多种异常类型。这会很不幸地使代码无意中捕捉到NullPointerException、OutOfMemoryErrors等系统异常。",
+        "labels": []
+      },
+      {
+        "real_name": "IllegalImport",
+        "display_name": "IllegalImport",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "非法导入",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "检查一组非法包装的进口。默认情况下，该检查拒绝所有sun。*软件包，因为包含直接调用sun。*软件包的程序“不能保证在所有Java兼容平台上都能工作”。要拒绝其他软件包，请将属性invalidPkgs设置为非法软件包的列表。",
+        "labels": []
+      },
+      {
+        "real_name": "IllegalInstantiation",
+        "display_name": "IllegalInstantiation",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "非法实例化",
+        "rule_params": "classes=java.lang.Boolean",
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "某些对性能有极端要求的项目可能需要其他的类也使用工厂方法，以便于提高缓存或对象池的使用效率。",
+        "labels": []
+      },
+      {
+        "real_name": "IllegalThrows",
+        "display_name": "IllegalThrows",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "非法异常抛出",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "这项检查可以用来确保类型不能声明抛出指定的异常类型。从不允许声明抛出java.lang.Error或java.lang.RuntimeException。",
+        "labels": []
+      },
+      {
+        "real_name": "IllegalToken",
+        "display_name": "IllegalToken",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "非法标记",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "解释：某个语言特性经常会导致代码难以维护，或者开发新手难以理解。在某些框架中，其他特性可能不推荐使用，例如，在EJB组件中最好不要使用本地方法。",
+        "labels": []
+      },
+      {
+        "real_name": "IllegalTokenText",
+        "display_name": "IllegalTokenText",
+        "severity": "info",
+        "category": "convention",
+        "rule_title": "检查非法令牌文本",
+        "rule_params": "tokens = STRING_LITERAL, CHAR_LITERAL\r\nformat = \\\\u00(09|0(a|A)|0(c|C)|0(d|D)|22|27|5(C|c))|\\\\(0(10|11|12|14|15|42|47)|134)\r\nmessage = Consider using special escape sequence instead of octal value or Unicode escaped value.",
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "检查非法令牌文本",
+        "labels": []
+      },
+      {
+        "real_name": "IllegalType",
+        "display_name": "IllegalType",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "非法类型",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "解释：帮助减少和实体类之间的耦合。另外，抽象类应当被认为是接口的一种简便的基类实现，因此不能是类型本身。",
+        "labels": []
+      },
+      {
+        "real_name": "ImportOrder",
+        "display_name": "ImportOrder",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "导入顺序检查",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "检查导入包的顺序/分组。确保导入包的分组按照指定的顺序排列（例如，java.排在首位，javax.排在第二，以此类推），并且每个分组内导入的包都是按照字典序排列的。静态导入必须放在最后，并且也是按照字典序排列的。",
+        "labels": []
+      },
+      {
+        "real_name": "Indentation",
+        "display_name": "Indentation",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "代码缩进",
+        "rule_params": "basicOffset=4\nbraceAdjustment=0\ncaseIndent=4\nthrowsIndent=4\nlineWrappingIndentation=4\narrayInitIndent=4",
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": "请遵从规则设定的缩进规则修改代码。",
+        "owner": null,
+        "description": "尽管有些格式精美的打印机有时可以很方便地批量重排原始代码的格式，但是它们通常不是没有足够的可配置性，就是不能够达到预期的排版格式。有时这是个人喜好的问题，有时这是实际经验的问题。无论如何，这项检查应当只确保代码遵守缩进规则的一个最小集合。",
+        "labels": []
+      },
+      {
+        "real_name": "InnerAssignment",
+        "display_name": "InnerAssignment",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "内部赋值",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "解释：这项检查会忽略for循环代码，其余所有的赋值操作都应当在它们自己的顶层语句中，以便于增强可读性。在上述的内部赋值代码中，很难看到变量是在哪儿赋值的。",
+        "labels": []
+      },
+      {
+        "real_name": "InnerTypeLast",
+        "display_name": "InnerTypeLast",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "最后声明内部类型",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "检查嵌套/内部的类型是否在当前类的最底部声明（在所有的方法/字段的声明之后）。",
+        "labels": []
+      },
+      {
+        "real_name": "InterfaceIsType",
+        "display_name": "InterfaceIsType",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "接口是类型",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "这项检查还可以配置为禁用标记接口，例如java.io.Serializable，这种接口不会包含任何方法或常量。",
+        "labels": []
+      },
+      {
+        "real_name": "InterfaceTypeParameterName",
+        "display_name": "InterfaceTypeParameterName",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "检查接口类型参数名称是否符合format属性指定的格式",
+        "rule_params": "format=(^[A-Z][0-9]?)$|([A-Z][a-zA-Z0-9]*[T]$)",
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "检查接口类型参数名称是否符合format属性指定的格式",
+        "labels": []
+      },
+      {
+        "real_name": "InvalidJavadocPosition",
+        "display_name": "InvalidJavadocPosition",
+        "severity": "info",
+        "category": "convention",
+        "rule_title": "检查javadoc位置",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": "参考文档解决",
+        "owner": null,
+        "description": "检查Javadocs是否位于正确的位置。正如标准Doclet的文档注释规范中所指定的那样，只有将Javadocs放置在模块，包，类，接口，构造函数，方法或字段声明之前，才能识别Javadocs。 javadoc工具将忽略任何其他位置（例如方法主体中的位置），并且此检查将其视为无效。",
+        "labels": []
+      },
+      {
+        "real_name": "JavadocMethod",
+        "display_name": "JavadocMethod",
+        "severity": "info",
+        "category": "convention",
+        "rule_title": "方法注释检查",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "方法注释检查",
+        "labels": []
+      },
+      {
+        "real_name": "JavadocMethod_private",
+        "display_name": "JavadocMethod_private",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "方法注释",
+        "rule_params": "scope=private\nallowMissingParamTags=false\nallowMissingReturnTag=false\ntokens=METHOD_DEF",
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": "",
+        "owner": null,
+        "description": "检查方法的javadoc的注释\r\n                scope: 可以检查的方法的范围，例如：public只能检查public修饰的方法，private可以检查所有的方法\r\n                allowMissingParamTags: 是否忽略对参数注释的检查\r\n                allowMissingThrowsTags: 是否忽略对throws注释的检查\r\n                allowMissingReturnTag: 是否忽略对return注释的检查",
+        "labels": []
+      },
+      {
+        "real_name": "JavadocMethod_public",
+        "display_name": "JavadocMethod_public",
+        "severity": "info",
+        "category": "convention",
+        "rule_title": "方法注释",
+        "rule_params": "scope=public\nallowMissingParamTags=true\nallowMissingReturnTag=true\nallowedAnnotations=Override, Test\ntokens=METHOD_DEF, CTOR_DEF, ANNOTATION_FIELD_DEF",
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": "",
+        "owner": null,
+        "description": "方法注释",
+        "labels": []
+      },
+      {
+        "real_name": "JavadocPackage",
+        "display_name": "JavadocPackage",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "包注释",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "如果两个文件都存在的话，就会报告错误，因为Javadoc工具不允许这种情况发生。",
+        "labels": []
+      },
+      {
+        "real_name": "JavadocParagraph",
+        "display_name": "JavadocParagraph",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "检查Javadoc段落",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "检查Javadoc段落",
+        "labels": []
+      },
+      {
+        "real_name": "JavadocStyle",
+        "display_name": "JavadocStyle",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "风格注释",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "验证Javadoc注释，以便于确保它们的格式。可以检查以下注释：接口声明、类声明、方法声明、构造器声明、变量声明。",
+        "labels": []
+      },
+      {
+        "real_name": "JavadocTagContinuationIndentation",
+        "display_name": "JavadocTagContinuationIndentation",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "检查at子句中延续行的缩进",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "检查at子句中延续行的缩进",
+        "labels": []
+      },
+      {
+        "real_name": "JavadocType",
+        "display_name": "JavadocType",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "类型注释",
+        "rule_params": "authorFormat=\\S\r\nscope=protected\r\ntokens=CLASS_DEF,INTERFACE_DEF",
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "检查类和接口的javadoc 默认不检查author 和version tags\r\n\r\n* authorFormat: 检查author标签的格式\r\n* versionFormat: 检查version标签的格式\r\n* scope: 可以检查的类的范围，例如：public只能检查public修饰的类，private可以检查所有的类\r\n* excludeScope: 不能检查的类的范围，例如：public，public的类将不被检查，但访问权限小于public的类仍然会检查，其他的权限以此类推\r\n* tokens: 该属性适用的类型，例如：CLASS_DEF,INTERFACE_DEF",
+        "labels": []
+      },
+      {
+        "real_name": "JavadocVariable",
+        "display_name": "JavadocVariable",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "变量注释",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "检查变量是否具有Javadoc注释。",
+        "labels": []
+      },
+      {
+        "real_name": "JavaNCSS",
+        "display_name": "JavaNCSS",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "非注释源码语句",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "解释：太大的方法和类会难以阅读，并且维护成本会很高。一个较大的NCSS数值通常意味着对应的方法或类承担了过多的责任和/或功能，应当分解成多个较小的单元。",
+        "labels": []
+      },
+      {
+        "real_name": "LambdaParameterName",
+        "display_name": "LambdaParameterName",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "检查lambda参数命名",
+        "rule_params": "format=^[a-z]([a-z0-9][a-zA-Z0-9]*)?$",
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": "修正lambda参数命名",
+        "owner": null,
+        "description": "检查lambda参数命名。",
+        "labels": []
+      },
+      {
+        "real_name": "LeftCurly",
+        "display_name": "LeftCurly",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "左花括号位置",
+        "rule_params": "option=eol",
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "检查代码块的左花括号（'{'）的位置\r\noption: 定义左大括号'{'显示位置，eol在同一行显示，nl在下一行显示\r\nmaxLineLength: 大括号'{'所在行行最多容纳的字符数\r\ntokens: 该属性适用的类型，例：CLASS_DEF,INTERFACE_DEF,METHOD_DEF,CTOR_DEF",
+        "labels": []
+      },
+      {
+        "real_name": "LineLength",
+        "display_name": "LineLength",
+        "severity": "info",
+        "category": "convention",
+        "rule_title": "行长度",
+        "rule_params": "fileExtensions=java\nmax=100\nignorePattern=^package.*|^import.*|a href|href|http://|https://|ftp://",
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": "默认限定代码行长度为100字符。",
+        "owner": null,
+        "description": "解释：将源码打印出来，或者开发者限制了屏幕显示源码的空间（例如，IDE会显示额外的信息，诸如项目树、类层次等等），那么过长的行会显得难以阅读。",
+        "labels": []
+      },
+      {
+        "real_name": "LocalFinalVariableName",
+        "display_name": "LocalFinalVariableName",
+        "severity": "info",
+        "category": "convention",
+        "rule_title": "局部final变量名称",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "检查局部final变量的名称是否遵守命名规约。",
+        "labels": []
+      },
+      {
+        "real_name": "LocalVariableName",
+        "display_name": "LocalVariableName",
+        "severity": "info",
+        "category": "convention",
+        "rule_title": "检查本地变量名",
+        "rule_params": "tokens=VARIABLE_DEF\r\nformat=^[a-z]([a-z0-9][a-zA-Z0-9]*)?$",
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "局部非最终变量，包括catch参数",
+        "labels": []
+      },
+      {
+        "real_name": "MagicNumber",
+        "display_name": "MagicNumber",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "魔法数字",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "检查代码中是否含有“幻数”，幻数就是没有被定义为常量的数值文字。默认情况下，-1、0、1、2不会被认为是幻数。",
+        "labels": []
+      },
+      {
+        "real_name": "MemberName",
+        "display_name": "MemberName",
+        "severity": "info",
+        "category": "convention",
+        "rule_title": "检查成员变量名",
+        "rule_params": "format=(^[a-z][a-z0-9][a-zA-Z0-9]*$)",
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": "请按照命名规范命名成员函数名称。",
+        "owner": null,
+        "description": "非静态字段",
+        "labels": []
+      },
+      {
+        "real_name": "MethodCount",
+        "display_name": "MethodCount",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "方法总数",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "它包括了每种可见范围方法的总数（private、package、protected、public）。",
+        "labels": []
+      },
+      {
+        "real_name": "MethodLength",
+        "display_name": "MethodLength",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "方法长度",
+        "rule_params": "max=300",
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "解释：如果一个方法变得非常长，那么就会难以理解。因此，过长的方法通常应当被重构成若干个较小的独立的方法，每个方法专注于一个特定的任务。",
+        "labels": []
+      },
+      {
+        "real_name": "MethodName",
+        "display_name": "MethodName",
+        "severity": "info",
+        "category": "convention",
+        "rule_title": "方法名称",
+        "rule_params": "format=(^[a-z][a-zA-Z0-9]{0,29}$)",
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "检查方法名称是否遵守命名规约。",
+        "labels": []
+      },
+      {
+        "real_name": "MethodParamPad",
+        "display_name": "MethodParamPad",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "方法参数填充符",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "检查方法定义、构造器定义、方法调用、构造器调用的标识符和参数列表的左圆括号之间的填充符。也就是，如果标识符和左圆括号位于同一行，那么就检查标识符之后是否需要紧跟一个空格。如果标识符和左圆括号不在同一行，那么就报错，除非将规则配置为允许使用换行符。想要在标识符之后使用换行符，将allowLineBreaks属性设置为true即可。",
+        "labels": []
+      },
+      {
+        "real_name": "MethodTypeParameterName",
+        "display_name": "MethodTypeParameterName",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "方法的类型参数名称",
+        "rule_params": "format=(^[A-Z][0-9]?)$|([A-Z][a-zA-Z0-9]*[T]$)",
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "检查方法的类型参数名称是否遵守命名规约。",
+        "labels": []
+      },
+      {
+        "real_name": "MissingConstructor",
+        "display_name": "MissingConstructor",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "缺少构造器",
+        "rule_params": null,
+        "custom": false,
+        "languages": [],
+        "solution": null,
+        "owner": null,
+        "description": "检查类（除了抽象类）是否定义了一个构造器，而不是依赖于默认构造器。",
+        "labels": []
+      },
+      {
+        "real_name": "MissingCtor",
+        "display_name": "MissingCtor",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "缺少构造器",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "检查类（除了抽象类）是否定义了一个构造器，而不是依赖于默认构造器。",
+        "labels": []
+      },
+      {
+        "real_name": "MissingDeprecated",
+        "display_name": "MissingDeprecated",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "缺少deprecad",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "检查java.lang.Deprecated注解或@deprecated的Javadoc标记是否同时存在。",
+        "labels": []
+      },
+      {
+        "real_name": "MissingJavadocMethod",
+        "display_name": "MissingJavadocMethod",
+        "severity": "info",
+        "category": "convention",
+        "rule_title": "检查方法或构造函数的缺少Javadoc注释。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": "参考文档修复",
+        "owner": null,
+        "description": "检查方法或构造函数的缺少Javadoc注释。使用Scope类指定要验证的范围，默认范围为Scope.PUBLIC。若要验证另一个范围，请将属性范围设置为其他范围。\n\n标有@Override批注的方法不需要Javadoc。但是，在Java 5中，无法标记接口所需的方法（在Java 6中已更正）。因此，支持使用使用单个{@inheritDoc}标签而不是所有其他标签的约定。\n\n对于属性allowMissingPropertyJavadoc的获取器和设置器，方法必须与以下结构完全匹配。\n\npublic void setNumber（最终整数）\n{\n    mNumber =数字；\n}\n\npublic int getNumber（）\n{\n    返回mNumber;\n}\n\n公共布尔isSomething（）\n{\n    返回false；\n}",
+        "labels": []
+      },
+      {
+        "real_name": "MissingOverride",
+        "display_name": "MissingOverride",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "缺少override",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "当出现{@inheritDoc}的Javadoc标签时，验证java.lang.Override注解是否出现。",
+        "labels": []
+      },
+      {
+        "real_name": "MissingSwitchDefault",
+        "display_name": "MissingSwitchDefault",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "缺少switch默认分支",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "解释：在每个switch语句中引入一条默认分支通常是一个很好的主意。即使开发者确信所有当前可能的分支都能覆盖到，这也应当在default分支中表达出来，例如，使用一条断言。这种方法使得代码可以应付以后的修改，例如，在一个枚举类型中引入新的类型。",
+        "labels": []
+      },
+      {
+        "real_name": "ModifiedControlVariable",
+        "display_name": "ModifiedControlVariable",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "修改控制变量",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "解释：如果在循环体中修改了控制变量，程序流程就会变得更加难以跟踪。可以用while循环替换for循环。",
+        "labels": []
+      },
+      {
+        "real_name": "ModifierOrder",
+        "display_name": "ModifierOrder",
+        "severity": "info",
+        "category": "convention",
+        "rule_title": "修饰符顺序",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "11.strictfp",
+        "labels": []
+      },
+      {
+        "real_name": "MultipleStringLiterals",
+        "display_name": "MultipleStringLiterals",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "多重字符串常量",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "解释：重复代码会使得维护工作变得更加困难，因此最好用一个常量来替换多次出现。",
+        "labels": []
+      },
+      {
+        "real_name": "MultipleVariableDeclarations",
+        "display_name": "MultipleVariableDeclarations",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "多重变量声明",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "解释：《SUN编码规约》的第6.1章节推荐应当使用一行一条语句声明一个变量。",
+        "labels": []
+      },
+      {
+        "real_name": "MutableException",
+        "display_name": "MutableException",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "可变异常",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "解释：异常实例应当表示一个错误状态。异常类中含有非final的字段，不仅仅会导致异常状态会由于偶然的因素被修改，这样便会遮蔽原始的异常状态，还会使得开发者偶尔会忘记初始化异常状态，这样便会导致代码捕捉到异常之后，根据异常状态推导出不正确的结论。",
+        "labels": []
+      },
+      {
+        "real_name": "NeedBraces",
+        "display_name": "NeedBraces",
+        "severity": "info",
+        "category": "convention",
+        "rule_title": "需要花括号",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "检查代码块周围是否有大括号，可以检查do、else、if、for、while等关键字所控制的代码块。",
+        "labels": []
+      },
+      {
+        "real_name": "NestedForDepth",
+        "display_name": "NestedForDepth",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "for嵌套深度",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "限制for循环的嵌套层数（默认值为1）。",
+        "labels": []
+      },
+      {
+        "real_name": "NestedIfDepth",
+        "display_name": "NestedIfDepth",
+        "severity": "info",
+        "category": "convention",
+        "rule_title": "if嵌套深度",
+        "rule_params": "max=5",
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "限制if-else代码块的嵌套层数（默认值为1）。",
+        "labels": []
+      },
+      {
+        "real_name": "NestedTryDepth",
+        "display_name": "NestedTryDepth",
+        "severity": "info",
+        "category": "convention",
+        "rule_title": "try嵌套深度",
+        "rule_params": "max=1",
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "限制try代码块的嵌套层数（默认值为1）。暂定为2",
+        "labels": []
+      },
+      {
+        "real_name": "NewLineAtEndOfFile",
+        "display_name": "NewLineAtEndOfFile",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "文件末尾的新行",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "检查外部类型名称是否与文件名称匹配。例如，类Foo必须在文件Foo.java中。",
+        "labels": []
+      },
+      {
+        "real_name": "NoClone",
+        "display_name": "NoClone",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "没有clone方法",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "这项检查和{@link NoFinalizerCheck}几乎完全相同。",
+        "labels": []
+      },
+      {
+        "real_name": "NoFinalizer",
+        "display_name": "NoFinalizer",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "没有finalize方法",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "验证类中是否定义了finalize()方法。",
+        "labels": []
+      },
+      {
+        "real_name": "NoLineWrap",
+        "display_name": "NoLineWrap",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "检查所选语句是否不是换行的",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "检查所选语句是否不是换行的",
+        "labels": []
+      },
+      {
+        "real_name": "NonEmptyAtclauseDescription",
+        "display_name": "NonEmptyAtclauseDescription",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "检查at子句标记后面是描述",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "检查at子句标记后面是描述",
+        "labels": []
+      },
+      {
+        "real_name": "NoWhitespaceAfter",
+        "display_name": "NoWhitespaceAfter",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "指定标记之后没有空格",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "检查指定标记之后没有空格。若要禁用指定标记之后的换行符，将allowLineBreaks属性设为false即可。",
+        "labels": []
+      },
+      {
+        "real_name": "NoWhitespaceBefore",
+        "display_name": "NoWhitespaceBefore",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "指定标记之前没有空格",
+        "rule_params": "tokens=COMMA, SEMI, POST_INC, POST_DEC, DOT, ELLIPSIS, METHOD_REF\r\nallowLineBreaks=true",
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "检查指定标记之前没有空格。若要允许指定标记之前的换行符，将allowLineBreaks属性设为true即可。",
+        "labels": []
+      },
+      {
+        "real_name": "NPathComplexity",
+        "display_name": "NPathComplexity",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "NPath复杂度",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "解释：在Nejmeh的团队中，每个单独的例程都有一个取值为200的非正式的NPATH限值；超过这个限值的函数可能会进行进一步的分解，或者至少一探究竟。",
+        "labels": []
+      },
+      {
+        "real_name": "OneStatementPerLine",
+        "display_name": "OneStatementPerLine",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "检查每行只有一个语句",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "检查每行只有一个语句",
+        "labels": []
+      },
+      {
+        "real_name": "OneTopLevelClass",
+        "display_name": "OneTopLevelClass",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "检查每个顶级类，接口或枚举是否驻留在自己的源文件中",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "这项检查还可以配置为禁用标记接口，例如java.io.Serializable，这种接口不会包含任何方法或常量。",
+        "labels": []
+      },
+      {
+        "real_name": "OperatorWrap",
+        "display_name": "OperatorWrap",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "运算符换行",
+        "rule_params": "option=NL\r\ntokens=BAND, BOR, BSR, BXOR, DIV, EQUAL, GE, GT, LAND, LE, LITERAL_INSTANCEOF, LOR, LT, MINUS, MOD, NOT_EQUAL, PLUS, QUESTION, SL, SR, STAR, METHOD_REF",
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "检查代码自动换行时，运算符所处位置的策略。nl表示运算符必须在新行中，eol表示运算符必须在当前行的行末。",
+        "labels": []
+      },
+      {
+        "real_name": "OuterTypeFilename",
+        "display_name": "OuterTypeFilename",
+        "severity": "info",
+        "category": "convention",
+        "rule_title": "检查外部类型名称和文件名是否匹配",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "检查外部类型名称和文件名是否匹配",
+        "labels": []
+      },
+      {
+        "real_name": "OuterTypeNumber",
+        "display_name": "OuterTypeNumber",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "外层类型数量",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "解释：一般认为给每个文件只定义一个外层类型是较好的做法。",
+        "labels": []
+      },
+      {
+        "real_name": "OverloadMethodsDeclarationOrder",
+        "display_name": "OverloadMethodsDeclarationOrder",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "检查重载方法是否组合在一起",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "检查重载方法是否组合在一起",
+        "labels": []
+      },
+      {
+        "real_name": "PackageAnnotation",
+        "display_name": "PackageAnnotation",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "包注解",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "这项检查可以确保所有包的注解都在package-info.java文件中。",
+        "labels": []
+      },
+      {
+        "real_name": "PackageDeclaration",
+        "display_name": "PackageDeclaration",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "包声明",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "解释：位于空包中的类是不能够被导入的。很多开发新手并没有注意到这一点。",
+        "labels": []
+      },
+      {
+        "real_name": "PackageName",
+        "display_name": "PackageName",
+        "severity": "info",
+        "category": "convention",
+        "rule_title": "包名称",
+        "rule_params": "format=^[a-z]+(\\.[a-z][a-z0-9]*)*$",
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "检查包名称是否遵守命名规约。",
+        "labels": []
+      },
+      {
+        "real_name": "ParameterAssignment",
+        "display_name": "ParameterAssignment",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "参数赋值",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "解释：对参数的赋值通常被认为是缺乏编程实践经验。强迫开发者将参数声明为final通常是非常麻烦的。这项检查可以确保参数从不会被赋值，这对于双方都是好事。",
+        "labels": []
+      },
+      {
+        "real_name": "ParameterName",
+        "display_name": "ParameterName",
+        "severity": "info",
+        "category": "convention",
+        "rule_title": "参数名称",
+        "rule_params": "format=(^[a-z][a-zA-Z0-9_]{0,29}$)",
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "检查参数名称是否遵守命名规约。",
+        "labels": []
+      },
+      {
+        "real_name": "ParameterNumber",
+        "display_name": "ParameterNumber",
+        "severity": "info",
+        "category": "convention",
+        "rule_title": "参数数量",
+        "rule_params": "max=7",
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "检查一个方法或构造器的参数的数量。\r\nChecks the number of parameters of a method or constructor. max default 7个",
+        "labels": []
+      },
+      {
+        "real_name": "ParenPad",
+        "display_name": "ParenPad",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "圆括号填充符",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "检查圆括号的填充符策略，也就是在左圆括号之后和右圆括号之前是否需要有一个空格。",
+        "labels": []
+      },
+      {
+        "real_name": "RedundantImport",
+        "display_name": "RedundantImport",
+        "severity": "info",
+        "category": "other",
+        "rule_title": "检查是否导入了不必显示导入的类",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "检查是否导入了不必显示导入的类",
+        "labels": []
+      },
+      {
+        "real_name": "RedundantModifier",
+        "display_name": "RedundantModifier",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "多余修饰符",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "定义为final的类是不能被继承的，因此，final类的方法的final修饰符也是多余的。",
+        "labels": []
+      },
+      {
+        "real_name": "Regexp",
+        "display_name": "Regexp",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "//一切...",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "//一切...",
+        "labels": []
+      },
+      {
+        "real_name": "RegexpHeader",
+        "display_name": "RegexpHeader",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "正则表达式文件头",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "第1行和第6行说明了如何更紧凑地表示71个'/'符号。第4行表示版权信息中的年份的格式是四位数字。第5行示范了如何在文件头部添加校正控制关键字。第12-14行是Javadoc的模板（第13行非常复杂，它可以抑制Javadoc注释中的冲突）。",
+        "labels": []
+      },
+      {
+        "real_name": "RegexpMultiline",
+        "display_name": "RegexpMultiline",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "正则表达式多行匹配",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "解释：这项检查可以作为原型检查使用，能够发现常见的编码坏习惯，例如调用ex.printStacktrace()、System.out.println()、System.exit()，等等。",
+        "labels": []
+      },
+      {
+        "real_name": "RegexpOnFilename",
+        "display_name": "RegexpOnFilename",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "//一切...",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "//一切...",
+        "labels": []
+      },
+      {
+        "real_name": "RegexpSingleline",
+        "display_name": "RegexpSingleline",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "正则表达式单行匹配",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "解释：这项检查可以作为原型检查使用，能够发现常见的编码坏习惯，例如调用ex.printStacktrace()、System.out.println()、System.exit()，等等。",
+        "labels": []
+      },
+      {
+        "real_name": "RegexpSinglelineJava",
+        "display_name": "RegexpSinglelineJava",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "正则表达式单行Java匹配",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "这项检查是RegexpSingleline的变种，用于检测Java文件中的单行是否匹配给定的正则表达式。它支持通过Java注释抑制匹配操作。",
+        "labels": []
+      },
+      {
+        "real_name": "RequireThis",
+        "display_name": "RequireThis",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "需要this",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "检查代码是否使用了“this.”，也就是说，在默认情况下，引用当前对象的实例变量和方法时，应当显式地通过“this.varName”或“this.methodName(args)”这种形式进行调用。",
+        "labels": []
+      },
+      {
+        "real_name": "ReturnCount",
+        "display_name": "ReturnCount",
+        "severity": "info",
+        "category": "convention",
+        "rule_title": "return总数",
+        "rule_params": "max=5\r\nformat=^$",
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "解释：过多的返回点可能表明代码尝试处理过多的业务，可能会难以理解。",
+        "labels": []
+      },
+      {
+        "real_name": "RightCurly",
+        "display_name": "RightCurly",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "右花括号位置",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "检查右花括号的位置",
+        "labels": []
+      },
+      {
+        "real_name": "RightCurly_RightCurlyAlone",
+        "display_name": "RightCurly_RightCurlyAlone",
+        "severity": "info",
+        "category": "convention",
+        "rule_title": "检查右花括号的位置",
+        "rule_params": "id=RightCurlyAlone\r\noption=alone\r\ntokens=CLASS_DEF, METHOD_DEF, CTOR_DEF, LITERAL_FOR, LITERAL_WHILE, STATIC_INIT, INSTANCE_INIT",
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "检查右花括号的位置",
+        "labels": []
+      },
+      {
+        "real_name": "RightCurly_RightCurlySame",
+        "display_name": "RightCurly_RightCurlySame",
+        "severity": "info",
+        "category": "convention",
+        "rule_title": "检查右花括号的位置",
+        "rule_params": "id=RightCurlySame\r\ntokens=LITERAL_TRY, LITERAL_CATCH, LITERAL_FINALLY, LITERAL_IF, LITERAL_ELSE, LITERAL_DO",
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "检查右花括号的位置",
+        "labels": []
+      },
+      {
+        "real_name": "SeparatorWrap",
+        "display_name": "SeparatorWrap",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "检查带有分隔符的换行符",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "检查带有分隔符的换行符",
+        "labels": []
+      },
+      {
+        "real_name": "SeparatorWrap_SeparatorWrapArrayDeclarator",
+        "display_name": "SeparatorWrap_SeparatorWrapArrayDeclarator",
+        "severity": "info",
+        "category": "convention",
+        "rule_title": "检查带有分隔符的换行符",
+        "rule_params": "id=SeparatorWrapArrayDeclarator\r\ntokens=ARRAY_DECLARATOR\r\noption=EOL",
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "检查带有分隔符的换行符",
+        "labels": []
+      },
+      {
+        "real_name": "SeparatorWrap_SeparatorWrapComma",
+        "display_name": "SeparatorWrap_SeparatorWrapComma",
+        "severity": "info",
+        "category": "convention",
+        "rule_title": "检查带有分隔符的换行符",
+        "rule_params": "id=SeparatorWrapComma\r\ntokens=COMMA\r\noption=EOL",
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "检查带有分隔符的换行符",
+        "labels": []
+      },
+      {
+        "real_name": "SeparatorWrap_SeparatorWrapDot",
+        "display_name": "SeparatorWrap_SeparatorWrapDot",
+        "severity": "info",
+        "category": "convention",
+        "rule_title": "检查带有分隔符的换行符",
+        "rule_params": "id=SeparatorWrapDot\r\ntokens=DOT\r\noption=nl",
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "检查带有分隔符的换行符",
+        "labels": []
+      },
+      {
+        "real_name": "SeparatorWrap_SeparatorWrapEllipsis",
+        "display_name": "SeparatorWrap_SeparatorWrapEllipsis",
+        "severity": "info",
+        "category": "convention",
+        "rule_title": "检查带有分隔符的换行符",
+        "rule_params": "id=SeparatorWrapEllipsis\r\ntokens=ELLIPSIS\r\noption=EOL",
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "检查带有分隔符的换行符",
+        "labels": []
+      },
+      {
+        "real_name": "SeparatorWrap_SeparatorWrapMethodRef",
+        "display_name": "SeparatorWrap_SeparatorWrapMethodRef",
+        "severity": "info",
+        "category": "convention",
+        "rule_title": "检查带有分隔符的换行符",
+        "rule_params": "id=SeparatorWrapMethodRef\r\ntokens=METHOD_REF\r\noption=nl",
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "检查带有分隔符的换行符",
+        "labels": []
+      },
+      {
+        "real_name": "SimplifyBooleanExpression",
+        "display_name": "SimplifyBooleanExpression",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "简化布尔表达式",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "解释：复杂的布尔逻辑会使得代码难以理解和维护。",
+        "labels": []
+      },
+      {
+        "real_name": "SimplifyBooleanReturn",
+        "display_name": "SimplifyBooleanReturn",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "简化布尔返回值",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "这项检查是从PMD规则中借鉴而来的。",
+        "labels": []
+      },
+      {
+        "real_name": "SingleLineJavadoc",
+        "display_name": "SingleLineJavadoc",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "检查JavaDoc块是否适合单行并且不包含at子句",
+        "rule_params": "ignoreInlineTags=false",
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "检查JavaDoc块是否适合单行并且不包含at子句",
+        "labels": []
+      },
+      {
+        "real_name": "SingleSpaceSeparator",
+        "display_name": "SingleSpaceSeparator",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "//一切...",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "//一切...",
+        "labels": []
+      },
+      {
+        "real_name": "StaticVariableName",
+        "display_name": "StaticVariableName",
+        "severity": "info",
+        "category": "convention",
+        "rule_title": "静态变量名称",
+        "rule_params": "format=(^[A-Z0-9_]{0,29}$)",
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "检查静态变量（用static修饰，但没用final修饰的字段）的名称是否遵守命名规约。",
+        "labels": []
+      },
+      {
+        "real_name": "StringLiteralEquality",
+        "display_name": "StringLiteralEquality",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "严格的常量等式比较",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "if (\"something\".equals(x))",
+        "labels": []
+      },
+      {
+        "real_name": "SummaryJavadoc",
+        "display_name": "SummaryJavadoc",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "检查Javadoc摘要语句是否包含不建议使用的短语",
+        "rule_params": "forbiddenSummaryFragments=^@return the *|^This method returns |^A [{]@code [a-zA-Z0-9]+[}]( is a )",
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "检查Javadoc摘要语句是否包含不建议使用的短语",
+        "labels": []
+      },
+      {
+        "real_name": "SuperClone",
+        "display_name": "SuperClone",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "父类clone方法",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "参考：Object.clone()。",
+        "labels": []
+      },
+      {
+        "real_name": "SuperFinalize",
+        "display_name": "SuperFinalize",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "父类finalize方法",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "参考：清理未使用对象。",
+        "labels": []
+      },
+      {
+        "real_name": "SuppressWarnings",
+        "display_name": "SuppressWarnings",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "抑制警告",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "这项检查允许你指定不允许SuppressWarnings抑制哪些警告信息。你还可以指定一个TokenTypes列表，其中包含了所有不能被抑制的警告信息。",
+        "labels": []
+      },
+      {
+        "real_name": "ThrowsCount",
+        "display_name": "ThrowsCount",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "抛出计数",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "解释：异常是方法接口的组成部分之一。如果一个方法声明抛出过多不同的异常，就会使得异常处理非常繁重，并且会导致不好的编程习惯，例如catch (Exception)。这项检查会强制开发者将异常处理变得具有层次性，举个最简单的例子，调用者只需要检查一种类型的异常，但是必要时也允许捕捉上述异常的任何子类。",
+        "labels": []
+      },
+      {
+        "real_name": "TodoComment",
+        "display_name": "TodoComment",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "TODO注释",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "这项检查负责TODO注释的检查。实际上，这是一种检查Java注释的通用正则表达式匹配器。想要检查其他格式的Java注释，那么设置format属性即可。",
+        "labels": []
+      },
+      {
+        "real_name": "TrailingComment",
+        "display_name": "TrailingComment",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "行尾注释",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "当使用自动化重构技术时，源码每行的长度会经常变化，这就使得包含大量行尾注释的代码变得非常难以维护。",
+        "labels": []
+      },
+      {
+        "real_name": "Translation",
+        "display_name": "Translation",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "语言转换",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "messages.properties：缺少键“ ok”。",
+        "labels": []
+      },
+      {
+        "real_name": "TreeWalker",
+        "display_name": "TreeWalker",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "树遍历器",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "文件检查，树遍历器会检查单个的Java源码文件，并且定义了适用于检查这种文件的属性。",
+        "labels": []
+      },
+      {
+        "real_name": "TypecastParenPad",
+        "display_name": "TypecastParenPad",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "类型转换圆括号填充符",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "检查类型转换的圆括号的填充符策略。也就是，在左圆括号之后和右圆括号之前是否需要有一个空格。",
+        "labels": []
+      },
+      {
+        "real_name": "TypeName",
+        "display_name": "TypeName",
+        "severity": "info",
+        "category": "convention",
+        "rule_title": "类型名称",
+        "rule_params": "format=(^[A-Z][a-zA-Z0-9]{0,29}$)",
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "检查类的名称是否遵守命名规约。",
+        "labels": []
+      },
+      {
+        "real_name": "UncommentedMain",
+        "display_name": "UncommentedMain",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "未注释main方法",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "解释：调试时经常会在代码中利用main()方法。当调试结束时，开发者经常会忘记删除这些main()方法，这样会改变API，并且会增大生成的class/jar文件的尺寸。除了程序真正的入口点之外，源码中其他所有的main()方法都应当被删除或注释掉。",
+        "labels": []
+      },
+      {
+        "real_name": "UniqueProperties",
+        "display_name": "UniqueProperties",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "//一切...",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "解释：小写字母“l”看起来非常像数字“1”。",
+        "labels": []
+      },
+      {
+        "real_name": "UnnecessaryParentheses",
+        "display_name": "UnnecessaryParentheses",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "不必要的圆括号",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "检查代码中是否使用了不必要的圆括号。",
+        "labels": []
+      },
+      {
+        "real_name": "UnusedImports",
+        "display_name": "UnusedImports",
+        "severity": "info",
+        "category": "convention",
+        "rule_title": "未使用导入",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "检查是否导入的包没有使用",
+        "labels": []
+      },
+      {
+        "real_name": "UpperEll",
+        "display_name": "UpperEll",
+        "severity": "info",
+        "category": "convention",
+        "rule_title": "检查是否在long类型是否定义了大写的L",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "检查是否在long类型是否定义了大写的L.字母小写l和数字1很相似。",
+        "labels": []
+      },
+      {
+        "real_name": "VariableDeclarationUsageDistance",
+        "display_name": "VariableDeclarationUsageDistance",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "检查变量声明与其首次使用之间的距离",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "检查变量声明与其首次使用之间的距离",
+        "labels": []
+      },
+      {
+        "real_name": "VisibilityModifier",
+        "display_name": "VisibilityModifier",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "可见性标识符",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "解释：强制封装。",
+        "labels": []
+      },
+      {
+        "real_name": "WhitespaceAfter",
+        "display_name": "WhitespaceAfter",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "指定标记之后有空格",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "检查指定标记之后是否紧跟了空格。",
+        "labels": []
+      },
+      {
+        "real_name": "WhitespaceAround",
+        "display_name": "WhitespaceAround",
+        "severity": "info",
+        "category": "convention",
+        "rule_title": "指定标记周围有空格",
+        "rule_params": "allowEmptyConstructors=true\r\nallowEmptyMethods=true\r\nallowEmptyTypes=true\r\nallowEmptyLoops=true",
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "可以选择性地从检查策略中排除，通过设置allowEmptyMethods和allowEmptyConstructors属性即可。",
+        "labels": []
+      },
+      {
+        "real_name": "WriteTag",
+        "display_name": "WriteTag",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "输出标记",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "description": "将Javadoc作为信息输出。可以作为样式表来使用，根据作者名排序报告。想要为一个标记定义格式，将tagFormat属性设置为相应的正则表达式即可。这项检查会使用两种不同的严重级别。当标记缺失时，使用标准的严重级别（Severity）。当标记存在时，使用附加的严重级别（tagSeverity）作为报告等级。",
+        "labels": []
+      }
+    ]
+  }
+]

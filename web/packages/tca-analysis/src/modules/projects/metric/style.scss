@@ -1,0 +1,85 @@
+@import '@src/common/style/color.scss';
+
+.cc-search-header {
+    margin-bottom: 12px;
+
+    .file-header {
+        display: flex;
+        align-items: center;
+    }
+
+    .search-header {
+        display: inline-block;
+        padding-right: 14px;
+        margin-right: 14px;
+        border-right: 1px solid $grey-3;
+    
+        .title {
+            font-weight: bold;
+            padding-right: 6px;
+        }
+    }
+}
+
+
+
+.metric-content {
+    padding-top: 16px;
+}
+
+.clocs-left-container {
+    margin-bottom: 16px;
+    width: 320px;
+    min-height: 500px;
+    border: 1px solid $grey-3;
+    padding: 10px;
+    overflow: auto;
+}
+
+.clocs-right-container {
+    border: 1px solid $grey-3;
+    .header {
+        padding: 10px;
+        .tit {
+            font-size: 18px;
+            font-weight: 500;
+        }
+        .desc {
+            margin-top: 8px;
+            color: $grey-6;
+        }
+    }
+    .body {
+        padding: 10px;
+        border-top: 1px solid $grey-3;
+        .tit {
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+    }
+}
+
+.back-icon {
+    color: $blue-5;
+    margin-right: 10px;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+    transition: all 0.3s;
+
+    &:hover {
+        box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+    }
+}
+
+.cc-files-filter-btn-popup {
+
+    :global {
+        .cuk-tooltip-arrow {
+            // margin-left: 236px;
+            margin-top: 6px;
+        }
+
+        .ant-tooltip-inner {
+            padding: 20px;
+        }
+    }
+}

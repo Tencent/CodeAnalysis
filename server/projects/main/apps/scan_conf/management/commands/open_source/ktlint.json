@@ -1,0 +1,687 @@
+[
+    {
+        "name": "ktlint",
+        "display_name": "Ktlint",
+        "description": "kotlin static analyzer.",
+        "license": "MIT",
+        "libscheme_set": [],
+        "task_processes": [
+            "analyze",
+            "datahandle"
+        ],
+        "scan_app": "codelint",
+        "scm_url": "https://github.com/TCATools/custom-ktlint.git",
+        "run_cmd": "python main.py",
+        "envs": "PYTHON_HOME = $PYTHON37_HOME\nPATH = $PYTHON_HOME/bin:$PATH",
+        "build_flag": false,
+        "checkrule_set": [
+            {
+                "real_name": "annotation",
+                "display_name": "Annotation",
+                "severity": "error",
+                "category": "convention",
+                "rule_title": "annotation",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "kotlin"
+                ],
+                "solution": null,
+                "owner": null,
+                "labels": [],
+                "description": "annotation",
+                "disable": false
+            },
+            {
+                "real_name": "chain-wrapping",
+                "display_name": "ChainWrapping",
+                "severity": "error",
+                "category": "convention",
+                "rule_title": "chain wrapping",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "kotlin"
+                ],
+                "solution": null,
+                "owner": null,
+                "labels": [],
+                "description": "chain wrapping",
+                "disable": false
+            },
+            {
+                "real_name": "colon-spacing",
+                "display_name": "ColonSpacing",
+                "severity": "error",
+                "category": "convention",
+                "rule_title": "colon spacing",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "kotlin"
+                ],
+                "solution": null,
+                "owner": null,
+                "labels": [],
+                "description": "colon spacing",
+                "disable": false
+            },
+            {
+                "real_name": "comma-spacing",
+                "display_name": "CommaSpacing",
+                "severity": "error",
+                "category": "convention",
+                "rule_title": "comma spacing",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "kotlin"
+                ],
+                "solution": null,
+                "owner": null,
+                "labels": [],
+                "description": "comma spacing",
+                "disable": false
+            },
+            {
+                "real_name": "comment-spacing",
+                "display_name": "CommentSpacing",
+                "severity": "error",
+                "category": "convention",
+                "rule_title": "comment spacing",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "kotlin"
+                ],
+                "solution": null,
+                "owner": null,
+                "labels": [],
+                "description": "comment spacing",
+                "disable": false
+            },
+            {
+                "real_name": "curly-spacing",
+                "display_name": "CurlySpacing",
+                "severity": "error",
+                "category": "convention",
+                "rule_title": "curly spacing",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "kotlin"
+                ],
+                "solution": null,
+                "owner": null,
+                "labels": [],
+                "description": "curly spacing",
+                "disable": false
+            },
+            {
+                "real_name": "dot-spacing",
+                "display_name": "DotSpacing",
+                "severity": "error",
+                "category": "convention",
+                "rule_title": "dot spacing",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "kotlin"
+                ],
+                "solution": null,
+                "owner": null,
+                "labels": [],
+                "description": "dot spacing",
+                "disable": false
+            },
+            {
+                "real_name": "double-colon-spacing",
+                "display_name": "DoubleColonSpacing",
+                "severity": "error",
+                "category": "convention",
+                "rule_title": "double colon spacing",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "kotlin"
+                ],
+                "solution": null,
+                "owner": null,
+                "labels": [],
+                "description": "double colon spacing",
+                "disable": false
+            },
+            {
+                "real_name": "enum-entry-name-case",
+                "display_name": "EnumEntryNameCase",
+                "severity": "error",
+                "category": "convention",
+                "rule_title": "enum entry name case",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "kotlin"
+                ],
+                "solution": null,
+                "owner": null,
+                "labels": [],
+                "description": "enum entry name case",
+                "disable": false
+            },
+            {
+                "real_name": "final-newline",
+                "display_name": "FinalNewline",
+                "severity": "error",
+                "category": "convention",
+                "rule_title": "final newline",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "kotlin"
+                ],
+                "solution": null,
+                "owner": null,
+                "labels": [],
+                "description": "final newline",
+                "disable": false
+            },
+            {
+                "real_name": "import-ordering",
+                "display_name": "ImportOrdering",
+                "severity": "error",
+                "category": "convention",
+                "rule_title": "import ordering",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "kotlin"
+                ],
+                "solution": null,
+                "owner": null,
+                "labels": [],
+                "description": "import ordering",
+                "disable": false
+            },
+            {
+                "real_name": "indent",
+                "display_name": "Indent",
+                "severity": "error",
+                "category": "convention",
+                "rule_title": "indent",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "kotlin"
+                ],
+                "solution": null,
+                "owner": null,
+                "labels": [],
+                "description": "indent",
+                "disable": false
+            },
+            {
+                "real_name": "keyword-spacing",
+                "display_name": "KeywordSpacing",
+                "severity": "error",
+                "category": "convention",
+                "rule_title": "keyword spacing",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "kotlin"
+                ],
+                "solution": null,
+                "owner": null,
+                "labels": [],
+                "description": "keyword spacing",
+                "disable": false
+            },
+            {
+                "real_name": "max-line-length",
+                "display_name": "MaxLineLength",
+                "severity": "error",
+                "category": "convention",
+                "rule_title": "max line length",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "kotlin"
+                ],
+                "solution": null,
+                "owner": null,
+                "labels": [],
+                "description": "max line length",
+                "disable": false
+            },
+            {
+                "real_name": "modifier-order",
+                "display_name": "ModifierOrder",
+                "severity": "error",
+                "category": "convention",
+                "rule_title": "modifier order",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "kotlin"
+                ],
+                "solution": null,
+                "owner": null,
+                "labels": [],
+                "description": "modifier order",
+                "disable": false
+            },
+            {
+                "real_name": "multiline-if-else",
+                "display_name": "MultilineIfElse",
+                "severity": "error",
+                "category": "convention",
+                "rule_title": "multiline if else",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "kotlin"
+                ],
+                "solution": null,
+                "owner": null,
+                "labels": [],
+                "description": "multiline if else",
+                "disable": false
+            },
+            {
+                "real_name": "no-blank-line-before-rbrace",
+                "display_name": "NoBlankLineBeforeRbrace",
+                "severity": "error",
+                "category": "convention",
+                "rule_title": "no blank line before rbrace",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "kotlin"
+                ],
+                "solution": null,
+                "owner": null,
+                "labels": [],
+                "description": "no blank line before rbrace",
+                "disable": false
+            },
+            {
+                "real_name": "no-consecutive-blank-lines",
+                "display_name": "NoConsecutiveBlankLines",
+                "severity": "error",
+                "category": "convention",
+                "rule_title": "no consecutive blank lines",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "kotlin"
+                ],
+                "solution": null,
+                "owner": null,
+                "labels": [],
+                "description": "no consecutive blank lines",
+                "disable": false
+            },
+            {
+                "real_name": "no-empty-class-body",
+                "display_name": "NoEmptyClassBody",
+                "severity": "error",
+                "category": "convention",
+                "rule_title": "no empty class body",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "kotlin"
+                ],
+                "solution": null,
+                "owner": null,
+                "labels": [],
+                "description": "no empty class body",
+                "disable": false
+            },
+            {
+                "real_name": "no-empty-first-line-in-method-block",
+                "display_name": "NoEmptyFirstLineInMethodBlock",
+                "severity": "error",
+                "category": "convention",
+                "rule_title": "no empty first line in method block",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "kotlin"
+                ],
+                "solution": null,
+                "owner": null,
+                "labels": [],
+                "description": "no empty first line in method block",
+                "disable": false
+            },
+            {
+                "real_name": "no-line-break-after-else",
+                "display_name": "NoLineBreakAfterElse",
+                "severity": "error",
+                "category": "convention",
+                "rule_title": "no line break after else",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "kotlin"
+                ],
+                "solution": null,
+                "owner": null,
+                "labels": [],
+                "description": "no line break after else",
+                "disable": false
+            },
+            {
+                "real_name": "no-line-break-before-assignment",
+                "display_name": "NoLineBreakBeforeAssignment",
+                "severity": "error",
+                "category": "convention",
+                "rule_title": "no line break before assignment",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "kotlin"
+                ],
+                "solution": null,
+                "owner": null,
+                "labels": [],
+                "description": "no line break before assignment",
+                "disable": false
+            },
+            {
+                "real_name": "no-multi-spaces",
+                "display_name": "NoMultiSpaces",
+                "severity": "error",
+                "category": "convention",
+                "rule_title": "no multi spaces",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "kotlin"
+                ],
+                "solution": null,
+                "owner": null,
+                "labels": [],
+                "description": "no multi spaces",
+                "disable": false
+            },
+            {
+                "real_name": "no-semi",
+                "display_name": "NoSemi",
+                "severity": "error",
+                "category": "convention",
+                "rule_title": "no semi",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "kotlin"
+                ],
+                "solution": null,
+                "owner": null,
+                "labels": [],
+                "description": "no semi",
+                "disable": false
+            },
+            {
+                "real_name": "no-trailing-spaces",
+                "display_name": "NoTrailingSpaces",
+                "severity": "error",
+                "category": "convention",
+                "rule_title": "no trailing spaces",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "kotlin"
+                ],
+                "solution": null,
+                "owner": null,
+                "labels": [],
+                "description": "no trailing spaces",
+                "disable": false
+            },
+            {
+                "real_name": "no-unit-return",
+                "display_name": "NoUnitReturn",
+                "severity": "error",
+                "category": "convention",
+                "rule_title": "no unit return",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "kotlin"
+                ],
+                "solution": null,
+                "owner": null,
+                "labels": [],
+                "description": "no unit return",
+                "disable": false
+            },
+            {
+                "real_name": "no-unused-imports",
+                "display_name": "NoUnusedImports",
+                "severity": "error",
+                "category": "convention",
+                "rule_title": "no unused imports",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "kotlin"
+                ],
+                "solution": null,
+                "owner": null,
+                "labels": [],
+                "description": "no unused imports",
+                "disable": false
+            },
+            {
+                "real_name": "no-var",
+                "display_name": "NoVar",
+                "severity": "error",
+                "category": "convention",
+                "rule_title": "no var",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "kotlin"
+                ],
+                "solution": null,
+                "owner": null,
+                "labels": [],
+                "description": "no var",
+                "disable": false
+            },
+            {
+                "real_name": "no-wildcard-imports",
+                "display_name": "NoWildcardImports",
+                "severity": "error",
+                "category": "convention",
+                "rule_title": "no wildcard imports",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "kotlin"
+                ],
+                "solution": null,
+                "owner": null,
+                "labels": [],
+                "description": "no wildcard imports",
+                "disable": false
+            },
+            {
+                "real_name": "op-spacing",
+                "display_name": "OpSpacing",
+                "severity": "error",
+                "category": "convention",
+                "rule_title": "op spacing",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "kotlin"
+                ],
+                "solution": null,
+                "owner": null,
+                "labels": [],
+                "description": "op spacing",
+                "disable": false
+            },
+            {
+                "real_name": "package-name",
+                "display_name": "PackageName",
+                "severity": "error",
+                "category": "convention",
+                "rule_title": "package name",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "kotlin"
+                ],
+                "solution": null,
+                "owner": null,
+                "labels": [],
+                "description": "package name",
+                "disable": false
+            },
+            {
+                "real_name": "parameter-list-wrapping",
+                "display_name": "ParameterListWrapping",
+                "severity": "error",
+                "category": "convention",
+                "rule_title": "parameter list wrapping",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "kotlin"
+                ],
+                "solution": null,
+                "owner": null,
+                "labels": [],
+                "description": "parameter list wrapping",
+                "disable": false
+            },
+            {
+                "real_name": "paren-spacing",
+                "display_name": "ParenSpacing",
+                "severity": "error",
+                "category": "convention",
+                "rule_title": "paren spacing",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "kotlin"
+                ],
+                "solution": null,
+                "owner": null,
+                "labels": [],
+                "description": "paren spacing",
+                "disable": false
+            },
+            {
+                "real_name": "range-spacing",
+                "display_name": "RangeSpacing",
+                "severity": "error",
+                "category": "convention",
+                "rule_title": "range spacing",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "kotlin"
+                ],
+                "solution": null,
+                "owner": null,
+                "labels": [],
+                "description": "range spacing",
+                "disable": false
+            },
+            {
+                "real_name": "spacing-around-angle-brackets",
+                "display_name": "SpacingAroundAngleBrackets",
+                "severity": "error",
+                "category": "convention",
+                "rule_title": "spacing around angle brackets",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "kotlin"
+                ],
+                "solution": null,
+                "owner": null,
+                "labels": [],
+                "description": "spacing around angle brackets",
+                "disable": false
+            },
+            {
+                "real_name": "spacing-between-declarations-with-annotations",
+                "display_name": "SpacingBetweenDeclarationsWithAnnotations",
+                "severity": "error",
+                "category": "convention",
+                "rule_title": "spacing between declarations with annotations",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "kotlin"
+                ],
+                "solution": null,
+                "owner": null,
+                "labels": [],
+                "description": "spacing between declarations with annotations",
+                "disable": false
+            },
+            {
+                "real_name": "spacing-between-declarations-with-comments",
+                "display_name": "SpacingBetweenDeclarationsWithComments",
+                "severity": "error",
+                "category": "convention",
+                "rule_title": "spacing between declarations with comments",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "kotlin"
+                ],
+                "solution": null,
+                "owner": null,
+                "labels": [],
+                "description": "spacing between declarations with comments",
+                "disable": false
+            },
+            {
+                "real_name": "string-template",
+                "display_name": "StringTemplate",
+                "severity": "error",
+                "category": "convention",
+                "rule_title": "string template",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "kotlin"
+                ],
+                "solution": null,
+                "owner": null,
+                "labels": [],
+                "description": "string template",
+                "disable": false
+            },
+            {
+                "real_name": "unary-op-spacing",
+                "display_name": "UnaryOpSpacing",
+                "severity": "error",
+                "category": "convention",
+                "rule_title": "unary op spacing",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "kotlin"
+                ],
+                "solution": null,
+                "owner": null,
+                "labels": [],
+                "description": "unary op spacing",
+                "disable": false
+            }
+        ],
+        "open_user": true,
+        "open_saas": false,
+        "virtual_name": "159",
+        "show_display_name": true
+    }
+]

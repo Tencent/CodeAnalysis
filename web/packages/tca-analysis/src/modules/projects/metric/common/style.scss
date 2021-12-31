@@ -1,0 +1,72 @@
+@import '@src/common/style/color.scss';
+
+.file-path {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.title-wrapper {
+  color: $grey-8 !important;
+}
+
+.title-wrapper:hover {
+  color: $blue-5 !important;
+}
+
+.hover-btn {
+  width: auto;
+  padding: 2px 4px 2px 4px !important;
+  color: rgb(32, 45, 64) !important;
+  border-radius: 0;
+  height: 20px !important;
+  line-height: 14px !important;
+  border: none !important;
+}
+
+.fs-12 {
+  font-size: 12px;
+}
+
+.fs-14 {
+  font-size: 14px;
+}
+
+.ellipsis {
+  width: 250px;
+  overflow: hidden;
+  display: block;
+
+  /* 当文本溢出包含元素时，以省略号表示超出的文本 */
+  text-overflow: ellipsis;
+}
+
+.cg-text-secondary {
+  color: $grey-7 !important;
+}
+
+.bottom {
+  margin-bottom: 12px;
+}
+
+.empty-center-box {
+  width: 300px;
+  // height: 150px;
+  margin: auto;
+  padding-top: 200px;
+  text-align: center;
+}
+
+.no-data {
+  background: url('../../../../images/no-data.svg') no-repeat center;
+  height: 102px;
+  width: 104px;
+  margin: auto;
+}
+
+.empty-search {
+  background: url('../../../../images/search-s.svg') no-repeat center;
+  height: 48px;
+  width: 50px;
+  margin: auto;
+}

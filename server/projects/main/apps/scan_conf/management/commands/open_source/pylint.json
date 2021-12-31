@@ -1,0 +1,5020 @@
+[
+  {
+    "name": "pylint",
+    "display_name": "PyLint",
+    "description": "python static analyzer",
+    "license": "GPL-2.0",
+    "task_processes": [
+      "analyze",
+      "datahandle"
+    ],
+    "scan_app": "codelint",
+    "scm_url": null,
+    "run_cmd": null,
+    "envs": null,
+    "build_flag": false,
+    "show_display_name": true,
+    "checkrule_set": [
+      {
+        "real_name": "abstract-class-instantiated",
+        "display_name": "abstract-class-instantiated",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "实例化具有抽象方法的抽象类",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "Used when an abstract class with `abc.ABCMeta` as metaclass has abstract methods and is instantiated.\n\n当以abc.ABCMeta作为元类的抽象类具有抽象方法并被实例化时使用。",
+        "disable": false
+      },
+      {
+        "real_name": "abstract-method",
+        "display_name": "abstract-method",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "方法在类中是抽象的，但不被覆盖",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "在具体类中未覆盖抽象方法（即raise NotImplementedError）时使用。",
+        "disable": false
+      },
+      {
+        "real_name": "access-member-before-definition",
+        "display_name": "access-member-before-definition",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "在其定义行之前访问成员",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "Used when an instance member is accessed before it's actually assigned.\n\n在实例成员被实际分配之前对其进行访问。",
+        "disable": false
+      },
+      {
+        "real_name": "anomalous-backslash-in-string",
+        "display_name": "anomalous-backslash-in-string",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "字符串中的反斜杠。字符串常量可能缺少r前缀。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当反斜杠在文字字符串中但不用作转义符时使用。",
+        "disable": false
+      },
+      {
+        "real_name": "anomalous-unicode-escape-in-string",
+        "display_name": "anomalous-unicode-escape-in-string",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "字符串中的异常反斜杠。 字符串常量可能缺少r或u前缀。",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "在字节串中遇到\\ u这样的转义无效时使用。",
+        "disable": false
+      },
+      {
+        "real_name": "apply-builtin",
+        "display_name": "apply-builtin",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "应用内置引用",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "在引用apply内置函数时使用（Python 3缺少），当使用Python> = 3.0时，不会发出此消息。",
+        "disable": false
+      },
+      {
+        "real_name": "arguments-differ",
+        "display_name": "arguments-differ",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "参数数量与方法定义的不一样",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当方法的参数数量与已实现的接口或重写的方法中的参数数量不同时，使用此方法。",
+        "disable": false
+      },
+      {
+        "real_name": "assert-on-tuple",
+        "display_name": "assert-on-tuple",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "断言两次。您是说“断言x，y”吗？",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "如果元组不为空，则对元组的assert调用将始终评估为true，如果为空，则将始终评估为false。",
+        "disable": false
+      },
+      {
+        "real_name": "assigning-non-slot",
+        "display_name": "assigning-non-slot",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "分配给未在类插槽中定义的属性",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "分配给未在类插槽中定义的属性时使用。",
+        "disable": false
+      },
+      {
+        "real_name": "assignment-from-no-return",
+        "display_name": "assignment-from-no-return",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "赋值变量为没有返回值的函数",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "Used when an assignment is done on a function call but the inferred function doesn't return anything.\n\n把没有返回值的函数赋值给变量",
+        "disable": false
+      },
+      {
+        "real_name": "assignment-from-none",
+        "display_name": "assignment-from-none",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "分配给仅返回None的函数调用",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "在函数调用上完成赋值但推断的函数仅返回None时使用。",
+        "disable": false
+      },
+      {
+        "real_name": "attribute-defined-outside-init",
+        "display_name": "attribute-defined-outside-init",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "在__init__外部定义的属性",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "在__init__方法之外定义实例属性时使用。",
+        "disable": false
+      },
+      {
+        "real_name": "backtick",
+        "display_name": "backtick",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "使用``运算符",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当使用不推荐使用的“”“（反引号）运算符而不是str（）函数时使用。使用Python> = 3.0时无法发出此消息。",
+        "disable": false
+      },
+      {
+        "real_name": "bad-bool-option",
+        "display_name": "bad-bool-option",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "不要用 `==` 与 `True`、 `False` 进行布尔运算; 不建议使用len(List), len(Dict)的方式判断是否为空序列",
+        "rule_params": null,
+        "custom": true,
+        "languages": [
+          "python"
+        ],
+        "solution": "可以参考详情描述中的文献修改。",
+        "owner": null,
+        "labels": [],
+        "description": "不要用 `==` 与 `True`、 `False` 进行布尔运算; \n不建议使用len(List), len(Dict)的方式判断是否为空序列.\n",
+        "disable": false
+      },
+      {
+        "real_name": "bad-builtin",
+        "display_name": "bad-builtin",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "使用内置功能",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当使用黑色列出的内置功能时使用（请参阅功能不良选项）。常用的黑名单函数是map或filter，Python现在提供了一些更简洁的替代方法，例如列表理解。",
+        "disable": false
+      },
+      {
+        "real_name": "bad-class-name",
+        "display_name": "bad-class-name",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "错误的类命名",
+        "rule_params": null,
+        "custom": true,
+        "languages": [
+          "python"
+        ],
+        "solution": "建议修改为驼峰格式。",
+        "owner": null,
+        "labels": [],
+        "description": "检测错误的类命名。建议是驼峰格式。",
+        "disable": false
+      },
+      {
+        "real_name": "bad-classmethod-argument",
+        "display_name": "bad-classmethod-argument",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "类方法应将“ cls”作为第一个参数",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当类方法的第一个参数的名称与valid-classmethod-first-arg选项中指定的值（默认值为“ cls”）不同时，使用该参数，建议您轻松将其与常规实例方法区分开。",
+        "disable": false
+      },
+      {
+        "real_name": "bad-continuation",
+        "display_name": "bad-continuation",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "Wrong indentation.",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "一切",
+        "disable": false
+      },
+      {
+        "real_name": "bad-except-order",
+        "display_name": "bad-except-order",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "except捕获异常顺序不对",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "Used when except clauses are not in the correct order (from the more specific to the more generic). If you don't fix the order, some exceptions may not be catched by the most specific handler.\n\n当except子句的顺序不正确（从更具体到更通用）。如果您不固定顺序，则最特定的处理程序可能不会捕获某些异常。",
+        "disable": false
+      },
+      {
+        "real_name": "bad-format",
+        "display_name": "bad-format",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "错误的格式化方式你需要在+和%之间权衡.",
+        "rule_params": null,
+        "custom": true,
+        "languages": [
+          "python"
+        ],
+        "solution": "可以参考详情描述中的文献，使用正确的格式化字符串。",
+        "owner": null,
+        "labels": [],
+        "description": "错误的格式化方式你需要在+和%之间权衡.\n",
+        "disable": false
+      },
+      {
+        "real_name": "bad-format-character",
+        "display_name": "bad-format-character",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "不支持的格式字符",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "在格式字符串中使用不受支持的格式字符时使用。",
+        "disable": false
+      },
+      {
+        "real_name": "bad-format-string",
+        "display_name": "bad-format-string",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "格式字符串无效",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当PEP 3101格式字符串无效时使用。使用Python <2.7时，不会发出此消息。",
+        "disable": false
+      },
+      {
+        "real_name": "bad-format-string-key",
+        "display_name": "bad-format-string-key",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "格式字符串字典键应为字符串，而不是",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当使用命名转换说明符的格式字符串与其键不是全部字符串的字典一起使用时使用。",
+        "disable": false
+      },
+      {
+        "real_name": "bad-function-name",
+        "display_name": "bad-function-name",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "错误的函数命名",
+        "rule_params": null,
+        "custom": true,
+        "languages": [
+          "python"
+        ],
+        "solution": "建议修改为小写加下划线的方式命名(如lower_with_under)",
+        "owner": null,
+        "labels": [],
+        "description": "建议使用小写加下划线的方式命名(如lower_with_under)",
+        "disable": false
+      },
+      {
+        "real_name": "bad-indentation",
+        "display_name": "bad-indentation",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "缩进不良。发现，预期",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当发现缩进的制表或空格数量意外时使用。",
+        "disable": false
+      },
+      {
+        "real_name": "bad-inline-option",
+        "display_name": "bad-inline-option",
+        "severity": "info",
+        "category": "convention",
+        "rule_title": "无法考虑内联选项",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "内联选项格式错误或无法在模块内部使用时使用。",
+        "disable": false
+      },
+      {
+        "real_name": "bad-mcs-classmethod-argument",
+        "display_name": "bad-mcs-classmethod-argument",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "元类类方法应具有第一个参数",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当元类类方法的第一个参数的名称与valid-metaclass-classmethod-first-arg选项（默认为“ mcs”）中指定的值不同时，建议使用此参数，建议您轻松将其与常规实例方法区分开。",
+        "disable": false
+      },
+      {
+        "real_name": "bad-mcs-method-argument",
+        "display_name": "bad-mcs-method-argument",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "元类方法应具有第一个参数",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当元类方法的第一个参数的名称不同于有效类方法第一参数的值（默认为“ cls”）时，建议使用此参数，建议将其与常规实例方法轻松区分开。",
+        "disable": false
+      },
+      {
+        "real_name": "bad-open-mode",
+        "display_name": "bad-open-mode",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "这不是打开的有效模式。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "Python支持带有b，+和U（仅带有r）选项的r，w，a [，x]模式。参见http://docs.python.org/2/library/functions.html#open",
+        "disable": false
+      },
+      {
+        "real_name": "bad-option-value",
+        "display_name": "bad-option-value",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "错误的期权价值",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当遇到内联选项的错误值时使用。",
+        "disable": false
+      },
+      {
+        "real_name": "bad-param-name",
+        "display_name": "bad-param-name",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "错误的参数命名",
+        "rule_params": null,
+        "custom": true,
+        "languages": [
+          "python"
+        ],
+        "solution": "建议使用小写加下划线的方式命名(如lower_with_under)",
+        "owner": null,
+        "labels": [],
+        "description": "建议使用小写加下划线的方式命名(如lower_with_under)",
+        "disable": false
+      },
+      {
+        "real_name": "bad-reversed-sequence",
+        "display_name": "bad-reversed-sequence",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "第一个reversed()参数不是序列",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "Used when the first argument to reversed() builtin isn't a sequence (does not implement __reversed__, nor __getitem__ and __len__\n\n当内置的reversed（）的第一个参数不是序列时（既使用__reversed__，也不使用__getitem__和__len__",
+        "disable": false
+      },
+      {
+        "real_name": "bad-staticmethod-argument",
+        "display_name": "bad-staticmethod-argument",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "静态方法作为第一个参数",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当静态方法具有“ self”或在valid-classmethod-first-arg选项或valid-metaclass-classmethod-first-arg选项中指定的值作为第一个参数时使用。",
+        "disable": false
+      },
+      {
+        "real_name": "bad-str-strip-call",
+        "display_name": "bad-str-strip-call",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "可疑参数",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "The argument to a str.{l,r,}strip call contains a duplicate character,",
+        "disable": false
+      },
+      {
+        "real_name": "bad-string-option",
+        "display_name": "bad-string-option",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "避免在循环中用`+`和`+=`操作符来累加字符串",
+        "rule_params": null,
+        "custom": true,
+        "languages": [
+          "python"
+        ],
+        "solution": "可以参考详情描述中的文献，使用正确的格式化字符串。",
+        "owner": null,
+        "labels": [],
+        "description": "避免在循环中用`+`和`+=`操作符来累加字符串.\n",
+        "disable": false
+      },
+      {
+        "real_name": "bad-string-slice",
+        "display_name": "bad-string-slice",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "使用使用 `.startswith()` 和 `.endswith()` 代替字符串切片来检查前缀和后缀",
+        "rule_params": null,
+        "custom": true,
+        "languages": [
+          "python"
+        ],
+        "solution": "可以参考详情描述中的文献，使用正确的格式化字符串。",
+        "owner": null,
+        "labels": [],
+        "description": "使用使用 `.startswith()` 和 `.endswith()` 代替字符串切片来检查前缀和后缀.\n",
+        "disable": false
+      },
+      {
+        "real_name": "bad-super-call",
+        "display_name": "bad-super-call",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "Bad first argument given to super()",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当将当前类以外的其他参数作为超级内置函数的第一个参数给出时使用。",
+        "disable": false
+      },
+      {
+        "real_name": "bad-var-name",
+        "display_name": "bad-var-name",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "错误的变量命名",
+        "rule_params": null,
+        "custom": true,
+        "languages": [
+          "python"
+        ],
+        "solution": "建议使用小写加下划线的方式命名(如lower_with_under)",
+        "owner": null,
+        "labels": [],
+        "description": "建议使用小写加下划线的方式命名(如lower_with_under)",
+        "disable": false
+      },
+      {
+        "real_name": "bad-whitespace",
+        "display_name": "bad-whitespace",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "空间",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "Used when a wrong number of spaces is used around an operator, bracket or block opener.",
+        "disable": false
+      },
+      {
+        "real_name": "bare-except",
+        "display_name": "bare-except",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "未指定例外类型",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当except子句未指定要捕获的异常类型时使用。",
+        "disable": false
+      },
+      {
+        "real_name": "basestring-builtin",
+        "display_name": "basestring-builtin",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "内置基准字符串",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当引用了基串内置函数时使用（Python 3缺少），当使用Python> = 3.0时，不会发出此消息。",
+        "disable": false
+      },
+      {
+        "real_name": "binary-op-exception",
+        "display_name": "binary-op-exception",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "捕获异常是二进制操作的结果",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "Used when the exception to catch is of the form \"except A or B:\". If intending to catch multiple, rewrite as \"except (A, B):\"",
+        "disable": false
+      },
+      {
+        "real_name": "blacklisted-name",
+        "display_name": "blacklisted-name",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "黑名单名称",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "Used when the name is listed in the black list (unauthorized names).",
+        "disable": false
+      },
+      {
+        "real_name": "boolean-datetime",
+        "display_name": "boolean-datetime",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "Using datetime.time in a boolean context.",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当布尔值表示的时间与午夜UTC匹配时，在布尔上下文中使用datetime.time可以隐藏细微的错误。此行为已在Python 3.5中修复。请参阅http://bugs.python.org/issue13936以获取参考。使用Python> = 3.5时无法发出此消息。",
+        "disable": false
+      },
+      {
+        "real_name": "broad-except",
+        "display_name": "broad-except",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "捕获太普遍的异常",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "Used when an except catches a too general exception, possibly burying unrelated errors.",
+        "disable": false
+      },
+      {
+        "real_name": "buffer-builtin",
+        "display_name": "buffer-builtin",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "内置缓冲区参考",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "Used when the buffer built-in function is referenced (missing from Python 3) This message can't be emitted when using Python >= 3.0.",
+        "disable": false
+      },
+      {
+        "real_name": "catching-non-exception",
+        "display_name": "catching-non-exception",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "Catching an exception which doesn't inherit from BaseException:",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "Used when a class which doesn't inherit from BaseException is used as an exception in an except clause.",
+        "disable": false
+      },
+      {
+        "real_name": "cell-var-from-loop",
+        "display_name": "cell-var-from-loop",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "Cell variable defined in loop",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "A variable used in a closure is defined in a loop. This will result in all closures using the same value for the closed-over variable.",
+        "disable": false
+      },
+      {
+        "real_name": "cmp-builtin",
+        "display_name": "cmp-builtin",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "cmp内置引用",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "Used when the cmp built-in function is referenced (missing from Python 3) This message can't be emitted when using Python >= 3.0.",
+        "disable": false
+      },
+      {
+        "real_name": "cmp-method",
+        "display_name": "cmp-method",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "__cmp__ method defined",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "Used when a __cmp__ method is defined (method is not used by Python 3) This message can't be emitted when using Python >= 3.0.",
+        "disable": false
+      },
+      {
+        "real_name": "coerce-builtin",
+        "display_name": "coerce-builtin",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "内置强制",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "在引用强制内置函数时使用（Python 3缺少此函数），当使用Python> = 3.0时，不会发出此消息。",
+        "disable": false
+      },
+      {
+        "real_name": "coerce-method",
+        "display_name": "coerce-method",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "__coerce__ method defined",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "在定义__coerce__方法时使用（Python 3不使用该方法）当使用Python> = 3.0时，不会发出此消息。",
+        "disable": false
+      },
+      {
+        "real_name": "complex-bool-option",
+        "display_name": "complex-bool-option",
+        "severity": "error",
+        "category": "convention",
+        "rule_title": "逻辑判断复杂难懂建议使用`x = a if a >= b else b`形式",
+        "rule_params": null,
+        "custom": true,
+        "languages": [
+          "python"
+        ],
+        "solution": "逻辑判断复杂难懂建议使用`x = a if a >= b else b`形式",
+        "owner": null,
+        "labels": [],
+        "description": "逻辑判断复杂难懂建议使用`x = a if a >= b else b`形式\n",
+        "disable": false
+      },
+      {
+        "real_name": "confusing-with-statement",
+        "display_name": "confusing-with-statement",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "Following \"as\" with another context manager looks like a tuple.",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "Emitted when a `with` statement component returns multiple values and uses name binding with `as` only for a part of those values, as in with ctx() as a, b. This can be misleading, since it's not clear if the context manager returns a tuple or if the node without a name binding is another context manager.",
+        "disable": false
+      },
+      {
+        "real_name": "consider-iterating-dictionary",
+        "display_name": "consider-iterating-dictionary",
+        "severity": "info",
+        "category": "other",
+        "rule_title": null,
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": null,
+        "disable": false
+      },
+      {
+        "real_name": "consider-merging-isinstance",
+        "display_name": "consider-merging-isinstance",
+        "severity": "info",
+        "category": "other",
+        "rule_title": null,
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": null,
+        "disable": false
+      },
+      {
+        "real_name": "consider-using-dict-comprehension",
+        "display_name": "consider-using-dict-comprehension",
+        "severity": "info",
+        "category": "other",
+        "rule_title": null,
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": null,
+        "disable": false
+      },
+      {
+        "real_name": "consider-using-enumerate",
+        "display_name": "consider-using-enumerate",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "Consider using enumerate instead of iterating with range and len",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "遇到使用范围和len进行迭代的代码时发出。通过使用枚举内置，可以简化此类代码。",
+        "disable": false
+      },
+      {
+        "real_name": "consider-using-get",
+        "display_name": "consider-using-get",
+        "severity": "info",
+        "category": "other",
+        "rule_title": null,
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": null,
+        "disable": false
+      },
+      {
+        "real_name": "consider-using-in",
+        "display_name": "consider-using-in",
+        "severity": "info",
+        "category": "other",
+        "rule_title": null,
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": null,
+        "disable": false
+      },
+      {
+        "real_name": "consider-using-set-comprehension",
+        "display_name": "consider-using-set-comprehension",
+        "severity": "info",
+        "category": "other",
+        "rule_title": null,
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": null,
+        "disable": false
+      },
+      {
+        "real_name": "continue-in-finally",
+        "display_name": "continue-in-finally",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "“ finally”子句中不支持“ continue”",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "Emitted when the `continue` keyword is found inside a finally clause, which is a SyntaxError.",
+        "disable": false
+      },
+      {
+        "real_name": "cyclic-import",
+        "display_name": "cyclic-import",
+        "severity": "info",
+        "category": "convention",
+        "rule_title": "循环导入",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "Used when a cyclic import between two or more modules is detected.",
+        "disable": false
+      },
+      {
+        "real_name": "dangerous-default-value",
+        "display_name": "dangerous-default-value",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "Dangerous default value as argument",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当在参数的默认值中检测到可变值作为列表或字典时使用。",
+        "disable": false
+      },
+      {
+        "real_name": "delslice-method",
+        "display_name": "delslice-method",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "__delslice__ method defined",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "Used when a __delslice__ method is defined (method is not used by Python 3) This message can't be emitted when using Python >= 3.0.",
+        "disable": false
+      },
+      {
+        "real_name": "deprecated-lambda",
+        "display_name": "deprecated-lambda",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "map/filter on lambda could be replaced by comprehension",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "Used when a lambda is the first argument to \"map\" or \"filter\". It could be clearer as a list comprehension or generator expression. This message can't be emitted when using Python >= 3.0.",
+        "disable": false
+      },
+      {
+        "real_name": "deprecated-method",
+        "display_name": "deprecated-method",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "Using deprecated method()",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "该方法被标记为已弃用，并将在将来的Python版本中删除。考虑在文档中寻找替代方案。",
+        "disable": false
+      },
+      {
+        "real_name": "deprecated-module",
+        "display_name": "deprecated-module",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "不推荐使用的模块的使用",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "Used a module marked as deprecated is imported.",
+        "disable": false
+      },
+      {
+        "real_name": "deprecated-pragma",
+        "display_name": "deprecated-pragma",
+        "severity": "info",
+        "category": "convention",
+        "rule_title": "不建议使用Pragma，请改用",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "Some inline pylint options have been renamed or reworked, only the most recent form should be used. NOTE:skip-all is only available with pylint >= 0.26",
+        "disable": false
+      },
+      {
+        "real_name": "dict-iter-method",
+        "display_name": "dict-iter-method",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "调用dict.iter *（）方法",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "用于调用dict.iterkeys（），itervalues（）或iteritems（）（Python 3缺少这些方法）使用Python> = 3.0时无法发出此消息。",
+        "disable": false
+      },
+      {
+        "real_name": "dict-view-method",
+        "display_name": "dict-view-method",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "Calling a dict.view*() method",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "用于调用dict.viewkeys（），viewvalues（）或viewitems（）（Python 3缺少这些方法）使用Python> = 3.0时无法发出此消息。",
+        "disable": false
+      },
+      {
+        "real_name": "duplicate-argument-name",
+        "display_name": "duplicate-argument-name",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "函数定义中的参数名称重复",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "函数定义中重复的参数名称是语法错误。",
+        "disable": false
+      },
+      {
+        "real_name": "duplicate-bases",
+        "display_name": "duplicate-bases",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "班级重复",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "Used when a class has duplicate bases.",
+        "disable": false
+      },
+      {
+        "real_name": "duplicate-code",
+        "display_name": "duplicate-code",
+        "severity": "info",
+        "category": "convention",
+        "rule_title": "Similar lines in files",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "表示已在多个文件中检测到一组相似的行。这通常意味着应重构代码以避免这种重复。",
+        "disable": false
+      },
+      {
+        "real_name": "duplicate-except",
+        "display_name": "duplicate-except",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "捕获先前捕获的异常类型",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "Used when an except catches a type that was already caught by a previous handler.",
+        "disable": false
+      },
+      {
+        "real_name": "duplicate-key",
+        "display_name": "duplicate-key",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "字典中的重复键",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当字典表达式多次绑定相同的键时使用。",
+        "disable": false
+      },
+      {
+        "real_name": "empty-docstring",
+        "display_name": "empty-docstring",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "空文档字符串",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当模块，函数，类或方法的文档字符串为空时使用（这太容易了；）。",
+        "disable": false
+      },
+      {
+        "real_name": "eval-used",
+        "display_name": "eval-used",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "Use of eval",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "在使用“评估”功能时使用，以阻止其使用。考虑使用`ast.literal_eval`安全评估包含来自不受信任来源的Python表达式的字符串。",
+        "disable": false
+      },
+      {
+        "real_name": "exec-used",
+        "display_name": "exec-used",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "Use of exec",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "Used when you use the \"exec\" statement (function for Python 3), to discourage its usage. That doesn't mean you can not use it !",
+        "disable": false
+      },
+      {
+        "real_name": "execfile-builtin",
+        "display_name": "execfile-builtin",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "execfile内置引用",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "Used when the execfile built-in function is referenced (missing from Python 3) This message can't be emitted when using Python >= 3.0.",
+        "disable": false
+      },
+      {
+        "real_name": "expression-not-assigned",
+        "display_name": "expression-not-assigned",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "表达式未分配任何内容",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当不是函数调用的表达式未分配任何内容时使用。可能还有其他意图。",
+        "disable": false
+      },
+      {
+        "real_name": "fatal",
+        "display_name": "fatal",
+        "severity": "fatal",
+        "category": "correctness",
+        "rule_title": "an error occurred preventing the analysis of a module (unable to find it for instance).",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "Used when an error occurred preventing the analysis of a module (unable to find it for instance).",
+        "disable": false
+      },
+      {
+        "real_name": "file-builtin",
+        "display_name": "file-builtin",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "内置文件引用",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "在引用文件内置函数时使用（Python 3缺少此函数），当使用Python> = 3.0时，不会发出此消息。",
+        "disable": false
+      },
+      {
+        "real_name": "file-ignored",
+        "display_name": "file-ignored",
+        "severity": "info",
+        "category": "convention",
+        "rule_title": "Ignoring entire file",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "用于通知将不检查文件",
+        "disable": false
+      },
+      {
+        "real_name": "filter-builtin-not-iterating",
+        "display_name": "filter-builtin-not-iterating",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "filter built-in referenced when not iterating",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "在非迭代上下文中引用内置过滤器时使用（在Python 3中返回迭代器），当使用Python> = 3.0时，不会发出此消息。",
+        "disable": false
+      },
+      {
+        "real_name": "fixme",
+        "display_name": "fixme",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "Used when a warning note as FIXME or XXX is detected.",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当检测到警告提示为FIXME或XXX时使用。",
+        "disable": false
+      },
+      {
+        "real_name": "format-combined-specification",
+        "display_name": "format-combined-specification",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "Format string contains both automatic field numbering and manual field specification",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当PEP 3101格式字符串包含自动字段编号（例如'{}'）和手动字段指定（例如'{0}'）时使用。使用Python <2.7时，不会发出此消息。",
+        "disable": false
+      },
+      {
+        "real_name": "format-needs-mapping",
+        "display_name": "format-needs-mapping",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "格式字符串的预期映射，不是",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当使用命名转换说明符的格式字符串与非映射参数一起使用时使用。",
+        "disable": false
+      },
+      {
+        "real_name": "function-redefined",
+        "display_name": "function-redefined",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "already defined line",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "重新定义函数/类/方法时使用。",
+        "disable": false
+      },
+      {
+        "real_name": "getslice-method",
+        "display_name": "getslice-method",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "__getslice__方法定义",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "在定义__getslice__方法时使用（Python 3不使用该方法）当使用Python> = 3.0时，不会发出此消息。",
+        "disable": false
+      },
+      {
+        "real_name": "global-at-module-level",
+        "display_name": "global-at-module-level",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "在模块级别使用全局语句",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "在模块级别使用“全局”语句时使用，因为它无效",
+        "disable": false
+      },
+      {
+        "real_name": "global-statement",
+        "display_name": "global-statement",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "使用全局语句",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "Used when you use the \"global\" statement to update a global variable. Pylint just try to discourage this usage. That doesn't mean you can not use it !",
+        "disable": false
+      },
+      {
+        "real_name": "global-variable-not-assigned",
+        "display_name": "global-variable-not-assigned",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "Using global for but no assignment is done",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "Used when a variable is defined through the \"global\" statement but no assignment to this variable is done.",
+        "disable": false
+      },
+      {
+        "real_name": "global-variable-undefined",
+        "display_name": "global-variable-undefined",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "Global variable undefined at the module level",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "通过“全局”语句定义变量但未在模块作用域中定义变量时使用。",
+        "disable": false
+      },
+      {
+        "real_name": "hex-method",
+        "display_name": "hex-method",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "__hex__方法定义",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "Used when a __hex__ method is defined (method is not used by Python 3) This message can't be emitted when using Python >= 3.0.",
+        "disable": false
+      },
+      {
+        "real_name": "import-error",
+        "display_name": "import-error",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "Unable to import",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当pylint无法导入模块时使用。",
+        "disable": false
+      },
+      {
+        "real_name": "import-self",
+        "display_name": "import-self",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "Module import itself",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "Used when a module is importing itself.",
+        "disable": false
+      },
+      {
+        "real_name": "import-star-module-level",
+        "display_name": "import-star-module-level",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "导入*仅在模块级别允许",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "Used when the import star syntax is used somewhere else than the module level. This message can't be emitted when using Python >= 3.0.",
+        "disable": false
+      },
+      {
+        "real_name": "inconsistent-mro",
+        "display_name": "inconsistent-mro",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "Inconsistent method resolution order for class",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "Used when a class has an inconsistent method resolutin order.",
+        "disable": false
+      },
+      {
+        "real_name": "inconsistent-return-statements",
+        "display_name": "inconsistent-return-statements",
+        "severity": "info",
+        "category": "other",
+        "rule_title": null,
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": null,
+        "disable": false
+      },
+      {
+        "real_name": "indexing-exception",
+        "display_name": "indexing-exception",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "Indexing exceptions will not work on Python 3",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "索引异常不适用于Python3。请改用`exception.args [index]`。使用Python> = 3.0时无法发出此消息。",
+        "disable": false
+      },
+      {
+        "real_name": "inherit-non-class",
+        "display_name": "inherit-non-class",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "Inheriting, which is not a class.",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "Used when a class inherits from something which is not a class.",
+        "disable": false
+      },
+      {
+        "real_name": "init-is-generator",
+        "display_name": "init-is-generator",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "__init__ method is a generator",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "Used when the special class method __init__ is turned into a generator by a yield in its body.\n\n当特殊类方法__init__通过其主体中的yield转换为生成器时使用",
+        "disable": false
+      },
+      {
+        "real_name": "input-builtin",
+        "display_name": "input-builtin",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "输入内置参考",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "Used when the input built-in is referenced (backwards-incompatible semantics in Python 3) This message can't be emitted when using Python >= 3.0.",
+        "disable": false
+      },
+      {
+        "real_name": "interface-not-implemented",
+        "display_name": "interface-not-implemented",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "Used when an interface class has not been implemented.",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "Used when an interface class has not been implemented.\r\n",
+        "disable": false
+      },
+      {
+        "real_name": "intern-builtin",
+        "display_name": "intern-builtin",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "内置的实习生引用",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "Used when the intern built-in is referenced (Moved to sys.intern in Python 3) This message can't be emitted when using Python >= 3.0.",
+        "disable": false
+      },
+      {
+        "real_name": "invalid-all-object",
+        "display_name": "invalid-all-object",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "__all__中的无效对象，只能包含字符串",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "Used when an invalid (non-string) object occurs in __all__.",
+        "disable": false
+      },
+      {
+        "real_name": "invalid-characters-in-docstring",
+        "display_name": "invalid-characters-in-docstring",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "Invalid characters in a docstring",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当附魔无法检查文档字符串中的单词时使用。",
+        "disable": false
+      },
+      {
+        "real_name": "invalid-encoded-data",
+        "display_name": "invalid-encoded-data",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "Cannot decode using encoding, unexpected byte at specified position",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当无法使用指定的源文件编码对源行进行解码时使用。使用Python> = 3.0时无法发出此消息。",
+        "disable": false
+      },
+      {
+        "real_name": "invalid-format-index",
+        "display_name": "invalid-format-index",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "Using invalid lookup key in format specifier",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当PEP 3101格式字符串使用查找说明符（{a [1]}），但为格式化而传递的参数不包含该键或没有该键作为属性时使用。使用Python <2.7时，不会发出此消息。",
+        "disable": false
+      },
+      {
+        "real_name": "invalid-name",
+        "display_name": "invalid-name",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "名称无效",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当名称与与其类型关联的正则表达式（常量，变量，类...）不匹配时使用。",
+        "disable": false
+      },
+      {
+        "real_name": "invalid-sequence-index",
+        "display_name": "invalid-sequence-index",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "序列索引不是具有__index__的int，slice或实例",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当序列类型被无效类型索引时使用。有效类型是int，slice和使用__index__方法的对象。",
+        "disable": false
+      },
+      {
+        "real_name": "invalid-slice-index",
+        "display_name": "invalid-slice-index",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "切片索引不是int，None或具有__index__的实例",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当切片索引不是整数，无或带有__index__方法的对象时使用。",
+        "disable": false
+      },
+      {
+        "real_name": "invalid-slots",
+        "display_name": "invalid-slots",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "无效的__slots__对象",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "Used when an invalid __slots__ is found in class. Only a string, an iterable or a sequence is permitted.",
+        "disable": false
+      },
+      {
+        "real_name": "invalid-slots-object",
+        "display_name": "invalid-slots-object",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "__slots__中的无效对象，只能包含非空字符串",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当__slots__中出现无效（非字符串）对象时使用。",
+        "disable": false
+      },
+      {
+        "real_name": "invalid-unary-operand-type",
+        "display_name": "invalid-unary-operand-type",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "一元操作数用于不支持此类操作的对象",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "在不支持此类操作的对象上使用一元操作数时触发",
+        "disable": false
+      },
+      {
+        "real_name": "keep-exception-traceback",
+        "display_name": "keep-exception-traceback",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "在 `except` 子句中重新抛出原有异常时，保留原来的异常信息",
+        "rule_params": null,
+        "custom": true,
+        "languages": [
+          "python"
+        ],
+        "solution": "在 except 子句中重新抛出原有异常时，不能用 raise ex，而是用 raise。",
+        "owner": null,
+        "labels": [],
+        "description": "在 except 子句中重新抛出原有异常时，不能用 raise ex，而是用 raise。",
+        "disable": false
+      },
+      {
+        "real_name": "len-as-condition",
+        "display_name": "len-as-condition",
+        "severity": "info",
+        "category": "other",
+        "rule_title": null,
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": null,
+        "disable": false
+      },
+      {
+        "real_name": "line-too-long",
+        "display_name": "line-too-long",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "行太长",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当行长超过给定字符数时使用。",
+        "disable": false
+      },
+      {
+        "real_name": "locally-disabled",
+        "display_name": "locally-disabled",
+        "severity": "info",
+        "category": "convention",
+        "rule_title": "本地禁用",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "Used when an inline option disables a message or a messages category.",
+        "disable": false
+      },
+      {
+        "real_name": "locally-enabled",
+        "display_name": "locally-enabled",
+        "severity": "info",
+        "category": "convention",
+        "rule_title": "本地启用",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "内联选项启用消息或消息类别时使用。",
+        "disable": false
+      },
+      {
+        "real_name": "logging-format-interpolation",
+        "display_name": "logging-format-interpolation",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "在日志记录函数中使用％格式，并将％参数作为参数传递",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当日志记录语句的调用形式为“ logging。<logging method>（format_string.format（format_args ...））”时使用。此类调用应改为使用％格式，但通过将参数作为参数传递，将插值留给日志记录函数。",
+        "disable": false
+      },
+      {
+        "real_name": "logging-format-truncated",
+        "display_name": "logging-format-truncated",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "记录格式字符串在转换说明符的中间结束",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当日志记录语句格式字符串在转换说明符的结尾之前终止时使用。",
+        "disable": false
+      },
+      {
+        "real_name": "logging-not-lazy",
+        "display_name": "logging-not-lazy",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "指定字符串格式参数作为日志记录函数参数",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当记录语句的调用形式为“ logging。<记录方法>（format_string％（format_args ...））”时使用。这样的调用应将字符串插值留给日志记录方法本身，并写为“ logging。<logging method>（format_string，format_args ...）”，这样，在没有消息会出现的情况下，程序可以避免产生插值的代价。被记录。有关更多信息，请参见http://www.python.org/dev/peps/pep-0282/。",
+        "disable": false
+      },
+      {
+        "real_name": "logging-too-few-args",
+        "display_name": "logging-too-few-args",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "参数不足，无法记录格式字符串",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "给日志记录格式字符串提供过多参数时使用",
+        "disable": false
+      },
+      {
+        "real_name": "logging-too-many-args",
+        "display_name": "logging-too-many-args",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "记录格式字符串的参数过多",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当日志记录格式字符串的参数太少时使用。",
+        "disable": false
+      },
+      {
+        "real_name": "logging-unsupported-format",
+        "display_name": "logging-unsupported-format",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "不支持的日志记录格式字符",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "在日志记录语句格式字符串中使用了不受支持的格式字符时使用。",
+        "disable": false
+      },
+      {
+        "real_name": "long-builtin",
+        "display_name": "long-builtin",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "long built-in referenced",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "在引用long内置函数时使用（Python 3缺少此函数），当使用Python> = 3.0时，不会发出此消息。",
+        "disable": false
+      },
+      {
+        "real_name": "long-suffix",
+        "display_name": "long-suffix",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "使用长后缀",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当使用“ l”或“ L”标记长整数时使用。这在Python 3中不起作用，因为`int`和`long`类型已合并。使用Python> = 3.0时无法发出此消息。",
+        "disable": false
+      },
+      {
+        "real_name": "lost-exception",
+        "display_name": "lost-exception",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "最终块中的语句可能会吞下异常",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当在try ... finally块的finally子句中找到break或return语句时使用：try子句中引发的异常将被静默吞下，而不是重新引发。",
+        "disable": false
+      },
+      {
+        "real_name": "lowercase-l-suffix",
+        "display_name": "lowercase-l-suffix",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "使用“ l”作为长整数标识符",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当小写字母“ l”用于标记长整数时使用。您应该使用大写字母“ L”，因为字母“ l”看起来非常像数字“ 1”。当使用Python> = 3.0时，不会发出此消息。",
+        "disable": false
+      },
+      {
+        "real_name": "map-builtin-not-iterating",
+        "display_name": "map-builtin-not-iterating",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "不迭代时引用的内置地图",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "在非迭代上下文中引用内置地图时使用（在Python 3中返回迭代器），当使用Python> = 3.0时，不会发出此消息。",
+        "disable": false
+      },
+      {
+        "real_name": "metaclass-assignment",
+        "display_name": "metaclass-assignment",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "分配给类的__metaclass__属性",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "通过分配给__metaclass__来指定元类时使用（Python 3将元类指定为类声明参数）。当使用Python> = 3.0时，不会发出此消息。",
+        "disable": false
+      },
+      {
+        "real_name": "method-check-failed",
+        "display_name": "method-check-failed",
+        "severity": "fatal",
+        "category": "correctness",
+        "rule_title": "无法检查方法签名（/）",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当Pylint出于意外原因无法检查方法签名兼容性时使用。如果您不了解，请报告这种情况。",
+        "disable": false
+      },
+      {
+        "real_name": "method-hidden",
+        "display_name": "method-hidden",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "行中定义的属性隐藏此方法",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当类定义一个方法时，该方法被祖先类的实例属性隐藏或由某些客户端代码设置。",
+        "disable": false
+      },
+      {
+        "real_name": "misplaced-bare-raise",
+        "display_name": "misplaced-bare-raise",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "引发语句不在except子句中",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当except子句中未使用裸加薪时使用。这将产生一个错误，因为没有要重新引发的活动异常。只要在try块内引发异常，此规则的异常就可以通过finally子句中的裸引发来表示，但这可能是可行的，但这仍然是不能依赖的代码味道。",
+        "disable": false
+      },
+      {
+        "real_name": "misplaced-comparison-constant",
+        "display_name": "misplaced-comparison-constant",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "比较应该是",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当常量位于比较的左侧时使用。通常将其放置在比较的右侧更加清楚。",
+        "disable": false
+      },
+      {
+        "real_name": "misplaced-future",
+        "display_name": "misplaced-future",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "__future__ import不是第一个非docstring语句",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "Python 2.5及更高版本要求__future__ import是模块中的第一个非docstring语句。",
+        "disable": false
+      },
+      {
+        "real_name": "missing-docstring",
+        "display_name": "missing-docstring",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "缺少文档字符串",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当模块，函数，类或方法没有文档字符串时使用.__ init__等某些特殊方法不需要文档字符串。",
+        "disable": false
+      },
+      {
+        "real_name": "missing-final-newline",
+        "display_name": "missing-final-newline",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "最终换行符丢失",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "Used when the last line in a file is missing a newline.",
+        "disable": false
+      },
+      {
+        "real_name": "missing-format-argument-key",
+        "display_name": "missing-format-argument-key",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "格式字符串缺少关键字参数",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当使用命名字段的PEP 3101格式字符串未收到一个或多个必需关键字时使用。使用Python <2.7时，不会发出此消息。",
+        "disable": false
+      },
+      {
+        "real_name": "missing-format-attribute",
+        "display_name": "missing-format-attribute",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "格式说明符中缺少格式属性",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当PEP 3101格式字符串使用属性说明符（{0.length}），但为格式化传递的参数不具有该属性时使用。使用Python <2.7时，不会发出此消息。",
+        "disable": false
+      },
+      {
+        "real_name": "missing-format-string-key",
+        "display_name": "missing-format-string-key",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "Missing key in format string dictionary",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当使用命名转换说明符的格式字符串与不包含格式字符串所需的所有键的字典一起使用时使用。",
+        "disable": false
+      },
+      {
+        "real_name": "missing-super-argument",
+        "display_name": "missing-super-argument",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "super（）缺少参数",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "在超级内置函数未收到参数时使用。使用Python> = 3.0时无法发出此消息。",
+        "disable": false
+      },
+      {
+        "real_name": "mixed-format-string",
+        "display_name": "mixed-format-string",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "在格式字符串中混合已命名和未命名的转换说明符*当格式字符串同时包含已命名（例如'％（foo）d'）和未命名（例如'％d'）转换说明符时使用。当命名的转换说明符包含",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "for the minimum field width and/or precision.\n\n以获得最小的字段宽度和/或精度。",
+        "disable": false
+      },
+      {
+        "real_name": "mixed-indentation",
+        "display_name": "mixed-indentation",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "发现缩进用代替",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当模块中有一些混合的制表符和空格时使用。",
+        "disable": false
+      },
+      {
+        "real_name": "mixed-line-endings",
+        "display_name": "mixed-line-endings",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "混合行结尾LF和CRLF",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当文件中包含换行符（LF和CRLF）时使用。",
+        "disable": false
+      },
+      {
+        "real_name": "multiple-imports",
+        "display_name": "multiple-imports",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "一条线上多次导入",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当检测到导入语句导入多个模块时使用。",
+        "disable": false
+      },
+      {
+        "real_name": "multiple-statements",
+        "display_name": "multiple-statements",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "一行以上的语句",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "在同一行上找到多于on语句时使用。",
+        "disable": false
+      },
+      {
+        "real_name": "next-method-called",
+        "display_name": "next-method-called",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "在对象上调用了next（）方法",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "在调用对象的next（）方法时使用（Python 3使用next（）内置函数）当使用Python> = 3.0时，不会发出此消息。",
+        "disable": false
+      },
+      {
+        "real_name": "no-absolute-import",
+        "display_name": "no-absolute-import",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "从__future__中导入缺少的`import absolute_import`",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当导入不伴有from from __future__ import absolute_import时使用（Python 3中的默认行为），当使用Python> = 3.0时，不会发出此消息。",
+        "disable": false
+      },
+      {
+        "real_name": "no-classmethod-decorator",
+        "display_name": "no-classmethod-decorator",
+        "severity": "info",
+        "category": "convention",
+        "rule_title": "考虑使用装饰器而不是调用类方法",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "在不使用装饰器语法定义类方法时使用。",
+        "disable": false
+      },
+      {
+        "real_name": "no-else-return",
+        "display_name": "no-else-return",
+        "severity": "info",
+        "category": "other",
+        "rule_title": null,
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": null,
+        "disable": false
+      },
+      {
+        "real_name": "no-import-all",
+        "display_name": "no-import-all",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "不应导入*",
+        "rule_params": null,
+        "custom": true,
+        "languages": [
+          "python"
+        ],
+        "solution": "不应该使用import *",
+        "owner": null,
+        "labels": [],
+        "description": "不应该使用import *\n",
+        "disable": false
+      },
+      {
+        "real_name": "no-init",
+        "display_name": "no-init",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "类没有__init__方法",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当类没有__init__方法，也没有其父类时使用。",
+        "disable": false
+      },
+      {
+        "real_name": "no-lambda",
+        "display_name": "no-lambda",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "使用 def 定义简短函数而不是使用lambda",
+        "rule_params": null,
+        "custom": true,
+        "languages": [
+          "python"
+        ],
+        "solution": "使用 def 定义简短函数而不是使用lambda.",
+        "owner": null,
+        "labels": [],
+        "description": "使用 def 定义简短函数而不是使用lambda.\n",
+        "disable": false
+      },
+      {
+        "real_name": "no-member",
+        "display_name": "no-member",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "没有成员",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当不存在的成员访问变量时使用。",
+        "disable": false
+      },
+      {
+        "real_name": "no-method-argument",
+        "display_name": "no-method-argument",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "方法没有参数",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当应该将绑定实例作为第一个参数的方法未定义参数时使用。",
+        "disable": false
+      },
+      {
+        "real_name": "no-name-in-module",
+        "display_name": "no-name-in-module",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "模块中没有名称",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "在模块中找不到名称时使用。",
+        "disable": false
+      },
+      {
+        "real_name": "no-old-raise",
+        "display_name": "no-old-raise",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "检查旧的养育风格",
+        "rule_params": null,
+        "custom": true,
+        "languages": [
+          "python"
+        ],
+        "solution": "像这样触发异常: raise MyException(\"Error message\") 或者 raise MyException。",
+        "owner": null,
+        "labels": [],
+        "description": "像这样触发异常: raise MyException(\"Error message\") 或者 raise MyException。不要使用两个参数的形式( raise MyException, \"Error message\" )或者过时的字符串异常( raise \"Error message\" )。",
+        "disable": false
+      },
+      {
+        "real_name": "no-self-argument",
+        "display_name": "no-self-argument",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "方法应以“自我”作为第一个参数",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当方法的属性作为第一个参数具有与“ self”不同的属性时使用。这被认为是错误，因为这是非常常见的约定，您不应该破坏它！",
+        "disable": false
+      },
+      {
+        "real_name": "no-self-use",
+        "display_name": "no-self-use",
+        "severity": "info",
+        "category": "convention",
+        "rule_title": "方法可能是一个功能",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当方法不使用其绑定实例时使用，因此可以作为函数编写。",
+        "disable": false
+      },
+      {
+        "real_name": "no-staticmethod-decorator",
+        "display_name": "no-staticmethod-decorator",
+        "severity": "info",
+        "category": "convention",
+        "rule_title": "考虑使用装饰器而不是调用staticmethod",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "在不使用装饰器语法定义静态方法时使用。",
+        "disable": false
+      },
+      {
+        "real_name": "no-value-for-parameter",
+        "display_name": "no-value-for-parameter",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "通话中没有参数值",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当函数调用传递的参数太少时使用。",
+        "disable": false
+      },
+      {
+        "real_name": "no-variable-argument",
+        "display_name": "no-variable-argument",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "函数参数中，不允许出现可变类型变量作为默认值。",
+        "rule_params": null,
+        "custom": true,
+        "languages": [
+          "python"
+        ],
+        "solution": "函数参数中，不允许出现可变类型变量作为默认值。",
+        "owner": null,
+        "labels": [],
+        "description": "函数参数中，不允许出现可变类型变量作为默认值。\n",
+        "disable": false
+      },
+      {
+        "real_name": "non-iterator-returned",
+        "display_name": "non-iterator-returned",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "__iter__返回非迭代",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "Used when an __iter__ method returns something which is not an iterable (i.e. has no `next` method)",
+        "disable": false
+      },
+      {
+        "real_name": "non-parent-init-called",
+        "display_name": "non-parent-init-called",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "来自非直接基类的__init__方法被称为",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当在不在所分析类的直接祖先的类上调用__init__方法时使用。",
+        "disable": false
+      },
+      {
+        "real_name": "nonexistent-operator",
+        "display_name": "nonexistent-operator",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "使用不存在的运算符",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "Used when you attempt to use the C-style pre-increment orpre-decrement operator -- and ++, which doesn't exist in Python.\n\n尝试使用C样式的预增或减算运算符--和++（在Python中不存在）时使用。",
+        "disable": false
+      },
+      {
+        "real_name": "nonstandard-exception",
+        "display_name": "nonstandard-exception",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "异常不会从标准的“异常”类继承",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "在引发自定义异常类但不继承自内置“ Exception”类时使用。使用Python> = 3.0时无法发出此消息。",
+        "disable": false
+      },
+      {
+        "real_name": "nonzero-method",
+        "display_name": "nonzero-method",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "__nonzero__方法已定义",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "Used when a __nonzero__ method is defined (method is not used by Python 3) This message can't be emitted when using Python >= 3.0.",
+        "disable": false
+      },
+      {
+        "real_name": "not-a-mapping",
+        "display_name": "not-a-mapping",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "在映射上下文中使用非映射值",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "在需要映射的地方使用非映射值时使用",
+        "disable": false
+      },
+      {
+        "real_name": "not-an-iterable",
+        "display_name": "not-an-iterable",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "不可迭代的值用于迭代上下文中",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当将不可迭代的值用于期望可迭代的位置时使用",
+        "disable": false
+      },
+      {
+        "real_name": "not-callable",
+        "display_name": "not-callable",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "不可通话",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当被调用的对象被推断为不可调用的对象时使用",
+        "disable": false
+      },
+      {
+        "real_name": "not-context-manager",
+        "display_name": "not-context-manager",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "上下文管理器未实现__enter__和__exit__。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当with语句中的实例未实现上下文管理器协议（__enter __ / __ exit__）时使用。",
+        "disable": false
+      },
+      {
+        "real_name": "not-in-loop",
+        "display_name": "not-in-loop",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "中断或继续循环不正确",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "在循环外使用break或continue关键字时使用。",
+        "disable": false
+      },
+      {
+        "real_name": "notimplemented-raised",
+        "display_name": "notimplemented-raised",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "引发NotImplemented-应该引发NotImplementedError",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "在引发NotImplemented而不是NotImplementedError时使用",
+        "disable": false
+      },
+      {
+        "real_name": "oct-method",
+        "display_name": "oct-method",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "__oct__方法已定义",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "在定义__oct__方法时使用（Python 3不使用该方法）当使用Python> = 3.0时，不会发出此消息。",
+        "disable": false
+      },
+      {
+        "real_name": "old-division",
+        "display_name": "old-division",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "不含________的部门",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "用于不带浮点文字或``来自__future__ import分割''的非底分割（Python 3无条件返回int分割的浮点）当使用Python> = 3.0时，不会发出此消息。",
+        "disable": false
+      },
+      {
+        "real_name": "old-ne-operator",
+        "display_name": "old-ne-operator",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "使用<>运算符",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当使用不推荐使用的“ <>”运算符而不是“！=”时使用。在Python 3中已将其删除。使用Python> = 3.0时，不会发出此消息。",
+        "disable": false
+      },
+      {
+        "real_name": "old-octal-literal",
+        "display_name": "old-octal-literal",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "使用旧的八进制文字",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "遇到旧的八进制语法时，用Usen（在Python 3中删除）。要使用新的语法，请在数字前加0o。使用Python> = 3.0时无法发出此消息。",
+        "disable": false
+      },
+      {
+        "real_name": "old-raise-syntax",
+        "display_name": "old-raise-syntax",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "使用raise ErrorClass（args）而不是raise ErrorClass，args。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当使用替代的升高语法“ raise foo，bar”代替“ raise foo（bar）”时使用。使用Python> = 3.0时无法发出此消息。",
+        "disable": false
+      },
+      {
+        "real_name": "old-style-class",
+        "display_name": "old-style-class",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "定义了旧式类。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当定义一个不继承自另一个类且不明确继承“对象”的类时使用。使用Python> = 3.0时无法发出此消息。",
+        "disable": false
+      },
+      {
+        "real_name": "one-line",
+        "display_name": "one-line",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "每个语句应该独占一行, 如果是if语句, 只有在没有else时才能这样做.",
+        "rule_params": null,
+        "custom": true,
+        "languages": [
+          "python"
+        ],
+        "solution": "每个语句应该独占一行",
+        "owner": null,
+        "labels": [],
+        "description": "每个语句应该独占一行, 如果是if语句, 只有在没有else时才能这样做.\n",
+        "disable": false
+      },
+      {
+        "real_name": "parameter-unpacking",
+        "display_name": "parameter-unpacking",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "指定参数拆箱",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "为函数指定参数解包时使用（Python 3不允许使用）。当使用Python> = 3.0时，不会发出此消息。",
+        "disable": false
+      },
+      {
+        "real_name": "parse-error",
+        "display_name": "parse-error",
+        "severity": "fatal",
+        "category": "correctness",
+        "rule_title": "代码解析时出错：",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "在构建Astroid表示形式时发生异常时使用，可以用astroid处理。",
+        "disable": false
+      },
+      {
+        "real_name": "pointless-statement",
+        "display_name": "pointless-statement",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "声明似乎无效",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当一条语句没有（或至少看起来）没有任何效果时使用。",
+        "disable": false
+      },
+      {
+        "real_name": "pointless-string-statement",
+        "display_name": "pointless-string-statement",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "字符串语句无效",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "在将字符串用作语句时使用（这当然无效）。这是W0104的特例，带有其自身的消息，因此，如果您将这些字符串用作文档而不是注释，则可以轻松禁用它。",
+        "disable": false
+      },
+      {
+        "real_name": "possibly-unused-variable",
+        "display_name": "possibly-unused-variable",
+        "severity": "info",
+        "category": "other",
+        "rule_title": null,
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": null,
+        "disable": false
+      },
+      {
+        "real_name": "prefer-double-underline",
+        "display_name": "prefer-double-underline",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "使用双下划线 `__` 来代表不需要的变量，单下划线 `_` 容易与 `gettext()` 函数的别名冲突。",
+        "rule_params": null,
+        "custom": true,
+        "languages": [
+          "python"
+        ],
+        "solution": "使用双下划线 `__` 来代表不需要的变量，单下划线 `_` 容易与 `gettext()` 函数的别名冲突。",
+        "owner": null,
+        "labels": [],
+        "description": "使用双下划线 `__` 来代表不需要的变量，单下划线 `_` 容易与 `gettext()` 函数的别名冲突。\n",
+        "disable": false
+      },
+      {
+        "real_name": "prefer-return-none",
+        "display_name": "prefer-return-none",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "函数或者方法在没有返回时要明确返回None。",
+        "rule_params": null,
+        "custom": true,
+        "languages": [
+          "python"
+        ],
+        "solution": "函数或者方法在没有返回时要明确返回None。",
+        "owner": null,
+        "labels": [],
+        "description": "函数或者方法在没有返回时要明确返回None。\n",
+        "disable": false
+      },
+      {
+        "real_name": "preferred-detailed-exception",
+        "display_name": "preferred-detailed-exception",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "永远不要使用 `except:` 语句来捕获所有异常,也不要捕获 Exception 或 者 StandardError",
+        "rule_params": null,
+        "custom": true,
+        "languages": [
+          "python"
+        ],
+        "solution": "永远不要使用 `except:` 语句来捕获所有异常,也不要捕获 Exception 或 者 StandardError",
+        "owner": null,
+        "labels": [],
+        "description": "永远不要使用 `except:` 语句来捕获所有异常,也不要捕获 Exception 或者 StandardError",
+        "disable": false
+      },
+      {
+        "real_name": "preferred-import-module-name",
+        "display_name": "preferred-import-module-name",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "使用模块的全路径名来导入",
+        "rule_params": null,
+        "custom": true,
+        "languages": [
+          "python"
+        ],
+        "solution": "用完整包名来导入每个模块",
+        "owner": null,
+        "labels": [],
+        "description": "用完整包名来导入每个模块",
+        "disable": false
+      },
+      {
+        "real_name": "preferred-use-as",
+        "display_name": "preferred-use-as",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "当捕获异常时, 使用 as 而不要用逗号",
+        "rule_params": null,
+        "custom": true,
+        "languages": [
+          "python"
+        ],
+        "solution": "当捕获异常时, 使用 as 而不要用逗号",
+        "owner": null,
+        "labels": [],
+        "description": "当捕获异常时, 使用 as 而不要用逗号",
+        "disable": false
+      },
+      {
+        "real_name": "print-statement",
+        "display_name": "print-statement",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "使用的打印声明",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "Used when a print statement is used (`print` is a function in Python 3) This message can't be emitted when using Python >= 3.0.\r\n1、该规则检测print语句的使用（print在Python3中是一个方法）。当在Python3中使用print，不会报错。\r\n用于代码库从Python2语法迁移向Python3时候。\r\n2、可以用于Python2中扫描print语句的使用，方便开发修改为对应日志打印方法，比如logging模块",
+        "disable": false
+      },
+      {
+        "real_name": "property-on-old-class",
+        "display_name": "property-on-old-class",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "在旧样式类上使用“财产”",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当Pylint依赖于新样式类功能而在旧样式类上检测到内置“属性”的使用时使用。使用Python> = 3.0时无法发出此消息。",
+        "disable": false
+      },
+      {
+        "real_name": "protected-access",
+        "display_name": "protected-access",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "访问客户端类的受保护成员",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当受保护成员（即以下划线开头的名称的类成员）在类之外或在其定义的类的后代中访问时使用。",
+        "disable": false
+      },
+      {
+        "real_name": "raising-bad-type",
+        "display_name": "raising-bad-type",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "仅允许类或实例时进行筹集",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "Used when something which is neither a class, an instance or a string is raised (i.e. a `TypeError` will be raised).",
+        "disable": false
+      },
+      {
+        "real_name": "raising-non-exception",
+        "display_name": "raising-non-exception",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "引发一个不继承自BaseException的新样式类",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当引发不继承自BaseException的新样式类时使用。",
+        "disable": false
+      },
+      {
+        "real_name": "raising-string",
+        "display_name": "raising-string",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "引发字符串异常",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "引发字符串异常时使用。这在Python 3上不起作用。当使用Python> = 3.0时，不会发出此消息。",
+        "disable": false
+      },
+      {
+        "real_name": "range-builtin-not-iterating",
+        "display_name": "range-builtin-not-iterating",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "不迭代时引用的内置范围",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "在非迭代上下文中引用内置的范围时使用（在Python 3中返回迭代器），当使用Python> = 3.0时，不会发出此消息。",
+        "disable": false
+      },
+      {
+        "real_name": "raw-checker-failed",
+        "display_name": "raw-checker-failed",
+        "severity": "info",
+        "category": "convention",
+        "rule_title": "无法在内置模块上运行原始检查器",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "用于通知未使用原始检查器检查内置模块。",
+        "disable": false
+      },
+      {
+        "real_name": "redefine-in-handler",
+        "display_name": "redefine-in-handler",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "在异常处理程序中重新定义名称",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当异常处理程序将异常分配给现有名称时使用",
+        "disable": false
+      },
+      {
+        "real_name": "redefined-argument-from-local",
+        "display_name": "redefined-argument-from-local",
+        "severity": "info",
+        "category": "other",
+        "rule_title": null,
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": null,
+        "disable": false
+      },
+      {
+        "real_name": "redefined-builtin",
+        "display_name": "redefined-builtin",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "重新定义内置",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当变量或函数覆盖内置变量时使用。",
+        "disable": false
+      },
+      {
+        "real_name": "redefined-outer-name",
+        "display_name": "redefined-outer-name",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "从外部作用域（行）重新定义名称",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当变量的名称隐藏外部作用域中定义的名称时使用。",
+        "disable": false
+      },
+      {
+        "real_name": "redefined-variable-type",
+        "display_name": "redefined-variable-type",
+        "severity": "info",
+        "category": "convention",
+        "rule_title": "重新定义类型从",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当变量的类型在方法或函数内部更改时使用。",
+        "disable": false
+      },
+      {
+        "real_name": "reduce-builtin",
+        "display_name": "reduce-builtin",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "减少内置引用",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "在引用reduce内置函数时使用（Python 3缺少此函数），当使用Python> = 3.0时，不会发出此消息。",
+        "disable": false
+      },
+      {
+        "real_name": "redundant-keyword-arg",
+        "display_name": "redundant-keyword-arg",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "通话中按位置和关键字传递的参数",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当函数调用会导致向函数参数分配多个值时使用，其中一个值来自位置参数，一个值来自关键字参数。",
+        "disable": false
+      },
+      {
+        "real_name": "redundant-unittest-assert",
+        "display_name": "redundant-unittest-assert",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "恒定值的冗余使用",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "assertTrue和assertFalse的第一个参数是一个条件。如果将常量作为参数传递，则该条件将始终为true。在这种情况下，应该发出警告。",
+        "disable": false
+      },
+      {
+        "real_name": "reimported",
+        "display_name": "reimported",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "重新导入（导入行）",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "多次导入模块时使用。",
+        "disable": false
+      },
+      {
+        "real_name": "relative-import",
+        "display_name": "relative-import",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "相对进口，应为",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当检测到相对于软件包目录的导入时使用。使用Python> = 3.0时无法发出此消息。",
+        "disable": false
+      },
+      {
+        "real_name": "reload-builtin",
+        "display_name": "reload-builtin",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "重新加载内置引用",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "Used when the reload built-in function is referenced (missing from Python 3). You can use instead imp.reload or importlib.reload. This message can't be emitted when using Python >= 3.0.",
+        "disable": false
+      },
+      {
+        "real_name": "repeated-keyword",
+        "display_name": "repeated-keyword",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "在函数调用中获得了关键字参数的多个值",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当一个函数调用获得一个关键字的多个值时发出。",
+        "disable": false
+      },
+      {
+        "real_name": "return-arg-in-generator",
+        "display_name": "return-arg-in-generator",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "在生成器内部返回参数",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "在生成器函数或方法的外部（例如带有一些“ yield”语句）找到带有参数的“ return”语句时使用。使用Python> = 3.3时无法发出此消息。",
+        "disable": false
+      },
+      {
+        "real_name": "return-in-init",
+        "display_name": "return-in-init",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "__init__中的使用显式返回",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "Used when the special class method __init__ has an explicit return value.\n\n当特殊类方法__init__具有显式的返回值时使用。",
+        "disable": false
+      },
+      {
+        "real_name": "return-outside-function",
+        "display_name": "return-outside-function",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "返回外部功能",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "在函数或方法之外找到return语句时使用。",
+        "disable": false
+      },
+      {
+        "real_name": "round-builtin",
+        "display_name": "round-builtin",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "圆形内置参考",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "在引用圆形内置函数时使用（Python 3中向后不兼容的语义），当使用Python> = 3.0时，不会发出此消息。",
+        "disable": false
+      },
+      {
+        "real_name": "self-cls-assignment",
+        "display_name": "self-cls-assignment",
+        "severity": "info",
+        "category": "other",
+        "rule_title": "在方法中无效分配给％s在实例或类方法中无效分配给self或cls。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "在方法中无效分配给％s在实例或类方法中无效分配给self或cls。",
+        "owner": null,
+        "labels": [],
+        "description": "Invalid assignment to %s in method Invalid assignment to self or cls in instance or class method respectively.\n在方法中无效分配给％s在实例或类方法中无效分配给self或cls。",
+        "disable": false
+      },
+      {
+        "real_name": "setslice-method",
+        "display_name": "setslice-method",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "__setslice__方法定义",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "在定义__setslice__方法时使用（Python 3不使用该方法）当使用Python> = 3.0时，不会发出此消息。",
+        "disable": false
+      },
+      {
+        "real_name": "signature-differs",
+        "display_name": "signature-differs",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "签名与方法不同",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当方法签名不同于已实现的接口或重写的方法中时使用。",
+        "disable": false
+      },
+      {
+        "real_name": "simplifiable-if-statement",
+        "display_name": "simplifiable-if-statement",
+        "severity": "info",
+        "category": "convention",
+        "rule_title": "if语句可以减少",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当if语句可以简化为语句测试的布尔转换时使用。",
+        "disable": false
+      },
+      {
+        "real_name": "singleton-comparison",
+        "display_name": "singleton-comparison",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "比较应",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当将表达式与True，False或None等单例值进行比较时使用。",
+        "disable": false
+      },
+      {
+        "real_name": "slots-on-old-class",
+        "display_name": "slots-on-old-class",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "Use of __slots__ on an old style class",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当旧样式类使用__slots__属性时使用。使用Python> = 3.0时无法发出此消息。",
+        "disable": false
+      },
+      {
+        "real_name": "smaller-try-block",
+        "display_name": "smaller-try-block",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "尽量减少try/except块中的代码量。try块的体积越大，期望之外的异常就越容易被触发。",
+        "rule_params": null,
+        "custom": true,
+        "languages": [
+          "python"
+        ],
+        "solution": "减少try/except块中的代码行数",
+        "owner": null,
+        "labels": [],
+        "description": "尽量减少try/except块中的代码量。try块的体积越大，期望之外的异常就越容易被触发。",
+        "disable": false
+      },
+      {
+        "real_name": "standarderror-builtin",
+        "display_name": "standarderror-builtin",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "内置StandardError引用",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当引用StandardError内置函数时使用（Python 3缺少），当使用Python> = 3.0时，不会发出此消息。",
+        "disable": false
+      },
+      {
+        "real_name": "super-init-not-called",
+        "display_name": "super-init-not-called",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "不调用基类的__init__方法",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当祖先类的方法具有派生类未调用的__init__方法时使用。",
+        "disable": false
+      },
+      {
+        "real_name": "super-on-old-class",
+        "display_name": "super-on-old-class",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "在旧样式的类上使用super",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当旧样式类使用超级内置函数时使用。使用Python> = 3.0时无法发出此消息。",
+        "disable": false
+      },
+      {
+        "real_name": "superfluous-parens",
+        "display_name": "superfluous-parens",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "关键字后不必要的括号",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当括号中的单个项目后接if，for或other关键字时使用。",
+        "disable": false
+      },
+      {
+        "real_name": "suppressed-message",
+        "display_name": "suppressed-message",
+        "severity": "info",
+        "category": "convention",
+        "rule_title": "从专线禁止",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "一条消息在一行上触发，但被文件中的disable =注释显式抑制。对于由于配置设置而被忽略的消息，不会生成此消息。",
+        "disable": false
+      },
+      {
+        "real_name": "syntax-error",
+        "display_name": "syntax-error",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "模块出现语法错误。",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "在引发模块语法错误时使用。",
+        "disable": false
+      },
+      {
+        "real_name": "too-few-format-args",
+        "display_name": "too-few-format-args",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "格式字符串的参数不足",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当使用未命名的转换说明符的格式字符串的参数设置过少时使用",
+        "disable": false
+      },
+      {
+        "real_name": "too-few-public-methods",
+        "display_name": "too-few-public-methods",
+        "severity": "info",
+        "category": "convention",
+        "rule_title": "公开方法太少",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当类的公共方法太少时使用，因此请确保它确实值得。",
+        "disable": false
+      },
+      {
+        "real_name": "too-many-ancestors",
+        "display_name": "too-many-ancestors",
+        "severity": "info",
+        "category": "convention",
+        "rule_title": "祖先太多",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当类的父类太多时使用，请尝试减少该类以获得更简单（因此更易于使用）的类。",
+        "disable": false
+      },
+      {
+        "real_name": "too-many-arguments",
+        "display_name": "too-many-arguments",
+        "severity": "info",
+        "category": "convention",
+        "rule_title": "争论太多",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当函数或方法接受太多参数时使用。",
+        "disable": false
+      },
+      {
+        "real_name": "too-many-boolean-expressions",
+        "display_name": "too-many-boolean-expressions",
+        "severity": "info",
+        "category": "convention",
+        "rule_title": "Too many boolean expressions in if statement",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当if语句包含太多布尔表达式时使用",
+        "disable": false
+      },
+      {
+        "real_name": "too-many-branches",
+        "display_name": "too-many-branches",
+        "severity": "info",
+        "category": "convention",
+        "rule_title": "分支太多",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当函数或方法的分支过多，难以使用时使用。",
+        "disable": false
+      },
+      {
+        "real_name": "too-many-format-args",
+        "display_name": "too-many-format-args",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "格式字符串的参数过多",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当给使用未命名的转换说明符的格式字符串提供太多参数时使用。",
+        "disable": false
+      },
+      {
+        "real_name": "too-many-function-args",
+        "display_name": "too-many-function-args",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "Too many positional arguments for call",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当函数调用传递太多位置参数时使用。",
+        "disable": false
+      },
+      {
+        "real_name": "too-many-instance-attributes",
+        "display_name": "too-many-instance-attributes",
+        "severity": "info",
+        "category": "convention",
+        "rule_title": "实例属性太多",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "在类具有太多实例属性的情况下使用，请尝试减少此属性以获得更简单（因此更易于使用）的类。",
+        "disable": false
+      },
+      {
+        "real_name": "too-many-lines",
+        "display_name": "too-many-lines",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "模块中的行太多",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当模块的行数过多时使用，从而降低其可读性。",
+        "disable": false
+      },
+      {
+        "real_name": "too-many-locals",
+        "display_name": "too-many-locals",
+        "severity": "info",
+        "category": "convention",
+        "rule_title": "Too many local variables",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当函数或方法的局部变量过多时使用。",
+        "disable": false
+      },
+      {
+        "real_name": "too-many-nested-blocks",
+        "display_name": "too-many-nested-blocks",
+        "severity": "info",
+        "category": "convention",
+        "rule_title": "Too many nested blocks",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "Used when a function or a method has too many nested blocks. This makes the code less understandable and maintainable.",
+        "disable": false
+      },
+      {
+        "real_name": "too-many-public-methods",
+        "display_name": "too-many-public-methods",
+        "severity": "info",
+        "category": "convention",
+        "rule_title": "太多的公开方法",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当类具有太多公共方法时使用，请尝试减少此方法以获得一个更简单（因此更易于使用）的类。",
+        "disable": false
+      },
+      {
+        "real_name": "too-many-return-statements",
+        "display_name": "too-many-return-statements",
+        "severity": "info",
+        "category": "convention",
+        "rule_title": "太多的退货单",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当函数或方法的return语句过多，难以遵循时使用。",
+        "disable": false
+      },
+      {
+        "real_name": "too-many-statements",
+        "display_name": "too-many-statements",
+        "severity": "info",
+        "category": "convention",
+        "rule_title": "Too many statements",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当函数或方法的语句过多时使用。然后，应将其拆分为较小的函数/方法。",
+        "disable": false
+      },
+      {
+        "real_name": "trailing-comma-tuple",
+        "display_name": "trailing-comma-tuple",
+        "severity": "error",
+        "category": "convention",
+        "rule_title": "不允许尾随逗号元组",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "你应该总是使用括号显式地创建一个元组。\n- 错误示例：\na = 1,\n- 正确示例：\na = (1, )",
+        "owner": null,
+        "labels": [],
+        "description": "In Python, a tuple is actually created by the comma symbol, not by the  parentheses. \n在Python中，元组实际上是由逗号创建的，而不是圆括号。\nUnfortunately, one can actually create a tuple by misplacing a trailing comma, which can lead to potential weird bugs in your code. \n不幸的是，你可能会因为误输入了一个逗号，导致变成了一个元组类型。\nYou should always use parentheses explicitly for creating a tuple.\n你应该总是使用括号显式地创建一个元组。\n\n- 错误示例：\na = 1,\n- 正确示例：\na = (1, )",
+        "disable": false
+      },
+      {
+        "real_name": "trailing-newlines",
+        "display_name": "trailing-newlines",
+        "severity": "info",
+        "category": "other",
+        "rule_title": "尾随换行符",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "Used when there are trailing blank lines in a file.",
+        "owner": null,
+        "labels": [],
+        "description": "当文件中有尾随空白行时使用。",
+        "disable": false
+      },
+      {
+        "real_name": "trailing-whitespace",
+        "display_name": "trailing-whitespace",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "尾随空格",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当行尾和换行符之间有空格时使用。",
+        "disable": false
+      },
+      {
+        "real_name": "truncated-format-string",
+        "display_name": "truncated-format-string",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "格式字符串缺少参数",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "Used when a format string terminates before the end of a conversion specifier.\n\n格式字符串参数少于转换符，例如：\nbad = '%s%s' % (test1)  # 缺少 test2",
+        "disable": false
+      },
+      {
+        "real_name": "try-except-raise",
+        "display_name": "try-except-raise",
+        "severity": "info",
+        "category": "other",
+        "rule_title": null,
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": null,
+        "disable": false
+      },
+      {
+        "real_name": "unbalanced-tuple-unpacking",
+        "display_name": "unbalanced-tuple-unpacking",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "Possible unbalanced tuple unpacking with sequence.",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当分配中的元组拆解不平衡时使用",
+        "disable": false
+      },
+      {
+        "real_name": "undefined-all-variable",
+        "display_name": "undefined-all-variable",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "__all__中的未定义变量名",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "Used when an undefined variable name is referenced in __all__.",
+        "disable": false
+      },
+      {
+        "real_name": "undefined-loop-variable",
+        "display_name": "undefined-loop-variable",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "Using possibly undefined loop variable",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "Used when an loop variable (i.e. defined by a for loop or a list comprehension or a generator expression) is used outside the loop.",
+        "disable": false
+      },
+      {
+        "real_name": "undefined-variable",
+        "display_name": "undefined-variable",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "Undefined variable",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "Used when an undefined variable is accessed.",
+        "disable": false
+      },
+      {
+        "real_name": "unexpected-keyword-arg",
+        "display_name": "unexpected-keyword-arg",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "Unexpected keyword argument in call",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当函数调用传递与该函数的参数名称之一不对应的关键字参数时使用。",
+        "disable": false
+      },
+      {
+        "real_name": "unexpected-line-ending-format",
+        "display_name": "unexpected-line-ending-format",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "意外的行结束格式。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "Used when there is different newline than expected.",
+        "disable": false
+      },
+      {
+        "real_name": "unexpected-special-method-signature",
+        "display_name": "unexpected-special-method-signature",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "特殊方法需要参数，但是给定的参数太少或太多",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当使用无效数目的参数定义特殊方法时发出。如果数量太少或太多，则可能根本无法工作。",
+        "disable": false
+      },
+      {
+        "real_name": "ungrouped-imports",
+        "display_name": "ungrouped-imports",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "Imports from package are not grouped",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当导入未按包分组时使用",
+        "disable": false
+      },
+      {
+        "real_name": "unichr-builtin",
+        "display_name": "unichr-builtin",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "unichr内置参考",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "Used when the unichr built-in is referenced (Use chr in Python 3) This message can't be emitted when using Python >= 3.0.",
+        "disable": false
+      },
+      {
+        "real_name": "unicode-builtin",
+        "display_name": "unicode-builtin",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "unicode built-in referenced",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当引用Unicode内置函数时使用（Python 3缺少此函数），当使用Python> = 3.0时，不会发出此消息。",
+        "disable": false
+      },
+      {
+        "real_name": "unidiomatic-typecheck",
+        "display_name": "unidiomatic-typecheck",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "使用type（）代替isinstance（）进行类型检查。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "The idiomatic way to perform an explicit typecheck in Python is to use isinstance(x, Y) rather than type(x) == Y, type(x) is Y. Though there are unusual situations where these give different results.",
+        "disable": false
+      },
+      {
+        "real_name": "unnecessary-lambda",
+        "display_name": "unnecessary-lambda",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "Lambda may not be necessary",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "Used when the body of a lambda expression is a function call on the same argument list as the lambda itself; such lambda expressions are in all but a few cases replaceable with the function being called in the body of the lambda.",
+        "disable": false
+      },
+      {
+        "real_name": "unnecessary-pass",
+        "display_name": "unnecessary-pass",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "Unnecessary pass statement",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "Used when a \"pass\" statement that can be avoided is encountered.",
+        "disable": false
+      },
+      {
+        "real_name": "unnecessary-semicolon",
+        "display_name": "unnecessary-semicolon",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "不必要的分号",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "Used when a statement is ended by a semi-colon (\";\"), which isn't necessary (that's python, not C ;).",
+        "disable": false
+      },
+      {
+        "real_name": "unneeded-not",
+        "display_name": "unneeded-not",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "Consider changing to",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当布尔表达式包含不需要的否定时使用。",
+        "disable": false
+      },
+      {
+        "real_name": "unpacking-in-except",
+        "display_name": "unpacking-in-except",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "Implicit unpacking of exceptions is not supported in Python 3",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "Python3 will not allow implicit unpacking of exceptions in except clauses. See http://www.python.org/dev/peps/pep-3110/ This message can't be emitted when using Python >= 3.0.",
+        "disable": false
+      },
+      {
+        "real_name": "unpacking-non-sequence",
+        "display_name": "unpacking-non-sequence",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "尝试解开非序列包",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "Used when something which is not a sequence is used in an unpack assignment",
+        "disable": false
+      },
+      {
+        "real_name": "unreachable",
+        "display_name": "unreachable",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "无法访问的代码",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "Used when there is some code behind a \"return\" or \"raise\" statement, which will never be accessed.",
+        "disable": false
+      },
+      {
+        "real_name": "unrecognized-inline-option",
+        "display_name": "unrecognized-inline-option",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "Unrecognized file option",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "Used when an unknown inline option is encountered.",
+        "disable": false
+      },
+      {
+        "real_name": "unsubscriptable-object",
+        "display_name": "unsubscriptable-object",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "Value is unsubscriptable",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当下标的值不支持订阅时发出（即未定义__getitem__方法）",
+        "disable": false
+      },
+      {
+        "real_name": "unsupported-binary-operation",
+        "display_name": "unsupported-binary-operation",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "a binary arithmetic operation between two operands is not supported",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当不支持两个操作数之间的二进制算术运算时发射。",
+        "disable": false
+      },
+      {
+        "real_name": "unsupported-membership-test",
+        "display_name": "unsupported-membership-test",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "价值不支持会员资格测试",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当成员资格测试表达式中的实例未实现成员资格协议（__contains __ / __ iter __ / __ getitem__）时发出",
+        "disable": false
+      },
+      {
+        "real_name": "unused-argument",
+        "display_name": "unused-argument",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "Unused argument",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "Used when a function or method argument is not used.",
+        "disable": false
+      },
+      {
+        "real_name": "unused-format-string-argument",
+        "display_name": "unused-format-string-argument",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "未使用的格式参数",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "Used when a PEP 3101 format string that uses named fields is used with an argument that is not required by the format string. This message can't be emitted when using Python < 2.7.",
+        "disable": false
+      },
+      {
+        "real_name": "unused-format-string-key",
+        "display_name": "unused-format-string-key",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "Unused key in format string dictionary",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当使用命名转换说明符的格式字符串与包含格式字符串不需要的键的字典一起使用时使用。",
+        "disable": false
+      },
+      {
+        "real_name": "unused-import",
+        "display_name": "unused-import",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "没用过",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "不使用导入的模块或变量时使用。",
+        "disable": false
+      },
+      {
+        "real_name": "unused-variable",
+        "display_name": "unused-variable",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "Unused variable",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "在定义变量但不使用时使用。",
+        "disable": false
+      },
+      {
+        "real_name": "unused-wildcard-import",
+        "display_name": "unused-wildcard-import",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "Unused import from wildcard import",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当未从''from X import *'样式导入中使用导入的模块或变量时使用。",
+        "disable": false
+      },
+      {
+        "real_name": "used-before-assignment",
+        "display_name": "used-before-assignment",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "Using variable before assignment",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "Used when a local variable is accessed before it's assignment.",
+        "disable": false
+      },
+      {
+        "real_name": "useless-else-on-loop",
+        "display_name": "useless-else-on-loop",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "循环中的其他子句，没有break语句",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "Loops should only have an else clause if they can exit early with a break statement, otherwise the statements under else should be on the same scope as the loop itself.",
+        "disable": false
+      },
+      {
+        "real_name": "useless-object-inheritance",
+        "display_name": "useless-object-inheritance",
+        "severity": "info",
+        "category": "other",
+        "rule_title": null,
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": null,
+        "disable": false
+      },
+      {
+        "real_name": "useless-return",
+        "display_name": "useless-return",
+        "severity": "info",
+        "category": "other",
+        "rule_title": null,
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": null,
+        "disable": false
+      },
+      {
+        "real_name": "useless-super-delegation",
+        "display_name": "useless-super-delegation",
+        "severity": "info",
+        "category": "other",
+        "rule_title": null,
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": null,
+        "disable": false
+      },
+      {
+        "real_name": "useless-suppression",
+        "display_name": "useless-suppression",
+        "severity": "info",
+        "category": "convention",
+        "rule_title": "Useless suppression of",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "Reported when a message is explicitly disabled for a line or a block of code, but never triggered.",
+        "disable": false
+      },
+      {
+        "real_name": "using-cmp-argument",
+        "display_name": "using-cmp-argument",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "使用cmp参数进行list.sort /排序",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "应该避免将cmp参数用于list.sort或sorted内置函数，因为它已在Python 3中删除。应该首选使用`key`或`functools.cmp_to_key`。使用Python> = 3.0时无法发出此消息。",
+        "disable": false
+      },
+      {
+        "real_name": "using-constant-test",
+        "display_name": "using-constant-test",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "Using a conditional statement with a constant value",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "Emitted when a conditional statement (If or ternary if) uses a constant value for its test. This might not be what the user intended to do.",
+        "disable": false
+      },
+      {
+        "real_name": "wildcard-import",
+        "display_name": "wildcard-import",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "Wildcard import",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "当检测到“从模块导入*”时使用。",
+        "disable": false
+      },
+      {
+        "real_name": "wrong-import-order",
+        "display_name": "wrong-import-order",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "来之前",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "在不遵守PEP8导入顺序时使用（首先是标准导入，然后是第三方库，然后是本地导入）",
+        "disable": false
+      },
+      {
+        "real_name": "wrong-import-position",
+        "display_name": "wrong-import-position",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "导入应放在模块顶部",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "Used when code and imports are mixed",
+        "disable": false
+      },
+      {
+        "real_name": "wrong-spelling-in-comment",
+        "display_name": "wrong-spelling-in-comment",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "Wrong spelling of a word in a comment:",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "Used when a word in comment is not spelled correctly.",
+        "disable": false
+      },
+      {
+        "real_name": "wrong-spelling-in-docstring",
+        "display_name": "wrong-spelling-in-docstring",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "Wrong spelling of a word in a docstring:",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "Used when a word in docstring is not spelled correctly.",
+        "disable": false
+      },
+      {
+        "real_name": "xrange-builtin",
+        "display_name": "xrange-builtin",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "xrange built-in referenced",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "在引用xrange内置函数时使用（Python 3缺少），当使用Python> = 3.0时，不会发出此消息。",
+        "disable": false
+      },
+      {
+        "real_name": "yield-outside-function",
+        "display_name": "yield-outside-function",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "Yield outside function",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "Used when a \"yield\" statement is found outside a function or method.",
+        "disable": false
+      },
+      {
+        "real_name": "zip-builtin-not-iterating",
+        "display_name": "zip-builtin-not-iterating",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "未迭代时引用的内置zip",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": "",
+        "owner": null,
+        "labels": [],
+        "description": "Used when the zip built-in is referenced in a non-iterating context (returns an iterator in Python 3) This message can't be emitted when using Python >= 3.0.",
+        "disable": false
+      }
+    ],
+    "open_user": true,
+    "open_saas": true
+  }
+]

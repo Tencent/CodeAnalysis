@@ -1,0 +1,35 @@
+# -*- encoding: utf-8 -*-
+'''
+each task has a response object, which is used to send back task result to server.
+'''
+from util.attrdict import AttrDict
+from util import errcode
+from task.toolmodel import IToolModel
+
+
+class TaskResponse(AttrDict):
+    '''Task response contains below fields.
+    
+    ``task_version``
+        task version
+    
+    ``status``
+        task status code
+        
+    ``result``
+        task result data
+        
+    ``message``
+        task error message, default is None if no error
+        
+    ``files``
+        file list with each item be a file or a directory path relative to work_dir. 
+        those file will upload to file server
+    '''
+
+    def __init__(self, task_version=IToolModel.version, status=errcode.OK, message=None, result=None, files=None):
+        self.task_version = task_version
+        self.status = status
+        self.message = message
+        self.result = result
+        self.files = files

@@ -1,0 +1,144 @@
+[
+  {
+      "name": "【Python】基础规则包",
+      "description": "Python官方基础规则包，提供常见代码问题扫描。",
+      "revision": null,
+      "package_type": "official",
+      "languages": [
+          "python"
+      ],
+      "labels": [
+          "基础"
+      ],
+      "checkrule_set": [
+          {
+              "checktool": "flake8",
+              "checkrule": "W602",
+              "severity": "warning",
+              "rule_params": null,
+              "state": "enabled"
+          },
+          {
+              "checktool": "flake8",
+              "checkrule": "E113",
+              "severity": "error",
+              "rule_params": null,
+              "state": "enabled"
+          },
+          {
+              "checktool": "flake8",
+              "checkrule": "E111",
+              "severity": "error",
+              "rule_params": null,
+              "state": "enabled"
+          },
+          {
+              "checktool": "flake8",
+              "checkrule": "E117",
+              "severity": "error",
+              "rule_params": null,
+              "state": "enabled"
+          },
+          {
+              "checktool": "flake8",
+              "checkrule": "E133",
+              "severity": "error",
+              "rule_params": null,
+              "state": "enabled"
+          },
+          {
+              "checktool": "flake8",
+              "checkrule": "E201",
+              "severity": "error",
+              "rule_params": null,
+              "state": "enabled"
+          },
+          {
+              "checktool": "flake8",
+              "checkrule": "E202",
+              "severity": "error",
+              "rule_params": null,
+              "state": "enabled"
+          },
+          {
+              "checktool": "flake8",
+              "checkrule": "E211",
+              "severity": "error",
+              "rule_params": null,
+              "state": "enabled"
+          },
+          {
+              "checktool": "flake8",
+              "checkrule": "E223",
+              "severity": "error",
+              "rule_params": null,
+              "state": "enabled"
+          },
+          {
+              "checktool": "flake8",
+              "checkrule": "E224",
+              "severity": "error",
+              "rule_params": null,
+              "state": "enabled"
+          },
+          {
+              "checktool": "flake8",
+              "checkrule": "E228",
+              "severity": "error",
+              "rule_params": null,
+              "state": "enabled"
+          },
+          {
+              "checktool": "flake8",
+              "checkrule": "E241",
+              "severity": "error",
+              "rule_params": null,
+              "state": "enabled"
+          },
+          {
+              "checktool": "flake8",
+              "checkrule": "E242",
+              "severity": "error",
+              "rule_params": null,
+              "state": "enabled"
+          },
+          {
+              "checktool": "flake8",
+              "checkrule": "E262",
+              "severity": "error",
+              "rule_params": null,
+              "state": "enabled"
+          },
+          {
+              "checktool": "flake8",
+              "checkrule": "E712",
+              "severity": "warning",
+              "rule_params": null,
+              "state": "disabled"
+          },
+          {
+              "checktool": "flake8",
+              "checkrule": "E713",
+              "severity": "warning",
+              "rule_params": null,
+              "state": "enabled"
+          },
+          {
+              "checktool": "flake8",
+              "checkrule": "W292",
+              "severity": "warning",
+              "rule_params": null,
+              "state": "enabled"
+          },
+          {
+              "checktool": "flake8",
+              "checkrule": "W291",
+              "severity": "warning",
+              "rule_params": null,
+              "state": "enabled"
+          }
+      ],
+      "open_saas": false,
+      "envs": ""
+  }
+]

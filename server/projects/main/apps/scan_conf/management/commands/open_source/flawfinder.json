@@ -1,0 +1,3696 @@
+[
+    {
+        "name": "flawfinder",
+        "display_name": "Flawfinder",
+        "description": "C/C++ 安全扫描工具\nFlawfinder is a simple program that scans C/C++ source code and reports potential security flaws.",
+        "license": "GPL-2.0",
+        "libscheme_set": [],
+        "task_processes": [
+            "analyze",
+            "datahandle"
+        ],
+        "scan_app": "codelint",
+        "scm_url": "https://github.com/TCATools/flawfinder.git",
+        "run_cmd": "python main.py",
+        "envs": "PYTHON_HOME = $PYTHON37_HOME\nPATH = $PYTHON_HOME/bin:$PATH",
+        "build_flag": false,
+        "checkrule_set": [
+            {
+                "real_name": "access",
+                "display_name": "race/access",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "This usually indicates a security flaw.  If an attacker can change anything along the path between the call to access() and the file's actual use (e.g., by moving files), the attacker can exploit the race condition (CWE-362/CWE-367!)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Set up the correct permissions (e.g., using setuid()) and try to open the file directly",
+                "owner": null,
+                "labels": [],
+                "description": "This usually indicates a security flaw.  If an attacker can change anything along the path between the call to access() and the file's actual use (e.g., by moving files), the attacker can exploit the race condition (CWE-362/CWE-367!)",
+                "disable": false
+            },
+            {
+                "real_name": "AddAccessAllowedAce",
+                "display_name": "misc/AddAccessAllowedAce",
+                "severity": "warning",
+                "category": "security",
+                "rule_title": "This doesn't set the inheritance bits in the access control entry (ACE) header (CWE-732)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Make sure that you set inheritance by hand if you wish it to inherit",
+                "owner": null,
+                "labels": [],
+                "description": "This doesn't set the inheritance bits in the access control entry (ACE) header (CWE-732)",
+                "disable": false
+            },
+            {
+                "real_name": "atoi",
+                "display_name": "integer/atoi",
+                "severity": "warning",
+                "category": "security",
+                "rule_title": "Unless checked, the resulting number can exceed the expected range (CWE-190)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "If source untrusted, check both minimum and maximum, even if the input had no minus sign (large numbers can roll over into negative number; consider saving to an unsigned value if that is intended)",
+                "owner": null,
+                "labels": [],
+                "description": "Unless checked, the resulting number can exceed the expected range (CWE-190)",
+                "disable": false
+            },
+            {
+                "real_name": "atol",
+                "display_name": "integer/atol",
+                "severity": "warning",
+                "category": "security",
+                "rule_title": "Unless checked, the resulting number can exceed the expected range (CWE-190)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "If source untrusted, check both minimum and maximum, even if the input had no minus sign (large numbers can roll over into negative number; consider saving to an unsigned value if that is intended)",
+                "owner": null,
+                "labels": [],
+                "description": "Unless checked, the resulting number can exceed the expected range (CWE-190)",
+                "disable": false
+            },
+            {
+                "real_name": "bcopy",
+                "display_name": "buffer/bcopy",
+                "severity": "warning",
+                "category": "security",
+                "rule_title": "Does not check for buffer overflows when copying to destination (CWE-120)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Make sure destination can always hold the source data",
+                "owner": null,
+                "labels": [],
+                "description": "Does not check for buffer overflows when copying to destination (CWE-120)",
+                "disable": false
+            },
+            {
+                "real_name": "char",
+                "display_name": "buffer/char",
+                "severity": "warning",
+                "category": "security",
+                "rule_title": "Statically-sized arrays can be improperly restricted, leading to potential overflows or other issues (CWE-119!/CWE-120)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Perform bounds checking, use functions that limit length, or ensure that the size is larger than the maximum possible length",
+                "owner": null,
+                "labels": [],
+                "description": "Statically-sized arrays can be improperly restricted, leading to potential overflows or other issues (CWE-119!/CWE-120)",
+                "disable": false
+            },
+            {
+                "real_name": "chgrp",
+                "display_name": "race/chgrp",
+                "severity": "fatal",
+                "category": "security",
+                "rule_title": "This accepts filename arguments; if an attacker can move those files, a race condition results. (CWE-362)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Use fchgrp( ) instead",
+                "owner": null,
+                "labels": [],
+                "description": "This accepts filename arguments; if an attacker can move those files, a race condition results. (CWE-362)",
+                "disable": false
+            },
+            {
+                "real_name": "chmod",
+                "display_name": "race/chmod",
+                "severity": "fatal",
+                "category": "security",
+                "rule_title": "This accepts filename arguments; if an attacker can move those files, a race condition results. (CWE-362)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Use fchmod( ) instead",
+                "owner": null,
+                "labels": [],
+                "description": "This accepts filename arguments; if an attacker can move those files, a race condition results. (CWE-362)",
+                "disable": false
+            },
+            {
+                "real_name": "chown",
+                "display_name": "race/chown",
+                "severity": "fatal",
+                "category": "security",
+                "rule_title": "This accepts filename arguments; if an attacker can move those files, a race condition results. (CWE-362)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Use fchown( ) instead",
+                "owner": null,
+                "labels": [],
+                "description": "This accepts filename arguments; if an attacker can move those files, a race condition results. (CWE-362)",
+                "disable": false
+            },
+            {
+                "real_name": "chroot",
+                "display_name": "misc/chroot",
+                "severity": "warning",
+                "category": "security",
+                "rule_title": "chroot can be very helpful, but is hard to use correctly (CWE-250, CWE-22)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Make sure the program immediately chdir(\"/\"), closes file descriptors, and drops root privileges, and that all necessary files (and no more!) are in the new root",
+                "owner": null,
+                "labels": [],
+                "description": "chroot can be very helpful, but is hard to use correctly (CWE-250, CWE-22)",
+                "disable": false
+            },
+            {
+                "real_name": "CoImpersonateClient",
+                "display_name": "access/CoImpersonateClient",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "If this call fails, the program could fail to drop heightened privileges (CWE-250)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Make sure the return value is checked, and do not continue if a failure is reported",
+                "owner": null,
+                "labels": [],
+                "description": "If this call fails, the program could fail to drop heightened privileges (CWE-250)",
+                "disable": false
+            },
+            {
+                "real_name": "CopyMemory",
+                "display_name": "buffer/CopyMemory",
+                "severity": "warning",
+                "category": "security",
+                "rule_title": "Does not check for buffer overflows when copying to destination (CWE-120)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Make sure destination can always hold the source data",
+                "owner": null,
+                "labels": [],
+                "description": "Does not check for buffer overflows when copying to destination (CWE-120)",
+                "disable": false
+            },
+            {
+                "real_name": "CreateProcess",
+                "display_name": "shell/CreateProcess",
+                "severity": "warning",
+                "category": "security",
+                "rule_title": "This causes a new process to execute and is difficult to use safely (CWE-78)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Specify the application path in the first argument, NOT as part of the second, or embedded spaces could allow an attacker to force a different program to run",
+                "owner": null,
+                "labels": [],
+                "description": "This causes a new process to execute and is difficult to use safely (CWE-78)",
+                "disable": false
+            },
+            {
+                "real_name": "CreateProcessAsUser",
+                "display_name": "shell/CreateProcessAsUser",
+                "severity": "warning",
+                "category": "security",
+                "rule_title": "This causes a new process to execute and is difficult to use safely (CWE-78)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Especially watch out for embedded spaces",
+                "owner": null,
+                "labels": [],
+                "description": "This causes a new process to execute and is difficult to use safely (CWE-78)",
+                "disable": false
+            },
+            {
+                "real_name": "CreateProcessWithLogon",
+                "display_name": "shell/CreateProcessWithLogon",
+                "severity": "warning",
+                "category": "security",
+                "rule_title": "This causes a new process to execute and is difficult to use safely (CWE-78)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Especially watch out for embedded spaces",
+                "owner": null,
+                "labels": [],
+                "description": "This causes a new process to execute and is difficult to use safely (CWE-78)",
+                "disable": false
+            },
+            {
+                "real_name": "crypt",
+                "display_name": "crypto/crypt",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "The crypt functions use a poor one-way hashing algorithm; since they only accept passwords of 8 characters or fewer and only a two-byte salt, they are excessively vulnerable to dictionary attacks given today's faster computing equipment (CWE-327)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Use a different algorithm, such as SHA-256, with a larger, non-repeating salt",
+                "owner": null,
+                "labels": [],
+                "description": "The crypt functions use a poor one-way hashing algorithm; since they only accept passwords of 8 characters or fewer and only a two-byte salt, they are excessively vulnerable to dictionary attacks given today's faster computing equipment (CWE-327)",
+                "disable": false
+            },
+            {
+                "real_name": "crypt_r",
+                "display_name": "crypto/crypt_r",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "The crypt functions use a poor one-way hashing algorithm; since they only accept passwords of 8 characters or fewer and only a two-byte salt, they are excessively vulnerable to dictionary attacks given today's faster computing equipment (CWE-327)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Use a different algorithm, such as SHA-256, with a larger, non-repeating salt",
+                "owner": null,
+                "labels": [],
+                "description": "The crypt functions use a poor one-way hashing algorithm; since they only accept passwords of 8 characters or fewer and only a two-byte salt, they are excessively vulnerable to dictionary attacks given today's faster computing equipment (CWE-327)",
+                "disable": false
+            },
+            {
+                "real_name": "curl_getenv",
+                "display_name": "buffer/curl_getenv",
+                "severity": "warning",
+                "category": "security",
+                "rule_title": "Environment variables are untrustable input if they can be set by an attacker.  They can have any content and length, and the same variable can be set more than once (CWE-807, CWE-20)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Check environment variables carefully before using them",
+                "owner": null,
+                "labels": [],
+                "description": "Environment variables are untrustable input if they can be set by an attacker.  They can have any content and length, and the same variable can be set more than once (CWE-807, CWE-20)",
+                "disable": false
+            },
+            {
+                "real_name": "cuserid",
+                "display_name": "misc/cuserid",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "Exactly what cuserid() does is poorly defined (e.g., some systems use the effective uid, like Linux, while others like System V use the real uid). Thus, you can't trust what it does. It's certainly not portable (The cuserid function was included in the 1988 version of POSIX, but removed from the 1990 version).  Also, if passed a non-null parameter, there's a risk of a buffer overflow if the passed-in buffer is not at least L_cuserid characters long (CWE-120)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Use getpwuid(geteuid()) and extract the desired information instead",
+                "owner": null,
+                "labels": [],
+                "description": "Exactly what cuserid() does is poorly defined (e.g., some systems use the effective uid, like Linux, while others like System V use the real uid). Thus, you can't trust what it does. It's certainly not portable (The cuserid function was included in the 1988 version of POSIX, but removed from the 1990 version).  Also, if passed a non-null parameter, there's a risk of a buffer overflow if the passed-in buffer is not at least L_cuserid characters long (CWE-120)",
+                "disable": false
+            },
+            {
+                "real_name": "drand48",
+                "display_name": "random/drand48",
+                "severity": "warning",
+                "category": "security",
+                "rule_title": "This function is not sufficiently random for security-related functions such as key and nonce creation (CWE-327)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Use a more secure technique for acquiring random values",
+                "owner": null,
+                "labels": [],
+                "description": "This function is not sufficiently random for security-related functions such as key and nonce creation (CWE-327)",
+                "disable": false
+            },
+            {
+                "real_name": "equal",
+                "display_name": "buffer/equal",
+                "severity": "info",
+                "category": "security",
+                "rule_title": "Function does not check the second iterator for over-read conditions (CWE-126)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "This function is often discouraged by most C++ coding standards in favor of its safer alternatives provided since C++14. Consider using a form of this function that checks the second iterator before potentially overflowing it",
+                "owner": null,
+                "labels": [],
+                "description": "Function does not check the second iterator for over-read conditions (CWE-126)",
+                "disable": false
+            },
+            {
+                "real_name": "erand48",
+                "display_name": "random/erand48",
+                "severity": "warning",
+                "category": "security",
+                "rule_title": "This function is not sufficiently random for security-related functions such as key and nonce creation (CWE-327)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Use a more secure technique for acquiring random values",
+                "owner": null,
+                "labels": [],
+                "description": "This function is not sufficiently random for security-related functions such as key and nonce creation (CWE-327)",
+                "disable": false
+            },
+            {
+                "real_name": "EVP_desx_cbc",
+                "display_name": "crypto/EVP_desx_cbc",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "DES only supports a 56-bit keysize, which is too small given today's computers (CWE-327)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Use a different patent-free encryption algorithm with a larger keysize, such as 3DES or AES",
+                "owner": null,
+                "labels": [],
+                "description": "DES only supports a 56-bit keysize, which is too small given today's computers (CWE-327)",
+                "disable": false
+            },
+            {
+                "real_name": "EVP_des_cbc",
+                "display_name": "crypto/EVP_des_cbc",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "DES only supports a 56-bit keysize, which is too small given today's computers (CWE-327)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Use a different patent-free encryption algorithm with a larger keysize, such as 3DES or AES",
+                "owner": null,
+                "labels": [],
+                "description": "DES only supports a 56-bit keysize, which is too small given today's computers (CWE-327)",
+                "disable": false
+            },
+            {
+                "real_name": "EVP_des_cfb",
+                "display_name": "crypto/EVP_des_cfb",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "DES only supports a 56-bit keysize, which is too small given today's computers (CWE-327)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Use a different patent-free encryption algorithm with a larger keysize, such as 3DES or AES",
+                "owner": null,
+                "labels": [],
+                "description": "DES only supports a 56-bit keysize, which is too small given today's computers (CWE-327)",
+                "disable": false
+            },
+            {
+                "real_name": "EVP_des_ecb",
+                "display_name": "crypto/EVP_des_ecb",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "DES only supports a 56-bit keysize, which is too small given today's computers (CWE-327)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Use a different patent-free encryption algorithm with a larger keysize, such as 3DES or AES",
+                "owner": null,
+                "labels": [],
+                "description": "DES only supports a 56-bit keysize, which is too small given today's computers (CWE-327)",
+                "disable": false
+            },
+            {
+                "real_name": "EVP_des_ofb",
+                "display_name": "crypto/EVP_des_ofb",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "DES only supports a 56-bit keysize, which is too small given today's computers (CWE-327)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Use a different patent-free encryption algorithm with a larger keysize, such as 3DES or AES",
+                "owner": null,
+                "labels": [],
+                "description": "DES only supports a 56-bit keysize, which is too small given today's computers (CWE-327)",
+                "disable": false
+            },
+            {
+                "real_name": "EVP_rc2_40_cbc",
+                "display_name": "crypto/EVP_rc2_40_cbc",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "These keysizes are too small given today's computers (CWE-327)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Use a different patent-free encryption algorithm with a larger keysize, such as 3DES or AES",
+                "owner": null,
+                "labels": [],
+                "description": "These keysizes are too small given today's computers (CWE-327)",
+                "disable": false
+            },
+            {
+                "real_name": "EVP_rc2_64_cbc",
+                "display_name": "crypto/EVP_rc2_64_cbc",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "These keysizes are too small given today's computers (CWE-327)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Use a different patent-free encryption algorithm with a larger keysize, such as 3DES or AES",
+                "owner": null,
+                "labels": [],
+                "description": "These keysizes are too small given today's computers (CWE-327)",
+                "disable": false
+            },
+            {
+                "real_name": "EVP_rc4_40",
+                "display_name": "crypto/EVP_rc4_40",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "These keysizes are too small given today's computers (CWE-327)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Use a different patent-free encryption algorithm with a larger keysize, such as 3DES or AES",
+                "owner": null,
+                "labels": [],
+                "description": "These keysizes are too small given today's computers (CWE-327)",
+                "disable": false
+            },
+            {
+                "real_name": "execl",
+                "display_name": "shell/execl",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "This causes a new program to execute and is difficult to use safely (CWE-78)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "try using a library call that implements the same functionality if available",
+                "owner": null,
+                "labels": [],
+                "description": "This causes a new program to execute and is difficult to use safely (CWE-78)",
+                "disable": false
+            },
+            {
+                "real_name": "execle",
+                "display_name": "shell/execle",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "This causes a new program to execute and is difficult to use safely (CWE-78)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "try using a library call that implements the same functionality if available",
+                "owner": null,
+                "labels": [],
+                "description": "This causes a new program to execute and is difficult to use safely (CWE-78)",
+                "disable": false
+            },
+            {
+                "real_name": "execlp",
+                "display_name": "shell/execlp",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "This causes a new program to execute and is difficult to use safely (CWE-78)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "try using a library call that implements the same functionality if available",
+                "owner": null,
+                "labels": [],
+                "description": "This causes a new program to execute and is difficult to use safely (CWE-78)",
+                "disable": false
+            },
+            {
+                "real_name": "execv",
+                "display_name": "shell/execv",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "This causes a new program to execute and is difficult to use safely (CWE-78)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "try using a library call that implements the same functionality if available",
+                "owner": null,
+                "labels": [],
+                "description": "This causes a new program to execute and is difficult to use safely (CWE-78)",
+                "disable": false
+            },
+            {
+                "real_name": "execvp",
+                "display_name": "shell/execvp",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "This causes a new program to execute and is difficult to use safely (CWE-78)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "try using a library call that implements the same functionality if available",
+                "owner": null,
+                "labels": [],
+                "description": "This causes a new program to execute and is difficult to use safely (CWE-78)",
+                "disable": false
+            },
+            {
+                "real_name": "fgetc",
+                "display_name": "buffer/fgetc",
+                "severity": "info",
+                "category": "security",
+                "rule_title": "Check buffer boundaries if used in a loop including recursive loops (CWE-120, CWE-20)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Check buffer boundaries if used in a loop including recursive loops (CWE-120, CWE-20)",
+                "disable": false
+            },
+            {
+                "real_name": "fopen",
+                "display_name": "misc/fopen",
+                "severity": "warning",
+                "category": "security",
+                "rule_title": "Check when opening files - can an attacker redirect it (via symlinks), force the opening of special file type (e.g., device files), move things around to create a race condition, control its ancestors, or change its contents? (CWE-362)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Check when opening files - can an attacker redirect it (via symlinks), force the opening of special file type (e.g., device files), move things around to create a race condition, control its ancestors, or change its contents? (CWE-362)",
+                "disable": false
+            },
+            {
+                "real_name": "fprintf",
+                "display_name": "format/fprintf",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "If format strings can be influenced by an attacker, they can be exploited (CWE-134)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Use a constant for the format specification",
+                "owner": null,
+                "labels": [],
+                "description": "If format strings can be influenced by an attacker, they can be exploited (CWE-134)",
+                "disable": false
+            },
+            {
+                "real_name": "fread",
+                "display_name": "input/fread",
+                "severity": "info",
+                "category": "security",
+                "rule_title": "Function accepts input from outside program (CWE-20)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Make sure input data is filtered, especially if an attacker could manipulate it",
+                "owner": null,
+                "labels": [],
+                "description": "Function accepts input from outside program (CWE-20)",
+                "disable": false
+            },
+            {
+                "real_name": "fscanf",
+                "display_name": "buffer/fscanf",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "The scanf() family's %s operation, without a limit specification, permits buffer overflows (CWE-120, CWE-20)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Specify a limit to %s, or use a different input function",
+                "owner": null,
+                "labels": [],
+                "description": "The scanf() family's %s operation, without a limit specification, permits buffer overflows (CWE-120, CWE-20)",
+                "disable": false
+            },
+            {
+                "real_name": "fvwprintf",
+                "display_name": "format/fvwprintf",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "If format strings can be influenced by an attacker, they can be exploited (CWE-134)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Use a constant for the format specification",
+                "owner": null,
+                "labels": [],
+                "description": "If format strings can be influenced by an attacker, they can be exploited (CWE-134)",
+                "disable": false
+            },
+            {
+                "real_name": "fwprintf",
+                "display_name": "format/fwprintf",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "If format strings can be influenced by an attacker, they can be exploited (CWE-134)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Use a constant for the format specification",
+                "owner": null,
+                "labels": [],
+                "description": "If format strings can be influenced by an attacker, they can be exploited (CWE-134)",
+                "disable": false
+            },
+            {
+                "real_name": "fwscanf",
+                "display_name": "buffer/fwscanf",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "The scanf() family's %s operation, without a limit specification, permits buffer overflows (CWE-120, CWE-20)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Specify a limit to %s, or use a different input function",
+                "owner": null,
+                "labels": [],
+                "description": "The scanf() family's %s operation, without a limit specification, permits buffer overflows (CWE-120, CWE-20)",
+                "disable": false
+            },
+            {
+                "real_name": "getc",
+                "display_name": "buffer/getc",
+                "severity": "info",
+                "category": "security",
+                "rule_title": "Check buffer boundaries if used in a loop including recursive loops (CWE-120, CWE-20)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Check buffer boundaries if used in a loop including recursive loops (CWE-120, CWE-20)",
+                "disable": false
+            },
+            {
+                "real_name": "getchar",
+                "display_name": "buffer/getchar",
+                "severity": "info",
+                "category": "security",
+                "rule_title": "Check buffer boundaries if used in a loop including recursive loops (CWE-120, CWE-20)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Check buffer boundaries if used in a loop including recursive loops (CWE-120, CWE-20)",
+                "disable": false
+            },
+            {
+                "real_name": "getenv",
+                "display_name": "buffer/getenv",
+                "severity": "warning",
+                "category": "security",
+                "rule_title": "Environment variables are untrustable input if they can be set by an attacker.  They can have any content and length, and the same variable can be set more than once (CWE-807, CWE-20)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Check environment variables carefully before using them",
+                "owner": null,
+                "labels": [],
+                "description": "Environment variables are untrustable input if they can be set by an attacker.  They can have any content and length, and the same variable can be set more than once (CWE-807, CWE-20)",
+                "disable": false
+            },
+            {
+                "real_name": "getlogin",
+                "display_name": "misc/getlogin",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "It's often easy to fool getlogin.  Sometimes it does not work at all, because some program messed up the utmp file.  Often, it gives only the first 8 characters of the login name. The user currently logged in on the controlling tty of our program need not be the user who started it.  Avoid getlogin() for security-related purposes (CWE-807)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Use getpwuid(geteuid()) and extract the desired information instead",
+                "owner": null,
+                "labels": [],
+                "description": "It's often easy to fool getlogin.  Sometimes it does not work at all, because some program messed up the utmp file.  Often, it gives only the first 8 characters of the login name. The user currently logged in on the controlling tty of our program need not be the user who started it.  Avoid getlogin() for security-related purposes (CWE-807)",
+                "disable": false
+            },
+            {
+                "real_name": "getopt",
+                "display_name": "buffer/getopt",
+                "severity": "warning",
+                "category": "security",
+                "rule_title": "Some older implementations do not protect against internal buffer overflows (CWE-120, CWE-20)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Check implementation on installation, or limit the size of all string inputs",
+                "owner": null,
+                "labels": [],
+                "description": "Some older implementations do not protect against internal buffer overflows (CWE-120, CWE-20)",
+                "disable": false
+            },
+            {
+                "real_name": "getopt_long",
+                "display_name": "buffer/getopt_long",
+                "severity": "warning",
+                "category": "security",
+                "rule_title": "Some older implementations do not protect against internal buffer overflows (CWE-120, CWE-20)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Check implementation on installation, or limit the size of all string inputs",
+                "owner": null,
+                "labels": [],
+                "description": "Some older implementations do not protect against internal buffer overflows (CWE-120, CWE-20)",
+                "disable": false
+            },
+            {
+                "real_name": "getpass",
+                "display_name": "misc/getpass",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "This function is obsolete and not portable. It was in SUSv2 but removed by POSIX.2.  What it does exactly varies considerably between systems, particularly in where its prompt is displayed and where it gets its data (e.g., /dev/tty, stdin, stderr, etc.). In addition, some implementations overflow buffers. (CWE-676, CWE-120, CWE-20)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Make the specific calls to do exactly what you want.  If you continue to use it, or write your own, be sure to zero the password as soon as possible to avoid leaving the cleartext password visible in the process' address space",
+                "owner": null,
+                "labels": [],
+                "description": "This function is obsolete and not portable. It was in SUSv2 but removed by POSIX.2.  What it does exactly varies considerably between systems, particularly in where its prompt is displayed and where it gets its data (e.g., /dev/tty, stdin, stderr, etc.). In addition, some implementations overflow buffers. (CWE-676, CWE-120, CWE-20)",
+                "disable": false
+            },
+            {
+                "real_name": "getpw",
+                "display_name": "buffer/getpw",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "This function is dangerous; it may overflow the provided buffer. It extracts data from a 'protected' area, but most systems have many commands to let users modify the protected area, and it's not always clear what their limits are.  Best to avoid using this function altogether (CWE-676, CWE-120)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Use getpwuid() instead",
+                "owner": null,
+                "labels": [],
+                "description": "This function is dangerous; it may overflow the provided buffer. It extracts data from a 'protected' area, but most systems have many commands to let users modify the protected area, and it's not always clear what their limits are.  Best to avoid using this function altogether (CWE-676, CWE-120)",
+                "disable": false
+            },
+            {
+                "real_name": "gets",
+                "display_name": "buffer/gets",
+                "severity": "fatal",
+                "category": "security",
+                "rule_title": "Does not check for buffer overflows (CWE-120, CWE-20)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Use fgets() instead",
+                "owner": null,
+                "labels": [],
+                "description": "Does not check for buffer overflows (CWE-120, CWE-20)",
+                "disable": false
+            },
+            {
+                "real_name": "GetTempFileName",
+                "display_name": "tmpfile/GetTempFileName",
+                "severity": "warning",
+                "category": "security",
+                "rule_title": "Temporary file race condition in certain cases (e.g., if run as SYSTEM in many versions of Windows) (CWE-377)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Temporary file race condition in certain cases (e.g., if run as SYSTEM in many versions of Windows) (CWE-377)",
+                "disable": false
+            },
+            {
+                "real_name": "getwd",
+                "display_name": "buffer/getwd",
+                "severity": "warning",
+                "category": "security",
+                "rule_title": "This does not protect against buffer overflows by itself, so use with caution (CWE-120, CWE-20)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Use getcwd instead",
+                "owner": null,
+                "labels": [],
+                "description": "This does not protect against buffer overflows by itself, so use with caution (CWE-120, CWE-20)",
+                "disable": false
+            },
+            {
+                "real_name": "gsignal",
+                "display_name": "obsolete/gsignal",
+                "severity": "warning",
+                "category": "security",
+                "rule_title": "These functions are considered obsolete on most systems, and very non-portable (Linux-based systems handle them radically different, basically if gsignal/ssignal were the same as raise/signal respectively, while System V considers them a separate set and obsolete) (CWE-676)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Switch to raise/signal, or some other signalling approach",
+                "owner": null,
+                "labels": [],
+                "description": "These functions are considered obsolete on most systems, and very non-portable (Linux-based systems handle them radically different, basically if gsignal/ssignal were the same as raise/signal respectively, while System V considers them a separate set and obsolete) (CWE-676)",
+                "disable": false
+            },
+            {
+                "real_name": "g_get_home_dir",
+                "display_name": "buffer/g_get_home_dir",
+                "severity": "warning",
+                "category": "security",
+                "rule_title": "This function is synonymous with 'getenv(\"HOME\")';it returns untrustable input if the environment can beset by an attacker.  It can have any content and length, and the same variable can be set more than once (CWE-807, CWE-20)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Check environment variables carefully before using them",
+                "owner": null,
+                "labels": [],
+                "description": "This function is synonymous with 'getenv(\"HOME\")';it returns untrustable input if the environment can beset by an attacker.  It can have any content and length, and the same variable can be set more than once (CWE-807, CWE-20)",
+                "disable": false
+            },
+            {
+                "real_name": "g_get_tmp_dir",
+                "display_name": "buffer/g_get_tmp_dir",
+                "severity": "warning",
+                "category": "security",
+                "rule_title": "This function is synonymous with 'getenv(\"TMP\")';it returns untrustable input if the environment can beset by an attacker.  It can have any content and length, and the same variable can be set more than once (CWE-807, CWE-20)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Check environment variables carefully before using them",
+                "owner": null,
+                "labels": [],
+                "description": "This function is synonymous with 'getenv(\"TMP\")';it returns untrustable input if the environment can beset by an attacker.  It can have any content and length, and the same variable can be set more than once (CWE-807, CWE-20)",
+                "disable": false
+            },
+            {
+                "real_name": "g_random_boolean",
+                "display_name": "random/g_random_boolean",
+                "severity": "warning",
+                "category": "security",
+                "rule_title": "This function is not sufficiently random for security-related functions such as key and nonce creation (CWE-327)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Use a more secure technique for acquiring random values",
+                "owner": null,
+                "labels": [],
+                "description": "This function is not sufficiently random for security-related functions such as key and nonce creation (CWE-327)",
+                "disable": false
+            },
+            {
+                "real_name": "g_random_double",
+                "display_name": "random/g_random_double",
+                "severity": "warning",
+                "category": "security",
+                "rule_title": "This function is not sufficiently random for security-related functions such as key and nonce creation (CWE-327)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Use a more secure technique for acquiring random values",
+                "owner": null,
+                "labels": [],
+                "description": "This function is not sufficiently random for security-related functions such as key and nonce creation (CWE-327)",
+                "disable": false
+            },
+            {
+                "real_name": "g_random_double_range",
+                "display_name": "random/g_random_double_range",
+                "severity": "warning",
+                "category": "security",
+                "rule_title": "This function is not sufficiently random for security-related functions such as key and nonce creation (CWE-327)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Use a more secure technique for acquiring random values",
+                "owner": null,
+                "labels": [],
+                "description": "This function is not sufficiently random for security-related functions such as key and nonce creation (CWE-327)",
+                "disable": false
+            },
+            {
+                "real_name": "g_random_int",
+                "display_name": "random/g_random_int",
+                "severity": "warning",
+                "category": "security",
+                "rule_title": "This function is not sufficiently random for security-related functions such as key and nonce creation (CWE-327)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Use a more secure technique for acquiring random values",
+                "owner": null,
+                "labels": [],
+                "description": "This function is not sufficiently random for security-related functions such as key and nonce creation (CWE-327)",
+                "disable": false
+            },
+            {
+                "real_name": "g_random_int_range",
+                "display_name": "random/g_random_int_range",
+                "severity": "warning",
+                "category": "security",
+                "rule_title": "This function is not sufficiently random for security-related functions such as key and nonce creation (CWE-327)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Use a more secure technique for acquiring random values",
+                "owner": null,
+                "labels": [],
+                "description": "This function is not sufficiently random for security-related functions such as key and nonce creation (CWE-327)",
+                "disable": false
+            },
+            {
+                "real_name": "g_rand_boolean",
+                "display_name": "random/g_rand_boolean",
+                "severity": "warning",
+                "category": "security",
+                "rule_title": "This function is not sufficiently random for security-related functions such as key and nonce creation (CWE-327)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Use a more secure technique for acquiring random values",
+                "owner": null,
+                "labels": [],
+                "description": "This function is not sufficiently random for security-related functions such as key and nonce creation (CWE-327)",
+                "disable": false
+            },
+            {
+                "real_name": "g_rand_double",
+                "display_name": "random/g_rand_double",
+                "severity": "warning",
+                "category": "security",
+                "rule_title": "This function is not sufficiently random for security-related functions such as key and nonce creation (CWE-327)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Use a more secure technique for acquiring random values",
+                "owner": null,
+                "labels": [],
+                "description": "This function is not sufficiently random for security-related functions such as key and nonce creation (CWE-327)",
+                "disable": false
+            },
+            {
+                "real_name": "g_rand_double_range",
+                "display_name": "random/g_rand_double_range",
+                "severity": "warning",
+                "category": "security",
+                "rule_title": "This function is not sufficiently random for security-related functions such as key and nonce creation (CWE-327)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Use a more secure technique for acquiring random values",
+                "owner": null,
+                "labels": [],
+                "description": "This function is not sufficiently random for security-related functions such as key and nonce creation (CWE-327)",
+                "disable": false
+            },
+            {
+                "real_name": "g_rand_int",
+                "display_name": "random/g_rand_int",
+                "severity": "warning",
+                "category": "security",
+                "rule_title": "This function is not sufficiently random for security-related functions such as key and nonce creation (CWE-327)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Use a more secure technique for acquiring random values",
+                "owner": null,
+                "labels": [],
+                "description": "This function is not sufficiently random for security-related functions such as key and nonce creation (CWE-327)",
+                "disable": false
+            },
+            {
+                "real_name": "g_rand_int_range",
+                "display_name": "random/g_rand_int_range",
+                "severity": "warning",
+                "category": "security",
+                "rule_title": "This function is not sufficiently random for security-related functions such as key and nonce creation (CWE-327)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Use a more secure technique for acquiring random values",
+                "owner": null,
+                "labels": [],
+                "description": "This function is not sufficiently random for security-related functions such as key and nonce creation (CWE-327)",
+                "disable": false
+            },
+            {
+                "real_name": "ImpersonateDdeClientWindow",
+                "display_name": "access/ImpersonateDdeClientWindow",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "If this call fails, the program could fail to drop heightened privileges (CWE-250)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Make sure the return value is checked, and do not continue if a failure is reported",
+                "owner": null,
+                "labels": [],
+                "description": "If this call fails, the program could fail to drop heightened privileges (CWE-250)",
+                "disable": false
+            },
+            {
+                "real_name": "ImpersonateLoggedOnUser",
+                "display_name": "access/ImpersonateLoggedOnUser",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "If this call fails, the program could fail to drop heightened privileges (CWE-250)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Make sure the return value is checked, and do not continue if a failure is reported",
+                "owner": null,
+                "labels": [],
+                "description": "If this call fails, the program could fail to drop heightened privileges (CWE-250)",
+                "disable": false
+            },
+            {
+                "real_name": "ImpersonateNamedPipeClient",
+                "display_name": "access/ImpersonateNamedPipeClient",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "If this call fails, the program could fail to drop heightened privileges (CWE-250)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Make sure the return value is checked, and do not continue if a failure is reported",
+                "owner": null,
+                "labels": [],
+                "description": "If this call fails, the program could fail to drop heightened privileges (CWE-250)",
+                "disable": false
+            },
+            {
+                "real_name": "ImpersonateSecurityContext",
+                "display_name": "access/ImpersonateSecurityContext",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "If this call fails, the program could fail to drop heightened privileges (CWE-250)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Make sure the return value is checked, and do not continue if a failure is reported",
+                "owner": null,
+                "labels": [],
+                "description": "If this call fails, the program could fail to drop heightened privileges (CWE-250)",
+                "disable": false
+            },
+            {
+                "real_name": "InitializeCriticalSection",
+                "display_name": "misc/InitializeCriticalSection",
+                "severity": "warning",
+                "category": "security",
+                "rule_title": "Exceptions can be thrown in low-memory situations",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Use InitializeCriticalSectionAndSpinCount instead",
+                "owner": null,
+                "labels": [],
+                "description": "Exceptions can be thrown in low-memory situations",
+                "disable": false
+            },
+            {
+                "real_name": "is_permutation",
+                "display_name": "buffer/is_permutation",
+                "severity": "info",
+                "category": "security",
+                "rule_title": "Function does not check the second iterator for over-read conditions (CWE-126)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "This function is often discouraged by most C++ coding standards in favor of its safer alternatives provided since C++14. Consider using a form of this function that checks the second iterator before potentially overflowing it",
+                "owner": null,
+                "labels": [],
+                "description": "Function does not check the second iterator for over-read conditions (CWE-126)",
+                "disable": false
+            },
+            {
+                "real_name": "jrand48",
+                "display_name": "random/jrand48",
+                "severity": "warning",
+                "category": "security",
+                "rule_title": "This function is not sufficiently random for security-related functions such as key and nonce creation (CWE-327)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Use a more secure technique for acquiring random values",
+                "owner": null,
+                "labels": [],
+                "description": "This function is not sufficiently random for security-related functions such as key and nonce creation (CWE-327)",
+                "disable": false
+            },
+            {
+                "real_name": "lcong48",
+                "display_name": "random/lcong48",
+                "severity": "warning",
+                "category": "security",
+                "rule_title": "This function is not sufficiently random for security-related functions such as key and nonce creation (CWE-327)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Use a more secure technique for acquiring random values",
+                "owner": null,
+                "labels": [],
+                "description": "This function is not sufficiently random for security-related functions such as key and nonce creation (CWE-327)",
+                "disable": false
+            },
+            {
+                "real_name": "LoadLibrary",
+                "display_name": "misc/LoadLibrary",
+                "severity": "warning",
+                "category": "security",
+                "rule_title": "Ensure that the full path to the library is specified, or current directory may be used (CWE-829, CWE-20)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Use LoadLibraryEx with one of the search flags, or call SetSearchPathMode to use a safe search path, or pass a full path to the library",
+                "owner": null,
+                "labels": [],
+                "description": "Ensure that the full path to the library is specified, or current directory may be used (CWE-829, CWE-20)",
+                "disable": false
+            },
+            {
+                "real_name": "LoadLibraryEx",
+                "display_name": "misc/LoadLibraryEx",
+                "severity": "warning",
+                "category": "security",
+                "rule_title": "Ensure that the full path to the library is specified, or current directory may be used (CWE-829, CWE-20)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Use a flag like LOAD_LIBRARY_SEARCH_SYSTEM32 or LOAD_LIBRARY_SEARCH_APPLICATION_DIR to search only desired folders",
+                "owner": null,
+                "labels": [],
+                "description": "Ensure that the full path to the library is specified, or current directory may be used (CWE-829, CWE-20)",
+                "disable": false
+            },
+            {
+                "real_name": "lrand48",
+                "display_name": "random/lrand48",
+                "severity": "warning",
+                "category": "security",
+                "rule_title": "This function is not sufficiently random for security-related functions such as key and nonce creation (CWE-327)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Use a more secure technique for acquiring random values",
+                "owner": null,
+                "labels": [],
+                "description": "This function is not sufficiently random for security-related functions such as key and nonce creation (CWE-327)",
+                "disable": false
+            },
+            {
+                "real_name": "lstrcat",
+                "display_name": "buffer/lstrcat",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "Does not check for buffer overflows when concatenating to destination [MS-banned] (CWE-120)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Does not check for buffer overflows when concatenating to destination [MS-banned] (CWE-120)",
+                "disable": false
+            },
+            {
+                "real_name": "lstrcatA",
+                "display_name": "buffer/lstrcatA",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "Does not check for buffer overflows when concatenating to destination [MS-banned] (CWE-120)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Does not check for buffer overflows when concatenating to destination [MS-banned] (CWE-120)",
+                "disable": false
+            },
+            {
+                "real_name": "lstrcatn",
+                "display_name": "buffer/lstrcatn",
+                "severity": "info",
+                "category": "security",
+                "rule_title": "Easily used incorrectly (e.g., incorrectly computing the correct maximum size to add) [MS-banned] (CWE-120)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Consider strcat_s, strlcat, or automatically resizing strings",
+                "owner": null,
+                "labels": [],
+                "description": "Easily used incorrectly (e.g., incorrectly computing the correct maximum size to add) [MS-banned] (CWE-120)",
+                "disable": false
+            },
+            {
+                "real_name": "lstrcatnA",
+                "display_name": "buffer/lstrcatnA",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "Does not check for buffer overflows when concatenating to destination [MS-banned] (CWE-120)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Does not check for buffer overflows when concatenating to destination [MS-banned] (CWE-120)",
+                "disable": false
+            },
+            {
+                "real_name": "lstrcatnW",
+                "display_name": "buffer/lstrcatnW",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "Does not check for buffer overflows when concatenating to destination [MS-banned] (CWE-120)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Does not check for buffer overflows when concatenating to destination [MS-banned] (CWE-120)",
+                "disable": false
+            },
+            {
+                "real_name": "lstrcatW",
+                "display_name": "buffer/lstrcatW",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "Does not check for buffer overflows when concatenating to destination [MS-banned] (CWE-120)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Does not check for buffer overflows when concatenating to destination [MS-banned] (CWE-120)",
+                "disable": false
+            },
+            {
+                "real_name": "lstrcpy",
+                "display_name": "buffer/lstrcpy",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "Does not check for buffer overflows when copying to destination [MS-banned] (CWE-120)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Consider using a function version that stops copying at the end of the buffer",
+                "owner": null,
+                "labels": [],
+                "description": "Does not check for buffer overflows when copying to destination [MS-banned] (CWE-120)",
+                "disable": false
+            },
+            {
+                "real_name": "lstrcpyA",
+                "display_name": "buffer/lstrcpyA",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "Does not check for buffer overflows when copying to destination [MS-banned] (CWE-120)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Consider using snprintf, strcpy_s, or strlcpy (warning: strncpy easily misused)",
+                "owner": null,
+                "labels": [],
+                "description": "Does not check for buffer overflows when copying to destination [MS-banned] (CWE-120)",
+                "disable": false
+            },
+            {
+                "real_name": "lstrcpyn",
+                "display_name": "buffer/lstrcpyn",
+                "severity": "info",
+                "category": "security",
+                "rule_title": "Easily used incorrectly; doesn't always \\0-terminate or check for invalid pointers [MS-banned] (CWE-120)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Easily used incorrectly; doesn't always \\0-terminate or check for invalid pointers [MS-banned] (CWE-120)",
+                "disable": false
+            },
+            {
+                "real_name": "lstrcpynA",
+                "display_name": "buffer/lstrcpynA",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "Does not check for buffer overflows when copying to destination [MS-banned] (CWE-120)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Consider using snprintf, strcpy_s, or strlcpy (warning: strncpy easily misused)",
+                "owner": null,
+                "labels": [],
+                "description": "Does not check for buffer overflows when copying to destination [MS-banned] (CWE-120)",
+                "disable": false
+            },
+            {
+                "real_name": "lstrcpynW",
+                "display_name": "buffer/lstrcpynW",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "Does not check for buffer overflows when copying to destination [MS-banned] (CWE-120)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Consider using snprintf, strcpy_s, or strlcpy (warning: strncpy easily misused)",
+                "owner": null,
+                "labels": [],
+                "description": "Does not check for buffer overflows when copying to destination [MS-banned] (CWE-120)",
+                "disable": false
+            },
+            {
+                "real_name": "lstrcpyW",
+                "display_name": "buffer/lstrcpyW",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "Does not check for buffer overflows when copying to destination [MS-banned] (CWE-120)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Consider using snprintf, strcpy_s, or strlcpy (warning: strncpy easily misused)",
+                "owner": null,
+                "labels": [],
+                "description": "Does not check for buffer overflows when copying to destination [MS-banned] (CWE-120)",
+                "disable": false
+            },
+            {
+                "real_name": "lstrncat",
+                "display_name": "buffer/lstrncat",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "Does not check for buffer overflows when concatenating to destination [MS-banned] (CWE-120)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Does not check for buffer overflows when concatenating to destination [MS-banned] (CWE-120)",
+                "disable": false
+            },
+            {
+                "real_name": "memalign",
+                "display_name": "free/memalign",
+                "severity": "info",
+                "category": "security",
+                "rule_title": "On some systems (though not Linux-based systems) an attempt to free() results from memalign() may fail. This may, on a few systems, be exploitable.  Also note that memalign() may not check that the boundary parameter is correct (CWE-676)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Use posix_memalign instead (defined in POSIX's 1003.1d).  Don't switch to valloc(); it is marked as obsolete in BSD 4.3, as legacy in SUSv2, and is no longer defined in SUSv3.  In some cases, malloc()'s alignment may be sufficient",
+                "owner": null,
+                "labels": [],
+                "description": "On some systems (though not Linux-based systems) an attempt to free() results from memalign() may fail. This may, on a few systems, be exploitable.  Also note that memalign() may not check that the boundary parameter is correct (CWE-676)",
+                "disable": false
+            },
+            {
+                "real_name": "memcpy",
+                "display_name": "buffer/memcpy",
+                "severity": "warning",
+                "category": "security",
+                "rule_title": "Does not check for buffer overflows when copying to destination (CWE-120)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Make sure destination can always hold the source data",
+                "owner": null,
+                "labels": [],
+                "description": "Does not check for buffer overflows when copying to destination (CWE-120)",
+                "disable": false
+            },
+            {
+                "real_name": "mismatch",
+                "display_name": "buffer/mismatch",
+                "severity": "info",
+                "category": "security",
+                "rule_title": "Function does not check the second iterator for over-read conditions (CWE-126)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "This function is often discouraged by most C++ coding standards in favor of its safer alternatives provided since C++14. Consider using a form of this function that checks the second iterator before potentially overflowing it",
+                "owner": null,
+                "labels": [],
+                "description": "Function does not check the second iterator for over-read conditions (CWE-126)",
+                "disable": false
+            },
+            {
+                "real_name": "mkstemp",
+                "display_name": "tmpfile/mkstemp",
+                "severity": "warning",
+                "category": "security",
+                "rule_title": "Potential for temporary file vulnerability in some circumstances.  Some older Unix-like systems create temp files with permission to write by all by default, so be sure to set the umask to override this. Also, some older Unix systems might fail to use O_EXCL when opening the file, so make sure that O_EXCL is used by the library (CWE-377)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Potential for temporary file vulnerability in some circumstances.  Some older Unix-like systems create temp files with permission to write by all by default, so be sure to set the umask to override this. Also, some older Unix systems might fail to use O_EXCL when opening the file, so make sure that O_EXCL is used by the library (CWE-377)",
+                "disable": false
+            },
+            {
+                "real_name": "mktemp",
+                "display_name": "tmpfile/mktemp",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "Temporary file race condition (CWE-377)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Temporary file race condition (CWE-377)",
+                "disable": false
+            },
+            {
+                "real_name": "mrand48",
+                "display_name": "random/mrand48",
+                "severity": "warning",
+                "category": "security",
+                "rule_title": "This function is not sufficiently random for security-related functions such as key and nonce creation (CWE-327)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Use a more secure technique for acquiring random values",
+                "owner": null,
+                "labels": [],
+                "description": "This function is not sufficiently random for security-related functions such as key and nonce creation (CWE-327)",
+                "disable": false
+            },
+            {
+                "real_name": "MultiByteToWideChar",
+                "display_name": "buffer/MultiByteToWideChar",
+                "severity": "warning",
+                "category": "security",
+                "rule_title": "Requires maximum length in CHARACTERS, not bytes (CWE-120)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Requires maximum length in CHARACTERS, not bytes (CWE-120)",
+                "disable": false
+            },
+            {
+                "real_name": "nrand48",
+                "display_name": "random/nrand48",
+                "severity": "warning",
+                "category": "security",
+                "rule_title": "This function is not sufficiently random for security-related functions such as key and nonce creation (CWE-327)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Use a more secure technique for acquiring random values",
+                "owner": null,
+                "labels": [],
+                "description": "This function is not sufficiently random for security-related functions such as key and nonce creation (CWE-327)",
+                "disable": false
+            },
+            {
+                "real_name": "open",
+                "display_name": "misc/open",
+                "severity": "warning",
+                "category": "security",
+                "rule_title": "Check when opening files - can an attacker redirect it (via symlinks), force the opening of special file type (e.g., device files), move things around to create a race condition, control its ancestors, or change its contents? (CWE-362)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Check when opening files - can an attacker redirect it (via symlinks), force the opening of special file type (e.g., device files), move things around to create a race condition, control its ancestors, or change its contents? (CWE-362)",
+                "disable": false
+            },
+            {
+                "real_name": "popen",
+                "display_name": "shell/popen",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "This causes a new program to execute and is difficult to use safely (CWE-78)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "try using a library call that implements the same functionality if available",
+                "owner": null,
+                "labels": [],
+                "description": "This causes a new program to execute and is difficult to use safely (CWE-78)",
+                "disable": false
+            },
+            {
+                "real_name": "printf",
+                "display_name": "format/printf",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "If format strings can be influenced by an attacker, they can be exploited (CWE-134)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Use a constant for the format specification",
+                "owner": null,
+                "labels": [],
+                "description": "If format strings can be influenced by an attacker, they can be exploited (CWE-134)",
+                "disable": false
+            },
+            {
+                "real_name": "random",
+                "display_name": "random/random",
+                "severity": "warning",
+                "category": "security",
+                "rule_title": "This function is not sufficiently random for security-related functions such as key and nonce creation (CWE-327)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Use a more secure technique for acquiring random values",
+                "owner": null,
+                "labels": [],
+                "description": "This function is not sufficiently random for security-related functions such as key and nonce creation (CWE-327)",
+                "disable": false
+            },
+            {
+                "real_name": "read",
+                "display_name": "buffer/read",
+                "severity": "info",
+                "category": "security",
+                "rule_title": "Check buffer boundaries if used in a loop including recursive loops (CWE-120, CWE-20)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Check buffer boundaries if used in a loop including recursive loops (CWE-120, CWE-20)",
+                "disable": false
+            },
+            {
+                "real_name": "readlink",
+                "display_name": "race/readlink",
+                "severity": "fatal",
+                "category": "security",
+                "rule_title": "This accepts filename arguments; if an attacker can move those files or change the link content, a race condition results.  Also, it does not terminate with ASCII NUL. (CWE-362, CWE-20)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Reconsider approach",
+                "owner": null,
+                "labels": [],
+                "description": "This accepts filename arguments; if an attacker can move those files or change the link content, a race condition results.  Also, it does not terminate with ASCII NUL. (CWE-362, CWE-20)",
+                "disable": false
+            },
+            {
+                "real_name": "readv",
+                "display_name": "input/readv",
+                "severity": "info",
+                "category": "security",
+                "rule_title": "Function accepts input from outside program (CWE-20)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Make sure input data is filtered, especially if an attacker could manipulate it",
+                "owner": null,
+                "labels": [],
+                "description": "Function accepts input from outside program (CWE-20)",
+                "disable": false
+            },
+            {
+                "real_name": "realpath",
+                "display_name": "buffer/realpath",
+                "severity": "warning",
+                "category": "security",
+                "rule_title": "This function does not protect against buffer overflows, and some implementations can overflow internally (CWE-120/CWE-785!)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Ensure that the destination buffer is at least of size MAXPATHLEN, andto protect against implementation problems, the input argument should also be checked to ensure it is no larger than MAXPATHLEN",
+                "owner": null,
+                "labels": [],
+                "description": "This function does not protect against buffer overflows, and some implementations can overflow internally (CWE-120/CWE-785!)",
+                "disable": false
+            },
+            {
+                "real_name": "recv",
+                "display_name": "input/recv",
+                "severity": "info",
+                "category": "security",
+                "rule_title": "Function accepts input from outside program (CWE-20)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Make sure input data is filtered, especially if an attacker could manipulate it",
+                "owner": null,
+                "labels": [],
+                "description": "Function accepts input from outside program (CWE-20)",
+                "disable": false
+            },
+            {
+                "real_name": "recvfrom",
+                "display_name": "input/recvfrom",
+                "severity": "info",
+                "category": "security",
+                "rule_title": "Function accepts input from outside program (CWE-20)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Make sure input data is filtered, especially if an attacker could manipulate it",
+                "owner": null,
+                "labels": [],
+                "description": "Function accepts input from outside program (CWE-20)",
+                "disable": false
+            },
+            {
+                "real_name": "recvmsg",
+                "display_name": "input/recvmsg",
+                "severity": "info",
+                "category": "security",
+                "rule_title": "Function accepts input from outside program (CWE-20)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Make sure input data is filtered, especially if an attacker could manipulate it",
+                "owner": null,
+                "labels": [],
+                "description": "Function accepts input from outside program (CWE-20)",
+                "disable": false
+            },
+            {
+                "real_name": "RpcImpersonateClient",
+                "display_name": "access/RpcImpersonateClient",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "If this call fails, the program could fail to drop heightened privileges (CWE-250)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Make sure the return value is checked, and do not continue if a failure is reported",
+                "owner": null,
+                "labels": [],
+                "description": "If this call fails, the program could fail to drop heightened privileges (CWE-250)",
+                "disable": false
+            },
+            {
+                "real_name": "scanf",
+                "display_name": "buffer/scanf",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "The scanf() family's %s operation, without a limit specification, permits buffer overflows (CWE-120, CWE-20)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Specify a limit to %s, or use a different input function",
+                "owner": null,
+                "labels": [],
+                "description": "The scanf() family's %s operation, without a limit specification, permits buffer overflows (CWE-120, CWE-20)",
+                "disable": false
+            },
+            {
+                "real_name": "seed48",
+                "display_name": "random/seed48",
+                "severity": "warning",
+                "category": "security",
+                "rule_title": "This function is not sufficiently random for security-related functions such as key and nonce creation (CWE-327)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Use a more secure technique for acquiring random values",
+                "owner": null,
+                "labels": [],
+                "description": "This function is not sufficiently random for security-related functions such as key and nonce creation (CWE-327)",
+                "disable": false
+            },
+            {
+                "real_name": "SetSecurityDescriptorDacl",
+                "display_name": "misc/SetSecurityDescriptorDacl",
+                "severity": "fatal",
+                "category": "security",
+                "rule_title": "Never create NULL ACLs; an attacker can set it to Everyone (Deny All Access), which would even forbid administrator access (CWE-732)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Never create NULL ACLs; an attacker can set it to Everyone (Deny All Access), which would even forbid administrator access (CWE-732)",
+                "disable": false
+            },
+            {
+                "real_name": "setstate",
+                "display_name": "random/setstate",
+                "severity": "warning",
+                "category": "security",
+                "rule_title": "This function is not sufficiently random for security-related functions such as key and nonce creation (CWE-327)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Use a more secure technique for acquiring random values",
+                "owner": null,
+                "labels": [],
+                "description": "This function is not sufficiently random for security-related functions such as key and nonce creation (CWE-327)",
+                "disable": false
+            },
+            {
+                "real_name": "SetThreadToken",
+                "display_name": "access/SetThreadToken",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "If this call fails, the program could fail to drop heightened privileges (CWE-250)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Make sure the return value is checked, and do not continue if a failure is reported",
+                "owner": null,
+                "labels": [],
+                "description": "If this call fails, the program could fail to drop heightened privileges (CWE-250)",
+                "disable": false
+            },
+            {
+                "real_name": "ShellExecute",
+                "display_name": "shell/ShellExecute",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "This causes a new program to execute and is difficult to use safely (CWE-78)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "try using a library call that implements the same functionality if available",
+                "owner": null,
+                "labels": [],
+                "description": "This causes a new program to execute and is difficult to use safely (CWE-78)",
+                "disable": false
+            },
+            {
+                "real_name": "snprintf",
+                "display_name": "format/snprintf",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "If format strings can be influenced by an attacker, they can be exploited, and note that sprintf variations do not always \\0-terminate (CWE-134)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Use a constant for the format specification",
+                "owner": null,
+                "labels": [],
+                "description": "If format strings can be influenced by an attacker, they can be exploited, and note that sprintf variations do not always \\0-terminate (CWE-134)",
+                "disable": false
+            },
+            {
+                "real_name": "sprintf",
+                "display_name": "buffer/sprintf",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "Does not check for buffer overflows (CWE-120)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Use sprintf_s, snprintf, or vsnprintf",
+                "owner": null,
+                "labels": [],
+                "description": "Does not check for buffer overflows (CWE-120)",
+                "disable": false
+            },
+            {
+                "real_name": "srand",
+                "display_name": "random/srand",
+                "severity": "warning",
+                "category": "security",
+                "rule_title": "This function is not sufficiently random for security-related functions such as key and nonce creation (CWE-327)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Use a more secure technique for acquiring random values",
+                "owner": null,
+                "labels": [],
+                "description": "This function is not sufficiently random for security-related functions such as key and nonce creation (CWE-327)",
+                "disable": false
+            },
+            {
+                "real_name": "srandom",
+                "display_name": "random/srandom",
+                "severity": "warning",
+                "category": "security",
+                "rule_title": "This function is not sufficiently random for security-related functions such as key and nonce creation (CWE-327)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Use a more secure technique for acquiring random values",
+                "owner": null,
+                "labels": [],
+                "description": "This function is not sufficiently random for security-related functions such as key and nonce creation (CWE-327)",
+                "disable": false
+            },
+            {
+                "real_name": "sscanf",
+                "display_name": "buffer/sscanf",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "The scanf() family's %s operation, without a limit specification, permits buffer overflows (CWE-120, CWE-20)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Specify a limit to %s, or use a different input function",
+                "owner": null,
+                "labels": [],
+                "description": "The scanf() family's %s operation, without a limit specification, permits buffer overflows (CWE-120, CWE-20)",
+                "disable": false
+            },
+            {
+                "real_name": "ssignal",
+                "display_name": "obsolete/ssignal",
+                "severity": "warning",
+                "category": "security",
+                "rule_title": "These functions are considered obsolete on most systems, and very non-portable (Linux-based systems handle them radically different, basically if gsignal/ssignal were the same as raise/signal respectively, while System V considers them a separate set and obsolete) (CWE-676)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Switch to raise/signal, or some other signalling approach",
+                "owner": null,
+                "labels": [],
+                "description": "These functions are considered obsolete on most systems, and very non-portable (Linux-based systems handle them radically different, basically if gsignal/ssignal were the same as raise/signal respectively, while System V considers them a separate set and obsolete) (CWE-676)",
+                "disable": false
+            },
+            {
+                "real_name": "strcadd",
+                "display_name": "buffer/strcadd",
+                "severity": "info",
+                "category": "security",
+                "rule_title": "Subject to buffer overflow if buffer is not as big as claimed (CWE-120)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Ensure that destination buffer is sufficiently large",
+                "owner": null,
+                "labels": [],
+                "description": "Subject to buffer overflow if buffer is not as big as claimed (CWE-120)",
+                "disable": false
+            },
+            {
+                "real_name": "strcat",
+                "display_name": "buffer/strcat",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "Does not check for buffer overflows when concatenating to destination [MS-banned] (CWE-120)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Consider using strcat_s, strncat, strlcat, or snprintf (warning: strncat is easily misused)",
+                "owner": null,
+                "labels": [],
+                "description": "Does not check for buffer overflows when concatenating to destination [MS-banned] (CWE-120)",
+                "disable": false
+            },
+            {
+                "real_name": "StrCatA",
+                "display_name": "buffer/StrCatA",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "Does not check for buffer overflows when concatenating to destination [MS-banned] (CWE-120)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Does not check for buffer overflows when concatenating to destination [MS-banned] (CWE-120)",
+                "disable": false
+            },
+            {
+                "real_name": "strCatBuff",
+                "display_name": "buffer/strCatBuff",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "Does not check for buffer overflows when concatenating to destination [MS-banned] (CWE-120)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Does not check for buffer overflows when concatenating to destination [MS-banned] (CWE-120)",
+                "disable": false
+            },
+            {
+                "real_name": "StrCatBuffA",
+                "display_name": "buffer/StrCatBuffA",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "Does not check for buffer overflows when concatenating to destination [MS-banned] (CWE-120)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Does not check for buffer overflows when concatenating to destination [MS-banned] (CWE-120)",
+                "disable": false
+            },
+            {
+                "real_name": "StrCatBuffW",
+                "display_name": "buffer/StrCatBuffW",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "Does not check for buffer overflows when concatenating to destination [MS-banned] (CWE-120)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Does not check for buffer overflows when concatenating to destination [MS-banned] (CWE-120)",
+                "disable": false
+            },
+            {
+                "real_name": "StrCatChainW",
+                "display_name": "buffer/StrCatChainW",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "Does not check for buffer overflows when concatenating to destination [MS-banned] (CWE-120)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Does not check for buffer overflows when concatenating to destination [MS-banned] (CWE-120)",
+                "disable": false
+            },
+            {
+                "real_name": "StrCatN",
+                "display_name": "buffer/StrCatN",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "Does not check for buffer overflows when concatenating to destination [MS-banned] (CWE-120)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Does not check for buffer overflows when concatenating to destination [MS-banned] (CWE-120)",
+                "disable": false
+            },
+            {
+                "real_name": "StrCatNA",
+                "display_name": "buffer/StrCatNA",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "Does not check for buffer overflows when concatenating to destination [MS-banned] (CWE-120)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Does not check for buffer overflows when concatenating to destination [MS-banned] (CWE-120)",
+                "disable": false
+            },
+            {
+                "real_name": "StrCatNW",
+                "display_name": "buffer/StrCatNW",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "Does not check for buffer overflows when concatenating to destination [MS-banned] (CWE-120)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Does not check for buffer overflows when concatenating to destination [MS-banned] (CWE-120)",
+                "disable": false
+            },
+            {
+                "real_name": "StrcatW",
+                "display_name": "buffer/StrcatW",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "Does not check for buffer overflows when concatenating to destination [MS-banned] (CWE-120)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Does not check for buffer overflows when concatenating to destination [MS-banned] (CWE-120)",
+                "disable": false
+            },
+            {
+                "real_name": "strccpy",
+                "display_name": "buffer/strccpy",
+                "severity": "info",
+                "category": "security",
+                "rule_title": "Subject to buffer overflow if buffer is not as big as claimed (CWE-120)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Ensure that destination buffer is sufficiently large",
+                "owner": null,
+                "labels": [],
+                "description": "Subject to buffer overflow if buffer is not as big as claimed (CWE-120)",
+                "disable": false
+            },
+            {
+                "real_name": "strcpy",
+                "display_name": "buffer/strcpy",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "Does not check for buffer overflows when copying to destination [MS-banned] (CWE-120)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Consider using snprintf, strcpy_s, or strlcpy (warning: strncpy easily misused)",
+                "owner": null,
+                "labels": [],
+                "description": "Does not check for buffer overflows when copying to destination [MS-banned] (CWE-120)",
+                "disable": false
+            },
+            {
+                "real_name": "strcpyA",
+                "display_name": "buffer/strcpyA",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "Does not check for buffer overflows when copying to destination [MS-banned] (CWE-120)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Consider using snprintf, strcpy_s, or strlcpy (warning: strncpy easily misused)",
+                "owner": null,
+                "labels": [],
+                "description": "Does not check for buffer overflows when copying to destination [MS-banned] (CWE-120)",
+                "disable": false
+            },
+            {
+                "real_name": "StrCpyN",
+                "display_name": "buffer/StrCpyN",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "Does not check for buffer overflows when copying to destination [MS-banned] (CWE-120)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Consider using snprintf, strcpy_s, or strlcpy (warning: strncpy easily misused)",
+                "owner": null,
+                "labels": [],
+                "description": "Does not check for buffer overflows when copying to destination [MS-banned] (CWE-120)",
+                "disable": false
+            },
+            {
+                "real_name": "strcpynA",
+                "display_name": "buffer/strcpynA",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "Does not check for buffer overflows when copying to destination [MS-banned] (CWE-120)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Consider using snprintf, strcpy_s, or strlcpy (warning: strncpy easily misused)",
+                "owner": null,
+                "labels": [],
+                "description": "Does not check for buffer overflows when copying to destination [MS-banned] (CWE-120)",
+                "disable": false
+            },
+            {
+                "real_name": "StrCpyNW",
+                "display_name": "buffer/StrCpyNW",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "Does not check for buffer overflows when copying to destination [MS-banned] (CWE-120)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Consider using snprintf, strcpy_s, or strlcpy (warning: strncpy easily misused)",
+                "owner": null,
+                "labels": [],
+                "description": "Does not check for buffer overflows when copying to destination [MS-banned] (CWE-120)",
+                "disable": false
+            },
+            {
+                "real_name": "strcpyW",
+                "display_name": "buffer/strcpyW",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "Does not check for buffer overflows when copying to destination [MS-banned] (CWE-120)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Consider using snprintf, strcpy_s, or strlcpy (warning: strncpy easily misused)",
+                "owner": null,
+                "labels": [],
+                "description": "Does not check for buffer overflows when copying to destination [MS-banned] (CWE-120)",
+                "disable": false
+            },
+            {
+                "real_name": "streadd",
+                "display_name": "buffer/streadd",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "This function does not protect against buffer overflows (CWE-120)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Ensure the destination has 4 times the size of the source, to leave room for expansion",
+                "owner": null,
+                "labels": [],
+                "description": "This function does not protect against buffer overflows (CWE-120)",
+                "disable": false
+            },
+            {
+                "real_name": "strecpy",
+                "display_name": "buffer/strecpy",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "This function does not protect against buffer overflows (CWE-120)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Ensure the destination has 4 times the size of the source, to leave room for expansion",
+                "owner": null,
+                "labels": [],
+                "description": "This function does not protect against buffer overflows (CWE-120)",
+                "disable": false
+            },
+            {
+                "real_name": "strfry",
+                "display_name": "random/strfry",
+                "severity": "warning",
+                "category": "security",
+                "rule_title": "This function is not sufficiently random for security-related functions such as key and nonce creation (CWE-327)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Use a more secure technique for acquiring random values",
+                "owner": null,
+                "labels": [],
+                "description": "This function is not sufficiently random for security-related functions such as key and nonce creation (CWE-327)",
+                "disable": false
+            },
+            {
+                "real_name": "strlen",
+                "display_name": "buffer/strlen",
+                "severity": "info",
+                "category": "security",
+                "rule_title": "Does not handle strings that are not \\0-terminated; if given one it may perform an over-read (it could cause a crash if unprotected) (CWE-126)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Does not handle strings that are not \\0-terminated; if given one it may perform an over-read (it could cause a crash if unprotected) (CWE-126)",
+                "disable": false
+            },
+            {
+                "real_name": "strncat",
+                "display_name": "buffer/strncat",
+                "severity": "info",
+                "category": "security",
+                "rule_title": "Easily used incorrectly (e.g., incorrectly computing the correct maximum size to add) [MS-banned] (CWE-120)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Consider strcat_s, strlcat, snprintf, or automatically resizing strings",
+                "owner": null,
+                "labels": [],
+                "description": "Easily used incorrectly (e.g., incorrectly computing the correct maximum size to add) [MS-banned] (CWE-120)",
+                "disable": false
+            },
+            {
+                "real_name": "StrNCatA",
+                "display_name": "buffer/StrNCatA",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "Does not check for buffer overflows when concatenating to destination [MS-banned] (CWE-120)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Does not check for buffer overflows when concatenating to destination [MS-banned] (CWE-120)",
+                "disable": false
+            },
+            {
+                "real_name": "StrNCatW",
+                "display_name": "buffer/StrNCatW",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "Does not check for buffer overflows when concatenating to destination [MS-banned] (CWE-120)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Does not check for buffer overflows when concatenating to destination [MS-banned] (CWE-120)",
+                "disable": false
+            },
+            {
+                "real_name": "strncpy",
+                "display_name": "buffer/strncpy",
+                "severity": "info",
+                "category": "security",
+                "rule_title": "Easily used incorrectly; doesn't always \\0-terminate or check for invalid pointers [MS-banned] (CWE-120)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Easily used incorrectly; doesn't always \\0-terminate or check for invalid pointers [MS-banned] (CWE-120)",
+                "disable": false
+            },
+            {
+                "real_name": "StrNCpyA",
+                "display_name": "buffer/StrNCpyA",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "Does not check for buffer overflows when copying to destination [MS-banned] (CWE-120)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Consider using snprintf, strcpy_s, or strlcpy (warning: strncpy easily misused)",
+                "owner": null,
+                "labels": [],
+                "description": "Does not check for buffer overflows when copying to destination [MS-banned] (CWE-120)",
+                "disable": false
+            },
+            {
+                "real_name": "StrNCpyW",
+                "display_name": "buffer/StrNCpyW",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "Does not check for buffer overflows when copying to destination [MS-banned] (CWE-120)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Consider using snprintf, strcpy_s, or strlcpy (warning: strncpy easily misused)",
+                "owner": null,
+                "labels": [],
+                "description": "Does not check for buffer overflows when copying to destination [MS-banned] (CWE-120)",
+                "disable": false
+            },
+            {
+                "real_name": "strtrns",
+                "display_name": "buffer/strtrns",
+                "severity": "warning",
+                "category": "security",
+                "rule_title": "This function does not protect against buffer overflows (CWE-120)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Ensure that destination is at least as long as the source",
+                "owner": null,
+                "labels": [],
+                "description": "This function does not protect against buffer overflows (CWE-120)",
+                "disable": false
+            },
+            {
+                "real_name": "swprintf",
+                "display_name": "buffer/swprintf",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "Does not check for buffer overflows (CWE-120)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Use sprintf_s, snprintf, or vsnprintf",
+                "owner": null,
+                "labels": [],
+                "description": "Does not check for buffer overflows (CWE-120)",
+                "disable": false
+            },
+            {
+                "real_name": "syslog",
+                "display_name": "format/syslog",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "If syslog's format strings can be influenced by an attacker, they can be exploited (CWE-134)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Use a constant format string for syslog",
+                "owner": null,
+                "labels": [],
+                "description": "If syslog's format strings can be influenced by an attacker, they can be exploited (CWE-134)",
+                "disable": false
+            },
+            {
+                "real_name": "system",
+                "display_name": "shell/system",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "This causes a new program to execute and is difficult to use safely (CWE-78)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "try using a library call that implements the same functionality if available",
+                "owner": null,
+                "labels": [],
+                "description": "This causes a new program to execute and is difficult to use safely (CWE-78)",
+                "disable": false
+            },
+            {
+                "real_name": "TCHAR",
+                "display_name": "buffer/TCHAR",
+                "severity": "warning",
+                "category": "security",
+                "rule_title": "Statically-sized arrays can be improperly restricted, leading to potential overflows or other issues (CWE-119!/CWE-120)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Perform bounds checking, use functions that limit length, or ensure that the size is larger than the maximum possible length",
+                "owner": null,
+                "labels": [],
+                "description": "Statically-sized arrays can be improperly restricted, leading to potential overflows or other issues (CWE-119!/CWE-120)",
+                "disable": false
+            },
+            {
+                "real_name": "tempnam",
+                "display_name": "tmpfile/tempnam",
+                "severity": "warning",
+                "category": "security",
+                "rule_title": "Temporary file race condition (CWE-377)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Temporary file race condition (CWE-377)",
+                "disable": false
+            },
+            {
+                "real_name": "tmpfile",
+                "display_name": "tmpfile/tmpfile",
+                "severity": "warning",
+                "category": "security",
+                "rule_title": "Function tmpfile() has a security flaw on some systems (e.g., older System V systems) (CWE-377)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Function tmpfile() has a security flaw on some systems (e.g., older System V systems) (CWE-377)",
+                "disable": false
+            },
+            {
+                "real_name": "tmpnam",
+                "display_name": "tmpfile/tmpnam",
+                "severity": "warning",
+                "category": "security",
+                "rule_title": "Temporary file race condition (CWE-377)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Temporary file race condition (CWE-377)",
+                "disable": false
+            },
+            {
+                "real_name": "ulimit",
+                "display_name": "obsolete/ulimit",
+                "severity": "info",
+                "category": "security",
+                "rule_title": "This C routine is considered obsolete (as opposed to the shell command by the same name, which is NOT obsolete) (CWE-676)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Use getrlimit(2), setrlimit(2), and sysconf(3) instead",
+                "owner": null,
+                "labels": [],
+                "description": "This C routine is considered obsolete (as opposed to the shell command by the same name, which is NOT obsolete) (CWE-676)",
+                "disable": false
+            },
+            {
+                "real_name": "umask",
+                "display_name": "access/umask",
+                "severity": "info",
+                "category": "security",
+                "rule_title": "Ensure that umask is given most restrictive possible setting (e.g., 066 or 077) (CWE-732)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Ensure that umask is given most restrictive possible setting (e.g., 066 or 077) (CWE-732)",
+                "disable": false
+            },
+            {
+                "real_name": "usleep",
+                "display_name": "obsolete/usleep",
+                "severity": "info",
+                "category": "security",
+                "rule_title": "This C routine is considered obsolete (as opposed to the shell command by the same name).   The interaction of this function with SIGALRM and other timer functions such as sleep(), alarm(), setitimer(), and nanosleep() is unspecified (CWE-676)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Use nanosleep(2) or setitimer(2) instead",
+                "owner": null,
+                "labels": [],
+                "description": "This C routine is considered obsolete (as opposed to the shell command by the same name).   The interaction of this function with SIGALRM and other timer functions such as sleep(), alarm(), setitimer(), and nanosleep() is unspecified (CWE-676)",
+                "disable": false
+            },
+            {
+                "real_name": "vfork",
+                "display_name": "race/vfork",
+                "severity": "warning",
+                "category": "security",
+                "rule_title": "On some old systems, vfork() permits race conditions, and it's very difficult to use correctly (CWE-362)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Use fork() instead",
+                "owner": null,
+                "labels": [],
+                "description": "On some old systems, vfork() permits race conditions, and it's very difficult to use correctly (CWE-362)",
+                "disable": false
+            },
+            {
+                "real_name": "vfprintf",
+                "display_name": "format/vfprintf",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "If format strings can be influenced by an attacker, they can be exploited (CWE-134)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Use a constant for the format specification",
+                "owner": null,
+                "labels": [],
+                "description": "If format strings can be influenced by an attacker, they can be exploited (CWE-134)",
+                "disable": false
+            },
+            {
+                "real_name": "vfscanf",
+                "display_name": "buffer/vfscanf",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "The scanf() family's %s operation, without a limit specification, permits buffer overflows (CWE-120, CWE-20)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Specify a limit to %s, or use a different input function",
+                "owner": null,
+                "labels": [],
+                "description": "The scanf() family's %s operation, without a limit specification, permits buffer overflows (CWE-120, CWE-20)",
+                "disable": false
+            },
+            {
+                "real_name": "vfwprintf",
+                "display_name": "format/vfwprintf",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "If format strings can be influenced by an attacker, they can be exploited (CWE-134)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Use a constant for the format specification",
+                "owner": null,
+                "labels": [],
+                "description": "If format strings can be influenced by an attacker, they can be exploited (CWE-134)",
+                "disable": false
+            },
+            {
+                "real_name": "vfwscanf",
+                "display_name": "buffer/vfwscanf",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "The scanf() family's %s operation, without a limit specification, permits buffer overflows (CWE-120, CWE-20)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Specify a limit to %s, or use a different input function",
+                "owner": null,
+                "labels": [],
+                "description": "The scanf() family's %s operation, without a limit specification, permits buffer overflows (CWE-120, CWE-20)",
+                "disable": false
+            },
+            {
+                "real_name": "vprintf",
+                "display_name": "format/vprintf",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "If format strings can be influenced by an attacker, they can be exploited (CWE-134)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Use a constant for the format specification",
+                "owner": null,
+                "labels": [],
+                "description": "If format strings can be influenced by an attacker, they can be exploited (CWE-134)",
+                "disable": false
+            },
+            {
+                "real_name": "vscanf",
+                "display_name": "buffer/vscanf",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "The scanf() family's %s operation, without a limit specification, permits buffer overflows (CWE-120, CWE-20)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Specify a limit to %s, or use a different input function",
+                "owner": null,
+                "labels": [],
+                "description": "The scanf() family's %s operation, without a limit specification, permits buffer overflows (CWE-120, CWE-20)",
+                "disable": false
+            },
+            {
+                "real_name": "vsnprintf",
+                "display_name": "format/vsnprintf",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "If format strings can be influenced by an attacker, they can be exploited, and note that sprintf variations do not always \\0-terminate (CWE-134)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Use a constant for the format specification",
+                "owner": null,
+                "labels": [],
+                "description": "If format strings can be influenced by an attacker, they can be exploited, and note that sprintf variations do not always \\0-terminate (CWE-134)",
+                "disable": false
+            },
+            {
+                "real_name": "vsprintf",
+                "display_name": "buffer/vsprintf",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "Does not check for buffer overflows (CWE-120)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Use sprintf_s, snprintf, or vsnprintf",
+                "owner": null,
+                "labels": [],
+                "description": "Does not check for buffer overflows (CWE-120)",
+                "disable": false
+            },
+            {
+                "real_name": "vsscanf",
+                "display_name": "buffer/vsscanf",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "The scanf() family's %s operation, without a limit specification, permits buffer overflows (CWE-120, CWE-20)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Specify a limit to %s, or use a different input function",
+                "owner": null,
+                "labels": [],
+                "description": "The scanf() family's %s operation, without a limit specification, permits buffer overflows (CWE-120, CWE-20)",
+                "disable": false
+            },
+            {
+                "real_name": "vswprintf",
+                "display_name": "buffer/vswprintf",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "Does not check for buffer overflows (CWE-120)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Use sprintf_s, snprintf, or vsnprintf",
+                "owner": null,
+                "labels": [],
+                "description": "Does not check for buffer overflows (CWE-120)",
+                "disable": false
+            },
+            {
+                "real_name": "vswscanf",
+                "display_name": "buffer/vswscanf",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "The scanf() family's %s operation, without a limit specification, permits buffer overflows (CWE-120, CWE-20)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Specify a limit to %s, or use a different input function",
+                "owner": null,
+                "labels": [],
+                "description": "The scanf() family's %s operation, without a limit specification, permits buffer overflows (CWE-120, CWE-20)",
+                "disable": false
+            },
+            {
+                "real_name": "vwprintf",
+                "display_name": "format/vwprintf",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "If format strings can be influenced by an attacker, they can be exploited (CWE-134)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Use a constant for the format specification",
+                "owner": null,
+                "labels": [],
+                "description": "If format strings can be influenced by an attacker, they can be exploited (CWE-134)",
+                "disable": false
+            },
+            {
+                "real_name": "vwscanf",
+                "display_name": "buffer/vwscanf",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "The scanf() family's %s operation, without a limit specification, permits buffer overflows (CWE-120, CWE-20)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Specify a limit to %s, or use a different input function",
+                "owner": null,
+                "labels": [],
+                "description": "The scanf() family's %s operation, without a limit specification, permits buffer overflows (CWE-120, CWE-20)",
+                "disable": false
+            },
+            {
+                "real_name": "wchar_t",
+                "display_name": "buffer/wchar_t",
+                "severity": "warning",
+                "category": "security",
+                "rule_title": "Statically-sized arrays can be improperly restricted, leading to potential overflows or other issues (CWE-119!/CWE-120)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Perform bounds checking, use functions that limit length, or ensure that the size is larger than the maximum possible length",
+                "owner": null,
+                "labels": [],
+                "description": "Statically-sized arrays can be improperly restricted, leading to potential overflows or other issues (CWE-119!/CWE-120)",
+                "disable": false
+            },
+            {
+                "real_name": "wcscat",
+                "display_name": "buffer/wcscat",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "Does not check for buffer overflows when concatenating to destination [MS-banned] (CWE-120)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Does not check for buffer overflows when concatenating to destination [MS-banned] (CWE-120)",
+                "disable": false
+            },
+            {
+                "real_name": "wcscpy",
+                "display_name": "buffer/wcscpy",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "Does not check for buffer overflows when copying to destination [MS-banned] (CWE-120)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Consider using a function version that stops copying at the end of the buffer",
+                "owner": null,
+                "labels": [],
+                "description": "Does not check for buffer overflows when copying to destination [MS-banned] (CWE-120)",
+                "disable": false
+            },
+            {
+                "real_name": "wcslen",
+                "display_name": "buffer/wcslen",
+                "severity": "info",
+                "category": "security",
+                "rule_title": "Does not handle strings that are not \\0-terminated; if given one it may perform an over-read (it could cause a crash if unprotected) (CWE-126)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Does not handle strings that are not \\0-terminated; if given one it may perform an over-read (it could cause a crash if unprotected) (CWE-126)",
+                "disable": false
+            },
+            {
+                "real_name": "wcsncat",
+                "display_name": "buffer/wcsncat",
+                "severity": "info",
+                "category": "security",
+                "rule_title": "Easily used incorrectly (e.g., incorrectly computing the correct maximum size to add) [MS-banned] (CWE-120)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Consider strcat_s, strlcat, or automatically resizing strings",
+                "owner": null,
+                "labels": [],
+                "description": "Easily used incorrectly (e.g., incorrectly computing the correct maximum size to add) [MS-banned] (CWE-120)",
+                "disable": false
+            },
+            {
+                "real_name": "wcsncpy",
+                "display_name": "buffer/wcsncpy",
+                "severity": "info",
+                "category": "security",
+                "rule_title": "Easily used incorrectly; doesn't always \\0-terminate or check for invalid pointers [MS-banned] (CWE-120)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Easily used incorrectly; doesn't always \\0-terminate or check for invalid pointers [MS-banned] (CWE-120)",
+                "disable": false
+            },
+            {
+                "real_name": "WinExec",
+                "display_name": "shell/WinExec",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "This causes a new program to execute and is difficult to use safely (CWE-78)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "try using a library call that implements the same functionality if available",
+                "owner": null,
+                "labels": [],
+                "description": "This causes a new program to execute and is difficult to use safely (CWE-78)",
+                "disable": false
+            },
+            {
+                "real_name": "wprintf",
+                "display_name": "format/wprintf",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "If format strings can be influenced by an attacker, they can be exploited (CWE-134)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Use a constant for the format specification",
+                "owner": null,
+                "labels": [],
+                "description": "If format strings can be influenced by an attacker, they can be exploited (CWE-134)",
+                "disable": false
+            },
+            {
+                "real_name": "wscanf",
+                "display_name": "buffer/wscanf",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "The scanf() family's %s operation, without a limit specification, permits buffer overflows (CWE-120, CWE-20)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Specify a limit to %s, or use a different input function",
+                "owner": null,
+                "labels": [],
+                "description": "The scanf() family's %s operation, without a limit specification, permits buffer overflows (CWE-120, CWE-20)",
+                "disable": false
+            },
+            {
+                "real_name": "_ftcscat",
+                "display_name": "buffer/_ftcscat",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "Does not check for buffer overflows when concatenating to destination [MS-banned] (CWE-120)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Does not check for buffer overflows when concatenating to destination [MS-banned] (CWE-120)",
+                "disable": false
+            },
+            {
+                "real_name": "_ftcscpy",
+                "display_name": "buffer/_ftcscpy",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "Does not check for buffer overflows when copying to destination [MS-banned] (CWE-120)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Consider using snprintf, strcpy_s, or strlcpy (warning: strncpy easily misused)",
+                "owner": null,
+                "labels": [],
+                "description": "Does not check for buffer overflows when copying to destination [MS-banned] (CWE-120)",
+                "disable": false
+            },
+            {
+                "real_name": "_ftprintf",
+                "display_name": "format/_ftprintf",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "If format strings can be influenced by an attacker, they can be exploited (CWE-134)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Use a constant for the format specification",
+                "owner": null,
+                "labels": [],
+                "description": "If format strings can be influenced by an attacker, they can be exploited (CWE-134)",
+                "disable": false
+            },
+            {
+                "real_name": "_ftscanf",
+                "display_name": "buffer/_ftscanf",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "The scanf() family's %s operation, without a limit specification, permits buffer overflows (CWE-120, CWE-20)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Specify a limit to %s, or use a different input function",
+                "owner": null,
+                "labels": [],
+                "description": "The scanf() family's %s operation, without a limit specification, permits buffer overflows (CWE-120, CWE-20)",
+                "disable": false
+            },
+            {
+                "real_name": "_gettc",
+                "display_name": "buffer/_gettc",
+                "severity": "info",
+                "category": "security",
+                "rule_title": "Check buffer boundaries if used in a loop including recursive loops (CWE-120, CWE-20)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Check buffer boundaries if used in a loop including recursive loops (CWE-120, CWE-20)",
+                "disable": false
+            },
+            {
+                "real_name": "_getts",
+                "display_name": "buffer/_getts",
+                "severity": "fatal",
+                "category": "security",
+                "rule_title": "Does not check for buffer overflows (CWE-120, CWE-20)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Use fgets() instead",
+                "owner": null,
+                "labels": [],
+                "description": "Does not check for buffer overflows (CWE-120, CWE-20)",
+                "disable": false
+            },
+            {
+                "real_name": "_mbccat",
+                "display_name": "buffer/_mbccat",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "Does not check for buffer overflows when concatenating to destination [MS-banned] (CWE-120)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Does not check for buffer overflows when concatenating to destination [MS-banned] (CWE-120)",
+                "disable": false
+            },
+            {
+                "real_name": "_mbccpy",
+                "display_name": "buffer/_mbccpy",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "Does not check for buffer overflows when copying to destination [MS-banned] (CWE-120)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Consider using snprintf, strcpy_s, or strlcpy (warning: strncpy easily misused)",
+                "owner": null,
+                "labels": [],
+                "description": "Does not check for buffer overflows when copying to destination [MS-banned] (CWE-120)",
+                "disable": false
+            },
+            {
+                "real_name": "_mbscat",
+                "display_name": "buffer/_mbscat",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "Does not check for buffer overflows when concatenating to destination [MS-banned] (CWE-120)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Does not check for buffer overflows when concatenating to destination [MS-banned] (CWE-120)",
+                "disable": false
+            },
+            {
+                "real_name": "_mbscpy",
+                "display_name": "buffer/_mbscpy",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "Does not check for buffer overflows when copying to destination [MS-banned] (CWE-120)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Consider using a function version that stops copying at the end of the buffer",
+                "owner": null,
+                "labels": [],
+                "description": "Does not check for buffer overflows when copying to destination [MS-banned] (CWE-120)",
+                "disable": false
+            },
+            {
+                "real_name": "_mbslen",
+                "display_name": "buffer/_mbslen",
+                "severity": "info",
+                "category": "security",
+                "rule_title": "Does not handle strings that are not \\0-terminated; if given one it may perform an over-read (it could cause a crash if unprotected) (CWE-126)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Does not handle strings that are not \\0-terminated; if given one it may perform an over-read (it could cause a crash if unprotected) (CWE-126)",
+                "disable": false
+            },
+            {
+                "real_name": "_mbsnbcat",
+                "display_name": "buffer/_mbsnbcat",
+                "severity": "info",
+                "category": "security",
+                "rule_title": "Easily used incorrectly (e.g., incorrectly computing the correct maximum size to add) [MS-banned] (CWE-120)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Consider strcat_s, strlcat, or automatically resizing strings",
+                "owner": null,
+                "labels": [],
+                "description": "Easily used incorrectly (e.g., incorrectly computing the correct maximum size to add) [MS-banned] (CWE-120)",
+                "disable": false
+            },
+            {
+                "real_name": "_mbsnbcpy",
+                "display_name": "buffer/_mbsnbcpy",
+                "severity": "info",
+                "category": "security",
+                "rule_title": "Easily used incorrectly; doesn't always \\0-terminate or check for invalid pointers [MS-banned] (CWE-120)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Easily used incorrectly; doesn't always \\0-terminate or check for invalid pointers [MS-banned] (CWE-120)",
+                "disable": false
+            },
+            {
+                "real_name": "_mbsncpy",
+                "display_name": "buffer/_mbsncpy",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "Does not check for buffer overflows when copying to destination [MS-banned] (CWE-120)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Consider using snprintf, strcpy_s, or strlcpy (warning: strncpy easily misused)",
+                "owner": null,
+                "labels": [],
+                "description": "Does not check for buffer overflows when copying to destination [MS-banned] (CWE-120)",
+                "disable": false
+            },
+            {
+                "real_name": "_snprintf",
+                "display_name": "format/_snprintf",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "If format strings can be influenced by an attacker, they can be exploited, and note that sprintf variations do not always \\0-terminate (CWE-134)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Use a constant for the format specification",
+                "owner": null,
+                "labels": [],
+                "description": "If format strings can be influenced by an attacker, they can be exploited, and note that sprintf variations do not always \\0-terminate (CWE-134)",
+                "disable": false
+            },
+            {
+                "real_name": "_sntprintf",
+                "display_name": "format/_sntprintf",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "If format strings can be influenced by an attacker, they can be exploited, and note that sprintf variations do not always \\0-terminate (CWE-134)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Use a constant for the format specification",
+                "owner": null,
+                "labels": [],
+                "description": "If format strings can be influenced by an attacker, they can be exploited, and note that sprintf variations do not always \\0-terminate (CWE-134)",
+                "disable": false
+            },
+            {
+                "real_name": "_stprintf",
+                "display_name": "buffer/_stprintf",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "Does not check for buffer overflows (CWE-120)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Use sprintf_s, snprintf, or vsnprintf",
+                "owner": null,
+                "labels": [],
+                "description": "Does not check for buffer overflows (CWE-120)",
+                "disable": false
+            },
+            {
+                "real_name": "_tccat",
+                "display_name": "buffer/_tccat",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "Does not check for buffer overflows when concatenating to destination [MS-banned] (CWE-120)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Does not check for buffer overflows when concatenating to destination [MS-banned] (CWE-120)",
+                "disable": false
+            },
+            {
+                "real_name": "_tccpy",
+                "display_name": "buffer/_tccpy",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "Does not check for buffer overflows when copying to destination [MS-banned] (CWE-120)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Consider using snprintf, strcpy_s, or strlcpy (warning: strncpy easily misused)",
+                "owner": null,
+                "labels": [],
+                "description": "Does not check for buffer overflows when copying to destination [MS-banned] (CWE-120)",
+                "disable": false
+            },
+            {
+                "real_name": "_tcscat",
+                "display_name": "buffer/_tcscat",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "Does not check for buffer overflows when concatenating to destination [MS-banned] (CWE-120)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Does not check for buffer overflows when concatenating to destination [MS-banned] (CWE-120)",
+                "disable": false
+            },
+            {
+                "real_name": "_tcscpy",
+                "display_name": "buffer/_tcscpy",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "Does not check for buffer overflows when copying to destination [MS-banned] (CWE-120)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Consider using a function version that stops copying at the end of the buffer",
+                "owner": null,
+                "labels": [],
+                "description": "Does not check for buffer overflows when copying to destination [MS-banned] (CWE-120)",
+                "disable": false
+            },
+            {
+                "real_name": "_tcslen",
+                "display_name": "buffer/_tcslen",
+                "severity": "info",
+                "category": "security",
+                "rule_title": "Does not handle strings that are not \\0-terminated; if given one it may perform an over-read (it could cause a crash if unprotected) (CWE-126)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Does not handle strings that are not \\0-terminated; if given one it may perform an over-read (it could cause a crash if unprotected) (CWE-126)",
+                "disable": false
+            },
+            {
+                "real_name": "_tcsncat",
+                "display_name": "buffer/_tcsncat",
+                "severity": "info",
+                "category": "security",
+                "rule_title": "Easily used incorrectly (e.g., incorrectly computing the correct maximum size to add) [MS-banned] (CWE-120)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Consider strcat_s, strlcat, or automatically resizing strings",
+                "owner": null,
+                "labels": [],
+                "description": "Easily used incorrectly (e.g., incorrectly computing the correct maximum size to add) [MS-banned] (CWE-120)",
+                "disable": false
+            },
+            {
+                "real_name": "_tcsncpy",
+                "display_name": "buffer/_tcsncpy",
+                "severity": "info",
+                "category": "security",
+                "rule_title": "Easily used incorrectly; doesn't always \\0-terminate or check for invalid pointers [MS-banned] (CWE-120)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Easily used incorrectly; doesn't always \\0-terminate or check for invalid pointers [MS-banned] (CWE-120)",
+                "disable": false
+            },
+            {
+                "real_name": "_tscanf",
+                "display_name": "buffer/_tscanf",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "The scanf() family's %s operation, without a limit specification, permits buffer overflows (CWE-120, CWE-20)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Specify a limit to %s, or use a different input function",
+                "owner": null,
+                "labels": [],
+                "description": "The scanf() family's %s operation, without a limit specification, permits buffer overflows (CWE-120, CWE-20)",
+                "disable": false
+            },
+            {
+                "real_name": "_vftprintf",
+                "display_name": "format/_vftprintf",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "If format strings can be influenced by an attacker, they can be exploited (CWE-134)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Use a constant for the format specification",
+                "owner": null,
+                "labels": [],
+                "description": "If format strings can be influenced by an attacker, they can be exploited (CWE-134)",
+                "disable": false
+            },
+            {
+                "real_name": "_vsntprintf",
+                "display_name": "format/_vsntprintf",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "If format strings can be influenced by an attacker, they can be exploited, and note that sprintf variations do not always \\0-terminate (CWE-134)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Use a constant for the format specification",
+                "owner": null,
+                "labels": [],
+                "description": "If format strings can be influenced by an attacker, they can be exploited, and note that sprintf variations do not always \\0-terminate (CWE-134)",
+                "disable": false
+            },
+            {
+                "real_name": "_vstprintf",
+                "display_name": "buffer/_vstprintf",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "Does not check for buffer overflows (CWE-120)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Use sprintf_s, snprintf, or vsnprintf",
+                "owner": null,
+                "labels": [],
+                "description": "Does not check for buffer overflows (CWE-120)",
+                "disable": false
+            },
+            {
+                "real_name": "_vtprintf",
+                "display_name": "format/_vtprintf",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "If format strings can be influenced by an attacker, they can be exploited (CWE-134)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Use a constant for the format specification",
+                "owner": null,
+                "labels": [],
+                "description": "If format strings can be influenced by an attacker, they can be exploited (CWE-134)",
+                "disable": false
+            },
+            {
+                "real_name": "_wtoi",
+                "display_name": "integer/_wtoi",
+                "severity": "warning",
+                "category": "security",
+                "rule_title": "Unless checked, the resulting number can exceed the expected range (CWE-190)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "If source untrusted, check both minimum and maximum, even if the input had no minus sign (large numbers can roll over into negative number; consider saving to an unsigned value if that is intended)",
+                "owner": null,
+                "labels": [],
+                "description": "Unless checked, the resulting number can exceed the expected range (CWE-190)",
+                "disable": false
+            },
+            {
+                "real_name": "_wtoi64",
+                "display_name": "integer/_wtoi64",
+                "severity": "warning",
+                "category": "security",
+                "rule_title": "Unless checked, the resulting number can exceed the expected range (CWE-190)",
+                "rule_params": null,
+                "custom": true,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "If source untrusted, check both minimum and maximum, even if the input had no minus sign (large numbers can roll over into negative number; consider saving to an unsigned value if that is intended)",
+                "owner": null,
+                "labels": [],
+                "description": "Unless checked, the resulting number can exceed the expected range (CWE-190)",
+                "disable": false
+            }
+        ],
+        "open_user": true,
+        "open_saas": false,
+        "virtual_name": "179",
+        "show_display_name": true
+    }
+]

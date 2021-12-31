@@ -1,0 +1,60 @@
+[
+    {
+        "name": "【iOS】隐私合规检查",
+        "description": "iOS审核规则",
+        "revision": null,
+        "package_type": "official",
+        "languages": [
+            "oc"
+        ],
+        "labels": [
+            "安全"
+        ],
+        "checkrule_set": [
+            {
+                "checktool": "regexscan",
+                "checkrule": "iOSAppCheck_SensitiveWord",
+                "severity": "error",
+                "rule_params": "regex = (因苹果公司的限制)\r\nmsg = 发现不规范关键词\"%s\"，苹果不允许出现此字样\r\nignore_comment = True",
+                "state": "enabled"
+            },
+            {
+                "checktool": "regexscan",
+                "checkrule": "iOSAppCheck_iOSTypo",
+                "severity": "error",
+                "rule_params": "regex = \\b(IOS|Ios|IoS|IOs|iOs|ioS|ios)\\b\r\nmsg = 发现不规范关键词\"%s\"，苹果不允许出现iOS错误拼写\r\nignore_comment = True",
+                "state": "enabled"
+            },
+            {
+                "checktool": "regexscan",
+                "checkrule": "iOSAppCheck_Unimplemented",
+                "severity": "error",
+                "rule_params": "regex = (暂未实现|敬请期待)\r\nmsg = 发现不规范用语\"%s\"，建议删除未实现的功能页\r\nignore_comment = True",
+                "state": "enabled"
+            },
+            {
+                "checktool": "regexscan",
+                "checkrule": "iOSAppCheck_MobilePlatform",
+                "severity": "error",
+                "rule_params": "regex = (?i)(\\bAndroid\\b|安卓|\\bSymbian\\b|塞班|\\bWindows\\s*Phone\\b|\\bBlackBerry\\s*OS\\b|蓝莓)\r\nmsg = 发现不规范关键词\"%s\"，苹果不允许出现移动平台字样\r\nignore_comment = True",
+                "state": "enabled"
+            },
+            {
+                "checktool": "regexscan",
+                "checkrule": "iOSHotPlugin",
+                "severity": "error",
+                "rule_params": "regex = (?i)(( JSPatch )|( RolloutIO )|( TriggerIO )|( WAX )|( Lua ))\r\nmsg = 字符串包含%s，可能为被认为热更新技术，引起审核问。\r\nignore_comment = True",
+                "state": "enabled"
+            },
+            {
+                "checktool": "regexscan",
+                "checkrule": "iOSPrivateAPIScan",
+                "severity": "error",
+                "rule_params": "regex = (?i)(((\\( *|\\] *|\\[.* )(_performMemoryWarning|_UICreateCGImageFromIOSurface|UICreateCGImageFromIOSurface|applicationsAvailableForHandlingURLScheme|defaultWorkspace|recursiveDescription|_NSAllMapTableKeys|modelDidChange|_defaultAttributes|_setViewAppearState:.*isAnimating:.*|playerViewController|setPlayerViewController:.*|timeString|__ZN3WTF10fastMallocEm|__ZN3WTF11currentTimeEv|__ZN3WTF15ThreadCondition6signalEv|__ZN3WTF5Mutex4lockEv|__ZN3WTF5Mutex6unlockEv|__ZN3WTF5MutexC1Ev|__ZN3WTF8fastFreeEPv|xsltApplyStylesheet|xsltCleanupGlobals|xsltFreeStylesheet|xsltParseStylesheetFile|xsltSaveResultToString|_adjustContentOffsetIfNecessary|__Block_has_signature|__Block_signature|_adjustContentOffsetIfNecessary|privateConfigureRouteDescription|_showTextStyleOptions|setCookies:.*|_UICreateCGImageFromIOSurface|AudioServicesPlaySystemSoundWithVibration|_autolayoutTrace|_printHierarchy)(\\)|\\]| ))|(\\\"[^\\\"]*prefs:root=.[^\\\"]*\\\"))|(@\\\"_printHierarchy\\\")\r\nmsg = 函数方法%s可能为私有API\r\nignore_comment = True",
+                "state": "enabled"
+            }
+        ],
+        "open_saas": false,
+        "envs": null
+    }
+]

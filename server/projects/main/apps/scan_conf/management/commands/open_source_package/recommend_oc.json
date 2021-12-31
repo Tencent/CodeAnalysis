@@ -1,0 +1,227 @@
+[
+  {
+    "name": "【Objective-C】推荐规则包",
+    "description": "Objective-C推荐规则集，需要提供编译信息，支持各种代码问题检查",
+    "revision": "0.1",
+    "open_saas": true,
+    "package_type": "official",
+    "languages": [
+      "oc"
+    ],
+    "labels": [
+      "推荐"
+    ],
+    "checkrule_set": [
+      {
+        "checktool": "clang",
+        "checkrule": "ArrayOutOfBound",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled"
+      },
+      {
+        "checktool": "clang",
+        "checkrule": "ArraySubscript",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled"
+      },
+      {
+        "checktool": "clang",
+        "checkrule": "BadRelease",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled"
+      },
+      {
+        "checktool": "clang",
+        "checkrule": "Dealloc",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled"
+      },
+      {
+        "checktool": "clang",
+        "checkrule": "Leak",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled"
+      },
+      {
+        "checktool": "clang",
+        "checkrule": "LeakOfReturn",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled"
+      },
+      {
+        "checktool": "clang",
+        "checkrule": "MemoryLeak",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled"
+      },
+      {
+        "checktool": "clang",
+        "checkrule": "MissingSuperCall",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled"
+      },
+      {
+        "checktool": "clang",
+        "checkrule": "NilArg",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled"
+      },
+      {
+        "checktool": "clang",
+        "checkrule": "NullPointer",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled"
+      },
+      {
+        "checktool": "clang",
+        "checkrule": "NullPointerCpp",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled"
+      },
+      {
+        "checktool": "clang",
+        "checkrule": "NullPointerFunc",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled"
+      },
+      {
+        "checktool": "clang",
+        "checkrule": "SelfInit",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled"
+      },
+      {
+        "checktool": "clangwarning",
+        "checkrule": "shorten-64-to-32",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled"
+      },
+      {
+        "checktool": "clangwarning",
+        "checkrule": "objc-method-access",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled"
+      },
+      {
+        "checktool": "clangwarning",
+        "checkrule": "format",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled"
+      },
+      {
+        "checktool": "clangwarning",
+        "checkrule": "undeclared-selector",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled"
+      },
+      {
+        "checktool": "clangwarning",
+        "checkrule": "int-conversion",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled"
+      },
+      {
+        "checktool": "clangwarning",
+        "checkrule": "mismatched-return-types",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled"
+      },
+      {
+        "checktool": "clangwarning",
+        "checkrule": "deprecated-declarations",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled"
+      },
+      {
+        "checktool": "clangwarning",
+        "checkrule": "return-type",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled"
+      },
+      {
+        "checktool": "clangwarning",
+        "checkrule": "incomplete-implementation",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled"
+      },
+      {
+        "checktool": "clangwarning",
+        "checkrule": "objc-multiple-method-names",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled"
+      },
+      {
+        "checktool": "clangwarning",
+        "checkrule": "format-security",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled"
+      },
+      {
+        "checktool": "clangwarning",
+        "checkrule": "macro-redefined",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled"
+      },
+      {
+        "checktool": "clangwarning",
+        "checkrule": "arc-performSelector-leaks",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled"
+      },
+      {
+        "checktool": "clangwarning",
+        "checkrule": "objc-property-no-attribute",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled"
+      },
+      {
+        "checktool": "clangwarning",
+        "checkrule": "int-to-pointer-cast",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled"
+      },
+      {
+        "checktool": "clangwarning",
+        "checkrule": "arc-retain-cycles",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled"
+      },
+      {
+        "checktool": "clangwarning",
+        "checkrule": "enum-conversion",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled"
+      }
+    ]
+  }
+]

@@ -1,0 +1,41 @@
+[
+    {
+        "name": "regexfilescan",
+        "display_name": "RegexFileScan",
+        "description": "正则匹配文件路径，检查代码库中是否存在敏感文件。",
+        "license": null,
+        "libscheme_set": [],
+        "task_processes": [
+            "analyze",
+            "datahandle"
+        ],
+        "scan_app": "codelint",
+        "scm_url": null,
+        "run_cmd": null,
+        "envs": null,
+        "build_flag": false,
+        "checkrule_set": [
+            {
+                "real_name": "log4jcheck",
+                "display_name": "Log4jCheck",
+                "severity": "fatal",
+                "category": "security",
+                "rule_title": "Apache Log4j高危组件检查",
+                "rule_params": "regex = (log4j-core-1\\..*\\.jar)|(log4j-core-2\\.1[0-6]\\..*\\.jar)|(log4j-core-2\\.\\d\\..*\\.jar)\nmsg = 发现Log4j高危组件%s",
+                "custom": true,
+                "languages": [],
+                "solution": "升级到官方最新版本。",
+                "owner": null,
+                "labels": [
+                    "安全"
+                ],
+                "description": "Apache Log4j存在潜在JNDI注入安全漏洞，可导致服务器被入侵。\n高危版本：Apache Log4j 1.x版本；2.x < 2.15.0-rc2\n安全版本：Apache Log4j 2.15.0及以上",
+                "disable": false
+            }
+        ],
+        "open_user": true,
+        "open_saas": false,
+        "virtual_name": "186",
+        "show_display_name": true
+    }
+]

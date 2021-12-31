@@ -1,0 +1,37 @@
+[
+  {
+    "name": "fbrjs",
+    "display_name": "FbRjs",
+    "description": "检查JS项目是否引用了16.0.0版本以下的ReactJS模块",
+    "license": "自研工具",
+    "task_processes": [
+      "analyze",
+      "datahandle"
+    ],
+    "open_user": true,
+    "open_saas": true,
+    "scan_app": "codelint",
+    "scm_url": null,
+    "run_cmd": null,
+    "envs": null,
+    "show_display_name": true,
+    "checkrule_set": [
+      {
+        "real_name": "FbRjs",
+        "display_name": "FbRjs",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "本规则针对检查JS项目是否引用了16.0.0版本以下的ReactJS模块。",
+        "rule_params": "",
+        "custom": false,
+        "languages": [],
+        "solution": null,
+        "owner": null,
+        "labels": [
+          "推荐"
+        ],
+        "description": "当检测到项目中引用了16.0.0版本以下的ReactJS模块，即报出error。"
+      }
+    ]
+  }
+]

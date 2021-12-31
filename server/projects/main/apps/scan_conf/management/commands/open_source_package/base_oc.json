@@ -1,0 +1,66 @@
+[
+  {
+    "name": "【Objective-C】基础规则包",
+    "description": "OBjective-C官方基础规则包，目前该语言需要提供编译信息请使用Objective-C推荐规则包",
+    "revision": "0.1",
+    "open_saas": true,
+    "package_type": "official",
+    "languages": [
+      "oc"
+    ],
+    "labels": [
+      "基础"
+    ],
+    "checkrule_set": [
+      {
+        "checktool": "customfilescan",
+        "checkrule": "WrongEncoding",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled"
+      },
+      {
+        "checktool": "customfilescan",
+        "checkrule": "CopyrightChecker",
+        "severity": "warning",
+        "rule_params": null,
+        "state": "enabled"
+      },
+      {
+        "checktool": "customfilescan",
+        "checkrule": "LowCommentRatio",
+        "severity": "warning",
+        "rule_params": null,
+        "state": "enabled"
+      },
+      {
+        "checktool": "customfilescan",
+        "checkrule": "FilesNotFound",
+        "severity": "warning",
+        "rule_params": null,
+        "state": "enabled"
+      },
+      {
+        "checktool": "customscan",
+        "checkrule": "NewlineChecker",
+        "severity": "warning",
+        "rule_params": null,
+        "state": "enabled"
+      },
+      {
+        "checktool": "regexscan",
+        "checkrule": "HttpHardcoded",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled"
+      },
+      {
+        "checktool": "regexscan",
+        "checkrule": "DirtyWord",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled"
+      }
+    ]
+  }
+]

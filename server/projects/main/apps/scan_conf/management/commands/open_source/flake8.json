@@ -1,0 +1,1365 @@
+[
+  {
+    "name": "flake8",
+    "display_name": "Flake8",
+    "description": "python static analyzer",
+    "license": "MIT",
+    "task_processes": [
+      "analyze",
+      "datahandle"
+    ],
+    "open_user": true,
+    "open_saas": true,
+    "scan_app": "codelint",
+    "scm_url": null,
+    "run_cmd": null,
+    "envs": null,
+    "show_display_name": true,
+    "checkrule_set": [
+      {
+        "real_name": "E101",
+        "display_name": "E101",
+        "severity": "error",
+        "category": "convention",
+        "rule_title": "indentation contains mixed spaces and tabs",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "indentation contains mixed spaces and tabs"
+      },
+      {
+        "real_name": "E111",
+        "display_name": "E111",
+        "severity": "error",
+        "category": "convention",
+        "rule_title": "indentation is not a multiple of four",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "indentation is not a multiple of four"
+      },
+      {
+        "real_name": "E112",
+        "display_name": "E112",
+        "severity": "error",
+        "category": "convention",
+        "rule_title": "expected an indented block",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "expected an indented block"
+      },
+      {
+        "real_name": "E113",
+        "display_name": "E113",
+        "severity": "error",
+        "category": "convention",
+        "rule_title": "unexpected indentation",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "unexpected indentation"
+      },
+      {
+        "real_name": "E114",
+        "display_name": "E114",
+        "severity": "error",
+        "category": "convention",
+        "rule_title": "indentation is not a multiple of four (comment)",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "indentation is not a multiple of four (comment)"
+      },
+      {
+        "real_name": "E115",
+        "display_name": "E115",
+        "severity": "error",
+        "category": "convention",
+        "rule_title": "expected an indented block (comment)",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "expected an indented block (comment)"
+      },
+      {
+        "real_name": "E116",
+        "display_name": "E116",
+        "severity": "error",
+        "category": "convention",
+        "rule_title": "unexpected indentation (comment)",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "unexpected indentation (comment)"
+      },
+      {
+        "real_name": "E117",
+        "display_name": "E117",
+        "severity": "error",
+        "category": "convention",
+        "rule_title": "over-indented",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "over-indented"
+      },
+      {
+        "real_name": "E121",
+        "display_name": "E121",
+        "severity": "error",
+        "category": "convention",
+        "rule_title": "continuation line under-indented for hanging indent",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "continuation line under-indented for hanging indent"
+      },
+      {
+        "real_name": "E122",
+        "display_name": "E122",
+        "severity": "error",
+        "category": "convention",
+        "rule_title": "continuation line missing indentation or outdented",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "continuation line missing indentation or outdented"
+      },
+      {
+        "real_name": "E123",
+        "display_name": "E123",
+        "severity": "error",
+        "category": "convention",
+        "rule_title": "closing bracket does not match indentation of opening bracket’s line",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "closing bracket does not match indentation of opening bracket’s line"
+      },
+      {
+        "real_name": "E124",
+        "display_name": "E124",
+        "severity": "error",
+        "category": "convention",
+        "rule_title": "closing bracket does not match visual indentation",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "closing bracket does not match visual indentation"
+      },
+      {
+        "real_name": "E125",
+        "display_name": "E125",
+        "severity": "error",
+        "category": "convention",
+        "rule_title": "continuation line with same indent as next logical line",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "continuation line with same indent as next logical line"
+      },
+      {
+        "real_name": "E126",
+        "display_name": "E126",
+        "severity": "error",
+        "category": "convention",
+        "rule_title": "continuation line over-indented for hanging indent",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "continuation line over-indented for hanging indent"
+      },
+      {
+        "real_name": "E127",
+        "display_name": "E127",
+        "severity": "error",
+        "category": "convention",
+        "rule_title": "continuation line over-indented for visual indent",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "continuation line over-indented for visual indent"
+      },
+      {
+        "real_name": "E128",
+        "display_name": "E128",
+        "severity": "error",
+        "category": "convention",
+        "rule_title": "continuation line under-indented for visual indent",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "continuation line under-indented for visual indent"
+      },
+      {
+        "real_name": "E129",
+        "display_name": "E129",
+        "severity": "error",
+        "category": "convention",
+        "rule_title": "visually indented line with same indent as next logical line",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "visually indented line with same indent as next logical line"
+      },
+      {
+        "real_name": "E131",
+        "display_name": "E131",
+        "severity": "error",
+        "category": "convention",
+        "rule_title": "continuation line unaligned for hanging indent",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "continuation line unaligned for hanging indent"
+      },
+      {
+        "real_name": "E133",
+        "display_name": "E133",
+        "severity": "error",
+        "category": "convention",
+        "rule_title": "closing bracket is missing indentation",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "closing bracket is missing indentation"
+      },
+      {
+        "real_name": "E201",
+        "display_name": "E201",
+        "severity": "error",
+        "category": "convention",
+        "rule_title": "whitespace after ‘(‘",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "whitespace after ‘(‘"
+      },
+      {
+        "real_name": "E202",
+        "display_name": "E202",
+        "severity": "error",
+        "category": "convention",
+        "rule_title": "whitespace before ‘)’",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "whitespace before ‘)’"
+      },
+      {
+        "real_name": "E203",
+        "display_name": "E203",
+        "severity": "error",
+        "category": "convention",
+        "rule_title": "whitespace before ‘:’",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "whitespace before ‘:’"
+      },
+      {
+        "real_name": "E211",
+        "display_name": "E211",
+        "severity": "error",
+        "category": "convention",
+        "rule_title": "whitespace before ‘(‘",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "whitespace before ‘(‘"
+      },
+      {
+        "real_name": "E221",
+        "display_name": "E221",
+        "severity": "error",
+        "category": "convention",
+        "rule_title": "multiple spaces before operator",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "multiple spaces before operator"
+      },
+      {
+        "real_name": "E222",
+        "display_name": "E222",
+        "severity": "error",
+        "category": "convention",
+        "rule_title": "multiple spaces after operator",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "multiple spaces after operator"
+      },
+      {
+        "real_name": "E223",
+        "display_name": "E223",
+        "severity": "error",
+        "category": "convention",
+        "rule_title": "tab before operator",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "tab before operator"
+      },
+      {
+        "real_name": "E224",
+        "display_name": "E224",
+        "severity": "error",
+        "category": "convention",
+        "rule_title": "tab after operator",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "tab after operator"
+      },
+      {
+        "real_name": "E225",
+        "display_name": "E225",
+        "severity": "error",
+        "category": "convention",
+        "rule_title": "missing whitespace around operator",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "missing whitespace around operator"
+      },
+      {
+        "real_name": "E226",
+        "display_name": "E226",
+        "severity": "error",
+        "category": "convention",
+        "rule_title": "missing whitespace around arithmetic operator",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "missing whitespace around arithmetic operator"
+      },
+      {
+        "real_name": "E227",
+        "display_name": "E227",
+        "severity": "error",
+        "category": "convention",
+        "rule_title": "missing whitespace around bitwise or shift operator",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "missing whitespace around bitwise or shift operator"
+      },
+      {
+        "real_name": "E228",
+        "display_name": "E228",
+        "severity": "error",
+        "category": "convention",
+        "rule_title": "missing whitespace around modulo operator",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "missing whitespace around modulo operator"
+      },
+      {
+        "real_name": "E231",
+        "display_name": "E231",
+        "severity": "error",
+        "category": "convention",
+        "rule_title": "missing whitespace after ‘,’, ‘;’, or ‘:’",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "missing whitespace after ‘,’, ‘;’, or ‘:’"
+      },
+      {
+        "real_name": "E241",
+        "display_name": "E241",
+        "severity": "error",
+        "category": "convention",
+        "rule_title": "multiple spaces after ‘,’",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "multiple spaces after ‘,’"
+      },
+      {
+        "real_name": "E242",
+        "display_name": "E242",
+        "severity": "error",
+        "category": "convention",
+        "rule_title": "tab after ‘,’",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "tab after ‘,’"
+      },
+      {
+        "real_name": "E251",
+        "display_name": "E251",
+        "severity": "error",
+        "category": "convention",
+        "rule_title": "unexpected spaces around keyword / parameter equals",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "unexpected spaces around keyword / parameter equals"
+      },
+      {
+        "real_name": "E261",
+        "display_name": "E261",
+        "severity": "error",
+        "category": "convention",
+        "rule_title": "at least two spaces before inline comment",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "at least two spaces before inline comment"
+      },
+      {
+        "real_name": "E262",
+        "display_name": "E262",
+        "severity": "error",
+        "category": "convention",
+        "rule_title": "inline comment should start with ‘# ‘",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "inline comment should start with ‘# ‘"
+      },
+      {
+        "real_name": "E265",
+        "display_name": "E265",
+        "severity": "error",
+        "category": "convention",
+        "rule_title": "block comment should start with ‘# ‘",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "block comment should start with ‘# ‘"
+      },
+      {
+        "real_name": "E266",
+        "display_name": "E266",
+        "severity": "error",
+        "category": "convention",
+        "rule_title": "too many leading ‘#’ for block comment",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "too many leading ‘#’ for block comment"
+      },
+      {
+        "real_name": "E271",
+        "display_name": "E271",
+        "severity": "error",
+        "category": "convention",
+        "rule_title": "multiple spaces after keyword",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "multiple spaces after keyword"
+      },
+      {
+        "real_name": "E272",
+        "display_name": "E272",
+        "severity": "error",
+        "category": "convention",
+        "rule_title": "multiple spaces before keyword",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "multiple spaces before keyword"
+      },
+      {
+        "real_name": "E273",
+        "display_name": "E273",
+        "severity": "error",
+        "category": "convention",
+        "rule_title": "tab after keyword",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "tab after keyword"
+      },
+      {
+        "real_name": "E274",
+        "display_name": "E274",
+        "severity": "error",
+        "category": "convention",
+        "rule_title": "tab before keyword",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "tab before keyword"
+      },
+      {
+        "real_name": "E275",
+        "display_name": "E275",
+        "severity": "error",
+        "category": "convention",
+        "rule_title": "missing whitespace after keyword",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "missing whitespace after keyword"
+      },
+      {
+        "real_name": "E301",
+        "display_name": "E301",
+        "severity": "error",
+        "category": "convention",
+        "rule_title": "expected 1 blank line",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "expected 1 blank line"
+      },
+      {
+        "real_name": "E302",
+        "display_name": "E302",
+        "severity": "error",
+        "category": "convention",
+        "rule_title": "expected 2 blank lines",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "expected 2 blank lines"
+      },
+      {
+        "real_name": "E303",
+        "display_name": "E303",
+        "severity": "error",
+        "category": "convention",
+        "rule_title": "too many blank lines (3)",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "too many blank lines (3)"
+      },
+      {
+        "real_name": "E304",
+        "display_name": "E304",
+        "severity": "error",
+        "category": "convention",
+        "rule_title": "blank lines found after function decorator",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "blank lines found after function decorator"
+      },
+      {
+        "real_name": "E305",
+        "display_name": "E305",
+        "severity": "error",
+        "category": "convention",
+        "rule_title": "expected 2 blank lines after end of function or class",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "expected 2 blank lines after end of function or class"
+      },
+      {
+        "real_name": "E306",
+        "display_name": "E306",
+        "severity": "error",
+        "category": "convention",
+        "rule_title": "expected 1 blank line before a nested definition",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "expected 1 blank line before a nested definition"
+      },
+      {
+        "real_name": "E401",
+        "display_name": "E401",
+        "severity": "error",
+        "category": "convention",
+        "rule_title": "multiple imports on one line",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "multiple imports on one line"
+      },
+      {
+        "real_name": "E402",
+        "display_name": "E402",
+        "severity": "error",
+        "category": "convention",
+        "rule_title": "module level import not at top of file",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "module level import not at top of file"
+      },
+      {
+        "real_name": "E501",
+        "display_name": "E501",
+        "severity": "error",
+        "category": "convention",
+        "rule_title": "line too long (82 > 79 characters)",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "line too long (82 > 79 characters)"
+      },
+      {
+        "real_name": "E502",
+        "display_name": "E502",
+        "severity": "error",
+        "category": "convention",
+        "rule_title": "the backslash is redundant between brackets",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "the backslash is redundant between brackets"
+      },
+      {
+        "real_name": "E701",
+        "display_name": "E701",
+        "severity": "error",
+        "category": "convention",
+        "rule_title": "multiple statements on one line (colon)",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "multiple statements on one line (colon)"
+      },
+      {
+        "real_name": "E702",
+        "display_name": "E702",
+        "severity": "error",
+        "category": "convention",
+        "rule_title": "multiple statements on one line (semicolon)",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "multiple statements on one line (semicolon)"
+      },
+      {
+        "real_name": "E703",
+        "display_name": "E703",
+        "severity": "error",
+        "category": "convention",
+        "rule_title": "statement ends with a semicolon",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "statement ends with a semicolon"
+      },
+      {
+        "real_name": "E704",
+        "display_name": "E704",
+        "severity": "error",
+        "category": "convention",
+        "rule_title": "multiple statements on one line (def)",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "multiple statements on one line (def)"
+      },
+      {
+        "real_name": "E711",
+        "display_name": "E711",
+        "severity": "error",
+        "category": "convention",
+        "rule_title": "comparison to None should be ‘if cond is None:’",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "comparison to None should be ‘if cond is None:’"
+      },
+      {
+        "real_name": "E712",
+        "display_name": "E712",
+        "severity": "error",
+        "category": "convention",
+        "rule_title": "comparison to True should be ‘if cond is True:’ or ‘if cond:’",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "comparison to True should be ‘if cond is True:’ or ‘if cond:’"
+      },
+      {
+        "real_name": "E713",
+        "display_name": "E713",
+        "severity": "error",
+        "category": "convention",
+        "rule_title": "test for membership should be ‘not in’",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "test for membership should be ‘not in’"
+      },
+      {
+        "real_name": "E714",
+        "display_name": "E714",
+        "severity": "error",
+        "category": "convention",
+        "rule_title": "test for object identity should be ‘is not’",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "test for object identity should be ‘is not’"
+      },
+      {
+        "real_name": "E721",
+        "display_name": "E721",
+        "severity": "error",
+        "category": "convention",
+        "rule_title": "do not compare types, use ‘isinstance()’",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "do not compare types, use ‘isinstance()’"
+      },
+      {
+        "real_name": "E722",
+        "display_name": "E722",
+        "severity": "error",
+        "category": "convention",
+        "rule_title": "do not use bare except, specify exception instead",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "do not use bare except, specify exception instead"
+      },
+      {
+        "real_name": "E731",
+        "display_name": "E731",
+        "severity": "error",
+        "category": "convention",
+        "rule_title": "do not assign a lambda expression, use a def",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "do not assign a lambda expression, use a def"
+      },
+      {
+        "real_name": "E741",
+        "display_name": "E741",
+        "severity": "error",
+        "category": "convention",
+        "rule_title": "do not use variables named ‘l’, ‘O’, or ‘I’",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "do not use variables named ‘l’, ‘O’, or ‘I’"
+      },
+      {
+        "real_name": "E742",
+        "display_name": "E742",
+        "severity": "error",
+        "category": "convention",
+        "rule_title": "do not define classes named ‘l’, ‘O’, or ‘I’",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "do not define classes named ‘l’, ‘O’, or ‘I’"
+      },
+      {
+        "real_name": "E743",
+        "display_name": "E743",
+        "severity": "error",
+        "category": "convention",
+        "rule_title": "do not define functions named ‘l’, ‘O’, or ‘I’",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "do not define functions named ‘l’, ‘O’, or ‘I’"
+      },
+      {
+        "real_name": "E901",
+        "display_name": "E901",
+        "severity": "error",
+        "category": "convention",
+        "rule_title": "SyntaxError or IndentationError",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "SyntaxError or IndentationError"
+      },
+      {
+        "real_name": "E902",
+        "display_name": "E902",
+        "severity": "error",
+        "category": "convention",
+        "rule_title": "IOError",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "IOError"
+      },
+      {
+        "real_name": "W191",
+        "display_name": "W191",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "indentation contains tabs",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "indentation contains tabs"
+      },
+      {
+        "real_name": "W291",
+        "display_name": "W291",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "trailing whitespace",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "trailing whitespace"
+      },
+      {
+        "real_name": "W292",
+        "display_name": "W292",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "no newline at end of file",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "no newline at end of file"
+      },
+      {
+        "real_name": "W293",
+        "display_name": "W293",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "blank line contains whitespace",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "blank line contains whitespace"
+      },
+      {
+        "real_name": "W391",
+        "display_name": "W391",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "blank line at end of file",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "blank line at end of file"
+      },
+      {
+        "real_name": "W503",
+        "display_name": "W503",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "line break before binary operator",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "line break before binary operator"
+      },
+      {
+        "real_name": "W504",
+        "display_name": "W504",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "line break after binary operator",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "line break after binary operator"
+      },
+      {
+        "real_name": "W505",
+        "display_name": "W505",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "doc line too long (82 > 79 characters)",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "doc line too long (82 > 79 characters)"
+      },
+      {
+        "real_name": "W601",
+        "display_name": "W601",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": ".has_key() is deprecated, use ‘in’",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": ".has_key() is deprecated, use ‘in’"
+      },
+      {
+        "real_name": "W602",
+        "display_name": "W602",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "deprecated form of raising exception",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "deprecated form of raising exception"
+      },
+      {
+        "real_name": "W603",
+        "display_name": "W603",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "‘<>’ is deprecated, use ‘!=’",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "‘<>’ is deprecated, use ‘!=’"
+      },
+      {
+        "real_name": "W604",
+        "display_name": "W604",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "backticks are deprecated, use ‘repr()’",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "backticks are deprecated, use ‘repr()’"
+      },
+      {
+        "real_name": "W605",
+        "display_name": "W605",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "invalid escape sequence ‘x’",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "invalid escape sequence ‘x’"
+      },
+      {
+        "real_name": "W606",
+        "display_name": "W606",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "‘async’ and ‘await’ are reserved keywords starting with Python 3.7",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "python"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "‘async’ and ‘await’ are reserved keywords starting with Python 3.7"
+      }
+    ]
+  }
+]

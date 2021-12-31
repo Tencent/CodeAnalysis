@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "sourceMap": true,
+    "esModuleInterop": true, // esModuleInterop通过导入内容创建命名空间，实现CommonJS和ES模块之间的互操作性
+    "checkJs": true, // checkJs用来指定是否检查和报告JS文件中的错误，默认false
+    "allowJs": true,
+    "noEmit": true,
+    "removeComments": true, // removeComments用于指定是否将编译后的文件注释删掉
+    "noImplicitAny": true, // noImplicitAny如果我们没有一些值设置明确类型，编译器会默认认为这个值为any类型
+    "jsx": "react", // 指定jsx代码用于的开发环境:'preserve','react-native',or 'react
+    "experimentalDecorators": true, //为ES装饰器提案提供实验支持
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+  },
+  "include": ["packages/**/*"],
+  "exclude": ["node_modules", "dist"],
+}

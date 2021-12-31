@@ -1,0 +1,2854 @@
+[
+  {
+    "name": "androidlint",
+    "display_name": "AndroidLint",
+    "description": "检查 Android 项目源文件是否包含潜在的错误，以及在正确性、安全性、性能、易用性、便利性和国际化方面是否需要优化改进。",
+    "license": "Apache 2.0",
+    "task_processes": [
+      "analyze",
+      "datahandle",
+      "compile"
+    ],
+    "open_user": true,
+    "open_saas": true,
+    "scan_app": "codelint",
+    "scm_url": null,
+    "run_cmd": null,
+    "envs": null,
+    "show_display_name": true,
+    "checkrule_set": [
+      {
+        "real_name": "AdapterViewChildren",
+        "display_name": "AdapterViewChildren",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "检查AdapterViews是否不用XML定义其子元素",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "适配器视图（如ListViews）必须使用来自Java代码的数据（例如ListAdapter）进行配置。"
+      },
+      {
+        "real_name": "AllowBackup",
+        "display_name": "AllowBackup",
+        "severity": "warning",
+        "category": "security",
+        "rule_title": "确保在应用程序的清单中显式设置allowBackup",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "allowBackup属性确定是否可以备份和恢复应用程序的数据。它记录在http://developer.android.com/reference/android/R.attr.html#allowBackup默认情况下，此标志设置为true。当此标志设置为true时，应用程序数据可以由用户使用adb backup和adb restore进行备份和恢复。\n 这可能对应用程序有安全后果。 adb备份允许启用USB调试的用户将应用程序数据从设备中复制出来。备份完成后，用户可以读取所有应用程序数据。 adb restore允许从用户指定的源创建应用程序数据。恢复之后，应用程序不应该认为数据，文件权限和目录权限是由应用程序本身创建的。\n 设置allowBackup =“false”会从备份和恢复中选择一个应用程序。\n 要解决此警告，请确定您的应用程序是否应支持备份，并明确设置android：allowBackup =（true | false）“"
+      },
+      {
+        "real_name": "AlwaysShowAction",
+        "display_name": "AlwaysShowAction",
+        "severity": "warning",
+        "category": "usability",
+        "rule_title": "检查showAsAction =“always”的用法，并建议showAsAction =“ifRoom”",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "在菜单XML中使用showAsAction =“always”，或者在Java代码中使用MenuItem.SHOW_AS_ACTION_ALWAYS通常与用户界面风格指南有所偏差。请改用ifRoom或相应的MenuItem.SHOW_AS_ACTION_IF_ROOM。\n 如果总是谨慎使用，通常没有问题，行为大致相当于ifRoom，但优先于其他ifRoom项目。\n在同一菜单中使用它两次以上是一个坏主意。\n 此检查查找包含两个以上始终操作的菜单XML文件，或者一些总是操作且不包含ifRoom操作。在Java代码中，它会查找包含对MenuItem.SHOW_AS_ACTION_ALWAYS的引用的项目，并且不会引用MenuItem.SHOW_AS_ACTION_IF_ROOM。"
+      },
+      {
+        "real_name": "AsOperator",
+        "display_name": "AsOperator",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "AsOperator",
+        "rule_params": "",
+        "custom": true,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "禁止直接使用as操作符，请使用更安全的as?操作符"
+      },
+      {
+        "real_name": "BackButton",
+        "display_name": "BackButton",
+        "severity": "warning",
+        "category": "usability",
+        "rule_title": "寻找后退按钮，这在Android平台上并不常见。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "根据Android设计指南，“其他平台使用带标签的明确后退按钮允许用户导航应用程序的层次结构，而Android使用主操作栏的应用程序图标进行分层导航，并使用导航栏的后退按钮进行时间导航“。这种检查不是很复杂（它只是寻找带有“返回”标签的按钮），所以默认情况下它是禁用的，不会触发常见的场景，例如成对的后退/下一步按钮以在屏幕上分页。"
+      },
+      {
+        "real_name": "ButtonCase",
+        "display_name": "ButtonCase",
+        "severity": "warning",
+        "category": "usability",
+        "rule_title": "确保取消/确定对话框按钮使用规范大小写",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "确定/取消对话框的标准大小写为“确定”和“取消”。为确保您的对话框使用标准字符串，您可以使用资源字符串@android：string / ok和@android：string / cancel。"
+      },
+      {
+        "real_name": "ButtonOrder",
+        "display_name": "ButtonOrder",
+        "severity": "warning",
+        "category": "usability",
+        "rule_title": "确保对话的不重要行为在左边，在右边是肯定的",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "根据Android设计指南，“动作按钮通常取消和/或确定，OK表示首选或最可能的动作。但是，如果选项包含特定动作，如关闭或等待，而不是确认或取消动作描述放在内容中，那么所有的按钮都应该是主动动词。通常，对话的忽视动作总是在左边，而肯定动作在右边。“此检查查找按钮栏和按钮，看起来像取消按钮，并确保这些按钮位于左侧。"
+      },
+      {
+        "real_name": "ButtonStyle",
+        "display_name": "ButtonStyle",
+        "severity": "warning",
+        "category": "usability",
+        "rule_title": "确保按钮栏中的按钮无边界",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "按钮栏通常使用按钮的无边框样式。在每个按钮上设置style =“？android：attr / buttonBarButtonStyle”属性，并在父级布局上设置style =“？android：attr / buttonBarStyle”"
+      },
+      {
+        "real_name": "CommitPrefEdits",
+        "display_name": "CommitPrefEdits",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "查找编辑SharedPreference的代码，但忘记调用commit（）",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "在SharedPreference上调用edit（）之后，必须在编辑器上调用commit（）或apply（）以保存结果。"
+      },
+      {
+        "real_name": "CommitTransaction",
+        "display_name": "CommitTransaction",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "在FragmentTransaction上查找丢失的commit（）调用",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "创建FragmentTransaction后，您通常也需要提交它"
+      },
+      {
+        "real_name": "Contentdescriptionription",
+        "display_name": "Contentdescriptionription",
+        "severity": "warning",
+        "category": "accessibility",
+        "rule_title": "确保图像小部件提供内容描述",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": "该规则在2019版CodeDog中已废弃。",
+        "owner": null,
+        "labels": [],
+        "description": "非文本小部件（如ImageView和ImageButton）应使用contentdescriptionription属性来指定小部件的文本说明，以便屏幕阅读器和其他辅助工具可充分描述用户界面。\n 请注意，应用程序屏幕中的纯粹装饰性元素，不提供任何内容或不允许用户操作的元素不应具有辅助功能内容说明。在这种情况下，只需使用tools：ignore =“Contentdescriptionription”属性来抑制lint警告。\n 请注意，对于文本字段，您不应该同时设置提示和contentdescriptionription属性，因为该提示将永远不会显示。只需设置提示。请参阅http://developer.android.com/guide/topics/ui/accessibility/checklist.html#spec al-cases。"
+      },
+      {
+        "real_name": "CreateNewFile",
+        "display_name": "CreateNewFile",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "CreateNewFile",
+        "rule_params": "",
+        "custom": true,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "禁止直接使用File.createNewFile()，请使用com.tencent.nijigen.utils.FileUtil.createFile()\r\n\r\n波洞项目自制专用"
+      },
+      {
+        "real_name": "CutPasteId",
+        "display_name": "CutPasteId",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "在findViewById（）调用中查找代码剪切和粘贴错误",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "此lint检查查找您已剪切和粘贴findViewById但忘记更新R.id字段的情况。你的代码很可能会重复查找字段，但是lint无法区分这种情况，例如你想要初始化字段prev和next，并且剪切并粘贴findViewById（R.id.prev）并忘记了将第二个初始化更新为R.id.next。"
+      },
+      {
+        "real_name": "DalvikOverride",
+        "display_name": "DalvikOverride",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "寻找被Dalvik视为覆盖的方法",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Android虚拟机会将一个类中的包私有方法视为在其超类中重写包私有方法，即使它们位于单独的包中。这可能令人惊讶，但出于兼容性原因，行为尚未改变（尚未）。\n 如果您确实打算使用此方法来覆盖其他方法，请改为保护方法。\n 如果您不打算覆盖，请考虑将该方法设置为私人，或更改其名称或签名。"
+      },
+      {
+        "real_name": "DefaultLocale",
+        "display_name": "DefaultLocale",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "查找对语言环境不明确的字符串操作方法的调用",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "调用String＃toLowerCase（）或#toUpperCase（）而不指定显式语言环境是bug的常见来源。原因是这些方法将在用户的设备上使用当前的语言环境，即使代码在开发应用程序时似乎能够正常工作，它在某些语言环境中也会失败。例如，在土耳其语语言环境中，我的大写替换不是I.\n 如果您希望这些方法仅执行ASCII替换，例如转换枚举名称，请改为调用String＃toUpperCase（Locale.US）。如果您确实想要使用当前的语言环境，请调用String＃toUpperCase（Locale.getDefault（））。"
+      },
+      {
+        "real_name": "DelegateNotNull",
+        "display_name": "DelegateNotNull",
+        "severity": "warning",
+        "category": "other",
+        "rule_title": "DelegateNotNull",
+        "rule_params": "",
+        "custom": true,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "不建议使用Delegate.notNull委托, 容易引发空指针"
+      },
+      {
+        "real_name": "Deprecated",
+        "display_name": "Deprecated",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "查找已弃用布局，属性等的用法。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "不推荐使用的视图，属性等被弃用，因为有更好的方法来做某件事。以新的方式去做吧。你已被警告。"
+      },
+      {
+        "real_name": "DeviceAdmin",
+        "display_name": "DeviceAdmin",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "确保设备管理员已正确注册",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "如果您注册了充当设备管理员的广播接收器，则您还必须注册一个<intent-filter>，以执行android.app.action.DEVICE_ADMIN_ENABLED操作，而不需要任何<data>，以便设备管理员可以被激活/取消激活。\n 为此，请向<receiver>添加<intent-filter> <action android：name =“android.app.action.DEVICE_ADMIN_ENABLED”/> </ intent-filter>。"
+      },
+      {
+        "real_name": "DisableBaselineAlignment",
+        "display_name": "DisableBaselineAlignment",
+        "severity": "warning",
+        "category": "performance",
+        "rule_title": "寻找应该设置android：baselineAligned = false的LinearLayouts",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "当使用LinearLayout在嵌套布局之间按比例分配空间时，应关闭基线对齐属性以加快布局计算。"
+      },
+      {
+        "real_name": "DrawAllocation",
+        "display_name": "DrawAllocation",
+        "severity": "warning",
+        "category": "performance",
+        "rule_title": "在绘图代码中寻找内存分配",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "您应该避免在绘图或布局操作中分配对象。\n这些被频繁调用，所以一个流畅的UI可以被对象分配造成的垃圾收集暂停中断。\n 通常处理的方式是预先分配所需的对象，并为每个绘图操作重新使用它们。\n 一些方法代表您分配内存（如Bitmap.create），并且应该以相同的方式处理这些内存。"
+      },
+      {
+        "real_name": "DuplicateActivity",
+        "display_name": "DuplicateActivity",
+        "severity": "fatal",
+        "category": "correctness",
+        "rule_title": "检查活动是否仅在清单中注册一次",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "一个活动只能在清单中注册一次。如果意外注册了多次，则可能会发生细微的错误，因为来自两个元素的属性声明未合并，因此您可能会意外删除先前的声明。"
+      },
+      {
+        "real_name": "DuplicateDefinition",
+        "display_name": "DuplicateDefinition",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "发现资源的重复定义",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "您可以在不同的资源文件夹中多次定义资源;例如，这就是字符串翻译的完成方式。但是，在同一个资源文件夹中多次定义相同资源可能是一个错误，例如尝试添加新资源而未意识到该名称已被使用，等等。"
+      },
+      {
+        "real_name": "DuplicateIds",
+        "display_name": "DuplicateIds",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "检查单个布局中的重复ID",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "在布局中，id应该是唯一的，否则findViewById（）会返回一个意外的视图。"
+      },
+      {
+        "real_name": "DuplicateIncludedIds",
+        "display_name": "DuplicateIncludedIds",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "检查与包含标记相结合的布局中的重复ID",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "两个独立的布局可以使用相同的ID。但是，如果布局与包含标签组合在一起，那么标识符在任何包含的布局链中都必须是唯一的，否则Activity＃findViewById（）可能会返回意外的视图。"
+      },
+      {
+        "real_name": "DuplicateUsesFeature",
+        "display_name": "DuplicateUsesFeature",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "确保您仅在清单中声明每个硬件或软件功能一次",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "一个给定的功能只能在清单中声明一次。"
+      },
+      {
+        "real_name": "EasterEgg",
+        "display_name": "EasterEgg",
+        "severity": "warning",
+        "category": "security",
+        "rule_title": "寻找隐藏的复活节彩蛋",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "“复活节彩蛋”代码是故意隐藏在代码中的，既可以来自潜在用户，也可以来自其他开发人员。这个棉绒检查查找看起来可能隐藏起来的代码。"
+      },
+      {
+        "real_name": "EnforceUTF8",
+        "display_name": "EnforceUTF8",
+        "severity": "warning",
+        "category": "i18n",
+        "rule_title": "检查所有XML资源文件是否使用UTF-8作为文件编码",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "XML支持各种字符集中的编码。但是，并非所有工具都能正确处理XML编码属性，并且几乎所有的Android应用程序都使用UTF-8，所以使用UTF-8时，您可以在使用非ASCII字符时防止出现细微的错误。"
+      },
+      {
+        "real_name": "Executor",
+        "display_name": "Executor",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "Executor",
+        "rule_params": "",
+        "custom": true,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "禁止直接使用Executor.execute()，请使用com.tencent.nijigen.thread.ThreadManager"
+      },
+      {
+        "real_name": "ExportedContentProvider",
+        "display_name": "ExportedContentProvider",
+        "severity": "warning",
+        "category": "security",
+        "rule_title": "检查不需要权限的导出内容提供者",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "内容提供者默认导出，系统上的任何应用程序都可能使用它们读取和写入数据。如果内容提供者提供对敏感数据的访问，则应该通过在清单中指定export = false来保护它，或者使用可授予其他应用程序的权限来保护它。"
+      },
+      {
+        "real_name": "ExportedReceiver",
+        "display_name": "ExportedReceiver",
+        "severity": "warning",
+        "category": "security",
+        "rule_title": "检查不需要权限的导出接收器",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "导出的接收者（接收者或者设置了export = true或者包含intent-filter并且没有指定exported = false）应该定义实体为启动接收者或绑定接收者而必须拥有的权限。\n没有这个，任何应用程序都可以使用该接收器"
+      },
+      {
+        "real_name": "ExportedService",
+        "display_name": "ExportedService",
+        "severity": "warning",
+        "category": "security",
+        "rule_title": "检查不需要权限的导出服务",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "导出的服务（设置了exported = true或包含intent-filter并且不指定exported = false的服务）应该定义实体为启动服务或绑定服务而必须具有的权限。没有这个，任何应用程序都可以使用此服务。"
+      },
+      {
+        "real_name": "ExtraText",
+        "display_name": "ExtraText",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "在资源文件中查找无关文本",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "布局资源文件应该只包含元素和属性。在文件中找到的任何XML文本内容都可能是偶然的（如果文本类似于XML并且开发人员认为文本可以正常工作，那么这种内容可能是非常危险的）"
+      },
+      {
+        "real_name": "ExtraTranslation",
+        "display_name": "ExtraTranslation",
+        "severity": "fatal",
+        "category": "correctness",
+        "rule_title": "检查显示为未使用的翻译（无默认语言字符串）",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "如果某个字符串出现在特定的语言翻译文件中，但缺省语言环境中没有相应的字符串，则该字符串可能未被使用。 （从技术上讲，您的应用程序只能在特定区域运行，但提供回退仍然是个不错的主意。）。\n 请注意，如果在任何不提供翻译的语言环境中查找字符串，这些字符串可能会导致崩溃，因此清理它们非常重要。"
+      },
+      {
+        "real_name": "FieldGetter",
+        "display_name": "FieldGetter",
+        "severity": "warning",
+        "category": "performance",
+        "rule_title": "建议在类中直接使用字段访问来取代getter的使用",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "在为该字段定义一个getter的类中访问一个字段比调用getter至少快3倍。对于简单的getter来说，除了返回字段之外什么都不做，您可能只想直接引用本地字段。\n 注意：从Android 2.3（姜饼）开始，此优化由Dalvik自动执行，因此不需要更改代码;这只适用于您定位旧版Android的情况。"
+      },
+      {
+        "real_name": "FindViewById",
+        "display_name": "FindViewById",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "FindViewById",
+        "rule_params": "",
+        "custom": true,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "禁止在onCreate方法外使用findViewById"
+      },
+      {
+        "real_name": "FloatMath",
+        "display_name": "FloatMath",
+        "severity": "warning",
+        "category": "performance",
+        "rule_title": "建议用java.lang.Math替换android.util.FloatMath调用",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "在较旧版本的Android中，使用android.util.FloatMath时，出于性能原因建议在浮点操作上使用。然而，在现代硬件上，双精度和浮点一样快（虽然它们需要更多的内存），而在最近的Android版本中，由于JIT优化java.lang.Math的方式，FloatMath实际上比使用java.lang.Math慢。因此，如果您只是针对Froyo或更高版本，则应该使用Math而不是FloatMath。"
+      },
+      {
+        "real_name": "FrescoLoad",
+        "display_name": "FrescoLoad",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "FrescoLoad",
+        "rule_params": "",
+        "custom": true,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "禁止直接使用DraweeView.setController，请使用FrescoUtil.load()方法"
+      },
+      {
+        "real_name": "GetQueryParameter",
+        "display_name": "GetQueryParameter",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "GetQueryParameter",
+        "rule_params": "",
+        "custom": true,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "禁止直接使用Uri.getQueryParameter()，请使用Uri.getQueryParameterSafely()"
+      },
+      {
+        "real_name": "GetSystemService",
+        "display_name": "GetSystemService",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "GetSystemService",
+        "rule_params": "",
+        "custom": true,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "禁止直接使用Context.getSystemService()，请使用com.tencent.nijigen.utils.ContextUtil.getSystemService()"
+      },
+      {
+        "real_name": "GifUsage",
+        "display_name": "GifUsage",
+        "severity": "warning",
+        "category": "usability",
+        "rule_title": "使用不鼓励的GIF文件格式检查图像",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "不鼓励.gif文件格式。考虑使用.png（首选）或.jpg（可接受）。"
+      },
+      {
+        "real_name": "GradleOverrides",
+        "display_name": "GradleOverrides",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "查找清单文件中指定的值，这些值由Gradle中的值覆盖",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "（例如）minSdkVersion的值仅在未在build.gradle构建脚本中指定的情况下使用。在Gradle构建脚本中指定时，清单值将被忽略并且可能会产生误导，因此应该将其删除以避免含糊不清。"
+      },
+      {
+        "real_name": "GrantAllUris",
+        "display_name": "GrantAllUris",
+        "severity": "warning",
+        "category": "security",
+        "rule_title": "检查一切共享的<grant-uri-permission>元素",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "<grant-uri-permission>元素允许共享特定的路径。这个检测器检查只是'/'（一切）的路径URL，这可能不是你想要的;你应该限制对子集的访问。"
+      },
+      {
+        "real_name": "GridLayout",
+        "display_name": "GridLayout",
+        "severity": "fatal",
+        "category": "correctness",
+        "rule_title": "检查潜在的GridLayout错误，例如在声明的网格维度外声明行和列",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "声明layout_row或layout_column超出了GridLayout的rowCount或columnCount的声明大小通常是一个无意的错误。"
+      },
+      {
+        "real_name": "HandlerLeak",
+        "display_name": "HandlerLeak",
+        "severity": "warning",
+        "category": "performance",
+        "rule_title": "确保Handler类不保留对外部类的引用",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "由于此Handler被声明为内部类，因此可能会阻止外部类被垃圾收集。如果处理程序对主线程以外的线程使用Looper或MessageQueue，则没有问题。\n如果Handler使用主线程的Looper或MessageQueue，则需要修复Handler声明，如下所示：将Handler声明为静态类;在外部类中，实例化WeakReference到外部类并在实例化Handler时将此对象传递给Handler;使用WeakReference对象创建对外部类成员的所有引用。"
+      },
+      {
+        "real_name": "HardcodedDebugMode",
+        "display_name": "HardcodedDebugMode",
+        "severity": "fatal",
+        "category": "security",
+        "rule_title": "检查清单中android：debuggable的硬编码值",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "最好省略清单中的android：debuggable属性。如果你这样做，那么当构建一个APK在仿真器或设备上调试时，这些工具会自动插入android：debuggable = true。当您执行发布版本时，如导出APK，它会自动将其设置为false。\n 另一方面，如果您在清单文件中指定了特定的值，那么这些工具将始终使用它。这可能会导致意外地向您的应用程序发布调试信息。"
+      },
+      {
+        "real_name": "HardcodedText",
+        "display_name": "HardcodedText",
+        "severity": "warning",
+        "category": "i18n",
+        "rule_title": "寻找应该转换为资源查找的硬编码文本属性",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "直接在布局文件中对文本属性进行硬编码是有缺陷的，原因如下：*创建配置变体时（例如横向或纵向），必须重复实际文本（并在更改时保持最新）*应用程序无法翻译只需为现有的字符串资源添加新的翻译就可以将其转换为其他语言\n 在Eclipse中有一个quickfix可以自动将这个硬编码字符串提取到资源查找中。"
+      },
+      {
+        "real_name": "IconColors",
+        "display_name": "IconColors",
+        "severity": "warning",
+        "category": "usability",
+        "rule_title": "检查图标是否符合建议的视觉样式",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "通知图标和操作栏图标应该只有白色和灰色阴影。\n有关更多详细信息，请参阅Android设计指南。请注意，Lint决定图标是否为操作栏图标或通知图标的方式基于文件名前缀：ic_menu_用于操作栏图标，ic_stat_用于通知图标等。这些对应于http：// developer中记录的命名约定.android.com /引导/做法/ ui_guidelines / icon_design.html"
+      },
+      {
+        "real_name": "IconDensities",
+        "display_name": "IconDensities",
+        "severity": "warning",
+        "category": "usability",
+        "rule_title": "确保图标为所有支持的密度提供定制版本",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "如果为每个主要屏幕密度类别（低，中，高，特高）提供定制版本，图标看起来最好。此棉绒检查识别密度不完全覆盖的图标。\n 低密度已经不再使用了，所以这个检查忽略了ldpi密度。要强制lint包含它，请设置环境变量ANDROID_LINT_INCLUDE_LDPI = true。有关当前密度使用情况的更多信息，请参阅http://developer.android.com/resources/dashboard/screens.html"
+      },
+      {
+        "real_name": "IconDipSize",
+        "display_name": "IconDipSize",
+        "severity": "warning",
+        "category": "usability",
+        "rule_title": "确保密度图标提供大致相同的密度独立大小",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "检查以多个密度提供的所有图标，全部计算为大致相同的与密度无关的像素（倾角）大小。这会捕获图像放置在错误的文件夹中的错误，或图标更改为新的尺寸，但某些文件夹被遗忘。"
+      },
+      {
+        "real_name": "IconDuplicates",
+        "display_name": "IconDuplicates",
+        "severity": "warning",
+        "category": "usability",
+        "rule_title": "使用不同的名称查找重复的图标",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "如果图标在不同名称下重复出现，则可以合并并只使用其中一个图标并删除其他图标，以缩小应用程序的大小。\n但是，重复的图标通常不是有意的，有时可能会指向意外覆盖或意外不更新的图标。"
+      },
+      {
+        "real_name": "IconDuplicatesConfig",
+        "display_name": "IconDuplicatesConfig",
+        "severity": "warning",
+        "category": "usability",
+        "rule_title": "查找各种配置参数中具有相同位图的图标",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "如果在不同的配置参数（例如drawable-hdpi或-v11）下提供图标，它们通常应该不同。该检测器捕获通常不是有意的不同配置文件夹中提供相同图标的情况。"
+      },
+      {
+        "real_name": "IconExpectedSize",
+        "display_name": "IconExpectedSize",
+        "severity": "warning",
+        "category": "usability",
+        "rule_title": "确保启动器图标，通知图标等具有正确的大小",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "预定义的大小（对于每个密度）用于启动器图标。你应该遵循这些约定来确保你的图标符合平台的整体外观。"
+      },
+      {
+        "real_name": "IconExtension",
+        "display_name": "IconExtension",
+        "severity": "warning",
+        "category": "usability",
+        "rule_title": "检查图标文件扩展名是否与文件中的实际图像格式匹配",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "确保图标具有正确的文件扩展名（例如，.png文件实际上是PNG格式，而不是例如名为.png的GIF文件。）"
+      },
+      {
+        "real_name": "IconLauncherShape",
+        "display_name": "IconLauncherShape",
+        "severity": "warning",
+        "category": "usability",
+        "rule_title": "检查启动器图标是否遵循建议的视觉样式",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "根据Android设计指南（http://developer.android.com/design/style/iconography.html），您的启动器图标应该“使用独特的轮廓”，即“​​三维前视图，如果从上面看，让用户感受到一定的深度。“独特的轮廓意味着你的发射器图标不应该是一个填充正方形。"
+      },
+      {
+        "real_name": "IconLocation",
+        "display_name": "IconLocation",
+        "severity": "warning",
+        "category": "usability",
+        "rule_title": "确保在密度无关的可绘制文件夹中未定义图像",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "res / drawable文件夹适用于与密度无关的图形，如XML中定义的形状。对于位图，将其移动到drawable-mdpi并考虑在drawable-ldpi，drawable-hdpi和drawable-xhdpi中提供更高和更低的分辨率版本。如果图标真的是密度独立的（例如纯色），则可以将其放置在drawable-nodpi中。"
+      },
+      {
+        "real_name": "IconMissingDensityFolder",
+        "display_name": "IconMissingDensityFolder",
+        "severity": "warning",
+        "category": "usability",
+        "rule_title": "确保所有密度文件夹都存在",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "如果为每个主要屏幕密度类别（低，中，高，特高）提供定制版本，图标看起来最好。此lint检查可识别缺少的文件夹，例如drawable-hdpi。\n低密度已经不再使用了，所以这个检查忽略了ldpi密度。要强制lint包含它，请设置环境变量ANDROID_LINT_INCLUDE_LDPI = true。有关当前密度使用情况的更多信息，请参阅http://developer.android.com/resources/dashboard/screens.html"
+      },
+      {
+        "real_name": "IconMixedNinePatch",
+        "display_name": "IconMixedNinePatch",
+        "severity": "warning",
+        "category": "usability",
+        "rule_title": "检查.png文件和九个补丁（.9.png）文件之间的文件名冲突",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "如果您不小心命名了两个单独的资源file.png和file.9.png，映像文件和九个补丁文件都将映射到相同的可绘制资源@ drawable / file，这可能不是预期的。"
+      },
+      {
+        "real_name": "IconNoDpi",
+        "display_name": "IconNoDpi",
+        "severity": "warning",
+        "category": "usability",
+        "rule_title": "查找出现在-nodpi文件夹和dpi文件夹中的图标",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "出现在drawable-nodpi文件夹中的位图不会被Android框架缩放。如果相同名称的可绘制资源同时出现在-nodpi文件夹以及dpi文件夹（如drawable-hdpi）中，则行为不明确，可能不是有意的。删除一个或另一个，或使用不同的名称作为图标。"
+      },
+      {
+        "real_name": "IconXmlAndPng",
+        "display_name": "IconXmlAndPng",
+        "severity": "warning",
+        "category": "usability",
+        "rule_title": "查找出现为可绘制的.xml文件和位图的图标",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "如果可绘制资源在drawable /文件夹中显示为.xml文件，通常不会故意将其用作使用相同名称的位图;通常您会期望可绘制的XML文件来定义状态，并且每个状态都有相应的可绘制位图。"
+      },
+      {
+        "real_name": "IllegalResourceRef",
+        "display_name": "IllegalResourceRef",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "检查只允许使用文字的资源引用",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "对于versionCode属性，您必须指定实际的整数字面值;您不能使用@ dimen / name资源的间接方式。同样，versionName属性应该是实际的字符串，而不是字符串资源的url。"
+      },
+      {
+        "real_name": "InconsistentArrays",
+        "display_name": "InconsistentArrays",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "检查数组中元素数量的不一致性",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "当数组在不同的语言环境中转换时，它通常应该具有与原始数组相同数量的元素。向数组添加或删除元素时，很容易忘记更新所有语言环境，并且此lint警告发现这些不一致。\n 但是请注意，在某些情况下，您确实想要在每个配置中声明不同数目的数组项（例如数组代表可用选项，而这些选项因不同布局方向而异等），请使用您自己的判断以决定这是否真的是一个错误。\n 如果它在您的项目中发现虚假错误，您可以禁止此错误类型。"
+      },
+      {
+        "real_name": "InconsistentLayout",
+        "display_name": "InconsistentLayout",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "检查布局变化是否一致",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "此检查可确保在多个资源文件夹中定义的布局资源指定相同的一组小部件。\n 这会发现您不小心忘记将小部件添加到布局的所有变体的情况，这可能导致findViewById（）失败时某些资源配置的运行时崩溃。\n 有些情况下这是故意的。例如，您可能有一个专用的大型平板电脑布局，其中添加了一些额外的小部件，这些小部件不存在于布局的电话版本中。只要访问布局资源的代码仔细处理，它就是有效的。在这种情况下，您可以针对给定的额外视图或缺少视图或整个布局来抑制此lint检查"
+      },
+      {
+        "real_name": "IndexOutOfBounds",
+        "display_name": "IndexOutOfBounds",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "IndexOutOfBounds",
+        "rule_params": "",
+        "custom": true,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "有可能出现索引越界问题，请注意判断索引边界值"
+      },
+      {
+        "real_name": "InefficientWeight",
+        "display_name": "InefficientWeight",
+        "severity": "warning",
+        "category": "performance",
+        "rule_title": "在LinearLayouts中查找低效的重量声明",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "当LinearLayout中只有一个小部件定义了一个权重时，为其分配一个0dp的宽度/高度会更高效，因为它无论如何都会吸收所有剩余的空间。如果声明的宽度/高度为0dp，则不必首先测量其自己的大小。"
+      },
+      {
+        "real_name": "InlinedApi",
+        "display_name": "InlinedApi",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "查找内联字段，这些字段可能适用于旧版平台，也可能不适用",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "此检查扫描应用程序中的所有Android API字段引用，并标记某些常量，如静态最终整数和字符串，这些常量将在更高版本中引入。这些实际上将被复制到类文件中而不是被引用，这意味着即使在较旧的设备上运行该值也是可用的。在某些情况下，这很好，并且在其他情况下可能会导致运行时崩溃或不正确的行为。这取决于上下文，因此仔细考虑代码并设备是否安全并且可以被抑制或代码是否需要保护。\n 如果你真的想使用这个API，并且不需要支持旧设备，只需在AndroidManifest.xml文件中设置minSdkVersion即可。\n如果您的代码故意访问较新的API，并且您已确保（例如，\n使用条件执行）该代码只能在支持的平台上调用，那么您可以使用@TargetApi批注指定您的类或方法，指定要应用的本地最低SDK，例如@TargetApi（11），以便此检查考虑11而不是清单文件的最低SDK作为所需的API级别。"
+      },
+      {
+        "real_name": "InnerclassSeparator",
+        "display_name": "InnerclassSeparator",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "确保使用'$'而不是''引用内部类。在类名中",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "当您在清单文件中引用内部类时，必须使用'$'而不是'。'。作为分隔符，即Outer $ Inner而不是Outer.Inner。\n （如果你对一个实际上不是内部类的类发出警告，那是因为你在包名中使用了大写字母，这不是常规的。）"
+      },
+      {
+        "real_name": "InOrMmUsage",
+        "display_name": "InOrMmUsage",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "寻找mm或尺寸的使用",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "避免使用mm（毫米）或in（inches）作为尺寸单位。\n 虽然原则上它应该工作，但不幸的是，许多设备不报告正确的真实物理密度，这意味着尺寸计算将无法正确工作。你最好使用dp（和字体大小，sp。）"
+      },
+      {
+        "real_name": "Instantiatable",
+        "display_name": "Instantiatable",
+        "severity": "fatal",
+        "category": "correctness",
+        "rule_title": "确保在清单文件中注册的类是可实例化的",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "在清单文件中注册的活动，服务，广播接收者等必须由系统“实例化”，这意味着该类必须是公共的，它必须有一个空的公共构造函数，如果它是一个内部类，它必须是一个静态内部类。"
+      },
+      {
+        "real_name": "InvalidId",
+        "display_name": "InvalidId",
+        "severity": "fatal",
+        "category": "correctness",
+        "rule_title": "检查无效的ID定义",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "一个id定义必须是@ + id / yourname的形式。这些工具过去并未拒绝@ + foo / bar形式的字符串，但这是一个错误，并且由于id整数被分配的方式，可能会导致棘手的错误。\n 如果你真的想为你的id有不同的“范围”，可以使用前缀，比如login_button1和login_button2。"
+      },
+      {
+        "real_name": "InvalidPackage",
+        "display_name": "InvalidPackage",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "查找API访问Android中不支持的API",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "此检查扫描图书馆寻找未包含在Android中的API的调用。\n 在创建Android项目时，将设置类路径，以便您只能访问Android中包含的API包中的类。但是，如果将其他项目添加到libs /文件夹，则不能保证这些.jar文件是使用特定于Android的类路径构建的，特别是可以访问不受支持的API（如java.applet）。\n 此检查通过库Jars扫描并查找对Android中未包含的API包的引用，并标记这些包。如果您的代码调用引用不支持的包的库类之一，这只是一个错误。"
+      },
+      {
+        "real_name": "JavascriptInterface",
+        "display_name": "JavascriptInterface",
+        "severity": "error",
+        "category": "security",
+        "rule_title": "确保添加了addJavascriptInterface的接口使用@JavascriptInterface进行注释",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "从API 17开始，必须使用@JavascriptInterface注释在注解了addJavascriptInterface方法的对象中注释方法。"
+      },
+      {
+        "real_name": "LabelFor",
+        "display_name": "LabelFor",
+        "severity": "warning",
+        "category": "accessibility",
+        "rule_title": "确保文本字段标有labelFor属性",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "如果您的minSdkVersion至少为17，则文本字段应使用labelFor属性进行标记。\n 如果您的视图被标记了，但是在包含此视图的其他布局中标记了一个标签，则只需从lint中禁用此警告即可。"
+      },
+      {
+        "real_name": "LibraryCustomView",
+        "display_name": "LibraryCustomView",
+        "severity": "fatal",
+        "category": "correctness",
+        "rule_title": "标记库中的自定义属性，它必须使用res-auto-namespace",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "在库项目中使用具有自定义属性的自定义视图时，布局必须使用特殊的命名空间http://schemas.android.com/apk/res-auto，而不是包含库项目自己的包的URI。这将用于在库资源合并到应用程序项目中时自动调整属性的命名空间。"
+      },
+      {
+        "real_name": "LocalSuppress",
+        "display_name": "LocalSuppress",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "在不支持基于类的检查的地方查找@SuppressLint注释",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "@SuppressAnnotation用于抑制Java文件中的Lint警告。\n但是，虽然许多lint检查分析Java源代码，他们可以在其中找到（例如）局部变量的注释，但某些检查正在分析.class文件。而在类文件中，注释只出现在类，字段和方法上。置于局部变量上的注释消失。如果您尝试为基于类文件的lint检查取消lint错误，则禁止注释将不起作用。您必须将注释移出到周围的方法。"
+      },
+      {
+        "real_name": "LogSpec",
+        "display_name": "LogSpec",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "LogSpec",
+        "rule_params": "",
+        "custom": true,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "请正确使用com.tencent.nijigen.util.LogUtil日志输出\r\n\r\n波洞项目自制专用"
+      },
+      {
+        "real_name": "MangledCRLF",
+        "display_name": "MangledCRLF",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "用DOS行结尾检查文件是否一致",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "在Windows上，行尾通常记录为回车加换行符：\\ r \\ n。\n 该检测器使用重复的回车符（无换行符）查找无效的行尾。以前版本的ADT插件可能会意外地将这些插入到文件中，并且在编辑文件时，编辑器可能会产生令人困惑的视觉工件。"
+      },
+      {
+        "real_name": "ManifestOrder",
+        "display_name": "ManifestOrder",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "在<application>标记之后检查清单问题，如<uses-sdk>",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "<application>标签应该出现在声明你需要哪个版本，你需要哪些特性，你需要哪些库等等的元素之后。过去，当<application>标签出现在这些其他元素之前时，就会出现微妙的错误（例如主题未正确应用），所以最好按照逻辑依赖性顺序排列清单。"
+      },
+      {
+        "real_name": "ManifestTypo",
+        "display_name": "ManifestTypo",
+        "severity": "fatal",
+        "category": "correctness",
+        "rule_title": "检查清单错别字",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "此检查通过清单查找，如果发现任何看起来可能拼写错误的标签，它们将被标记。"
+      },
+      {
+        "real_name": "MenuTitle",
+        "display_name": "MenuTitle",
+        "severity": "warning",
+        "category": "usability",
+        "rule_title": "确保所有菜单项提供标题",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "从操作栏文档中可以看出：“即使您没有声明标题与动作项j一起出现，为每个菜单项j定义android：标题也很重要，原因有三：*如果动作中没有足够的空间栏中，菜单项出现在溢出菜单中，只有标题出现。\n*视障用户阅读屏幕阅读器的标题。\n*如果操作项目仅出现图标，用户可以长按该项目以显示显示操作项目标题的工具提示。\nandroid：图标始终是可选的，但推荐使用。"
+      },
+      {
+        "real_name": "MergeRootFrame",
+        "display_name": "MergeRootFrame",
+        "severity": "warning",
+        "category": "performance",
+        "rule_title": "检查根<FrameLayout>是否可以用<merge>标记替换",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "如果一个<FrameLayout>是一个布局的根，并且不提供背景或填充等，它通常可以用一个稍微高效的<merge>标签替换。请注意，这取决于上下文，因此在继续之前，请确保您了解<merge>标签的工作方式。"
+      },
+      {
+        "real_name": "MissingApplicationIcon",
+        "display_name": "MissingApplicationIcon",
+        "severity": "warning",
+        "category": "usability",
+        "rule_title": "检查是否设置了应用程序图标",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "您应该为整个应用程序设置一个图标，因为没有默认值。该属性必须设置为对包含图像的可绘制资源的引用（例如@ drawable / icon）。"
+      },
+      {
+        "real_name": "MissingId",
+        "display_name": "MissingId",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "确保XML标签（如<fragment>）指定标识或标签属性",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "如果您没有在<fragment>元素上指定android：id或android：tag属性，那么如果活动重新启动（例如对于方向旋转），您可能会失去状态。从片段文档：“每个片段都需要一个唯一标识符，系统可以使用该标识符在活动重新启动时恢复片段（您可以使用该标识符来捕获片段以执行事务，例如将其删除）。*提供android ：具有唯一ID的id属性。\n*提供具有唯一字符串的android：tag属性。\n如果您既不提供前两项，系统也使用容器视图的ID。"
+      },
+      {
+        "real_name": "MissingPrefix",
+        "display_name": "MissingPrefix",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "检测不使用Android命名空间的XML属性",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "大多数Android视图在Android命名空间中都有属性。引用这些属性时，必须包含名称空间前缀，否则您的属性将被aapt解释为只是一个自定义属性。\n 同样，在清单文件中，几乎所有属性都应该位于android：命名空间中。"
+      },
+      {
+        "real_name": "MissingQuantity",
+        "display_name": "MissingQuantity",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "检查与每个区域设置相关的缺失数量字符串",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "不同的语言对语法与数量的一致性有不同的规则。例如，在英语中，数量1是特例。我们写“1本书”，但对于任何其他数量，我们会写“n书”。单数和复数之间的这种区分是非常普遍的，但其他语言更加细化。\n 这种棉绒检查会查看<plural>的每个翻译，并确保由该翻译提供给定语言考虑的所有数量字符串。\n 例如，英文翻译必须提供数量=“1”的字符串。\n同样，捷克语翻译必须提供数量=“少量”的字符串。"
+      },
+      {
+        "real_name": "MissingRegistered",
+        "display_name": "MissingRegistered",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "确保清单中引用的类存在于项目或库中",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "如果在清单中引用了一个类，它也必须存在于项目中（或者包含在项目中的某个库中）。此检查可帮助发现注册名称中的拼写错误，或尝试重命名或移动类，而无需正确更新清单文件。"
+      },
+      {
+        "real_name": "MissingSuperCall",
+        "display_name": "MissingSuperCall",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "寻找应该调用父方法的重写方法",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "某些方法（如View＃onDetachedFromWindow）要求您也将超级实现称为方法的一部分。"
+      },
+      {
+        "real_name": "MissingTranslation",
+        "display_name": "MissingTranslation",
+        "severity": "fatal",
+        "category": "correctness",
+        "rule_title": "检查并非所有字符串都被翻译的不完整翻译",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "如果应用程序具有多个语言环境，则用一种语言声明的所有字符串也应该用其他所有语言翻译。\n 如果字符串不应该被翻译，你可以在<string>元素上添加translatable =“false”属性，或者你可以在名为donottranslate.xml的资源文件中定义所有不可翻译的字符串。或者，您可以使用工具忽略该问题：ignore =“MissingTranslation”属性。\n 默认情况下，该检测器允许语言区域仅提供字符串的一个子集并回退到标准语言字符串。您可以通过设置环境变量ANDROID_LINT_COMPLETE_REGIONS来要求所有地区提供完整的翻译。\n 通过在资源文件中为根<resources>元素指定tools：locale =“languageCode”，可以告诉lint（和其他工具）res / values /文件夹中的哪种语言是默认语言。 （工具前缀是指名称空间声明http://schemas.android.com/tools。）"
+      },
+      {
+        "real_name": "MissingVersion",
+        "display_name": "MissingVersion",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "检查是否设置了应用程序名称和版本",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "您应该为您的应用程序定义版本信息。\nandroid：versionCode：一个整数值，表示应用程序代码相对于其他版本的版本。\n android：versionName：表示应用程序代码的发布版本的字符串值，因为它应该显示给用户。"
+      },
+      {
+        "real_name": "MockLocation",
+        "display_name": "MockLocation",
+        "severity": "fatal",
+        "category": "correctness",
+        "rule_title": "检查模拟位置提供程序仅用于调试版本",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "使用模拟位置提供程序（通过要求权限android.permission.ACCESS_MOCK_LOCATION）应该只在调试版本中完成。\n在Gradle项目中，这意味着您只应在调试源集特定清单文件中请求此权限。\n 要解决此问题，请在调试文件夹中创建一个新的清单文件，并在那里移动<uses-permission>元素。在Gradle项目中，调试清单覆盖文件的典型路径是src / debug / AndroidManifest.xml。"
+      },
+      {
+        "real_name": "MultipleUsesSdk",
+        "display_name": "MultipleUsesSdk",
+        "severity": "fatal",
+        "category": "correctness",
+        "rule_title": "检查<uses-sdk>元素最多显示一次",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "<uses-sdk>元素应该只出现一次;这些工具不会合并所有元素的内容，因此如果您将属性分成多个元素，则只有其中一个元素会生效。为了解决这个问题，只需将各种元素的所有属性合并到一个<uses-sdk>元素中即可。"
+      },
+      {
+        "real_name": "NamespaceTypo",
+        "display_name": "NamespaceTypo",
+        "severity": "fatal",
+        "category": "correctness",
+        "rule_title": "在命名空间声明中查找拼写错误",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "命名空间声明中的意外拼写错误会导致一些非常模糊的错误消息。此检查查找可能的拼写错误以帮助追踪这些错误。"
+      },
+      {
+        "real_name": "NestedScrolling",
+        "display_name": "NestedScrolling",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "检查滚动窗口小部件中是否有任何嵌套的滚动窗口小部件",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "滚动窗口小部件（如ScrollView）不应该包含任何嵌套的滚动窗口小部件，因为这具有各种可用性问题"
+      },
+      {
+        "real_name": "NestedWeights",
+        "display_name": "NestedWeights",
+        "severity": "warning",
+        "category": "performance",
+        "rule_title": "寻找嵌套的布局权重，这是昂贵的",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "布局权重需要一个小部件进行两次测量。当具有非零权重的LinearLayout嵌套在具有非零权重的另一个LinearLayout内时，测量次数呈指数增长。"
+      },
+      {
+        "real_name": "NetworkUtil",
+        "display_name": "NetworkUtil",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "NetworkUtil",
+        "rule_params": "",
+        "custom": true,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "主线程使用NetworkUtil.getNetworkType()可能会导致ANR，请确保是在子线程使用NetworkUtil.getNetworkType()"
+      },
+      {
+        "real_name": "NewApi",
+        "display_name": "NewApi",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "查找对所有目标API版本不支持的API的API访问",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "此检查会扫描应用程序中的所有Android API调用，并警告所有在此应用程序所针对的所有版本上都不可用的调用（根据清单中的最小SDK属性）。\r\n 如果你真的想使用这个API，并且不需要支持旧设备，只需在AndroidManifest.xml文件中设置minSdkVersion即可。\r\n如果您的代码故意访问较新的API，并且您已确保（例如，\r\n使用条件执行）该代码只能在支持的平台上调用，那么您可以使用@TargetApi批注指定您的类或方法，指定要应用的本地最低SDK，例如@TargetApi（11），以便此检查考虑11而不是清单文件的最低SDK作为所需的API级别。\r\n 如果您故意在样式定义中设置android：属性，请确保将其放置在values-v11文件夹中，以避免在某些设备上遇到运行时冲突，其中制造商已添加了自定义属性，这些自定义属性的ID与后续平台上的新ID冲突。\r\n 同样，您可以在XML文件中使用tools：targetApi =“11”来表示该元素只会在适当的上下文中膨胀。"
+      },
+      {
+        "real_name": "NotSibling",
+        "display_name": "NotSibling",
+        "severity": "fatal",
+        "category": "correctness",
+        "rule_title": "在RelativeLayouts中检查不引用同级的id引用",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "给定的RelativeLayout中的布局约束应引用同一相对布局中的其他视图。"
+      },
+      {
+        "real_name": "ObsoleteLayoutParam",
+        "display_name": "ObsoleteLayoutParam",
+        "severity": "warning",
+        "category": "performance",
+        "rule_title": "查找对给定父布局无效的布局参数",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "给定的layout_param没有为给定的布局定义，这意味着它没有效果。这通常发生在您更改父布局或移动视图代码而未更新布局参数时发生。这会在运行时造成无用的属性处理，并且误导其他人读取布局，因此应该删除参数。"
+      },
+      {
+        "real_name": "OldTargetApi",
+        "display_name": "OldTargetApi",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "检查清单是否指定了最近的targetSdkVersion",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "当您的应用程序运行在比您的targetSdkVersion更新的Android版本上时，它指定它已经过测试，各种兼容模式将启动。这可确保您的应用程序继续工作，但它可能看起来不合适。例如，如果targetSdkVersion小于14，则您的应用可能会在UI中获得一个选项按钮。\n 要解决此问题，请将targetSdkVersion设置为最高可用值。\n然后测试你的应用程序，确保一切正常。您可能需要查阅兼容性说明，以了解哪些更改适用于您要添加支持的每个版本：http://developer.android.com/reference/android/os/Build.VERSION_CODES.html"
+      },
+      {
+        "real_name": "OnClick",
+        "display_name": "OnClick",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "确保onClick属性值引用真实方法",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "onClick属性值应该是该视图上下文中用于在单击视图时调用的方法的名称。该名称必须对应于一个公共方法，该方法只需要一个View类型的参数。\n 必须是字符串值，使用'\\;'转义字符如'\\ n'或'\\ uxxxx'以获得unicode字符。"
+      },
+      {
+        "real_name": "Orientation",
+        "display_name": "Orientation",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "检查具有多个子项的LinearLayouts设置方向",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "LinearLayout的默认方向是水平的。很容易相信布局是垂直的，添加多个孩子，并想知道为什么只有第一个孩子可见（当后面的孩子在屏幕右侧）。这个lint规则通过在使用隐式方向和多个子项时使用LinearLayout进行警告来帮助查明这个问题。\n 它还检查空的LinearLayouts，而没有也定义id属性的方向属性。这捕获了儿童将动态添加到LinearLayout的场景。"
+      },
+      {
+        "real_name": "Overdraw",
+        "display_name": "Overdraw",
+        "severity": "warning",
+        "category": "performance",
+        "rule_title": "寻找透支问题（一个视图只能被完全绘制）",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "如果您在根视图上设置可绘制背景，则应使用主题背景为空的自定义主题。否则，主题背景将首先绘制，只有让您的自定义背景完全覆盖它;这被称为“透支”。\n 注意：该检测器依赖于根据扫描Java代码来确定哪些布局与哪些活动相关联，并且目前正在使用不精确的模式匹配算法来执行此操作。因此，它可能会错误地断定布局与哪个活动相关联，然后错误地抱怨隐藏了背景主题。\n 如果您想在多个页面上使用自定义背景，那么您应该考虑使用自定义背景制作自定义主题，并使用该主题而不是根元素背景。\n 当然，您的自定义绘图可能是半透明的，并且您希望将其与背景混合在一起。但是，如果您将背景与可绘制画面预先混合，并使用生成的图像或颜色作为自定义主题背景，则会获得更好的性能。"
+      },
+      {
+        "real_name": "Override",
+        "display_name": "Override",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "查找将意外覆盖更高版本中方法的方法声明",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "假设您正在构建Android API 8，并且已经分类为Activity。在你的子类中添加一个名为isDestroyed（）的新方法。在稍后的时间点，Android中会添加一个同名和签名的方法。您的方法现在将覆盖Android方法，并可能违反合同。\n你的方法没有调用super.isDestroyed（），因为你的编译目标不知道这个方法。\n 上述场景就是这款棉绒探测器所寻找的。上面的例子是真实的，因为isDestroyed（）是在API 17中添加的，但是对于添加到Android类的子类中的任何方法，其构建目标低于引入方法的版本都是如此。\n 为了解决这个问题，或者重命名你的方法，或者如果你真的试图增加内置方法（如果可用），切换到更高的构建目标，你可以在你的重写方法中有意地添加@Override，并在适当的时候调用超级方法。"
+      },
+      {
+        "real_name": "PackagedPrivateKey",
+        "display_name": "PackagedPrivateKey",
+        "severity": "fatal",
+        "category": "security",
+        "rule_title": "查找打包的私钥文件",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "一般来说，您不应该在您的应用程序中打包私钥文件。"
+      },
+      {
+        "real_name": "ParcelCreator",
+        "display_name": "ParcelCreator",
+        "severity": "warning",
+        "category": "usability",
+        "rule_title": "检查实现Parcelable的类还提供CREATOR字段",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "根据Parcelable接口文档，“实现Parcelable接口的类还必须有一个名为CREATOR的静态字段，它是实现Parcelable.Creator接口的对象。"
+      },
+      {
+        "real_name": "ParseColor",
+        "display_name": "ParseColor",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "ParseColor",
+        "rule_params": "",
+        "custom": true,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "禁止直接使用Color.parseColor()，请使用com.tencent.nijigen.utils.ColorUtil.parseColor()"
+      },
+      {
+        "real_name": "PrivateResource",
+        "display_name": "PrivateResource",
+        "severity": "fatal",
+        "category": "correctness",
+        "rule_title": "寻找对私人资源的参考",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "私人资源不应被引用;可能并不是到处都有，甚至它们可能在没有通知的情况下消失。\n 要解决此问题，请将资源复制到您自己的项目中。您可以在$ ANDROID_SK / platforms / android- $ VERSION / data / res /下找到平台资源。"
+      },
+      {
+        "real_name": "Proguard",
+        "display_name": "Proguard",
+        "severity": "fatal",
+        "category": "correctness",
+        "rule_title": "在proguard配置文件中寻找问题",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "在proguard配置文件中使用-keepclasseswithmembernames是不正确的;它可能会导致一些符号被重命名，而这不应该是。\n早期版本的ADT用于创建格式错误的proguard.cfg文件。而不是-keepclasseswithmembernames使用-keepclasseswithmembers，因为旧标志也意味着“允许缩小”，这意味着只从XML引用的符号，而不是Java（如可能的CustomViews）可以被删除。"
+      },
+      {
+        "real_name": "ProguardSplit",
+        "display_name": "ProguardSplit",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "检查包含通用Android规则的旧proguard.cfg文件",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "早期版本的Android工具捆绑了一个proguard.cfg文件，其中包含一个适用于Android缩小和混淆的ProGuard配置文件。但是，该版本已复制到新项目中，这意味着它不会继续更新，因为我们改进了Android的默认ProGuard规则。\n 在新版本的工具中，我们将ProGuard配置分成两部分：*一个简单的配置文件，其中只包含项目特定的标志，*包含推荐的Android项目ProGuard选项集的通用配置文件。这个通用文件位于SDK安装目录中，这意味着它会随着工具一起更新。\n 为了使其工作，project.properties文件中的proguard.config属性现在引用了一个路径，因此您可以引用通用文件以及您自己的文件（以及任何其他文件）。\n 为了您的项目迁移到新的设置，创建项目中包含的任何项目的具体ProGuard的标志以及你所做的任何定制一个新的ProGuard-project.txt文件，然后更新您的project.properties文件中包含：proguard.config = $ {sdk.dir} /tools/proguard/proguard-android.txt:proguard-projec .txt"
+      },
+      {
+        "real_name": "ProtectedPermissions",
+        "display_name": "ProtectedPermissions",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "查找仅授予系统应用程序的权限",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "保护级别签名或signatureOrSystem权限仅授予系统应用程序。如果应用程序是常规的非系统应用程序，它将永远无法使用这些权限。"
+      },
+      {
+        "real_name": "PxUsage",
+        "display_name": "PxUsage",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "寻找使用px维度",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "出于性能原因并保持代码简单，Android系统使用像素作为表示尺寸或坐标值的标准单位。\n这意味着视图的尺寸总是使用像素代码表示，但始终基于当前的屏幕密度。例如，如果myView.getWidth（）返回10，则当前屏幕上的视图宽度为10像素，但在具有更高密度屏幕的设备上，返回的值可能为15.如果在应用程序代码中使用像素值使用未针对当前屏幕密度进行预缩放的位图，则可能需要缩放用于代码中的像素值以匹配未缩放的位图源。"
+      },
+      {
+        "real_name": "Recycle",
+        "display_name": "Recycle",
+        "severity": "warning",
+        "category": "performance",
+        "rule_title": "寻找资源缺少recycle（）调用",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "许多资源（如TypedArrays，VelocityTracker等）应在使用后回收（使用回收（）调用）。此lint检查查找丢失的回收（）调用。"
+      },
+      {
+        "real_name": "Registered",
+        "display_name": "Registered",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "确保活动，服务和内容提供商在清单中注册",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "应该使用<activity>，<service>和<provider>标签在AndroidManifest.xml文件中注册活动，服务和内容提供者。\n 如果您的活动仅仅是一个旨在被其他“真实”活动划分子类别的父类，则将其作为抽象类。"
+      },
+      {
+        "real_name": "RequiredSize",
+        "display_name": "RequiredSize",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "确保为所有视图指定了layout_width和layout_height",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "所有视图都必须指定一个明确的layout_width和layout_height属性。\n对此有一个运行时检查，因此如果您未能指定大小，则会在运行时引发异常。\n 也可以通过样式指定这些宽度。作为一种特殊情况，GridLayout不需要您指定大小。"
+      },
+      {
+        "real_name": "ResAuto",
+        "display_name": "ResAuto",
+        "severity": "fatal",
+        "category": "correctness",
+        "rule_title": "使用硬编码的软件包名称查找资源命名空间",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "在Gradle项目中，最终APK中使用的实际包可能会有所不同;因为您可以在一个版本中添加.debug包后缀，而不是其他版本。因此，您不应该在资源中硬编码应用程序包;相反，使用特殊的命名空间http://schemas.android.com/apk/res-auto，这将导致工具为资源找出正确的命名空间，而不管构建过程中使用的实际包。"
+      },
+      {
+        "real_name": "ResourceAsColor",
+        "display_name": "ResourceAsColor",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "查找对setColor的调用，其中传递资源ID而不是解析颜色",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "采用整数形式的颜色的方法应该传递RGB三元组，而不是实际的颜色资源ID。您必须首先调用getResources（）。getColor（resource）来解析实际颜色值。"
+      },
+      {
+        "real_name": "RtlCompat",
+        "display_name": "RtlCompat",
+        "severity": "error",
+        "category": "convention",
+        "rule_title": "寻找RTL支持的兼容性问题",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "API 17添加了一个textAlignment属性来指定文本对齐。但是，如果您支持比API 17更早的版本，则还必须指定gravity或layout_gravity属性，因为较早的平台将忽略textAlignment属性。"
+      },
+      {
+        "real_name": "RtlEnabled",
+        "display_name": "RtlEnabled",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "在不启用RTL支持的情况下查找从右到左文本常量的用法",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "要启用从右至左的支持，在API 17及更高版本上运行时，必须在清单<application>元素中设置android：supportsRtl属性。\n如果您已开始添加RTL属性，但尚未完成迁移，则可以将该属性设置为false以满足此lint检查。"
+      },
+      {
+        "real_name": "RtlHardcoded",
+        "display_name": "RtlHardcoded",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "寻找可以作为双向文本开始/结束的硬编码左/右常量",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "在文本从右向左流动的区域设置中呈现布局时，使用Gravity＃LEFT和Gravity＃RIGHT可能会导致问题。改用Gravity＃START和Gravity＃END。同样，在XML gravity和layout_gravity属性中，使用start而不是left。\n对于paddingLeft和layout_marginLeft等XML属性，请使用paddingStart和layout_marginStart。注意：如果minSdkVersion小于17，则应添加较旧的左/右属性以及新的开始/右属性。在较旧的平台上，RTL不受支持且开始/权限属性未知且因此被忽略，您需要较旧的左/右属性。有一个单独的皮棉检查，捕捉这种类型的错误。\n（注意：对于Gravity＃LEFT和Gravity＃START，即使针对老平台，也可以使用这些常量，因为起始位掩码是左位掩码的超集，因此，您可以使用gravity =“start”而不是gravity =“左|启动”）。"
+      },
+      {
+        "real_name": "Schedulers",
+        "display_name": "Schedulers",
+        "severity": "error",
+        "category": "other",
+        "rule_title": "Schedulers",
+        "rule_params": "",
+        "custom": true,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "禁止直接使用Schedulers做和线程相关的事，请使用com.tencent.nijigen.thread.ThreadManager.Schedulers"
+      },
+      {
+        "real_name": "ScrollViewCount",
+        "display_name": "ScrollViewCount",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "检查ScrollViews是否只有一个子部件",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "ScrollViews只能有一个子部件。如果您想要更多的孩子，请将它们包装在容器布局中。"
+      },
+      {
+        "real_name": "ScrollViewSize",
+        "display_name": "ScrollViewSize",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "检查ScrollViews在滚动维度中使用wrap_content",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "ScrollView儿童必须将其layout_width或layout_height属性设置为wrap_content，而不是滚动维度中的fill_parent或match_parent"
+      },
+      {
+        "real_name": "SdCardPath",
+        "display_name": "SdCardPath",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "寻找/ SD卡的硬编码引用",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "你的代码不应该直接引用/ sdcard路径;改为使用Environment.getExternalStorageDirectory（）。getPath（）。\n 同样，不要直接引用/ data / data /路径;它可以在多用户场景中有所不同。相反，使用Context.getFilesDir（）。getPath（）。"
+      },
+      {
+        "real_name": "SecureRandom",
+        "display_name": "SecureRandom",
+        "severity": "warning",
+        "category": "performance",
+        "rule_title": "寻找SecureRandom类的可疑用法",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "指定一个固定的种子将导致实例返回一个可预测的数字序列。这对于测试可能有用，但不适合安全使用。"
+      },
+      {
+        "real_name": "SelectableText",
+        "display_name": "SelectableText",
+        "severity": "warning",
+        "category": "usability",
+        "rule_title": "寻找可能允许选择文本的TextViews",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "如果使用<TextView>来显示数据，用户可能希望复制该数据并将其粘贴到别处。为了允许这个，<TextView>应该指定android：textIsSelectable =“true”。\n 此lint检查查找可能正在显示数据的TextViews：其文本是动态设置的视图。此值在API 11以前的平台上将被忽略，因此无论您的minSdkVersion如何设置它都可以。"
+      },
+      {
+        "real_name": "ServiceCast",
+        "display_name": "ServiceCast",
+        "severity": "fatal",
+        "category": "correctness",
+        "rule_title": "查找值错误地转换的Context＃getSystemService（）调用",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "当您调用Context＃getSystemService（）时，结果通常会转换为特定的接口。此lint检查可确保演员阵列与预期的返回值类型兼容。"
+      },
+      {
+        "real_name": "SetJavaScriptEnabled",
+        "display_name": "SetJavaScriptEnabled",
+        "severity": "warning",
+        "category": "security",
+        "rule_title": "寻找android.webkit.WebSettings.setJavaScriptEnabled的调用",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "如果您不确定您的应用程序确实需要JavaScript支持，那么您的代码不应该调用setJavaScriptEnabled。"
+      },
+      {
+        "real_name": "ShowToast",
+        "display_name": "ShowToast",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "寻找创建Toast的代码，但忘记调用show（）",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Toast.makeText（）创建一个Toast，但不显示它。您必须在生成的对象上调用show（）才能使Toast显示。"
+      },
+      {
+        "real_name": "SimpleDateFormat",
+        "display_name": "SimpleDateFormat",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "直接使用SimpleDateFormat而不显式区域设置",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "几乎所有调用者都应该使用getDateInstance（），getDateTimeInstance（）或getTimeInstance（）来获取适合用户语言环境的现成SimpleDateFormat实例。您直接创建实例的主要原因是您需要格式化/解析特定的机器可读格式，在这种情况下，您几乎肯定希望明确要求美国确保获得ASCII数字（而不是，比如阿拉伯数字）。\n 因此，您应该使用SimpleDateFormat构造函数的形式，在其中传递显式语言环境（如Locale.US），或者使用其中一个get实例方法，或者如果真的知道您在做什么，则可以抑制此错误。"
+      },
+      {
+        "real_name": "SmallSp",
+        "display_name": "SmallSp",
+        "severity": "warning",
+        "category": "usability",
+        "rule_title": "寻找太小的文字大小",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "避免使用小于12sp的尺寸。"
+      },
+      {
+        "real_name": "SpUsage",
+        "display_name": "SpUsage",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "查找使用dp代替文本大小的sp尺寸",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "设置文字大小时，通常应使用sp或“与刻度无关的像素”。这就像dp单元一样，但它也会根据用户的字体大小首选项进行缩放。建议您在指定字体大小时使用本机，以便针对屏幕密度和用户偏好进行调整。\n 有些情况下你可能需要使用dp;通常这发生在文本位于具有特定dp大小的容器中时。这将防止文字溢出容器外。但请注意，这意味着用户的字体大小设置不受尊重，因此请考虑调整布局本身以使其更加灵活。"
+      },
+      {
+        "real_name": "StateListReachable",
+        "display_name": "StateListReachable",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "在<selector>中查找无法访问的状态",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "在选择器中，只有状态列表中的最后一个孩子应该省略状态限定符。如果不是，列表中的所有后续项目将被忽略，因为给定项目将全部匹配。"
+      },
+      {
+        "real_name": "StopShip",
+        "display_name": "StopShip",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "寻找形式为// STOPSHIP的注释标记，它表示代码不应该被释放",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "使用注释// STOPSHIP可用于标记不完整但签入的代码。此注释标记可用于指示代码在问题得到解决之前不应该发货，lint将查找这些代码。"
+      },
+      {
+        "real_name": "StringFormatCount",
+        "display_name": "StringFormatCount",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "确保使用所有格式字符串，并且跨翻译定义相同的数字",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "当格式化的字符串需要参数时，通常需要在所有翻译中引用相同的参数。有些情况并非如此，所以这个问题在默认情况下是一个警告而不是错误。但是，这通常发生在语言未被正确翻译或更新时。"
+      },
+      {
+        "real_name": "StringFormatInvalid",
+        "display_name": "StringFormatInvalid",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "检查格式字符串是否有效",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "如果一个字符串包含'％'字符，那么该字符串可能是一个格式化字符串，它将从Java代码传递给String.format，以用特定值替换每个'％'的出现。\n 这个lint警告检查两个相关的问题：（1）格式化无效的字符串，这意味着String.format会在尝试使用格式字符串时在运行时引发异常。\n（2）包含'％'的字符串不会格式化字符串，而是传递给String.format调用。在这种情况下，'％'将需要转义为'%%'。\n 注意：并非所有看起来像格式化字符串的字符串都是供String.format使用的;例如，它们可能包含用于android.text.format.Time＃format（）的日期格式。林特不能总是找出一个字符串是日期格式，所以你可能会在这些情况下得到错误的警告。有关如何在此情况下抑制错误的信息，请参阅抑制帮助主题。"
+      },
+      {
+        "real_name": "StringFormatMatches",
+        "display_name": "StringFormatMatches",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "确保<string>定义中使用的格式与String.format调用兼容",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "这个lint检查确保了以下内容：（1）如果格式字符串有多个翻译，则所有翻译对于相同编号的参数使用相同类型（2）Java中格式字符串的用法与格式字符串一致，这意味着传递给String.format的参数类型与格式字符串中的参数类型相匹配。"
+      },
+      {
+        "real_name": "StringToNumberCast",
+        "display_name": "StringToNumberCast",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "StringToNumberCast",
+        "rule_params": "",
+        "custom": true,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "禁止使用String.toInt()，Integer.parseInt()等方法将字符串转换为数字，请使用Kotlin系列扩展方法String.toIntOrDefault()/toIntOrNull()"
+      },
+      {
+        "real_name": "StyleCycle",
+        "display_name": "StyleCycle",
+        "severity": "fatal",
+        "category": "correctness",
+        "rule_title": "在样式定义中寻找循环",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": "该规则在2019版CodeDog中已废弃。",
+        "owner": null,
+        "labels": [],
+        "description": "样式定义中不应该有循环，因为这会导致运行时异常。"
+      },
+      {
+        "real_name": "Suspicious0dp",
+        "display_name": "Suspicious0dp",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "查找0dp作为垂直LinearLayout中的宽度或水平方向的高度",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "使用0dp作为具有权重的水平LinearLayout中的宽度是一种有用的技巧，可确保在调整子项大小时仅使用权重（而不是内在大小）。\n 但是，如果您在相反维度使用0dp，则视图将不可见。如果您更改布局的方向而不翻转所有子项中的0dp尺寸，则会发生这种情况。"
+      },
+      {
+        "real_name": "SuspiciousImport",
+        "display_name": "SuspiciousImport",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "检查'import android.R'语句，这通常是偶然的",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "导入android.R通常不是有意的;它有时会在您使用IDE时发生，并要求它在项目的R类不存在时自动添加导入。\n 一旦导入那里，你可能会得到很多“混淆”的错误消息，因为当然android.R中的可用字段并不是你期望看到你自己的R类的那些字段。"
+      },
+      {
+        "real_name": "TextFields",
+        "display_name": "TextFields",
+        "severity": "warning",
+        "category": "usability",
+        "rule_title": "查找缺少inputType或提示设置的文本字段",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "在文本字段上提供inputType属性可以提高可用性，因为根据要输入的数据，可以向用户显示优化的键盘（例如电话号码的数字和括号）。同样，提示属性会向用户显示提示文本字段中的内容。\n 棉绒探测器还查看视图的ID，如果该ID提供该字段的目的提示（例如，该ID包含短语电话或电子邮件），则lint还将确保inputType包含相应的类型属性。\n 如果你真的想保持文本字段是通用的，你可以通过设置inputType =“text”来抑制这个警告。"
+      },
+      {
+        "real_name": "TextViewEdits",
+        "display_name": "TextViewEdits",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "查找用于输入的TextView",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "使用<TextView>输入文本通常是一个错误，您应该使用<EditText>代替。 EditText是TextView的子类，一些编辑支持由TextView提供，因此可以在TextView上设置一些与输入相关的属性。但是，使用TextView和输入属性通常是剪切和粘贴错误。要输入文本，你应该使用<EditText>。\n此检查还检查TextView的子类，如Button和CheckBox，因为它们具有相同的问题：它们不应与可编辑属性一起使用。"
+      },
+      {
+        "real_name": "ToastShow",
+        "display_name": "ToastShow",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "ToastShow",
+        "rule_params": "",
+        "custom": true,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "禁止直接使用Toast.Show()，请使用com.tencent.nijigen.utils.ToastUtil.show()"
+      },
+      {
+        "real_name": "TooDeepLayout",
+        "display_name": "TooDeepLayout",
+        "severity": "warning",
+        "category": "performance",
+        "rule_title": "检查布局层次结构是否太深",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "嵌套过多的布局对性能不利。考虑使用更平坦的布局（比如RelativeLayout或GridLayout）。默认最大深度为10，但可以使用环境变量ANDROID_LINT_MAX_DEPTH进行配置。"
+      },
+      {
+        "real_name": "TooManyViews",
+        "display_name": "TooManyViews",
+        "severity": "warning",
+        "category": "performance",
+        "rule_title": "检查布局是否有太多视图",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "在单一布局中使用太多视图对性能不利。考虑使用复合绘图或其他技巧来减少此布局中的视图数量。\n 最大查看次数默认为80，但可以使用环境变量ANDROID_LINT_MAX_VIEW_COUNT进行配置。"
+      },
+      {
+        "real_name": "TrulyRandom",
+        "display_name": "TrulyRandom",
+        "severity": "warning",
+        "category": "security",
+        "rule_title": "寻找对可能受到SecureRandom漏洞影响的JCA基元的调用",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "密钥生成，签名，加密和随机数生成可能因Android 4.3及更低版本的底层PRNG初始化不当而无法获得密码强大的值。\n 如果您的应用程序依赖于加密安全的随机数生成，则应应用https://android-developers.blogspot.com/2013/08/some-securerandom-thoughts.htm中的解决方法说明。\n 这种无绒规则大多是信息性的;它不能准确检测是否需要密码安全的RNG，或者是否已经应用了解决方法。在阅读博客条目并在必要时更新您的代码后，您可以禁用此lint问题。"
+      },
+      {
+        "real_name": "TypographyDashes",
+        "display_name": "TypographyDashes",
+        "severity": "warning",
+        "category": "usability",
+        "rule_title": "寻找可以用n短划线和m短划线字符替代的连字符的用法",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "“n短划线”（Ƀ， - ）和“m短划线”（j， - ）字符用于范围（n短划线）和短划线（m短划线）。使用这些而不是简单的连字符可以使文本更易于阅读，并且您的应用程序看起来更加精美。"
+      },
+      {
+        "real_name": "TypographyEllipsis",
+        "display_name": "TypographyEllipsis",
+        "severity": "warning",
+        "category": "usability",
+        "rule_title": "查找可用省略号字符替换的省略号字符串（...）",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "您可以用专用的省略号字符（省略号字符（m，...））替换字符串“...”。这可以帮助使文本更具可读性。"
+      },
+      {
+        "real_name": "TypographyFractions",
+        "display_name": "TypographyFractions",
+        "severity": "warning",
+        "category": "usability",
+        "rule_title": "查找可以用分数字符替换的分数字符串",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "您可以使用专用字符替换某些字符串，例如1/2和1/4，例如？ （½）和？ （1/4）。这可以帮助使文本更具可读性。"
+      },
+      {
+        "real_name": "TypographyOther",
+        "display_name": "TypographyOther",
+        "severity": "warning",
+        "category": "usability",
+        "rule_title": "寻找杂项印刷问题，如将（c）替换为？",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "此检查可查找各种印刷问题，并提供替换序列，使文本更易于阅读，并使您的应用更精美。"
+      },
+      {
+        "real_name": "TypographyQuotes",
+        "display_name": "TypographyQuotes",
+        "severity": "warning",
+        "category": "usability",
+        "rule_title": "寻找可以用弯曲的引号取代的直接引号",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "直接单引号和双引号当用作一对时，可以用“弯曲引号”（或方向引号）替代。这可以使文本更具可读性。\n 请注意，你不应该使用严重的口音和撇号引用，“这样的”。\n （另请注意，您不应使用曲线引号代码段。）"
+      },
+      {
+        "real_name": "Typos",
+        "display_name": "Typos",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "寻找消息中的错别字",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "此检查通过字符串定义进行查看，如果发现任何看起来可能拼写错误的单词，则会对其进行标记。"
+      },
+      {
+        "real_name": "UniquePermission",
+        "display_name": "UniquePermission",
+        "severity": "fatal",
+        "category": "correctness",
+        "rule_title": "检查权限名称是否唯一",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "不合格的名称或您的权限必须是唯一的。原因是在构建时，aapt工具将生成一个名为Manifest的类，其中包含每个权限的字段。这些字段使用您的权限未限定名称命名（即最后一个点之后的名称部分）。\n 如果多个权限映射到相同的字段名称，则该字段将任意命名其中的一个。"
+      },
+      {
+        "real_name": "UnknownId",
+        "display_name": "UnknownId",
+        "severity": "fatal",
+        "category": "correctness",
+        "rule_title": "检查RelativeLayouts中未在别处定义的id引用",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "@ + id /语法引用现有的id，或者如果还没有在其他地方定义，则创建一个新的id。但是，这意味着如果您的引用中存在拼写错误，或者引用的视图不再存在，则不会收到警告，因为该id将根据需要创建。此检查将捕获您重命名了某个标识但未更新其所有引用的错误。"
+      },
+      {
+        "real_name": "UnknownIdInLayout",
+        "display_name": "UnknownIdInLayout",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "确保@ + id引用引用同一布局中的视图",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "@ + id /语法引用现有的id，或者如果还没有在其他地方定义，则创建一个新的id。但是，这意味着如果您的引用中存在拼写错误，或者引用的视图不再存在，则不会收到警告，因为该id将根据需要创建。\n 这有时是有意为之的，例如，您指的是通过包含以不同布局提供的视图。但是，如果您有拼写错误，或者您已更名视图而未更新对其的所有引用，则通常会发生意外。"
+      },
+      {
+        "real_name": "UnlocalizedSms",
+        "display_name": "UnlocalizedSms",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "寻找代码发送短信到未定位的电话号码",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "SMS目标号码必须以国家代码开头，或者应用程序代码必须确保仅当用户与接收方位于同一国家时才会发送SMS。"
+      },
+      {
+        "real_name": "UnusedIds",
+        "display_name": "UnusedIds",
+        "severity": "warning",
+        "category": "performance",
+        "rule_title": "寻找未使用的ID",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "这个资源ID定义似乎并不需要，因为它没有从任何地方引用。有了id定义，即使未被使用，也不一定是一个坏主意，因为它们使布局和菜单更容易工作，所以没有强烈的理由来删除它们。"
+      },
+      {
+        "real_name": "UnusedNamespace",
+        "display_name": "UnusedNamespace",
+        "severity": "warning",
+        "category": "performance",
+        "rule_title": "在XML文档中查找未使用的名称空间",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "未使用的名称空间声明占用空间并且需要不必要的处理"
+      },
+      {
+        "real_name": "UnusedQuantity",
+        "display_name": "UnusedQuantity",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "检查未在此语言中使用的数量字符串翻译",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Android定义了许多不同数量的字符串，例如零，一，少和许多。但是，许多语言在语法上不能区分所有这些不同的数量。\n 这个lint检查会查看为每个翻译定义的数量字符串，并标记任何未使用的数量字符串（因为语言不会使数量有所区别，因此Android不会查找它）。\n例如，在中文中，只使用其他数量，因此即使提供零和一的翻译，当调用getQuantityString（）时也不会返回这些字符串，即使使用0或1也是如此。"
+      },
+      {
+        "real_name": "UnusedResources",
+        "display_name": "UnusedResources",
+        "severity": "warning",
+        "category": "performance",
+        "rule_title": "寻找未使用的资源",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "未使用的资源使应用程序变大并减慢构建。"
+      },
+      {
+        "real_name": "UseCheckPermission",
+        "display_name": "UseCheckPermission",
+        "severity": "warning",
+        "category": "security",
+        "rule_title": "确保使用检查权限调用的返回值",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "您通常要使用检查权限的结果;这些方法返回是否允许该权限;如果权限未被授予，他们不会抛出错误。对返回值没有任何作用的代码可能意味着调用强制方法，例如而不是Context＃checkCallingPermission，它应该调用Context＃enforceCallingPermission。"
+      },
+      {
+        "real_name": "UseCompoundDrawables",
+        "display_name": "UseCompoundDrawables",
+        "severity": "warning",
+        "category": "performance",
+        "rule_title": "检查当前节点是否可以由使用复合绘图的TextView替换。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "包含ImageView和TextView的LinearLayout可以更有效地处理为复合可绘制（单个TextView，使用drawableTop，drawableLeft，drawableRight和/或drawableBottom属性在文本旁边绘制一个或多个图像）。\n 如果这两个小部件彼此之间有边距偏移，则可以用drawablePadding属性替换。\n 有一个lint quickfix在Eclipse插件中执行这种转换。"
+      },
+      {
+        "real_name": "UselessLeaf",
+        "display_name": "UselessLeaf",
+        "severity": "warning",
+        "category": "performance",
+        "rule_title": "检查是否可以删除叶子布局。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "没有子女或没有背景的布局通常可以被删除（因为它是不可见的），以获得更平坦和更高效的布局层次结构。"
+      },
+      {
+        "real_name": "UselessParent",
+        "display_name": "UselessParent",
+        "severity": "warning",
+        "category": "performance",
+        "rule_title": "检查是否可以删除父级布局。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "包含没有兄弟的子项的布局不是滚动视图或根布局，并且没有背景，可以将其删除并让子项直接移入父项，以获得更平坦更高效的布局分层结构。"
+      },
+      {
+        "real_name": "UsesMinSdkAttributes",
+        "display_name": "UsesMinSdkAttributes",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "检查是否定义了最低SDK和目标SDK属性",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "清单应该包含一个<uses-sdk>元素，它定义了应用程序运行所需的最低API级别以及目标版本（您测试版本的最高API级别）。"
+      },
+      {
+        "real_name": "UseSparseArrays",
+        "display_name": "UseSparseArrays",
+        "severity": "warning",
+        "category": "performance",
+        "rule_title": "寻找机会用更高效的SparseArray替换HashMaps",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "对于键类型为integer的映射，使用Android SparseArray API通常效率更高。此检查可确定您可能想要考虑使用SparseArray而不是HashMap以获得更好性能的场景。\n 当值类型是像int这样的基本类型时，这是特别有用的，在这里你可以使用SparseIntArray并且避免从int到Integer的值自动装箱。\n 如果您需要构建HashMap，因为您需要调用需要Map的控件之外的API，则可以使用例如@SuppressLint注释来禁止此警告。"
+      },
+      {
+        "real_name": "UseValueOf",
+        "display_name": "UseValueOf",
+        "severity": "warning",
+        "category": "performance",
+        "rule_title": "寻找使用valueOf的包装类的新用法",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "你不应该直接调用包装类的构造函数，比如`new Integer（42）`。相反，调用valueOf工厂方法，如Integer.valueOf（42）。这通常会使用较少的内存，因为常见的整数（如0和1）将共享一个实例。"
+      },
+      {
+        "real_name": "ValidFragment",
+        "display_name": "ValidFragment",
+        "severity": "fatal",
+        "category": "correctness",
+        "rule_title": "确保片段子类可以被实例化",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "从碎片文档：每个碎片必须有一个空的构造函数，所以它可以在恢复其活动状态时被实例化。强烈建议子类没有带参数的其他构造函数，因为这些构造函数在重新实例化时不会被调用;相反，调用者可以使用setArguments（Bundle）提供参数，然后使用getArguments（）由Fragment检索参数。"
+      },
+      {
+        "real_name": "ViewConstructor",
+        "display_name": "ViewConstructor",
+        "severity": "warning",
+        "category": "usability",
+        "rule_title": "检查自定义视图是否定义了预期的构造函数",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "一些布局工具（例如Eclipse的Android布局编辑器）需要找到具有以下特征之一的构造函数：* View（Context context）* View（Context context，AttributeSet attrs）* View（Context context，AttributeSet attrs，int defStyle）如果您的自定义视图需要执行在布局编辑器中使用时不适用的初始化，则可以使用检查来包围给定代码，以查看View＃isInititMode（）是否为false，因为该方法在运行时将返回false，在用户界面编辑器中为true。"
+      },
+      {
+        "real_name": "ViewTag",
+        "display_name": "ViewTag",
+        "severity": "warning",
+        "category": "performance",
+        "rule_title": "使用View.setTag时发现潜在的泄漏",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "在Android 4.0之前，View.setTag（int，Object）的实现会将这些对象存储在一个静态映射中，其中的值被强烈引用。\n这意味着如果对象包含任何指向上下文的引用，则上下文（指向其他所有内容）将会泄漏。\n如果您传递一个视图，该视图将提供对创建它的上下文的引用。同样，视图持有者通常包含一个视图，并且光标有时也与视图相关联。"
+      },
+      {
+        "real_name": "Wakelock",
+        "display_name": "Wakelock",
+        "severity": "warning",
+        "category": "performance",
+        "rule_title": "查找WakeLock使用情况的问题",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "未能正确释放唤醒锁可使Android设备保持高功率模式，这会缩短电池寿命。这有几个原因，比如在onDestroy（）中释放唤醒锁，而不是在onPause（）中，在acquire（）之后的所有可能的代码路径中无法调用release（）等等。\n 注意：如果您仅使用锁来保持屏幕亮起，则应该强烈考虑使用FLAG_KEEP_SCREEN_ON。当用户在应用程序之间移动时，此窗口标志将由平台正确管理，并且不需要特殊许可。请参阅http://developer.android.com/reference/android/view/WindowManager.LayoutParams html＃FLAG_KEEP_SCREEN_ON。"
+      },
+      {
+        "real_name": "WorldReadableFiles",
+        "display_name": "WorldReadableFiles",
+        "severity": "warning",
+        "category": "security",
+        "rule_title": "检查openFileOutput（）和getSharedPreferences（）调用是否传递MODE_WORLD_READABLE",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "在某些情况下，应用程序可以编写世界可读文件，但应仔细检查这些文件以确保它们不包含泄露给其他应用程序的私人数据。"
+      },
+      {
+        "real_name": "WorldWriteableFiles",
+        "display_name": "WorldWriteableFiles",
+        "severity": "warning",
+        "category": "security",
+        "rule_title": "检查openFileOutput（）和getSharedPreferences（）调用是否传递MODE_WORLD_WRITEABLE",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "在某些情况下，应用程序可以编写世界可写入文件，但应仔细检查这些文件以确保它们不包含私人数据，并且如果文件被恶意应用程序修改，它不会欺骗或损害您的应用程序。"
+      },
+      {
+        "real_name": "WrongCall",
+        "display_name": "WrongCall",
+        "severity": "fatal",
+        "category": "correctness",
+        "rule_title": "查找发生错误调用的情况，例如调用onMeasure而不是度量",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "自定义视图通常需要在子项上调用measure（），而不是onMeasure。 onDraw，onLayout等同上"
+      },
+      {
+        "real_name": "WrongCase",
+        "display_name": "WrongCase",
+        "severity": "fatal",
+        "category": "correctness",
+        "rule_title": "确保正确的大小写用于特殊布局标签，如<fragment>",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "大多数布局标记（例如<Button>）指的是实际的视图类，因此大写。但是，也有例外，如<fragment>和<include>。此lint检查查找不正确的大写字母。"
+      },
+      {
+        "real_name": "WrongFolder",
+        "display_name": "WrongFolder",
+        "severity": "fatal",
+        "category": "correctness",
+        "rule_title": "查找放置在错误文件夹中的资源文件",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "资源文件有时会放在错误的文件夹中，并且会导致难以理解的细微错误。此检查查找此区域中的问题，例如试图将布局“别名”文件放置在布局/文件夹中，而不是其所属的值/文件夹。"
+      },
+      {
+        "real_name": "WrongManifestParent",
+        "display_name": "WrongManifestParent",
+        "severity": "fatal",
+        "category": "correctness",
+        "rule_title": "检查各种清单元素是否在正确的位置声明",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "<uses-library>元素应该定义为<application>标记的直接子元素，而不是<manifest>标记或<activity>标记。同样，一个<uses-sdk>标签在根级别被声明，等等。此检查在清单中查找不正确的声明位置，并且在错误位置找到元素时发出投诉。"
+      },
+      {
+        "real_name": "WrongViewCast",
+        "display_name": "WrongViewCast",
+        "severity": "fatal",
+        "category": "correctness",
+        "rule_title": "根据XML查找不同类型的视图的错误转换",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "跟踪与id相关联的视图类型，并且如果它在Java代码中找到id的用法，则确保它被视为相同类型。"
+      }
+    ]
+  }
+]

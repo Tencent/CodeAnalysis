@@ -1,0 +1,956 @@
+[
+  {
+    "name": "clang",
+    "display_name": "Clang",
+    "description": "clang static analyzer（需要编译）",
+    "license": "BSD",
+    "task_processes": [
+      "analyze",
+      "datahandle"
+    ],
+    "open_user": true,
+    "open_saas": true,
+    "scan_app": "codelint",
+    "scm_url": null,
+    "run_cmd": null,
+    "envs": null,
+    "show_display_name": true,
+    "checkrule_set": [
+      {
+        "real_name": "ArrayOutOfBound",
+        "display_name": "ArrayOutOfBound",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "Out-of-bound array access",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [
+          "推荐",
+          "基础"
+        ],
+        "description": "Out-of-bound array access\r\n参考[官方文档-规则描述及代码示例](http://clang-analyzer.llvm.org/available_checks.html)"
+      },
+      {
+        "real_name": "ArraySubscript",
+        "display_name": "ArraySubscript",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "Array subscript is undefined",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [
+          "推荐",
+          "基础"
+        ],
+        "description": "Array subscript is undefined\r\n参考[官方文档-规则描述及代码示例](http://clang-analyzer.llvm.org/available_checks.html)"
+      },
+      {
+        "real_name": "BadDeallocator",
+        "display_name": "BadDeallocator",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "Bad deallocator",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Mismatched deallocators.\r\n参考[官方文档-规则描述及代码示例](http://clang-analyzer.llvm.org/available_checks.html)"
+      },
+      {
+        "real_name": "BadRelease",
+        "display_name": "BadRelease",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "Bad release",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [
+          "推荐",
+          "基础"
+        ],
+        "description": "Bad release\r\n参考[官方文档-规则描述及代码示例](http://clang-analyzer.llvm.org/available_checks.html)"
+      },
+      {
+        "real_name": "CFNumber",
+        "display_name": "CFNumber",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "Bad use of CFNumberCreate",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Bad use of CFNumberCreate\r\n参考[官方文档-规则描述及代码示例](http://clang-analyzer.llvm.org/available_checks.html)"
+      },
+      {
+        "real_name": "CFRetainRelease",
+        "display_name": "CFRetainRelease",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "null passed to CF memory management function",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "null passed to CF memory management function\r\n参考[官方文档-规则描述及代码示例](http://clang-analyzer.llvm.org/available_checks.html)"
+      },
+      {
+        "real_name": "DeadAssignment",
+        "display_name": "DeadAssignment",
+        "severity": "warning",
+        "category": "accessibility",
+        "rule_title": "Dead assignment",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Dead assignment\r\n参考[官方文档-规则描述及代码示例](http://clang-analyzer.llvm.org/available_checks.html)"
+      },
+      {
+        "real_name": "DeadIncrement",
+        "display_name": "DeadIncrement",
+        "severity": "warning",
+        "category": "accessibility",
+        "rule_title": "Dead increment",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Dead increment\r\n参考[官方文档-规则描述及代码示例](http://clang-analyzer.llvm.org/available_checks.html)"
+      },
+      {
+        "real_name": "DeadInit",
+        "display_name": "DeadInit",
+        "severity": "warning",
+        "category": "accessibility",
+        "rule_title": "Dead initialization",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Dead initialization\r\n参考[官方文档-规则描述及代码示例](http://clang-analyzer.llvm.org/available_checks.html)"
+      },
+      {
+        "real_name": "Dealloc",
+        "display_name": "Dealloc",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "Objective-C classes that lack a correct implementation of -dealloc",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [
+          "推荐",
+          "基础"
+        ],
+        "description": "Objective-C classes that lack a correct implementation of -dealloc\r\n参考[官方文档-规则描述及代码示例](http://clang-analyzer.llvm.org/available_checks.html)"
+      },
+      {
+        "real_name": "DeallocNotOwned",
+        "display_name": "DeallocNotOwned",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "-dealloc sent to non-exclusively owned object",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "-dealloc sent to non-exclusively owned object\r\n参考[官方文档-规则描述及代码示例](http://clang-analyzer.llvm.org/available_checks.html)"
+      },
+      {
+        "real_name": "DispatchOnce",
+        "display_name": "DispatchOnce",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "Improper use of 'dispatch_once'",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Improper use of 'dispatch_once'\r\n参考[官方文档-规则描述及代码示例](http://clang-analyzer.llvm.org/available_checks.html)"
+      },
+      {
+        "real_name": "DivideZero",
+        "display_name": "DivideZero",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "Division by zero",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Division by zero\r\n参考[官方文档-规则描述及代码示例](http://clang-analyzer.llvm.org/available_checks.html)"
+      },
+      {
+        "real_name": "DoubleDelete",
+        "display_name": "DoubleDelete",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "Double delete",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Double delete\r\n参考[官方文档-规则描述及代码示例](http://clang-analyzer.llvm.org/available_checks.html)"
+      },
+      {
+        "real_name": "DoubleFree",
+        "display_name": "DoubleFree",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "Double free",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Double free\r\n参考[官方文档-规则描述及代码示例](http://clang-analyzer.llvm.org/available_checks.html)"
+      },
+      {
+        "real_name": "DoubleSuperDealloc",
+        "display_name": "DoubleSuperDealloc",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "[super dealloc] should not be called more than once",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "[super dealloc] should not be called more than once\r\n参考[官方文档-规则描述及代码示例](http://clang-analyzer.llvm.org/available_checks.html)"
+      },
+      {
+        "real_name": "IncompatibleMethodTypes",
+        "display_name": "IncompatibleMethodTypes",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "Incompatible instance method return type",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Incompatible instance method return type\r\n参考[官方文档-规则描述及代码示例](http://clang-analyzer.llvm.org/available_checks.html)"
+      },
+      {
+        "real_name": "InsecureStr",
+        "display_name": "InsecureStr",
+        "severity": "error",
+        "category": "security",
+        "rule_title": "Potential insecure memory buffer bounds restriction in call 'strcat'",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Potential insecure memory buffer bounds restriction in call 'strcat'\r\n参考[官方文档-规则描述及代码示例](http://clang-analyzer.llvm.org/available_checks.html)"
+      },
+      {
+        "real_name": "InsecureVfork",
+        "display_name": "InsecureVfork",
+        "severity": "error",
+        "category": "security",
+        "rule_title": "Potential insecure implementation-specific behavior in call 'vfork'",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Potential insecure implementation-specific behavior in call 'vfork'\r\n参考[官方文档-规则描述及代码示例](http://clang-analyzer.llvm.org/available_checks.html)"
+      },
+      {
+        "real_name": "Leak",
+        "display_name": "Leak",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "Leak",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [
+          "推荐",
+          "基础"
+        ],
+        "description": "Leak\r\n参考[官方文档-规则描述及代码示例](http://clang-analyzer.llvm.org/available_checks.html)"
+      },
+      {
+        "real_name": "LeakOfReturn",
+        "display_name": "LeakOfReturn",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "Leak of returned object",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [
+          "推荐",
+          "基础"
+        ],
+        "description": "Leak of returned object\r\n参考[官方文档-规则描述及代码示例](http://clang-analyzer.llvm.org/available_checks.html)"
+      },
+      {
+        "real_name": "MallocSizeof",
+        "display_name": "MallocSizeof",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "Allocator sizeof operand mismatch",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Allocator sizeof operand mismatch\r\n参考[官方文档-规则描述及代码示例](http://clang-analyzer.llvm.org/available_checks.html)"
+      },
+      {
+        "real_name": "MemoryLeak",
+        "display_name": "MemoryLeak",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "Memory leak",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [
+          "推荐",
+          "基础"
+        ],
+        "description": "Memory leak\r\n参考[官方文档-规则描述及代码示例](http://clang-analyzer.llvm.org/available_checks.html)"
+      },
+      {
+        "real_name": "MissingSuperCall",
+        "display_name": "MissingSuperCall",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "Missing call to superclass",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [
+          "推荐",
+          "基础"
+        ],
+        "description": "Missing call to superclass\r\n参考[官方文档-规则描述及代码示例](http://clang-analyzer.llvm.org/available_checks.html)"
+      },
+      {
+        "real_name": "NilArg",
+        "display_name": "NilArg",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "nil argument",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [
+          "推荐",
+          "基础"
+        ],
+        "description": "nil argument\r\n参考[官方文档-规则描述及代码示例](http://clang-analyzer.llvm.org/available_checks.html)"
+      },
+      {
+        "real_name": "NilMutex",
+        "display_name": "NilMutex",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "Nil value used as mutex for @synchronized() (no synchronization will occur)",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Nil value used as mutex for @synchronized() (no synchronization will occur)\r\n参考[官方文档-规则描述及代码示例](http://clang-analyzer.llvm.org/available_checks.html)"
+      },
+      {
+        "real_name": "NilReceiver",
+        "display_name": "NilReceiver",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "Receiver in message expression is 'nil'",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Receiver in message expression is 'nil'\r\n参考[官方文档-规则描述及代码示例](http://clang-analyzer.llvm.org/available_checks.html)"
+      },
+      {
+        "real_name": "NotSecureRand",
+        "display_name": "NotSecureRand",
+        "severity": "error",
+        "category": "security",
+        "rule_title": "'random' is not a secure random number generator",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "'random' is not a secure random number generator\r\n参考[官方文档-规则描述及代码示例](http://clang-analyzer.llvm.org/available_checks.html)"
+      },
+      {
+        "real_name": "NSError",
+        "display_name": "NSError",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "Bad return type when passing NSError**",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Bad return type when passing NSError**\r\n参考[官方文档-规则描述及代码示例](http://clang-analyzer.llvm.org/available_checks.html)"
+      },
+      {
+        "real_name": "Nullability",
+        "display_name": "Nullability",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "Nullability",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Nullability\r\n参考[官方文档-规则描述及代码示例](http://clang-analyzer.llvm.org/available_checks.html)"
+      },
+      {
+        "real_name": "NullAttrNonNull",
+        "display_name": "NullAttrNonNull",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "Argument with 'nonnull' attribute passed null",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Argument with 'nonnull' attribute passed null\r\n参考[官方文档-规则描述及代码示例](http://clang-analyzer.llvm.org/available_checks.html)"
+      },
+      {
+        "real_name": "NullPointer",
+        "display_name": "NullPointer",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "Dereference of null pointer",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [
+          "推荐",
+          "基础"
+        ],
+        "description": "Dereference of null pointer\r\n参考[官方文档-规则描述及代码示例](http://clang-analyzer.llvm.org/available_checks.html)"
+      },
+      {
+        "real_name": "NullPointerCpp",
+        "display_name": "NullPointerCpp",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "Called C++ object pointer is null",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [
+          "推荐",
+          "基础"
+        ],
+        "description": "Called C++ object pointer is null\r\n参考[官方文档-规则描述及代码示例](http://clang-analyzer.llvm.org/available_checks.html)"
+      },
+      {
+        "real_name": "NullPointerFunc",
+        "display_name": "NullPointerFunc",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "Called function pointer is null (null dereference)",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [
+          "推荐",
+          "基础"
+        ],
+        "description": "Called function pointer is null (null dereference)\r\n参考[官方文档-规则描述及代码示例](http://clang-analyzer.llvm.org/available_checks.html)"
+      },
+      {
+        "real_name": "NullPointerNSError",
+        "display_name": "NullPointerNSError",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "NSError** null dereference",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "NSError** null dereference\r\n参考[官方文档-规则描述及代码示例](http://clang-analyzer.llvm.org/available_checks.html)"
+      },
+      {
+        "real_name": "ObjCGenerics",
+        "display_name": "ObjCGenerics",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "Generics",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Type errors when using Objective-C generics\r\n参考[官方文档-规则描述及代码示例](http://clang-analyzer.llvm.org/available_checks.html)"
+      },
+      {
+        "real_name": "OverAutorelease",
+        "display_name": "OverAutorelease",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "Object autoreleased too many times",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Object autoreleased too many times\r\n参考[官方文档-规则描述及代码示例](http://clang-analyzer.llvm.org/available_checks.html)"
+      },
+      {
+        "real_name": "ReturnNotOwned",
+        "display_name": "ReturnNotOwned",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "Method should return an owned object",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Method should return an owned object\r\n参考[官方文档-规则描述及代码示例](http://clang-analyzer.llvm.org/available_checks.html)"
+      },
+      {
+        "real_name": "ReturnUndef",
+        "display_name": "ReturnUndef",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "Garbage return value",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Garbage return value\r\n参考[官方文档-规则描述及代码示例](http://clang-analyzer.llvm.org/available_checks.html)"
+      },
+      {
+        "real_name": "SelfInit",
+        "display_name": "SelfInit",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "Missing \"self = [(super or self) init...]\"",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [
+          "推荐",
+          "基础"
+        ],
+        "description": "Missing \"self = [(super or self) init...]\"\r\n参考[官方文档-规则描述及代码示例](http://clang-analyzer.llvm.org/available_checks.html)"
+      },
+      {
+        "real_name": "StackAddressEscape",
+        "display_name": "StackAddressEscape",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "Return of address to stack-allocated memory",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Return of address to stack-allocated memory\r\n参考[官方文档-规则描述及代码示例](http://clang-analyzer.llvm.org/available_checks.html)"
+      },
+      {
+        "real_name": "UndefAssignedValue",
+        "display_name": "UndefAssignedValue",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "Assigned value is garbage or undefined",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Assigned value is garbage or undefined\r\n参考[官方文档-规则描述及代码示例](http://clang-analyzer.llvm.org/available_checks.html)"
+      },
+      {
+        "real_name": "UndefBranch",
+        "display_name": "UndefBranch",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "Branch condition evaluates to a garbage value",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Branch condition evaluates to a garbage value\r\n参考[官方文档-规则描述及代码示例](http://clang-analyzer.llvm.org/available_checks.html)"
+      },
+      {
+        "real_name": "UndefinedBinaryOperationResult",
+        "display_name": "UndefinedBinaryOperationResult",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "Result of operation is garbage or undefined",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Result of operation is garbage or undefined\r\n参考[官方文档-规则描述及代码示例](http://clang-analyzer.llvm.org/available_checks.html)"
+      },
+      {
+        "real_name": "UndefPointerValue",
+        "display_name": "UndefPointerValue",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "Dereference of undefined pointer value",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Dereference of undefined pointer value\r\n参考[官方文档-规则描述及代码示例](http://clang-analyzer.llvm.org/available_checks.html)"
+      },
+      {
+        "real_name": "UninitArg",
+        "display_name": "UninitArg",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "Uninitialized argument value",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Uninitialized argument value\r\n参考[官方文档-规则描述及代码示例](http://clang-analyzer.llvm.org/available_checks.html)"
+      },
+      {
+        "real_name": "UninitCapturedBlockVariable",
+        "display_name": "UninitCapturedBlockVariable",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "uninitialized variable captured by block",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "uninitialized variable captured by block\r\n参考[官方文档-规则描述及代码示例](http://clang-analyzer.llvm.org/available_checks.html)"
+      },
+      {
+        "real_name": "UninitObjPointer",
+        "display_name": "UninitObjPointer",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "Property access on an uninitialized object pointer",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Property access on an uninitialized object pointer\r\n参考[官方文档-规则描述及代码示例](http://clang-analyzer.llvm.org/available_checks.html)"
+      },
+      {
+        "real_name": "UninitReceiver",
+        "display_name": "UninitReceiver",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "Receiver in message expression is an uninitialized value",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Receiver in message expression is an uninitialized value\r\n参考[官方文档-规则描述及代码示例](http://clang-analyzer.llvm.org/available_checks.html)"
+      },
+      {
+        "real_name": "UnixAPI",
+        "display_name": "UnixAPI",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "Unix API",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Unix API\r\n参考[官方文档-规则描述及代码示例](http://clang-analyzer.llvm.org/available_checks.html)"
+      },
+      {
+        "real_name": "UnusedIVars",
+        "display_name": "UnusedIVars",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "Unused instance variable",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Unused instance variable\r\n参考[官方文档-规则描述及代码示例](http://clang-analyzer.llvm.org/available_checks.html)"
+      },
+      {
+        "real_name": "UseAfterFree",
+        "display_name": "UseAfterFree",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "Use-after-free",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Use-after-free\r\n参考[官方文档-规则描述及代码示例](http://clang-analyzer.llvm.org/available_checks.html)"
+      },
+      {
+        "real_name": "UseAfterRelease",
+        "display_name": "UseAfterRelease",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "Use-after-release",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Use-after-release\r\n参考[官方文档-规则描述及代码示例](http://clang-analyzer.llvm.org/available_checks.html)"
+      },
+      {
+        "real_name": "VariadicMethodType",
+        "display_name": "VariadicMethodType",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "Arguments passed to variadic method aren't all Objective-C pointer types",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Arguments passed to variadic method aren't all Objective-C pointer types\r\n参考[官方文档-规则描述及代码示例](http://clang-analyzer.llvm.org/available_checks.html)"
+      },
+      {
+        "real_name": "VLASize",
+        "display_name": "VLASize",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "Dangerous variable-length array (VLA) declaration",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Dangerous variable-length array (VLA) declaration\r\n参考[官方文档-规则描述及代码示例](http://clang-analyzer.llvm.org/available_checks.html)"
+      },
+      {
+        "real_name": "ZeroByteAllocation",
+        "display_name": "ZeroByteAllocation",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "Undefined allocation of 0 bytes (CERT MEM04-C; CWE-131)",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Undefined allocation of 0 bytes (CERT MEM04-C; CWE-131)\r\n参考[官方文档-规则描述及代码示例](http://clang-analyzer.llvm.org/available_checks.html)"
+      }
+    ]
+  }
+]

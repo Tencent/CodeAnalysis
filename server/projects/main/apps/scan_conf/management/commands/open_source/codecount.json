@@ -1,0 +1,20 @@
+[
+  {
+    "name": "codecount",
+    "display_name": "CodeCount",
+    "description": "代码统计工具",
+    "license": "自研工具",
+    "task_processes": [
+      "analyze",
+      "datahandle"
+    ],
+    "open_user": true,
+    "open_saas": true,
+    "scan_app": "codemetric",
+    "scm_url": null,
+    "run_cmd": null,
+    "envs": null,
+    "show_display_name": true,
+    "checkrule_set": []
+  }
+]

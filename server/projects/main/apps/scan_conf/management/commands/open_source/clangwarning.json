@@ -1,0 +1,2104 @@
+[
+  {
+    "name": "clangwarning",
+    "display_name": "ClangWarning",
+    "description": "clang编译警告扫描（需要编译）",
+    "license": "自研工具",
+    "task_processes": [
+      "datahandle",
+      "compile"
+    ],
+    "open_user": true,
+    "open_saas": true,
+    "scan_app": "codelint",
+    "scm_url": null,
+    "run_cmd": null,
+    "envs": null,
+    "show_display_name": true,
+    "checkrule_set": [
+      {
+        "real_name": "#warnings",
+        "display_name": "#warnings",
+        "severity": "info",
+        "category": "other",
+        "rule_title": "发现#warning注释标记",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "发现#warning注释标记，提醒是否有未完成的功能"
+      },
+      {
+        "real_name": "absolute-value",
+        "display_name": "absolute-value",
+        "severity": "error",
+        "category": "other",
+        "rule_title": "绝对值计算。",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": " 绝对值计算。"
+      },
+      {
+        "real_name": "arc-performSelector-leaks",
+        "display_name": "arc-performSelector-leaks",
+        "severity": "error",
+        "category": "other",
+        "rule_title": "performSelector的使用可能导致资源泄露。",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [
+          "推荐",
+          "基础"
+        ],
+        "description": "performSelector的使用可能导致资源泄露。"
+      },
+      {
+        "real_name": "arc-repeated-use-of-weak",
+        "display_name": "arc-repeated-use-of-weak",
+        "severity": "info",
+        "category": "other",
+        "rule_title": null,
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": null
+      },
+      {
+        "real_name": "arc-retain-cycles",
+        "display_name": "arc-retain-cycles",
+        "severity": "error",
+        "category": "other",
+        "rule_title": "ARC retain cycle",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [
+          "推荐",
+          "基础"
+        ],
+        "description": "ARC retain cycle"
+      },
+      {
+        "real_name": "arc-unsafe-retained-assign",
+        "display_name": "arc-unsafe-retained-assign",
+        "severity": "info",
+        "category": "other",
+        "rule_title": null,
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": null
+      },
+      {
+        "real_name": "atomic-property-with-user-defined-accessor",
+        "display_name": "atomic-property-with-user-defined-accessor",
+        "severity": "error",
+        "category": "other",
+        "rule_title": "writable atomic property cannot pair a synthesized getter with a user defined setter",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": " writable atomic property cannot pair a synthesized getter with a user defined setter"
+      },
+      {
+        "real_name": "availability",
+        "display_name": "availability",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "API与iOS版本不兼容",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "API与iOS版本不兼容"
+      },
+      {
+        "real_name": "block-capture-autoreleasing",
+        "display_name": "block-capture-autoreleasing",
+        "severity": "error",
+        "category": "other",
+        "rule_title": "block captures an autoreleasing out-parameter, which may result in use-after-free bugs",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": " block captures an autoreleasing out-parameter, which may result in use-after-free bugs"
+      },
+      {
+        "real_name": "bool-conversion",
+        "display_name": "bool-conversion",
+        "severity": "error",
+        "category": "other",
+        "rule_title": "initialization of pointer to null from a constant boolean expression",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": " initialization of pointer to null from a constant boolean expression"
+      },
+      {
+        "real_name": "builtin-macro-redefined",
+        "display_name": "builtin-macro-redefined",
+        "severity": "error",
+        "category": "other",
+        "rule_title": "redefining builtin macro",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": " redefining builtin macro"
+      },
+      {
+        "real_name": "c++11-compat",
+        "display_name": "c++11-compat",
+        "severity": "info",
+        "category": "other",
+        "rule_title": null,
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": null
+      },
+      {
+        "real_name": "c++11-compat-deprecated-writable-strings",
+        "display_name": "c++11-compat-deprecated-writable-strings",
+        "severity": "error",
+        "category": "other",
+        "rule_title": "",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": " "
+      },
+      {
+        "real_name": "c99-extensions",
+        "display_name": "c99-extensions",
+        "severity": "info",
+        "category": "other",
+        "rule_title": null,
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": null
+      },
+      {
+        "real_name": "comma",
+        "display_name": "comma",
+        "severity": "error",
+        "category": "other",
+        "rule_title": "",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": " "
+      },
+      {
+        "real_name": "comment",
+        "display_name": "comment",
+        "severity": "error",
+        "category": "other",
+        "rule_title": "在注释内发现注释符号。",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": " 在注释内发现注释符号。"
+      },
+      {
+        "real_name": "compare-distinct-pointer-types",
+        "display_name": "compare-distinct-pointer-types",
+        "severity": "error",
+        "category": "other",
+        "rule_title": "比较不同的指针lei类型。",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": " 比较不同的指针lei类型。"
+      },
+      {
+        "real_name": "conditional-uninitialized",
+        "display_name": "conditional-uninitialized",
+        "severity": "error",
+        "category": "other",
+        "rule_title": "",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": " "
+      },
+      {
+        "real_name": "constant-conversion",
+        "display_name": "constant-conversion",
+        "severity": "error",
+        "category": "other",
+        "rule_title": "",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": " "
+      },
+      {
+        "real_name": "dangling-else",
+        "display_name": "dangling-else",
+        "severity": "error",
+        "category": "other",
+        "rule_title": "",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": " "
+      },
+      {
+        "real_name": "deprecated-declarations",
+        "display_name": "deprecated-declarations",
+        "severity": "error",
+        "category": "other",
+        "rule_title": "API已弃用。",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [
+          "推荐",
+          "基础"
+        ],
+        "description": "API已弃用。"
+      },
+      {
+        "real_name": "deprecated-implementations",
+        "display_name": "deprecated-implementations",
+        "severity": "info",
+        "category": "other",
+        "rule_title": null,
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": null
+      },
+      {
+        "real_name": "deprecated-register",
+        "display_name": "deprecated-register",
+        "severity": "info",
+        "category": "other",
+        "rule_title": null,
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": null
+      },
+      {
+        "real_name": "division-by-zero",
+        "display_name": "division-by-zero",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "除零错误",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "除数不能为0"
+      },
+      {
+        "real_name": "documentation",
+        "display_name": "documentation",
+        "severity": "error",
+        "category": "other",
+        "rule_title": "",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": " "
+      },
+      {
+        "real_name": "documentation-deprecated-sync",
+        "display_name": "documentation-deprecated-sync",
+        "severity": "info",
+        "category": "other",
+        "rule_title": null,
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": null
+      },
+      {
+        "real_name": "documentation-html",
+        "display_name": "documentation-html",
+        "severity": "error",
+        "category": "other",
+        "rule_title": "",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": " "
+      },
+      {
+        "real_name": "duplicate-method-match",
+        "display_name": "duplicate-method-match",
+        "severity": "error",
+        "category": "other",
+        "rule_title": "",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": " "
+      },
+      {
+        "real_name": "duplicate-protocol",
+        "display_name": "duplicate-protocol",
+        "severity": "error",
+        "category": "other",
+        "rule_title": "",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": " "
+      },
+      {
+        "real_name": "empty-body",
+        "display_name": "empty-body",
+        "severity": "error",
+        "category": "other",
+        "rule_title": "",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": " "
+      },
+      {
+        "real_name": "enum-conversion",
+        "display_name": "enum-conversion",
+        "severity": "error",
+        "category": "other",
+        "rule_title": "不同的枚举类型的隐式转换。",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [
+          "推荐",
+          "基础"
+        ],
+        "description": "不同的枚举类型的隐式转换。"
+      },
+      {
+        "real_name": "extern-initializer",
+        "display_name": "extern-initializer",
+        "severity": "info",
+        "category": "other",
+        "rule_title": null,
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": null
+      },
+      {
+        "real_name": "extra-tokens",
+        "display_name": "extra-tokens",
+        "severity": "error",
+        "category": "other",
+        "rule_title": "",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": " "
+      },
+      {
+        "real_name": "format",
+        "display_name": "format",
+        "severity": "error",
+        "category": "other",
+        "rule_title": "format",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [
+          "推荐",
+          "基础"
+        ],
+        "description": "format"
+      },
+      {
+        "real_name": "format-extra-args",
+        "display_name": "format-extra-args",
+        "severity": "error",
+        "category": "other",
+        "rule_title": "",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": " "
+      },
+      {
+        "real_name": "format-invalid-specifier",
+        "display_name": "format-invalid-specifier",
+        "severity": "error",
+        "category": "other",
+        "rule_title": "",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": " "
+      },
+      {
+        "real_name": "format-security",
+        "display_name": "format-security",
+        "severity": "error",
+        "category": "other",
+        "rule_title": "潜在安全隐患的格式化。",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [
+          "推荐",
+          "基础"
+        ],
+        "description": "format-security"
+      },
+      {
+        "real_name": "format-zero-length",
+        "display_name": "format-zero-length",
+        "severity": "error",
+        "category": "other",
+        "rule_title": "",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": " "
+      },
+      {
+        "real_name": "implicit-int",
+        "display_name": "implicit-int",
+        "severity": "info",
+        "category": "other",
+        "rule_title": null,
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": null
+      },
+      {
+        "real_name": "implicit-retain-self",
+        "display_name": "implicit-retain-self",
+        "severity": "error",
+        "category": "other",
+        "rule_title": "block中隐式捕获self",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "block implicitly retains 'self'; explicitly mention 'self' to indicate this is intended behavior [-Wimplicit-retain-self]。block中使用了self的实例变量 _xxx ，因此block会隐式的retain住self。Xcode认为这可能会给开发者造成困惑，或者因此而引起循环引用，所以警告我们要显式的在block中使用self，以达到block显式retain住self的目的。"
+      },
+      {
+        "real_name": "incompatible-pointer-types",
+        "display_name": "incompatible-pointer-types",
+        "severity": "error",
+        "category": "other",
+        "rule_title": "",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": " "
+      },
+      {
+        "real_name": "incompatible-pointer-types-discards-qualifiers",
+        "display_name": "incompatible-pointer-types-discards-qualifiers",
+        "severity": "error",
+        "category": "other",
+        "rule_title": "",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": " "
+      },
+      {
+        "real_name": "incompatible-property-type",
+        "display_name": "incompatible-property-type",
+        "severity": "error",
+        "category": "other",
+        "rule_title": "",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": " "
+      },
+      {
+        "real_name": "incomplete-implementation",
+        "display_name": "incomplete-implementation",
+        "severity": "error",
+        "category": "other",
+        "rule_title": "未找到函数定义。",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [
+          "推荐",
+          "基础"
+        ],
+        "description": "incomplete-implementation"
+      },
+      {
+        "real_name": "incomplete-umbrella",
+        "display_name": "incomplete-umbrella",
+        "severity": "info",
+        "category": "other",
+        "rule_title": null,
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": null
+      },
+      {
+        "real_name": "inconsistent-missing-override",
+        "display_name": "inconsistent-missing-override",
+        "severity": "error",
+        "category": "other",
+        "rule_title": "",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": " "
+      },
+      {
+        "real_name": "infinite-recursion",
+        "display_name": "infinite-recursion",
+        "severity": "error",
+        "category": "other",
+        "rule_title": "",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": " "
+      },
+      {
+        "real_name": "int-conversion",
+        "display_name": "int-conversion",
+        "severity": "error",
+        "category": "other",
+        "rule_title": "不兼容的int类型转换。",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [
+          "推荐",
+          "基础"
+        ],
+        "description": "int-conversion"
+      },
+      {
+        "real_name": "int-to-pointer-cast",
+        "display_name": "int-to-pointer-cast",
+        "severity": "error",
+        "category": "other",
+        "rule_title": "int类型转换成指针类型。",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [
+          "推荐",
+          "基础"
+        ],
+        "description": "int类型转换成指针类型。"
+      },
+      {
+        "real_name": "int-to-void-pointer-cast",
+        "display_name": "int-to-void-pointer-cast",
+        "severity": "info",
+        "category": "other",
+        "rule_title": null,
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": null
+      },
+      {
+        "real_name": "integer-overflow",
+        "display_name": "integer-overflow",
+        "severity": "info",
+        "category": "other",
+        "rule_title": null,
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": null
+      },
+      {
+        "real_name": "invalid-pp-token",
+        "display_name": "invalid-pp-token",
+        "severity": "info",
+        "category": "other",
+        "rule_title": null,
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": null
+      },
+      {
+        "real_name": "invalid-source-encoding",
+        "display_name": "invalid-source-encoding",
+        "severity": "error",
+        "category": "other",
+        "rule_title": "",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": " "
+      },
+      {
+        "real_name": "logical-not-parentheses",
+        "display_name": "logical-not-parentheses",
+        "severity": "error",
+        "category": "other",
+        "rule_title": "",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": " "
+      },
+      {
+        "real_name": "logical-op-parentheses",
+        "display_name": "logical-op-parentheses",
+        "severity": "error",
+        "category": "other",
+        "rule_title": "",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": " "
+      },
+      {
+        "real_name": "macro-redefined",
+        "display_name": "macro-redefined",
+        "severity": "error",
+        "category": "other",
+        "rule_title": "宏重定义。",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [
+          "推荐",
+          "基础"
+        ],
+        "description": "macro-redefined"
+      },
+      {
+        "real_name": "mismatched-new-delete",
+        "display_name": "mismatched-new-delete",
+        "severity": "error",
+        "category": "other",
+        "rule_title": "",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": " "
+      },
+      {
+        "real_name": "mismatched-parameter-types",
+        "display_name": "mismatched-parameter-types",
+        "severity": "error",
+        "category": "other",
+        "rule_title": "",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": " "
+      },
+      {
+        "real_name": "mismatched-return-types",
+        "display_name": "mismatched-return-types",
+        "severity": "error",
+        "category": "other",
+        "rule_title": "返回值类型不匹配。",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [
+          "推荐",
+          "基础"
+        ],
+        "description": "mismatched-return-types"
+      },
+      {
+        "real_name": "missing-declarations",
+        "display_name": "missing-declarations",
+        "severity": "info",
+        "category": "other",
+        "rule_title": null,
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": null
+      },
+      {
+        "real_name": "missing-noescape",
+        "display_name": "missing-noescape",
+        "severity": "info",
+        "category": "other",
+        "rule_title": null,
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": null
+      },
+      {
+        "real_name": "missing-prototypes",
+        "display_name": "missing-prototypes",
+        "severity": "error",
+        "category": "other",
+        "rule_title": "",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": " "
+      },
+      {
+        "real_name": "missing-selector-name",
+        "display_name": "missing-selector-name",
+        "severity": "error",
+        "category": "other",
+        "rule_title": "",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": " "
+      },
+      {
+        "real_name": "multichar",
+        "display_name": "multichar",
+        "severity": "info",
+        "category": "other",
+        "rule_title": null,
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": null
+      },
+      {
+        "real_name": "non-literal-null-conversion",
+        "display_name": "non-literal-null-conversion",
+        "severity": "error",
+        "category": "other",
+        "rule_title": "",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": " "
+      },
+      {
+        "real_name": "nonnull",
+        "display_name": "nonnull",
+        "severity": "error",
+        "category": "other",
+        "rule_title": "",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": " "
+      },
+      {
+        "real_name": "nonportable-include-path",
+        "display_name": "nonportable-include-path",
+        "severity": "error",
+        "category": "other",
+        "rule_title": "",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": " "
+      },
+      {
+        "real_name": "null-arithmetic",
+        "display_name": "null-arithmetic",
+        "severity": "info",
+        "category": "other",
+        "rule_title": null,
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": null
+      },
+      {
+        "real_name": "nullability",
+        "display_name": "nullability",
+        "severity": "info",
+        "category": "other",
+        "rule_title": null,
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": null
+      },
+      {
+        "real_name": "nullability-completeness",
+        "display_name": "nullability-completeness",
+        "severity": "error",
+        "category": "other",
+        "rule_title": "",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": " "
+      },
+      {
+        "real_name": "nullability-completeness-on-arrays",
+        "display_name": "nullability-completeness-on-arrays",
+        "severity": "info",
+        "category": "other",
+        "rule_title": null,
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": null
+      },
+      {
+        "real_name": "nullability-inferred-on-nested-type",
+        "display_name": "nullability-inferred-on-nested-type",
+        "severity": "info",
+        "category": "other",
+        "rule_title": null,
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": null
+      },
+      {
+        "real_name": "objc-autosynthesis-property-ivar-name-match",
+        "display_name": "objc-autosynthesis-property-ivar-name-match",
+        "severity": "error",
+        "category": "other",
+        "rule_title": "",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": " "
+      },
+      {
+        "real_name": "objc-designated-initializers",
+        "display_name": "objc-designated-initializers",
+        "severity": "error",
+        "category": "other",
+        "rule_title": "",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": " "
+      },
+      {
+        "real_name": "objc-literal-conversion",
+        "display_name": "objc-literal-conversion",
+        "severity": "error",
+        "category": "other",
+        "rule_title": "",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": " "
+      },
+      {
+        "real_name": "objc-method-access",
+        "display_name": "objc-method-access",
+        "severity": "error",
+        "category": "other",
+        "rule_title": "实例方法未找到。",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [
+          "推荐",
+          "基础"
+        ],
+        "description": "objc-method-access"
+      },
+      {
+        "real_name": "objc-missing-super-calls",
+        "display_name": "objc-missing-super-calls",
+        "severity": "error",
+        "category": "other",
+        "rule_title": "",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": " "
+      },
+      {
+        "real_name": "objc-multiple-method-names",
+        "display_name": "objc-multiple-method-names",
+        "severity": "error",
+        "category": "other",
+        "rule_title": "同一个方法名发现多个方法。",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [
+          "推荐",
+          "基础"
+        ],
+        "description": "objc-multiple-method-names"
+      },
+      {
+        "real_name": "objc-property-implementation",
+        "display_name": "objc-property-implementation",
+        "severity": "error",
+        "category": "other",
+        "rule_title": "",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": " "
+      },
+      {
+        "real_name": "objc-property-matches-cocoa-ownership-rule",
+        "display_name": "objc-property-matches-cocoa-ownership-rule",
+        "severity": "error",
+        "category": "other",
+        "rule_title": "",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": " "
+      },
+      {
+        "real_name": "objc-property-no-attribute",
+        "display_name": "objc-property-no-attribute",
+        "severity": "error",
+        "category": "other",
+        "rule_title": "未分配属性。",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [
+          "推荐",
+          "基础"
+        ],
+        "description": "objc-property-no-attribute"
+      },
+      {
+        "real_name": "objc-property-synthesis",
+        "display_name": "objc-property-synthesis",
+        "severity": "error",
+        "category": "other",
+        "rule_title": "",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": " "
+      },
+      {
+        "real_name": "objc-protocol-method-implementation",
+        "display_name": "objc-protocol-method-implementation",
+        "severity": "error",
+        "category": "other",
+        "rule_title": "",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": " "
+      },
+      {
+        "real_name": "objc-protocol-property-synthesis",
+        "display_name": "objc-protocol-property-synthesis",
+        "severity": "error",
+        "category": "other",
+        "rule_title": "",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": " "
+      },
+      {
+        "real_name": "objc-root-class",
+        "display_name": "objc-root-class",
+        "severity": "error",
+        "category": "other",
+        "rule_title": "",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": " "
+      },
+      {
+        "real_name": "parentheses",
+        "display_name": "parentheses",
+        "severity": "info",
+        "category": "other",
+        "rule_title": null,
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": null
+      },
+      {
+        "real_name": "pointer-bool-conversion",
+        "display_name": "pointer-bool-conversion",
+        "severity": "error",
+        "category": "other",
+        "rule_title": "",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": " "
+      },
+      {
+        "real_name": "pointer-sign",
+        "display_name": "pointer-sign",
+        "severity": "error",
+        "category": "other",
+        "rule_title": "",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": " "
+      },
+      {
+        "real_name": "pragma-pack",
+        "display_name": "pragma-pack",
+        "severity": "info",
+        "category": "other",
+        "rule_title": null,
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": null
+      },
+      {
+        "real_name": "property-attribute-mismatch",
+        "display_name": "property-attribute-mismatch",
+        "severity": "error",
+        "category": "other",
+        "rule_title": "",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": " "
+      },
+      {
+        "real_name": "protocol",
+        "display_name": "protocol",
+        "severity": "error",
+        "category": "other",
+        "rule_title": "",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": " "
+      },
+      {
+        "real_name": "receiver-expr",
+        "display_name": "receiver-expr",
+        "severity": "error",
+        "category": "other",
+        "rule_title": "",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": " "
+      },
+      {
+        "real_name": "receiver-forward-class",
+        "display_name": "receiver-forward-class",
+        "severity": "error",
+        "category": "other",
+        "rule_title": "",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": " "
+      },
+      {
+        "real_name": "return-stack-address",
+        "display_name": "return-stack-address",
+        "severity": "info",
+        "category": "other",
+        "rule_title": "",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "address of stack memory associated with local variable returned [-Wreturn-stack-address]"
+      },
+      {
+        "real_name": "return-type",
+        "display_name": "return-type",
+        "severity": "error",
+        "category": "other",
+        "rule_title": "返回类型非void的函数没有返回值。",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [
+          "推荐",
+          "基础"
+        ],
+        "description": "return-type"
+      },
+      {
+        "real_name": "sentinel",
+        "display_name": "sentinel",
+        "severity": "error",
+        "category": "other",
+        "rule_title": "",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": " "
+      },
+      {
+        "real_name": "shadow",
+        "display_name": "shadow",
+        "severity": "info",
+        "category": "other",
+        "rule_title": null,
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": null
+      },
+      {
+        "real_name": "shorten-64-to-32",
+        "display_name": "shorten-64-to-32",
+        "severity": "error",
+        "category": "other",
+        "rule_title": "整形隐式转换失去精度。",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [
+          "推荐",
+          "基础"
+        ],
+        "description": "shorten-64-to-32"
+      },
+      {
+        "real_name": "sometimes-uninitialized",
+        "display_name": "sometimes-uninitialized",
+        "severity": "error",
+        "category": "other",
+        "rule_title": "",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": " "
+      },
+      {
+        "real_name": "strict-prototypes",
+        "display_name": "strict-prototypes",
+        "severity": "error",
+        "category": "other",
+        "rule_title": "",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": " "
+      },
+      {
+        "real_name": "switch",
+        "display_name": "switch",
+        "severity": "error",
+        "category": "other",
+        "rule_title": "",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": " "
+      },
+      {
+        "real_name": "tautological-compare",
+        "display_name": "tautological-compare",
+        "severity": "error",
+        "category": "other",
+        "rule_title": "",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": " "
+      },
+      {
+        "real_name": "tautological-constant-out-of-range-compare",
+        "display_name": "tautological-constant-out-of-range-compare",
+        "severity": "info",
+        "category": "other",
+        "rule_title": null,
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": null
+      },
+      {
+        "real_name": "tautological-pointer-compare",
+        "display_name": "tautological-pointer-compare",
+        "severity": "error",
+        "category": "other",
+        "rule_title": "",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": " "
+      },
+      {
+        "real_name": "typedef-redefinition",
+        "display_name": "typedef-redefinition",
+        "severity": "error",
+        "category": "other",
+        "rule_title": "",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": " "
+      },
+      {
+        "real_name": "unavailable-declarations",
+        "display_name": "unavailable-declarations",
+        "severity": "error",
+        "category": "other",
+        "rule_title": "方法声明不可用",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "方法声明不可用"
+      },
+      {
+        "real_name": "undeclared-selector",
+        "display_name": "undeclared-selector",
+        "severity": "error",
+        "category": "other",
+        "rule_title": "未声明的selector。",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [
+          "推荐",
+          "基础"
+        ],
+        "description": "undeclared-selector"
+      },
+      {
+        "real_name": "unguarded-availability",
+        "display_name": "unguarded-availability",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "API与iOS版本不兼容",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "API与iOS版本不兼容"
+      },
+      {
+        "real_name": "unguarded-availability-new",
+        "display_name": "unguarded-availability-new",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "API在当前iOS系统不兼容",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "API在当前iOS系统不兼容"
+      },
+      {
+        "real_name": "unicode-homoglyph",
+        "display_name": "unicode-homoglyph",
+        "severity": "info",
+        "category": "other",
+        "rule_title": null,
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": null
+      },
+      {
+        "real_name": "unicode-whitespace",
+        "display_name": "unicode-whitespace",
+        "severity": "error",
+        "category": "other",
+        "rule_title": "",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": " "
+      },
+      {
+        "real_name": "uninitialized",
+        "display_name": "uninitialized",
+        "severity": "error",
+        "category": "other",
+        "rule_title": "",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": " "
+      },
+      {
+        "real_name": "unknown-escape-sequence",
+        "display_name": "unknown-escape-sequence",
+        "severity": "error",
+        "category": "other",
+        "rule_title": "",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": " "
+      },
+      {
+        "real_name": "unknown-warning-option",
+        "display_name": "unknown-warning-option",
+        "severity": "info",
+        "category": "other",
+        "rule_title": null,
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": null
+      },
+      {
+        "real_name": "unneeded-internal-declaration",
+        "display_name": "unneeded-internal-declaration",
+        "severity": "error",
+        "category": "other",
+        "rule_title": "",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": " "
+      },
+      {
+        "real_name": "unreachable-code",
+        "display_name": "unreachable-code",
+        "severity": "error",
+        "category": "other",
+        "rule_title": "",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": " "
+      },
+      {
+        "real_name": "unreachable-code-loop-increment",
+        "display_name": "unreachable-code-loop-increment",
+        "severity": "error",
+        "category": "other",
+        "rule_title": "",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": " "
+      },
+      {
+        "real_name": "unsupported-availability-guard",
+        "display_name": "unsupported-availability-guard",
+        "severity": "error",
+        "category": "other",
+        "rule_title": "API兼容问题",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": " API兼容问题"
+      },
+      {
+        "real_name": "unused-comparison",
+        "display_name": "unused-comparison",
+        "severity": "error",
+        "category": "other",
+        "rule_title": "对比结果未被使用",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": " "
+      },
+      {
+        "real_name": "unused-const-variable",
+        "display_name": "unused-const-variable",
+        "severity": "error",
+        "category": "other",
+        "rule_title": "常量未被使用",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": " "
+      },
+      {
+        "real_name": "unused-function",
+        "display_name": "unused-function",
+        "severity": "error",
+        "category": "other",
+        "rule_title": "未使用的方法",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": " "
+      },
+      {
+        "real_name": "unused-getter-return-value",
+        "display_name": "unused-getter-return-value",
+        "severity": "error",
+        "category": "other",
+        "rule_title": "getter函数结果未被使用",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": " "
+      },
+      {
+        "real_name": "unused-value",
+        "display_name": "unused-value",
+        "severity": "info",
+        "category": "other",
+        "rule_title": "表达式的结果值未被使用",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "expression result unused"
+      },
+      {
+        "real_name": "unused-variable",
+        "display_name": "unused-variable",
+        "severity": "error",
+        "category": "other",
+        "rule_title": "未使用的变量",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": " "
+      },
+      {
+        "real_name": "varargs",
+        "display_name": "varargs",
+        "severity": "error",
+        "category": "other",
+        "rule_title": "",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": " "
+      },
+      {
+        "real_name": "visibility",
+        "display_name": "visibility",
+        "severity": "info",
+        "category": "other",
+        "rule_title": null,
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": null
+      },
+      {
+        "real_name": "writable-strings",
+        "display_name": "writable-strings",
+        "severity": "error",
+        "category": "other",
+        "rule_title": "",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "oc"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": " "
+      }
+    ]
+  }
+]

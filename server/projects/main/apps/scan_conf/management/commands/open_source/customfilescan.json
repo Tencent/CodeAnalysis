@@ -1,0 +1,119 @@
+[
+  {
+    "name": "customfilescan",
+    "display_name": "CustomFileScan",
+    "description": "文件型自定义规则扫描工具",
+    "license": "自研工具",
+    "task_processes": [
+      "analyze",
+      "datahandle"
+    ],
+    "open_user": true,
+    "open_saas": true,
+    "scan_app": "codelint",
+    "scm_url": null,
+    "run_cmd": null,
+    "envs": null,
+    "show_display_name": true,
+    "checkrule_set": [
+      {
+        "real_name": "CmdTooLong",
+        "display_name": "CmdTooLong",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "编译命令过长，可能导致编译异常",
+        "rule_params": "",
+        "custom": true,
+        "languages": [],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "iOS项目搜索路径过长，会导致编译命令过长而编译失败。"
+      },
+      {
+        "real_name": "CopyrightChecker",
+        "display_name": "CopyrightChecker",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "检查开源项目中代码文件头部是否有Copyright信息",
+        "rule_params": "",
+        "custom": true,
+        "languages": [],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "检查开源项目中代码文件头部是否有Copyright信息。"
+      },
+      {
+        "real_name": "FilesFound",
+        "display_name": "FilesFound",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "发现需要检查的文件",
+        "rule_params": "",
+        "custom": true,
+        "languages": [],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "扫描项目代码中特定的文件，可以通过项目环境变量 CHECKED_PATH 设置，格式：\nCHECKED_PATH=相对项目根目录的路径\n多个路径用英文逗号(,)分隔，路径格式遵循python fnmatch语法，示例：\n1. 根目录及其子目录下的所有test.py文件：test.py,*/test.py\n2. 所有.framework后缀的文件：*.framework\n\n默认检查*.framework,*.a 文件。"
+      },
+      {
+        "real_name": "FilesNotFound",
+        "display_name": "FilesNotFound",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "检查项目中是否包含必备的文件",
+        "rule_params": "",
+        "custom": true,
+        "languages": [],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "#### 规则功能\r\n在某些场景，需要检查代码库有没有存在必备的文件。比如，在开源代码库中，是否已经存在readme.md、contributing.md、license.txt等必备文件\r\n#### 更多\r\n支持在CodeDog项目中设置环境变量来指定需要检查的文件\r\n\r\n- 补充需要检查的文件，逗号分隔，基于sourcedir的相对路径\r\nCUSTOMFILECHECK_ADD_FILES=readme.md,contributing.md\r\n- 覆盖需要检查的文件，逗号分隔，基于sourcedir的相对路径\r\nCUSTOMFILECHECK_ONLY_FILES=readme.md,contributing.md"
+      },
+      {
+        "real_name": "FileTooLong",
+        "display_name": "FileTooLong",
+        "severity": "info",
+        "category": "convention",
+        "rule_title": "检查项目中行数过长的文件",
+        "rule_params": null,
+        "custom": true,
+        "languages": [],
+        "solution": "减少文件长度。",
+        "owner": null,
+        "labels": [],
+        "description": "检查项目中行数过长的文件"
+      },
+      {
+        "real_name": "LowCommentRatio",
+        "display_name": "LowCommentRatio",
+        "severity": "warning",
+        "category": "convention",
+        "rule_title": "检查代码文件注释行数占比，不能低于阈值，默认阈值为10%",
+        "rule_params": "",
+        "custom": true,
+        "languages": [],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "#### 规则功能\r\n检查代码文件注释行数占比，不能低于阈值，默认阈值为10%\r\n#### 支持语种\r\nC/C++、C#、Objective-C/C++、Java、Kotlin、JavaScript、TypeScript、PHP、Python、Scala、Kotlin、Ruby、Swift、Go、Lua、XML、HTML、CSS、Json等多种语种，如需扩展，请联系yalechen\r\n#### 更多\r\n支持在CodeDog项目中设置环境变量CUSTOMFILECHECK_COMMENT_RADIO来设置阈值，比如\r\nCUSTOMFILECHECK_COMMENT_RADIO=20%"
+      },
+      {
+        "real_name": "WrongEncoding",
+        "display_name": "WrongEncoding",
+        "severity": "error",
+        "category": "convention",
+        "rule_title": "文件编码格式不符合规范",
+        "rule_params": "",
+        "custom": true,
+        "languages": [],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "源代码编码格式不正确，请改用UTF-8。"
+      }
+    ]
+  }
+]

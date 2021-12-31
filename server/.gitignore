@@ -1,0 +1,9 @@
+*/.git
+
+# 临时文件
+tmp/
+logs/
+django_metrics/
+nohup.out
+nohup_*.out
+*-master.pid

@@ -1,0 +1,14 @@
+@import "@src/common/style/color.scss";
+.form-content {
+  max-width: 540px;
+  .item {
+    margin-bottom: 20px;
+    .value {
+      color: $grey-7;
+    }
+  }
+}
+
+.header {
+  margin-bottom: 20px;
+}

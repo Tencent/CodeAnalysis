@@ -1,0 +1,1750 @@
+[
+  {
+    "name": "gometalinter",
+    "display_name": "GoMetaLinter",
+    "description": "go static analyzer.",
+    "license": "MIT",
+    "task_processes": [
+      "analyze",
+      "datahandle"
+    ],
+    "open_user": true,
+    "open_saas": true,
+    "scan_app": "codelint",
+    "scm_url": null,
+    "run_cmd": null,
+    "envs": null,
+    "build_flag": false,
+    "show_display_name": true,
+    "checkrule_set": [
+      {
+        "real_name": "deadcode",
+        "display_name": "deadcode",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "检测无用代码",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": ""
+      },
+      {
+        "real_name": "deadcode/unused",
+        "display_name": "deadcode/unused",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "检测未使用代码",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "检测未使用代码"
+      },
+      {
+        "real_name": "errcheck",
+        "display_name": "errcheck",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "检查是否使用错误返回值",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "使用命令是：errcheck -abspath {not_tests=-ignoretests}"
+      },
+      {
+        "real_name": "errcheck/retvalue",
+        "display_name": "errcheck/retvalue",
+        "severity": "info",
+        "category": "correctness",
+        "rule_title": "没有检查返回值",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "没有检查返回值"
+      },
+      {
+        "real_name": "gas",
+        "display_name": "gas",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "通过扫描Go AST来检查代码的安全问题",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "使用命令是：gas -fmt=csv"
+      },
+      {
+        "real_name": "gochecknoglobals/noglobals",
+        "display_name": "gochecknoglobals/noglobals",
+        "severity": "info",
+        "category": "correctness",
+        "rule_title": "检查全局变量",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "检查全局变量。全局变量是函数签名、复杂的测试中不可见的函数的输入，会降低了可读性并增加了代码的复杂性。"
+      },
+      {
+        "real_name": "goconst",
+        "display_name": "goconst",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "查找可以被常量替换的重复字符串",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "使用命令是：goconst -min-occurrences {min_occurrences} -min-length {min_const_length}"
+      },
+      {
+        "real_name": "goconst/string",
+        "display_name": "goconst/string",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "重复使用的字符串应提取为常量",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "重复使用的字符串应提取为常量"
+      },
+      {
+        "real_name": "gofmt",
+        "display_name": "gofmt",
+        "severity": "info",
+        "category": "correctness",
+        "rule_title": "检查代码是否格式正确以及是否无法进一步简化",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "使用命令是：gofmt -l -s"
+      },
+      {
+        "real_name": "gofmt/notformat",
+        "display_name": "gofmt/notformat",
+        "severity": "info",
+        "category": "correctness",
+        "rule_title": "文件没有使用gofmt -s格式化",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "文件没有使用gofmt -s格式化"
+      },
+      {
+        "real_name": "goimports",
+        "display_name": "goimports",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "检查丢失或未引用的软件包导入",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "使用命令是：goimports -l"
+      },
+      {
+        "real_name": "goimports/notimport",
+        "display_name": "goimports/notimport",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "文件没有被goimport",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "文件没有被goimport"
+      },
+      {
+        "real_name": "golint",
+        "display_name": "golint",
+        "severity": "info",
+        "category": "correctness",
+        "rule_title": "Google的linter，侧重于代码风格",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "使用命令是：golint -min_confidence {min_confidence}"
+      },
+      {
+        "real_name": "golint/arg-order",
+        "display_name": "golint/arg-order",
+        "severity": "info",
+        "category": "correctness",
+        "rule_title": "检查参数",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "检查参数"
+      },
+      {
+        "real_name": "golint/comment",
+        "display_name": "golint/comment",
+        "severity": "info",
+        "category": "correctness",
+        "rule_title": "检查注释",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "检查注释"
+      },
+      {
+        "real_name": "golint/context",
+        "display_name": "golint/context",
+        "severity": "info",
+        "category": "correctness",
+        "rule_title": "不应该使用基础类型 %s 作为context.WithValue的key",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "不应该使用基础类型 %s 作为context.WithValue的key"
+      },
+      {
+        "real_name": "golint/imports",
+        "display_name": "golint/imports",
+        "severity": "info",
+        "category": "correctness",
+        "rule_title": "检查import格式",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "检查import格式"
+      },
+      {
+        "real_name": "golint/indent",
+        "display_name": "golint/indent",
+        "severity": "info",
+        "category": "correctness",
+        "rule_title": "if语块以return语句结束，那么可以删去else分支并将else内的语句移到if语块外",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "if语块以return语句结束，那么可以删去else分支并将else内的语句移到if语块外"
+      },
+      {
+        "real_name": "golint/mixed-caps",
+        "display_name": "golint/mixed-caps",
+        "severity": "info",
+        "category": "correctness",
+        "rule_title": "package名不要使用MixedCaps格式命名",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "package名不要使用MixedCaps格式命名"
+      },
+      {
+        "real_name": "golint/naming",
+        "display_name": "golint/naming",
+        "severity": "info",
+        "category": "correctness",
+        "rule_title": "检查命名规范",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "检查命名规范"
+      },
+      {
+        "real_name": "golint/print",
+        "display_name": "golint/print",
+        "severity": "info",
+        "category": "correctness",
+        "rule_title": "检查print",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "检查print"
+      },
+      {
+        "real_name": "golint/range-loop",
+        "display_name": "golint/range-loop",
+        "severity": "info",
+        "category": "correctness",
+        "rule_title": "检查range",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "检查range"
+      },
+      {
+        "real_name": "golint/string",
+        "display_name": "golint/string",
+        "severity": "info",
+        "category": "correctness",
+        "rule_title": "错误字符串不应该大写，或者标点符号、新行结尾",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "错误字符串不应该大写，或者标点符号、新行结尾"
+      },
+      {
+        "real_name": "golint/time",
+        "display_name": "golint/time",
+        "severity": "info",
+        "category": "correctness",
+        "rule_title": "var %s 是类型 %v，不要使用unit-specific后缀 %q",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "var %s 是类型 %v，不要使用unit-specific后缀 %q"
+      },
+      {
+        "real_name": "golint/type-inference",
+        "display_name": "golint/type-inference",
+        "severity": "info",
+        "category": "correctness",
+        "rule_title": "检查可省略的类型",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "可以省略类型，因为该类型可以从变量的声明语句中的右值推导出来"
+      },
+      {
+        "real_name": "golint/unary-op",
+        "display_name": "golint/unary-op",
+        "severity": "info",
+        "category": "correctness",
+        "rule_title": "检查一元操作符",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "检查一元操作符"
+      },
+      {
+        "real_name": "golint/unexported-type-in-api",
+        "display_name": "golint/unexported-type-in-api",
+        "severity": "info",
+        "category": "correctness",
+        "rule_title": "exported类型 %s %s 返回unexported类型 %s，这会造成使用上的困扰",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "exported类型 %s %s 返回unexported类型 %s，这会造成使用上的困扰"
+      },
+      {
+        "real_name": "golint/zero-value",
+        "display_name": "golint/zero-value",
+        "severity": "info",
+        "category": "correctness",
+        "rule_title": "检查零值",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "检查零值"
+      },
+      {
+        "real_name": "gosec/archive",
+        "display_name": "gosec/archive",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "解压zip时候文件遍历",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "解压zip时候文件遍历"
+      },
+      {
+        "real_name": "gosec/blacklist",
+        "display_name": "gosec/blacklist",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "安全检查，建议不使用被列入import的黑名单的库",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "安全检查，建议不使用被列入import的黑名单的库，可能存在安全漏洞。"
+      },
+      {
+        "real_name": "gosec/calls",
+        "display_name": "gosec/calls",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "审查不安全的调用",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "审查不安全的调用"
+      },
+      {
+        "real_name": "gosec/crypto",
+        "display_name": "gosec/crypto",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "安全检查，检查弱加密方式",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "安全检查，检查弱加密方式"
+      },
+      {
+        "real_name": "gosec/error",
+        "display_name": "gosec/error",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "没有处理错误",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "没有处理错误"
+      },
+      {
+        "real_name": "gosec/escape",
+        "display_name": "gosec/escape",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "该方法不会自动转义HTML。验证数据格式良好。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "该方法不会自动转义HTML。验证数据格式良好。"
+      },
+      {
+        "real_name": "gosec/file",
+        "display_name": "gosec/file",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "在tmp目录创建文件没有使用ioutil.Tempfile",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "在tmp目录创建文件没有使用ioutil.Tempfile"
+      },
+      {
+        "real_name": "gosec/modulus",
+        "display_name": "gosec/modulus",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "检查使用math/big.Int.Exp函数时模数是否为0",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "检查使用math/big.Int.Exp函数时模数是否为0"
+      },
+      {
+        "real_name": "gosec/network",
+        "display_name": "gosec/network",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "绑定了所有网络接口",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "绑定了所有网络接口"
+      },
+      {
+        "real_name": "gosec/permission",
+        "display_name": "gosec/permission",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "检查文件、目录的权限",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "检查文件、目录的权限"
+      },
+      {
+        "real_name": "gosec/readfile",
+        "display_name": "gosec/readfile",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "变量可能包含文件路径",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "变量可能包含文件路径"
+      },
+      {
+        "real_name": "gosec/sql",
+        "display_name": "gosec/sql",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "检查SQL字符",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "检查SQL字符"
+      },
+      {
+        "real_name": "gosec/ssh",
+        "display_name": "gosec/ssh",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "应检查ssh InsecureIgnoreHostKey的使用",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "应检查ssh InsecureIgnoreHostKey的使用"
+      },
+      {
+        "real_name": "gosec/ssrf",
+        "display_name": "gosec/ssrf",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "使用变量url进行的潜在HTTP请求",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "使用变量url进行的潜在HTTP请求"
+      },
+      {
+        "real_name": "gosec/subproc",
+        "display_name": "gosec/subproc",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "检查子进程",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "检查子进程"
+      },
+      {
+        "real_name": "gosec/tls",
+        "display_name": "gosec/tls",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "检查tls",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "检查tls"
+      },
+      {
+        "real_name": "gosimple",
+        "display_name": "gosimple",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "检测可简化的代码",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "使用命令是：gosimple"
+      },
+      {
+        "real_name": "gosimple/boolcmp",
+        "display_name": "gosimple/boolcmp",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "应该省略bool常量的比较",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "应该省略bool常量的比较"
+      },
+      {
+        "real_name": "gosimple/copy",
+        "display_name": "gosimple/copy",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "应该使用copy()而不是循环",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "应该使用copy()而不是循环"
+      },
+      {
+        "real_name": "gosimple/for",
+        "display_name": "gosimple/for",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "应该使用for range，而不是 for select{}",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "应该使用for range，而不是 for select{}"
+      },
+      {
+        "real_name": "gosimple/sendrecv",
+        "display_name": "gosimple/sendrecv",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "应该使用简单通道的send/receive，而不是select",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "应该使用简单通道的send/receive，而不是select"
+      },
+      {
+        "real_name": "gosimple/usageadvice",
+        "display_name": "gosimple/usageadvice",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "检查一些函数的用法",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "检查一些函数的用法"
+      },
+      {
+        "real_name": "gotype",
+        "display_name": "gotype",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "类似于Go编译器的句法和语义分析",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "使用命令是：gotype -e {tests=-t}"
+      },
+      {
+        "real_name": "gotypex",
+        "display_name": "gotypex",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "对外部test包中的语法和语义分析（类似于Go编译器）",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "使用命令是：gotype -e -x"
+      },
+      {
+        "real_name": "ineffassign",
+        "display_name": "ineffassign",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "检测没有使用到的现有变量的赋值",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "使用命令是：ineffassign -n"
+      },
+      {
+        "real_name": "ineffassign/assign",
+        "display_name": "ineffassign/assign",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "检查无效赋值",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "检查无效赋值"
+      },
+      {
+        "real_name": "interfacer",
+        "display_name": "interfacer",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "建议可以使用的更精准的接口",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "使用命令是：interfacer"
+      },
+      {
+        "real_name": "interfacer/interface",
+        "display_name": "interfacer/interface",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "检查接口",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "检查接口"
+      },
+      {
+        "real_name": "maligned",
+        "display_name": "maligned",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "检测Go结构的工具，如果结果的字段被排序，将会占用更少的内存",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "检测Go结构的工具，如果结果的字段被排序，将会占用更少的内存"
+      },
+      {
+        "real_name": "maligned/size",
+        "display_name": "maligned/size",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "%s：结构大小%d 可以为 %d",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "%s：结构大小%d 可以为 %d"
+      },
+      {
+        "real_name": "megacheck",
+        "display_name": "megacheck",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "运行staticcheck，gosimple和unused，一起运行工作",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "使用命令是：megacheck"
+      },
+      {
+        "real_name": "misspell",
+        "display_name": "misspell",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "发现通常拼写错误的英文单词",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "使用命令是：misspell -j 1"
+      },
+      {
+        "real_name": "misspell/spell",
+        "display_name": "misspell/spell",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "%s 应拼写为 %s",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "%s 应拼写为 %s"
+      },
+      {
+        "real_name": "nakedret",
+        "display_name": "nakedret",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "检测空返回值",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "使用命令是：nakedret"
+      },
+      {
+        "real_name": "nakedret/ret",
+        "display_name": "nakedret/ret",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "在%v:%v %v 的第 %v 行的函数，存在空返回值(naked returns)",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "在%v:%v %v 的第 %v 行的函数，存在空返回值(naked returns)"
+      },
+      {
+        "real_name": "safesql",
+        "display_name": "safesql",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "检测潜在的sql注入漏洞",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "使用命令是：safesql"
+      },
+      {
+        "real_name": "safesql/sql",
+        "display_name": "safesql/sql",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "潜在不安全的SQL语句",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "潜在不安全的SQL语句"
+      },
+      {
+        "real_name": "staticcheck",
+        "display_name": "staticcheck",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "静态检测bug，包括明显的bug和比较微妙的bug",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "使用命令是：staticcheck"
+      },
+      {
+        "real_name": "staticcheck/append",
+        "display_name": "staticcheck/append",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "append的结果不会被使用，除非在其他的appends里",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "append的结果不会被使用，除非在其他的appends里"
+      },
+      {
+        "real_name": "staticcheck/args",
+        "display_name": "staticcheck/args",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "检查参数",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "检查参数"
+      },
+      {
+        "real_name": "staticcheck/assign",
+        "display_name": "staticcheck/assign",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "检查赋值",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "检查赋值"
+      },
+      {
+        "real_name": "staticcheck/boolean",
+        "display_name": "staticcheck/boolean",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "对于boolean类型的双重否定是没有效果的，是笔误吗？",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "对于boolean类型的双重否定是没有效果的，是笔误吗？"
+      },
+      {
+        "real_name": "staticcheck/break",
+        "display_name": "staticcheck/break",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "break语句没有效果，是希望跳出外部循环吗？",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "break语句没有效果，是希望跳出外部循环吗？"
+      },
+      {
+        "real_name": "staticcheck/compare",
+        "display_name": "staticcheck/compare",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "检查代码中的比较错误",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "检查代码中的比较错误"
+      },
+      {
+        "real_name": "staticcheck/defer",
+        "display_name": "staticcheck/defer",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "检查defer情况",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "检查defer情况"
+      },
+      {
+        "real_name": "staticcheck/deprecated",
+        "display_name": "staticcheck/deprecated",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "%s 已经废弃",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "%s 已经废弃"
+      },
+      {
+        "real_name": "staticcheck/efficient",
+        "display_name": "staticcheck/efficient",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "m[string(key)] 可能比 k := string(key); m[k] 更加高效",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "m[string(key)] 可能比 k := string(key); m[k] 更加高效"
+      },
+      {
+        "real_name": "staticcheck/emptybranch",
+        "display_name": "staticcheck/emptybranch",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "检查空的分支",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "检查空的分支"
+      },
+      {
+        "real_name": "staticcheck/exec",
+        "display_name": "staticcheck/exec",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "exec.Command的第一个参数看起来是shell命令，但是缺少了程序名或者路径",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "exec.Command的第一个参数看起来是shell命令，但是缺少了程序名或者路径"
+      },
+      {
+        "real_name": "staticcheck/exit",
+        "display_name": "staticcheck/exit",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "TestMain应该调用os.Exit来设置退出码",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "TestMain应该调用os.Exit来设置退出码"
+      },
+      {
+        "real_name": "staticcheck/exp",
+        "display_name": "staticcheck/exp",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "检查表达式",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "检查表达式"
+      },
+      {
+        "real_name": "staticcheck/explicit",
+        "display_name": "staticcheck/explicit",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "只有第1个常量是显式类型",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "只有第1个常量是显式类型"
+      },
+      {
+        "real_name": "staticcheck/finalizer",
+        "display_name": "staticcheck/finalizer",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "终结器关闭该对象，从而阻止终结器运行（在％s）",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "终结器关闭该对象，从而阻止终结器运行（在％s）"
+      },
+      {
+        "real_name": "staticcheck/goroutine",
+        "display_name": "staticcheck/goroutine",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "goroutine调用T.%s，作为测试test必须在相同的goroutine里调用",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "goroutine调用T.%s，作为测试test必须在相同的goroutine里调用"
+      },
+      {
+        "real_name": "staticcheck/httpheader",
+        "display_name": "staticcheck/httpheader",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "在http.Header里的keys都是规范化的，然而%q并不符合规范；修改该常量或者使用http.CanonicalHeaderKey",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "在http.Header里的keys都是规范化的，然而%q并不符合规范；修改该常量或者使用http.CanonicalHeaderKey"
+      },
+      {
+        "real_name": "staticcheck/infinite",
+        "display_name": "staticcheck/infinite",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "调用了无限递归",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "调用了无限递归"
+      },
+      {
+        "real_name": "staticcheck/iowriter",
+        "display_name": "staticcheck/iowriter",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "io.Writer.Write 不能修改所提供的buffer缓冲区，即使是临时性的",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "io.Writer.Write 不能修改所提供的buffer缓冲区，即使是临时性的"
+      },
+      {
+        "real_name": "staticcheck/loop",
+        "display_name": "staticcheck/loop",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "检查循环",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "检查循环"
+      },
+      {
+        "real_name": "staticcheck/overrun",
+        "display_name": "staticcheck/overrun",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "index索引超出界限（bounds）",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "index索引超出界限（bounds）"
+      },
+      {
+        "real_name": "staticcheck/resource",
+        "display_name": "staticcheck/resource",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "空的临界区（critical section)",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "空的临界区（critical section)"
+      },
+      {
+        "real_name": "staticcheck/return",
+        "display_name": "staticcheck/return",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "%s 是一个纯函数（pure function），但是它的返回值被忽略了",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "%s 是一个纯函数（pure function），但是它的返回值被忽略了"
+      },
+      {
+        "real_name": "staticcheck/routine",
+        "display_name": "staticcheck/routine",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "启动goroutine前应该先调用%s，以避免竞争",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "启动goroutine前应该先调用%s，以避免竞争"
+      },
+      {
+        "real_name": "staticcheck/signal",
+        "display_name": "staticcheck/signal",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "检查signal",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "检查signal"
+      },
+      {
+        "real_name": "staticcheck/simple",
+        "display_name": "staticcheck/simple",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "检查简化模式",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "检查简化模式"
+      },
+      {
+        "real_name": "staticcheck/sleep",
+        "display_name": "staticcheck/sleep",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "睡眠 %d（ns）很可能是一个bug。如果不是的话请明确下:%s",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "睡眠 %d（ns）很可能是一个bug。如果不是的话请明确下:%s"
+      },
+      {
+        "real_name": "staticcheck/timeticker",
+        "display_name": "staticcheck/timeticker",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "使用time.Tick在某些场景下会泄漏。可以考虑在endless function中使用，或者使用time.NewTicker。",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "使用time.Tick在某些场景下会泄漏。可以考虑在endless function中使用，或者使用time.NewTicker。"
+      },
+      {
+        "real_name": "staticcheck/unused",
+        "display_name": "staticcheck/unused",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "这个变量%s的值不会被使用",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "这个变量%s的值不会被使用"
+      },
+      {
+        "real_name": "structcheck",
+        "display_name": "structcheck",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "检测无用的struct域",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "使用命令是：structcheck {tests=-t}"
+      },
+      {
+        "real_name": "structcheck/field",
+        "display_name": "structcheck/field",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "未使用的struct字段",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "未使用的struct字段"
+      },
+      {
+        "real_name": "unconvert",
+        "display_name": "unconvert",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "检测过于频繁的类型转换",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "使用命令是：unconvert"
+      },
+      {
+        "real_name": "unparam",
+        "display_name": "unparam",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "检测无用的函数参数",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "使用命令是：unparam {not_tests=-tests=false}"
+      },
+      {
+        "real_name": "unparam/unused",
+        "display_name": "unparam/unused",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "参数%s没有使用",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "参数%s没有使用"
+      },
+      {
+        "real_name": "unparam/value",
+        "display_name": "unparam/value",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "检查参数值",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "检查参数值"
+      },
+      {
+        "real_name": "unused",
+        "display_name": "unused",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "检测无用的变量",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "使用命令是：unused"
+      },
+      {
+        "real_name": "unused/unused",
+        "display_name": "unused/unused",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "%s没有被使用",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "%s没有被使用"
+      },
+      {
+        "real_name": "varcheck",
+        "display_name": "varcheck",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "检测无用的全局变量和常量",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "使用命令是：varcheck"
+      },
+      {
+        "real_name": "varcheck/unused",
+        "display_name": "varcheck/unused",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "未使用的变量或常量",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "未使用的变量或常量"
+      },
+      {
+        "real_name": "vet",
+        "display_name": "vet",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "检测妨碍编译的错误",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "使用命令是：govet --no-recurse"
+      },
+      {
+        "real_name": "vetshadow",
+        "display_name": "vetshadow",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "检测无意中被覆盖了的变量",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "使用命令是：govet --no-recurse --shadow"
+      },
+      {
+        "real_name": "vetshadow/shadow",
+        "display_name": "vetshadow/shadow",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "%q的声明覆盖了%s位置的声明",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Go"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "%q的声明覆盖了%s位置的声明"
+      }
+    ]
+  }
+]

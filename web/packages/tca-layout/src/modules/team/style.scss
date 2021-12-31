@@ -1,0 +1,85 @@
+@import "@src/common/style/color.scss";
+
+.team-container {
+  // margin-top: 48px;
+  padding: 20px 200px;
+  min-width: 1000px;
+  overflow: auto;
+
+  .team-wrapper {
+    $mg: 24px;
+    white-space: normal;
+    padding: 0 20px;
+    margin-top: $mg;
+    margin-right: -$mg;
+
+    .team {
+      display: inline-block;
+      width: calc((100% - #{$mg} * 4) / 4);
+      margin-right: $mg;
+      margin-bottom: 24px;
+      border: 1px solid #e6e9ed;
+      border-radius: 2px;
+      box-shadow: 0px 6px 12px 0px rgba(197, 206, 219, 0.1);
+      transition: all 0.3s;
+      cursor: pointer;
+
+      &:hover {
+        box-shadow: 0 1px 2px -2px rgba(0, 0, 0, 0.12), 0 3px 6px 0 rgba(0, 0, 0, 0.12),
+          0 5px 12px 4px rgba(0, 0, 0, 0.09);
+      }
+
+      .item {
+        display: flex;
+        align-items: center;
+        padding: 20px;
+
+        .content {
+          padding-left: 20px;
+        }
+
+        .time {
+          color: $grey-7;
+          margin-top: 6px;
+          font-size: 13px;
+        }
+      }
+
+      .badge {
+        display: none;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 2000px) {
+  .team-container {
+    padding: 20px 120px;
+
+    .team-wrapper {
+      $mg: 20px;
+      margin-right: -$mg;
+
+      .team {
+        margin-right: $mg;
+        width: calc((100% - #{$mg} * 3) / 3);
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1300px) {
+  .team-container {
+    padding: 20px 60px;
+
+    .team-wrapper {
+      $mg: 16px;
+      margin-right: -$mg;
+
+      .team {
+        margin-right: $mg;
+        width: calc((100% - #{$mg} * 2) / 2);
+      }
+    }
+  }
+}

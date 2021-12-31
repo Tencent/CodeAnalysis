@@ -1,0 +1,107 @@
+[
+  {
+    "name": "【Html】基础规则包",
+    "description": "Html官方基础规则包，提供常见代码问题扫描。",
+    "revision": null,
+    "open_saas": true,
+    "package_type": "official",
+    "languages": [
+      "html"
+    ],
+    "labels": [
+      "基础"
+    ],
+    "checkrule_set": [
+      {
+        "checktool": "htmlcs",
+        "checkrule": "attr-no-duplication",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "AttrNoDuplication",
+        "checktool_display_name": "HtmlCs"
+      },
+      {
+        "checktool": "htmlcs",
+        "checkrule": "charset",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "Charset",
+        "checktool_display_name": "HtmlCs"
+      },
+      {
+        "checktool": "htmlcs",
+        "checkrule": "css-in-head",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "CssInHead",
+        "checktool_display_name": "HtmlCs"
+      },
+      {
+        "checktool": "htmlcs",
+        "checkrule": "img-src",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "ImgSrc",
+        "checktool_display_name": "HtmlCs"
+      },
+      {
+        "checktool": "htmlcs",
+        "checkrule": "rel-stylesheet",
+        "severity": "warning",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "RelStylesheet",
+        "checktool_display_name": "HtmlCs"
+      },
+      {
+        "checktool": "htmlcs",
+        "checkrule": "spec-char-escape",
+        "severity": "warning",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "SpecCharEscape",
+        "checktool_display_name": "HtmlCs"
+      },
+      {
+        "checktool": "htmlcs",
+        "checkrule": "tag-pair",
+        "severity": "warning",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "TagPair",
+        "checktool_display_name": "HtmlCs"
+      },
+      {
+        "checktool": "htmlcs",
+        "checkrule": "title-required",
+        "severity": "warning",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "TitleRequired",
+        "checktool_display_name": "HtmlCs"
+      },
+      {
+        "checktool": "htmlcs",
+        "checkrule": "no-duplication-id-and-name",
+        "severity": "warning",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "NoDuplicationIdAndName",
+        "checktool_display_name": "HtmlCs"
+      }
+    ]
+  }
+]

@@ -1,0 +1,228 @@
+[
+  {
+    "name": "【Vue】推荐规则包",
+    "description": "Vue官方推荐规则包。",
+    "revision": null,
+    "package_type": "official",
+    "languages": [
+      "js"
+    ],
+    "labels": [
+      "推荐"
+    ],
+    "checkrule_set": [
+      {
+        "checktool": "eslint_vue",
+        "checkrule": "vue/attribute-hyphenation",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "vue/attribute-hyphenation",
+        "checktool_display_name": "EslintVue"
+      },
+      {
+        "checktool": "eslint_vue",
+        "checkrule": "vue/html-end-tags",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "vue/html-end-tags",
+        "checktool_display_name": "EslintVue"
+      },
+      {
+        "checktool": "eslint_vue",
+        "checkrule": "vue/html-quotes",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "vue/html-quotes",
+        "checktool_display_name": "EslintVue"
+      },
+      {
+        "checktool": "eslint_vue",
+        "checkrule": "vue/html-self-closing",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "vue/html-self-closing",
+        "checktool_display_name": "EslintVue"
+      },
+      {
+        "checktool": "eslint_vue",
+        "checkrule": "vue/max-attributes-per-line",
+        "severity": "warning",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "convention",
+        "checkrule_display_name": "vue/max-attributes-per-line",
+        "checktool_display_name": "EslintVue"
+      },
+      {
+        "checktool": "eslint_vue",
+        "checkrule": "vue/name-property-casing",
+        "severity": "warning",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "convention",
+        "checkrule_display_name": "vue/name-property-casing",
+        "checktool_display_name": "EslintVue"
+      },
+      {
+        "checktool": "eslint_vue",
+        "checkrule": "vue/no-multi-spaces",
+        "severity": "warning",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "convention",
+        "checkrule_display_name": "vue/no-multi-spaces",
+        "checktool_display_name": "EslintVue"
+      },
+      {
+        "checktool": "eslint_vue",
+        "checkrule": "vue/no-template-shadow",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "vue/no-template-shadow",
+        "checktool_display_name": "EslintVue"
+      },
+      {
+        "checktool": "eslint_vue",
+        "checkrule": "vue/prop-name-casing",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "vue/prop-name-casing",
+        "checktool_display_name": "EslintVue"
+      },
+      {
+        "checktool": "eslint_vue",
+        "checkrule": "vue/require-default-prop",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "vue/require-default-prop",
+        "checktool_display_name": "EslintVue"
+      },
+      {
+        "checktool": "eslint_vue",
+        "checkrule": "vue/require-prop-types",
+        "severity": "warning",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "convention",
+        "checkrule_display_name": "vue/require-prop-types",
+        "checktool_display_name": "EslintVue"
+      },
+      {
+        "checktool": "eslint_vue",
+        "checkrule": "vue/v-bind-style",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "vue/v-bind-style",
+        "checktool_display_name": "EslintVue"
+      },
+      {
+        "checktool": "eslint_vue",
+        "checkrule": "vue/v-on-style",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "vue/v-on-style",
+        "checktool_display_name": "EslintVue"
+      },
+      {
+        "checktool": "eslint_vue",
+        "checkrule": "vue/attributes-order",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "vue/attributes-order",
+        "checktool_display_name": "EslintVue"
+      },
+      {
+        "checktool": "eslint_vue",
+        "checkrule": "vue/no-v-html",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "vue/no-v-html",
+        "checktool_display_name": "EslintVue"
+      },
+      {
+        "checktool": "eslint_vue",
+        "checkrule": "vue/order-in-components",
+        "severity": "warning",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "convention",
+        "checkrule_display_name": "vue/order-in-components",
+        "checktool_display_name": "EslintVue"
+      },
+      {
+        "checktool": "eslint_vue",
+        "checkrule": "vue/this-in-template",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "vue/this-in-template",
+        "checktool_display_name": "EslintVue"
+      },
+      {
+        "checktool": "eslint_vue",
+        "checkrule": "vue/use-v-on-exact",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "vue/use-v-on-exact",
+        "checktool_display_name": "EslintVue"
+      },
+      {
+        "checktool": "eslint_vue",
+        "checkrule": "vue/return-in-computed-property",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "vue/return-in-computed-property",
+        "checktool_display_name": "EslintVue"
+      },
+      {
+        "checktool": "eslint_vue",
+        "checkrule": "vue/comment-directive",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "vue/comment-directive",
+        "checktool_display_name": "EslintVue"
+      },
+      {
+        "checktool": "eslint_vue",
+        "checkrule": "vue/jsx-uses-vars",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "vue/jsx-uses-vars",
+        "checktool_display_name": "EslintVue"
+      }
+    ],
+    "open_saas": false,
+    "envs": null
+  }
+]

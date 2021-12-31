@@ -1,0 +1,27 @@
+{
+  "name": "tca-open-source-frontend",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "clean": "lerna clean -y",
+    "bootstrap": "lerna bootstrap",
+    "update": "lernaupdate",
+    "lint": "eslint \"packages/*/src/**/*.{js,jsx,ts,tsx}\" --quiet",
+    "lint:fix": "eslint \"packages/*/src/**/*.{js,jsx,ts,tsx}\" --fix",
+    "dev:comment": "echo '启动项目: xxx=xxx yarn dev --scope pkg_name'",
+    "dev": "lerna run dev --stream",
+    "build:comment": "echo '启动项目: xxx=xxx yarn build --scope pkg_name'",
+    "build": "lerna run build --stream"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.33.0",
+    "@typescript-eslint/parser": "^4.33.0",
+    "eslint": "^7.32.0",
+    "eslint-plugin-react": "^7.26.1",
+    "lerna": "^4.0.0",
+    "lerna-update-wizard": "^0.17.8",
+    "typescript": "^4.4.2"
+  }
+}

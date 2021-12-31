@@ -1,0 +1,1036 @@
+[
+  {
+    "name": "【Java】 基础规则包",
+    "description": "扫描基础的安全、缺陷、性能等类型问题，无需提供编译信息。更多能力可开启 Java 功能规则包、Java 安全规则包。",
+    "open_saas": true,
+    "package_type": "official",
+    "languages": [
+      "java"
+    ],
+    "labels": [
+      "基础"
+    ],
+    "checkrule_set": [
+    {
+      "checktool": "pmd",
+      "checkrule": "rulesets/java/android.xml/DoNotHardCodeSDCard",
+      "severity": "warning",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "correctness",
+      "checkrule_display_name": "不要硬编码SD卡",
+      "checktool_display_name": "PMD"
+    },
+    {
+      "checktool": "pmd",
+      "checkrule": "rulesets/java/basic.xml/AvoidBranchingStatementAsLastInLoop",
+      "severity": "error",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "correctness",
+      "checkrule_display_name": "避免将分支语句作为最后一个循环",
+      "checktool_display_name": "PMD"
+    },
+    {
+      "checktool": "pmd",
+      "checkrule": "rulesets/java/basic.xml/AvoidDecimalLiteralsInBigDecimalConstructor",
+      "severity": "warning",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "correctness",
+      "checkrule_display_name": "避免使用十进制（浮点/双精度）文字创建BigDecimal",
+      "checktool_display_name": "PMD"
+    },
+    {
+      "checktool": "pmd",
+      "checkrule": "rulesets/java/basic.xml/AvoidMultipleUnaryOperators",
+      "severity": "error",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "correctness",
+      "checkrule_display_name": "避免多个一元运算符",
+      "checktool_display_name": "PMD"
+    },
+    {
+      "checktool": "pmd",
+      "checkrule": "rulesets/java/basic.xml/AvoidThreadGroup",
+      "severity": "warning",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "correctness",
+      "checkrule_display_name": "避免线程组",
+      "checktool_display_name": "PMD"
+    },
+    {
+      "checktool": "pmd",
+      "checkrule": "rulesets/java/basic.xml/AvoidUsingHardCodedIP",
+      "severity": "error",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "convention",
+      "checkrule_display_name": "不要硬编码IP地址",
+      "checktool_display_name": "PMD"
+    },
+    {
+      "checktool": "pmd",
+      "checkrule": "rulesets/java/basic.xml/AvoidUsingOctalValues",
+      "severity": "warning",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "correctness",
+      "checkrule_display_name": "避免使用八进制值",
+      "checktool_display_name": "PMD"
+    },
+    {
+      "checktool": "pmd",
+      "checkrule": "rulesets/java/basic.xml/BrokenNullCheck",
+      "severity": "error",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "correctness",
+      "checkrule_display_name": "“||“和“&&”可能用反了",
+      "checktool_display_name": "PMD"
+    },
+    {
+      "checktool": "pmd",
+      "checkrule": "rulesets/java/basic.xml/CheckResultSet",
+      "severity": "warning",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "convention",
+      "checkrule_display_name": "检查结果集",
+      "checktool_display_name": "PMD"
+    },
+    {
+      "checktool": "pmd",
+      "checkrule": "rulesets/java/basic.xml/CheckSkipResult",
+      "severity": "warning",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "correctness",
+      "checkrule_display_name": "检查Skip函数",
+      "checktool_display_name": "PMD"
+    },
+    {
+      "checktool": "pmd",
+      "checkrule": "rulesets/java/basic.xml/ClassCastExceptionWithToArray",
+      "severity": "warning",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "correctness",
+      "checkrule_display_name": "类强制转换为To Array",
+      "checktool_display_name": "PMD"
+    },
+    {
+      "checktool": "pmd",
+      "checkrule": "rulesets/java/basic.xml/DontUseFloatTypeForLoopIndices",
+      "severity": "warning",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "correctness",
+      "checkrule_display_name": "不要将浮点类型用于循环索引",
+      "checktool_display_name": "PMD"
+    },
+    {
+      "checktool": "pmd",
+      "checkrule": "rulesets/java/basic.xml/DoubleCheckedLocking",
+      "severity": "error",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "correctness",
+      "checkrule_display_name": "双重检查锁定",
+      "checktool_display_name": "PMD"
+    },
+    {
+      "checktool": "pmd",
+      "checkrule": "rulesets/java/basic.xml/JumbledIncrementer",
+      "severity": "warning",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "correctness",
+      "checkrule_display_name": "混乱的增量器",
+      "checktool_display_name": "PMD"
+    },
+    {
+      "checktool": "pmd",
+      "checkrule": "rulesets/java/basic.xml/MisplacedNullCheck",
+      "severity": "warning",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "correctness",
+      "checkrule_display_name": "空放的Null Check",
+      "checktool_display_name": "PMD"
+    },
+    {
+      "checktool": "pmd",
+      "checkrule": "rulesets/java/basic.xml/OverrideBothEqualsAndHashcode",
+      "severity": "warning",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "correctness",
+      "checkrule_display_name": "确保同时覆盖equals和hashCode",
+      "checktool_display_name": "PMD"
+    },
+    {
+      "checktool": "pmd",
+      "checkrule": "rulesets/java/basic.xml/ReturnFromFinallyBlock",
+      "severity": "warning",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "correctness",
+      "checkrule_display_name": "从finally块返回",
+      "checktool_display_name": "PMD"
+    },
+    {
+      "checktool": "pmd",
+      "checkrule": "rulesets/java/basic.xml/UnconditionalIfStatement",
+      "severity": "warning",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "correctness",
+      "checkrule_display_name": "无条件的If语句",
+      "checktool_display_name": "PMD"
+    },
+    {
+      "checktool": "pmd",
+      "checkrule": "rulesets/java/braces.xml/ForLoopsMustUseBraces",
+      "severity": "warning",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "convention",
+      "checkrule_display_name": "对于循环必须使用花括号",
+      "checktool_display_name": "PMD"
+    },
+    {
+      "checktool": "pmd",
+      "checkrule": "rulesets/java/braces.xml/IfElseStmtsMustUseBraces",
+      "severity": "warning",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "convention",
+      "checkrule_display_name": "IfElse语句必须使用大括号",
+      "checktool_display_name": "PMD"
+    },
+    {
+      "checktool": "pmd",
+      "checkrule": "rulesets/java/braces.xml/IfStmtsMustUseBraces",
+      "severity": "warning",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "convention",
+      "checkrule_display_name": "If必须使用大括号",
+      "checktool_display_name": "PMD"
+    },
+    {
+      "checktool": "pmd",
+      "checkrule": "rulesets/java/braces.xml/WhileLoopsMustUseBraces",
+      "severity": "warning",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "convention",
+      "checkrule_display_name": "While循环必须使用花括号",
+      "checktool_display_name": "PMD"
+    },
+    {
+      "checktool": "pmd",
+      "checkrule": "rulesets/java/clone.xml/CloneMethodMustBePublic",
+      "severity": "warning",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "correctness",
+      "checkrule_display_name": "Clone方法必须公开",
+      "checktool_display_name": "PMD"
+    },
+    {
+      "checktool": "pmd",
+      "checkrule": "rulesets/java/clone.xml/CloneMethodMustImplementCloneable",
+      "severity": "warning",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "correctness",
+      "checkrule_display_name": "Clone方法必须实现可Clone",
+      "checktool_display_name": "PMD"
+    },
+    {
+      "checktool": "pmd",
+      "checkrule": "rulesets/java/clone.xml/CloneMethodReturnTypeMustMatchClassName",
+      "severity": "warning",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "correctness",
+      "checkrule_display_name": "Clone方法返回类型必须与类名称匹配",
+      "checktool_display_name": "PMD"
+    },
+    {
+      "checktool": "pmd",
+      "checkrule": "rulesets/java/clone.xml/CloneThrowsCloneNotSupportedException",
+      "severity": "warning",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "correctness",
+      "checkrule_display_name": "Clone引发Clone不受支持的异常",
+      "checktool_display_name": "PMD"
+    },
+    {
+      "checktool": "pmd",
+      "checkrule": "rulesets/java/clone.xml/ProperCloneImplementation",
+      "severity": "error",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "correctness",
+      "checkrule_display_name": "正确的Clone实施",
+      "checktool_display_name": "PMD"
+    },
+    {
+      "checktool": "pmd",
+      "checkrule": "rulesets/java/controversial.xml/AssignmentInOperand",
+      "severity": "warning",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "correctness",
+      "checkrule_display_name": "操作数中的赋值",
+      "checktool_display_name": "PMD"
+    },
+    {
+      "checktool": "pmd",
+      "checkrule": "rulesets/java/controversial.xml/AvoidAccessibilityAlteration",
+      "severity": "warning",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "correctness",
+      "checkrule_display_name": "避免无障碍更改",
+      "checktool_display_name": "PMD"
+    },
+    {
+      "checktool": "pmd",
+      "checkrule": "rulesets/java/controversial.xml/AvoidUsingNativeCode",
+      "severity": "error",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "convention",
+      "checkrule_display_name": "避免使用本机代码",
+      "checktool_display_name": "PMD"
+    },
+    {
+      "checktool": "pmd",
+      "checkrule": "rulesets/java/controversial.xml/AvoidUsingVolatile",
+      "severity": "warning",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "correctness",
+      "checkrule_display_name": "避免使用volatile",
+      "checktool_display_name": "PMD"
+    },
+    {
+      "checktool": "pmd",
+      "checkrule": "rulesets/java/controversial.xml/DoNotCallGarbageCollectionExplicitly",
+      "severity": "error",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "correctness",
+      "checkrule_display_name": "不要明确呼叫垃圾回收",
+      "checktool_display_name": "PMD"
+    },
+    {
+      "checktool": "pmd",
+      "checkrule": "rulesets/java/design.xml/AssignmentToNonFinalStatic",
+      "severity": "warning",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "correctness",
+      "checkrule_display_name": "分配给非最终静态",
+      "checktool_display_name": "PMD"
+    },
+    {
+      "checktool": "pmd",
+      "checkrule": "rulesets/java/design.xml/AvoidInstanceofChecksInCatchClause",
+      "severity": "warning",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "correctness",
+      "checkrule_display_name": "避免在捕获条款中使用instanceof检查",
+      "checktool_display_name": "PMD"
+    },
+    {
+      "checktool": "pmd",
+      "checkrule": "rulesets/java/design.xml/AvoidReassigningParameters",
+      "severity": "warning",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "convention",
+      "checkrule_display_name": "避免重新分配参数",
+      "checktool_display_name": "PMD"
+    },
+    {
+      "checktool": "pmd",
+      "checkrule": "rulesets/java/design.xml/AvoidSynchronizedAtMethodLevel",
+      "severity": "warning",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "correctness",
+      "checkrule_display_name": "避免在方法级别同步",
+      "checktool_display_name": "PMD"
+    },
+    {
+      "checktool": "pmd",
+      "checkrule": "rulesets/java/design.xml/BadComparison",
+      "severity": "warning",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "correctness",
+      "checkrule_display_name": "错误的比较",
+      "checktool_display_name": "PMD"
+    },
+    {
+      "checktool": "pmd",
+      "checkrule": "rulesets/java/design.xml/CloseResource",
+      "severity": "error",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "correctness",
+      "checkrule_display_name": "关闭资源",
+      "checktool_display_name": "PMD"
+    },
+    {
+      "checktool": "pmd",
+      "checkrule": "rulesets/java/design.xml/CompareObjectsWithEquals",
+      "severity": "warning",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "correctness",
+      "checkrule_display_name": "比较对象使用equals()",
+      "checktool_display_name": "PMD"
+    },
+    {
+      "checktool": "pmd",
+      "checkrule": "rulesets/java/design.xml/ConstructorCallsOverridableMethod",
+      "severity": "error",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "convention",
+      "checkrule_display_name": "构造函数调用重写方法",
+      "checktool_display_name": "PMD"
+    },
+    {
+      "checktool": "pmd",
+      "checkrule": "rulesets/java/design.xml/DefaultLabelNotLastInSwitchStmt",
+      "severity": "warning",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "convention",
+      "checkrule_display_name": "默认标签不是Switch的最后",
+      "checktool_display_name": "PMD"
+    },
+    {
+      "checktool": "pmd",
+      "checkrule": "rulesets/java/design.xml/EmptyMethodInAbstractClassShouldBeAbstract",
+      "severity": "error",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "convention",
+      "checkrule_display_name": "抽象类中的空方法应该是抽象的",
+      "checktool_display_name": "PMD"
+    },
+    {
+      "checktool": "pmd",
+      "checkrule": "rulesets/java/design.xml/EqualsNull",
+      "severity": "error",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "correctness",
+      "checkrule_display_name": "Equals和Null比较",
+      "checktool_display_name": "PMD"
+    },
+    {
+      "checktool": "pmd",
+      "checkrule": "rulesets/java/design.xml/IdempotentOperations",
+      "severity": "warning",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "correctness",
+      "checkrule_display_name": "等幂运算",
+      "checktool_display_name": "PMD"
+    },
+    {
+      "checktool": "pmd",
+      "checkrule": "rulesets/java/design.xml/MissingBreakInSwitch",
+      "severity": "warning",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "correctness",
+      "checkrule_display_name": "Switch缺少break",
+      "checktool_display_name": "PMD"
+    },
+    {
+      "checktool": "pmd",
+      "checkrule": "rulesets/java/design.xml/MissingStaticMethodInNonInstantiatableClass",
+      "severity": "warning",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "correctness",
+      "checkrule_display_name": "不可实例化类中缺少静态方法",
+      "checktool_display_name": "PMD"
+    },
+    {
+      "checktool": "pmd",
+      "checkrule": "rulesets/java/design.xml/NonCaseLabelInSwitchStatement",
+      "severity": "warning",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "correctness",
+      "checkrule_display_name": "Switch语句中的非大小写标签",
+      "checktool_display_name": "PMD"
+    },
+    {
+      "checktool": "pmd",
+      "checkrule": "rulesets/java/design.xml/NonThreadSafeSingleton",
+      "severity": "warning",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "correctness",
+      "checkrule_display_name": "非线程安全单例",
+      "checktool_display_name": "PMD"
+    },
+    {
+      "checktool": "pmd",
+      "checkrule": "rulesets/java/design.xml/PositionLiteralsFirstInCaseInsensitiveComparisons",
+      "severity": "warning",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "convention",
+      "checkrule_display_name": "在不区分大小写的比较中，位置文字优先",
+      "checktool_display_name": "PMD"
+    },
+    {
+      "checktool": "pmd",
+      "checkrule": "rulesets/java/design.xml/PositionLiteralsFirstInComparisons",
+      "severity": "warning",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "convention",
+      "checkrule_display_name": "在字符串比较中将固定值放在首位",
+      "checktool_display_name": "PMD"
+    },
+    {
+      "checktool": "pmd",
+      "checkrule": "rulesets/java/design.xml/PreserveStackTrace",
+      "severity": "warning",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "convention",
+      "checkrule_display_name": "保留堆栈跟踪",
+      "checktool_display_name": "PMD"
+    },
+    {
+      "checktool": "pmd",
+      "checkrule": "rulesets/java/design.xml/ReturnEmptyArrayRatherThanNull",
+      "severity": "error",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "correctness",
+      "checkrule_display_name": "返回空数组而不是Null",
+      "checktool_display_name": "PMD"
+    },
+    {
+      "checktool": "pmd",
+      "checkrule": "rulesets/java/design.xml/SingleMethodSingleton",
+      "severity": "error",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "correctness",
+      "checkrule_display_name": "单一方法单例",
+      "checktool_display_name": "PMD"
+    },
+    {
+      "checktool": "pmd",
+      "checkrule": "rulesets/java/design.xml/SingletonClassReturningNewInstance",
+      "severity": "error",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "correctness",
+      "checkrule_display_name": "Singleton类返回新实例",
+      "checktool_display_name": "PMD"
+    },
+    {
+      "checktool": "pmd",
+      "checkrule": "rulesets/java/design.xml/SwitchStmtsShouldHaveDefault",
+      "severity": "warning",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "convention",
+      "checkrule_display_name": "switch语句应该具有默认值",
+      "checktool_display_name": "PMD"
+    },
+    {
+      "checktool": "pmd",
+      "checkrule": "rulesets/java/design.xml/UnsynchronizedStaticDateFormatter",
+      "severity": "warning",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "correctness",
+      "checkrule_display_name": "不同步的静态DateFormatter",
+      "checktool_display_name": "PMD"
+    },
+    {
+      "checktool": "pmd",
+      "checkrule": "rulesets/java/design.xml/UseNotifyAllInsteadOfNotify",
+      "severity": "warning",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "correctness",
+      "checkrule_display_name": "使用notifyAll()",
+      "checktool_display_name": "PMD"
+    },
+    {
+      "checktool": "pmd",
+      "checkrule": "rulesets/java/empty.xml/EmptySwitchStatements",
+      "severity": "warning",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "correctness",
+      "checkrule_display_name": "空switch语句",
+      "checktool_display_name": "PMD"
+    },
+    {
+      "checktool": "pmd",
+      "checkrule": "rulesets/java/empty.xml/EmptyTryBlock",
+      "severity": "warning",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "correctness",
+      "checkrule_display_name": "空试块",
+      "checktool_display_name": "PMD"
+    },
+    {
+      "checktool": "pmd",
+      "checkrule": "rulesets/java/empty.xml/EmptyWhileStmt",
+      "severity": "warning",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "correctness",
+      "checkrule_display_name": "空While",
+      "checktool_display_name": "PMD"
+    },
+    {
+      "checktool": "pmd",
+      "checkrule": "rulesets/java/finalizers.xml/AvoidCallingFinalize",
+      "severity": "warning",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "correctness",
+      "checkrule_display_name": "避免调用Finalize",
+      "checktool_display_name": "PMD"
+    },
+    {
+      "checktool": "pmd",
+      "checkrule": "rulesets/java/finalizers.xml/FinalizeDoesNotCallSuperFinalize",
+      "severity": "warning",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "correctness",
+      "checkrule_display_name": "Finalize没有调用super",
+      "checktool_display_name": "PMD"
+    },
+    {
+      "checktool": "pmd",
+      "checkrule": "rulesets/java/finalizers.xml/FinalizeOnlyCallsSuperFinalize",
+      "severity": "warning",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "correctness",
+      "checkrule_display_name": "Finalize只调用super",
+      "checktool_display_name": "PMD"
+    },
+    {
+      "checktool": "pmd",
+      "checkrule": "rulesets/java/finalizers.xml/FinalizeOverloaded",
+      "severity": "warning",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "correctness",
+      "checkrule_display_name": "Finalize重载",
+      "checktool_display_name": "PMD"
+    },
+    {
+      "checktool": "pmd",
+      "checkrule": "rulesets/java/finalizers.xml/FinalizeShouldBeProtected",
+      "severity": "warning",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "correctness",
+      "checkrule_display_name": "Finalize应该受到保护",
+      "checktool_display_name": "PMD"
+    },
+    {
+      "checktool": "pmd",
+      "checkrule": "rulesets/java/j2ee.xml/DoNotCallSystemExit",
+      "severity": "warning",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "correctness",
+      "checkrule_display_name": "不要System.exit",
+      "checktool_display_name": "PMD"
+    },
+    {
+      "checktool": "pmd",
+      "checkrule": "rulesets/java/j2ee.xml/StaticEJBFieldShouldBeFinal",
+      "severity": "warning",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "correctness",
+      "checkrule_display_name": "静态EJB字段应为最终字段",
+      "checktool_display_name": "PMD"
+    },
+    {
+      "checktool": "pmd",
+      "checkrule": "rulesets/java/j2ee.xml/UseProperClassLoader",
+      "severity": "warning",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "correctness",
+      "checkrule_display_name": "Use Proper Class Loader",
+      "checktool_display_name": "PMD"
+    },
+    {
+      "checktool": "pmd",
+      "checkrule": "rulesets/java/javabeans.xml/BeanMembersShouldSerialize",
+      "severity": "warning",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "correctness",
+      "checkrule_display_name": "Bean成员应序列化",
+      "checktool_display_name": "PMD"
+    },
+    {
+      "checktool": "pmd",
+      "checkrule": "rulesets/java/javabeans.xml/MissingSerialVersionUID",
+      "severity": "warning",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "correctness",
+      "checkrule_display_name": "缺少序列号UID",
+      "checktool_display_name": "PMD"
+    },
+    {
+      "checktool": "pmd",
+      "checkrule": "rulesets/java/logging-jakarta-commons.xml/UseCorrectExceptionLogging",
+      "severity": "warning",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "correctness",
+      "checkrule_display_name": "使用日志记录语句记录异常",
+      "checktool_display_name": "PMD"
+    },
+    {
+      "checktool": "pmd",
+      "checkrule": "rulesets/java/logging-java.xml/AvoidPrintStackTrace",
+      "severity": "warning",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "convention",
+      "checkrule_display_name": "避免打印堆栈跟踪",
+      "checktool_display_name": "PMD"
+    },
+    {
+      "checktool": "pmd",
+      "checkrule": "rulesets/java/logging-java.xml/LoggerIsNotStaticFinal",
+      "severity": "warning",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "correctness",
+      "checkrule_display_name": "记录器不是静态最终",
+      "checktool_display_name": "PMD"
+    },
+    {
+      "checktool": "pmd",
+      "checkrule": "rulesets/java/logging-java.xml/MoreThanOneLogger",
+      "severity": "warning",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "correctness",
+      "checkrule_display_name": "超过一个记录器",
+      "checktool_display_name": "PMD"
+    },
+    {
+      "checktool": "pmd",
+      "checkrule": "rulesets/java/logging-java.xml/SystemPrintln",
+      "severity": "error",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "convention",
+      "checkrule_display_name": "System Println",
+      "checktool_display_name": "PMD"
+    },
+    {
+      "checktool": "pmd",
+      "checkrule": "rulesets/java/migrating.xml/AvoidAssertAsIdentifier",
+      "severity": "error",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "correctness",
+      "checkrule_display_name": "Avoid Assert As Identifier",
+      "checktool_display_name": "PMD"
+    },
+    {
+      "checktool": "pmd",
+      "checkrule": "rulesets/java/migrating.xml/AvoidEnumAsIdentifier",
+      "severity": "error",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "correctness",
+      "checkrule_display_name": "避免将Enum作为标识符",
+      "checktool_display_name": "PMD"
+    },
+    {
+      "checktool": "pmd",
+      "checkrule": "rulesets/java/naming.xml/SuspiciousEqualsMethodName",
+      "severity": "warning",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "correctness",
+      "checkrule_display_name": "可疑的等于方法名称",
+      "checktool_display_name": "PMD"
+    },
+    {
+      "checktool": "pmd",
+      "checkrule": "rulesets/java/naming.xml/SuspiciousHashcodeMethodName",
+      "severity": "warning",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "correctness",
+      "checkrule_display_name": "可疑哈希码方法名称",
+      "checktool_display_name": "PMD"
+    },
+    {
+      "checktool": "pmd",
+      "checkrule": "rulesets/java/strictexception.xml/AvoidCatchingNPE",
+      "severity": "warning",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "correctness",
+      "checkrule_display_name": "避免捕获NPE",
+      "checktool_display_name": "PMD"
+    },
+    {
+      "checktool": "pmd",
+      "checkrule": "rulesets/java/strictexception.xml/AvoidCatchingThrowable",
+      "severity": "warning",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "correctness",
+      "checkrule_display_name": "避免捕获throwable",
+      "checktool_display_name": "PMD"
+    },
+    {
+      "checktool": "pmd",
+      "checkrule": "rulesets/java/strictexception.xml/AvoidLosingExceptionInformation",
+      "severity": "warning",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "correctness",
+      "checkrule_display_name": "避免丢失异常信息",
+      "checktool_display_name": "PMD"
+    },
+    {
+      "checktool": "pmd",
+      "checkrule": "rulesets/java/strictexception.xml/AvoidRethrowingException",
+      "severity": "warning",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "correctness",
+      "checkrule_display_name": "避免重复抛出捕获异常",
+      "checktool_display_name": "PMD"
+    },
+    {
+      "checktool": "pmd",
+      "checkrule": "rulesets/java/strictexception.xml/AvoidThrowingNullPointerException",
+      "severity": "error",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "convention",
+      "checkrule_display_name": "避免引发空指针异常",
+      "checktool_display_name": "PMD"
+    },
+    {
+      "checktool": "pmd",
+      "checkrule": "rulesets/java/strictexception.xml/AvoidThrowingRawExceptionTypes",
+      "severity": "error",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "convention",
+      "checkrule_display_name": "避免引发原始异常类型",
+      "checktool_display_name": "PMD"
+    },
+    {
+      "checktool": "pmd",
+      "checkrule": "rulesets/java/strictexception.xml/ExceptionAsFlowControl",
+      "severity": "warning",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "convention",
+      "checkrule_display_name": "避免将异常用作流控制",
+      "checktool_display_name": "PMD"
+    },
+    {
+      "checktool": "pmd",
+      "checkrule": "rulesets/java/strictexception.xml/SignatureDeclareThrowsException",
+      "severity": "warning",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "convention",
+      "checkrule_display_name": "不应显式抛出java.lang.Exception",
+      "checktool_display_name": "PMD"
+    },
+    {
+      "checktool": "pmd",
+      "checkrule": "rulesets/java/strings.xml/AvoidStringBufferField",
+      "severity": "warning",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "convention",
+      "checkrule_display_name": "避免字符串缓冲区",
+      "checktool_display_name": "PMD"
+    },
+    {
+      "checktool": "pmd",
+      "checkrule": "rulesets/java/strings.xml/UseEqualsToCompareStrings",
+      "severity": "warning",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "correctness",
+      "checkrule_display_name": "使用equals比较字符串",
+      "checktool_display_name": "PMD"
+    },
+    {
+      "checktool": "pmd",
+      "checkrule": "rulesets/java/sunsecure.xml/ArrayIsStoredDirectly",
+      "severity": "warning",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "convention",
+      "checkrule_display_name": "数组直接存储",
+      "checktool_display_name": "PMD"
+    },
+    {
+      "checktool": "pmd",
+      "checkrule": "rulesets/java/sunsecure.xml/MethodReturnsInternalArray",
+      "severity": "warning",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "convention",
+      "checkrule_display_name": "方法返回内部数组",
+      "checktool_display_name": "PMD"
+    },
+    {
+      "checktool": "pmd",
+      "checkrule": "rulesets/java/unnecessary.xml/UnusedNullCheckInEquals",
+      "severity": "warning",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "correctness",
+      "checkrule_display_name": "不为空的对象上调用equals",
+      "checktool_display_name": "PMD"
+    },
+    {
+      "checktool": "pmd",
+      "checkrule": "rulesets/java/unnecessary.xml/UselessOperationOnImmutable",
+      "severity": "warning",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "correctness",
+      "checkrule_display_name": "不变的无用操作",
+      "checktool_display_name": "PMD"
+    },
+    {
+      "checktool": "cobra",
+      "checkrule": "CVI-110005",
+      "severity": "error",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "security",
+      "checkrule_display_name": "允许任意证书（CWE-295）",
+      "checktool_display_name": "Cobra"
+    },
+    {
+      "checktool": "cobra",
+      "checkrule": "CVI-140001",
+      "severity": "error",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "security",
+      "checkrule_display_name": "文本框反射型XSS",
+      "checktool_display_name": "Cobra"
+    },
+    {
+      "checktool": "cobra",
+      "checkrule": "CVI-140002",
+      "severity": "fatal",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "security",
+      "checkrule_display_name": "输出入参可能导致XSS",
+      "checktool_display_name": "Cobra"
+    },
+    {
+      "checktool": "cobra",
+      "checkrule": "CVI-160001",
+      "severity": "fatal",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "security",
+      "checkrule_display_name": "拼接SQL注入",
+      "checktool_display_name": "Cobra"
+    },
+    {
+      "checktool": "cobra",
+      "checkrule": "CVI-170001",
+      "severity": "error",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "security",
+      "checkrule_display_name": "LFI",
+      "checktool_display_name": "Cobra"
+    },
+    {
+      "checktool": "cobra",
+      "checkrule": "CVI-190001",
+      "severity": "error",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "security",
+      "checkrule_display_name": "Logger敏感信息",
+      "checktool_display_name": "Cobra"
+    },
+    {
+      "checktool": "cobra",
+      "checkrule": "CVI-200001",
+      "severity": "error",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "security",
+      "checkrule_display_name": "不安全的随机数",
+      "checktool_display_name": "Cobra"
+    },
+    {
+      "checktool": "cobra",
+      "checkrule": "CVI-355001",
+      "severity": "error",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "security",
+      "checkrule_display_name": "DES加密模式",
+      "checktool_display_name": "Cobra"
+    },
+    {
+      "checktool": "cobra",
+      "checkrule": "CVI-355002",
+      "severity": "error",
+      "rule_params": "",
+      "state": "enabled",
+      "checkrule_category": "security",
+      "checkrule_display_name": "ECB加密模式",
+      "checktool_display_name": "Cobra"
+    }
+  ]
+  }
+]

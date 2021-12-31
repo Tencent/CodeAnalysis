@@ -1,0 +1,522 @@
+$space-base: 16px !default;
+$space-x-base: $space-base !default;
+$space-y-base: $space-base !default;
+
+$space-none: (
+  x: 0,
+  y: 0,
+) !default;
+$space-xs: (
+  x: (
+    $space-x-base * 0.25,
+  ),
+  y: (
+    $space-y-base * 0.25,
+  ),
+) !default;
+$space-sm: (
+  x: (
+    $space-x-base * 0.5,
+  ),
+  y: (
+    $space-y-base * 0.5,
+  ),
+) !default;
+$space-md: (
+  x: $space-x-base,
+  y: $space-y-base,
+) !default;
+$space-lg: (
+  x: (
+    $space-x-base * 1.5,
+  ),
+  y: (
+    $space-y-base * 1.5,
+  ),
+) !default;
+$space-xl: (
+  x: (
+    $space-x-base * 3,
+  ),
+  y: (
+    $space-y-base * 3,
+  ),
+) !default;
+$space-12: (
+  x: 12px,
+  y: 12px,
+) !default;
+$space-20: (
+  x: 20px,
+  y: 20px,
+) !default;
+
+// sorry for long line; we need .sass and it doesn't support multi-line list
+$spaces: (
+  "none": $space-none,
+  "xs": $space-xs,
+  "sm": $space-sm,
+  "md": $space-md,
+  "lg": $space-lg,
+  "xl": $space-xl,
+  "12": $space-12,
+  "20": $space-20,
+) !default;
+
+@each $space, $value in $spaces {
+  .pa-#{$space} {
+    padding: map-get($value, "y") map-get($value, "x");
+  }
+
+  .pl-#{$space} {
+    padding-left: map-get($value, "x");
+  }
+
+  .pr-#{$space} {
+    padding-right: map-get($value, "x");
+  }
+
+  .pt-#{$space} {
+    padding-top: map-get($value, "y");
+  }
+
+  .pb-#{$space} {
+    padding-bottom: map-get($value, "y");
+  }
+
+  .px-#{$space} {
+    padding-left: map-get($value, "x");
+    padding-right: map-get($value, "x");
+  }
+
+  .py-#{$space} {
+    padding-top: map-get($value, "y");
+    padding-bottom: map-get($value, "y");
+  }
+
+  .ma-#{$space} {
+    margin: map-get($value, "y") map-get($value, "x");
+  }
+
+  .ml-#{$space} {
+    margin-left: map-get($value, "x");
+  }
+
+  .mr-#{$space} {
+    margin-right: map-get($value, "x");
+  }
+
+  .mt-#{$space} {
+    margin-top: map-get($value, "y");
+  }
+
+  .mb-#{$space} {
+    margin-bottom: map-get($value, "y");
+  }
+
+  .mx-#{$space} {
+    margin-left: map-get($value, "x");
+    margin-right: map-get($value, "x");
+  }
+
+  .my-#{$space} {
+    margin-top: map-get($value, "y");
+    margin-bottom: map-get($value, "y");
+  }
+}
+
+.ml-auto {
+  margin-left: auto;
+}
+
+.mr-auto {
+  margin-right: auto;
+}
+
+.mx-auto {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.block {
+  display: block !important;
+}
+
+.inline-block {
+  display: inline-block !important;
+}
+
+.fit {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.full-height {
+  height: 100% !important;
+}
+
+.full-width {
+  width: 100% !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+// visibility
+.no-margin {
+  margin: 0 !important;
+}
+
+.no-padding {
+  padding: 0 !important;
+}
+
+.no-border {
+  border: 0 !important;
+}
+
+.no-border-radius {
+  border-radius: 0 !important;
+}
+
+.no-box-shadow {
+  box-shadow: none !important;
+}
+
+.no-outline {
+  outline: 0 !important;
+}
+
+.ellipsis {
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+
+  &-2-lines,
+  &-3-lines {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+  }
+
+  &-2-lines {
+    -webkit-line-clamp: 2;
+  }
+
+  &-3-lines {
+    -webkit-line-clamp: 3;
+  }
+}
+
+.hidden {
+  display: none !important;
+}
+
+.invisible {
+  visibility: hidden !important;
+}
+
+.transparent {
+  background: transparent !important;
+}
+
+.overflow-auto {
+  overflow: auto !important;
+}
+
+.overflow-hidden {
+  overflow: hidden !important;
+}
+
+.overflow-hidden-y {
+  overflow-y: hidden !important;
+}
+
+$z-top: 7000 !default;
+$z-max: 9998 !default;
+
+.z-top {
+  z-index: $z-top !important;
+}
+
+.z-max {
+  z-index: $z-max !important;
+}
+
+// mouse
+.non-selectable {
+  user-select: none !important;
+}
+
+.scroll {
+  overflow: auto;
+}
+
+.scroll,
+.scroll-x,
+.scroll-y {
+  -webkit-overflow-scrolling: touch;
+  will-change: scroll-position;
+}
+
+.scroll-x {
+  overflow-x: auto;
+}
+
+.scroll-y {
+  overflow-y: auto;
+}
+
+.no-scroll {
+  overflow: hidden !important;
+}
+
+.no-pointer-events,
+.no-pointer-events--children,
+.no-pointer-events--children * {
+  pointer-events: none !important;
+}
+
+.all-pointer-events {
+  pointer-events: all !important;
+}
+
+.cursor {
+  &-pointer {
+    cursor: pointer !important;
+  }
+
+  &-not-allowed {
+    cursor: not-allowed !important;
+  }
+
+  &-inherit {
+    cursor: inherit !important;
+  }
+
+  &-none {
+    cursor: none !important;
+  }
+}
+
+// position
+.float-left {
+  float: left;
+}
+
+.float-right {
+  float: right;
+}
+
+.relative-position {
+  position: relative;
+}
+
+.absolute,
+.absolute-full,
+.absolute-center,
+.absolute-bottom,
+.absolute-left,
+.absolute-right,
+.absolute-top,
+.absolute-top-left,
+.absolute-top-right,
+.absolute-bottom-left,
+.absolute-bottom-right {
+  position: absolute;
+}
+
+.fixed,
+.fixed-full,
+.fullscreen,
+.fixed-center,
+.fixed-bottom,
+.fixed-left,
+.fixed-right,
+.fixed-top,
+.fixed-top-left,
+.fixed-top-right,
+.fixed-bottom-left,
+.fixed-bottom-right {
+  position: fixed;
+}
+
+.fixed-center,
+.absolute-center {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.fixed-top,
+.absolute-top {
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+.fixed-right,
+.absolute-right {
+  top: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.fixed-bottom,
+.absolute-bottom {
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.fixed-left,
+.absolute-left {
+  top: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.fixed-top-left,
+.absolute-top-left {
+  top: 0;
+  left: 0;
+}
+
+.fixed-top-right,
+.absolute-top-right {
+  top: 0;
+  right: 0;
+}
+
+.fixed-bottom-left,
+.absolute-bottom-left {
+  bottom: 0;
+  left: 0;
+}
+
+.fixed-bottom-right,
+.absolute-bottom-right {
+  bottom: 0;
+  right: 0;
+}
+
+.vertical- {
+  &top {
+    vertical-align: top !important;
+  }
+
+  &middle {
+    vertical-align: middle !important;
+  }
+
+  &bottom {
+    vertical-align: bottom !important;
+  }
+}
+
+.on-left {
+  margin-right: 12px;
+}
+
+.on-right {
+  margin-left: 12px;
+}
+
+// orientation
+// .rotate-45
+//     transform: rotate(45deg)
+// .rotate-90
+//     transform: rotate(90deg)
+// .rotate-135
+//     transform: rotate(135deg)
+// .rotate-180
+//     transform: rotate(180deg)
+// .rotate-205
+//     transform: rotate(205deg)
+// .rotate-270
+//     transform: rotate(270deg)
+// .rotate-315
+//     transform: rotate(315deg)
+// .flip-horizontal
+//     transform: scaleX(-1)
+// .flip-vertical
+//     transform: scaleY(-1)
+
+.right-sp {
+  border-right: 1px solid $grey-3;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-left {
+  text-align: left;
+}
+
+// 清除浮动
+.clear-both {
+  &::after,
+  ::before {
+    content: "";
+    display: table;
+  }
+
+  &::after {
+    clear: both;
+  }
+}
+
+.ib-vt,
+.ib-vb,
+.ib-vm {
+  @extend .inline-block;
+}
+
+.ib-vt {
+  vertical-align: top;
+}
+
+.ib-vb {
+  vertical-align: bottom;
+}
+
+.ib-vm {
+  vertical-align: middle;
+}
+
+$colors: (
+  "blue-1": $blue-1,
+  "blue-2": $blue-2,
+  "blue-3": $blue-3,
+  "blue-4": $blue-4,
+  "blue-5": $blue-5,
+  "blue-6": $blue-6,
+  "red": red,
+  "red-1": $red-1,
+  "red-2": $red-2,
+  "red-3": $red-3,
+  "green": green,
+  "green-1": $green-1,
+  "green-2": $green-2,
+  "green-3": $green-3,
+  "yellow": yellow,
+  "yellow-1": $yellow-1,
+  "yellow-2": $yellow-2,
+  "yellow-3": $yellow-3,
+);
+
+@each $color, $value in $colors {
+  .#{$color} {
+    color: $value;
+  }
+}
+
+.fw500 {
+  font-weight: 500;
+}

@@ -1,0 +1,752 @@
+[
+  {
+    "name": "htmlcs",
+    "display_name": "HtmlCs",
+    "description": "Html static analyzer.",
+    "license": "MIT",
+    "task_processes": [
+      "analyze",
+      "datahandle"
+    ],
+    "open_user": true,
+    "open_saas": true,
+    "scan_app": "codelint",
+    "scm_url": null,
+    "run_cmd": null,
+    "envs": null,
+    "show_display_name": true,
+    "checkrule_set": [
+      {
+        "real_name": "asset-type",
+        "display_name": "AssetType",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "属性type的默认值不应该被修改",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "html"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Default value of attribute \"type\" (<link>/<style>/<script>) should not be set.\n属性type的默认值不应该被修改。默认开启该规则。\n[详细网址](https://github.com/ecomfe/htmlcs/blob/master/lib/default/htmlcsrc)"
+      },
+      {
+        "real_name": "attr-lowercase",
+        "display_name": "AttrLowercase",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "属性名必须是小写",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "html"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Attribute name must be lowercase.\n属性名必须是小写。默认开启该规则。\n[详情可见网址](https://github.com/ecomfe/htmlcs/blob/master/lib/default/htmlcsrc)"
+      },
+      {
+        "real_name": "attr-no-duplication",
+        "display_name": "AttrNoDuplication",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "属性名不能重复",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "html"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [
+          "推荐",
+          "基础"
+        ],
+        "description": "Attribute name can not been duplication.\n属性名不能重复。默认开启该规则。\n[详情可见网址](https://github.com/ecomfe/htmlcs/blob/master/lib/default/htmlcsrc)"
+      },
+      {
+        "real_name": "attr-value-double-quotes",
+        "display_name": "AttrValueDoubleQuotes",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "属性值必须用双引号括起来",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "html"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Attribute value must be closed by double quotes.\n属性值必须用双引号括起来。默认开启该规则。\n[详情可见网址](https://github.com/ecomfe/htmlcs/blob/master/lib/default/htmlcsrc)"
+      },
+      {
+        "real_name": "bool-attribute-value",
+        "display_name": "BoolAttributeValue",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "不应设置布尔属性的值",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "html"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Value of boolean attributes (allowfullscreen, async, autofocus, ...) should not be set.\n不应设置布尔属性的值（allowfullscreen，async，autofocus，...）。默认开启该规则。\n[详情可见网址](https://github.com/ecomfe/htmlcs/blob/master/lib/default/htmlcsrc)"
+      },
+      {
+        "real_name": "button-name",
+        "display_name": "ButtonName",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "<button>的属性名不能被设置",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "html"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Attribute \"name\" of <button> should not be set.\n<button>的属性名不能被设置。默认开启该规则。\n[详情可见网址](https://github.com/ecomfe/htmlcs/blob/master/lib/default/htmlcsrc)"
+      },
+      {
+        "real_name": "button-type",
+        "display_name": "ButtonType",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "<button>的type属性值不应该被设置",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "html"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Attribute \"type\" of <button> should be set.\n<button>的type属性值不应该被设置。默认开启该规则。\n[详情可见网址](https://github.com/ecomfe/htmlcs/blob/master/lib/default/htmlcsrc)"
+      },
+      {
+        "real_name": "charset",
+        "display_name": "Charset",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "要求必须写<meta charset>",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "html"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [
+          "推荐",
+          "基础"
+        ],
+        "description": "<meta charset> required.\n要求必须写<meta charset> 。默认开启该规则。\n[详情可见网址](https://github.com/ecomfe/htmlcs/blob/master/lib/default/htmlcsrc)"
+      },
+      {
+        "real_name": "css-in-head",
+        "display_name": "CssInHead",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "Css内容应该放在<head>中",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "html"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [
+          "推荐",
+          "基础"
+        ],
+        "description": "Css contents (link[rel=stylesheet], style) should to be in <head>.\nCss内容应该放在<head>中。默认开启该规则。\n[详情可见网址](https://github.com/ecomfe/htmlcs/blob/master/lib/default/htmlcsrc)"
+      },
+      {
+        "real_name": "doctype",
+        "display_name": "Doctype",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "要求要有DOCTYPE",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "html"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "DOCTYPE required.\n要求要有DOCTYPE。默认开启该规则。\n[详情可见网址](https://github.com/ecomfe/htmlcs/blob/master/lib/default/htmlcsrc)"
+      },
+      {
+        "real_name": "html-lang",
+        "display_name": "HtmlLang",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "<html>标签的lang属性不能被设置",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "html"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Attribute \"lang\" of <html> should be set.\n。<html>标签的lang属性不能被设置。默认开启该规则。\n[详情可见网址](https://github.com/ecomfe/htmlcs/blob/master/lib/default/htmlcsrc)"
+      },
+      {
+        "real_name": "id-class-ad-disabled",
+        "display_name": "IdClassAdDisabled",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "Id and class can not use ad-relative keyword",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "html"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Id and class can not use ad-relative keyword, it will be blocked by adblock software.\n默认开启该规则。\n[详情可见网址](https://github.com/ecomfe/htmlcs/blob/master/lib/default/htmlcsrc)"
+      },
+      {
+        "real_name": "ie-edge",
+        "display_name": "IeEdge",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "需要<meta http-equiv=\"X-UA-Compatible\" content=\"IE=Edge\">",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "html"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "<meta http-equiv=\"X-UA-Compatible\" content=\"IE=Edge\"> required.\n需要<meta http-equiv=\"X-UA-Compatible\" content=\"IE=Edge\">。默认开启该规则。\n[详情可见网址](https://github.com/ecomfe/htmlcs/blob/master/lib/default/htmlcsrc)"
+      },
+      {
+        "real_name": "img-alt",
+        "display_name": "ImgAlt",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "<img>标签的alt属性建议重新设置",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "html"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Attribute \"alt\" of <img> should be set.\n<img>标签的alt属性建议重新设置。默认开启该规则。\n[详情可见网址](https://github.com/ecomfe/htmlcs/blob/master/lib/default/htmlcsrc)"
+      },
+      {
+        "real_name": "img-src",
+        "display_name": "ImgSrc",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "<img>的src属性不应该为空",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "html"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [
+          "推荐",
+          "基础"
+        ],
+        "description": "Attribute \"src\" of <img> should not be empty.\n<img>的src属性不应该为空。默认开启该规则。\n[详情可见网址](https://github.com/ecomfe/htmlcs/blob/master/lib/default/htmlcsrc)"
+      },
+      {
+        "real_name": "img-title",
+        "display_name": "ImgTitle",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "<img>标签的title属性不应该被重新设置",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "html"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Attribute \"title\" of <img> should not be set.\n<img>标签的title属性不应该被重新设置。默认开启该规则。\n[详情可见网址](https://github.com/ecomfe/htmlcs/blob/master/lib/default/htmlcsrc)"
+      },
+      {
+        "real_name": "img-width-height",
+        "display_name": "ImgWidthHeight",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "<img>标签的width和height属性应该被重新设置",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "html"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Attribute \"width\" & \"height\" of <img> should be set.\n<img>标签的width和height属性应该被重新设置。默认开启该规则。\n[详情可见网址](https://github.com/ecomfe/htmlcs/blob/master/lib/default/htmlcsrc)"
+      },
+      {
+        "real_name": "indent-char",
+        "display_name": "IndentChar",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "一行的缩进",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "html"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "space-4: Line should indent with 4 spaces.\n默认一行的缩进为4个空格。其他的还有tab和space-2。\n[详情可见网址](https://github.com/ecomfe/htmlcs/blob/master/lib/default/htmlcsrc)"
+      },
+      {
+        "real_name": "label-for-input",
+        "display_name": "LabelForInput",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "输入应该与标签相关联",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "html"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "input should be associate with label.\n输入应该与标签相关联。\n默认开启该规则。\n[详情可见网址](https://github.com/ecomfe/htmlcs/blob/master/lib/default/htmlcsrc)"
+      },
+      {
+        "real_name": "lowercase-class-with-hyphen",
+        "display_name": "LowercaseClassWithHyphen",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "类名应该是短横线-连接的小写单词",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "html"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "ClassName should be lowercase words connected with hyphens.\n类名应该是短横线-连接的小写单词。默认开启该规则。\n[详情可见网址](https://github.com/ecomfe/htmlcs/blob/master/lib/default/htmlcsrc)"
+      },
+      {
+        "real_name": "lowercase-id-with-hyphen",
+        "display_name": "LowercaseIdWithHyphen",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "id应该是短横线-连接的小写单词",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "html"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "ID should be lowercase words connected with hyphens.\nid应该是短横线-连接的小写单词。默认开启该规则。\n[详情可见网址](https://github.com/ecomfe/htmlcs/blob/master/lib/default/htmlcsrc)"
+      },
+      {
+        "real_name": "max-len",
+        "display_name": "MaxLen",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "默认限制一行长度为120",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "html"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "max length of line, 0 means no limit.\n限制一行长度。\n[详情可见网址](https://github.com/ecomfe/htmlcs/blob/master/lib/default/htmlcsrc)"
+      },
+      {
+        "real_name": "multiple-stylesheets",
+        "display_name": "MultipleStylesheets",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "包含多个样式表（将所有样式表合并为一个整齐的CSS文件将更清晰）",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "html"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "More than one style-sheet is included (combining all style-sheets into one neat CSS file would be cleaner).\n包含多个样式表（将所有样式表合并为一个整齐的CSS文件将更清晰）。默认开启该规则。\n[详情可见网址](https://github.com/ecomfe/htmlcs/blob/master/lib/default/htmlcsrc)"
+      },
+      {
+        "real_name": "nest",
+        "display_name": "Nest",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "元素应该按照特定规则嵌套",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "html"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Elements should be nested abiding by specific rules.\n元素应该按照特定规则嵌套。默认开启该规则。\n[详情可见网址](https://github.com/ecomfe/htmlcs/blob/master/lib/default/htmlcsrc)"
+      },
+      {
+        "real_name": "new-line-for-blocks",
+        "display_name": "NewLineForBlocks",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "每个块，列表或表元素都应该有一个新行",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "html"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "There should be a new line for every block, list, or table element.\n每个块，列表或表元素都应该有一个新行。默认开启该规则。\n[详情可见网址](https://github.com/ecomfe/htmlcs/blob/master/lib/default/htmlcsrc)"
+      },
+      {
+        "real_name": "no-bom",
+        "display_name": "NoBom",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "no-bom",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "html"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "默认开启该规则。\n[详情可见网址](https://github.com/ecomfe/htmlcs/blob/master/lib/default/htmlcsrc)"
+      },
+      {
+        "real_name": "no-duplication-id-and-name",
+        "display_name": "NoDuplicationIdAndName",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "在不同的元素中id和命名都不能重复",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "html"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [
+          "推荐",
+          "基础"
+        ],
+        "description": "Id and name should be not duplication in difference elements.\n在不同的元素中id和命名都不能重复。\n默认开启该规则。\n[详情可见网址](https://github.com/ecomfe/htmlcs/blob/master/lib/default/htmlcsrc)"
+      },
+      {
+        "real_name": "no-hook-class",
+        "display_name": "NoHookClass",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "没有hook class",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "html"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "默认设置key为[\"/[-_#](?:js|hook)[-_#]/\"]\n[详情可见网址](https://github.com/ecomfe/htmlcs/blob/master/lib/default/htmlcsrc)"
+      },
+      {
+        "real_name": "no-meta-css",
+        "display_name": "NoMetaCss",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "没有meta css",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "html"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "默认设置threshold为3，minlen为3\n[详情可见网址](https://github.com/ecomfe/htmlcs/blob/master/lib/default/htmlcsrc)"
+      },
+      {
+        "real_name": "no-space-before-tag-end",
+        "display_name": "NoSpaceBeforeTagEnd",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "标记结束前应该没有空格",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "html"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "There should be no whitespaces before tag end.\n标记结束前应该没有空格。默认关闭该规则。\n[详情可见网址](https://github.com/ecomfe/htmlcs/blob/master/lib/default/htmlcsrc)"
+      },
+      {
+        "real_name": "protocol-omitted-in-href",
+        "display_name": "ProtocolOmittedInHref",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "应该从href属性中省略协议（http：//或https：//）（应该有“//”代替）",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "html"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Protocol (http:// or https://) should be omitted from href attribute (there should be \"//\" instead).\n应该从href属性中省略协议（http：//或https：//）（应该有“//”代替）。默认关闭该规则。\n[详情可见网址](https://github.com/ecomfe/htmlcs/blob/master/lib/default/htmlcsrc)"
+      },
+      {
+        "real_name": "rel-stylesheet",
+        "display_name": "RelStylesheet",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "导入的css（<link>）的属性“rel”应设置为“stylesheet”",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "html"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [
+          "推荐",
+          "基础"
+        ],
+        "description": "Attribute \"rel\" of imported css (<link>) should be set as \"stylesheet\".\n导入的css（<link>）的属性“rel”应设置为“stylesheet”。默认开启该规则。\n[详情可见网址](https://github.com/ecomfe/htmlcs/blob/master/lib/default/htmlcsrc)"
+      },
+      {
+        "real_name": "script-content",
+        "display_name": "ScriptContent",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "<Script>的内容必须符合标准",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "html"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Content of <script> must meet standard.\n<Script>的内容必须符合标准。默认开启该规则。\n[详情可见网址](https://github.com/ecomfe/htmlcs/blob/master/lib/default/htmlcsrc)"
+      },
+      {
+        "real_name": "script-in-tail",
+        "display_name": "ScriptInTail",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "Js contents (script:not([type]), script[type=\"text/javascript\"])应该在<body>的尾部",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "html"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Js contents (script:not([type]), script[type=\"text/javascript\"]) should be in the tail of <body>.\nJs contents (script:not([type]), script[type=\"text/javascript\"])应该在<body>的尾部。默认开启该规则。\n[详情可见网址](https://github.com/ecomfe/htmlcs/blob/master/lib/default/htmlcsrc)"
+      },
+      {
+        "real_name": "self-close",
+        "display_name": "SelfClose",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "Void标签不应该用“/”关闭",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "html"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "no-close: Void tags should not close themeselves  with \"/\".\nno-close: Void标签不应该用“/”关闭。\n默认是no-close, 其他选项还有close。\n[详情可见网址](https://github.com/ecomfe/htmlcs/blob/master/lib/default/htmlcsrc)"
+      },
+      {
+        "real_name": "spec-char-escape",
+        "display_name": "SpecCharEscape",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "尽可能避免特殊字符",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "html"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [
+          "推荐",
+          "基础"
+        ],
+        "description": "Special characters must be escaped.\n尽可能避免特殊字符。\n默认开启该规则。\n[详情可见网址](https://github.com/ecomfe/htmlcs/blob/master/lib/default/htmlcsrc)"
+      },
+      {
+        "real_name": "style-content",
+        "display_name": "StyleContent",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "<style>的内容不许符合标准",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "html"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Content of <style> must meet standard.\n<style>的内容不许符合标准。\n默认开启该规则。\n[详情可见网址](https://github.com/ecomfe/htmlcs/blob/master/lib/default/htmlcsrc)"
+      },
+      {
+        "real_name": "style-disabled",
+        "display_name": "StyleDisabled",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "不能使用<style>",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "html"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Style tag can not be used.\n不能使用<style>。\n默认开启该规则。\n[详情可见网址](https://github.com/ecomfe/htmlcs/blob/master/lib/default/htmlcsrc)"
+      },
+      {
+        "real_name": "tag-pair",
+        "display_name": "TagPair",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "标签要成对",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "html"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [
+          "推荐",
+          "基础"
+        ],
+        "description": "Tag must be paired.\n标签要成对。\n默认开启该规则。\n[详情可见网址](https://github.com/ecomfe/htmlcs/blob/master/lib/default/htmlcsrc)"
+      },
+      {
+        "real_name": "tagname-lowercase",
+        "display_name": "TagnameLowercase",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "标签名必须要小写",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "html"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Tagname must be lowercase.\n标签名必须要小写。\n默认开启该规则。\n[详情可见网址](https://github.com/ecomfe/htmlcs/blob/master/lib/default/htmlcsrc)"
+      },
+      {
+        "real_name": "title-required",
+        "display_name": "TitleRequired",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "要求要有<title>",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "html"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [
+          "推荐",
+          "基础"
+        ],
+        "description": "<title> required.\n要求要有<title>。\n默认开启该规则。\n[详情可见网址](https://github.com/ecomfe/htmlcs/blob/master/lib/default/htmlcsrc)"
+      },
+      {
+        "real_name": "unique-id",
+        "display_name": "UniqueId",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "在页面中ID应该是唯一标识的",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "html"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Id should be unique in page.\n在页面中ID应该是唯一标识的。\n默认开启该规则。\n[详情可见网址](https://github.com/ecomfe/htmlcs/blob/master/lib/default/htmlcsrc)"
+      },
+      {
+        "real_name": "unnecessary-whitespace-in-text",
+        "display_name": "UnnecessaryWhitespaceInText",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "在文本中不必要地使用后面的空白区域",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "html"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "Unnecessary usage of a trailing white-space in text.\n在文本中不必要地使用后面的空白区域。\n默认开启该规则。\n[详情可见网址](https://github.com/ecomfe/htmlcs/blob/master/lib/default/htmlcsrc)"
+      },
+      {
+        "real_name": "viewport",
+        "display_name": "Viewport",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "要求有<meta name=\"viewport\" content=\"...\">",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "html"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "<meta name=\"viewport\" content=\"...\"> required.\n要求有<meta name=\"viewport\" content=\"...\">。\n默认开启该规则。\n[详情可见网址](https://github.com/ecomfe/htmlcs/blob/master/lib/default/htmlcsrc)"
+      }
+    ]
+  }
+]

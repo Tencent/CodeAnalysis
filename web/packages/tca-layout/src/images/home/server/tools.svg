@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="56px" height="56px" viewBox="0 0 56 56" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>icon-多平台覆盖</title>
+    <defs>
+        <linearGradient x1="16.0421164%" y1="75.6910904%" x2="87.9769212%" y2="75.6910904%" id="linearGradient-1">
+            <stop stop-color="#455B79" offset="0%"></stop>
+            <stop stop-color="#030D1C" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="11.4904306%" y1="76.4540292%" x2="86.901819%" y2="76.4540292%" id="linearGradient-2">
+            <stop stop-color="#349CFF" offset="0%"></stop>
+            <stop stop-color="#005EEA" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="16.5633495%" y1="50%" x2="109.713676%" y2="50%" id="linearGradient-3">
+            <stop stop-color="#E2EEFF" offset="0%"></stop>
+            <stop stop-color="#A2BFE8" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="首页" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="其他" transform="translate(-939.000000, -2507.000000)">
+            <g id="icon-多平台覆盖" transform="translate(939.000000, 2507.000000)">
+                <rect id="矩形" fill="#DADFE6" opacity="0" x="0" y="0" width="56" height="56"></rect>
+                <g id="分组-20" transform="translate(5.000000, 5.000000)">
+                    <polygon id="路径" fill="url(#linearGradient-1)" points="23 46 0 31.4333333 23 16.8666667 46 31.4333333"></polygon>
+                    <polygon id="路径" fill="url(#linearGradient-2)" points="23 37.5666667 0 23 23 8.43333333 46 23"></polygon>
+                    <polygon id="路径" fill="url(#linearGradient-3)" points="23 29.1333333 0 14.5666667 23 0 46 14.5666667"></polygon>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

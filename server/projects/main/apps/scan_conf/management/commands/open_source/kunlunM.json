@@ -1,0 +1,490 @@
+[
+    {
+        "name": "kunlunM",
+        "display_name": "Kunlun-M",
+        "description": "误报率低，漏报率相对较高的安全检查工具。目前适用于JS和PHP语言",
+        "license": "mit",
+        "task_processes": [
+            "analyze",
+            "datahandle"
+        ],
+        "scan_app": "codelint",
+        "scm_url": "https://github.com/TCATools/common-kunlun.git",
+        "run_cmd": "python main.py",
+        "envs": "python_version = 3",
+        "build_flag": false,
+        "checkrule_set": [
+            {
+                "real_name": "addEventListener message param 可控",
+                "display_name": "addEventListener message param 可控",
+                "severity": "warning",
+                "category": "security",
+                "rule_title": "addEventListener message param 可控, 可以通过windows.postMessage传递，有可能导致安全问题，这里主要假设为chrome contentjs场景",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "js"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "addEventListener message param 可控, 可以通过windows.postMessage传递，有可能导致安全问题，这里主要假设为chrome contentjs场景",
+                "disable": false
+            },
+            {
+                "real_name": "Chrome ext function XSS",
+                "display_name": "Chrome ext function XSS",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "Chrome 插件的 XSS漏洞检查",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "js"
+                ],
+                "solution": "参考https://www.freebuf.com/vuls/246539.html",
+                "owner": null,
+                "labels": [],
+                "description": "跨站脚本攻击（XSS），是最普遍的Web应用安全漏洞。这类漏洞能够使得攻击者嵌入恶意脚本代码到正常用户会访问到的页面中，当正常用户访问该页面时，则可导致嵌入的恶意脚本代码的执行，从而达到恶意攻击用户的目的。\n参考https://www.freebuf.com/vuls/246539.html",
+                "disable": false
+            },
+            {
+                "real_name": "cURL SSRF",
+                "display_name": "cURL SSRF",
+                "severity": "fatal",
+                "category": "security",
+                "rule_title": "curl_setopt 函数引起的SSRF漏洞",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "php"
+                ],
+                "solution": "“”",
+                "owner": null,
+                "labels": [
+                    "安全"
+                ],
+                "description": "curl_setopt 函数引起的SSRF漏洞\nSSRF(Server-Side Request Forgery:服务器端请求伪造) 是一种由攻击者构造形成由服务端发起请求的一个安全漏洞。一般情况下，SSRF攻击的目标是从外网无法访问的内部系统。（正是因为它是由服务端发起的，所以它能够请求到与它相连而与外网隔离的内部系统）\n\nSSRF 形成的原因大都是由于服务端提供了从其他服务器应用获取数据的功能且没有对目标地址做过滤与限制。比如从指定URL地址获取网页文本内容，加载指定地址的图片，下载等等。",
+                "disable": false
+            },
+            {
+                "real_name": "executeScript中参数拼接",
+                "display_name": "executeScript中参数拼接",
+                "severity": "warning",
+                "category": "security",
+                "rule_title": "executeScript中code或者file出现参数拼接，可能导致安全问题",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "js"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "executeScript中code或者file出现参数拼接，可能导致安全问题",
+                "disable": false
+            },
+            {
+                "real_name": "file_get_contents SSRF",
+                "display_name": "file_get_contents SSRF",
+                "severity": "fatal",
+                "category": "security",
+                "rule_title": "file_get_contents 引起的SSRF",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "php"
+                ],
+                "solution": "“”",
+                "owner": null,
+                "labels": [
+                    "安全"
+                ],
+                "description": "SSRF(Server-Side Request Forgery:服务器端请求伪造) 是一种由攻击者构造形成由服务端发起请求的一个安全漏洞。一般情况下，SSRF攻击的目标是从外网无法访问的内部系统。（正是因为它是由服务端发起的，所以它能够请求到与它相连而与外网隔离的内部系统）\n\nSSRF 形成的原因大都是由于服务端提供了从其他服务器应用获取数据的功能且没有对目标地址做过滤与限制。比如从指定URL地址获取网页文本内容，加载指定地址的图片，下载等等。",
+                "disable": false
+            },
+            {
+                "real_name": "get_headers SSRF",
+                "display_name": "get_headers SSRF",
+                "severity": "fatal",
+                "category": "security",
+                "rule_title": "get_headers函数引起的SSRF",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "php"
+                ],
+                "solution": "“”",
+                "owner": null,
+                "labels": [],
+                "description": "get_headers函数引起的SSRF\nSSRF(Server-Side Request Forgery:服务器端请求伪造) 是一种由攻击者构造形成由服务端发起请求的一个安全漏洞。一般情况下，SSRF攻击的目标是从外网无法访问的内部系统。（正是因为它是由服务端发起的，所以它能够请求到与它相连而与外网隔离的内部系统）\n\nSSRF 形成的原因大都是由于服务端提供了从其他服务器应用获取数据的功能且没有对目标地址做过滤与限制。比如从指定URL地址获取网页文本内容，加载指定地址的图片，下载等等。",
+                "disable": false
+            },
+            {
+                "real_name": "Handlebars XSS",
+                "display_name": "Handlebars XSS",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "Handlebars模版中的 XSS漏洞",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "js"
+                ],
+                "solution": "“”",
+                "owner": null,
+                "labels": [],
+                "description": "Handlebars 中 SafeString 可导致XSS",
+                "disable": false
+            },
+            {
+                "real_name": "HTML attr injection",
+                "display_name": "HTML attr injection",
+                "severity": "fatal",
+                "category": "security",
+                "rule_title": "HTML attr 注入",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "js"
+                ],
+                "solution": "参考：https://xz.aliyun.com/t/2934",
+                "owner": null,
+                "labels": [],
+                "description": "通过JS代码实现对html属性的修改注入",
+                "disable": false
+            },
+            {
+                "real_name": "HTML injection",
+                "display_name": "HTML injection",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "HTML 注入",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "js"
+                ],
+                "solution": "参考：https://xz.aliyun.com/t/2934",
+                "owner": null,
+                "labels": [],
+                "description": "当黑客能够将HTML标签注入表单并最终将其存储到数据库中时，就会出现这种类型的漏洞。\n\n想象一下，假设我们有一个博客，用户可以在我们的博客文章中分享他们的评论。如果存在HTML注入漏洞的话，黑客就能够将HTML标签写为评论，并且所有人都可以看到这些代码。大家都知道，利用HTML标签，黑客可以执行下列恶意操作：\n\n可以改变文本的样式\n可以在评论文本中插入带有标签的链接，并诱使用户点击该链接（该链接可能包含恶意信息）。\n可以在评论中插入图像\n原文链接：https://xz.aliyun.com/t/2934",
+                "disable": false
+            },
+            {
+                "real_name": "Information Disclosure",
+                "display_name": "Information Disclosure",
+                "severity": "fatal",
+                "category": "security",
+                "rule_title": "信息泄漏",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "php"
+                ],
+                "solution": "“”",
+                "owner": null,
+                "labels": [],
+                "description": "```\nprint_r|var_dump|show_source|highlight_file\n```\n这些函数处理不当可能造成信息泄漏",
+                "disable": false
+            },
+            {
+                "real_name": "JQuery eval",
+                "display_name": "JQuery eval",
+                "severity": "warning",
+                "category": "security",
+                "rule_title": "JQuery 中 globalEval同eval 可导致eval",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "js"
+                ],
+                "solution": "“”",
+                "owner": null,
+                "labels": [],
+                "description": "JQuery 中 globalEval同eval 可导致eval",
+                "disable": false
+            },
+            {
+                "real_name": "JQuery HTML attr injection",
+                "display_name": "JQuery HTML attr injection",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "JQuery HTML attr injection",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "js"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "JQuery 中的HTML attr注入问题",
+                "disable": false
+            },
+            {
+                "real_name": "JQuery XSS",
+                "display_name": "JQuery XSS",
+                "severity": "fatal",
+                "category": "security",
+                "rule_title": "JQuery XSS漏洞",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "js"
+                ],
+                "solution": "参考 https://www.freebuf.com/vuls/246539.html",
+                "owner": null,
+                "labels": [],
+                "description": "跨站脚本攻击（XSS），是最普遍的Web应用安全漏洞。这类漏洞能够使得攻击者嵌入恶意脚本代码到正常用户会访问到的页面中，当正常用户访问该页面时，则可导致嵌入的恶意脚本代码的执行，从而达到恶意攻击用户的目的。\n参考 https://www.freebuf.com/vuls/246539.html",
+                "disable": false
+            },
+            {
+                "real_name": "JQuery 原型链污染",
+                "display_name": "JQuery 原型链污染",
+                "severity": "fatal",
+                "category": "security",
+                "rule_title": "JQuery 原型链污染",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "js"
+                ],
+                "solution": "解决方法：在遍历对象时，当遇见 __proto__ 敏感属性，则退出程序。",
+                "owner": null,
+                "labels": [],
+                "description": "jquery3.4.0（3.4.0及以后版本已修复）之前版本中extend函数会导致原型污染。",
+                "disable": false
+            },
+            {
+                "real_name": "LDAP injection",
+                "display_name": "LDAP injection",
+                "severity": "fatal",
+                "category": "security",
+                "rule_title": "LDAP 注入",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "php"
+                ],
+                "solution": "对以上函数的参数进行逻辑运算符过滤\n该参数禁止涉及用户输入内容",
+                "owner": null,
+                "labels": [],
+                "description": "LDAP(Lightweight Directory Access Protocol):轻量级目录访问协议，是一种在线目录访问协议。LDAP主要用于目录中资源的搜索和查询，是X.500的一种简便的实现。\n存在于这些函数中\n``` \n'ldap_add' 第二和第三个参数\n‘ldap_delete'  第二个参数\n'ldap_list'       第三个参数\n'ldap_read'       第三个参数\n'ldap_search'     第三个参数\\n\n```",
+                "disable": false
+            },
+            {
+                "real_name": "RCE in JS",
+                "display_name": "RCE in JS",
+                "severity": "fatal",
+                "category": "security",
+                "rule_title": "JS代码的远程代码执行漏洞",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "js"
+                ],
+                "solution": "“”",
+                "owner": null,
+                "labels": [],
+                "description": "远程命令执行漏洞，用户通过浏览器提交执行命令，由于服务器端没有针对执行函数做过滤，导致在没有指定绝对路径的情况下就执行命令，可能会允许攻击者通过改变 $PATH 或程序执行环境的其他方面来执行一个恶意构造的代码。",
+                "disable": false
+            },
+            {
+                "real_name": "Reflected XSS",
+                "display_name": "Reflected XSS",
+                "severity": "fatal",
+                "category": "security",
+                "rule_title": "Reflected XSS",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "php"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [
+                    "安全"
+                ],
+                "description": "跨站脚本攻击（XSS），是最普遍的Web应用安全漏洞。这类漏洞能够使得攻击者嵌入恶意脚本代码到正常用户会访问到的页面中，当正常用户访问该页面时，则可导致嵌入的恶意脚本代码的执行，从而达到恶意攻击用户的目的。",
+                "disable": false
+            },
+            {
+                "real_name": "Reflected XSS for echo",
+                "display_name": "Reflected XSS for echo",
+                "severity": "fatal",
+                "category": "security",
+                "rule_title": "echo函数引起的XSS",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "php"
+                ],
+                "solution": "（1）不信任用户提交的任何内容，对所有用户提交内容进行可靠的输入验证，包括对URL、查询关键字、HTTP头、REFER、POST数据等，仅接受指定长度范围内、采用适当格式、采用所预期的字符的内容提交，对其他的一律过滤。尽量采用POST而非GET提交表单；对“<”，“>”，“；”，“””等字符做过滤；任何内容输出到页面之前都必须加以en-code，避免不小心把htmltag显示出来。\\n（2）实现Session 标记（session tokens）、CAPTCHA（验证码）系统或者HTTP引用头检查，以防功能被第三方网站所执行，对于用户提交信息的中的img等link，检查是否有重定向回本站、不是真的图片等可疑操作。\\n（3）cookie 防盗。避免直接在cookie中泄露用户隐私，例如email、密码，等等；通过使cookie和系统IP绑定来降低cookie泄露后的危险。这样攻击者得到的cookie没有实际价值，很难拿来直接进行重放攻击。\\n（4）确认接收的内容被妥善地规范化，仅包含最小的、安全的Tag（没有JavaScript），去掉任何对远程内容的引用（尤其是样式表和JavaScript），使用HTTPonly的cookie。",
+                "owner": null,
+                "labels": [],
+                "description": "跨站脚本攻击（XSS），是最普遍的Web应用安全漏洞。这类漏洞能够使得攻击者嵌入恶意脚本代码到正常用户会访问到的页面中，当正常用户访问该页面时，则可导致嵌入的恶意脚本代码的执行，从而达到恶意攻击用户的目的。",
+                "disable": false
+            },
+            {
+                "real_name": "Remote code execute",
+                "display_name": "Remote code execute",
+                "severity": "fatal",
+                "category": "security",
+                "rule_title": "远程代码注入漏洞",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "php"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [
+                    "安全"
+                ],
+                "description": "远程命令执行漏洞，用户通过浏览器提交执行命令，由于服务器端没有针对执行函数做过滤，导致在没有指定绝对路径的情况下就执行命令，可能会允许攻击者通过改变 $PATH 或程序执行环境的其他方面来执行一个恶意构造的代码。",
+                "disable": false
+            },
+            {
+                "real_name": "remote file include",
+                "display_name": "remote file include",
+                "severity": "fatal",
+                "category": "security",
+                "rule_title": "文件包含漏洞",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "php"
+                ],
+                "solution": "1.使用 open_basedir 配置限制访问在指定的区域\\n2.过滤.（点）/（反斜杠）\\\\（反斜杠）\\n3.参数禁止使用涉及用户输入的变量",
+                "owner": null,
+                "labels": [],
+                "description": "服务器通过php的特性函数去导入某些文件时，由于要导入的这个文件来源过滤不严，从而引入了恶意的代码文件\\n```\\nexample\\nif ($_GET[page]) {\\n    include $_GET[page];\\n} else {\\n    include ”home.php”;\\n}\\n```\\n可能引发的函数有\\n```\\n\\t\\t'include' \\n\\t\\t'include_once' \\n\\t\\t'parsekit_compile_file'\\t\\n\\t\\t'require' \\t\\n\\t\\t'require_once' \\n\\t\\t'runkit_import'\\n\\t\\t'set_include_path' \\n\\t\\t'virtual' \\n```",
+                "disable": false
+            },
+            {
+                "real_name": "SQL injection",
+                "display_name": "SQL injection",
+                "severity": "fatal",
+                "category": "security",
+                "rule_title": "SQL注入漏洞",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "php"
+                ],
+                "solution": "SQL语句对用户输入进行过滤，尽量使用安全的查询函数",
+                "owner": null,
+                "labels": [],
+                "description": "SQL注入即是指web应用程序对用户输入数据的合法性没有判断或过滤不严，攻击者可以在web应用程序中事先定义好的查询语句的结尾上添加额外的SQL语句，在管理员不知情的情况下实现非法操作，以此来实现欺骗数据库服务器执行非授权的任意查询，从而进一步得到相应的数据信息。",
+                "disable": false
+            },
+            {
+                "real_name": "unserialize vulerablity",
+                "display_name": "unserialize vulerablity",
+                "severity": "fatal",
+                "category": "security",
+                "rule_title": "反序列化漏洞",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "php"
+                ],
+                "solution": "对 'unserialize'的第一个参数\\n对'yaml_parse'的第一个参数\\n进行过滤，且禁止该参数涉及用户输入",
+                "owner": null,
+                "labels": [],
+                "description": "HP的序列化的不正确使用有关。PHP对象注入其实本质上也是由于序列化引起的。\\nphp可以将序列化的值保存在文件中，这样需要用的时候就可以直接从文件中读取数据然后进行反序列化就可以了。在PHP使用serialize()和unserialize()来进行序列化和反序列化的。\\n而序列化的危害就在于如果序列化的内容是用户可控的，那么用户就可以注入精心构造的payload。当进行发序列化的时候就有可能会出发对象中的一些魔术方法，造成意想不到的危害。\\n参考：https://blog.spoock.com/2016/10/29/php-object-injection/",
+                "disable": false
+            },
+            {
+                "real_name": "URL Redirect",
+                "display_name": "URL Redirect",
+                "severity": "fatal",
+                "category": "security",
+                "rule_title": "Js代码的URL Redirect",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "js"
+                ],
+                "solution": "严格控制将要跳转的域名，如果某个业务事先已经确定将要跳转的网站，最稳妥的方式是将其直接编码在源代码中，通过URL中传入的参数来映射跳转网址。\n\n严格验证跳转URL参数的有效性、合法性。\n\n校验传入的URL参数是否为可信域名\n参考https://houbb.github.io/2020/08/09/web-safe-06-redirect",
+                "owner": null,
+                "labels": [],
+                "description": "```\ndocument.location.replace|window.location.replace\n```\n函数可能引起URL重定向\n也称URL跳转、URL重定向漏洞，由于目标网站未对程序跳转的URL地址及参数做合法性判断，导致应用程序直接跳转到参数中指定的的URL地址。\n\n攻击者可通过将跳转地址修改为指向恶意站点，即可发起网络钓鱼、诈骗甚至窃取用户凭证等。\n参考：https://houbb.github.io/2020/08/09/web-safe-06-redirect",
+                "disable": false
+            },
+            {
+                "real_name": "URL Redirector Abuse",
+                "display_name": "URL Redirector Abuse",
+                "severity": "fatal",
+                "category": "security",
+                "rule_title": "URL重定向漏洞",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "php"
+                ],
+                "solution": "严格控制将要跳转的域名，如果某个业务事先已经确定将要跳转的网站，最稳妥的方式是将其直接编码在源代码中，通过URL中传入的参数来映射跳转网址。\n\n严格验证跳转URL参数的有效性、合法性。\n\n校验传入的URL参数是否为可信域名\n参考https://houbb.github.io/2020/08/09/web-safe-06-redirect",
+                "owner": null,
+                "labels": [],
+                "description": "也称URL跳转、URL重定向漏洞，由于目标网站未对程序跳转的URL地址及参数做合法性判断，导致应用程序直接跳转到参数中指定的的URL地址。\n\n攻击者可通过将跳转地址修改为指向恶意站点，即可发起网络钓鱼、诈骗甚至窃取用户凭证等。\n参考：https://houbb.github.io/2020/08/09/web-safe-06-redirect",
+                "disable": false
+            },
+            {
+                "real_name": "variable shadowing",
+                "display_name": "variable shadowing",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "变量作用域",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "php"
+                ],
+                "solution": "“”",
+                "owner": null,
+                "labels": [],
+                "description": "```\nimport_request_variables|parse_str|mb_parse_str|extract\n```\n这些函数可能导致变量覆盖",
+                "disable": false
+            },
+            {
+                "real_name": "Xml injection",
+                "display_name": "Xml injection",
+                "severity": "fatal",
+                "category": "security",
+                "rule_title": "Xml 注入",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "php"
+                ],
+                "solution": "过滤用户提交的参数 。",
+                "owner": null,
+                "labels": [],
+                "description": "XML注入指在请求的XML中插入攻击利用代码\n以php环境为例，index.php内容如下：\n```\n<?php\n  $xml=simplexml_load_string($_GET['xml']);\n  print_r((string)$xml);\n?>\n```\n利用各种协议可以读取文件。比如file协议，这里读取h盘里的key.txt\n```\n<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<!DOCTYPE root [<!ENTITY  file SYSTEM \"file:///h://key.txt\">]>\n<root>&file;</root>\n```",
+                "disable": false
+            },
+            {
+                "real_name": "XSS in JS",
+                "display_name": "XSS in JS",
+                "severity": "fatal",
+                "category": "security",
+                "rule_title": "JS代码XSS漏洞",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "js"
+                ],
+                "solution": "（1）不信任用户提交的任何内容，对所有用户提交内容进行可靠的输入验证，包括对URL、查询关键字、HTTP头、REFER、POST数据等，仅接受指定长度范围内、采用适当格式、采用所预期的字符的内容提交，对其他的一律过滤。尽量采用POST而非GET提交表单；对“<”，“>”，“；”，“””等字符做过滤；任何内容输出到页面之前都必须加以en-code，避免不小心把htmltag显示出来。\\n（2）实现Session 标记（session tokens）、CAPTCHA（验证码）系统或者HTTP引用头检查，以防功能被第三方网站所执行，对于用户提交信息的中的img等link，检查是否有重定向回本站、不是真的图片等可疑操作。\\n（3）cookie 防盗。避免直接在cookie中泄露用户隐私，例如email、密码，等等；通过使cookie和系统IP绑定来降低cookie泄露后的危险。这样攻击者得到的cookie没有实际价值，很难拿来直接进行重放攻击。\\n（4）确认接收的内容被妥善地规范化，仅包含最小的、安全的Tag（没有JavaScript），去掉任何对远程内容的引用（尤其是样式表和JavaScript），使用HTTPonly的cookie。",
+                "owner": null,
+                "labels": [],
+                "description": "跨站脚本攻击（XSS），是最普遍的Web应用安全漏洞。这类漏洞能够使得攻击者嵌入恶意脚本代码到正常用户会访问到的页面中，当正常用户访问该页面时，则可导致嵌入的恶意脚本代码的执行，从而达到恶意攻击用户的目的。",
+                "disable": false
+            }
+        ],
+        "open_user": true,
+        "open_saas": false,
+        "virtual_name": "133",
+        "show_display_name": true
+    }
+]

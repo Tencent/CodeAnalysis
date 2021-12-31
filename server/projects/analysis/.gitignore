@@ -1,0 +1,32 @@
+# python
+__pycache__
+*.py[cod]
+*$py.class
+.python-version
+
+# Test data
+data/
+log/
+*.log
+staticroot/
+celerybeat-schedule
+codedog/settings/local.py
+codedog/settings/dev.py
+codedog/settings/test.py
+codedog/settings/prod.py
+docker_data/
+mysql/
+ENV/
+tempdata/
+*.sql
+django_metrics/
+nohup.out
+analysis-master.pid
+
+# Idea
+.idea/
+.vscode/
+
+# Mac OS
+.DS_Store
+._*

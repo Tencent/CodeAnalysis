@@ -1,0 +1,75 @@
+[
+  {
+      "name": "【C/C++】基础规则包",
+      "description": "C/C++官方基础规则包，无需提供编译信息；仅提供风格类检查，更多功能请使用C/C++推荐规则包",
+      "revision": null,
+      "package_type": "official",
+      "languages": [
+          "cpp"
+      ],
+      "labels": [
+          "基础"
+      ],
+      "checkrule_set": [
+          
+          {
+              "checktool": "customfilescan",
+              "checkrule": "FileTooLong",
+              "severity": "info",
+              "rule_params": null,
+              "state": "enabled"
+          },
+          {
+              "checktool": "customscan",
+              "checkrule": "FunctionTooLong",
+              "severity": "info",
+              "rule_params": null,
+              "state": "enabled"
+          },
+          {
+              "checktool": "cpplint",
+              "checkrule": "readability/casting",
+              "severity": "warning",
+              "rule_params": "",
+              "state": "enabled"
+          },
+          {
+              "checktool": "cpplint",
+              "checkrule": "readability/constructors",
+              "severity": "warning",
+              "rule_params": "",
+              "state": "enabled"
+          },
+          {
+              "checktool": "cpplint",
+              "checkrule": "runtime/invalid_increment",
+              "severity": "fatal",
+              "rule_params": "",
+              "state": "enabled"
+          },
+          {
+              "checktool": "cpplint",
+              "checkrule": "whitespace/line_length",
+              "severity": "warning",
+              "rule_params": "",
+              "state": "enabled"
+          },
+          {
+              "checktool": "cpplint",
+              "checkrule": "whitespace/parens",
+              "severity": "warning",
+              "rule_params": "",
+              "state": "enabled"
+          },
+          {
+              "checktool": "cpplint",
+              "checkrule": "readability/utf8",
+              "severity": "warning",
+              "rule_params": "",
+              "state": "enabled"
+          }
+      ],
+      "open_saas": false,
+      "envs": null
+  }
+]

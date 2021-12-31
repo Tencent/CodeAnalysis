@@ -1,0 +1,210 @@
+version: "3"
+
+services:
+  mysql:
+    image: mysql:5.7.24
+    command:
+      [
+        "--log-bin=mysql-bin",
+        "--character-set-server=utf8mb4",
+        "--collation-server=utf8mb4_unicode_ci",
+        "--innodb_flush_log_at_trx_commit=1",
+        "--sync_binlog=1",
+        "--server-id=1"
+      ]
+    environment:
+      MYSQL_DATABASE: "codedog_db"
+      MYSQL_ROOT_PASSWORD: "TCA!@#2021"
+    volumes:
+      - ./.docker_data/mysql:/var/lib/mysql
+      - ./server/sql/init.sql:/docker-entrypoint-initdb.d/init.sql
+    expose:
+      - "3306"
+    restart: always
+
+  redis:
+    image: redis:5.0.5
+    command: redis-server
+    volumes:
+      - ./.docker_data/redis:/data
+    expose:
+      - "6379"
+    restart: always
+
+  main-server:
+    env_file:
+      - ./server/dockerconfs/.env.local
+    build:
+      context: ./server/projects/main
+      dockerfile: ../../dockerconfs/Dockerfile-common # 相对于main目录的位置
+    command:
+      [
+        "gunicorn",
+        "codedog.wsgi",
+        "-c",
+        "main.gunicorn.conf.py"
+      ]
+    volumes:
+      - ./server/configs/django/local_main.py:/var/www/django/codedog/codedog/settings/local.py
+    expose:
+      - "8001"
+    depends_on:
+      - mysql
+      - redis
+
+  main-worker:
+    env_file:
+      - ./server/dockerconfs/.env.local
+    build:
+      context: ./server/projects/main
+      dockerfile: ../../dockerconfs/Dockerfile-common
+    command:
+      [
+        "celery",
+        "-A",
+        "codedog",
+        "worker",
+        "--concurrency=2",
+        "-l",
+        "INFO"
+      ]
+    volumes:
+      - ./server/configs/django/local_main.py:/var/www/django/codedog/codedog/settings/local.py
+    depends_on:
+      - mysql
+      - redis
+
+  main-beat:
+    env_file:
+      - ./server/dockerconfs/.env.local
+    build:
+      context: ./server/projects/main
+      dockerfile: ../../dockerconfs/Dockerfile-common
+    command:
+      [
+        "celery",
+        "-A",
+        "codedog",
+        "beat",
+        "-S",
+        "redbeat.RedBeatScheduler",
+        "-l",
+        "INFO"
+      ]
+    volumes:
+      - ./server/configs/django/local_main.py:/var/www/django/codedog/codedog/settings/local.py
+    depends_on:
+      - mysql
+      - redis
+
+  analysis-server:
+    env_file:
+      - ./server/dockerconfs/.env.local
+    build:
+      context: ./server/projects/analysis
+      dockerfile: ../../dockerconfs/Dockerfile-common
+    command:
+      [
+        "gunicorn",
+        "codedog.wsgi",
+        "-c",
+        "analysis.gunicorn.conf.py"
+      ]
+    volumes:
+      - ./server/configs/django/local_analysis.py:/var/www/django/codedog/codedog/settings/local.py
+    expose:
+      - "8002"
+    depends_on:
+      - mysql
+      - redis
+
+  analysis-worker:
+    env_file:
+      - ./server/dockerconfs/.env.local
+    build:
+      context: ./server/projects/analysis
+      dockerfile: ../../dockerconfs/Dockerfile-common
+    command:
+      [
+        "celery",
+        "-A",
+        "codedog",
+        "worker",
+        "--concurrency=2",
+        "-l",
+        "INFO"
+      ]
+    volumes:
+      - ./server/configs/django/local_analysis.py:/var/www/django/codedog/codedog/settings/local.py
+    depends_on:
+      - mysql
+      - redis
+
+  login-server:
+    env_file:
+      - ./server/dockerconfs/.env.local
+    build:
+      context: ./server/projects/login
+      dockerfile: ../../dockerconfs/Dockerfile-common
+    command:
+      [
+        "gunicorn",
+        "apps.wsgi",
+        "-c",
+        "login.gunicorn.conf.py"
+      ]
+    volumes:
+      - ./server/configs/django/local_login.py:/var/www/django/codedog/apps/settings/local.py
+    expose:
+      - "8003"
+    depends_on:
+      - mysql
+
+  file-server:
+    env_file:
+      - ./server/dockerconfs/.env.local
+    build:
+      context: ./server/projects/file
+      dockerfile: ../../dockerconfs/Dockerfile-common
+    command:
+      [
+        "gunicorn",
+        "codedog_file_server.wsgi",
+        "-c",
+        "file.gunicorn.conf.py"
+      ]
+    volumes:
+      - ./server/configs/django/local_file.py:/var/www/django/codedog/codedog_file_server/env/local.py
+      - ./.docker_data/filedata:/var/www/django/codedog/data
+    expose:
+      - "8804"
+    depends_on:
+      - mysql
+
+  scmproxy:
+    env_file:
+      - ./server/dockerconfs/.env.local
+    build:
+      context: ./server/projects/scmproxy
+      dockerfile: ../../dockerconfs/Dockerfile-common # 相对于scmproxy目录的位置
+    command: [ "python", "proxyserver.py" ]
+
+  nginx:
+    build:
+      context: ./web/tca-deploy-source
+      dockerfile: ../../server/dockerconfs/Dockerfile-nginx
+    env_file:
+      - ./web/tca-deploy-source/docker_conf/.env
+    volumes:
+      - ./web/tca-deploy-source:/data/tca-deploy-source
+      - ./server/configs/nginx/tca_8000_compose.conf:/etc/nginx/conf.d/tca_8000_compose.conf
+      - ./server/configs/nginx/tca_file_local_compose.conf:/etc/nginx/conf.d/tca_file_local_compose.conf
+    entrypoint: bash /data/tca-deploy-source/init.sh
+    ports:
+      - "80:80"
+      - "8000:8000"
+    depends_on:
+      - main-server
+      - analysis-server
+      - login-server
+      - file-server

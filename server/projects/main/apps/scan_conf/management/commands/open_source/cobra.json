@@ -1,0 +1,1277 @@
+[
+  {
+    "name": "cobra",
+    "display_name": "Cobra",
+    "description": "multi-language static vulnerability analyzer.",
+    "license": "MIT",
+    "task_processes": [
+      "analyze",
+      "datahandle"
+    ],
+    "open_user": true,
+    "open_saas": true,
+    "scan_app": "codelint",
+    "scm_url": null,
+    "run_cmd": null,
+    "envs": null,
+    "show_display_name": true,
+    "checkrule_set": [
+      {
+        "real_name": "CVI-110001",
+        "display_name": "不安全的权限设置",
+        "severity": "error",
+        "category": "security",
+        "rule_title": "针对漏洞——不安全的权限设置(针对语言：php)",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "php"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "## 安全风险\n        不安全的权限设置\n        权限为0777表示所有权限均开放，即属性为:drwxrwxrwx(用户可读可写可执行)。\n\n        ## 修复方案\n        设置相应的权限，尽量减少权限为0777。\n    \n匹配模式是：regex-only-match\n匹配内容是：(mkdir|chmod)\\s*\\(\\s*(.*?)\\s*,\\s*0777\\s*\\)\n以下为示例：\nassert=true\ncase如下：\nmkdir (\"dir\",0777)\nassert=true\ncase如下：\nchmod('file' ,0777)"
+      },
+      {
+        "real_name": "CVI-110005",
+        "display_name": "允许任意证书（CWE-295）",
+        "severity": "error",
+        "category": "security",
+        "rule_title": "针对漏洞——允许任意证书（CWE-295）(针对语言：java)",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "## 安全风险\n        允许任意证书存在MITM攻击风险\n\n        ## 修复方案\n        使用TrustManager允许特定证书\n    \n匹配模式是：regex-only-match\n匹配内容是：X509Certificate\\[\\s?\\]\\s*getAcceptedIssuers\\(\\s?\\)\n以下为示例：\nassert=true\ncase如下：\n\n            class TrustAllManager implements X509TrustManager {\n\n                @Override\n                public void checkClientTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {\n                    //Trust any client connecting (no certificate validation)\n                }\n\n                @Override\n                public void checkServerTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {\n                    //Trust any remote server (no certificate validation)\n                }\n\n                @Override\n                public X509Certificate[] getAcceptedIssuers() {\n                    return null;\n                }\n            }\n        \nassert=false\ncase如下：\n\n            KeyStore ks = //Load keystore containing the certificates trusted\n\n            SSLContext sc = SSLContext.getInstance(\"TLS\");\n\n            TrustManagerFactory tmf = TrustManagerFactory.getInstance(\"SunX509\");\n            tmf.init(ks);\n\n            sc.init(kmf.getKeyManagers(), tmf.getTrustManagers(),null);"
+      },
+      {
+        "real_name": "CVI-120001",
+        "display_name": "cURL导致的SSRF",
+        "severity": "error",
+        "category": "security",
+        "rule_title": "针对漏洞——cURL导致的SSRF(针对语言：php)",
+        "rule_params": "",
+        "custom": false,
+        "languages": [
+          "php"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "## 安全风险\r\n        SSRF漏洞(Server-Side Request Forgery)\r\n\r\n        ### 形成原理\r\n        SSRF形成的原因大都是由于服务端提供了从其他服务器应用获取数据的功能且没有对目标地址做过滤与限制。\r\n\r\n        ### 风险\r\n        1、攻击者可以对外网、服务器所在内网、本地进行端口扫描，获取服务的banner信息。\r\n        2、攻击运行在内网或本地的应用程序。\r\n        3、对内网web应用进行指纹识别。\r\n        4、攻击内外网的web应用。\r\n        5、利用file协议读取本地文件等。\r\n\r\n        ### 举例\r\n        ```php\r\n        function curl($url){\r\n            $ch = curl_init();\r\n            curl_setopt($ch, CURLOPT_URL, $url);\r\n            curl_setopt($ch, CURLOPT_HEADER, 0);\r\n            curl_exec($ch);\r\n            curl_close($ch);\r\n        }\r\n        $url = $_GET['url'];\r\n        curl($url);\r\n        ```\r\n        以上代码未做任何SSRF防御，风险举例如下：\r\n\r\n        ```\r\n        # 利用file协议任意文件读取\r\n        curl -v 'http://test.com:8082/ssrf.php?url=file:///etc/passwd'\r\n\r\n        # 利用dict协议查看端口\r\n        curl -v 'http://test.com:8082/ssrf.php?url=dict://127.0.0.1:22'\r\n        ```\r\n\r\n        ## 修复方案\r\n        1. 限制协议为HTTP、HTTPS\r\n            ```\r\n            curl_setopt($ch, CURLOPT_PROTOCOLS, CURLPROTO_HTTP | CURLPROTO_HTTPS);\r\n            ```\r\n        2. 限制请求域名白名单\r\n        3. 禁止30x跳转\r\n            ```\r\n            删掉 curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);\r\n            ```\r\n    \r\n匹配模式是：regex-param-controllable\r\n匹配内容是：curl_setopt\\s*\\(.*,\\s*CURLOPT_URL\\s*,(.*)\\)\r\n以下为示例：\r\nassert=true\r\ncase如下：\r\n\r\n            function curl($url){\r\n                $ch = curl_init();\r\n                curl_setopt($ch, CURLOPT_URL, $url);\r\n                curl_setopt($ch, CURLOPT_HEADER, 0);\r\n                curl_exec($ch);\r\n                curl_close($ch);\r\n            }\r\n            $url = $_GET['url'];\r\n            curl($url);"
+      },
+      {
+        "real_name": "CVI-120002",
+        "display_name": "file_get_contents导致的SSRF",
+        "severity": "error",
+        "category": "security",
+        "rule_title": "针对漏洞——file_get_contents导致的SSRF(针对语言：php)",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "php"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "## 安全风险\n        SSRF漏洞(Server-Side Request Forgery)\n\n        ### 形成原理\n        SSRF形成的原因大都是由于服务端提供了从其他服务器应用获取数据的功能且没有对目标地址做过滤与限制。\n\n        ### 风险\n        1、攻击者可以对外网、服务器所在内网、本地进行端口扫描，获取服务的banner信息。\n        2、攻击运行在内网或本地的应用程序。\n        3、对内网web应用进行指纹识别。\n        4、攻击内外网的web应用。\n        5、利用file协议读取本地文件等。\n\n        ## 修复方案\n        1. 限制协议为HTTP、HTTPS\n        2. 限制请求域名白名单\n        3. 禁止30x跳转\n\n        ## 举例\n\n        ```php\n        $url = $_GET['url'];;\n        echo file_get_contents($url); //对用户可控的参数没有进行过滤，攻击者恶意构造输入就可能导致SSRF\n        ```\n    \n匹配模式是：function-param-controllable\n匹配内容是：file_get_contents\n以下为示例：\nassert=true\ncase如下：\n\n            $url = $_GET['url'];\n            echo file_get_contents($url);\n        \nassert=false\ncase如下：\n\n            $url = \"http://www.example.com\";\n            echo file_get_contents($url);"
+      },
+      {
+        "real_name": "CVI-120003",
+        "display_name": "get_headers导致的SSRF",
+        "severity": "error",
+        "category": "security",
+        "rule_title": "针对漏洞——get_headers导致的SSRF(针对语言：php)",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "php"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "## 安全风险\n        SSRF漏洞(Server-Side Request Forgery)\n\n        ### 形成原理\n        SSRF形成的原因大都是由于服务端提供了从其他服务器应用获取数据的功能且没有对目标地址做过滤与限制。\n\n        ### 风险\n        1、攻击者可以对外网、服务器所在内网、本地进行端口扫描，获取服务的banner信息。\n        2、攻击运行在内网或本地的应用程序。\n        3、对内网web应用进行指纹识别。\n        4、攻击内外网的web应用。\n        5、利用file协议读取本地文件等。\n\n        ## 修复方案\n        1. 限制协议为HTTP、HTTPS\n        2. 限制请求域名白名单\n        3. 禁止30x跳转\n\n        ## 举例\n        ```php\n        $url = $_GET['url'];\n        echo get_headers($url);//对用户可控的参数没有进行过滤，攻击者恶意构造输入就可能导致SSRF\n        ```\n    \n匹配模式是：function-param-controllable\n匹配内容是：get_headers\n以下为示例：\nassert=true\ncase如下：\n\n                $url = $_GET['url'];\n                echo get_headers($url);\n        \nassert=false\ncase如下：\n\n                $url = 'http://www.example.com';\n                echo get_headers($url);"
+      },
+      {
+        "real_name": "CVI-120004",
+        "display_name": "fsockopen造成的SSRF",
+        "severity": "error",
+        "category": "security",
+        "rule_title": "针对漏洞——fsockopen造成的SSRF(针对语言：php)",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "php"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "## 安全风险\n        SSRF漏洞(Server-Side Request Forgery)\n\n        ### 形成原理\n        SSRF形成的原因大都是由于服务端提供了从其他服务器应用获取数据的功能且没有对目标地址做过滤与限制。\n\n        ### 风险\n        1、攻击者可以对外网、服务器所在内网、本地进行端口扫描，获取服务的banner信息。\n        2、攻击运行在内网或本地的应用程序。\n        3、对内网web应用进行指纹识别。\n        4、攻击内外网的web应用。\n        5、利用file协议读取本地文件等。\n\n        ## 修复方案\n        1. 限制协议为HTTP、HTTPS\n        2. 限制请求域名白名单\n        3. 禁止30x跳转\n\n    \n匹配模式是：function-param-controllable\n匹配内容是：fsockopen\n以下为示例：\nassert=true\ncase如下：\n\n            $host = $_GET['host'];\n            $fp = fsockopen($host, intval($port), $errno, $errstr, 30);"
+      },
+      {
+        "real_name": "CVI-130001",
+        "display_name": "赋值型硬编码密码",
+        "severity": "error",
+        "category": "security",
+        "rule_title": "针对漏洞——赋值型硬编码密码(针对语言：php)",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "php"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "## 安全风险\n        硬编码密码\n\n        ## 修复方案\n        将密码抽出统一放在配置文件中，配置文件不放在git中\n    \n匹配模式是：regex-only-match\n匹配内容是：(?:private\\s+|public\\s+|protected\\s+)?(?:static\\s+)?\\$\\w*(?:passwd|password|pwd)\\w*\\s*(?:=|=>|->)\\s*(?:md5\\(|sha1\\()?['\"][^,]+?['\"]\n以下为示例：\nassert=true\ncase如下：\nprivate $password = \"test\"\nassert=true\ncase如下：\nprivate static $password = \"test\"\nassert=true\ncase如下：\npublic $pwd = \"test\"\nassert=true\ncase如下：\nprotected $passwd = 'test'\nassert=true\ncase如下：\nprotected $except_password = md5(\"test\")\nassert=true\ncase如下：\nprotected $password_except = sha1(\"test\")\nassert=true\ncase如下：\n$password = \"test\"\nassert=true\ncase如下：\n$passwd = \"test\"\nassert=true\ncase如下：\n$pwd = \"test\"\nassert=false\ncase如下：\n$pwd = \"\";"
+      },
+      {
+        "real_name": "CVI-130002",
+        "display_name": "硬编码Token/Key",
+        "severity": "error",
+        "category": "security",
+        "rule_title": "针对漏洞——硬编码Token/Key(针对语言：*)",
+        "rule_params": null,
+        "custom": false,
+        "languages": [],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "## 安全风险\n        硬编码密码\n\n        ## 修复方案\n        将密码抽出统一放在配置文件中，配置文件不放在git中\n    \n匹配模式是：regex-only-match\n匹配内容是：[^\\\\/](?![\\d]{32})(?![a-fA-F]{32})([a-f\\d]{32}|[A-F\\d]{32})[^.]\n以下为示例：\nassert=true\ncase如下：\n\"41a6bc4d9a033e1627f448f0b9593f9316d071c1\"\nassert=true\ncase如下：\n\"d042343e49e40f16cb61bd203b0ce756\"\nassert=true\ncase如下：\nC787AFE9D9E86A6A6C78ACE99CA778EE\nassert=false\ncase如下：\nplease like and subscribe to my\nassert=false\ncase如下：\nA32efC32c79823a2123AA8cbDDd3231c\nassert=false\ncase如下：\nffffffffffffffffffffffffffffffff\nassert=false\ncase如下：\n01110101001110011101011010101001\nassert=false\ncase如下：\n00000000000000000000000000000000\nassert=false\ncase如下：\n\\3986770edb3e40a7eeb35e867ceb7821.php\nassert=false\ncase如下：\n/3986770edb3e40a7eeb35e867ceb7821.php\nassert=false\ncase如下：\n3986770edb3e40a7eeb35e867ceb7821.php\nassert=false\ncase如下：\napi.github.com/repos/nikic/PHP-Parser/zipball/f78af2c9c86107aa1a34cd\nassert=false\ncase如下：\nfiles.phpcomposer.com/files/PHPMailer/PHPMailer/22d04c6a58145a244696\nassert=false\ncase如下：\n\"reference\": \"f78af2c9c86107aa1a34cd1dbb5bbe9eeb0d9f51\"\nassert=false\ncase如下：\nreturn ComposerAutoloaderInitc106a97e2ff6ae6c690bb686f7369207::getLoader();"
+      },
+      {
+        "real_name": "CVI-130003",
+        "display_name": "配置型硬编码密码1",
+        "severity": "error",
+        "category": "security",
+        "rule_title": "针对漏洞——配置型硬编码密码1(针对语言：conf)",
+        "rule_params": null,
+        "custom": false,
+        "languages": [],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "## 安全风险\n        硬编码邮箱、用户名、密码、IP、DB链接信息等\n\n        ## 修复方案\n        将密码抽出统一放在配置文件中，配置文件不放在git中\n    \n匹配模式是：regex-only-match\n匹配内容是：(?:username|email|host|password|passwd|mysql)\\w*\\s*(?:=)\\s*(.*)\n以下为示例：\nassert=true\ncase如下：\ndb_query_user=db_auto\nassert=true\ncase如下：\ndb_query_password=db_auto\nassert=true\ncase如下：\ndb_alert_email = alert_db@test.com\nassert=true\ncase如下：\ndb_alert_email_password = test==\nassert=true\ncase如下：\ndb_alert_email_smtp = smtp.exmail.qq.com:25\nassert=true\ncase如下：\ndb_host    = 192.168.1.1\nassert=true\ncase如下：\ndb_user    = db_auto\nassert=true\ncase如下：\ndb_pass    = db_auto\nassert=false\ncase如下：\nuserLoginIp := this.Ctx.Request.RemoteAddr"
+      },
+      {
+        "real_name": "CVI-130004",
+        "display_name": "配置型硬编码密码2",
+        "severity": "error",
+        "category": "security",
+        "rule_title": "针对漏洞——配置型硬编码密码2(针对语言：conf)",
+        "rule_params": null,
+        "custom": false,
+        "languages": [],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "## 安全风险\n        硬编码邮箱、用户名、密码、IP、DB链接信息等\n\n        ## 修复方案\n        将密码抽出统一放在配置文件中，配置文件不放在git中\n    \n匹配模式是：regex-only-match\n匹配内容是：(?:username|email|host|password|passwd|mysql)\\w*\\s*(?::)\\s*(.*)\n以下为示例：\nassert=false\ncase如下：\nuserLoginIp := this.Ctx.Request.RemoteAddr\nassert=true\ncase如下：\nusername: 123123\nassert=true\ncase如下：\npassword: 123123\nassert=true\ncase如下：\nmysql: mysql+mysqldb://123:123@10.111.111.111:3306/test"
+      },
+      {
+        "real_name": "CVI-130005",
+        "display_name": "硬编码IP",
+        "severity": "error",
+        "category": "security",
+        "rule_title": "针对漏洞——硬编码IP(针对语言：*)",
+        "rule_params": null,
+        "custom": false,
+        "languages": [],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "## 安全风险\n        硬编码IP\n\n        ## 修复方案\n        移到配置文件中\n    \n匹配模式是：regex-only-match\n匹配内容是：((25[0-5]|2[0-4][0-9]|[01]?[0-9]{2}?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?))\n以下为示例：\nassert=true\ncase如下：\n103.21.140.84\nassert=true\ncase如下：\n10.11.2.220\nassert=true\ncase如下：\n14.0.0.0\nassert=false\ncase如下：\n1.2.3.4\nassert=false\ncase如下：\n13.11.2\nassert=false\ncase如下：\n3.3.0.1\nassert=false\ncase如下：\n1.0.1.0\nassert=false\ncase如下：\n1.4.16.0\nassert=false\ncase如下：\n1.204.0.0\nassert=false\ncase如下：\n127.0.0.1\nassert=false\ncase如下：\n192.168.1.1\nassert=false\ncase如下：\n192.168.0.1\nassert=false\ncase如下：\n255.255.255.255"
+      },
+      {
+        "real_name": "CVI-140001",
+        "display_name": "文本框反射型XSS",
+        "severity": "error",
+        "category": "security",
+        "rule_title": "针对漏洞——文本框反射型XSS(针对语言：jsp)",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "## 安全风险\n        表单值直接取入参会导致XSS\n\n        ## 修复方案\n        使用Begis对参数进行过滤后再使用\n    \n匹配模式是：regex-only-match\n匹配内容是：input.*type=(\\\"|\\')?hidden.*=.*request\\.get(Parameter|QueryString)\n以下为示例：\nassert=true\ncase如下：\ninput type=\"hidden\" value=\"request.getParameter(\"test\")\""
+      },
+      {
+        "real_name": "CVI-140002",
+        "display_name": "输出入参可能导致XSS",
+        "severity": "error",
+        "category": "security",
+        "rule_title": "针对漏洞——输出入参可能导致XSS(针对语言：java)",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "## 安全风险\n        输出入参会导致XSS\n\n        ## 修复方案\n        使用Begis对参数进行过滤后再输出\n    \n匹配模式是：regex-only-match\n匹配内容是：out\\.println\\s*\\(\\s*request\\.get(Parameter|QueryString)\\s*\\(\\s*\\\"\n以下为示例：\nassert=true\ncase如下：\nout.println(request.getParameter(\"test\"))"
+      },
+      {
+        "real_name": "CVI-140003",
+        "display_name": "直接输出入参可能导致XSS",
+        "severity": "error",
+        "category": "security",
+        "rule_title": "针对漏洞——直接输出入参可能导致XSS(针对语言：php)",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "php"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "## 安全风险\n        直接输出入参会导致XSS\n\n        ## 修复方案\n        1. 使用`htmlentities`函数进行转义\n        2. 使用Begis安全组件对参数进行过滤后使用\n    \n匹配模式是：function-param-controllable\n匹配内容是：(echo|print|print_r|exit|die|printf|vprintf|trigger_error|user_error|odbc_result_all|ovrimos_result_all|ifx_htmltbl_result)\n以下为示例：\nassert=true\ncase如下：\nprint_r ($_GET['test']);\nassert=true\ncase如下：\n\n            $filename = $_POST['filename'];\n            $file = fopen($filename, 'r')\n                or exit(\"unable to open file ($filename)\");"
+      },
+      {
+        "real_name": "CVI-140005",
+        "display_name": "获取URI或参数未过滤导致的XSS",
+        "severity": "error",
+        "category": "security",
+        "rule_title": "针对漏洞——获取URI或参数未过滤导致的XSS(针对语言：lua)",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "Lua"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "## 安全风险\n        未过滤的URI和参数直接输出可导致XSS\n\n        ## 修复方案\n        输出时进行过滤\n    \n匹配模式是：regex-only-match\n匹配内容是：ngx.say\\s*\\(\\s*ngx\\.(var|req)\\.(request_uri|uri|get_uri_args\\(\\)|get_post_args\\(\\))\n以下为示例：\nassert=true\ncase如下：\n\n            ngx.say(ngx.req.get_uri_args().name)"
+      },
+      {
+        "real_name": "CVI-160001",
+        "display_name": "拼接SQL注入",
+        "severity": "error",
+        "category": "security",
+        "rule_title": "针对漏洞——拼接SQL注入(针对语言：java)",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "## 安全风险\n        拼接SQL语句存在SQL注入风险\n\n        ## 修复方案\n        使用ORM中间件，比如raptor\n    \n匹配模式是：regex-only-match\n匹配内容是：(?:select|update)\\s+.*(?:from|set).*where\\s+\\w+\\s*=[^\"']*(?:\"|').*(?:\\+|\\%s)\n以下为示例：\nassert=true\ncase如下：\nQuery q = pm.newQuery(\"select * from Users where name = \" + input);\nassert=true\ncase如下：\nString hql = \"select max(detailLineNo) from TWmsSoreturnAsnDetailEntity where isDel = 0 and asnId=\"+headId;"
+      },
+      {
+        "real_name": "CVI-160002",
+        "display_name": "拼接SQL注入",
+        "severity": "error",
+        "category": "security",
+        "rule_title": "针对漏洞——拼接SQL注入(针对语言：php)",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "php"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "## 安全风险\n\n        ### SQL注入漏洞形成原因\n        SQL语句拼接，若未对用户可控参数进行足够过滤，可能会导致SQL注入\n\n        ### 风险\n        - 用户信息被篡改\n        - 攻击者偷取代码和用户数据\n        - 业务运营的数据被恶意获取\n        - 线上代码被非法篡改，并造成为恶意攻击者输送流量或其他利益的影响\n\n        ## 修复方案\n        - 已不再使用的功能，直接做下线处理\n        - 引入安全组件\n        - 代码层修复:尽量不要拼接SQL语句。如必要，需对用户可控的参数进行严格过滤\n\n        ## 举例\n        ```php\n        \n        ```\n        若输入的数据为\n        ```php\n        $_POST['username'] = 'adan';\n        $_POST['password'] = '' OR ''='';\n        ```\n\n        SQL语句变为 `SELECT * FROM users WHERE user='adan' AND password='' OR ''=''` 发生SQL注入，攻击者无需密码即可登录。\n        尽量不要使用拼接的SQL语句。若不得不使用，尽量不要用户可控SQL语句的参数。\n        若必须用户可控，请对用户输入的参数进行严格的限制和过滤。\n    \n匹配模式是：regex-only-match\n匹配内容是：(\\\"\\s*(select|SELECT|insert|INSERT|update|UPDATE)\\s*(([^;]\\s*)*)?\\$(.+?);?\\\")\n以下为示例：\nassert=true\ncase如下：\n$query  = \"SELECT id, name FROM products ORDER BY name LIMIT 20 OFFSET $offset;\";\nassert=false\ncase如下：\n$query  = \"SELECT id FROM products LIMIT 20 ;\";\nassert=true\ncase如下：\n$s = \"select\"  + $v + \"from \" + $tb + \"where id = \" + $id;\nassert=true\ncase如下：\n\n            $query  = \"SELECT id, name, inserted, size FROM products\n                    WHERE size = '$size'\n                    ORDER BY $order\n                    LIMIT $limit, $offset;\";"
+      },
+      {
+        "real_name": "CVI-160003",
+        "display_name": "MySQL Execute Functions可能导致SQL注入",
+        "severity": "error",
+        "category": "security",
+        "rule_title": "针对漏洞——MySQL Execute Functions可能导致SQL注入(针对语言：php)",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "php"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "## 安全风险\n\n        ### SQL注入形成原因\n        SQL语句用户可控，若未对参数进行足够的过滤直接执行SQL语句，则可能发生SQL注入\n\n        ### 风险\n        - 用户信息被篡改\n        - 攻击者偷取代码和用户数据\n        - 业务运营的所有数据被恶意获取\n        - 线上代码被非法篡改，并造成为恶意攻击者输送流量或其他利益的影响\n\n        ## 修复方案\n        - 已不再使用的功能，可直接做下线处理\n        - 引入安全组件\n        - 代码层修复:对用户可控参数进行严格过滤\n            使用 `mysql_real_escape_string`转义 SQL 语句中使用的字符串中的特殊字符\n            若无转义函数并且使用 \\ 来转义特殊字符，可以使用addslashes函数\n\n        ## 代码示例\n        ```\n        \n        ```\n    \n匹配模式是：function-param-controllable\n匹配内容是：(mysql_query|mysql_db_query)\n以下为示例：\nassert=true\ncase如下：\n\n            $username = $_POST['username'];\n            $password = $_POST['password'];\n            $query = \"SELECT * FROM users WHERE user = $username AND password = $password \";\n            mysql_query($query);\n        \nassert=false\ncase如下：\n\n            $username = \"user\";\n            $password = \"cobra123\";\n            $query = \"SELECT * FROM users WHERE user = $username AND password = $password \";\n            mysql_query($query);\n        \nassert=false\ncase如下：\n\n            $username = $_POST['username'];\n            $password = $_POST['password'];\n            $username = mysql_real_escape_string($username); //转义\n            $password = mysql_real_escape_string($password); //转义\n            $query = \"SELECT * FROM users WHERE user = $username AND password = $password \";\n            mysql_query($query);"
+      },
+      {
+        "real_name": "CVI-160004",
+        "display_name": "SQL Execute Functions可能导致SQL注入",
+        "severity": "error",
+        "category": "security",
+        "rule_title": "针对漏洞——SQL Execute Functions可能导致SQL注入(针对语言：php)",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "php"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "## 安全风险\n\n        ### SQL注入形成原因\n        SQL语句用户可控，若未对参数进行足够的过滤则会导致SQL注入\n\n        ### 风险\n        - 用户信息被篡改\n        - 攻击者偷取代码和用户数据\n        - 业务运营的所有数据被恶意获取\n        - 线上代码被非法篡改，并造成为恶意攻击者输送流量或其他利益的影响\n\n        ## 修复方案\n        - 已不再使用的功能，直接做下线处理\n        - 引入安全组件\n        - 代码层修复:对用户可控参数进行严格过滤\n    \n匹配模式是：function-param-controllable\n匹配内容是：(mysqli_query|pg_execute|pg_insert|pg_query|pg_select|pg_update|sqlite_query|msql_query|mssql_query|odbc_exec|fbsql_query|sybase_query|ibase_query|dbx_query|ingres_query|ifx_query|oci_parse|sqlsrv_query|maxdb_query|db2_exec)\n以下为示例：\nassert=true\ncase如下：\n\n            $username = $_POST['username'];\n            $password = $_POST['password'];\n            $query = \"SELECT * FROM users WHERE user = $username AND password = $password \";\n            mysqli_query($query);\n        \nassert=false\ncase如下：\n\n            $username = \"user\";\n            $password = \"cobra123\";\n            $query = \"SELECT * FROM users WHERE user = $username AND password = $password \";\n            mysqli_query($query);"
+      },
+      {
+        "real_name": "CVI-165001",
+        "display_name": "LDAP注入",
+        "severity": "error",
+        "category": "security",
+        "rule_title": "针对漏洞——LDAP注入(针对语言：php)",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "php"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "## 安全风险\n\n        LDAP Injection\n        允许进行LDAP查询 + 输入未进行过滤 ---> LDAP注入\n        这种威胁可以让攻击者能够从LADP树中提取到很多很重要的信息\n\n        ## 修复方案\n        对用户输入数据中包含的”语言本身的保留字符”进行转义(例如可以使用`ldap_escape`)\n\n    \n匹配模式是：function-param-controllable\n匹配内容是：(ldap_add|ldap_delete|ldap_list|ldap_read|ldap_search|ldap_bind)\n以下为示例：\nassert=true\ncase如下：\n\n            $surname=$_GET['surname'];\n            $filter = \"(sn=\" . $surname . \")\";\n            $sr=ldap_search($ds, \"o=My Company, c=US\", $filter);\n            $info = ldap_get_entries($ds, $sr);"
+      },
+      {
+        "real_name": "CVI-167001",
+        "display_name": "XXE(XML实体注入)",
+        "severity": "error",
+        "category": "security",
+        "rule_title": "针对漏洞——XXE(XML实体注入)(针对语言：php)",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "php"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "## 安全风险\n        XXE(XML实体注入)\n\n        ### 形成原因\n        输入的XML中包含外部实体 + 解析程序没有正确过滤 -->\n        这种攻击会造成敏感信息泄露，DoS攻击，SSRF攻击，端口扫描等等。\n\n        ### 风险\n        敏感信息泄露\n        探测内网，获取服务器权限\n        进行拒绝服务攻击，影响正常业务\n        敏感数据被盗取。\n        造成服务宕机。\n\n        ## 修复方案\n        1. 使用 `libxml_disable_entity_loader(true);`\n        2. 过滤用户提交的XML数据，关键词：`DOCTYPE`和 `ENTITY`或者，`SYSTEM`和`PUBLIC`\n        3. 升级libxml至libxml2.9及以上，2.9版本已经默认关闭了XML外部实体的解析\n\n        ## 举例\n        ```php\n            $xml = $_POST['xml'];\n            $data = simplexml_load_string($xml);\n        ```\n        修改后代码\n        ```php\n            $xml = $_POST['xml'];\n            libxml_disable_entity_loader(true);\n            $data = simplexml_load_string($xml);\n        ```\n    \n匹配模式是：function-param-controllable\n匹配内容是：simplexml_load_file|simplexml_load_string\n以下为示例：\nassert=true\ncase如下：\n\n            $xml = $_POST['xml'];\n            $data = simplexml_load_string($xml);\n        \nassert=false\ncase如下：\n\n            $xml = $_POST['xml'];\n            libxml_disable_entity_loader(true);\n            $data = simplexml_load_string($xml);"
+      },
+      {
+        "real_name": "CVI-170001",
+        "display_name": "LFI",
+        "severity": "error",
+        "category": "security",
+        "rule_title": "针对漏洞——LFI(针对语言：jsp)",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "## 安全风险\n        载入的文件可控存在LFI漏洞\n\n        ## 修复方案\n        限制白名单\n    \n匹配模式是：regex-only-match\n匹配内容是：include[^>]*request\\.\n以下为示例：\nassert=true\ncase如下：\ninclude(request.getParam('test'));"
+      },
+      {
+        "real_name": "CVI-170002",
+        "display_name": "文件包含漏洞",
+        "severity": "error",
+        "category": "security",
+        "rule_title": "针对漏洞——文件包含漏洞(针对语言：php)",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "php"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "## 安全风险\n        LFI/FRI(本地文件包含/远程文件包含)\n\n        ### 形成\n        在引入文件时，引用的文件名用户可控，若传入的参数没有限制过滤或者校验被绕过，从而导致意外的文件泄露甚至恶意代码注入。\n\n        ### 影响范围\n        当攻击者通过该漏洞包含特定文件时，该文件将为相应的代码执行。\n\n        ## 修复方案\n        1. 应尽量避免包含动态的变量，尤其是用户可以控制的变量。\n        2. 设置白名单(使用枚举)\n        ```php\n        \n        ```\n    \n匹配模式是：function-param-controllable\n匹配内容是：include|include_once|require|require_once|parsekit_compile_file|php_check_syntax|runkit_import|virtual\n以下为示例：\nassert=true\ncase如下：\ninclude($_GET['file']);\nassert=true\ncase如下：\nrequire_once($_GET['file']);"
+      },
+      {
+        "real_name": "CVI-180001",
+        "display_name": "远程代码执行",
+        "severity": "error",
+        "category": "security",
+        "rule_title": "针对漏洞——远程代码执行(针对语言：php)",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "php"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "## 安全风险\n        代码注入(Code Injection)\n        没有对用户输入的参数进行足够的过滤，可能导致攻击者传入的恶意代码执行。\n        因此危险函数应该尽量避免在开发中使用。\n\n        ## 修复方案\n        禁用以下危险函数\n        - array_map\n        - create_function\n        - call_user_func\n        - call_user_func_array\n        - assert\n        - eval\n        - dl\n        - register_tick_function\n        - register_shutdown_function\n        - preg_replace\n\n        ## 举例\n        \n        提交 `/index.php?arg=1;phpinfo()` 便会产生代码注入\n    \n匹配模式是：function-param-controllable\n匹配内容是：(array_map|create_function|call_user_func|call_user_func_array|assert|eval|dl|register_tick_function|register_shutdown_function|array_filter|array_reduce|array_diff_ukey|array_udiff|array_walk|array_walk_recursive|uasort|uksort|usort)\n以下为示例：\nassert=true\ncase如下：\narray_map($_GET['pass'],$array);\nassert=true\ncase如下：\ncreate_function('$_GET['pass']',\"echo $a\");\nassert=true\ncase如下：\ncall_user_func($_GET['pass1'],$_GET['pass2']);\nassert=true\ncase如下：\ncall_user_func_array($_GET['pass1'],$array);\nassert=true\ncase如下：\nassert($_GET['pass']);\nassert=true\ncase如下：\neval($_GET['pass']);\nassert=true\ncase如下：\ndl($_GET['pass']);\nassert=true\ncase如下：\nregister_tick_function($_GET['pass']);\nassert=true\ncase如下：\nregister_shutdown_function($_GET['pass']);\nassert=true\ncase如下：\n\n            $a = base64_decode($_POST['test']);\n            eval($a);"
+      },
+      {
+        "real_name": "CVI-181001",
+        "display_name": "远程命令执行",
+        "severity": "error",
+        "category": "security",
+        "rule_title": "针对漏洞——远程命令执行(针对语言：php)",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "php"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "## 安全风险\n        当应用需要调用一些外部程序去处理内容的情况下，就会用到一些执行系统命令的函数。\n        当用户可以控制命令执行函数中的参数时，将可以注入恶意系统命令到正常命令中，造成命令执行攻击。\n\n        ## 修复方案\n        1.尽量不用执行命令的函数.\n        2.外部可控制参数进入执行命令函数要进行严格的过滤（如使用escapeshellcmd或escapeshellarg过滤参数）\n        3.升级ImageMagick到最新版本\n\n        ## 代码样例\n\n        ```\n        \n        ```\n        构造 `http://www.test.com/test.php?ip=127.0.0.1|ifconfig` 即会发生命令注入攻击\n\n        正确代码示例\n        ```php\n        \n        ```\n    \n匹配模式是：function-param-controllable\n匹配内容是：(system|passthru|exec|pcntl_exec|shell_exec|popen|proc_open|ob_start|expect_popen|mb_send_mail|w32api_register_function|w32api_invoke_function|ssh2_exec)\n以下为示例：\nassert=true\ncase如下：\nsystem($_GET['pass']);\nassert=true\ncase如下：\npassthru($_GET['pass']);\nassert=true\ncase如下：\nexec($_GET['pass1'],$_GET['pass2']);\nassert=true\ncase如下：\npcntl_exec('$_GET['pass']');\nassert=true\ncase如下：\nshell_exec('$_GET['pass']');\nassert=true\ncase如下：\npopen('$_GET['pass']');\nassert=true\ncase如下：\nproc_open('$_GET['pass']');\nassert=true\ncase如下：\nob_start('$_GET['pass']');\nassert=true\ncase如下：\nexpect_popen('$_GET['pass']');\nassert=true\ncase如下：\nssh2_exec($connection, '$_GET['pass']');"
+      },
+      {
+        "real_name": "CVI-190001",
+        "display_name": "Logger敏感信息",
+        "severity": "error",
+        "category": "security",
+        "rule_title": "针对漏洞——Logger敏感信息(针对语言：java)",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "## 安全风险\n        日志内记录了敏感信息\n\n        ## 修复方案\n        删除该代码\n    \n匹配模式是：regex-only-match\n匹配内容是：log(ger)?\\..*?\\(.*(([^a-z]ssn[^a-z])|getssn|ssn\\(|socialsecurity|taxid|email|e_mail|emailaddress|pass|amount|account|acct|phone|phonenumber|zip|postal)\n以下为示例：\nassert=true\ncase如下：\nlog.debug(\"email: feei@feei.cn\");\nassert=true\ncase如下：\nlogger.info(\"password: 123\");"
+      },
+      {
+        "real_name": "CVI-190002",
+        "display_name": "打印堆栈信息",
+        "severity": "error",
+        "category": "security",
+        "rule_title": "针对漏洞——打印堆栈信息(针对语言：java)",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "## 安全风险\n        堆栈信息不要直接暴露给客户端\n\n        ## 修复方案\n        可将错误信息打印在logger内\n    \n匹配模式是：regex-only-match\n匹配内容是：printStackTrace\\s*\\(\n以下为示例：\nassert=true\ncase如下：\ne.printStackTrace();\nassert=true\ncase如下：\ne.printStackTrace ();"
+      },
+      {
+        "real_name": "CVI-190003",
+        "display_name": "打印phpinfo",
+        "severity": "error",
+        "category": "security",
+        "rule_title": "针对漏洞——打印phpinfo(针对语言：php)",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "php"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "## 安全风险\n        phpinfo不要直接输出\n\n        ## 修复方案\n        删除\n    \n匹配模式是：regex-only-match\n匹配内容是：phpinfo\\s*\\(\n以下为示例：\nassert=true\ncase如下：\nphpinfo();"
+      },
+      {
+        "real_name": "CVI-190004",
+        "display_name": "证书文件泄露",
+        "severity": "error",
+        "category": "security",
+        "rule_title": "针对漏洞——证书文件泄露(针对语言：certificate)",
+        "rule_params": null,
+        "custom": false,
+        "languages": [],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "## 安全风险\n        证书文件不要放在git项目中\n\n        ## 修复方案\n        删除\n    \n匹配模式是：find-extension\n匹配内容是：\n以下为示例：\nassert=true"
+      },
+      {
+        "real_name": "CVI-190005",
+        "display_name": "缓存文件泄露",
+        "severity": "error",
+        "category": "security",
+        "rule_title": "针对漏洞——缓存文件泄露(针对语言：thumb)",
+        "rule_params": null,
+        "custom": false,
+        "languages": [],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "## 安全风险\n        缓存文件不要放在git项目中\n\n        ## 修复方案\n        删除\n    \n匹配模式是：find-extension\n匹配内容是：\n以下为示例：\nassert=true"
+      },
+      {
+        "real_name": "CVI-190006",
+        "display_name": "设计源文件泄露",
+        "severity": "error",
+        "category": "security",
+        "rule_title": "针对漏洞——设计源文件泄露(针对语言：source)",
+        "rule_params": null,
+        "custom": false,
+        "languages": [],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "## 安全风险\n        设计源文件不要放在git项目中\n\n        ## 修复方案\n        删除\n    \n匹配模式是：find-extension\n匹配内容是：\n以下为示例：\nassert=true"
+      },
+      {
+        "real_name": "CVI-190007",
+        "display_name": "日志泄露",
+        "severity": "error",
+        "category": "security",
+        "rule_title": "针对漏洞——日志泄露(针对语言：log)",
+        "rule_params": null,
+        "custom": false,
+        "languages": [],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "## 安全风险\n        日志文件不要放在git项目中\n\n        ## 修复方案\n        删除\n    \n匹配模式是：find-extension\n匹配内容是：\n以下为示例：\nassert=true"
+      },
+      {
+        "real_name": "CVI-190008",
+        "display_name": "信息泄露",
+        "severity": "error",
+        "category": "security",
+        "rule_title": "针对漏洞——信息泄露(针对语言：php)",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "php"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "## 安全风险\n        可能导致信息泄露\n\n        ## 修复方案\n        删除代码\n    \n匹配模式是：regex-only-match\n匹配内容是：(print_r|var_dump|show_source|highlight_file)\\s*\\(\n以下为示例：\nassert=true\ncase如下：\nprint_r($a);\nassert=true\ncase如下：\nvar_dump($a);\nassert=true\ncase如下：\nhighlight_file($file);"
+      },
+      {
+        "real_name": "CVI-200001",
+        "display_name": "不安全的随机数",
+        "severity": "error",
+        "category": "security",
+        "rule_title": "针对漏洞——不安全的随机数(针对语言：java)",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "## 安全风险\n        使用可预测的随机数会导致漏洞。\n\n        ## 修复方案\n        建议使用`java.security.SecureRandom`替代` java.util.Random`。\n        ```java\n        import org.apache.commons.codec.binary.Hex;\n\n        String generateSecretToken() {\n            SecureRandom secRandom = new SecureRandom();\n\n            byte[] result = new byte[32];\n            secRandom.nextBytes(result);\n            return Hex.encodeHexString(result);\n        }\n        ```\n        - [CWE-330](http://cwe.mitre.org/data/definitions/330.html)\n\n    \n匹配模式是：regex-only-match\n匹配内容是：new Random\\s*\\(|Random\\.next\n以下为示例：\nassert=true\ncase如下：\nRandom r = new Random();\nassert=true\ncase如下：\nRandom r = new Random  ();\nassert=true\ncase如下：\nRandom.nextLong()"
+      },
+      {
+        "real_name": "CVI-200002",
+        "display_name": "不安全的随机数",
+        "severity": "error",
+        "category": "security",
+        "rule_title": "针对漏洞——不安全的随机数(针对语言：php)",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "php"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "## 安全风险\n        uniqid基于时间戳生成的，属于伪随机生成器，不建议使用。\n\n        ## 修复方案\n        使用random替代\n    \n匹配模式是：regex-only-match\n匹配内容是：uniqid\\s?\\(\n以下为示例：\nassert=true\ncase如下：\n$uniq = uniqid();"
+      },
+      {
+        "real_name": "CVI-210001",
+        "display_name": "未经验证的任意链接跳转",
+        "severity": "error",
+        "category": "security",
+        "rule_title": "针对漏洞——未经验证的任意链接跳转(针对语言：php)",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "php"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "## 安全风险\n        UR(Unvalidated Redirect)\n\n        ### 形成原因\n        Web程序可进行URL跳转且参数用户可控 + 未对用户输入的URL进行足够的过滤限制 + 攻击者恶意构造输入参数\n\n        ### 风险\n        - 控制跳转链接跳转到恶意网站，或进行钓鱼攻击盗取用户信息。\n        - 绕过权限检查，到达受限页面并进行非法操。\n\n        ## 修复方案\n        1. 避免简单使用URL跳转函数。\n        2. 如果需要使用URL跳转功能，避免允许用户的输入作为跳转目标。\n        3. 若无法避免将用户的输入作为跳转目标，则须进行严格的限制和过滤，确保用户提供的URL是合法的、有权限访问的。\n        4. 设置URL跳转白名单。\n        5. 当用户跳转离开时，强制跳转到警告页面上，提示用户正在离开当前网站。\n\n        使用白名单判断\n        ```php\n        \n        ```\n    \n匹配模式是：function-param-controllable\n匹配内容是：header\n以下为示例：\nassert=true\ncase如下：\nheader(\"Location: \".$_GET[\"url\"]);"
+      },
+      {
+        "real_name": "CVI-230001",
+        "display_name": "SESSION固定攻击",
+        "severity": "error",
+        "category": "security",
+        "rule_title": "针对漏洞——SESSION固定攻击(针对语言：php)",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "php"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "## 安全风险\n        ``\n        `/index.php?sessid=1f3870be274f6c49b3e31a0c6728957f`\n\n        ## 修复方案\n        删除\n        ```\n    \n匹配模式是：function-param-controllable\n匹配内容是：setcookie\n以下为示例：\nassert=true\ncase如下：\nsetcookie(\"PHPSESSID\", $_GET[\"sessid\"]);"
+      },
+      {
+        "real_name": "CVI-260001",
+        "display_name": "PHP反序列化漏洞",
+        "severity": "error",
+        "category": "security",
+        "rule_title": "针对漏洞——PHP反序列化漏洞(针对语言：php)",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "php"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "## 安全风险\n        PHP反序列化漏洞(PHP对象注入漏洞)\n        传给 `unserialize()`的参数可控 + 构造序列化字符串 --> 从而控制对象内部的变量甚至是函数\n\n        ## 修复方案\n        严格控制 `unserialize`函数的参数，对`unserialize`后的变量内容进行检查\n    \n匹配模式是：function-param-controllable\n匹配内容是：unserialize\n以下为示例：\nassert=true\ncase如下：\n\n            $test = $_POST['test'];\n            $test_uns = unserialize($test);"
+      },
+      {
+        "real_name": "CVI-320001",
+        "display_name": "变量覆盖漏洞",
+        "severity": "error",
+        "category": "security",
+        "rule_title": "针对漏洞——变量覆盖漏洞(针对语言：php)",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "php"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "## 安全风险\n        变量覆盖漏洞\n\n        ## 修复方案\n        1、使用原始变量,不进行变量注册，直接使用原生的$_GET、$_POST等数组变量进行操作；\n        2、注册变量前判断变量是否存在。自行申明的变量一定要初始化，不然即使注册变量代码在执行流程最前面也能覆盖掉这些未初始化的变量。\n\n        ## 代码样例\n\n        ### 错误代码样例\n        ```php\n        \n        ```\n        构造 http://www.test.com/test.php?a=1时，会打印出true\n\n    \n匹配模式是：function-param-controllable\n匹配内容是：import_request_variables|parse_str|mb_parse_str\n以下为示例：\nassert=true\ncase如下：\nimport_request_variables('G');\nassert=true\ncase如下：\nparse_str($_SERVER['QUERY_STRING']);\nassert=true\ncase如下：\n\n            $encoded_string = $_POST['str'];\n            mb_parse_str($encoded_string, $result);"
+      },
+      {
+        "real_name": "CVI-320002",
+        "display_name": "extract导致变量覆盖漏洞",
+        "severity": "error",
+        "category": "security",
+        "rule_title": "针对漏洞——extract导致变量覆盖漏洞(针对语言：php)",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "php"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "## 安全风险\n        变量覆盖漏洞\n\n        ## 修复方案\n        在当前行通过flags修复(eg:调用extract()时使用EXTR_SKIP保证已有变量不会被覆盖)\n\n        ## 举例\n        ```php\n        \n        ```\n        构造 http://www.test.com/test.php?a=1时，会打印出true\n\n    \n匹配模式是：function-param-controllable\n匹配内容是：extract\n以下为示例：\nassert=true\ncase如下：\nextract($_GET['var']);"
+      },
+      {
+        "real_name": "CVI-350001",
+        "display_name": "unlink删除文件",
+        "severity": "error",
+        "category": "security",
+        "rule_title": "针对漏洞——unlink删除文件(针对语言：php)",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "php"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "## 安全风险\n        在使用unlink函数删除文件的时候没有考虑对该参数进行足够的过滤，导致存在多个任意文件删除的漏洞。\n\n        ## 修复方案\n        对用户输入的参数进行严格过滤(比如使用in_array设置允许的参数范围)。\n\n        ## 示例代码\n        ```php\n        f($post_submit_action == \"delete_file\"){\n            $file_name = $_POST[\"file_name\"];\n            $file = \"/home/file/\".$file_name;\n            unlink($file);\n            return;\n        }\n        ```\n        POST参数作为unlink函数的参数，当我们提交 `file_name=../../index.php`就会导致任意文件删除漏洞。\n        应该按照实际需要设置严格的参数过滤。\n    \n匹配模式是：function-param-controllable\n匹配内容是：unlink\n以下为示例：\nassert=true\ncase如下：\n\n            $file = $_POST[\"file_name\"];\n            unlink($file);\n        \nassert=false\ncase如下：\n\n            $file = \"ping.txt\";\n            unlink($file);"
+      },
+      {
+        "real_name": "CVI-355001",
+        "display_name": "DES加密模式",
+        "severity": "error",
+        "category": "security",
+        "rule_title": "针对漏洞——DES加密模式(针对语言：java)",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "## 安全风险\n        DES和DESede (3DES)存在安全问题\n\n        ## 修复方案\n        建议使用AES替换\n    \n匹配模式是：regex-only-match\n匹配内容是：Cipher....Instance\\s?\\(\\s?\\\".*DES\n以下为示例：\nassert=true\ncase如下：\n\n            Cipher c = Cipher.getInstance(\"DESede/CBC/PKCS5Padding\");\n            c.init(Cipher.ENCRYPT_MODE, k, iv);\n            byte[] cipherText = c.doFinal(plainText);\n        \nassert=false\ncase如下：\n\n            Cipher c = Cipher.getInstance(\"AES/GCM/NoPadding\");\n            c.init(Cipher.ENCRYPT_MODE, k, iv);\n            byte[] cipherText = c.doFinal(plainText);"
+      },
+      {
+        "real_name": "CVI-355002",
+        "display_name": "ECB加密模式",
+        "severity": "error",
+        "category": "security",
+        "rule_title": "针对漏洞——ECB加密模式(针对语言：java)",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "java"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "## 安全风险\n        ECB模式是不安全的\n\n        ## 修复方案\n        建议使用GCM模式\n    \n匹配模式是：regex-only-match\n匹配内容是：Cipher....Instance\\s?\\(\\s?\\\".*ECB\n以下为示例：\nassert=true\ncase如下：\n\n            Cipher c = Cipher.getInstance(\"AES/ECB/NoPadding\");\n            c.init(Cipher.ENCRYPT_MODE, k, iv);\n            byte[] cipherText = c.doFinal(plainText);\n        \nassert=false\ncase如下：\n\n            Cipher c = Cipher.getInstance(\"AES/GCM/NoPadding\");\n            c.init(Cipher.ENCRYPT_MODE, k, iv);\n            byte[] cipherText = c.doFinal(plainText);"
+      },
+      {
+        "real_name": "CVI-360001",
+        "display_name": "webshell1",
+        "severity": "error",
+        "category": "security",
+        "rule_title": "针对漏洞——webshell1(针对语言：php)",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "php"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "## 安全风险\n        代码中存在webshell\n\n        ## 修复方案\n        删除\n    \n匹配模式是：regex-only-match\n匹配内容是：\\s*\\b(include|require)(_once)?\\b[\\s\\(]*['\\\"][^\\n'\\\"]{0,100}((\\.(jpg|png|txt|jpeg|log|tmp|db|cache)|\\_(tmp|log))|((http|https|file|data|ftp)\\://.{0,25}))['\\\"][\\s\\)]*[\\r\\n;/\\*]+\n以下为示例：\nassert=true\ncase如下：\ninclude \"sss.jpg\";\nassert=true\ncase如下：\ninclude(\"sss_tmp\");\nassert=true\ncase如下：\nrequire_once \"http://www.test.com/sss.php\";"
+      },
+      {
+        "real_name": "CVI-360002",
+        "display_name": "webshell2",
+        "severity": "error",
+        "category": "security",
+        "rule_title": "针对漏洞——webshell2(针对语言：php)",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "php"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "## 安全风险\n        代码中存在webshell\n\n        ## 修复方案\n        删除\n    \n匹配模式是：regex-only-match\n匹配内容是：\\s*((array_filter|array_reduce|array_diff_ukey|array_udiff|uasort|uksort|usort)\\s*\\(+\\s*.{1,100}),\\s*(['\\\"]\\s*(eval|assert|ass\\\\x65rt|system|exec|shell_exec|passthru|popen|proc_open|pcntl_exec)\\s*['\\\"]|(base64_decode|gzinflate|gzuncompress|gzdecode|str_rot13)[\\s\\(].{1,25})\\s*\\)\n以下为示例：\nassert=true\ncase如下：\narray_filter($arr, base64_decode(\"ZXZhbA==\"));"
+      },
+      {
+        "real_name": "CVI-360003",
+        "display_name": "webshell3",
+        "severity": "error",
+        "category": "security",
+        "rule_title": "针对漏洞——webshell3(针对语言：php)",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "php"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "## 安全风险\n        代码中存在webshell\n\n        ## 修复方案\n        删除\n    \n匹配模式是：regex-only-match\n匹配内容是：\\s*\\$\\s*(\\w+)\\s*=[\\s\\(\\{]*['\\\"]\\s*(eval|assert|ass\\\\x65rt|system|exec|shell_exec|passthru|popen|proc_open|pcntl_exec|[^,;]*?\\x|[^,;]*?['\\\"]\\s*\\.\\s*['\\\"])[\\s\\S]{0,1000}(array_filter|array_reduce|array_diff_ukey|array_udiff|array_walk|uasort|uksort|usort)\\s*\\(+\\s*.{1,100},\\s*(\\$\\s*\\1\\s*\\))\n以下为示例：\nassert=true\ncase如下：\n$e = \"eval\";array_filter($arr, $e);"
+      },
+      {
+        "real_name": "CVI-360004",
+        "display_name": "webshell4",
+        "severity": "error",
+        "category": "security",
+        "rule_title": "针对漏洞——webshell4(针对语言：php)",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "php"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "## 安全风险\n        代码中存在webshell\n\n        ## 修复方案\n        删除\n    \n匹配模式是：regex-only-match\n匹配内容是：(preg_replace|preg_filter)[/*\\s]*\\(+[/*\\s]*((\\$_(GET|POST|REQUEST|COOKIE).{0,25})|[^,]{0,250}chr[\\s\\(](101|0x65|0145|\\d+)[^,]{0,25}\\s*|['\\\"]\\s*(([^\\s])[^,]{0,20}\\7['\\\"]*|[\\(\\}\\[].{0,20}[\\(\\}\\]])\\w*e\\w*['\\\"])\\s*,\\s*([^\\),]*(assert|eval|system|exec|shell_exec|passthru|popen|proc_open|pcntl_exec)|((\\$_(GET|POST|REQUEST|COOKIE).{0,25})))\n以下为示例：\nassert=true\ncase如下：\necho @preg_replace('/xx/e', $_POST[sss],axxa);"
+      },
+      {
+        "real_name": "CVI-360005",
+        "display_name": "webshell5",
+        "severity": "error",
+        "category": "security",
+        "rule_title": "针对漏洞——webshell5(针对语言：php)",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "php"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "## 安全风险\n        代码中存在webshell\n\n        ## 修复方案\n        删除\n    \n匹配模式是：regex-only-match\n匹配内容是：\\$\\s*(\\w+)\\s*=\\s*((\\$_(GET|POST|REQUEST|COOKIE).{0,25})|[^;]*chr[\\s\\(]*(101|0x65|0145|\\d+)|['\\\"](/[^/]*/|\\|[^\\|]*\\||\\'[^']*')\\w{0,5}e\\w{0,5}['\\\"])[\\s\\S]{0,1000}(preg_replace|preg_filter)[/*\\s]*\\([/*\\s]*\\$\\s*\\1.{0,30}(assert|eval|system|exec|shell_exec|passthru|popen|proc_open|pcntl_exec)\n以下为示例：\nassert=true\ncase如下：\n($e = $_POST['e']) && @preg_replace($e, \"eval\", 'hello');"
+      },
+      {
+        "real_name": "CVI-360006",
+        "display_name": "webshell6",
+        "severity": "error",
+        "category": "security",
+        "rule_title": "针对漏洞——webshell6(针对语言：php)",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "php"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "## 安全风险\n        代码中存在webshell\n\n        ## 修复方案\n        删除\n    \n匹配模式是：regex-only-match\n匹配内容是：.*\\s*\\$\\s*(\\w+)\\s*=\\s*(\\$_(GET|POST|REQUEST|COOKIE).{0,25})[\\s\\S]{0,1000}(preg_replace|preg_filter)[/*\\s]*\\(+[/*\\s]*((\\$_(GET|POST|REQUEST|COOKIE).{0,25})|[^,]{0,250}chr[\\s\\(](101|0x65|0145|\\d+)[^,]{0,25}\\s*|['\\\"]\\s*(([^\\s])[^,]{0,20}\\10|[\\(\\}\\[].{0,20}[\\(\\}\\]])\\w*e\\w*['\\\"])\\s*,([^\\)]*(assert|eval|system|exec|shell_exec|passthru|popen|proc_open|pcntl_exec)|\\s*.*\\$\\1)\n以下为示例：\nassert=true\ncase如下：\n($code = $_POST['code']) && @preg_replace('/ad/e','@'.str_rot13('riny').'($code)', 'add');"
+      },
+      {
+        "real_name": "CVI-360007",
+        "display_name": "webshell7",
+        "severity": "error",
+        "category": "security",
+        "rule_title": "针对漏洞——webshell7(针对语言：php)",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "php"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "## 安全风险\n        代码中存在webshell\n\n        ## 修复方案\n        删除\n    \n匹配模式是：regex-only-match\n匹配内容是：(array_map|call_user_func|call_user_func_array|register_shutdown_function|register_tick_function)\\s*\\(+\\s*(['\\\"]\\s*(eval|assert|ass\\\\x65rt|system|exec|shell_exec|passthru|popen|proc_open|pcntl_exec|[^'\\\"]*\\x).{0,200})\n以下为示例：\nassert=true\ncase如下：\ncall_user_func('assert', $arr);\nassert=true\ncase如下：\n@array_map(\"ass\\x65rt\", (array) @$cmd);"
+      },
+      {
+        "real_name": "CVI-360008",
+        "display_name": "webshell8",
+        "severity": "error",
+        "category": "security",
+        "rule_title": "针对漏洞——webshell8(针对语言：php)",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "php"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "## 安全风险\n        代码中存在webshell\n\n        ## 修复方案\n        删除\n    \n匹配模式是：regex-only-match\n匹配内容是：\\$\\s*(\\w+)\\s*=[\\s\\(\\{]*(['\\\"]\\s*(eval|assert|ass\\\\x65rt|system|exec|shell_exec|passthru|popen|proc_open|pcntl_exec))[\\s\\S]{0,200}\\b(array_map|call_user_func|call_user_func_array|register_shutdown_function|register_tick_function)\\b\\s*\\(+\\s*(\\$\\s*\\1|((base64_decode|gzinflate|gzuncompress|gzdecode|str_rot13)[\\s\\(]*\\$\\s*\\1))[^,;]*,[^;\\)]{0,50}\\$[^;\\)]{0,50}\\)\n以下为示例：\nassert=true\ncase如下：\n\n            $a = 'assert';\n            call_user_func($a, $arr);"
+      },
+      {
+        "real_name": "CVI-360009",
+        "display_name": "webshell9",
+        "severity": "error",
+        "category": "security",
+        "rule_title": "针对漏洞——webshell9(针对语言：php)",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "php"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "## 安全风险\n        代码中存在webshell\n\n        ## 修复方案\n        删除\n    \n匹配模式是：regex-only-match\n匹配内容是：((new\\s*SQLite3[\\s\\S]*->\\s*createFunction)\\s*\\(+\\s*.{1,100}|PDO::FETCH_FUNC\\s*),\\s*(['\\\"]\\s*(eval|assert|ass\\\\x65rt|system|exec|shell_exec|passthru|popen|proc_open|pcntl_exec)\\s*['\\\"]|(base64_decode|gzinflate|gzuncompress|gzdecode|str_rot13)[\\s\\(]+.{1,25}|(\\$_(GET|POST|REQUEST|COOKIE).{0,25}))\\s*\\)\n以下为示例：\nassert=true\ncase如下：\n\n            $db = new SQLite3('sqlite.db3');\n            $db->createFunction('myfunc', $_POST['e']);"
+      },
+      {
+        "real_name": "CVI-360010",
+        "display_name": "webshell10",
+        "severity": "error",
+        "category": "security",
+        "rule_title": "针对漏洞——webshell10(针对语言：php)",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "php"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "## 安全风险\n        代码中存在webshell\n\n        ## 修复方案\n        删除\n    \n匹配模式是：regex-only-match\n匹配内容是：\\$\\s*(\\w+)\\s*=[\\s\\(\\{]*((\\$_(GET|POST|REQUEST|COOKIE).{0,25})|['\\\"]\\s*(eval|assert|ass\\\\x65rt|system|exec|shell_exec|passthru|popen|proc_open|pcntl_exec|[^,;]*?\\x|[^,;]*?['\\\"]\\s*\\.\\s*['\\\"]))[\\s\\S]{0,1000}((new\\s*SQLite3[\\s\\S]*->\\s*createFunction)\\s*\\(+[^,]*(\\$)?[^,]*|PDO::FETCH_FUNC\\s*),\\s*(\\$\\s*\\1\\s*\\)|((base64_decode|gzinflate|gzuncompress|gzdecode|str_rot13)[\\s\\(]*\\$\\s*\\1))\n以下为示例：\nassert=true\ncase如下：\n\n            $e = $_REQUEST['e'];\n            $db = new SQLite3('sqlite.db3');\n            $db->createFunction('myfunc', $e);\n            $stmt = $db->prepare(\"SELECT myfunc(?)\");\n            $stmt->bindValue(1, $_REQUEST['pass'], SQLITE3_TEXT);\n            $stmt->execute();"
+      },
+      {
+        "real_name": "CVI-360011",
+        "display_name": "webshell11",
+        "severity": "error",
+        "category": "security",
+        "rule_title": "针对漏洞——webshell11(针对语言：php)",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "php"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "## 安全风险\n        代码中存在webshell\n\n        ## 修复方案\n        删除\n    \n匹配模式是：regex-only-match\n匹配内容是：\\$(\\w*)\\s*=\\s*create_function\\s*\\(+\\s*[^;\\n\\r\\)]{1,100},\\s*(['\\\"]\\s*[^;\\n\\r\\)]{0,100}(eval|assert|ass\\\\x65rt|system|exec|shell_exec|passthru|popen|poc_open|pcntl_exec).{1,600}\\s*['\\\"]|[^,\\n\\r\\)]{0,100}file_get_contents.{1,})\\s*\\)[\\s\\S]+\\$\\1\\s*\\([^\\)]*\\)\n以下为示例：\nassert=true\ncase如下：\n$sa = create_function('xxx', \"eval($_POST['sb']\");$sa();"
+      },
+      {
+        "real_name": "CVI-360012",
+        "display_name": "webshell12",
+        "severity": "error",
+        "category": "security",
+        "rule_title": "针对漏洞——webshell12(针对语言：php)",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "php"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "## 安全风险\n        代码中存在webshell\n\n        [webshell样例](https://github.com/tennc/webshell/blob/4ca96011884b892ec15de130f76eb2a047b77493/php/b374k/b374k-2.4.poly.php)\n\n        ## 修复方案\n        删除\n    \n匹配模式是：regex-only-match\n匹配内容是：\\$(\\w*)\\s*=\\s*@?create_function\\s*\\([^;]*;[\\s\\S]*\\$\\1\\s*\\([^\\)]*(['\\\"]\\s*[^;\\n\\r\\)]{0,100}(eval|assert|ass\\\\x65rt|system|exec|shell_exec|passthru|popen|poc_open|pcntl_exec).{1,600}\\s*['\\\"]|[^;\\n\\r]{0,100}(\\$_(GET|POST|REQUEST|COOKIE|SERVER).{1,})|[^;\\n\\r\\)]{0,100}file_get_contents.{1,})\n以下为示例：\nassert=true\ncase如下：\n\n            $func=@create_function('$x','ev'.'al'.'(gz'.'inf'.'late'.'(bas'.'e64'.'_de'.'co'.'de($x)));');\n            $func($_GET['func']);"
+      },
+      {
+        "real_name": "CVI-360013",
+        "display_name": "webshell13",
+        "severity": "error",
+        "category": "security",
+        "rule_title": "针对漏洞——webshell13(针对语言：php)",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "php"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "## 安全风险\n        代码中存在webshell\n\n        ## 修复方案\n        删除\n    \n匹配模式是：regex-only-match\n匹配内容是：\\$\\s*(\\w+)\\s*=[\\s\\(\\{]*(['\\\"]\\s*.{0,100}(eval|assert|ass\\\\x65rt|system|exec|shell_exec|passthru|popen|proc_open|pcntl_exec).{1,100}\\s*['\\\"]|file_get_contents)[\\s\\S]{0,200}create_function\\s*\\(+[^,]{1,100},['\\\"\\s]*(\\$\\s*\\1['\\\"\\s]*\\)|((base64_decode|gzinflate|gzuncompress|gzdecode|str_rot13)[\\s\\(]*\\$\\s*\\1))\n以下为示例：\nassert=true\ncase如下：\n$sa = \"eval()\"; create_function('xxx', $sa);"
+      },
+      {
+        "real_name": "CVI-360014",
+        "display_name": "webshell14",
+        "severity": "error",
+        "category": "security",
+        "rule_title": "针对漏洞——webshell14(针对语言：php)",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "php"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "## 安全风险\n        代码中存在webshell\n\n        ## 修复方案\n        删除\n    \n匹配模式是：regex-only-match\n匹配内容是：\\$\\s*(\\w+)\\s*=\\s*(['\\\"]\\s*(eval|assert|ass\\\\x65rt|system|exec|shell_exec|passthru|popen|proc_open|pcntl_exec)\\s*['\\\"]|(base64_decode|gzinflate|gzuncompress|gzdecode|str_rot13)\\s*\\()[\\s\\S]{0,200}\\s*\\$\\1\\s*\\(+[^\\)]*(\\$_(GET|POST|REQUEST|COOKIE|SERVER).{0,25})\n以下为示例：\nassert=true\ncase如下：\n$a = \"eval\";$a($_GET['a']);"
+      },
+      {
+        "real_name": "CVI-360016",
+        "display_name": "webshell16",
+        "severity": "error",
+        "category": "security",
+        "rule_title": "针对漏洞——webshell16(针对语言：php)",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "php"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "## 安全风险\n        代码中存在webshell\n\n        ## 修复方案\n        删除\n    \n匹配模式是：regex-only-match\n匹配内容是：\\b(filter_var|filter_var_array)\\b\\s*\\(.*FILTER_CALLBACK[^;]*((\\$_(GET|POST|REQUEST|COOKIE|SERVER).{0,25})|(eval|assert|ass\\\\x65rt|system|exec|shell_exec|passthru|popen|proc_open|pcntl_exec))\n以下为示例：\nassert=true\ncase如下：\nfilter_var($_REQUEST['pass'], FILTER_CALLBACK, array('options' => 'assert'));\nassert=true\ncase如下：\nfilter_var_array(array('test' => $_REQUEST['pass']), array('test' => array('filter' => FILTER_CALLBACK, 'options' => 'assert')));"
+      },
+      {
+        "real_name": "CVI-360017",
+        "display_name": "webshell17",
+        "severity": "error",
+        "category": "security",
+        "rule_title": "针对漏洞——webshell17(针对语言：php)",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "php"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "## 安全风险\n        代码中存在webshell\n\n        ## 修复方案\n        删除\n    \n匹配模式是：regex-only-match\n匹配内容是：\\$\\s*(\\w+)\\s*=\\s*((\\$_(GET|POST|REQUEST|COOKIE|SERVER).{0,25})|.*['\\\"]\\s*(eval|assert|ass\\\\x65rt|system|exec|shell_exec|passthru|popen|proc_open|pcntl_exec)\\s*['\\\"]|(base64_decode|gzinflate|gzuncompress|gzdecode|str_rot13)\\s*\\()[\\s\\S]{0,200}\\b(filter_var|filter_var_array)\\s*\\(.*FILTER_CALLBACK[^;]*\\$\\1\n以下为示例：\nassert=true\ncase如下：\n\n            $op=array('options' => 'assert');\n            filter_var($_REQUEST['pass'], FILTER_CALLBACK, $op);"
+      },
+      {
+        "real_name": "CVI-360018",
+        "display_name": "webshell18",
+        "severity": "error",
+        "category": "security",
+        "rule_title": "针对漏洞——webshell18(针对语言：php)",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "php"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "## 安全风险\n        代码中存在webshell\n\n        ## 修复方案\n        删除\n    \n匹配模式是：regex-only-match\n匹配内容是：\\s*(mb_ereg_replace|mb_eregi_replace)\\s*\\((.*,){3}\\s*(['\\\"][^,\\\"'\\)]*e[^,\\\"'\\)]*['\\\"]|.*(\\$_(GET|POST|REQUEST|COOKIE|SERVER).{0,25}).*|chr\\s*\\(\\s*101|chr\\s*\\(\\s*0x65|chr\\s*\\(\\s*0145)\\s*\\)\n以下为示例：\nassert=true\ncase如下：\nmb_ereg_replace('.*', $_REQUEST['op'], '', 'e');"
+      },
+      {
+        "real_name": "CVI-360019",
+        "display_name": "webshell19",
+        "severity": "error",
+        "category": "security",
+        "rule_title": "针对漏洞——webshell19(针对语言：php)",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "php"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "## 安全风险\n        代码中存在webshell\n\n        ## 修复方案\n        删除\n    \n匹配模式是：regex-only-match\n匹配内容是：\\$\\s*(\\w+)\\s*=\\s*((\\$_(GET|POST|REQUEST|COOKIE|SERVER).{3,25})|['\\\"][^;]*e|[^;]*chr[\\s\\(]*(101|0x65|0145))[\\s\\S]{0,200}\\b(mb_ereg_replace|mb_eregi_replace)\\s*\\((.*,){3}\\s*\\$\\1\n以下为示例：\nassert=true\ncase如下：\n\n            $e = \"\\ise\";\n            $data = mb_ereg_replace(\"/[^A-Za-z0-9\\.\\-]/\",\"\",$data,$e);"
+      },
+      {
+        "real_name": "CVI-360020",
+        "display_name": "webshell20",
+        "severity": "error",
+        "category": "security",
+        "rule_title": "针对漏洞——webshell20(针对语言：php)",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "php"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "## 安全风险\n        代码中存在webshell\n\n        ## 修复方案\n        删除\n    \n匹配模式是：regex-only-match\n匹配内容是：array_walk(_recursive)?\\s*\\([^;,]*,\\s*(['\\\"]\\s*(eval|assert|ass\\\\x65rt|system|exec|shell_exec|passthru|popen|proc_open|pcntl_exec|preg_replace)|(base64_decode|gzinflate|gzuncompress|gzdecode|str_rot13)[\\s\\(]*\\s*['\\\"])\n以下为示例：\nassert=true\ncase如下：\narray_walk($array, \"eval\");\nassert=true\ncase如下：\narray_walk(xxx,base64_decode(\"ZXZhbA==\");"
+      },
+      {
+        "real_name": "CVI-360021",
+        "display_name": "webshell21",
+        "severity": "error",
+        "category": "security",
+        "rule_title": "针对漏洞——webshell21(针对语言：php)",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "php"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "## 安全风险\n        代码中存在webshell\n\n        ## 修复方案\n        删除\n    \n匹配模式是：regex-only-match\n匹配内容是：\\$\\s*(\\w+)\\s*=\\s*(['\\\"]\\s*(eval|assert|ass\\\\x65rt|system|exec|shell_exec|passthru|popen|proc_open|pcntl_exec|preg_replace)|\\w*)[\\s\\S]{0,200}array_walk(_recursive)?\\s*\\([^;,]*,\\s*(\\$\\s*\\1|((base64_decode|gzinflate|gzuncompress|gzdecode|str_rot13)[\\s\\(]*\\$\\s*\\1))\n以下为示例：\nassert=true\ncase如下：\n$a = \"ZXZhbA==\";array_walk($array, base64_decode($a));"
+      },
+      {
+        "real_name": "CVI-360022",
+        "display_name": "webshell22",
+        "severity": "error",
+        "category": "security",
+        "rule_title": "针对漏洞——webshell22(针对语言：php)",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "php"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "## 安全风险\n        代码中存在webshell\n\n        ## 修复方案\n        删除\n    \n匹配模式是：regex-only-match\n匹配内容是：\\s*(assert|eval|system|exec|shell_exec|passthru|popen|proc_open|pcntl_exec|include)\\s*\\(\\s*(file_get_contents\\s*\\(\\s*)?['\\\"]php://input\n以下为示例：\nassert=true\ncase如下：\n\n            ini_set('allow_url_include, 1');\n            include('php://input');"
+      },
+      {
+        "real_name": "CVI-360026",
+        "display_name": "webshell26",
+        "severity": "error",
+        "category": "security",
+        "rule_title": "针对漏洞——webshell26(针对语言：php)",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "php"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "## 安全风险\n        代码中存在webshell\n\n        ## 修复方案\n        删除\n    \n匹配模式是：regex-only-match\n匹配内容是：ob_start\\s*\\(+\\s*(['\\\"]\\s*(eval|assert|ass\\\\x65rt|system|exec|shell_exec|passthru|popen|proc_open|pcntl_exec).{0,20}|['\\\"]\\s*\\w+[\\s\\S]{1,50}phpinfo\\s*\\(\\s*\\))\n以下为示例：\nassert=true\ncase如下：\n\n            $cb= 'system';\n            ob_start($cb);\n            echo $_GET[c];\n            ob_end_flush();\n        \nassert=true\ncase如下：\n\n            $evalstr=\"\";\n            ob_start(function ($c,$d){global $evalstr;$evalstr=$c;});\n            echo $_REQUEST['pass'];\n            ob_end_flush();\n            assert($evalstr);\n        \nassert=true\ncase如下：\n\n            ob_start(function ($c,$d){register_shutdown_function('assert',$c);});\n            echo $_REQUEST['pass'];\n            ob_end_flush();"
+      },
+      {
+        "real_name": "CVI-360027",
+        "display_name": "webshell27",
+        "severity": "error",
+        "category": "security",
+        "rule_title": "针对漏洞——webshell27(针对语言：php)",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "php"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "## 安全风险\n        代码中存在webshell\n\n        ## 修复方案\n        删除\n    \n匹配模式是：regex-only-match\n匹配内容是：\\b(assert|eval|system|exec|shell_exec|passthru|popen|proc_open|pcntl_exec)\\b\\s*\\(((\\$_SERVER|\\$_ENV|getenv|\\$GLOBALS)\\s*[\\[\\(]\\s*['\\\"]+(REQUEST_URI|QUERY_STRING|HTTP_[\\w_]+|REMOTE_[\\w_])['\\\"\\s]+\\s*[\\]\\)]|php://input|exif_read_data\\s*\\()\n以下为示例：\nassert=true\ncase如下：\nassert($_SERVER[\"REQUEST_URI\"]);\nassert=true\ncase如下：\neval(getenv('HTTP_CODE'));"
+      },
+      {
+        "real_name": "CVI-360028",
+        "display_name": "webshell28",
+        "severity": "error",
+        "category": "security",
+        "rule_title": "针对漏洞——webshell28(针对语言：php)",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "php"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "## 安全风险\n        代码中存在webshell\n\n        ## 修复方案\n        删除\n    \n匹配模式是：regex-only-match\n匹配内容是：eval\\(\\\"\\?>\\\"\\.|gzinflate\\(base64_decode\\(|eval\\(base64_decode\\(|cat\\s*/etc/passwd|Safe_Mode\\s*Bypass\n以下为示例：\nassert=true\ncase如下：\neval(base64_decode(ZXZhbChiYXNlNjRfZGVjb2RlKFpYWmhiQ2hpWVhObE5qUmZaR1ZqYjJSbEtFeDVPRGhRTTBKdlkwRndiR1J0Um5OTFExSm1WVVU1VkZaR2RHdGlNamw1V0ZOclMweDVPQzVqYUhJb05EY3BMbEJuS1NrNykpOw));\nassert=true\ncase如下：\n\n            eval(gzinflate(base64_decode('s7ezsS/IKFBwSC1LzNFQiQ/wDw6JVlcpL9a1CyrNU4/VtE7OyM1PUQBKBbsGhbkGRSsFOwd5BoTEu3n6uPo5+roqxeoYmJiYaFrbA40CAA==')));"
+      },
+      {
+        "real_name": "CVI-360029",
+        "display_name": "webshell29",
+        "severity": "error",
+        "category": "security",
+        "rule_title": "针对漏洞——webshell29(针对语言：php)",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "php"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "## 安全风险\n        代码中存在webshell\n\n        特征 `$bind_pl=\"IyEvdXNyL2Jpbi9lbnYgcGV` 对应webshell样例\n        [link](https://github.com/tennc/webshell/blob/4ca96011884b892ec15de130f76eb2a047b77493/web-malware-collection-13-06-2012/PHP/knullsh.txt)\n\n        特征 `python_eval(\"import os\\nos.system(` 对应webshell样例\n        [link](https://github.com/tennc/webshell/blob/4ca96011884b892ec15de130f76eb2a047b77493/web-malware-collection-13-06-2012/PHP/bdotw44shell.txt)\n\n        ## 修复方案\n        删除\n    \n匹配模式是：regex-only-match\n匹配内容是：\\$_\\[\\$_|\\${\\\"_P\\\"\\.|a(.)s\\1s\\1e\\1r\\1t|'e'\\.'v'\\.'a'\\.'l|687474703a2f2f626c616b696e2e64756170702e636f6d2f7631|python_eval\\(\\\"import os\\\\nos.system\\(|\\$bind_pl\\s*=\\s*\\\"IyEvdXNyL2Jpbi9lbnYgcGV|phpsocks5_encrypt\\s*\\(|eNrs/Vmv41iWJgq+ZwH1H7wdAWRksypJihRF3kQ0mvMsihTnuoUA53meeVG/valj5mbuHpF9b6P7se\n以下为示例：\nassert=true\ncase如下：\n\n            $bind_pl = \"IyEvdXNyL2Jpbi9lbnYgcGVybA0KJFNIRUxMPSIvYmluL2Jhc2ggLWkiOw0KaWYgKEBBUkdWIDwg...\";\n        \nassert=true\ncase如下：\n$result = python_eval(\"import os\\nos.system('$cmd')\");"
+      },
+      {
+        "real_name": "CVI-360030",
+        "display_name": "webshell30",
+        "severity": "error",
+        "category": "security",
+        "rule_title": "针对漏洞——webshell30(针对语言：php)",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "php"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "## 安全风险\n        代码中存在webshell\n\n        特征 `$back_connect=\"IyEvdXNyL2Jpbi9wZXJsDQp1c2UgU2` 对应webshell样例\n        [link](https://github.com/tennc/webshell/blob/4ca96011884b892ec15de130f76eb2a047b77493/138shell/N/NIX%20REMOTE%20WEB-SHELL%20v.0.5%20alpha%20Lite%20Public%20Version.txt)\n\n        ## 修复方案\n        删除\n    \n匹配模式是：regex-only-match\n匹配内容是：preg_replace\\s*\\(\\s*['\\\"][^;]*e[^;]*['\\\"],([^;]{0,30}\\x|[^;\\)]{200,300})|\\$back_connect=\\\"IyEvdXNyL2Jpbi9wZXJsDQp1c2UgU2|define\\('gzip',function_exists\\(\\\"ob_gzhandler\\\"\\)|chr\\(112\\)\\.chr\\(97\\)\\.chr\\(115\\)\\.chr\\(115\\)|687474703a2f2f377368656c\n以下为示例：\nassert=true\ncase如下：\n\n           $back_connect=\"IyEvdXNyL2Jpbi9wZXJsDQp1c2UgU2...\";"
+      },
+      {
+        "real_name": "CVI-360031",
+        "display_name": "webshell31",
+        "severity": "error",
+        "category": "security",
+        "rule_title": "针对漏洞——webshell31(针对语言：php)",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "php"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "## 安全风险\n        代码中存在webshell\n\n        特征 `gzuncompress\\(base64_decode` 对应webshell样例\n        [link](https://github.com/tennc/webshell/blob/4ca96011884b892ec15de130f76eb2a047b77493/php/BNKQbAKQ.txt)\n\n        ## 修复方案\n        删除\n    \n匹配模式是：regex-only-match\n匹配内容是：ini_get\\s*\\(\\s*\\\"disable_functions\\\"\\s*\\)|gzuncompress\\(base64_decode\\(|crypt\\(\\$_SERVER\\['HTTP_H0ST'\\],\\d+\\)==|if\\(file_exists\\(\\$settings\\['STOPFILE'\\]\\)\\)\n以下为示例：\nassert=true\ncase如下：\n\n            function zWM($NXlKO){\n                $NXlKO=gzuncompress(base64_decode($NXlKO));\n                for($i=0;$i<strlen($NXlKO);$i++){\n                    $NXlKO[$i] = chr(ord($NXlKO[$i])-1);\n                }\n                return $NXlKO;\n            }\n        \nassert=false\ncase如下：\n\n            $descriptorspec = array(\n\t\t\t0 => array(\"pipe\", \"r\"),  // stdin\n\t\t\t1 => array(\"pipe\", \"w\"),  // stdout\n\t\t\t2 => array(\"pipe\", \"w\")   // stderr\n\t\t\t)"
+      },
+      {
+        "real_name": "CVI-360032",
+        "display_name": "webshell32",
+        "severity": "error",
+        "category": "security",
+        "rule_title": "针对漏洞——webshell32(针对语言：php)",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "php"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "## 安全风险\n        代码中存在webshell\n\n        特征 `dQ99shell` 对应webshell样例\n        [link](https://github.com/tennc/webshell/blob/4ca96011884b892ec15de130f76eb2a047b77493/www-7jyewu-cn/%E5%9B%BD%E5%A4%96%E5%85%8D%E6%9D%80PHP%E5%A4%A7%E9%A9%AC_%E6%9C%AA%E7%BF%BB%E8%AF%91.php)\n\n        特征 `c999shexit` 对应webshell样例\n        [link](https://github.com/tennc/webshell/blob/4ca96011884b892ec15de130f76eb2a047b77493/web-malware-collection-13-06-2012/PHP/c99-bd.txt)\n\n        ## 修复方案\n        删除\n    \n匹配模式是：regex-only-match\n匹配内容是：\\$nofuncs='no\\s*exec\\s*functions|udf\\.dll|\\$b374k|POWER-BY\\s*WWW.XXDDOS.COM|<title>Safes\\s*Mode\\s*Shell</title>|Siyanur\\.PHP\\s*</font>|c999shexit\\(\\)|\\$c99sh_|c99_sess_put\\(|Coded\\s*by\\s*cyb3r|cyb3r_getupdate\\(|coded\\s*by\\s*tjomi4|john\\.barker446@gmail\\.com|eval\\(\\\"\\\\\\$x=gzin\\\"|eval\\(\\\"\\?>\\\"\\.gzinflate\\(base64_decode\\(|eval\\(gzinflate\\(base64_decode\\(|eval\\(gzuncompress\\(base64_decode\\(|eval\\(gzinflate\\(str_rot13\\(base64_decode\\(|function_exists\\(\\\"zigetwar_buff_prepare\\\"\\)|dQ99shell|r57shell|c99shell|lama's'hell\\s*v|Carbylamine\\s*PHP\\s*Encoder|Safe\\s*Mode\\s*Shell|\\$dI3h=\\${'_REQUEST'};|new\\s*COM\\(\\\"IIS://localhost/w3svc\\\"\\)|n57http-based\\[\\s*-\\]terminal|Dosya\\s*Olu|errorlog\\(\\\"BACKEND:\\s*startReDuh,|form\\s*name=sh311Form|PHPJackal<br>|Reddragonfly's\\s*WebShell|\\(\\\"system\\\"==\\$seletefunc\\)\\?system\\(\\$shellcmd\\)|eNrsvGmT40iSKPZ5xmz|CrystalShell\\s*v\\.|Special\\s*99\\s*Shell|Simple\\s*PHP\\s*Mysql\\s*client|'_de'\\.'code'|phpsocks5_encrypt\\(|define\\('PHPSHELL_VERSION',|ZXZhbCgkX1BPU1RbMV0p|\\$__H_H\\(\\$__C_C\"\n以下为示例：\nassert=true\ncase如下：\n\n            <div class=bartitle><h4>'.sh_name().'</h4>.: r57.biz Dq99Shell :.</div>"
+      },
+      {
+        "real_name": "CVI-360033",
+        "display_name": "webshell33",
+        "severity": "error",
+        "category": "security",
+        "rule_title": "针对漏洞——webshell33(针对语言：php)",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "php"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "## 安全风险\n        代码中存在webshell\n\n        特征 `setcookie(\"N3tsh_surl\");` 对应webshell样例\n        [link](https://github.com/tennc/webshell/blob/e2fd7eed0ca27430af65862bdcefd4bc268805f2/web-malware-collection-13-06-2012/PHP/c99.txt)\n\n        特征 `function Tihuan_Auto`  对应webshell样例\n        [link](https://github.com/tennc/webshell/blob/4ca96011884b892ec15de130f76eb2a047b77493/php/ghost_source.php)\n\n        特征 `http://www.7jyewu.cn/`  对应webshell样例\n        [link](https://github.com/tennc/webshell/blob/4ca96011884b892ec15de130f76eb2a047b77493/www-7jyewu-cn/DOC_ZIBSZXBIEG.php)\n\n        ## 修复方案\n        删除\n    \n匹配模式是：regex-only-match\n匹配内容是：PD9waHANCiRzX3ZlciA9ICIxLjAiOw0KJHNfdGl0bGUgPSAiWG5vbnltb3V4IFNoZWxsIC|GFnyF4lgiGXW2N7BNyL5EEyQA42LdZtao2S9f|IyEvdXNyL2Jpbi9wZXJsDQokU0hFTEw9Ii9iaW4vYmFzaCAtaSI7|setcookie\\(\\\"N3tsh_surl\\\"\\);|function\\s*Tihuan_Auto|\\$_COOKIE\\['b374k'\\]|function_exists\\(\\\"k1r4_sess_put\\\"\\)|http://www.7jyewu.cn/|scookie\\('phpspypass|PHVayv.php\\?duzkaydet=|phpRemoteView</a>|define\\('envlpass',|KingDefacer_getupdate\\(|relative2absolute\\(|Host:\\s*old.zone-h.org|<h3>PHPKonsole</h3>|\\$_SESSION\\['hassubdirs'\\]\\[\\$treeroot\\]|strtolower\\(\\$cmd\\)\\s*==\\s*\\\"canirun\\\"|\\$shell\\s*=\\s*'uname\\s*-a;\\s*w;\\s*id;|Avrasya\\s*Veri\\s*ve\\s*NetWork|<h1>Linux Shells</h1>|\\$MyShellVersion\\s*=\\s*\\\"MyShell|<a\\s*href=\\\"http://ihacklog.com/\\\"|setcookie\\(\\s*\\\"mysql_web_admin_username\\\"\\s*\\)|<title>PHP\\s*Shell\\s*[^\\n\\r]*</title>|\\$OOO000000=urldecode|1MSSYowqjzlVVAwAoHHFXzQ5Lc|'xiaoqiwangluo'|EqQC1FhyXxpEi7l2g\\+yNjW62S|\\$_uU\\(83\\)\\.\\$_uU\\(84\\)|7kyJ7kSKioDTWVWeRB3TiciL1UjcmRiLn4SKiAETs90cuZlTz5mROtHWHdWfRt0ZupmVRNTU2Y2MVZkT8|<title>\\s*ARS\\s*Terminator\\s*Shell</title>|base64_decode\\(\\\"R0lGODdhEgASAKEAAO7u7gAAAJmZmQAAACwAAA|\\\\x50\\\\x4b\\\\x03\\\\x04\\\\x0a\\\\x00\\\\x00\\\\x00\\\\x00|'<title>W3D\\s*Shell\n以下为示例：\nassert=true\ncase如下：\n\n            $shver = \"Emp3ror Undetectable #18\"; //Current version\n            //CONFIGURATION AND SETTINGS\n            if (!empty($unset_surl)) {setcookie(\"N3tsh_surl\"); $surl = \"\";}\n            elseif (!empty($set_surl)) {$surl = $set_surl; setcookie(\"N3tsh_surl\",$surl);}\n            else {$surl = $_REQUEST[\"N3tsh_surl\"]; //Set this cookie for manual SURL\n            }\n        \nassert=true\ncase如下：\n\n            function Tihuan_Auto($tp,$tt,$th,$tca,$tcb,$td,$tb)\n            {\n                if(($h_d = @opendir($tp)) == NULL) return false;\n                while(false !== ($Filename = @readdir($h_d)))\n                ....\n             }"
+      },
+      {
+        "real_name": "CVI-360034",
+        "display_name": "webshell34",
+        "severity": "error",
+        "category": "security",
+        "rule_title": "针对漏洞——webshell34(针对语言：php)",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "php"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "## 安全风险\n        代码中存在webshell\n\n        ## 修复方案\n        删除\n    \n匹配模式是：regex-only-match\n匹配内容是：\\$(\\w+)[\\s]*\\=[\\s]*\\$_(?:POST|GET|REQUEST|COOKIE|SERVER).{0,25}[\\s\\S]*\\$(?:\\1\\(\\s*\\$_(?:POST|GET|REQUEST|COOKIE|SERVER).{0,25}\\s*\\)|(\\w+)\\s*\\=\\s*\\$_(?:POST|GET|REQUEST|COOKIE|SERVER).{0,25}[\\s\\S]*\\$(\\1\\(\\s*\\$\\2|\\2\\(\\s*\\$\\1)\\s*\\)|_(?:POST|GET|REQUEST|COOKIE|SERVER).{0,25}\\(\\s*\\$\\1\\s*\\))|\\$_(?:POST|GET|REQUEST|COOKIE|SERVER)\\[(['\\\"]\\w+['\\\"]|\\d+)\\]\\(\\s*\\$_(?:POST|GET|REQUEST|COOKIE|SERVER)\\[(['\\\"]\\w+['\\\"]|\\d+)\\]\\s*\n以下为示例：\nassert=true\ncase如下：\n$_POST['sa']($_POST['sb']);\nassert=true\ncase如下：\n$_POST['sa']($_POST['sb'],$_POST['sc']);\nassert=true\ncase如下：\n\n            $sa = $_POST['sa'];\n            $sa($_POST['sb']);\n        \nassert=true\ncase如下：\n\n            $sa = $_POST['sa'];\n            $sb = $_POST['sb'];\n            $sa($sb);\n        \nassert=true\ncase如下：\n\n            $sa = $_POST['sa'];\n            $_POST($sa );"
+      },
+      {
+        "real_name": "CVI-360035",
+        "display_name": "webshell35",
+        "severity": "error",
+        "category": "security",
+        "rule_title": "针对漏洞——webshell35(针对语言：php)",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "php"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "## 安全风险\n        代码中存在webshell\n        [webshell样例](https://github.com/tennc/webshell/blob/master/php/p2j/PHP%20reflection.php.txt)\n\n        ## 修复方案\n        删除\n    \n匹配模式是：regex-only-match\n匹配内容是：(new\\s*ReflectionFunction|new\\s*ArrayObject[\\s\\S]*->u[ak]sort)\\s*\\(+\\s*(['\\\"]\\s*(eval|assert|ass\\\\x65rt|system|exec|shell_exec|passthru|popen|proc_open|pcntl_exec|[^'\\\"]*\\x).{0,200}|(\\$_(GET|POST|REQUEST|COOKIE)\\[[^,;\\)]{0,250}\\)))\n以下为示例：\nassert=true\ncase如下：\n\n            $arr = new ArrayObject(array('test', $_REQUEST['pass']));\n            $arr->uasort('assert');\n        \nassert=true\ncase如下：\n\n            $arr = new ArrayObject(array('test' => 1, $_REQUEST['pass'] => 2));\n            $arr->uksort('assert');\n        \nassert=true\ncase如下：\n\n            $func = new ReflectionFunction(\"system\");\n            echo $func->invokeArgs(array(\"$_GET[c]\"));\n        \nassert=true\ncase如下：\n\n            $func = new ReflectionFunction($_GET[m]);\n            echo $func->invokeArgs(array($_GET[c],$_GET[id]));"
+      },
+      {
+        "real_name": "CVI-360036",
+        "display_name": "webshell36",
+        "severity": "error",
+        "category": "security",
+        "rule_title": "针对漏洞——webshell36(针对语言：php)",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "php"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "## 安全风险\n        代码中存在webshell\n\n        ## 修复方案\n        删除\n    \n匹配模式是：regex-only-match\n匹配内容是：\\$\\s*(\\w+)\\s*=[\\s\\(\\{]*((\\$_(GET|POST|REQUEST|COOKIE|SERVER).{0,25})|['\\\"]\\s*(eval|assert|ass\\\\x65rt|system|exec|shell_exec|passthru|popen|proc_open|pcntl_exec))[\\s\\S]{0,200}\\b(new\\s*ReflectionFunction|new\\s*ArrayObject[\\s\\S]*->u[ak]sort)\\b\\s*\\(+\\s*(\\$\\s*\\1|((base64_decode|gzinflate|gzuncompress|gzdecode|str_rot13)[\\s\\(]*\\$\\s*\\1))\n以下为示例：\nassert=true\ncase如下：\n\n            $a = 'assert';\n            $arr = new ArrayObject(array('test', $_REQUEST['pass']));\n            $arr->uasort($a);"
+      },
+      {
+        "real_name": "CVI-360037",
+        "display_name": "webshell2",
+        "severity": "error",
+        "category": "security",
+        "rule_title": "针对漏洞——webshell2(针对语言：php)",
+        "rule_params": null,
+        "custom": false,
+        "languages": [
+          "php"
+        ],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "## 安全风险\n        代码中存在webshell\n\n        ## 修复方案\n        删除\n    \n匹配模式是：regex-only-match\n匹配内容是：\\s*\\$\\s*(\\w+)\\s*=[\\s\\(]*['\\\"](([^\\n'\\\"]{1,1000}(\\.(jpg|png|txt|jpeg|log|tmp|db|cache)|\\_(tmp|log)))|((http|https|file|php|data|ftp)\\://.{0,100}))[\\s\\S]{0,1000}(include|require)(_once)?[\\s\\(]\\$\\1\n以下为示例：\nassert=true\ncase如下：\n\n            $a=\"http://www.test.com/sss.php\";\n            require_once $a;"
+      },
+      {
+        "real_name": "CVI-999XXX",
+        "display_name": "引用了存在漏洞的三方组件",
+        "severity": "error",
+        "category": "security",
+        "rule_title": "针对漏洞——引用了存在漏洞的三方组件（注意：该类规则默认扫描，无需添加到规则列表中）",
+        "rule_params": null,
+        "custom": false,
+        "languages": [],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "三方依赖存在漏洞，并会展示漏洞编号。\n        ## 安全风险\n        \n        ## 安全修复\n        请根据对应厂商公告，及时更新三方依赖至安全版本\n    \n匹配模式是：Dependencies Matched(依赖匹配)"
+      },
+      {
+        "real_name": "硬编码IP",
+        "display_name": "硬编码IP",
+        "severity": "info",
+        "category": "security",
+        "rule_title": null,
+        "rule_params": null,
+        "custom": false,
+        "languages": [],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "扫描代码中的硬编码IP, 通用规则。"
+      },
+      {
+        "real_name": "硬编码Token/Key",
+        "display_name": "硬编码Token/Key",
+        "severity": "info",
+        "category": "security",
+        "rule_title": null,
+        "rule_params": null,
+        "custom": false,
+        "languages": [],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "扫描代码中的硬编码Token/Key, 通用规则。"
+      },
+      {
+        "real_name": "配置型硬编码密码1",
+        "display_name": "配置型硬编码密码1",
+        "severity": "info",
+        "category": "security",
+        "rule_title": null,
+        "rule_params": null,
+        "custom": false,
+        "languages": [],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "扫描代码中的硬编码密码, 通用规则。"
+      }
+    ]
+  }
+]

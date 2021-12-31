@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="18px" height="18px" viewBox="0 0 18 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 60.1 (88133) - https://sketch.com -->
+    <title>Content / CI / Status / Pass</title>
+    <desc>Created with Sketch.</desc>
+    <g id="代码分析-" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="1-4-扫描任务" transform="translate(-894.000000, -264.000000)">
+            <g id="编组" transform="translate(250.000000, 169.000000)">
+                <g id="编组-14" transform="translate(0.000000, 42.000000)">
+                    <g id="编组-13" transform="translate(0.002639, 40.000000)">
+                        <g id="编组-4">
+                            <g id="Content-/-CI-/-Status-/-Aborted" transform="translate(644.000000, 13.000000)">
+                                <circle id="Oval" fill="#C3CAD5" cx="9" cy="9" r="9"></circle>
+                                <path d="M12.9374797,8.57813673 C13.1152137,8.57813673 13.2690219,8.64307809 13.3989043,8.77296049 C13.5287867,8.90284289 13.5937281,9.05665111 13.5937281,9.23438517 L13.5937281,9.89063361 C13.5937281,10.0683677 13.5287867,10.2221759 13.3989043,10.3520583 C13.2690219,10.4819407 13.1152137,10.546882 12.9374797,10.546882 L5.06249844,10.546882 C4.88476438,10.546882 4.73095615,10.4819407 4.60107375,10.3520583 C4.47119136,10.2221759 4.40625,10.0683677 4.40625,9.89063361 L4.40625,9.23438517 C4.40625,9.05665111 4.47119136,8.90284289 4.60107375,8.77296049 C4.73095615,8.64307809 4.88476438,8.57813673 5.06249844,8.57813673 L12.9374797,8.57813673 Z" id="minus" fill="#FFFFFF"></path>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

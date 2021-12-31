@@ -1,0 +1,558 @@
+[
+  {
+    "name": "【Python】推荐规则包",
+    "description": "Python官方推荐规则包",
+    "revision": null,
+    "package_type": "official",
+    "languages": [
+      "python"
+    ],
+    "labels": [
+      "推荐"
+    ],
+    "checkrule_set": [
+      {
+        "checktool": "pylint",
+        "checkrule": "assigning-non-slot",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "assigning-non-slot",
+        "checktool_display_name": "PyLint"
+      },
+      {
+        "checktool": "pylint",
+        "checkrule": "assignment-from-none",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "assignment-from-none",
+        "checktool_display_name": "PyLint"
+      },
+      {
+        "checktool": "pylint",
+        "checkrule": "assignment-from-no-return",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "assignment-from-no-return",
+        "checktool_display_name": "PyLint"
+      },
+      {
+        "checktool": "pylint",
+        "checkrule": "bad-except-order",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "bad-except-order",
+        "checktool_display_name": "PyLint"
+      },
+      {
+        "checktool": "pylint",
+        "checkrule": "bad-reversed-sequence",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "bad-reversed-sequence",
+        "checktool_display_name": "PyLint"
+      },
+      {
+        "checktool": "pylint",
+        "checkrule": "bad-str-strip-call",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "bad-str-strip-call",
+        "checktool_display_name": "PyLint"
+      },
+      {
+        "checktool": "pylint",
+        "checkrule": "bad-super-call",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "bad-super-call",
+        "checktool_display_name": "PyLint"
+      },
+      {
+        "checktool": "pylint",
+        "checkrule": "duplicate-argument-name",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "duplicate-argument-name",
+        "checktool_display_name": "PyLint"
+      },
+      {
+        "checktool": "pylint",
+        "checkrule": "duplicate-bases",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "duplicate-bases",
+        "checktool_display_name": "PyLint"
+      },
+      {
+        "checktool": "pylint",
+        "checkrule": "duplicate-except",
+        "severity": "warning",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "convention",
+        "checkrule_display_name": "duplicate-except",
+        "checktool_display_name": "PyLint"
+      },
+      {
+        "checktool": "pylint",
+        "checkrule": "duplicate-key",
+        "severity": "warning",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "convention",
+        "checkrule_display_name": "duplicate-key",
+        "checktool_display_name": "PyLint"
+      },
+      {
+        "checktool": "pylint",
+        "checkrule": "fatal",
+        "severity": "fatal",
+        "rule_params": "",
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "fatal",
+        "checktool_display_name": "PyLint"
+      },
+      {
+        "checktool": "pylint",
+        "checkrule": "format-needs-mapping",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "format-needs-mapping",
+        "checktool_display_name": "PyLint"
+      },
+      {
+        "checktool": "pylint",
+        "checkrule": "function-redefined",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "function-redefined",
+        "checktool_display_name": "PyLint"
+      },
+      {
+        "checktool": "pylint",
+        "checkrule": "global-variable-not-assigned",
+        "severity": "warning",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "convention",
+        "checkrule_display_name": "global-variable-not-assigned",
+        "checktool_display_name": "PyLint"
+      },
+      {
+        "checktool": "pylint",
+        "checkrule": "global-variable-undefined",
+        "severity": "warning",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "convention",
+        "checkrule_display_name": "global-variable-undefined",
+        "checktool_display_name": "PyLint"
+      },
+      {
+        "checktool": "pylint",
+        "checkrule": "import-star-module-level",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "import-star-module-level",
+        "checktool_display_name": "PyLint"
+      },
+      {
+        "checktool": "pylint",
+        "checkrule": "inconsistent-mro",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "inconsistent-mro",
+        "checktool_display_name": "PyLint"
+      },
+      {
+        "checktool": "pylint",
+        "checkrule": "inherit-non-class",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "inherit-non-class",
+        "checktool_display_name": "PyLint"
+      },
+      {
+        "checktool": "pylint",
+        "checkrule": "init-is-generator",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "init-is-generator",
+        "checktool_display_name": "PyLint"
+      },
+      {
+        "checktool": "pylint",
+        "checkrule": "interface-not-implemented",
+        "severity": "error",
+        "rule_params": "",
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "interface-not-implemented",
+        "checktool_display_name": "PyLint"
+      },
+      {
+        "checktool": "pylint",
+        "checkrule": "invalid-all-object",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "invalid-all-object",
+        "checktool_display_name": "PyLint"
+      },
+      {
+        "checktool": "pylint",
+        "checkrule": "invalid-sequence-index",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "invalid-sequence-index",
+        "checktool_display_name": "PyLint"
+      },
+      {
+        "checktool": "pylint",
+        "checkrule": "invalid-slice-index",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "invalid-slice-index",
+        "checktool_display_name": "PyLint"
+      },
+      {
+        "checktool": "pylint",
+        "checkrule": "invalid-slots",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "invalid-slots",
+        "checktool_display_name": "PyLint"
+      },
+      {
+        "checktool": "pylint",
+        "checkrule": "invalid-slots-object",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "invalid-slots-object",
+        "checktool_display_name": "PyLint"
+      },
+      {
+        "checktool": "pylint",
+        "checkrule": "logging-format-truncated",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "logging-format-truncated",
+        "checktool_display_name": "PyLint"
+      },
+      {
+        "checktool": "pylint",
+        "checkrule": "logging-unsupported-format",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "logging-unsupported-format",
+        "checktool_display_name": "PyLint"
+      },
+      {
+        "checktool": "pylint",
+        "checkrule": "method-check-failed",
+        "severity": "fatal",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "method-check-failed",
+        "checktool_display_name": "PyLint"
+      },
+      {
+        "checktool": "pylint",
+        "checkrule": "method-hidden",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "method-hidden",
+        "checktool_display_name": "PyLint"
+      },
+      {
+        "checktool": "pylint",
+        "checkrule": "missing-format-string-key",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "missing-format-string-key",
+        "checktool_display_name": "PyLint"
+      },
+      {
+        "checktool": "pylint",
+        "checkrule": "missing-super-argument",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "missing-super-argument",
+        "checktool_display_name": "PyLint"
+      },
+      {
+        "checktool": "pylint",
+        "checkrule": "mixed-format-string",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "mixed-format-string",
+        "checktool_display_name": "PyLint"
+      },
+      {
+        "checktool": "pylint",
+        "checkrule": "no-method-argument",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "no-method-argument",
+        "checktool_display_name": "PyLint"
+      },
+      {
+        "checktool": "pylint",
+        "checkrule": "nonexistent-operator",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "nonexistent-operator",
+        "checktool_display_name": "PyLint"
+      },
+      {
+        "checktool": "pylint",
+        "checkrule": "non-iterator-returned",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "non-iterator-returned",
+        "checktool_display_name": "PyLint"
+      },
+      {
+        "checktool": "pylint",
+        "checkrule": "no-self-argument",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "no-self-argument",
+        "checktool_display_name": "PyLint"
+      },
+      {
+        "checktool": "pylint",
+        "checkrule": "not-a-mapping",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "not-a-mapping",
+        "checktool_display_name": "PyLint"
+      },
+      {
+        "checktool": "pylint",
+        "checkrule": "not-in-loop",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "not-in-loop",
+        "checktool_display_name": "PyLint"
+      },
+      {
+        "checktool": "pylint",
+        "checkrule": "parameter-unpacking",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "parameter-unpacking",
+        "checktool_display_name": "PyLint"
+      },
+      {
+        "checktool": "pylint",
+        "checkrule": "parse-error",
+        "severity": "fatal",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "parse-error",
+        "checktool_display_name": "PyLint"
+      },
+      {
+        "checktool": "pylint",
+        "checkrule": "raising-non-exception",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "raising-non-exception",
+        "checktool_display_name": "PyLint"
+      },
+      {
+        "checktool": "pylint",
+        "checkrule": "redundant-keyword-arg",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "redundant-keyword-arg",
+        "checktool_display_name": "PyLint"
+      },
+      {
+        "checktool": "pylint",
+        "checkrule": "repeated-keyword",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "repeated-keyword",
+        "checktool_display_name": "PyLint"
+      },
+      {
+        "checktool": "pylint",
+        "checkrule": "return-arg-in-generator",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "return-arg-in-generator",
+        "checktool_display_name": "PyLint"
+      },
+      {
+        "checktool": "pylint",
+        "checkrule": "return-in-init",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "return-in-init",
+        "checktool_display_name": "PyLint"
+      },
+      {
+        "checktool": "pylint",
+        "checkrule": "return-outside-function",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "return-outside-function",
+        "checktool_display_name": "PyLint"
+      },
+      {
+        "checktool": "pylint",
+        "checkrule": "too-few-format-args",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "too-few-format-args",
+        "checktool_display_name": "PyLint"
+      },
+      {
+        "checktool": "pylint",
+        "checkrule": "truncated-format-string",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "truncated-format-string",
+        "checktool_display_name": "PyLint"
+      },
+      {
+        "checktool": "pylint",
+        "checkrule": "unrecognized-inline-option",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "unrecognized-inline-option",
+        "checktool_display_name": "PyLint"
+      },
+      {
+        "checktool": "pylint",
+        "checkrule": "yield-outside-function",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "yield-outside-function",
+        "checktool_display_name": "PyLint"
+      },
+      {
+        "checktool": "pylint",
+        "checkrule": "unused-import",
+        "severity": "warning",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "convention",
+        "checkrule_display_name": "unused-import",
+        "checktool_display_name": "PyLint"
+      },
+      {
+        "checktool": "pylint",
+        "checkrule": "unused-variable",
+        "severity": "warning",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "convention",
+        "checkrule_display_name": "unused-variable",
+        "checktool_display_name": "PyLint"
+      },
+      {
+        "checktool": "pylint",
+        "checkrule": "unused-wildcard-import",
+        "severity": "warning",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "convention",
+        "checkrule_display_name": "unused-wildcard-import",
+        "checktool_display_name": "PyLint"
+      }
+    ],
+    "open_saas": false,
+    "envs": null
+  }
+]

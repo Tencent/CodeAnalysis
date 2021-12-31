@@ -1,0 +1,19 @@
+.running {
+    font-size: 18px;
+    vertical-align: middle;
+    animation: myRotate 1s linear infinite;
+}
+
+@keyframes myRotate {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    50% {
+        transform: rotate(180deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}

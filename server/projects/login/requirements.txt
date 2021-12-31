@@ -1,0 +1,24 @@
+# Login Server Requirements
+# server deploy
+gunicorn==20.1.0
+
+# for django
+Django==3.1.12
+
+# for django using mysql server
+pymysql==1.0.2
+
+# for rest api
+djangorestframework==3.11.1
+
+# for login
+djangorestframework-simplejwt==4.4.0
+PyJWT==1.7.1
+
+# for password
+pyaes==1.6.1
+pycryptodome==3.9.8
+cryptography===2.9.2
+
+# for exception log
+sentry-sdk==0.10.2

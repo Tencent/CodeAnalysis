@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="12px" height="12px" viewBox="0 0 12 12" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 64 (93537) - https://sketch.com -->
+    <title>common-icons/12px/outlink</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Objectives" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Objectives-Sample-Date" transform="translate(-190.000000, -289.000000)">
+            <g id="Menu" transform="translate(0.000000, 49.000000)">
+                <g id="Menu-Item" transform="translate(0.000000, 225.000000)">
+                    <g id="Common-Icons/12px/Outlink" transform="translate(190.000000, 15.000000)">
+                        <g id="outlink" transform="translate(1.000000, 1.000000)">
+                            <rect id="Rectangle" fill="#455166" fill-rule="nonzero" opacity="0.15" x="0" y="2" width="8" height="8" rx="1"></rect>
+                            <polyline id="Path" stroke="#455166" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" points="5.5 0.5 9.5 0.5 9.5 4.5"></polyline>
+                            <line x1="9.0382" y1="0.99579" x2="4.5" y2="5.49999" id="Path" stroke="#455166" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></line>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

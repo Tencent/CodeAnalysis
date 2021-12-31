@@ -1,0 +1,106 @@
+[
+  {
+    "name": "【Css】基础规则包",
+    "description": "Css官方基础规则包，提供常见代码问题扫描。",
+    "revision": null,
+    "open_saas": true,
+    "package_type": "official",
+    "languages": [
+      "css"
+    ],
+    "labels": [
+      "基础"
+    ],
+    "checkrule_set": [
+      {
+        "checktool": "stylelint",
+        "checkrule": "function-linear-gradient-no-nonstandard-direction",
+        "severity": "warning",
+        "rule_params": null,
+        "state": "enabled"
+      },
+      {
+        "checktool": "stylelint",
+        "checkrule": "function-url-no-scheme-relative",
+        "severity": "warning",
+        "rule_params": null,
+        "state": "enabled"
+      },
+      {
+        "checktool": "stylelint",
+        "checkrule": "media-feature-name-no-unknown",
+        "severity": "warning",
+        "rule_params": null,
+        "state": "enabled"
+      },
+      {
+        "checktool": "stylelint",
+        "checkrule": "no-descending-specificity",
+        "severity": "warning",
+        "rule_params": null,
+        "state": "enabled"
+      },
+      {
+        "checktool": "stylelint",
+        "checkrule": "no-empty-source",
+        "severity": "warning",
+        "rule_params": null,
+        "state": "enabled"
+      },
+      {
+        "checktool": "stylelint",
+        "checkrule": "no-invalid-double-slash-comments",
+        "severity": "warning",
+        "rule_params": null,
+        "state": "enabled"
+      },
+      {
+        "checktool": "stylelint",
+        "checkrule": "unit-no-unknown",
+        "severity": "warning",
+        "rule_params": null,
+        "state": "enabled"
+      },
+      {
+        "checktool": "stylelint",
+        "checkrule": "no-duplicate-selectors",
+        "severity": "warning",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "NoDuplicateSelectors",
+        "checktool_display_name": "StyleLint"
+      },
+      {
+        "checktool": "stylelint",
+        "checkrule": "no-duplicate-at-import-rules",
+        "severity": "warning",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "NoDuplicateAtImportRules",
+        "checktool_display_name": "StyleLint"
+      },
+      {
+        "checktool": "stylelint",
+        "checkrule": "font-family-no-duplicate-names",
+        "severity": "warning",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "FontFamilyNoDuplicateNames",
+        "checktool_display_name": "StyleLint"
+      },
+      {
+        "checktool": "stylelint",
+        "checkrule": "declaration-block-no-duplicate-properties",
+        "severity": "warning",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "DeclarationBlockNoDuplicateProperties",
+        "checktool_display_name": "StyleLint"
+      }
+    ]
+  }
+]

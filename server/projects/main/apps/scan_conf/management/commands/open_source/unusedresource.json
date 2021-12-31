@@ -1,0 +1,35 @@
+[
+  {
+    "name": "unusedresource",
+    "display_name": "UnUsedResource",
+    "description": "扫描未使用的资源文件",
+    "license": "自研工具",
+    "task_processes": [
+      "analyze",
+      "datahandle"
+    ],
+    "open_user": true,
+    "open_saas": true,
+    "scan_app": "codelint",
+    "scm_url": null,
+    "run_cmd": null,
+    "envs": null,
+    "show_display_name": true,
+    "checkrule_set": [
+      {
+        "real_name": "UnusedPicture",
+        "display_name": "UnusedPicture",
+        "severity": "error",
+        "category": "correctness",
+        "rule_title": "发现未使用的图片文件",
+        "rule_params": "res_suffix = .jpg;.jpeg;.gif;.png;.imageset;.bmp\r\ncode_suffix = .h;.m;.mm;.cpp;.swift;.json;.html;.css;.plist;.xib;.storyboard",
+        "custom": true,
+        "languages": [],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "发现未使用的图片文件，确认后建议删除该文件。"
+      }
+    ]
+  }
+]

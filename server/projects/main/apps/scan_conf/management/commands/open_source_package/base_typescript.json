@@ -1,0 +1,138 @@
+[
+  {
+    "name": "【Typescript】基础规则包",
+    "description": "TypeScript官方基础规则包，提供常见代码问题扫描。",
+    "revision": null,
+    "package_type": "official",
+    "languages": [
+      "ts"
+    ],
+    "labels": [
+      "基础"
+    ],
+    "checkrule_set": [
+      {
+        "checktool": "eslint_typescript",
+        "checkrule": "no-debugger",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "no-debugger",
+        "checktool_display_name": "EslintTypeScript"
+      },
+      {
+        "checktool": "eslint_typescript",
+        "checkrule": "no-useless-call",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "no-useless-call",
+        "checktool_display_name": "EslintTypeScript"
+      },
+      {
+        "checktool": "eslint_typescript",
+        "checkrule": "no-ex-assign",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "no-ex-assign",
+        "checktool_display_name": "EslintTypeScript"
+      },
+      {
+        "checktool": "eslint_typescript",
+        "checkrule": "no-unsafe-finally",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "no-unsafe-finally",
+        "checktool_display_name": "EslintTypeScript"
+      },
+      {
+        "checktool": "eslint_typescript",
+        "checkrule": "typescript/no-empty-interface",
+        "severity": "warning",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "typescript/no-empty-interface",
+        "checktool_display_name": "EslintTypeScript"
+      },
+      {
+        "checktool": "eslint_typescript",
+        "checkrule": "typescript/no-unused-vars",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "typescript/no-unused-vars",
+        "checktool_display_name": "EslintTypeScript"
+      },
+      {
+        "checktool": "customfilescan",
+        "checkrule": "FileTooLong",
+        "severity": "info",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "convention",
+        "checkrule_display_name": "FileTooLong",
+        "checktool_display_name": "CustomFileScan"
+      },
+      {
+        "checktool": "customscan",
+        "checkrule": "FunctionTooLong",
+        "severity": "info",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "convention",
+        "checkrule_display_name": "FunctionTooLong",
+        "checktool_display_name": "CustomScan"
+      },
+      {
+        "checktool": "eslint_typescript",
+        "checkrule": "typescript/no-for-in-array",
+        "severity": "error",
+        "rule_params": "",
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "typescript/no-for-in-array",
+        "checktool_display_name": "EslintTypeScript"
+      },
+      {
+        "checktool": "eslint_typescript",
+        "checkrule": "typescript/no-misused-new",
+        "severity": "error",
+        "rule_params": "",
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "typescript/no-misused-new",
+        "checktool_display_name": "EslintTypeScript"
+      },
+      {
+        "checktool": "eslint_typescript",
+        "checkrule": "typescript/no-unnecessary-type-assertion",
+        "severity": "error",
+        "rule_params": "",
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "typescript/no-unnecessary-type-assertion",
+        "checktool_display_name": "EslintTypeScript"
+      },
+      {
+        "checktool": "eslint_typescript",
+        "checkrule": "typescript/no-empty-function",
+        "severity": "warning",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "convention",
+        "checkrule_display_name": "typescript/no-empty-function",
+        "checktool_display_name": "EslintTypeScript"
+      }
+    ],
+    "open_saas": false,
+    "envs": null
+  }
+]

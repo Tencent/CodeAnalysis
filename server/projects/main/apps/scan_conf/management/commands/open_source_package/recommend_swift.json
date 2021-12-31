@@ -1,0 +1,97 @@
+[
+  {
+    "name": "【Swift】推荐规则包",
+    "description": "Swift官方推荐规则包",
+    "revision": null,
+    "package_type": "official",
+    "languages": [
+      "swift"
+    ],
+    "labels": [
+      "推荐"
+    ],
+    "checkrule_set": [
+      {
+        "checktool": "swiftlint",
+        "checkrule": "convenience_type",
+        "severity": "warning",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "Convenience Type",
+        "checktool_display_name": "SwiftLint"
+      },
+      {
+        "checktool": "swiftlint",
+        "checkrule": "block_based_kvo",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "Block Based KVO",
+        "checktool_display_name": "SwiftLint"
+      },
+      {
+        "checktool": "swiftlint",
+        "checkrule": "discouraged_direct_init",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "Discouraged Direct Initialization",
+        "checktool_display_name": "SwiftLint"
+      },
+      {
+        "checktool": "swiftlint",
+        "checkrule": "dynamic_inline",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "Dynamic Inline",
+        "checktool_display_name": "SwiftLint"
+      },
+      {
+        "checktool": "swiftlint",
+        "checkrule": "force_cast",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "Force Cast",
+        "checktool_display_name": "SwiftLint"
+      },
+      {
+        "checktool": "swiftlint",
+        "checkrule": "nesting",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "Nesting",
+        "checktool_display_name": "SwiftLint"
+      },
+      {
+        "checktool": "swiftlint",
+        "checkrule": "unused_import",
+        "severity": "warning",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "Unused Import",
+        "checktool_display_name": "SwiftLint"
+      },
+      {
+        "checktool": "swiftlint",
+        "checkrule": "weak_delegate",
+        "severity": "warning",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "Weak Delegate",
+        "checktool_display_name": "SwiftLint"
+      }
+    ],
+    "open_saas": false
+  }
+]

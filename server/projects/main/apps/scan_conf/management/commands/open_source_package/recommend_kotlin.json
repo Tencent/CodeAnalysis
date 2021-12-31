@@ -1,0 +1,227 @@
+[
+  {
+    "name": "【Kotlin】推荐规则包",
+    "description": "Kotlin官方推荐规则包。",
+    "revision": null,
+    "package_type": "official",
+    "languages": [
+      "kotlin"
+    ],
+    "labels": [
+      "推荐"
+    ],
+    "checkrule_set": [
+      {
+        "checktool": "detekt",
+        "checkrule": "DuplicateCaseInWhenExpression",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "DuplicateCaseInWhenExpression",
+        "checktool_display_name": "Detekt"
+      },
+      {
+        "checktool": "detekt",
+        "checkrule": "EqualsWithHashCodeExist",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "EqualsWithHashCodeExist",
+        "checktool_display_name": "Detekt"
+      },
+      {
+        "checktool": "detekt",
+        "checkrule": "UnreachableCode",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "UnreachableCode",
+        "checktool_display_name": "Detekt"
+      },
+      {
+        "checktool": "detekt",
+        "checkrule": "ExplicitGarbageCollectionCall",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "ExplicitGarbageCollectionCall",
+        "checktool_display_name": "Detekt"
+      },
+      {
+        "checktool": "detekt",
+        "checkrule": "WrongEqualsTypeParameter",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "WrongEqualsTypeParameter",
+        "checktool_display_name": "Detekt"
+      },
+      {
+        "checktool": "detekt",
+        "checkrule": "RethrowCaughtException",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "RethrowCaughtException",
+        "checktool_display_name": "Detekt"
+      },
+      {
+        "checktool": "detekt",
+        "checkrule": "ExceptionRaisedInUnexpectedLocation",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "ExceptionRaisedInUnexpectedLocation",
+        "checktool_display_name": "Detekt"
+      },
+      {
+        "checktool": "detekt",
+        "checkrule": "ReturnFromFinally",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "ReturnFromFinally",
+        "checktool_display_name": "Detekt"
+      },
+      {
+        "checktool": "detekt",
+        "checkrule": "ThrowingExceptionFromFinally",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "ThrowingExceptionFromFinally",
+        "checktool_display_name": "Detekt"
+      },
+      {
+        "checktool": "detekt",
+        "checkrule": "ThrowingNewInstanceOfSameException",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "ThrowingNewInstanceOfSameException",
+        "checktool_display_name": "Detekt"
+      },
+      {
+        "checktool": "detekt",
+        "checkrule": "SwallowedException",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "SwallowedException",
+        "checktool_display_name": "Detekt"
+      },
+      {
+        "checktool": "detekt",
+        "checkrule": "InstanceOfCheckForException",
+        "severity": "warning",
+        "rule_params": "",
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "InstanceOfCheckForException",
+        "checktool_display_name": "Detekt"
+      },
+      {
+        "checktool": "detekt",
+        "checkrule": "IteratorNotThrowingNoSuchElementException",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "IteratorNotThrowingNoSuchElementException",
+        "checktool_display_name": "Detekt"
+      },
+      {
+        "checktool": "detekt",
+        "checkrule": "ThrowingExceptionInMain",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "ThrowingExceptionInMain",
+        "checktool_display_name": "Detekt"
+      },
+      {
+        "checktool": "detekt",
+        "checkrule": "ForEachOnRange",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "performance",
+        "checkrule_display_name": "ForEachOnRange",
+        "checktool_display_name": "Detekt"
+      },
+      {
+        "checktool": "detekt",
+        "checkrule": "UnnecessaryTemporaryInstantiation",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "performance",
+        "checkrule_display_name": "UnnecessaryTemporaryInstantiation",
+        "checktool_display_name": "Detekt"
+      },
+      {
+        "checktool": "detekt",
+        "checkrule": "UnconditionalJumpStatementInLoop",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "UnconditionalJumpStatementInLoop",
+        "checktool_display_name": "Detekt"
+      },
+      {
+        "checktool": "detekt",
+        "checkrule": "IteratorHasNextCallsNextMethod",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "IteratorHasNextCallsNextMethod",
+        "checktool_display_name": "Detekt"
+      },
+      {
+        "checktool": "detekt",
+        "checkrule": "InvalidLoopCondition",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "InvalidLoopCondition",
+        "checktool_display_name": "Detekt"
+      },
+      {
+        "checktool": "detekt",
+        "checkrule": "PrintStackTrace",
+        "severity": "warning",
+        "rule_params": "",
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "PrintStackTrace",
+        "checktool_display_name": "Detekt"
+      },
+      {
+        "checktool": "detekt",
+        "checkrule": "NotImplementedDeclaration",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled",
+        "checkrule_category": "correctness",
+        "checkrule_display_name": "NotImplementedDeclaration",
+        "checktool_display_name": "Detekt"
+      }
+    ],
+    "open_saas": false
+  }
+]

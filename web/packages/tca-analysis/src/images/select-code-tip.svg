@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="168px" height="128px" viewBox="0 0 168 128" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 57.1 (83088) - https://sketch.com -->
+    <title>iteration-intro-1</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <rect id="path-1" x="0" y="0" width="136" height="96" rx="3"></rect>
+        <filter x="-3.7%" y="-4.2%" width="107.4%" height="110.4%" filterUnits="objectBoundingBox" id="filter-2">
+            <feOffset dx="0" dy="1" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="1.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.08 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+        <path d="M0,0 L68,0 L68,87 L2,87 C0.8954305,87 1.3527075e-16,86.1045695 0,85 L0,0 L0,0 Z" id="path-3"></path>
+        <filter x="-8.1%" y="-6.3%" width="119.1%" height="114.9%" filterUnits="objectBoundingBox" id="filter-4">
+            <feOffset dx="1" dy="1" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="2" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.04 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+        <path d="M5,19 L63,19 C63.5522847,19 64,19.4477153 64,20 L64,80 C64,80.5522847 63.5522847,81 63,81 L4,81 L4,81 L4,20 C4,19.4477153 4.44771525,19 5,19 Z" id="path-5"></path>
+        <mask id="mask-6" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="60" height="62" fill="white">
+            <use xlink:href="#path-5"></use>
+        </mask>
+    </defs>
+    <g id="代码分析-" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="代码分析-重复代码详情-选择代码块-" transform="translate(-1056.000000, -378.000000)">
+            <g id="编组-12" transform="translate(1023.000000, 378.000000)">
+                <g id="iteration-intro-1" transform="translate(33.000000, 0.000000)">
+                    <g id="window" transform="translate(16.000000, 17.000000)">
+                        <g id="Rectangle">
+                            <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
+                            <use fill="#F2F4F6" fill-rule="evenodd" xlink:href="#path-1"></use>
+                        </g>
+                        <g id="issue" transform="translate(0.000000, 9.000000)">
+                            <g id="Rectangle">
+                                <use fill="black" fill-opacity="1" filter="url(#filter-4)" xlink:href="#path-3"></use>
+                                <use fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-3"></use>
+                            </g>
+                            <use id="Rectangle" stroke="#DFE5F0" mask="url(#mask-6)" stroke-width="2" fill-opacity="0.25" fill="#E5EAEE" stroke-dasharray="2" xlink:href="#path-5"></use>
+                            <path d="M17,19 L64,19 L64,81 L19,81 C17.8954305,81 17,80.1045695 17,79 L17,19 L17,19 Z" id="Rectangle" fill-opacity="0.412314248" fill="#E5EAEE"></path>
+                            <path d="M7,22 L9,22 L9,78 L7,78 L7,22 Z" id="Rectangle" fill="#F5A623"></path>
+                            <path d="M12,22 L14,22 L14,78 L12,78 L12,22 Z" id="Rectangle备份" fill="#F5A623"></path>
+                            <rect id="Rectangle-Copy-12" fill="#CFD8E5" fill-rule="nonzero" opacity="0.5" x="4" y="3" width="34" height="6" rx="1"></rect>
+                            <path d="M43,3 L63,3 C63.5522847,3 64,3.44771525 64,4 L64,8 C64,8.55228475 63.5522847,9 63,9 L43,9 C42.4477153,9 42,8.55228475 42,8 L42,4 C42,3.44771525 42.4477153,3 43,3 Z" id="Rectangle" fill="#3385FF"></path>
+                            <rect id="Rectangle-Copy-12备份" fill="#CFD8E5" fill-rule="nonzero" opacity="0.5" x="4" y="12" width="60" height="3" rx="1"></rect>
+                            <rect id="Rectangle-Copy-12备份-3" fill="#CFD8E5" fill-rule="nonzero" opacity="0.249000186" x="22" y="25" width="37" height="6" rx="1"></rect>
+                            <rect id="Rectangle-Copy-12备份-4" fill="#CFD8E5" fill-rule="nonzero" opacity="0.249000186" x="22" y="36" width="37" height="6" rx="1"></rect>
+                            <rect id="Rectangle-Copy-12备份-5" fill="#CFD8E5" fill-rule="nonzero" opacity="0.249000186" x="22" y="47" width="37" height="6" rx="1"></rect>
+                            <rect id="Rectangle-Copy-12备份-6" fill="#CFD8E5" fill-rule="nonzero" opacity="0.249000186" x="22" y="58" width="37" height="6" rx="1"></rect>
+                            <rect id="Rectangle-Copy-12备份-7" fill="#CFD8E5" fill-rule="nonzero" opacity="0.249000186" x="22" y="69" width="37" height="6" rx="1"></rect>
+                        </g>
+                        <g id="title">
+                            <path d="M3,0 L133,0 C134.656854,-3.04359188e-16 136,1.34314575 136,3 L136,9 L136,9 L0,9 L0,3 C-2.02906125e-16,1.34314575 1.34314575,-5.83819232e-16 3,0 Z" id="Rectangle-Copy-10" fill="#606C80" opacity="0.200000003"></path>
+                            <circle id="Oval" fill="#FFFFFF" opacity="0.746814546" cx="5.5" cy="4.5" r="1.5"></circle>
+                            <circle id="Oval" fill="#FFFFFF" opacity="0.746814546" cx="11.5" cy="4.5" r="1.5"></circle>
+                            <circle id="Oval" fill="#FFFFFF" opacity="0.746814546" cx="17.5" cy="4.5" r="1.5"></circle>
+                        </g>
+                    </g>
+                    <g id="issue" transform="translate(102.000000, 54.000000)" fill="#E7EBF2">
+                        <g id="编组-10">
+                            <rect id="Rectangle" x="5" y="0" width="20" height="16" rx="2"></rect>
+                            <rect id="Rectangle-Copy-12" fill-rule="nonzero" x="0" y="19" width="31" height="3" rx="1"></rect>
+                            <rect id="Rectangle-Copy-12备份-2" fill-rule="nonzero" x="4" y="25" width="22" height="3" rx="1"></rect>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

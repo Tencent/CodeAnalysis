@@ -1,0 +1,185 @@
+[
+  {
+    "name": "【PHP】基础规则包",
+    "description": "PHP官方基础规则包，支持常见代码问题扫描。",
+    "revision": "2.0",
+    "open_saas": true,
+    "package_type": "official",
+    "languages": [
+      "php"
+    ],
+    "labels": [
+      "基础"
+    ],
+    "checkrule_set": [
+      {
+        "checktool": "cobra",
+        "checkrule": "CVI-120001",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled"
+      },
+      {
+        "checktool": "cobra",
+        "checkrule": "CVI-120004",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled"
+      },
+      {
+        "checktool": "cobra",
+        "checkrule": "CVI-120003",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled"
+      },
+      {
+        "checktool": "cobra",
+        "checkrule": "CVI-120002",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled"
+      },
+      {
+        "checktool": "cobra",
+        "checkrule": "CVI-167001",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled"
+      },
+      {
+        "checktool": "cobra",
+        "checkrule": "CVI-200001",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled"
+      },
+      {
+        "checktool": "cobra",
+        "checkrule": "CVI-110001",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled"
+      },
+      {
+        "checktool": "cobra",
+        "checkrule": "CVI-160001",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled"
+      },
+      {
+        "checktool": "cobra",
+        "checkrule": "CVI-160002",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled"
+      },
+      {
+        "checktool": "cobra",
+        "checkrule": "CVI-140001",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled"
+      },
+      {
+        "checktool": "cobra",
+        "checkrule": "CVI-140003",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled"
+      },
+      {
+          "checktool": "kunlunM",
+          "checkrule": "addEventListener message param 可控",
+          "severity": "warning",
+          "rule_params": null,
+          "state": "enabled"
+      },
+      {
+          "checktool": "kunlunM",
+          "checkrule": "Chrome ext function XSS",
+          "severity": "error",
+          "rule_params": null,
+          "state": "enabled"
+      },
+      {
+          "checktool": "kunlunM",
+          "checkrule": "executeScript中参数拼接",
+          "severity": "warning",
+          "rule_params": null,
+          "state": "enabled"
+      },
+      {
+          "checktool": "kunlunM",
+          "checkrule": "Handlebars XSS",
+          "severity": "error",
+          "rule_params": null,
+          "state": "enabled"
+      },
+      {
+          "checktool": "kunlunM",
+          "checkrule": "HTML attr injection",
+          "severity": "fatal",
+          "rule_params": null,
+          "state": "enabled"
+      },
+      {
+          "checktool": "kunlunM",
+          "checkrule": "HTML injection",
+          "severity": "error",
+          "rule_params": null,
+          "state": "enabled"
+      },
+      {
+          "checktool": "kunlunM",
+          "checkrule": "JQuery eval",
+          "severity": "warning",
+          "rule_params": null,
+          "state": "enabled"
+      },
+      {
+          "checktool": "kunlunM",
+          "checkrule": "JQuery HTML attr injection",
+          "severity": "error",
+          "rule_params": null,
+          "state": "enabled"
+      },
+      {
+          "checktool": "kunlunM",
+          "checkrule": "JQuery XSS",
+          "severity": "fatal",
+          "rule_params": null,
+          "state": "enabled"
+      },
+      {
+          "checktool": "kunlunM",
+          "checkrule": "JQuery 原型链污染",
+          "severity": "fatal",
+          "rule_params": null,
+          "state": "enabled"
+      },
+      {
+          "checktool": "kunlunM",
+          "checkrule": "RCE in JS",
+          "severity": "fatal",
+          "rule_params": null,
+          "state": "enabled"
+      },
+      {
+          "checktool": "kunlunM",
+          "checkrule": "URL Redirect",
+          "severity": "fatal",
+          "rule_params": null,
+          "state": "enabled"
+      },
+      {
+          "checktool": "kunlunM",
+          "checkrule": "XSS in JS",
+          "severity": "fatal",
+          "rule_params": null,
+          "state": "enabled"
+      }
+    ]
+  }
+]

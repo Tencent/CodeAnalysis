@@ -1,0 +1,3270 @@
+[
+    {
+        "name": "swiftlint",
+        "display_name": "SwiftLint",
+        "description": "SwiftLint是 Realm 推出的一款 Swift 代码规范检查工具, SwiftLint 基于 Github 公布的 Swift 代码规范进行代码检查，并且能够很好的和 Xcode 整合",
+        "license": "MIT",
+        "task_processes": [
+            "analyze",
+            "datahandle"
+        ],
+        "scan_app": "codelint",
+        "scm_url": null,
+        "run_cmd": "",
+        "envs": "XCODE_VERSION=11.2",
+        "build_flag": false,
+        "checkrule_set": [
+            {
+                "real_name": "anyobject_protocol",
+                "display_name": "AnyObject Protocol",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Prefer using `AnyObject` over `class` for class-only protocols.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Prefer using `AnyObject` over `class` for class-only protocols.",
+                "disable": false
+            },
+            {
+                "real_name": "array_init",
+                "display_name": "Array Init",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Prefer using `Array(seq)` over `seq.map { $0 }` to convert a sequence into an Array.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Prefer using `Array(seq)` over `seq.map { $0 }` to convert a sequence into an Array.",
+                "disable": false
+            },
+            {
+                "real_name": "attributes",
+                "display_name": "Attributes",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Attributes should be on their own lines in functions and types, but on the same line as variables and imports.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Attributes should be on their own lines in functions and types, but on the same line as variables and imports.",
+                "disable": false
+            },
+            {
+                "real_name": "block_based_kvo",
+                "display_name": "Block Based KVO",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Prefer the new block based KVO API with keypaths when using Swift 3.2 or later.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Prefer the new block based KVO API with keypaths when using Swift 3.2 or later.",
+                "disable": false
+            },
+            {
+                "real_name": "class_delegate_protocol",
+                "display_name": "Class Delegate Protocol",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Delegate protocols should be class-only so they can be weakly referenced.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Delegate protocols should be class-only so they can be weakly referenced.",
+                "disable": false
+            },
+            {
+                "real_name": "closing_brace",
+                "display_name": "Closing Brace Spacing",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Closing brace with closing parenthesis should not have any whitespaces in the middle.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Closing brace with closing parenthesis should not have any whitespaces in the middle.",
+                "disable": false
+            },
+            {
+                "real_name": "closure_body_length",
+                "display_name": "Closure Body Length",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Closure bodies should not span too many lines.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Closure bodies should not span too many lines.",
+                "disable": false
+            },
+            {
+                "real_name": "closure_end_indentation",
+                "display_name": "Closure End Indentation",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Closure end should have the same indentation as the line that started it.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Closure end should have the same indentation as the line that started it.",
+                "disable": false
+            },
+            {
+                "real_name": "closure_parameter_position",
+                "display_name": "Closure Parameter Position",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Closure parameters should be on the same line as opening brace.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Closure parameters should be on the same line as opening brace.",
+                "disable": false
+            },
+            {
+                "real_name": "closure_spacing",
+                "display_name": "Closure Spacing",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Closure expressions should have a single space inside each brace.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Closure expressions should have a single space inside each brace.",
+                "disable": false
+            },
+            {
+                "real_name": "collection_alignment",
+                "display_name": "Collection Element Alignment",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "All elements in a collection literal should be vertically aligned",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "All elements in a collection literal should be vertically aligned",
+                "disable": false
+            },
+            {
+                "real_name": "colon",
+                "display_name": "Colon",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Colons should be next to the identifier when specifying a type and next to the key in dictionary literals.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Colons should be next to the identifier when specifying a type and next to the key in dictionary literals.",
+                "disable": false
+            },
+            {
+                "real_name": "comma",
+                "display_name": "Comma Spacing",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "There should be no space before and one after any comma.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "There should be no space before and one after any comma.",
+                "disable": false
+            },
+            {
+                "real_name": "compiler_protocol_init",
+                "display_name": "Compiler Protocol Init",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "The initializers declared in compiler protocols such as `ExpressibleByArrayLiteral` shouldn't be called directly.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "The initializers declared in compiler protocols such as `ExpressibleByArrayLiteral` shouldn't be called directly.",
+                "disable": false
+            },
+            {
+                "real_name": "conditional_returns_on_newline",
+                "display_name": "Conditional Returns on Newline",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Conditional statements should always return on the next line",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Conditional statements should always return on the next line",
+                "disable": false
+            },
+            {
+                "real_name": "contains_over_filter_count",
+                "display_name": "Contains Over Filter Count",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Prefer `contains` over comparing `filter(where:).count` to 0.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Prefer `contains` over comparing `filter(where:).count` to 0.",
+                "disable": false
+            },
+            {
+                "real_name": "contains_over_filter_is_empty",
+                "display_name": "Contains Over Filter Is Empty",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Prefer `contains` over using `filter(where:).isEmpty`",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Prefer `contains` over using `filter(where:).isEmpty`",
+                "disable": false
+            },
+            {
+                "real_name": "contains_over_first_not_nil",
+                "display_name": "Contains over first not nil",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Prefer `contains` over `first(where:) != nil` and `firstIndex(where:) != nil`.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Prefer `contains` over `first(where:) != nil` and `firstIndex(where:) != nil`.",
+                "disable": false
+            },
+            {
+                "real_name": "contains_over_range_nil_comparison",
+                "display_name": "Contains over range(of:) comparison to nil",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Prefer `contains` over `range(of:) != nil` and `range(of:) == nil`.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Prefer `contains` over `range(of:) != nil` and `range(of:) == nil`.",
+                "disable": false
+            },
+            {
+                "real_name": "control_statement",
+                "display_name": "Control Statement",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "`if`, `for`, `guard`, `switch`, `while`, and `catch` statements shouldn't unnecessarily wrap their conditionals or arguments in parentheses.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "`if`, `for`, `guard`, `switch`, `while`, and `catch` statements shouldn't unnecessarily wrap their conditionals or arguments in parentheses.",
+                "disable": false
+            },
+            {
+                "real_name": "convenience_type",
+                "display_name": "Convenience Type",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Types used for hosting only static members should be implemented as a caseless enum to avoid instantiation.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Types used for hosting only static members should be implemented as a caseless enum to avoid instantiation.",
+                "disable": false
+            },
+            {
+                "real_name": "custom_rules",
+                "display_name": "Custom Rules",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Create custom rules by providing a regex string. Optionally specify what syntax kinds to match against, the severity level, and what message to display.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Create custom rules by providing a regex string. Optionally specify what syntax kinds to match against, the severity level, and what message to display.",
+                "disable": false
+            },
+            {
+                "real_name": "cyclomatic_complexity",
+                "display_name": "Cyclomatic Complexity",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Complexity of function bodies should be limited.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Complexity of function bodies should be limited.",
+                "disable": false
+            },
+            {
+                "real_name": "deployment_target",
+                "display_name": "Deployment Target",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Availability checks or attributes shouldn't be using older versions that are satisfied by the deployment target.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Availability checks or attributes shouldn't be using older versions that are satisfied by the deployment target.",
+                "disable": false
+            },
+            {
+                "real_name": "discarded_notification_center_observer",
+                "display_name": "Discarded Notification Center Observer",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "When registering for a notification using a block, the opaque observer that is returned should be stored so it can be removed later.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "When registering for a notification using a block, the opaque observer that is returned should be stored so it can be removed later.",
+                "disable": false
+            },
+            {
+                "real_name": "discouraged_direct_init",
+                "display_name": "Discouraged Direct Initialization",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Discouraged direct initialization of types that can be harmful.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Discouraged direct initialization of types that can be harmful.",
+                "disable": false
+            },
+            {
+                "real_name": "discouraged_object_literal",
+                "display_name": "Discouraged Object Literal",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Prefer initializers over object literals.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Prefer initializers over object literals.",
+                "disable": false
+            },
+            {
+                "real_name": "discouraged_optional_boolean",
+                "display_name": "Discouraged Optional Boolean",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Prefer non-optional booleans over optional booleans.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Prefer non-optional booleans over optional booleans.",
+                "disable": false
+            },
+            {
+                "real_name": "discouraged_optional_collection",
+                "display_name": "Discouraged Optional Collection",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Prefer empty collection over optional collection.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Prefer empty collection over optional collection.",
+                "disable": false
+            },
+            {
+                "real_name": "duplicate_enum_cases",
+                "display_name": "Duplicate Enum Cases",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Enum can't contain multiple cases with the same name.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Enum can't contain multiple cases with the same name.",
+                "disable": false
+            },
+            {
+                "real_name": "duplicate_imports",
+                "display_name": "Duplicate Imports",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Imports should be unique.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Imports should be unique.",
+                "disable": false
+            },
+            {
+                "real_name": "dynamic_inline",
+                "display_name": "Dynamic Inline",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Avoid using 'dynamic' and '@inline(__always)' together.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Avoid using 'dynamic' and '@inline(__always)' together.",
+                "disable": false
+            },
+            {
+                "real_name": "empty_collection_literal",
+                "display_name": "Empty Collection Literal",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Prefer checking `isEmpty` over comparing collection to an empty array or dictionary literal.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Prefer checking `isEmpty` over comparing collection to an empty array or dictionary literal.",
+                "disable": false
+            },
+            {
+                "real_name": "empty_count",
+                "display_name": "Empty Count",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Prefer checking `isEmpty` over comparing `count` to zero.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Prefer checking `isEmpty` over comparing `count` to zero.",
+                "disable": false
+            },
+            {
+                "real_name": "empty_enum_arguments",
+                "display_name": "Empty Enum Arguments",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Arguments can be omitted when matching enums with associated types if they are not used.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Arguments can be omitted when matching enums with associated types if they are not used.",
+                "disable": false
+            },
+            {
+                "real_name": "empty_parameters",
+                "display_name": "Empty Parameters",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Prefer `() -> ` over `Void -> `.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Prefer `() -> ` over `Void -> `.",
+                "disable": false
+            },
+            {
+                "real_name": "empty_parentheses_with_trailing_closure",
+                "display_name": "Empty Parentheses with Trailing Closure",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "When using trailing closures, empty parentheses should be avoided after the method call.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "When using trailing closures, empty parentheses should be avoided after the method call.",
+                "disable": false
+            },
+            {
+                "real_name": "empty_string",
+                "display_name": "Empty String",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Prefer checking `isEmpty` over comparing `string` to an empty string literal.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Prefer checking `isEmpty` over comparing `string` to an empty string literal.",
+                "disable": false
+            },
+            {
+                "real_name": "empty_xctest_method",
+                "display_name": "Empty XCTest Method",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Empty XCTest method should be avoided.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Empty XCTest method should be avoided.",
+                "disable": false
+            },
+            {
+                "real_name": "enum_case_associated_values_count",
+                "display_name": "Enum Case Associated Values Count",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Number of associated values in an enum case should be low",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Number of associated values in an enum case should be low",
+                "disable": false
+            },
+            {
+                "real_name": "expiring_todo",
+                "display_name": "ExpiringTodo",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "TODOs and FIXMEs should be resolved prior to their expiry date.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "TODOs and FIXMEs should be resolved prior to their expiry date.",
+                "disable": false
+            },
+            {
+                "real_name": "explicit_acl",
+                "display_name": "Explicit ACL",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "All declarations should specify Access Control Level keywords explicitly.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "All declarations should specify Access Control Level keywords explicitly.",
+                "disable": false
+            },
+            {
+                "real_name": "explicit_enum_raw_value",
+                "display_name": "Explicit Enum Raw Value",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Enums should be explicitly assigned their raw values.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Enums should be explicitly assigned their raw values.",
+                "disable": false
+            },
+            {
+                "real_name": "explicit_init",
+                "display_name": "Explicit Init",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Explicitly calling .init() should be avoided.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Explicitly calling .init() should be avoided.",
+                "disable": false
+            },
+            {
+                "real_name": "explicit_self",
+                "display_name": "Explicit Self",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Instance variables and functions should be explicitly accessed with 'self.'.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Instance variables and functions should be explicitly accessed with 'self.'.",
+                "disable": false
+            },
+            {
+                "real_name": "explicit_top_level_acl",
+                "display_name": "Explicit Top Level ACL",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Top-level declarations should specify Access Control Level keywords explicitly.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Top-level declarations should specify Access Control Level keywords explicitly.",
+                "disable": false
+            },
+            {
+                "real_name": "explicit_type_interface",
+                "display_name": "Explicit Type Interface",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Properties should have a type interface",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Properties should have a type interface",
+                "disable": false
+            },
+            {
+                "real_name": "extension_access_modifier",
+                "display_name": "Extension Access Modifier",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Prefer to use extension access modifiers",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Prefer to use extension access modifiers",
+                "disable": false
+            },
+            {
+                "real_name": "fallthrough",
+                "display_name": "Fallthrough",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Fallthrough should be avoided.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Fallthrough should be avoided.",
+                "disable": false
+            },
+            {
+                "real_name": "fatal_error_message",
+                "display_name": "Fatal Error Message",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "A fatalError call should have a message.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "A fatalError call should have a message.",
+                "disable": false
+            },
+            {
+                "real_name": "file_header",
+                "display_name": "File Header",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Header comments should be consistent with project patterns. The SWIFTLINT_CURRENT_FILENAME placeholder can optionally be used in the required and forbidden patterns. It will be replaced by the real file name.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Header comments should be consistent with project patterns. The SWIFTLINT_CURRENT_FILENAME placeholder can optionally be used in the required and forbidden patterns. It will be replaced by the real file name.",
+                "disable": false
+            },
+            {
+                "real_name": "file_length",
+                "display_name": "File Line Length",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Files should not span too many lines.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Files should not span too many lines.",
+                "disable": false
+            },
+            {
+                "real_name": "file_name",
+                "display_name": "File Name",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "File name should match a type or extension declared in the file (if any).",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "File name should match a type or extension declared in the file (if any).",
+                "disable": false
+            },
+            {
+                "real_name": "file_name_no_space",
+                "display_name": "File Name No Space",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "File name should not contain any whitespace.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "File name should not contain any whitespace.",
+                "disable": false
+            },
+            {
+                "real_name": "file_types_order",
+                "display_name": "File Types Order",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Specifies how the types within a file should be ordered.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Specifies how the types within a file should be ordered.",
+                "disable": false
+            },
+            {
+                "real_name": "first_where",
+                "display_name": "First Where",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Prefer using `.first(where:)` over `.filter { }.first` in collections.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Prefer using `.first(where:)` over `.filter { }.first` in collections.",
+                "disable": false
+            },
+            {
+                "real_name": "flatmap_over_map_reduce",
+                "display_name": "FlatMap over map and reduce",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Prefer `flatMap` over `map` followed by `reduce([], +)`.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Prefer `flatMap` over `map` followed by `reduce([], +)`.",
+                "disable": false
+            },
+            {
+                "real_name": "force_cast",
+                "display_name": "Force Cast",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Force casts should be avoided.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Force casts should be avoided.",
+                "disable": false
+            },
+            {
+                "real_name": "force_try",
+                "display_name": "Force Try",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Force tries should be avoided.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Force tries should be avoided.",
+                "disable": false
+            },
+            {
+                "real_name": "force_unwrapping",
+                "display_name": "Force Unwrapping",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Force unwrapping should be avoided.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Force unwrapping should be avoided.",
+                "disable": false
+            },
+            {
+                "real_name": "for_where",
+                "display_name": "For Where",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "`where` clauses are preferred over a single `if` inside a `for`.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "`where` clauses are preferred over a single `if` inside a `for`.",
+                "disable": false
+            },
+            {
+                "real_name": "function_body_length",
+                "display_name": "Function Body Length",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Functions bodies should not span too many lines.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Functions bodies should not span too many lines.",
+                "disable": false
+            },
+            {
+                "real_name": "function_default_parameter_at_end",
+                "display_name": "Function Default Parameter at End",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Prefer to locate parameters with defaults toward the end of the parameter list.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Prefer to locate parameters with defaults toward the end of the parameter list.",
+                "disable": false
+            },
+            {
+                "real_name": "function_parameter_count",
+                "display_name": "Function Parameter Count",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Number of function parameters should be low.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Number of function parameters should be low.",
+                "disable": false
+            },
+            {
+                "real_name": "generic_type_name",
+                "display_name": "Generic Type Name",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Generic type name should only contain alphanumeric characters, start with an uppercase character and span between 1 and 20 characters in length.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Generic type name should only contain alphanumeric characters, start with an uppercase character and span between 1 and 20 characters in length.",
+                "disable": false
+            },
+            {
+                "real_name": "identical_operands",
+                "display_name": "Identical Operands",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Comparing two identical operands is likely a mistake.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Comparing two identical operands is likely a mistake.",
+                "disable": false
+            },
+            {
+                "real_name": "identifier_name",
+                "display_name": "Identifier Name",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Identifier names should only contain alphanumeric characters and start with a lowercase character or should only contain capital letters. In an exception to the above, variable names may start with a capital letter when they are declared static and immutable. Variable names should not be too long or too short.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Identifier names should only contain alphanumeric characters and start with a lowercase character or should only contain capital letters. In an exception to the above, variable names may start with a capital letter when they are declared static and immutable. Variable names should not be too long or too short.",
+                "disable": false
+            },
+            {
+                "real_name": "implicitly_unwrapped_optional",
+                "display_name": "Implicitly Unwrapped Optional",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Implicitly unwrapped optionals should be avoided when possible.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Implicitly unwrapped optionals should be avoided when possible.",
+                "disable": false
+            },
+            {
+                "real_name": "implicit_getter",
+                "display_name": "Implicit Getter",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Computed read-only properties and subscripts should avoid using the get keyword.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Computed read-only properties and subscripts should avoid using the get keyword.",
+                "disable": false
+            },
+            {
+                "real_name": "implicit_return",
+                "display_name": "Implicit Return",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Prefer implicit returns in closures, functions and getters.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Prefer implicit returns in closures, functions and getters.",
+                "disable": false
+            },
+            {
+                "real_name": "indentation_width",
+                "display_name": "Indentation Width",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Indent code using either one tab or the configured amount of spaces, unindent to match previous indentations. Don't indent the first line.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Indent code using either one tab or the configured amount of spaces, unindent to match previous indentations. Don't indent the first line.",
+                "disable": false
+            },
+            {
+                "real_name": "inert_defer",
+                "display_name": "Inert Defer",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "If defer is at the end of its parent scope, it will be executed right where it is anyway.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "If defer is at the end of its parent scope, it will be executed right where it is anyway.",
+                "disable": false
+            },
+            {
+                "real_name": "is_disjoint",
+                "display_name": "Is Disjoint",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Prefer using `Set.isDisjoint(with:)` over `Set.intersection(_:).isEmpty`.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Prefer using `Set.isDisjoint(with:)` over `Set.intersection(_:).isEmpty`.",
+                "disable": false
+            },
+            {
+                "real_name": "joined_default_parameter",
+                "display_name": "Joined Default Parameter",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Discouraged explicit usage of the default separator.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Discouraged explicit usage of the default separator.",
+                "disable": false
+            },
+            {
+                "real_name": "large_tuple",
+                "display_name": "Large Tuple",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Tuples shouldn't have too many members. Create a custom type instead.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Tuples shouldn't have too many members. Create a custom type instead.",
+                "disable": false
+            },
+            {
+                "real_name": "last_where",
+                "display_name": "Last Where",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Prefer using `.last(where:)` over `.filter { }.last` in collections.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Prefer using `.last(where:)` over `.filter { }.last` in collections.",
+                "disable": false
+            },
+            {
+                "real_name": "leading_whitespace",
+                "display_name": "Leading Whitespace",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Files should not contain leading whitespace.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Files should not contain leading whitespace.",
+                "disable": false
+            },
+            {
+                "real_name": "legacy_cggeometry_functions",
+                "display_name": "Legacy CGGeometry Functions",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Struct extension properties and methods are preferred over legacy functions",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Struct extension properties and methods are preferred over legacy functions",
+                "disable": false
+            },
+            {
+                "real_name": "legacy_constant",
+                "display_name": "Legacy Constant",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Struct-scoped constants are preferred over legacy global constants.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Struct-scoped constants are preferred over legacy global constants.",
+                "disable": false
+            },
+            {
+                "real_name": "legacy_constructor",
+                "display_name": "Legacy Constructor",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Swift constructors are preferred over legacy convenience functions.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Swift constructors are preferred over legacy convenience functions.",
+                "disable": false
+            },
+            {
+                "real_name": "legacy_hashing",
+                "display_name": "Legacy Hashing",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Prefer using the `hash(into:)` function instead of overriding `hashValue`",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Prefer using the `hash(into:)` function instead of overriding `hashValue`",
+                "disable": false
+            },
+            {
+                "real_name": "legacy_multiple",
+                "display_name": "Legacy Multiple",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Prefer using the `isMultiple(of:)` function instead of using the remainder operator (`%`).",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Prefer using the `isMultiple(of:)` function instead of using the remainder operator (`%`).",
+                "disable": false
+            },
+            {
+                "real_name": "legacy_nsgeometry_functions",
+                "display_name": "Legacy NSGeometry Functions",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Struct extension properties and methods are preferred over legacy functions",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Struct extension properties and methods are preferred over legacy functions",
+                "disable": false
+            },
+            {
+                "real_name": "legacy_random",
+                "display_name": "Legacy Random",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Prefer using `type.random(in:)` over legacy functions.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Prefer using `type.random(in:)` over legacy functions.",
+                "disable": false
+            },
+            {
+                "real_name": "let_var_whitespace",
+                "display_name": "Variable Declaration Whitespace",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Let and var should be separated from other statements by a blank line.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Let and var should be separated from other statements by a blank line.",
+                "disable": false
+            },
+            {
+                "real_name": "line_length",
+                "display_name": "Line Length",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Lines should not span too many characters.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Lines should not span too many characters.",
+                "disable": false
+            },
+            {
+                "real_name": "literal_expression_end_indentation",
+                "display_name": "Literal Expression End Indentation",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Array and dictionary literal end should have the same indentation as the line that started it.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Array and dictionary literal end should have the same indentation as the line that started it.",
+                "disable": false
+            },
+            {
+                "real_name": "lower_acl_than_parent",
+                "display_name": "Lower ACL than parent",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Ensure definitions have a lower access control level than their enclosing parent",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Ensure definitions have a lower access control level than their enclosing parent",
+                "disable": false
+            },
+            {
+                "real_name": "mark",
+                "display_name": "Mark",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "MARK comment should be in valid format. e.g. '// MARK: ...' or '// MARK: - ...'",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "MARK comment should be in valid format. e.g. '// MARK: ...' or '// MARK: - ...'",
+                "disable": false
+            },
+            {
+                "real_name": "missing_docs",
+                "display_name": "Missing Docs",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Declarations should be documented.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Declarations should be documented.",
+                "disable": false
+            },
+            {
+                "real_name": "modifier_order",
+                "display_name": "Modifier Order",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Modifier order should be consistent.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Modifier order should be consistent.",
+                "disable": false
+            },
+            {
+                "real_name": "multiline_arguments",
+                "display_name": "Multiline Arguments",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Arguments should be either on the same line, or one per line.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Arguments should be either on the same line, or one per line.",
+                "disable": false
+            },
+            {
+                "real_name": "multiline_arguments_brackets",
+                "display_name": "Multiline Arguments Brackets",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Multiline arguments should have their surrounding brackets in a new line.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Multiline arguments should have their surrounding brackets in a new line.",
+                "disable": false
+            },
+            {
+                "real_name": "multiline_function_chains",
+                "display_name": "Multiline Function Chains",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Chained function calls should be either on the same line, or one per line.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Chained function calls should be either on the same line, or one per line.",
+                "disable": false
+            },
+            {
+                "real_name": "multiline_literal_brackets",
+                "display_name": "Multiline Literal Brackets",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Multiline literals should have their surrounding brackets in a new line.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Multiline literals should have their surrounding brackets in a new line.",
+                "disable": false
+            },
+            {
+                "real_name": "multiline_parameters",
+                "display_name": "Multiline Parameters",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Functions and methods parameters should be either on the same line, or one per line.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Functions and methods parameters should be either on the same line, or one per line.",
+                "disable": false
+            },
+            {
+                "real_name": "multiline_parameters_brackets",
+                "display_name": "Multiline Parameters Brackets",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Multiline parameters should have their surrounding brackets in a new line.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Multiline parameters should have their surrounding brackets in a new line.",
+                "disable": false
+            },
+            {
+                "real_name": "multiple_closures_with_trailing_closure",
+                "display_name": "Multiple Closures with Trailing Closure",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Trailing closure syntax should not be used when passing more than one closure argument.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Trailing closure syntax should not be used when passing more than one closure argument.",
+                "disable": false
+            },
+            {
+                "real_name": "nesting",
+                "display_name": "Nesting",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Types should be nested at most 1 level deep, and statements should be nested at most 5 levels deep.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Types should be nested at most 1 level deep, and statements should be nested at most 5 levels deep.",
+                "disable": false
+            },
+            {
+                "real_name": "nimble_operator",
+                "display_name": "Nimble Operator",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Prefer Nimble operator overloads over free matcher functions.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Prefer Nimble operator overloads over free matcher functions.",
+                "disable": false
+            },
+            {
+                "real_name": "notification_center_detachment",
+                "display_name": "Notification Center Detachment",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "An object should only remove itself as an observer in `deinit`.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "An object should only remove itself as an observer in `deinit`.",
+                "disable": false
+            },
+            {
+                "real_name": "no_extension_access_modifier",
+                "display_name": "No Extension Access Modifier",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Prefer not to use extension access modifiers",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Prefer not to use extension access modifiers",
+                "disable": false
+            },
+            {
+                "real_name": "no_fallthrough_only",
+                "display_name": "No Fallthrough Only",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Fallthroughs can only be used if the `case` contains at least one other statement.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Fallthroughs can only be used if the `case` contains at least one other statement.",
+                "disable": false
+            },
+            {
+                "real_name": "no_grouping_extension",
+                "display_name": "No Grouping Extension",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Extensions shouldn't be used to group code within the same source file.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Extensions shouldn't be used to group code within the same source file.",
+                "disable": false
+            },
+            {
+                "real_name": "no_space_in_method_call",
+                "display_name": "No Space in Method Call",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Don't add a space between the method name and the parentheses.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Don't add a space between the method name and the parentheses.",
+                "disable": false
+            },
+            {
+                "real_name": "nslocalizedstring_key",
+                "display_name": "NSLocalizedString Key",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Static strings should be used as key in NSLocalizedString in order to genstrings work.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Static strings should be used as key in NSLocalizedString in order to genstrings work.",
+                "disable": false
+            },
+            {
+                "real_name": "nslocalizedstring_require_bundle",
+                "display_name": "NSLocalizedString Require Bundle",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Calls to NSLocalizedString should specify the bundle which contains the strings file.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Calls to NSLocalizedString should specify the bundle which contains the strings file.",
+                "disable": false
+            },
+            {
+                "real_name": "nsobject_prefer_isequal",
+                "display_name": "NSObject Prefer isEqual",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "NSObject subclasses should implement isEqual instead of ==.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "NSObject subclasses should implement isEqual instead of ==.",
+                "disable": false
+            },
+            {
+                "real_name": "number_separator",
+                "display_name": "Number Separator",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Underscores should be used as thousand separator in large decimal numbers.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Underscores should be used as thousand separator in large decimal numbers.",
+                "disable": false
+            },
+            {
+                "real_name": "object_literal",
+                "display_name": "Object Literal",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Prefer object literals over image and color inits.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Prefer object literals over image and color inits.",
+                "disable": false
+            },
+            {
+                "real_name": "opening_brace",
+                "display_name": "Opening Brace Spacing",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Opening braces should be preceded by a single space and on the same line as the declaration.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Opening braces should be preceded by a single space and on the same line as the declaration.",
+                "disable": false
+            },
+            {
+                "real_name": "operator_usage_whitespace",
+                "display_name": "Operator Usage Whitespace",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Operators should be surrounded by a single whitespace when they are being used.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Operators should be surrounded by a single whitespace when they are being used.",
+                "disable": false
+            },
+            {
+                "real_name": "operator_whitespace",
+                "display_name": "Operator Function Whitespace",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Operators should be surrounded by a single whitespace when defining them.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Operators should be surrounded by a single whitespace when defining them.",
+                "disable": false
+            },
+            {
+                "real_name": "optional_enum_case_matching",
+                "display_name": "Optional Enum Case Match",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Matching an enum case against an optional enum without '?' is supported on Swift 5.1 and above.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Matching an enum case against an optional enum without '?' is supported on Swift 5.1 and above.",
+                "disable": false
+            },
+            {
+                "real_name": "orphaned_doc_comment",
+                "display_name": "Orphaned Doc Comment",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "A doc comment should be attached to a declaration.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "A doc comment should be attached to a declaration.",
+                "disable": false
+            },
+            {
+                "real_name": "overridden_super_call",
+                "display_name": "Overridden methods call super",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Some overridden methods should always call super",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Some overridden methods should always call super",
+                "disable": false
+            },
+            {
+                "real_name": "override_in_extension",
+                "display_name": "Override in Extension",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Extensions shouldn't override declarations.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Extensions shouldn't override declarations.",
+                "disable": false
+            },
+            {
+                "real_name": "pattern_matching_keywords",
+                "display_name": "Pattern Matching Keywords",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Combine multiple pattern matching bindings by moving keywords out of tuples.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Combine multiple pattern matching bindings by moving keywords out of tuples.",
+                "disable": false
+            },
+            {
+                "real_name": "prefer_self_type_over_type_of_self",
+                "display_name": "Prefer Self Type Over Type of Self",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Prefer `Self` over `type(of: self)` when accessing properties or calling methods.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Prefer `Self` over `type(of: self)` when accessing properties or calling methods.",
+                "disable": false
+            },
+            {
+                "real_name": "prefixed_toplevel_constant",
+                "display_name": "Prefixed Top-Level Constant",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Top-level constants should be prefixed by `k`.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Top-level constants should be prefixed by `k`.",
+                "disable": false
+            },
+            {
+                "real_name": "private_action",
+                "display_name": "Private Actions",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "IBActions should be private.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "IBActions should be private.",
+                "disable": false
+            },
+            {
+                "real_name": "private_outlet",
+                "display_name": "Private Outlets",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "IBOutlets should be private to avoid leaking UIKit to higher layers.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "IBOutlets should be private to avoid leaking UIKit to higher layers.",
+                "disable": false
+            },
+            {
+                "real_name": "private_over_fileprivate",
+                "display_name": "Private over fileprivate",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Prefer `private` over `fileprivate` declarations.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Prefer `private` over `fileprivate` declarations.",
+                "disable": false
+            },
+            {
+                "real_name": "private_unit_test",
+                "display_name": "Private Unit Test",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Unit tests marked private are silently skipped.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Unit tests marked private are silently skipped.",
+                "disable": false
+            },
+            {
+                "real_name": "prohibited_interface_builder",
+                "display_name": "Prohibited Interface Builder",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Creating views using Interface Builder should be avoided.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Creating views using Interface Builder should be avoided.",
+                "disable": false
+            },
+            {
+                "real_name": "prohibited_super_call",
+                "display_name": "Prohibited calls to super",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Some methods should not call super",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Some methods should not call super",
+                "disable": false
+            },
+            {
+                "real_name": "protocol_property_accessors_order",
+                "display_name": "Protocol Property Accessors Order",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "When declaring properties in protocols, the order of accessors should be `get set`.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "When declaring properties in protocols, the order of accessors should be `get set`.",
+                "disable": false
+            },
+            {
+                "real_name": "quick_discouraged_call",
+                "display_name": "Quick Discouraged Call",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Discouraged call inside 'describe' and/or 'context' block.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Discouraged call inside 'describe' and/or 'context' block.",
+                "disable": false
+            },
+            {
+                "real_name": "quick_discouraged_focused_test",
+                "display_name": "Quick Discouraged Focused Test",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Discouraged focused test. Other tests won't run while this one is focused.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Discouraged focused test. Other tests won't run while this one is focused.",
+                "disable": false
+            },
+            {
+                "real_name": "quick_discouraged_pending_test",
+                "display_name": "Quick Discouraged Pending Test",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Discouraged pending test. This test won't run while it's marked as pending.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Discouraged pending test. This test won't run while it's marked as pending.",
+                "disable": false
+            },
+            {
+                "real_name": "raw_value_for_camel_cased_codable_enum",
+                "display_name": "Raw Value For Camel Cased Codable Enum",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Camel cased cases of Codable String enums should have raw value.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Camel cased cases of Codable String enums should have raw value.",
+                "disable": false
+            },
+            {
+                "real_name": "reduce_boolean",
+                "display_name": "Reduce Boolean",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Prefer using `.allSatisfy()` or `.contains()` over `reduce(true)` or `reduce(false)`",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Prefer using `.allSatisfy()` or `.contains()` over `reduce(true)` or `reduce(false)`",
+                "disable": false
+            },
+            {
+                "real_name": "reduce_into",
+                "display_name": "Reduce Into",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Prefer `reduce(into:_:)` over `reduce(_:_:)` for copy-on-write types",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Prefer `reduce(into:_:)` over `reduce(_:_:)` for copy-on-write types",
+                "disable": false
+            },
+            {
+                "real_name": "redundant_discardable_let",
+                "display_name": "Redundant Discardable Let",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Prefer `_ = foo()` over `let _ = foo()` when discarding a result from a function.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Prefer `_ = foo()` over `let _ = foo()` when discarding a result from a function.",
+                "disable": false
+            },
+            {
+                "real_name": "redundant_nil_coalescing",
+                "display_name": "Redundant Nil Coalescing",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "nil coalescing operator is only evaluated if the lhs is nil, coalescing operator with nil as rhs is redundant",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "nil coalescing operator is only evaluated if the lhs is nil, coalescing operator with nil as rhs is redundant",
+                "disable": false
+            },
+            {
+                "real_name": "redundant_objc_attribute",
+                "display_name": "Redundant @objc Attribute",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Objective-C attribute (@objc) is redundant in declaration.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Objective-C attribute (@objc) is redundant in declaration.",
+                "disable": false
+            },
+            {
+                "real_name": "redundant_optional_initialization",
+                "display_name": "Redundant Optional Initialization",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Initializing an optional variable with nil is redundant.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Initializing an optional variable with nil is redundant.",
+                "disable": false
+            },
+            {
+                "real_name": "redundant_set_access_control",
+                "display_name": "Redundant Set Access Control Rule",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Property setter access level shouldn't be explicit if it's the same as the variable access level.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Property setter access level shouldn't be explicit if it's the same as the variable access level.",
+                "disable": false
+            },
+            {
+                "real_name": "redundant_string_enum_value",
+                "display_name": "Redundant String Enum Value",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "String enum values can be omitted when they are equal to the enumcase name.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "String enum values can be omitted when they are equal to the enumcase name.",
+                "disable": false
+            },
+            {
+                "real_name": "redundant_type_annotation",
+                "display_name": "Redundant Type Annotation",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Variables should not have redundant type annotation",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Variables should not have redundant type annotation",
+                "disable": false
+            },
+            {
+                "real_name": "redundant_void_return",
+                "display_name": "Redundant Void Return",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Returning Void in a function declaration is redundant.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Returning Void in a function declaration is redundant.",
+                "disable": false
+            },
+            {
+                "real_name": "required_deinit",
+                "display_name": "Required Deinit",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Classes should have an explicit deinit method.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Classes should have an explicit deinit method.",
+                "disable": false
+            },
+            {
+                "real_name": "required_enum_case",
+                "display_name": "Required Enum Case",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Enums conforming to a specified protocol must implement a specific case(s).",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Enums conforming to a specified protocol must implement a specific case(s).",
+                "disable": false
+            },
+            {
+                "real_name": "return_arrow_whitespace",
+                "display_name": "Returning Whitespace",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Return arrow and return type should be separated by a single space or on a separate line.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Return arrow and return type should be separated by a single space or on a separate line.",
+                "disable": false
+            },
+            {
+                "real_name": "shorthand_operator",
+                "display_name": "Shorthand Operator",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Prefer shorthand operators (+=, -=, *=, /=) over doing the operation and assigning.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Prefer shorthand operators (+=, -=, *=, /=) over doing the operation and assigning.",
+                "disable": false
+            },
+            {
+                "real_name": "single_test_class",
+                "display_name": "Single Test Class",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Test files should contain a single QuickSpec or XCTestCase class.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Test files should contain a single QuickSpec or XCTestCase class.",
+                "disable": false
+            },
+            {
+                "real_name": "sorted_first_last",
+                "display_name": "Min or Max over Sorted First or Last",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Prefer using `min()` or `max()` over `sorted().first` or `sorted().last`",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Prefer using `min()` or `max()` over `sorted().first` or `sorted().last`",
+                "disable": false
+            },
+            {
+                "real_name": "sorted_imports",
+                "display_name": "Sorted Imports",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Imports should be sorted.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Imports should be sorted.",
+                "disable": false
+            },
+            {
+                "real_name": "statement_position",
+                "display_name": "Statement Position",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Else and catch should be on the same line, one space after the previous declaration.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Else and catch should be on the same line, one space after the previous declaration.",
+                "disable": false
+            },
+            {
+                "real_name": "static_operator",
+                "display_name": "Static Operator",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Operators should be declared as static functions, not free functions.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Operators should be declared as static functions, not free functions.",
+                "disable": false
+            },
+            {
+                "real_name": "strict_fileprivate",
+                "display_name": "Strict fileprivate",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "`fileprivate` should be avoided.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "`fileprivate` should be avoided.",
+                "disable": false
+            },
+            {
+                "real_name": "strong_iboutlet",
+                "display_name": "Strong IBOutlet",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "@IBOutlets shouldn't be declared as weak.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "@IBOutlets shouldn't be declared as weak.",
+                "disable": false
+            },
+            {
+                "real_name": "superfluous_disable_command",
+                "display_name": "Superfluous Disable Command",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "SwiftLint 'disable' commands are superfluous when the disabled rule would not have triggered a violation in the disabled region. Use \" - \" if you wish to document a command.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "SwiftLint 'disable' commands are superfluous when the disabled rule would not have triggered a violation in the disabled region. Use \" - \" if you wish to document a command.",
+                "disable": false
+            },
+            {
+                "real_name": "switch_case_alignment",
+                "display_name": "Switch and Case Statement Alignment",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Case statements should vertically align with their enclosing switch statement, or indented if configured otherwise.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Case statements should vertically align with their enclosing switch statement, or indented if configured otherwise.",
+                "disable": false
+            },
+            {
+                "real_name": "switch_case_on_newline",
+                "display_name": "Switch Case on Newline",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Cases inside a switch should always be on a newline",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Cases inside a switch should always be on a newline",
+                "disable": false
+            },
+            {
+                "real_name": "syntactic_sugar",
+                "display_name": "Syntactic Sugar",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Shorthand syntactic sugar should be used, i.e. [Int] instead of Array<Int>.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Shorthand syntactic sugar should be used, i.e. [Int] instead of Array<Int>.",
+                "disable": false
+            },
+            {
+                "real_name": "todo",
+                "display_name": "Todo",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "TODOs and FIXMEs should be resolved.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "TODOs and FIXMEs should be resolved.",
+                "disable": false
+            },
+            {
+                "real_name": "toggle_bool",
+                "display_name": "Toggle Bool",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Prefer `someBool.toggle()` over `someBool = !someBool`.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Prefer `someBool.toggle()` over `someBool = !someBool`.",
+                "disable": false
+            },
+            {
+                "real_name": "trailing_closure",
+                "display_name": "Trailing Closure",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Trailing closure syntax should be used whenever possible.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Trailing closure syntax should be used whenever possible.",
+                "disable": false
+            },
+            {
+                "real_name": "trailing_comma",
+                "display_name": "Trailing Comma",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Trailing commas in arrays and dictionaries should be avoided/enforced.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Trailing commas in arrays and dictionaries should be avoided/enforced.",
+                "disable": false
+            },
+            {
+                "real_name": "trailing_newline",
+                "display_name": "Trailing Newline",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Files should have a single trailing newline.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Files should have a single trailing newline.",
+                "disable": false
+            },
+            {
+                "real_name": "trailing_semicolon",
+                "display_name": "Trailing Semicolon",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Lines should not have trailing semicolons.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Lines should not have trailing semicolons.",
+                "disable": false
+            },
+            {
+                "real_name": "trailing_whitespace",
+                "display_name": "Trailing Whitespace",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Lines should not have trailing whitespace.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Lines should not have trailing whitespace.",
+                "disable": false
+            },
+            {
+                "real_name": "type_body_length",
+                "display_name": "Type Body Length",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Type bodies should not span too many lines.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Type bodies should not span too many lines.",
+                "disable": false
+            },
+            {
+                "real_name": "type_contents_order",
+                "display_name": "Type Contents Order",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Specifies the order of subtypes, properties, methods & more within a type.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Specifies the order of subtypes, properties, methods & more within a type.",
+                "disable": false
+            },
+            {
+                "real_name": "type_name",
+                "display_name": "Type Name",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Type name should only contain alphanumeric characters, start with an uppercase character and span between 3 and 40 characters in length.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Type name should only contain alphanumeric characters, start with an uppercase character and span between 3 and 40 characters in length.",
+                "disable": false
+            },
+            {
+                "real_name": "unavailable_function",
+                "display_name": "Unavailable Function",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Unimplemented functions should be marked as unavailable.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Unimplemented functions should be marked as unavailable.",
+                "disable": false
+            },
+            {
+                "real_name": "unneeded_break_in_switch",
+                "display_name": "Unneeded Break in Switch",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Avoid using unneeded break statements.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Avoid using unneeded break statements.",
+                "disable": false
+            },
+            {
+                "real_name": "unneeded_parentheses_in_closure_argument",
+                "display_name": "Unneeded Parentheses in Closure Argument",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Parentheses are not needed when declaring closure arguments.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Parentheses are not needed when declaring closure arguments.",
+                "disable": false
+            },
+            {
+                "real_name": "unowned_variable_capture",
+                "display_name": "Unowned Variable Capture",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Prefer capturing references as weak to avoid potential crashes.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Prefer capturing references as weak to avoid potential crashes.",
+                "disable": false
+            },
+            {
+                "real_name": "untyped_error_in_catch",
+                "display_name": "Untyped Error in Catch",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Catch statements should not declare error variables without type casting.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Catch statements should not declare error variables without type casting.",
+                "disable": false
+            },
+            {
+                "real_name": "unused_capture_list",
+                "display_name": "Unused Capture List",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Unused reference in a capture list should be removed.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Unused reference in a capture list should be removed.",
+                "disable": false
+            },
+            {
+                "real_name": "unused_closure_parameter",
+                "display_name": "Unused Closure Parameter",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Unused parameter in a closure should be replaced with _.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Unused parameter in a closure should be replaced with _.",
+                "disable": false
+            },
+            {
+                "real_name": "unused_control_flow_label",
+                "display_name": "Unused Control Flow Label",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Unused control flow label should be removed.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Unused control flow label should be removed.",
+                "disable": false
+            },
+            {
+                "real_name": "unused_declaration",
+                "display_name": "Unused Declaration",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Declarations should be referenced at least once within all files linted.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Declarations should be referenced at least once within all files linted.",
+                "disable": false
+            },
+            {
+                "real_name": "unused_enumerated",
+                "display_name": "Unused Enumerated",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "When the index or the item is not used, `.enumerated()` can be removed.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "When the index or the item is not used, `.enumerated()` can be removed.",
+                "disable": false
+            },
+            {
+                "real_name": "unused_import",
+                "display_name": "Unused Import",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "All imported modules should be required to make the file compile.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "All imported modules should be required to make the file compile.",
+                "disable": false
+            },
+            {
+                "real_name": "unused_optional_binding",
+                "display_name": "Unused Optional Binding",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Prefer `!= nil` over `let _ =`",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Prefer `!= nil` over `let _ =`",
+                "disable": false
+            },
+            {
+                "real_name": "unused_setter_value",
+                "display_name": "Unused Setter Value",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Setter value is not used.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Setter value is not used.",
+                "disable": false
+            },
+            {
+                "real_name": "valid_ibinspectable",
+                "display_name": "Valid IBInspectable",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "@IBInspectable should be applied to variables only, have its type explicit and be of a supported type",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "@IBInspectable should be applied to variables only, have its type explicit and be of a supported type",
+                "disable": false
+            },
+            {
+                "real_name": "vertical_parameter_alignment",
+                "display_name": "Vertical Parameter Alignment",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Function parameters should be aligned vertically if they're in multiple lines in a declaration.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Function parameters should be aligned vertically if they're in multiple lines in a declaration.",
+                "disable": false
+            },
+            {
+                "real_name": "vertical_parameter_alignment_on_call",
+                "display_name": "Vertical Parameter Alignment On Call",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Function parameters should be aligned vertically if they're in multiple lines in a method call.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Function parameters should be aligned vertically if they're in multiple lines in a method call.",
+                "disable": false
+            },
+            {
+                "real_name": "vertical_whitespace",
+                "display_name": "Vertical Whitespace",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Limit vertical whitespace to a single empty line.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Limit vertical whitespace to a single empty line.",
+                "disable": false
+            },
+            {
+                "real_name": "vertical_whitespace_between_cases",
+                "display_name": "Vertical Whitespace Between Cases",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Include a single empty line between switch cases.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Include a single empty line between switch cases.",
+                "disable": false
+            },
+            {
+                "real_name": "vertical_whitespace_closing_braces",
+                "display_name": "Vertical Whitespace before Closing Braces",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Don't include vertical whitespace (empty line) before closing braces.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Don't include vertical whitespace (empty line) before closing braces.",
+                "disable": false
+            },
+            {
+                "real_name": "vertical_whitespace_opening_braces",
+                "display_name": "Vertical Whitespace after Opening Braces",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Don't include vertical whitespace (empty line) after opening braces.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Don't include vertical whitespace (empty line) after opening braces.",
+                "disable": false
+            },
+            {
+                "real_name": "void_return",
+                "display_name": "Void Return",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Prefer `-> Void` over `-> ()`.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Prefer `-> Void` over `-> ()`.",
+                "disable": false
+            },
+            {
+                "real_name": "weak_delegate",
+                "display_name": "Weak Delegate",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Delegates should be weak to avoid reference cycles.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Delegates should be weak to avoid reference cycles.",
+                "disable": false
+            },
+            {
+                "real_name": "xctfail_message",
+                "display_name": "XCTFail Message",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "An XCTFail call should include a description of the assertion.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "An XCTFail call should include a description of the assertion.",
+                "disable": false
+            },
+            {
+                "real_name": "xct_specific_matcher",
+                "display_name": "XCTest Specific Matcher",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "Prefer specific XCTest matchers over `XCTAssertEqual` and `XCTAssertNotEqual`",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "Prefer specific XCTest matchers over `XCTAssertEqual` and `XCTAssertNotEqual`",
+                "disable": false
+            },
+            {
+                "real_name": "yoda_condition",
+                "display_name": "Yoda condition rule",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "The variable should be placed on the left, the constant on the right of a comparison operator.",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "swift"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "The variable should be placed on the left, the constant on the right of a comparison operator.",
+                "disable": false
+            }
+        ],
+        "open_user": false,
+        "open_saas": false,
+        "virtual_name": "126",
+        "show_display_name": true
+    }
+]
