@@ -28,5 +28,7 @@
 进入源码目录后，执行``docker-compose up -d``命令，即可启动Server与Web服务
 
 ## 常见问题
-Q：如何查看服务启动的日志：
+Q：如何查看服务启动的日志？
 A：可以先找服务名称，执行``docker-compose logs -f xxx``，xxx即服务的名称，比如``main-server``、``main-worker``等
+Q：TCA初始登录账号密码是什么？
+A：初始登录账号是``CodeDog``，密码是``admin``，如果想要自定义，在初始化前，可以在[.env.local](https://github.com/Tencent/CodeAnalysis/blob/main/server/dockerconfs/.env.local)对``TCA_DEFAULT_ADMIN``和``TCA_DEFAULT_PASSWORD``变量值进行调整。如果初始化完成后需要调整，则需要登录到平台的``用户管理``页面进行调整。
