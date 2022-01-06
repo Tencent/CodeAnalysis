@@ -2,7 +2,7 @@
 ## 前期部署准备
 ### 环境依赖
 1. Docker
-2. Docker-Compose 3.0以上版本
+2. Docker-Compose 2.0以上版本
 
 ### 服务部署顺序
 1. Server服务
