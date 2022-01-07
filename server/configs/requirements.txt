@@ -53,3 +53,5 @@ minio==7.1.0
 
 # for exception log
 sentry-sdk==0.10.2
+
+psutil==5.8.0
