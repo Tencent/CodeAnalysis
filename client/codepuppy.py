@@ -13,8 +13,8 @@ from logging.handlers import RotatingFileHandler
 from node import app
 from node.app import settings
 from node.cmdarg import CmdArgParser
-from settings.settingtype import SettingType
-from node.localtask.localconfig import LocalConfig
+from tool.util.pythontool import PythonTool
+from util.exceptions import ConfigError
 from util.gitconfig import GitConfig
 from util.logutil import LogPrinter
 
@@ -29,6 +29,9 @@ class CodePuppy(object):
         self._params = CmdArgParser.parse_args()
         # 日志输出设置
         self.__setup_logger()
+        # 检查是否为python3.7版本
+        if not PythonTool.is_local_python_command_available("python3", python_version="3.7"):
+            raise ConfigError("python3 command(Python Version 3.7) is not available, please install first.")
         # 运行环境默认编码检查
         self.__check_encoding()
 

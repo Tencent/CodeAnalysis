@@ -2,7 +2,9 @@
 ## 前期部署准备
 ### 环境依赖
 1. Docker
-2. Docker-Compose 3.0以上版本
+2. Docker-Compose
+
+> Compose file format需要为3.0及以上，Docker版本要求可以参考[官方文档](https://docs.docker.com/compose/compose-file/compose-file-v3/#compose-and-docker-compatibility-matrix)
 
 ### 服务部署顺序
 1. Server服务
@@ -28,5 +30,8 @@
 进入源码目录后，执行``docker-compose up -d``命令，即可启动Server与Web服务
 
 ## 常见问题
-Q：如何查看服务启动的日志：
-A：可以先找服务名称，执行``docker-compose logs -f xxx``，xxx即服务的名称，比如``main-server``、``main-worker``等
+- Q：如何查看服务启动的日志？
+  - A：可以先找服务名称，执行``docker-compose logs -f xxx``，xxx即服务的名称，比如``main-server``、``main-worker``等
+
+- Q：TCA初始登录账号密码是什么？
+  - A：初始登录账号是``CodeDog``，密码是``admin``，如果想要自定义，在初始化前，可以在[.env.local](https://github.com/Tencent/CodeAnalysis/blob/main/server/dockerconfs/.env.local)对``TCA_DEFAULT_ADMIN``和``TCA_DEFAULT_PASSWORD``变量值进行调整。如果初始化完成后需要调整，则需要登录到平台的``用户管理``页面进行调整。
