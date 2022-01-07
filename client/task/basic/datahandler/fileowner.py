@@ -1,4 +1,10 @@
 # -*- encoding: utf-8 -*-
+# Copyright (c) 2021-2022 THL A29 Limited
+#
+# This source code file is made available under MIT License
+# See LICENSE for details
+# ==============================================================================
+
 """
 在结果中添加文件负责人信息。
 用户可以在代码库中不同目录下添加.code.yml文件,yaml中包含以下字段内容：

@@ -1,4 +1,10 @@
 # -*- coding: utf-8 -*-
+# Copyright (c) 2021-2022 THL A29 Limited
+#
+# This source code file is made available under MIT License
+# See LICENSE for details
+# ==============================================================================
+
 """自定义规则工具，应用自定义规则扫描, 适用于文件结果的自定义规则(问题定位到文件,责任人通过文件最后修改人获取)
 """
 

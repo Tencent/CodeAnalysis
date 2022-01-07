@@ -1,4 +1,10 @@
-# -*-  coding: UTF-8  -*-
+# -*-  coding: utf-8  -*-
+# Copyright (c) 2021-2022 THL A29 Limited
+#
+# This source code file is made available under MIT License
+# See LICENSE for details
+# ==============================================================================
+
 """命令行版Scm控制器，依赖标准的SVN或GIT命令行客户端（该模块主要目标是减轻第三方模块的依赖，例如pysvn需要管理员权限才能部署。该模块适用于Python2&3）
 """
 # -*- -*- -*- -*- -*- -*-
