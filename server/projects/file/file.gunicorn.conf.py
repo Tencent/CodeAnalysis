@@ -14,7 +14,7 @@ import os
 import multiprocessing
 
 project_path = os.path.dirname(os.path.abspath(__file__))
-bind = "0.0.0.0:8004"
+bind = "0.0.0.0:8804"
 backlog = 2048
 chdir = project_path
 pidfile = os.path.join(project_path, "file-master.pid")

@@ -198,7 +198,6 @@ services:
     volumes:
       - ./web/tca-deploy-source:/data/tca-deploy-source
       - ./server/configs/nginx/tca_8000_compose.conf:/etc/nginx/conf.d/tca_8000_compose.conf
-      - ./server/configs/nginx/tca_file_local_compose.conf:/etc/nginx/conf.d/tca_file_local_compose.conf
     entrypoint: bash /data/tca-deploy-source/init.sh
     ports:
       - "80:80"
