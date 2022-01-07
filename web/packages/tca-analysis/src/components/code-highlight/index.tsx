@@ -1,3 +1,9 @@
+// Copyright (c) 2021-2022 THL A29 Limited
+//
+// This source code file is made available under MIT License
+// See LICENSE for details
+// ==============================================================================
+
 // 代码高亮自定义组件
 import React, { useRef, useEffect, CSSProperties } from 'react';
 import { VariableSizeList as List } from 'react-window';

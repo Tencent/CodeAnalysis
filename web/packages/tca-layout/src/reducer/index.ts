@@ -1,3 +1,9 @@
+// Copyright (c) 2021-2022 THL A29 Limited
+//
+// This source code file is made available under MIT License
+// See LICENSE for details
+// ==============================================================================
+
 import GLOBAL_BREADCRUMB from '@src/components/global-breadcrumb/reducer';
 import INITIAL from './initial';
 import APP from './app';

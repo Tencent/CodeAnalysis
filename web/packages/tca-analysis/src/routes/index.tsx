@@ -1,3 +1,9 @@
+// Copyright (c) 2021-2022 THL A29 Limited
+//
+// This source code file is made available under MIT License
+// See LICENSE for details
+// ==============================================================================
+
 // import React, { useEffect, useState, lazy } from 'react';
 import React, { useEffect, useState } from 'react';
 import { Route, Switch, useParams, useHistory } from 'react-router-dom';

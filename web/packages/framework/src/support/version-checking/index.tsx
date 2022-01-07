@@ -1,3 +1,9 @@
+// Copyright (c) 2021-2022 THL A29 Limited
+//
+// This source code file is made available under MIT License
+// See LICENSE for details
+// ==============================================================================
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { getMountedApps } from 'single-spa';

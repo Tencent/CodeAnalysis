@@ -1,3 +1,9 @@
+// Copyright (c) 2021-2022 THL A29 Limited
+//
+// This source code file is made available under MIT License
+// See LICENSE for details
+// ==============================================================================
+
 import { toUpper } from 'lodash';
 import { getMetaEnv, warn, info } from '@src/utils';
 import Constant, { DEFAULT_MICRO_FRONTEND_SETTING_API } from '@src/constant';

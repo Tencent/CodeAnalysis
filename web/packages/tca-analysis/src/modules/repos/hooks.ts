@@ -1,3 +1,9 @@
+// Copyright (c) 2021-2022 THL A29 Limited
+//
+// This source code file is made available under MIT License
+// See LICENSE for details
+// ==============================================================================
+
 import { useEffect } from 'react';
 // 项目内
 import { getRepo } from '@src/services/repos';

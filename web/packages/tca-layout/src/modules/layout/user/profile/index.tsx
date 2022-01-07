@@ -1,3 +1,9 @@
+// Copyright (c) 2021-2022 THL A29 Limited
+//
+// This source code file is made available under MIT License
+// See LICENSE for details
+// ==============================================================================
+
 import React, { useState } from 'react';
 import { Layout, Row, Col, Form, Button, Input, Avatar, message } from 'coding-oa-uikit';
 import classnames from 'classnames';
