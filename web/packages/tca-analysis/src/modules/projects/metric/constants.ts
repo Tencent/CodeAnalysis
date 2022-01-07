@@ -1,3 +1,9 @@
+// Copyright (c) 2021-2022 THL A29 Limited
+//
+// This source code file is made available under MIT License
+// See LICENSE for details
+// ==============================================================================
+
 export const TIPS = {
   UN_SUPPORT_CC: '暂不支持Kotlin、Css、Html、TypeScript、VisualBasic语言的圈复杂度分析。',
   UN_SUPPORT_DUP: '暂不支持Lua、Css、Html、TypeScript、VisualBasic语言的重复代码分析。',

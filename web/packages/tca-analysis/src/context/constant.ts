@@ -1,3 +1,9 @@
+// Copyright (c) 2021-2022 THL A29 Limited
+//
+// This source code file is made available under MIT License
+// See LICENSE for details
+// ==============================================================================
+
 export const SET_REPOS = 'SET_REPOS';
 
 export const SET_CUR_REPO = 'SET_CUR_REPO';

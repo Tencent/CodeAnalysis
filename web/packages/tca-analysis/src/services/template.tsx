@@ -1,3 +1,9 @@
+// Copyright (c) 2021-2022 THL A29 Limited
+//
+// This source code file is made available under MIT License
+// See LICENSE for details
+// ==============================================================================
+
 /**
  * description      方案模板请求
  * author           luochunlan@coding.net

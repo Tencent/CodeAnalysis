@@ -1,3 +1,9 @@
+// Copyright (c) 2021-2022 THL A29 Limited
+//
+// This source code file is made available under MIT License
+// See LICENSE for details
+// ==============================================================================
+
 /**
  * 添加/编辑过滤路径模态框
  */

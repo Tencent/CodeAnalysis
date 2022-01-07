@@ -1,3 +1,9 @@
+// Copyright (c) 2021-2022 THL A29 Limited
+//
+// This source code file is made available under MIT License
+// See LICENSE for details
+// ==============================================================================
+
 // 圈复杂度文件详情页
 import React, { useEffect, useState, useRef } from 'react';
 import { useParams, useHistory } from 'react-router-dom';

@@ -1,3 +1,9 @@
+// Copyright (c) 2021-2022 THL A29 Limited
+//
+// This source code file is made available under MIT License
+// See LICENSE for details
+// ==============================================================================
+
 /* tslint:disable */
 // 请确保 i18n 初始化文件最先加载
 import i18next from 'i18next';
