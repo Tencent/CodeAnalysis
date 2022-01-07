@@ -1,4 +1,10 @@
 # -*- encoding: utf-8 -*-
+# Copyright (c) 2021-2022 THL A29 Limited
+#
+# This source code file is made available under MIT License
+# See LICENSE for details
+# ==============================================================================
+
 """
 结果处理操作类的接口类
 """

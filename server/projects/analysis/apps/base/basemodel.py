@@ -1,4 +1,10 @@
 # -*- coding: utf-8 -*-
+# Copyright (c) 2021-2022 THL A29 Limited
+#
+# This source code file is made available under MIT License
+# See LICENSE for details
+# ==============================================================================
+
 """base的db模块，提供虚拟model基类
 Common model behavior for all models.
 Soft-deletion (including cascade) and tracking of user and timestamp for model

@@ -1,5 +1,11 @@
 #!/usr/bin/env python
 # -*- encoding: utf-8 -*-
+# Copyright (c) 2021-2022 THL A29 Limited
+#
+# This source code file is made available under MIT License
+# See LICENSE for details
+# ==============================================================================
+
 """
 FbRjs:扫描项目中的reactjs的版本号。要求大于等于16.0.0
 """

@@ -1,5 +1,11 @@
 #!/usr/bin/env python
 # -*- encoding: utf-8 -*-
+# Copyright (c) 2021-2022 THL A29 Limited
+#
+# This source code file is made available under MIT License
+# See LICENSE for details
+# ==============================================================================
+
 """
 cobra: Cobra是一款源代码安全审计工具，支持检测多种开发语言源代码中的大部分显著的安全问题和漏洞。
 """

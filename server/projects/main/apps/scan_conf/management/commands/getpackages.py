@@ -1,4 +1,10 @@
 # # -*- coding: utf-8 -*-
+# Copyright (c) 2021-2022 THL A29 Limited
+#
+# This source code file is made available under MIT License
+# See LICENSE for details
+# ==============================================================================
+
 """获取指定规则包并加载到Json文件中
 """
 # 原生 import

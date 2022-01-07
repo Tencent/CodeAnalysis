@@ -1,4 +1,10 @@
 # -*- encoding: utf-8 -*-
+# Copyright (c) 2021-2022 THL A29 Limited
+#
+# This source code file is made available under MIT License
+# See LICENSE for details
+# ==============================================================================
+
 """
 资源管理类用于进行各个task的数据过滤与管理
 资源管理的设计有两个思路：1. 针对不同类型的task进行区别处理 （优势，实现简单，劣势，可扩展性差，维护难度高）

@@ -1,4 +1,10 @@
 # -*- encoding: utf-8 -*-
+# Copyright (c) 2021-2022 THL A29 Limited
+#
+# This source code file is made available under MIT License
+# See LICENSE for details
+# ==============================================================================
+
 """
 检查项目中是否包含不该存在的的文件或目录
 默认检查的文件路径: *.a, *.framework

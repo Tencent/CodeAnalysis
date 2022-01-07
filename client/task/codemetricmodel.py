@@ -1,4 +1,10 @@
 # -*- encoding: utf-8 -*-
+# Copyright (c) 2021-2022 THL A29 Limited
+#
+# This source code file is made available under MIT License
+# See LICENSE for details
+# ==============================================================================
+
 """
 代码度量工具模板类，继承自 IToolModel。
 用于直接封装代码度量工具，所有代码度量类工具，必须继承自该类。

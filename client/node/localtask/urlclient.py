@@ -1,4 +1,10 @@
 # -*- encoding: utf-8 -*-
+# Copyright (c) 2021-2022 THL A29 Limited
+#
+# This source code file is made available under MIT License
+# See LICENSE for details
+# ==============================================================================
+
 """
 CodeDog 前端 URL 页面链接管理，包括标准版和Coding版等，不直接调用，通过 urlmgr.py 中的 UrlMgr 类来调用对应CodeDog版本的 URL 类
 """

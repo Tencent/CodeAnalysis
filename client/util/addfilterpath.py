@@ -1,4 +1,10 @@
 # -*- encoding: utf-8 -*-
+# Copyright (c) 2021-2022 THL A29 Limited
+#
+# This source code file is made available under MIT License
+# See LICENSE for details
+# ==============================================================================
+
 """
 PCG-EPC需求
 读取项目根目录下的.code.yml文件,获取过滤路径，添加到项目过滤路径中
