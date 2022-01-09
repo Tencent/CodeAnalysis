@@ -22,6 +22,8 @@ $ make -j8
 $ make install
 # 清理编译产出的中间文件
 $ make clean
+# 删除系统内置的python2的软连接
+rm /usr/bin/python
 # 链接构建产出的Python可执行文件到/usr/local/bin目录
 $ ln -s /usr/local/python3/bin/python3 /usr/local/bin/python
 # 链接构建产出的pip3可执行文件到/usr/local/bin目录
