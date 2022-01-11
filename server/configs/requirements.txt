@@ -44,7 +44,7 @@ PyJWT==1.7.1
 pyaes==1.6.1
 rsa==4.7.2
 pycryptodome==3.9.8
-cryptography==3.2.1
+cryptography==3.3.2
 PyJWT==1.7.1
 
 # for storage sdk
