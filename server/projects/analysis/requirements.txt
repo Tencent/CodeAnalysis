@@ -26,7 +26,7 @@ django-guardian==2.3.0
 Jinja2==2.11.3
 
 # for rest api
-djangorestframework==3.11.1
+djangorestframework==3.11.2
 coreapi==2.3.3
 Markdown==3.3.4
 django-cors-headers==3.7.0
