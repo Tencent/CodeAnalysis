@@ -18,7 +18,7 @@ PyJWT==1.7.1
 # for password
 pyaes==1.6.1
 pycryptodome==3.9.8
-cryptography===2.9.2
+cryptography===3.3.2
 
 # for exception log
 sentry-sdk==0.10.2
