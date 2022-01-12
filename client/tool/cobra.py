@@ -18,6 +18,7 @@ from task.scmmgr import SCMMgr
 from util.logutil import LogPrinter
 from util.pathlib import PathMgr
 from util.pathfilter import FilterPathUtil
+from tool.util.toolenvset import ToolEnvSet
 from task.codelintmodel import CodeLintModel
 from util.subprocc import SubProcController
 from task.basic.common import subprocc_log
@@ -28,6 +29,11 @@ class Cobra(CodeLintModel):
     def __init__(self, params):
         CodeLintModel.__init__(self, params)
         self.sensitive_word_maps = {"Cobra": "Tool", "cobra": "Tool"}
+        self.install_steps = (
+            "1. 执行<Client安装位置>/data/tools/cobra-v2.0.0-alpha.5/install.sh安装依赖;\n"
+            "2. cd <Client安装位置>/data/tools/cobra-v2.0.0-alpha.5; pip3 install -r requirements.txt\n"
+            "3. 检验: python3 cobra.py --help"
+        )
 
     def analyze(self, params):
         """
@@ -55,13 +61,15 @@ class Cobra(CodeLintModel):
         toscans = path_filter.get_include_files(toscans, relpos)
         toscans = [path[relpos:].replace(os.sep, "/") for path in toscans]
 
-        LogPrinter.info(f"待扫描文件数是: {len(toscans)}")
+        LogPrinter.info(f"待分析文件数是: {len(toscans)}")
         toscan_dir = os.path.join(work_dir, "toscan_dir")
         for path in toscans:
             file_path = os.path.join(toscan_dir, path)
             if not os.path.exists(os.path.dirname(file_path)):
                 os.makedirs(os.path.dirname(file_path))
             shutil.copyfile(os.path.join(params.source_dir, path), file_path)
+
+        ToolEnvSet.auto_set_py_env(params=params, version=3)
 
         scan_cmd = [
             "python",
@@ -77,15 +85,17 @@ class Cobra(CodeLintModel):
         if rules:
             scan_cmd.extend(["-r", ",".join(rules)])
 
+        LogPrinter.info("scan_cmd: %s" % " ".join(scan_cmd))
+        scan_cmd = PathMgr().format_cmd_arg_list(scan_cmd)
         SubProcController(
             scan_cmd, cwd=COBRA_HOME, stdout_line_callback=self.analyze_callback, stderr_line_callback=self.print_log
         ).wait()
 
-        # 扫描完成之后，删除拷贝的代码
+        # 分析完成之后，删除拷贝的代码
         PathMgr().rmpath(toscan_dir)
 
         if not os.path.exists(error_output):
-            LogPrinter.error("扫描结果不存在，请确认cobra是否安装成功，可以使用data/tools/cobra-v2.0.0-alpha.5/install.sh脚本进行安装！")
+            LogPrinter.error(f"分析结果不存在，请确认cobra是否安装成功:\n{self.install_steps}")
             return []
         with open(error_output, "r") as f:
             raw_warning_json = json.loads(f.read())
@@ -114,8 +124,11 @@ class Cobra(CodeLintModel):
         :return:
         """
         subprocc_log(line)
-        if line.find("brew install findutils pleases!") != -1:
-            raise AnalyzeTaskError("请确认cobra是否安装成功，可以使用data/tools/cobra-v2.0.0-alpha.5/install.sh脚本进行安装")
+        if (
+            line.find("brew install findutils pleases!") != -1
+            or line.find("ModuleNotFoundError: No module named") != -1
+        ):
+            raise AnalyzeTaskError(f"请确认cobra是否安装成功:\n{self.install_steps}")
 
     def check_tool_usable(self, tool_params):
         """
@@ -125,7 +138,7 @@ class Cobra(CodeLintModel):
         if SubProcController(["python", "--version"]).wait() != 0:
             return []
         if SubProcController(["python", "cobra.py", "--help"], cwd=os.environ.get("COBRA_HOME")).wait() != 0:
-            LogPrinter.error("cobra不可用，建议客户使用data/tools/cobra-v2.0.0-alpha.5/install.sh脚本进行安装！")
+            LogPrinter.error(f"cobra不可用，建议:\n{self.install_steps}")
             return []
         return ["analyze"]
 
