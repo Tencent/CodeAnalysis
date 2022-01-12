@@ -11,7 +11,321 @@
           "基础"
       ],
       "checkrule_set": [
-          
+        {
+            "checktool": "cppcheck",
+            "checkrule": "returnLocalVariable",
+            "severity": "error",
+            "rule_params": null,
+            "state": "enabled"
+          },
+          {
+            "checktool": "cppcheck",
+            "checkrule": "arrayIndexOutOfBounds",
+            "severity": "error",
+            "rule_params": null,
+            "state": "enabled"
+          },
+          {
+            "checktool": "cppcheck",
+            "checkrule": "bufferAccessOutOfBounds",
+            "severity": "error",
+            "rule_params": null,
+            "state": "enabled"
+          },
+          {
+            "checktool": "cppcheck",
+            "checkrule": "outOfBounds",
+            "severity": "error",
+            "rule_params": null,
+            "state": "enabled"
+          },
+          {
+            "checktool": "cppcheck",
+            "checkrule": "negativeIndex",
+            "severity": "error",
+            "rule_params": null,
+            "state": "enabled"
+          },
+          {
+            "checktool": "cppcheck",
+            "checkrule": "pointerOutOfBounds",
+            "severity": "info",
+            "rule_params": null,
+            "state": "enabled"
+          },
+          {
+            "checktool": "cppcheck",
+            "checkrule": "deallocret",
+            "severity": "error",
+            "rule_params": null,
+            "state": "enabled"
+          },
+          {
+            "checktool": "cppcheck",
+            "checkrule": "doubleFree",
+            "severity": "error",
+            "rule_params": null,
+            "state": "enabled"
+          },
+          {
+            "checktool": "cppcheck",
+            "checkrule": "memleak",
+            "severity": "error",
+            "rule_params": null,
+            "state": "enabled"
+          },
+          {
+            "checktool": "cppcheck",
+            "checkrule": "resourceLeak",
+            "severity": "error",
+            "rule_params": null,
+            "state": "enabled"
+          },
+          {
+            "checktool": "cppcheck",
+            "checkrule": "deallocDealloc",
+            "severity": "error",
+            "rule_params": null,
+            "state": "enabled"
+          },
+          {
+            "checktool": "cppcheck",
+            "checkrule": "deallocuse",
+            "severity": "error",
+            "rule_params": null,
+            "state": "enabled"
+          },
+          {
+            "checktool": "cppcheck",
+            "checkrule": "mismatchAllocDealloc",
+            "severity": "error",
+            "rule_params": null,
+            "state": "enabled"
+          },
+          {
+            "checktool": "cppcheck",
+            "checkrule": "memleakOnRealloc",
+            "severity": "error",
+            "rule_params": null,
+            "state": "enabled"
+          },
+          {
+            "checktool": "cppcheck",
+            "checkrule": "nullPointer",
+            "severity": "error",
+            "rule_params": null,
+            "state": "enabled"
+          },
+          {
+            "checktool": "cppcheck",
+            "checkrule": "stlOutOfBounds",
+            "severity": "error",
+            "rule_params": null,
+            "state": "enabled"
+          },
+          {
+            "checktool": "cppcheck",
+            "checkrule": "uninitstring",
+            "severity": "error",
+            "rule_params": null,
+            "state": "enabled"
+          },
+          {
+            "checktool": "cppcheck",
+            "checkrule": "uninitdata",
+            "severity": "error",
+            "rule_params": null,
+            "state": "enabled"
+          },
+          {
+            "checktool": "cppcheck",
+            "checkrule": "uninitvar",
+            "severity": "error",
+            "rule_params": null,
+            "state": "enabled"
+          },
+          {
+            "checktool": "cppcheck",
+            "checkrule": "zerodiv",
+            "severity": "error",
+            "rule_params": null,
+            "state": "enabled"
+          },
+          {
+            "checktool": "cppcheck",
+            "checkrule": "arithOperationsOnVoidPointer",
+            "severity": "info",
+            "rule_params": null,
+            "state": "enabled"
+          },
+          {
+            "checktool": "cppcheck",
+            "checkrule": "arrayIndexThenCheck",
+            "severity": "warning",
+            "rule_params": null,
+            "state": "enabled"
+          },
+          {
+            "checktool": "cppcheck",
+            "checkrule": "clarifyCondition",
+            "severity": "warning",
+            "rule_params": null,
+            "state": "enabled"
+          },
+          {
+            "checktool": "cppcheck",
+            "checkrule": "clarifyStatement",
+            "severity": "warning",
+            "rule_params": null,
+            "state": "enabled"
+          },
+          {
+            "checktool": "cppcheck",
+            "checkrule": "duplicateBranch",
+            "severity": "warning",
+            "rule_params": null,
+            "state": "enabled"
+          },
+          {
+            "checktool": "cppcheck",
+            "checkrule": "duplicateBreak",
+            "severity": "warning",
+            "rule_params": null,
+            "state": "enabled"
+          },
+          {
+            "checktool": "cppcheck",
+            "checkrule": "duplicateExpression",
+            "severity": "warning",
+            "rule_params": null,
+            "state": "enabled"
+          },
+          {
+            "checktool": "cppcheck",
+            "checkrule": "duplicateExpressionTernary",
+            "severity": "warning",
+            "rule_params": null,
+            "state": "enabled"
+          },
+          {
+            "checktool": "cppcheck",
+            "checkrule": "exceptThrowInDestructor",
+            "severity": "warning",
+            "rule_params": null,
+            "state": "enabled"
+          },
+          {
+            "checktool": "cppcheck",
+            "checkrule": "pointerLessThanZero",
+            "severity": "warning",
+            "rule_params": null,
+            "state": "enabled"
+          },
+          {
+            "checktool": "cppcheck",
+            "checkrule": "possibleBufferAccessOutOfBounds",
+            "severity": "warning",
+            "rule_params": null,
+            "state": "enabled"
+          },
+          {
+            "checktool": "cppcheck",
+            "checkrule": "redundantCondition",
+            "severity": "warning",
+            "rule_params": null,
+            "state": "enabled"
+          },
+          {
+            "checktool": "cppcheck",
+            "checkrule": "redundantCopy",
+            "severity": "warning",
+            "rule_params": null,
+            "state": "enabled"
+          },
+          {
+            "checktool": "cppcheck",
+            "checkrule": "selfAssignment",
+            "severity": "warning",
+            "rule_params": null,
+            "state": "enabled"
+          },
+          {
+            "checktool": "cppcheck",
+            "checkrule": "stlSize",
+            "severity": "warning",
+            "rule_params": null,
+            "state": "enabled"
+          },
+          {
+            "checktool": "cppcheck",
+            "checkrule": "suspiciousEqualityComparison",
+            "severity": "warning",
+            "rule_params": null,
+            "state": "enabled"
+          },
+          {
+            "checktool": "cppcheck",
+            "checkrule": "thisSubtraction",
+            "severity": "warning",
+            "rule_params": null,
+            "state": "enabled"
+          },
+          {
+            "checktool": "cppcheck",
+            "checkrule": "unassignedVariable",
+            "severity": "warning",
+            "rule_params": null,
+            "state": "enabled"
+          },
+          {
+            "checktool": "cppcheck",
+            "checkrule": "uninitMemberVar",
+            "severity": "warning",
+            "rule_params": null,
+            "state": "enabled"
+          },
+          {
+            "checktool": "cppcheck",
+            "checkrule": "uninitStructMember",
+            "severity": "error",
+            "rule_params": null,
+            "state": "enabled"
+          },
+          {
+            "checktool": "cppcheck",
+            "checkrule": "unreachableCode",
+            "severity": "warning",
+            "rule_params": null,
+            "state": "enabled"
+          },
+          {
+            "checktool": "cppcheck",
+            "checkrule": "unsignedLessThanZero",
+            "severity": "warning",
+            "rule_params": null,
+            "state": "enabled"
+          },
+          {
+            "checktool": "cppcheck",
+            "checkrule": "unsignedPositive",
+            "severity": "warning",
+            "rule_params": null,
+            "state": "enabled"
+          },
+          {
+            "checktool": "cppcheck",
+            "checkrule": "unusedScopedObject",
+            "severity": "warning",
+            "rule_params": null,
+            "state": "enabled"
+          },
+          {
+            "checktool": "cppcheck",
+            "checkrule": "unusedVariable",
+            "severity": "warning",
+            "rule_params": null,
+            "state": "enabled"
+          },
           {
               "checktool": "customfilescan",
               "checkrule": "FileTooLong",
