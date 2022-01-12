@@ -3,7 +3,7 @@
 gunicorn==20.1.0
 
 # for django
-Django==3.1.12
+Django==3.1.14
 
 #for django using mysql server
 pymysql==1.0.2
@@ -26,7 +26,7 @@ django-guardian==2.3.0
 Jinja2==2.11.3
 
 # for rest api
-djangorestframework==3.11.1
+djangorestframework==3.11.2
 coreapi==2.3.3
 Markdown==3.3.4
 django-cors-headers==3.7.0

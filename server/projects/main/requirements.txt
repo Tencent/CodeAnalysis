@@ -3,7 +3,7 @@
 gunicorn==20.1.0
 
 # for django
-Django==3.1.12
+Django==3.1.14
 
 # for django using mysql server
 pymysql==1.0.2
@@ -21,7 +21,7 @@ celery-redbeat==0.13.0
 flower==0.9.3
 
 # for rest api
-djangorestframework==3.11.1
+djangorestframework==3.11.2
 coreapi==2.3.3
 Markdown==3.3.4
 Pygments==2.8.1
@@ -34,7 +34,7 @@ drf-yasg==1.17.1
 # for password
 pyaes==1.6.1
 pycryptodome==3.9.8
-cryptography==2.9.2
+cryptography==3.3.2
 rsa==4.7.2
 
 # for django permission

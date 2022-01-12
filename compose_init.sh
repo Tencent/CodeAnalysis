@@ -12,7 +12,7 @@ function init_db() {
     db_container=$(docker-compose ps | grep mysql | awk '{print $1}')
 
    docker-compose exec mysql /bin/bash -c \
-        "printf 'wait db'; \
+        "printf 'wait db [DB default password: TCA!@#2021]\n'; \
          until \$(mysql -u${CODEDOG_DBUSER} -p'' -e '\s' > /dev/null 2>&1); do \
             printf '.' && sleep 1; \
          done; echo

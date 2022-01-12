@@ -3,13 +3,13 @@
 gunicorn==20.1.0
 
 # for django
-Django==3.1.12
+Django==3.1.14
 
 # for django using mysql server
 pymysql==1.0.2
 
 # for rest api
-djangorestframework==3.11.1
+djangorestframework==3.11.2
 
 # for celery
 celery==4.3.0
@@ -26,7 +26,7 @@ minio==7.1.0
 # for password
 pyaes==1.6.1
 pycryptodome==3.9.8
-cryptography==3.2.1
+cryptography==3.3.2
 
 # for monitor
 django-prometheus==2.0.0
