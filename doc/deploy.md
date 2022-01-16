@@ -32,6 +32,8 @@
     - 将安装好的``celery``与``gunicorn``可执行文件建立软链到``/usr/local/bin``路径下
         - ``ln -s /path/to/celery /usr/local/bin/celery``：``/path/to/``需要替换为``celery``可执行命令实际的路径，一般在python安装路径的``bin``目录下
         - ``ln -s /path/to/gunicorn /usr/local/bin/gunicorn``：``/path/to/``需要替换为实际的路径
+        - 如果您按Python3.7安装指导，这里的/path/to/路径为/usr/local/python3/bin/celery
+    - 执行``export PATH=/usr/local/bin:$PATH``环境变量生效避免出现unknown command错误
 3. 启动服务
     - 执行``./scripts/deploy.sh start``：启动服务
 4. 停止服务
