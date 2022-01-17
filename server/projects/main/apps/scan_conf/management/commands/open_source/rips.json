@@ -11,7 +11,7 @@
         ],
         "scan_app": "codelint",
         "scm_url": "https://github.com/TCATools/rips-scanner.git",
-        "run_cmd": "php main.php",
+        "run_cmd": "./php main.php",
         "envs": "",
         "build_flag": false,
         "checkrule_set": [
