@@ -942,94 +942,164 @@
       "checktool_display_name": "PMD"
     },
     {
-      "checktool": "cobra",
-      "checkrule": "CVI-110005",
-      "severity": "error",
-      "rule_params": "",
+      "checktool": "checkstyle",
+      "checkrule": "ArrayTypeStyle",
+      "severity": "warning",
+      "rule_params": null,
       "state": "enabled",
-      "checkrule_category": "security",
-      "checkrule_display_name": "允许任意证书（CWE-295）",
-      "checktool_display_name": "Cobra"
+      "checkrule_category": "convention",
+      "checkrule_display_name": "ArrayTypeStyle",
+      "checktool_display_name": "CheckStyle"
     },
     {
-      "checktool": "cobra",
-      "checkrule": "CVI-140001",
-      "severity": "error",
-      "rule_params": "",
+      "checktool": "checkstyle",
+      "checkrule": "AvoidStarImport",
+      "severity": "info",
+      "rule_params": null,
       "state": "enabled",
-      "checkrule_category": "security",
-      "checkrule_display_name": "文本框反射型XSS",
-      "checktool_display_name": "Cobra"
+      "checkrule_category": "convention",
+      "checkrule_display_name": "AvoidStarImport",
+      "checktool_display_name": "CheckStyle"
     },
     {
-      "checktool": "cobra",
-      "checkrule": "CVI-140002",
-      "severity": "fatal",
-      "rule_params": "",
+      "checktool": "checkstyle",
+      "checkrule": "BooleanExpressionComplexity",
+      "severity": "warning",
+      "rule_params": null,
       "state": "enabled",
-      "checkrule_category": "security",
-      "checkrule_display_name": "输出入参可能导致XSS",
-      "checktool_display_name": "Cobra"
+      "checkrule_category": "convention",
+      "checkrule_display_name": "BooleanExpressionComplexity",
+      "checktool_display_name": "CheckStyle"
     },
     {
-      "checktool": "cobra",
-      "checkrule": "CVI-160001",
-      "severity": "fatal",
-      "rule_params": "",
+      "checktool": "checkstyle",
+      "checkrule": "CatchParameterName",
+      "severity": "warning",
+      "rule_params": null,
       "state": "enabled",
-      "checkrule_category": "security",
-      "checkrule_display_name": "拼接SQL注入",
-      "checktool_display_name": "Cobra"
+      "checkrule_category": "convention",
+      "checkrule_display_name": "CatchParameterName",
+      "checktool_display_name": "CheckStyle"
     },
     {
-      "checktool": "cobra",
-      "checkrule": "CVI-170001",
-      "severity": "error",
-      "rule_params": "",
+      "checktool": "checkstyle",
+      "checkrule": "ClassTypeParameterName",
+      "severity": "warning",
+      "rule_params": null,
       "state": "enabled",
-      "checkrule_category": "security",
-      "checkrule_display_name": "LFI",
-      "checktool_display_name": "Cobra"
+      "checkrule_category": "convention",
+      "checkrule_display_name": "ClassTypeParameterName",
+      "checktool_display_name": "CheckStyle"
     },
     {
-      "checktool": "cobra",
-      "checkrule": "CVI-190001",
-      "severity": "error",
-      "rule_params": "",
+      "checktool": "checkstyle",
+      "checkrule": "EmptyBlock",
+      "severity": "warning",
+      "rule_params": null,
       "state": "enabled",
-      "checkrule_category": "security",
-      "checkrule_display_name": "Logger敏感信息",
-      "checktool_display_name": "Cobra"
+      "checkrule_category": "convention",
+      "checkrule_display_name": "EmptyBlock",
+      "checktool_display_name": "CheckStyle"
     },
     {
-      "checktool": "cobra",
-      "checkrule": "CVI-200001",
-      "severity": "error",
-      "rule_params": "",
+      "checktool": "checkstyle",
+      "checkrule": "EmptyCatchBlock",
+      "severity": "warning",
+      "rule_params": null,
       "state": "enabled",
-      "checkrule_category": "security",
-      "checkrule_display_name": "不安全的随机数",
-      "checktool_display_name": "Cobra"
+      "checkrule_category": "convention",
+      "checkrule_display_name": "EmptyCatchBlock",
+      "checktool_display_name": "CheckStyle"
     },
     {
-      "checktool": "cobra",
-      "checkrule": "CVI-355001",
-      "severity": "error",
-      "rule_params": "",
+      "checktool": "checkstyle",
+      "checkrule": "EmptyStatement",
+      "severity": "warning",
+      "rule_params": null,
       "state": "enabled",
-      "checkrule_category": "security",
-      "checkrule_display_name": "DES加密模式",
-      "checktool_display_name": "Cobra"
+      "checkrule_category": "convention",
+      "checkrule_display_name": "EmptyStatement",
+      "checktool_display_name": "CheckStyle"
     },
     {
-      "checktool": "cobra",
-      "checkrule": "CVI-355002",
-      "severity": "error",
-      "rule_params": "",
+      "checktool": "checkstyle",
+      "checkrule": "FileLength",
+      "severity": "warning",
+      "rule_params": null,
       "state": "enabled",
-      "checkrule_category": "security",
-      "checkrule_display_name": "ECB加密模式",
-      "checktool_display_name": "Cobra"
+      "checkrule_category": "convention",
+      "checkrule_display_name": "FileLength",
+      "checktool_display_name": "CheckStyle"
+    },
+    {
+      "checktool": "checkstyle",
+      "checkrule": "LineLength",
+      "severity": "info",
+      "rule_params": "fileExtensions=java\nmax=120\nignorePattern=^package.*|^import.*|a href|href|http://|https://|ftp://",
+      "state": "enabled",
+      "checkrule_category": "convention",
+      "checkrule_display_name": "LineLength",
+      "checktool_display_name": "CheckStyle"
+    },
+    {
+      "checktool": "checkstyle",
+      "checkrule": "TypeName",
+      "severity": "info",
+      "rule_params": null,
+      "state": "enabled",
+      "checkrule_category": "convention",
+      "checkrule_display_name": "TypeName",
+      "checktool_display_name": "CheckStyle"
+    },
+    {
+      "checktool": "checkstyle",
+      "checkrule": "UnusedImports",
+      "severity": "info",
+      "rule_params": null,
+      "state": "enabled",
+      "checkrule_category": "convention",
+      "checkrule_display_name": "UnusedImports",
+      "checktool_display_name": "CheckStyle"
+    },
+    {
+      "checktool": "checkstyle",
+      "checkrule": "StringLiteralEquality",
+      "severity": "warning",
+      "rule_params": null,
+      "state": "enabled",
+      "checkrule_category": "convention",
+      "checkrule_display_name": "StringLiteralEquality",
+      "checktool_display_name": "CheckStyle"
+    },
+    {
+      "checktool": "checkstyle",
+      "checkrule": "ParameterNumber",
+      "severity": "info",
+      "rule_params": null,
+      "state": "enabled",
+      "checkrule_category": "convention",
+      "checkrule_display_name": "ParameterNumber",
+      "checktool_display_name": "CheckStyle"
+    },
+    {
+      "checktool": "checkstyle",
+      "checkrule": "NestedTryDepth",
+      "severity": "info",
+      "rule_params": null,
+      "state": "enabled",
+      "checkrule_category": "convention",
+      "checkrule_display_name": "NestedTryDepth",
+      "checktool_display_name": "CheckStyle"
+    },
+    {
+      "checktool": "checkstyle",
+      "checkrule": "NestedForDepth",
+      "severity": "warning",
+      "rule_params": null,
+      "state": "enabled",
+      "checkrule_category": "convention",
+      "checkrule_display_name": "NestedForDepth",
+      "checktool_display_name": "CheckStyle"
     }
   ]
   }

@@ -1,3 +1,9 @@
+// Copyright (c) 2021-2022 THL A29 Limited
+//
+// This source code file is made available under MIT License
+// See LICENSE for details
+// ==============================================================================
+
 import React, { useState, useEffect } from 'react';
 import { Layout, Button, Row, Col, Tag, message } from 'coding-oa-uikit';
 import Plus from 'coding-oa-uikit/lib/icon/Plus';

@@ -1,4 +1,10 @@
 # -*- encoding: utf-8 -*-
+# Copyright (c) 2021-2022 THL A29 Limited
+#
+# This source code file is made available under MIT License
+# See LICENSE for details
+# ==============================================================================
+
 """
 本地任务执行器,只执行本地配置好的项目的扫描
 """
@@ -159,6 +165,10 @@ class LocalRunner(TaskRunner):
         """
         if args.token:
             self._token = args.token
+        if args.org_sid:
+            self._org_sid = args.org_sid
+        if args.team_name:
+            self._team_name = args.team_name
         if args.source_dir:
             self._source_dir = args.source_dir
         if args.language:

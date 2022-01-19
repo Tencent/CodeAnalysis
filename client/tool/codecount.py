@@ -1,4 +1,10 @@
 # -*- coding: utf-8 -*-
+# Copyright (c) 2021-2022 THL A29 Limited
+#
+# This source code file is made available under MIT License
+# See LICENSE for details
+# ==============================================================================
+
 """代码度量-codecount新版代码统计
 
 使用 cloc 工具扫描指定目录和参照目录，获取代码行、注释等变更信息，上报到Codedog平台（同时包含增量和全量）

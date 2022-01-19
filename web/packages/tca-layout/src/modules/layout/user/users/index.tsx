@@ -1,3 +1,9 @@
+// Copyright (c) 2021-2022 THL A29 Limited
+//
+// This source code file is made available under MIT License
+// See LICENSE for details
+// ==============================================================================
+
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Row, Col, Tabs, Button } from 'coding-oa-uikit';

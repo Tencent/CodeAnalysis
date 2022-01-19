@@ -1,3 +1,9 @@
+// Copyright (c) 2021-2022 THL A29 Limited
+//
+// This source code file is made available under MIT License
+// See LICENSE for details
+// ==============================================================================
+
 import React from 'react';
 import { Table, Tag, Button } from 'coding-oa-uikit';
 import Success from 'coding-oa-uikit/lib/icon/Success';

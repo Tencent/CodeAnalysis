@@ -1,4 +1,10 @@
 # -*- encoding: utf-8 -*-
+# Copyright (c) 2021-2022 THL A29 Limited
+#
+# This source code file is made available under MIT License
+# See LICENSE for details
+# ==============================================================================
+
 """
 工具加载管理类
 """
@@ -12,7 +18,7 @@ from node.app import settings
 from node.gitload import GitLoader
 from node.loadconfig import ConfigLoader
 from util.envset import EnvSet
-from util.scanlang.callback_queue import CallbackQueue
+from util.exceptions import ConfigError
 from util.pathlib import PathMgr
 from util.logutil import LogPrinter
 
@@ -29,10 +35,10 @@ class ToolCommonLoader(object):
         """
         if settings.USE_LOCAL_TOOL == "True":
             if os.path.exists(tool_dirpath):
-                # LogPrinter.info(f"USE_LOCAL_TOOL=True, use local tool dir: {tool_dirpath}")
+                LogPrinter.info(f"USE_LOCAL_TOOL=True, use local tool dir: {tool_dirpath}")
                 return "Local", None
             else:
-                return "Git", None
+                raise ConfigError(f"USE_LOCAL_TOOL=True, but local tool dir ({tool_dirpath}) not exists, please check!")
         else:
             copy_tools_src_dir = os.environ.get("COPY_TOOLS_FROM")
             if copy_tools_src_dir and os.path.exists(copy_tools_src_dir):

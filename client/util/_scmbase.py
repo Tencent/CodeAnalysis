@@ -1,4 +1,10 @@
 # -*- coding: utf-8 -*-
+# Copyright (c) 2021-2022 THL A29 Limited
+#
+# This source code file is made available under MIT License
+# See LICENSE for details
+# ==============================================================================
+
 """命令行版Scm控制器接口
 
 不建议在上层应用直接导入该模块，可以选择 `import cmdscm`，相关的类已在cmdscm倒入

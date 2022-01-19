@@ -35,4 +35,5 @@ $ ldconfig
 注：
 1. 链接到/usr/local/bin/目录不会影响系统软件（比如yum）的使用，因为 yum 工具指定的Python路径是``/usr/bin/python``
 2. 一般情况下，PATH配置是先``/usr/local/bin``再``/usr/bin``
+3. 请检查python -v输出结果是否为python-3.7.12版本，否则会影响后续安装
 

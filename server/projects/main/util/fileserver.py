@@ -1,4 +1,10 @@
 # -*- coding: utf-8 -*-
+# Copyright (c) 2021-2022 THL A29 Limited
+#
+# This source code file is made available under MIT License
+# See LICENSE for details
+# ==============================================================================
+
 """
 util.fileserver
 通过文件服务器上传/下载文件
@@ -85,7 +91,7 @@ class FileServer(object):
         if rsp.status == self.OK_STATUS:
             return file_url
         else:
-            logger.error('return code %d when put file to %s, content: %s' % (rsp.status, file_url, rsp.text))
+            logger.error('return code %d when put file to %s, content: %s' % (rsp.status, file_url, rsp.data.decode("utf-8")))
             raise ServerError(errcode.E_SERVER, 'return code %d when put file to %s' % (rsp.status, file_url))
 
     @RetryDecor(interval=3)
@@ -93,7 +99,7 @@ class FileServer(object):
         """获取指定路径文件数据，返回该文件的路径信息"""
         rsp = self._http_client.get(file_url, headers=self._headers)
         if rsp.status == self.OK_STATUS:
-            return rsp.text
+            return rsp.data
         else:
             logger.error('return code %d when get file %s' % (rsp.status, file_url))
             raise ServerError(errcode.E_SERVER, 'return code %d when get file %s' % (rsp.status, file_url))

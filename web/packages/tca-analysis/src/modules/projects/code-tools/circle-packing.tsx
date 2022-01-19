@@ -1,3 +1,9 @@
+// Copyright (c) 2021-2022 THL A29 Limited
+//
+// This source code file is made available under MIT License
+// See LICENSE for details
+// ==============================================================================
+
 /* eslint-disable */
 import React, { Component } from 'react';
 import * as d3 from 'd3';

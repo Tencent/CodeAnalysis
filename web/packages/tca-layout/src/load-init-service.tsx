@@ -1,3 +1,9 @@
+// Copyright (c) 2021-2022 THL A29 Limited
+//
+// This source code file is made available under MIT License
+// See LICENSE for details
+// ==============================================================================
+
 import React, { useState, useEffect, FC } from 'react';
 import { useDispatch } from 'react-redux';
 import LoadingIcon from 'coding-oa-uikit/lib/icon/Loading';

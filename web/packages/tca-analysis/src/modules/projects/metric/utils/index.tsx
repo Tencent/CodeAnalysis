@@ -1,3 +1,9 @@
+// Copyright (c) 2021-2022 THL A29 Limited
+//
+// This source code file is made available under MIT License
+// See LICENSE for details
+// ==============================================================================
+
 import qs from 'qs';
 
 // 将搜索条件中的数组类型转换为以逗号分割的字符串

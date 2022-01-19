@@ -18,7 +18,8 @@
 ![流程图](media/Flow.png)
 
 ## 体验
-[官方体验版](https://tca.tencent.com/)
+[官方体验申请链接](https://cloud.tencent.com/apply/p/44ncv4hzp1)
+
 ## 关键功能
 1. **语言支持**：支持 Java/C++/Objective-C/C#/JavaScript/Python/Go/PHP 等数十种语言，覆盖常用编程语言。 
 2. **代码检查**：通过代码检查精准跟踪管理发现的代码质量缺陷、代码规范、代码安全漏洞、无效代码等。目前已集成众多自研、知名开源分析工具，并采用了分层分离架构，可以满足团队快速自助管理工具。

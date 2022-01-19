@@ -1,4 +1,10 @@
 # -*- coding: utf-8 -*-
+# Copyright (c) 2021-2022 THL A29 Limited
+#
+# This source code file is made available under MIT License
+# See LICENSE for details
+# ==============================================================================
+
 """gunicorn配置文件
 """
 import logging
@@ -8,7 +14,7 @@ import os
 import multiprocessing
 
 project_path = os.path.dirname(os.path.abspath(__file__))
-bind = "0.0.0.0:8004"
+bind = "0.0.0.0:8804"
 backlog = 2048
 chdir = project_path
 pidfile = os.path.join(project_path, "file-master.pid")

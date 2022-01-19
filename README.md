@@ -18,7 +18,8 @@ Using TCA system can help the team monitor project code quality problems, find r
 ![流程图](media/Flow.png)
 
 ## Experience
-https://tca.tencent.com/
+[Apply Link](https://cloud.tencent.com/apply/p/44ncv4hzp1)
+
 ## Key Features
 1. **Language support**: It supports Java/C++/Objective-C/C#/JavaScript/Python/Go/PHP and more, covering common programming languages.
 2. **Code inspection**: Accurately track and manage the code quality defects, code specifications, code security vulnerabilities, invalid code found through code inspection. At present, it has integrated many self-developed, well-known open source analysis tools, and adopts a layered and separated architecture, which can satisfy the team's rapid self-service management tools.
@@ -32,7 +33,7 @@ https://tca.tencent.com/
 - [How to use client](doc/client.md)
 
 ## Community
-[Discussion](https://groups.google.com/g/tencentca)
+[Discussion](https://github.com/Tencent/CodeAnalysis/discussions)
 
 ## Changelogs
 - Check our [Changelogs](doc/changelogs.md)

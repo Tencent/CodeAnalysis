@@ -2,7 +2,9 @@
 ## 前期部署准备
 ### 环境依赖
 1. Docker
-2. Docker-Compose 2.0以上版本
+2. Docker-Compose2.0以上版本
+
+> Compose file format需要为3.0及以上，Docker版本要求可以参考[官方文档](https://docs.docker.com/compose/compose-file/compose-file-v3/#compose-and-docker-compatibility-matrix)
 
 ### 服务部署顺序
 1. Server服务

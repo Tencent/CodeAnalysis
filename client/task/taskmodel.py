@@ -1,4 +1,10 @@
 # -*- encoding: utf-8 -*-
+# Copyright (c) 2021-2022 THL A29 Limited
+#
+# This source code file is made available under MIT License
+# See LICENSE for details
+# ==============================================================================
+
 """
 task基础类，用于task的定义与执行
 task的主要工作是承担各个工具的公共执行部分，以及指定task类型的公共功能

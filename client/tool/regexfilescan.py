@@ -1,3 +1,9 @@
+
+# Copyright (c) 2021-2022 THL A29 Limited
+#
+# This source code file is made available under MIT License
+# See LICENSE for details
+# ==============================================================================
 # -*- encoding: utf8 -*-
 """ 正则匹配文件路径(支持自定义规则)
 """

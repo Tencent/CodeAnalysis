@@ -1,4 +1,10 @@
 # -*- encoding: utf-8 -*-
+# Copyright (c) 2021-2022 THL A29 Limited
+#
+# This source code file is made available under MIT License
+# See LICENSE for details
+# ==============================================================================
+
 """
 启用的扫描组件
 可选值:lint,cc,dup,cloc(分别代表代码检查、圈复杂度、重复代码、代码统计这4个检查组件),多项可用英文逗号(,)分隔
