@@ -1,0 +1,207 @@
+[
+    {
+        "name": "【PHP】基础安全",
+        "description": "PHP安全扫描规则包，包含内部工具灰度测试，需要在Mac或Linux环境使用。",
+        "revision": null,
+        "package_type": "official",
+        "languages": [
+            "php"
+        ],
+        "labels": [
+            "安全"
+        ],
+        "checkrule_set": [
+            {
+                "checktool": "kunlunM",
+                "checkrule": "cURL SSRF",
+                "severity": "fatal",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "kunlunM",
+                "checkrule": "file_get_contents SSRF",
+                "severity": "fatal",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "kunlunM",
+                "checkrule": "get_headers SSRF",
+                "severity": "fatal",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "kunlunM",
+                "checkrule": "Information Disclosure",
+                "severity": "fatal",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "kunlunM",
+                "checkrule": "LDAP injection",
+                "severity": "fatal",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "kunlunM",
+                "checkrule": "Reflected XSS",
+                "severity": "fatal",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "kunlunM",
+                "checkrule": "Reflected XSS for echo",
+                "severity": "fatal",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "kunlunM",
+                "checkrule": "Remote code execute",
+                "severity": "fatal",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "kunlunM",
+                "checkrule": "remote file include",
+                "severity": "fatal",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "kunlunM",
+                "checkrule": "SQL injection",
+                "severity": "fatal",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "kunlunM",
+                "checkrule": "unserialize vulerablity",
+                "severity": "fatal",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "kunlunM",
+                "checkrule": "URL Redirector Abuse",
+                "severity": "fatal",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "kunlunM",
+                "checkrule": "variable shadowing",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "kunlunM",
+                "checkrule": "Xml injection",
+                "severity": "fatal",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "rips",
+                "checkrule": "Code Execution",
+                "severity": "fatal",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "rips",
+                "checkrule": "Command Execution",
+                "severity": "fatal",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "rips",
+                "checkrule": "Cross-Site Scripting",
+                "severity": "fatal",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "rips",
+                "checkrule": "File Disclosure",
+                "severity": "fatal",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "rips",
+                "checkrule": "File Manipulation",
+                "severity": "fatal",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "rips",
+                "checkrule": "HTTP Response Splitting",
+                "severity": "fatal",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "rips",
+                "checkrule": "LDAP Injection",
+                "severity": "fatal",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "rips",
+                "checkrule": "PHP Object Injection",
+                "severity": "fatal",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "rips",
+                "checkrule": "Protocol Injection",
+                "severity": "fatal",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "rips",
+                "checkrule": "Reflection Injection",
+                "severity": "fatal",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "rips",
+                "checkrule": "Session Fixation",
+                "severity": "fatal",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "rips",
+                "checkrule": "SQL Injection",
+                "severity": "fatal",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "rips",
+                "checkrule": "XPath Injection",
+                "severity": "fatal",
+                "rule_params": null,
+                "state": "enabled"
+            }
+        ],
+        "open_saas": false,
+        "envs": null
+    }
+]

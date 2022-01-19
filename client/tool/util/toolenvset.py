@@ -26,12 +26,13 @@ class ToolEnvSet(object):
     """环境变量配置"""
 
     @staticmethod
-    def set_go_env(params):
+    def set_go_env(params, force_inner=False):
         """
         自动识别机器go环境:
         1. 优先使用本地机器环境中的Go环境
         2. 本地机器没有go的话，便使用CodeDog自带的go环境
         :param params:
+        :param force_inner: 强制使用内置的go环境
         :return:
         """
         source_dir = params.source_dir
@@ -42,14 +43,14 @@ class ToolEnvSet(object):
 
         # 判断本地go环境是否可用
         # 不可用，或者该机器没有go环境的话，便使用codedog维护的go环境
-        if SubProcController(["go", "version"]).wait() != 0:
+        if force_inner or SubProcController(["go", "version"]).wait() != 0:
             logger.info("建议客户将所有第三方依赖库存放到src/vendor目录下，这样可以保证编译时能够被依赖到。")
             EnvSet().set_tool_env(
                 {
                     tool_name: {
                         "env_path": {"GOROOT": go_home},
                         "env_value": {},
-                        "path": ["%s/bin" % go_home],
+                        "path": ["%s/bin" % go_home, f"{go_home}/go/bin"],
                         "tool_url": [],
                     }
                 }
@@ -68,7 +69,7 @@ class ToolEnvSet(object):
         elif not go_path or not go_root:
             # 机器有go环境，但没有设置GOPATH
             logger.info(
-                "建议客户机器设置GOPATH指向go项目根目录和项目依赖路径，最好将所有第三方依赖库存放到项目的src/vendor目录下，" "保证项目编译通过，以及设置GOROOT指向go安装位置，以防工具执行失败。"
+                "建议客户机器设置GOPATH指向go项目根目录和项目依赖路径，最好将所有第三方依赖库存放到项目的src/vendor目录下，保证项目编译通过，以及设置GOROOT指向go安装位置，以防工具执行失败。"
             )
 
         logger.info("当前使用的Go版本如下所示:")
@@ -101,8 +102,8 @@ class ToolEnvSet(object):
                 return True
         return False
 
-    @staticmethod
-    def set_py_env(params, version=3):
+    @classmethod
+    def auto_set_py_env(cls, params, version=3):
         """
         如果机器中有python环境，则使用机器环境。否则加载Puppy自身Python环境到环境变量中
         :param params:
@@ -111,6 +112,10 @@ class ToolEnvSet(object):
         """
         if ToolEnvSet.is_py_avail(version=version):
             return
+        cls.set_py_env(params, version)
+
+    @staticmethod
+    def set_py_env(params, version=3):
         tool_name = params["tool_name"]
         python_home = "PYTHON%s7_HOME" % str(version)
         logger.info("正在启用CodeDog内置的Python环境")

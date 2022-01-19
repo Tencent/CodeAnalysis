@@ -36,6 +36,8 @@ class CmdArgParser(object):
         # localscan命令
         localscan_parser = subparsers.add_parser('localscan', help="执行本地项目扫描")
         localscan_parser.add_argument("-t", "--token", dest='token', type=str, help="个人Token,在代码分析网站获取")
+        localscan_parser.add_argument("--org-sid", dest="org_sid", help="团队编号,在代码分析网站获取")
+        localscan_parser.add_argument("--team-name", dest="team_name", help="项目名称,在代码分析网站获取")
         localscan_parser.add_argument("-s", "--source-dir", dest="source_dir", type=str, help="本地代码目录")
         localscan_parser.add_argument("--total", dest="total_scan", action="store_true",
                                       help="指定本次为全量扫描,不指定该参数时默认为增量扫描")

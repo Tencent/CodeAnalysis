@@ -165,6 +165,10 @@ class LocalRunner(TaskRunner):
         """
         if args.token:
             self._token = args.token
+        if args.org_sid:
+            self._org_sid = args.org_sid
+        if args.team_name:
+            self._team_name = args.team_name
         if args.source_dir:
             self._source_dir = args.source_dir
         if args.language:

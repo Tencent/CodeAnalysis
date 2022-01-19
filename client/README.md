@@ -51,3 +51,7 @@
 - （3）修改`linux_tools.ini`或`mac_tools.ini`或`windows_tools.ini`文件中`[base_value]`中的`git_url`为自建git server地址。
 - （4）修改`client/config.ini`中的`TOOL_CONFIG_URL`为自建git server的`puppy-tools-config`仓库地址。
 - （5）填写`client/config.ini`中的`[TOOL_LOAD_ACCOUNT]`配置，输入有拉取权限的用户名密码，即可使用自建git server拉取工具。
+
+### 3. git lfs带宽和存储配额不够问题
+
+- 如果git拉取工具时，出现git lfs拉取失败，可能是lfs带宽和存储配额不够，可以打开对应的工具github页面，通过`Download ZIP`的方式下载工具压缩包，再解压到`client/data/tools`目录下。
