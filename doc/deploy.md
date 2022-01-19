@@ -1,10 +1,12 @@
 # Server与Web本地部署文档
 ## 前期部署准备
 ### 系统配置
-操作系统：
-Linux/Mac/Windows: 
+运行环境：
+- Linux
+- Linux/Mac/Window上的Docker
+
 最低配置要求：
-8核16G内存，硬盘空间256G（可用空间不低于100G）
+2核4G内存100G硬盘存储空间
 
 ### 服务部署顺序
 1. Server服务
