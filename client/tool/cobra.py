@@ -72,7 +72,7 @@ class Cobra(CodeLintModel):
         ToolEnvSet.auto_set_py_env(params=params, version=3)
 
         scan_cmd = [
-            "python",
+            "python3",
             "cobra.py",
             "-t",
             toscan_dir,
@@ -136,9 +136,9 @@ class Cobra(CodeLintModel):
         :return:
         """
         ToolEnvSet.auto_set_py_env(params=tool_params, version=3)
-        if SubProcController(["python", "--version"]).wait() != 0:
+        if SubProcController(["python3", "--version"]).wait() != 0:
             return []
-        if SubProcController(["python", "cobra.py", "--help"], cwd=os.environ.get("COBRA_HOME")).wait() != 0:
+        if SubProcController(["python3", "cobra.py", "--help"], cwd=os.environ.get("COBRA_HOME")).wait() != 0:
             LogPrinter.error(f"cobra不可用，建议:\n{self.install_steps}")
             return []
         return ["analyze"]
