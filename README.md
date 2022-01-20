@@ -33,7 +33,7 @@ Using TCA system can help the team monitor project code quality problems, find r
 - [How to use client](doc/client.md)
 
 ## Community
-[Discussion](https://groups.google.com/g/tencentca)
+[Discussion](https://github.com/Tencent/CodeAnalysis/discussions)
 
 ## Changelogs
 - Check our [Changelogs](doc/changelogs.md)
