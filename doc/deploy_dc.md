@@ -2,7 +2,7 @@
 ## 前期部署准备
 ### 环境依赖
 1. Docker
-2. Docker-Compose
+2. Docker-Compose2.0以上版本
 
 > Compose file format需要为3.0及以上，Docker版本要求可以参考[官方文档](https://docs.docker.com/compose/compose-file/compose-file-v3/#compose-and-docker-compatibility-matrix)
 
@@ -23,6 +23,7 @@
 注：
 1. 如果提示脚本没有执行权限，可以在源码执行命令：``chmod +x compose_init.sh``
 2. 首次启动会构建相关镜像，耗时会比较久
+3. 启动提示需要输入的密码（MySQL访问密码）为 ``TCA!@#2021``
 
 ``compose_init.sh``脚本会包含各个服务的初始化操作
 

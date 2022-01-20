@@ -32,7 +32,15 @@ $ ln -s /usr/local/python3/lib/libpython3.7m.so.1.0 /usr/lib/libpython3.7m.so.1.
 $ ldconfig
 ```
 
+## 检查
+检查Python版本是否安装成功
+```
+$ python --version
+Python 3.7.12  # 正常输出，表示安装成功
+```
+
 注：
 1. 链接到/usr/local/bin/目录不会影响系统软件（比如yum）的使用，因为 yum 工具指定的Python路径是``/usr/bin/python``
 2. 一般情况下，PATH配置是先``/usr/local/bin``再``/usr/bin``
+3. 检查``python -v``输出结果是否为``Python 3.7.12``版本，如果不是该版本，可能影响后续依赖安装和服务运行
 
