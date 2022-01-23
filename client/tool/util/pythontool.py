@@ -31,46 +31,44 @@ class PythonTool(object):
         可以通过$?或者%errorlevel%来检验
         :return:
         """
-        PYTHON_VERSION = os.environ.get('PYLINT_PYTHON_VERSION', None)
-        if PYTHON_VERSION is None:
-            # 支持通过PYTHON_VERSION环境变量设置python版本
-            PYTHON_VERSION = os.environ.get('PYTHON_VERSION', None)
-            # 默认是使用Python3
-            if PYTHON_VERSION is None:
-                PYTHON_VERSION = "3"
+        python_version = PythonTool.get_python_version_from_env()
 
         # 判断本地Python环境是否可用
-        if PythonTool.is_python_available(tool_name, python_version=PYTHON_VERSION):
+        if PythonTool.is_python_available(tool_name, python_version=python_version):
             return ["analyze"]
 
         # python --version执行失败，或者不是对应版本的情况, 使用python2 --version
-        if PythonTool.is_python_available(tool_name, python_version=PYTHON_VERSION, with_version=True):
+        if PythonTool.is_python_available(tool_name, python_version=python_version, with_version=True):
             return ["analyze"]
 
         # 本地Python环境不可用，使用puppy自身的Python环境，判断Puppy自身的Python环境在该机器上是否可用
         # 加载环境变量
         PythonTool.add_python_env(tool_name)
-        if PythonTool.is_python_available(tool_name, python_version=PYTHON_VERSION, with_version=True):
+        if PythonTool.is_python_available(tool_name, python_version=python_version, with_version=True):
             return ["analyze"]
 
         # 该机器不支持分析
         return []
 
     @staticmethod
-    def check_python(tool_name):
-        """判断当前使用的python版本"""
-        python_version = None
-
-        if tool_name == "pylint":
-            python_version = os.environ.get('PYLINT_PYTHON_VERSION', None)
-
+    def get_python_version_from_env():
+        """
+        从环境变量中获取python版本号,环境变量只支持2或3
+        :return: <str> "2"|"3"
+        """
+        # 支持从环境变量指定python版本
+        python_version = os.environ.get('PYLINT_PYTHON_VERSION')
         if python_version is None:
             # 支持通过PYTHON_VERSION环境变量设置python版本
-            python_version = os.environ.get('PYTHON_VERSION', None)
-
-        # 默认使用python3
-        if python_version is None:
+            python_version = os.environ.get('PYTHON_VERSION')
+        if python_version not in ["2", "3"]:  # 环境变量只支持2或3
             python_version = "3"
+        return python_version
+
+    @staticmethod
+    def check_python(tool_name):
+        """判断当前使用的python版本"""
+        python_version = PythonTool.get_python_version_from_env()
 
         # 公线机器的话，默认是python3; 客户机器的话，直接使用客户自己环境中的python版本
         python = "python"
@@ -95,6 +93,8 @@ class PythonTool(object):
         cmd_args = [python_cmd, "--version"]
         # LogPrinter.info(f'run cmd: {cmd_args}')
         subProC = SubProcController(cmd_args,
+                                    stdout_line_callback=LogPrinter.info,
+                                    stderr_line_callback=LogPrinter.info,
                                     stderr_filepath=std_output_filepath,
                                     stdout_filepath=std_output_filepath)
         subProC.wait()

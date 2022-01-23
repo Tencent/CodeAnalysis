@@ -1,6 +1,6 @@
 # TCA Client 客户端使用文档
 
-## 一、基础配置与使用
+## 一、基础配置
 
 ### 机器配置推荐
 |   操作系统 | 推荐配置                                       |
@@ -10,6 +10,37 @@
 |   Windows | 8核16G内存，硬盘空间256G（可用空间不低于100G）     |
 
 > 以上为推荐配置，实际情况需要考虑扫描对象代码库的大小，按实际情况增加磁盘空间。
+
+## 二、使用docker环境快速体验
+> 适用于快速上手体验。使用docker运行，可以免去客户端环境依赖的安装，避免环境兼容性问题。
+> 但是由于环境受限于docker，会无法复用本地的编译环境，部分需要编译的工具无法使用。
+### 1. 下载和安装Docker
+参考Docker官方文档：[Docker下载和安装](https://docs.docker.com/get-started/)
+
+### 2. 构建docker镜像
+在`client`目录下，执行以下命令：`docker build -t tca-client .`
+
+### 3. 配置client/config.ini文件
+将`<Server IP地址>`替换成实际的serve ip（可包含端口号）。
+
+### 4. 配置client/codedog.ini文件
+1. 填写以下必填项：`token`,`org_sid`,`team_name`,`source_dir`
+- 各字段获取方式，详见根目录下文档`《GettingStart(TCA快速入门).pdf》`
+- 注意：`source_dir`此处填写为固定的docker内路径：`/workspace/src`
+2. 按需填写其他可选项，也可以不填，按默认配置执行
+
+### 5. 执行docker容器，扫描代码
+在client目录下，执行以下命令：
+(注意：按照实际情况填写`SOURCE_DIR`环境变量值)
+```bash
+export SOURCE_DIR=需要扫描的代码目录绝对路径
+docker run -it --rm  -v $PWD:/workspace/client -v $SOURCE_DIR:/workspace/src  --name tca-client tca-client
+```
+
+
+## 三、使用本地机器环境运行
+> 适用于深度体验，可以复用本地编译环境，使用编译型代码分析工具。
+> 可能会有系统环境兼容问题。
 
 ### 安装Python环境和第三方库
 1. 预装Python3.7、pip，支持 `python3` 和 `pip3` 命令 
@@ -32,7 +63,7 @@
 2. 执行命令：`python3 codepuppy.py localscan`
 
 
-## 二、其他配置与用法
+## 四、其他配置与用法
 
 ### 1. 配置使用本地工具
 
