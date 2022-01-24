@@ -1,0 +1,16 @@
+<?jelly escape-by-default='true'?>
+<j:jelly xmlns:j="jelly:core" xmlns:l="/lib/layout" xmlns:st="jelly:stapler">
+    <l:layout title="分析报告">
+
+        <l:side-panel>
+            <st:include page="sidepanel.jelly" it="${it.run}" optional="true" />
+        </l:side-panel>
+
+
+        <l:main-panel>
+            <pre>
+                ${it.jsonStr}
+            </pre>
+        </l:main-panel>
+    </l:layout>
+</j:jelly>
