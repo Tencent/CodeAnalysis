@@ -7,11 +7,11 @@
 English | [简体中文](README_ZH.md)
 
 ## What is TCA
-Tencent Cloud Code Analysis (TCA for short, code-named CodeDog inside the company early) is a code comprehensive analysis platform, which includes three components: server, web and client. It supports the integration of common code analysis tools in the industry. Its main function is to ensure the code quality under agile iterations of multiple engineering projects, and Support the team to inherit the code culture.
+Tencent Cloud Code Analysis (TCA for short, code-named CodeDog inside the company early) is a comprehensive platform for code analysis and issue tracking. TCA consist of three components, server, web and client. It also supports the integration of other code analysis tools.
 
-Code analysis is a technique which is able to analyze the program code through lexical analysis, grammatical analysis, control flow, data flow analysis and other technologies to verify whether the code meets standardization, safety, reliability, maintainability, partial performance, etc., and conduct a comprehensive analysis of the code for indicators and metrics.
+Code analysis is a technology, using lexical analysis, syntax analysis, control-flow analysis, data-flow analysis to make a comprehensive analysis of the code, so as to verify whether the code meets the requirements of normative, security, reliability, maintainability and other indicators.
 
-Using TCA system can help the team monitor project code quality problems, find repetitive and difficult-to-maintain code and give warnings, and at the same time open API, support the docking with upstream and downstream systems, and integrate code analysis capabilities.
+Using TCA can help team find normative, structural, security vulnerabilities and other issues in the code, continuously monitor the quality of the project code and issue alerts. At the same time, TCA opens up APIs to support connection with upstream and downstream systems, so as to integrate code analysis capabilities, ensure code quality, and be more conducive to inheriting an excellent team code culture.
 
 ![组件图](media/Components.png)
 
@@ -21,13 +21,13 @@ Using TCA system can help the team monitor project code quality problems, find r
 [Apply Link](https://cloud.tencent.com/apply/p/44ncv4hzp1)
 
 ## Key Features
-1. **Language support**: It supports Java/C++/Objective-C/C#/JavaScript/Python/Go/PHP and more, covering common programming languages.
-2. **Code inspection**: Accurately track and manage the code quality defects, code specifications, code security vulnerabilities, invalid code found through code inspection. At present, it has integrated many self-developed, well-known open source analysis tools, and adopts a layered and separated architecture, which can satisfy the team's rapid self-service management tools.
-3. **Code measurement**: Support the three dimensions of code circle complexity, code repetition rate and code statistics to monitor the current code situation.
-4. **DevOps integration**: The client can be started via the command line, which can quickly connect to various DevOps scheduling systems, and connect upstream and downstream systems through standard API interfaces.
+1. **Language support**: It supports Java/C++/Objective-C/C#/JavaScript/Python/Go/PHP and more, covering common programming languages.  
+2. **Code inspection**: Discover code quality defects, code specification problems, code security vulnerabilities, invalid codes, etc. At present, many self-developed and well-known open source analysis tools have been integrated. The layered architecture can support rapid self-service management tools for teams.
+3. **Code measurement**: Support comprehensive measurement of code from the three dimensions of code cyclomatic complexity, code repetition rate and code statistics.
+4. **DevOps integration**: The client can be started via the command line. Standard APIs support connection to upstream and downstream systems, and various DevOps systems.
 
 ## Getting Started
-- [How to get start](GettingStart(TCA快速入门).pdf)
+- [How to get start](GettingStart(快速入门).md)
 - [How to deploy server and web](doc/deploy.md)
 - [How to deploy server and web with docker-compose](doc/deploy_dc.md)
 - [How to use client](doc/client.md)
