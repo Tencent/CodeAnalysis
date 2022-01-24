@@ -104,6 +104,18 @@ export function postFile(url: string, data?: any) {
     },
     body: JSON.stringify(data),
   })
+    .then(res => {
+      if (res.status === 200) {
+        return Promise.resolve(res)
+      }
+      else if (res.status === 401) {
+        reLogin(t('登录失效，请重新登录...'));
+        return Promise.reject();
+      }
+      else {
+        return Promise.reject(res.json().then(errorInterceptor))
+      }
+    })
     .catch((err: any) => Promise.reject(err));
 }
 
