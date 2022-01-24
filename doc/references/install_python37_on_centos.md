@@ -44,3 +44,11 @@ Python 3.7.12  # 正常输出，表示安装成功
 2. 一般情况下，PATH配置是先``/usr/local/bin``再``/usr/bin``
 3. 检查``python -v``输出结果是否为``Python 3.7.12``版本，如果不是该版本，可能影响后续依赖安装和服务运行
 
+
+## pypi下载源配置
+pip默认是到``pypi``官方源下载第三方依赖包，下载速度可能会比较慢，可以考虑调整为腾讯云的``pypi``下载源，调整方式：
+
+```bash
+$ mkdir ~/.pip/
+$ echo "[global]\nindex-url = https://mirrors.cloud.tencent.com/pypi/simple" >> ~/.pip/pip.conf
+```
