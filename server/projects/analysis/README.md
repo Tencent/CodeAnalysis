@@ -1,6 +1,6 @@
-## 腾讯云CodeDog静态代码检查平台 (Tencent Cloud CodeDog Static Code Analyse Platform)
+## 腾讯云TCA静态代码检查平台 (Tencent Cloud CodeDog Static Code Analyse Platform)
 
-腾讯云CodeDog静态代码检查平台包括代码检查、代码综合度量、代码覆盖率等功能，已支持18门语言。
+腾讯云TCA静态代码检查平台包括代码检查、代码综合度量、代码覆盖率等功能，已支持18门语言。
 
 **代码检查**，集成包括Clang、Coverity等代码静态分析工具或自定义工具，多方位检查各类编程语言（包括C、C++、OC、Java等18门语言）的代码问题，并支持通过差异化精准定位bug引入点和相关责任人，全自动跟踪bug处理。
 
