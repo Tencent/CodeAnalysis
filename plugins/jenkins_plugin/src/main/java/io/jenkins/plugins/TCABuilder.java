@@ -1,3 +1,11 @@
+/* -*- encoding: utf-8 -*-
+   Copyright (c) 2022 THL A29 Limited
+
+   This source code file is made available under MIT License
+   See LICENSE for details
+   ==============================================================================
+*/
+
 package io.jenkins.plugins;
 import edu.umd.cs.findbugs.annotations.NonNull;
 import hudson.EnvVars;
