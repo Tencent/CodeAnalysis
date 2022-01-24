@@ -73,7 +73,6 @@
     "@hot-loader/react-dom": "^17.0.1",
     "@types/friendly-errors-webpack-plugin": "^0.1.4",
     "@types/mini-css-extract-plugin": "^2.3.0",
-    "@types/qs": "^6.9.4",
     "@types/sass": "^1.16.1",
     "assets-webpack-plugin": "^7.1.1",
     "babel-loader": "^8.2.2",
