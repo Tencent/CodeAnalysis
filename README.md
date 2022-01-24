@@ -1,5 +1,5 @@
 <p align="center">
-    <img src='media/Logo.png' width="200"/>
+    <img src='media/Logo.svg' width="200"/>
     <br />
     <em>TCA, Tencent Cloud Code Analysis</em>
 </p>
@@ -9,7 +9,7 @@ English | [简体中文](README_ZH.md)
 ## What is TCA
 Tencent Cloud Code Analysis (TCA for short, code-named CodeDog inside the company early) is a code comprehensive analysis platform, which includes three components: server, web and client. It supports the integration of common code analysis tools in the industry. Its main function is to ensure the code quality under agile iterations of multiple engineering projects, and Support the team to inherit the code culture.
 
-Code analysis is to analyze the program code through lexical analysis, grammatical analysis, control flow, data flow analysis and other technologies to verify whether the code meets standardization, safety, reliability, maintainability, partial performance, etc., and conduct a comprehensive analysis of the code A code analysis technique for indicators and metrics.
+Code analysis is a technique which is able to analyze the program code through lexical analysis, grammatical analysis, control flow, data flow analysis and other technologies to verify whether the code meets standardization, safety, reliability, maintainability, partial performance, etc., and conduct a comprehensive analysis of the code for indicators and metrics.
 
 Using TCA system can help the team monitor project code quality problems, find repetitive and difficult-to-maintain code and give warnings, and at the same time open API, support the docking with upstream and downstream systems, and integrate code analysis capabilities.
 

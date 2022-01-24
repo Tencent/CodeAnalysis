@@ -1,7 +1,11 @@
 # Server与Web本地部署文档
+
 ## 前期部署准备
+
 ### 系统配置
+
 运行环境：
+
 - Linux
 - Linux/Mac/Window上的Docker
 
@@ -9,30 +13,38 @@
 2核4G内存100G硬盘存储空间
 
 ### 服务部署顺序
+
 1. Server服务
 2. Web服务
 
 ### 服务部署权限说明
+
 #### Linux角色权限
+
 1. 安装Server依赖软件（python、nginx、yum软件包）需要使用ROOT权限
 2. 启动Server服务时可以使用非ROOT用户运行
 
 #### 网络权限服务部署
+
 1. 需要开放80端口的访问权限(80为TCA平台访问端口)
 
 #### 数据库权限
+
 1. Server服务执行数据库初始化需要依赖``CREATE、ALTER、INDEX、DELETE、LOCK TABLES、SELECT、INSERT、REFERENCES、UPDATE``权限
 
 ## 服务部署
 
 ### Server部署
+
 #### 前置环境
+
 1. MySQL服务（5.7.8以上的版本），安装指导: [文档](./references/install_mysql_on_centos.md)（仅适用于本地部署体验），生产环境建议使用专业的MySQL服务
 2. Redis服务（4.0版本以上），安装指导: [文档](./references/install_redis_on_centos.md)（仅适用于本地部署体验），生产环境建议使用专业的Redis服务
 3. Python3.7执行环境，安装指导: [文档](./references/install_python37_on_centos.md)
 4. Nginx服务（可以使用包管理工具进行安装，比如CentOS系统执行``yum install nginx``，Ubuntu系统执行``apt-get install nginx``）
 
 #### 部署步骤
+
 1. 进入Server服务工作目录后（假设工作目录为 ``/data/tca_open_source/server/``，以下路径均为工作目录内的相对路径）
 2. 配置MySQL和Redis服务，初始化数据（MySQL版本运行版本：5.7）
     - 执行``vi ./scripts/config.sh``：填写数据库和Redis信息以及根据需要调整配置信息，主要的工程配置已提供默认值，字段说明可以查看[文档](../server/README.md)
@@ -55,9 +67,9 @@
 
 2. 系统已安装 nginx
 
-3. TCA Server 服务已部署完毕，具备后端服务地址
+3. TCA Server 服务已部署完毕，具备后端服务地址，默认登陆账号/密码：`CodeDog/admin`
 
-#### 部署步骤
+#### Web 部署步骤
 
 1. 进入`web`服务，并切换至`tca-deploy-source`目录，将其视为工作目录（假设工作目录为 `/data/tca_open_source/web/tca-deploy-source`）
 
