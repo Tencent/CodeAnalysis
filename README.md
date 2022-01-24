@@ -1,5 +1,5 @@
 <p align="center">
-    <img src='media/Logo.png' width="200"/>
+    <img src='media/Logo.svg' width="200"/>
     <br />
     <em>TCA, Tencent Cloud Code Analysis</em>
 </p>
