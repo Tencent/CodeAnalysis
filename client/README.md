@@ -29,12 +29,23 @@
 - 注意：`source_dir`此处填写为固定的docker内路径：`/workspace/src`
 2. 按需填写其他可选项，也可以不填，按默认配置执行
 
-### 5. 执行docker容器，扫描代码
-在client目录下，执行以下命令：
-(注意：按照实际情况填写`SOURCE_DIR`环境变量值)
+### 5. 执行docker容器，扫描代码，可选以下两种方式
+#### (1)直接使用docker运行
+- 在client目录下，执行以下命令：
+- (注意：按照实际情况填写`SOURCE_DIR`环境变量值)
 ```bash
 export SOURCE_DIR=需要扫描的代码目录绝对路径
 docker run -it --rm  -v $PWD:/workspace/client -v $SOURCE_DIR:/workspace/src  --name tca-client tca-client
+```
+#### (2)使用docker内bash终端运行
+- 通过以下方式，进入容器内的bash终端后，通过命令行启动client代码：
+- 在client目录下，执行以下命令：
+- (注意：按照实际情况填写`SOURCE_DIR`环境变量值)
+```bash
+export SOURCE_DIR=需要扫描的代码目录绝对路径
+docker run -it --rm  -v $PWD:/workspace/client -v $SOURCE_DIR:/workspace/src  --name tca-client tca-client bash
+# 进入容器内终端，通过命令行执行扫描
+python3 codepuppy.py localscan
 ```
 
 
