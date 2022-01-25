@@ -7,9 +7,11 @@ WORKDIR /workspace
 RUN apt-get update \
     && apt-get install -y --no-install-recommends $EXTRA_TOOLS
 
-COPY ./requirements/app_reqs.pip ./requirements/app_reqs.pip
+COPY ./requirements ./requirements
 
 RUN pip3 install --no-cache-dir -r requirements/app_reqs.pip
+
+RUN bash requirements/install.sh
 
 WORKDIR /workspace/client
 CMD [ "python3", "codepuppy.py", "localscan"]
