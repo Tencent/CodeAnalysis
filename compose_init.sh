@@ -1,17 +1,17 @@
-#!/bin/sh
+#!/bin/bash
 
 CURRENT_PATH=$(dirname $(cd "$(dirname "$0")";pwd))
 CODEDOG_DBUSER=${CODEDOG_DBUSER:-root}
 CODEDOG_DBPASSWD=${CODEDOG_DBPASSWD:-'TCA!@#2021'}
 
 function start_db() {
-    docker-compose up --force-recreate -d mysql redis
+    docker compose up --force-recreate -d mysql redis
 }
 
 function init_db() {
-    db_container=$(docker-compose ps | grep mysql | awk '{print $1}')
+    db_container=$(docker compose ps | grep mysql | awk '{print $1}')
 
-   docker-compose exec mysql /bin/bash -c \
+   docker compose exec mysql /bin/bash -c \
         "printf 'wait db [DB default password: TCA!@#2021]\n'; \
          until \$(mysql -u${CODEDOG_DBUSER} -p'' -e '\s' > /dev/null 2>&1); do \
             printf '.' && sleep 1; \
@@ -22,16 +22,16 @@ function init_db() {
 # 文件服务器初始化
 function init_file() {
     mkdir -p $CURRENT_PATH/server/projects/file
-    docker-compose up -d file-server 
-    docker-compose exec file-server bash -c \
+    docker compose up -d file-server 
+    docker compose exec file-server bash -c \
         "python manage.py migrate --noinput --traceback"
 }
 
 # 登陆服务器初始化
 function init_login() {
     mkdir -p $CURRENT_PATH/server/projects/login
-    docker-compose up -d login-server
-    docker-compose exec login-server bash -c \
+    docker compose up -d login-server
+    docker compose exec login-server bash -c \
         "python manage.py migrate --noinput --traceback; \
          python manage.py createcachetable; \
          python manage.py initializedb;
@@ -41,8 +41,8 @@ function init_login() {
 # Main服务器初始化
 function init_main() {
     mkdir -p $CURRENT_PATH/server/projects/main/log
-    docker-compose up -d main-server
-    docker-compose exec main-server /bin/bash -c \
+    docker compose up -d main-server
+    docker compose exec main-server /bin/bash -c \
         "python manage.py migrate --noinput --traceback; \
          python manage.py createcachetable; \
          python manage.py initializedb_open; \
@@ -55,8 +55,8 @@ function init_main() {
 # Analysis服务器初始化
 function init_analysis() {
     mkdir -p $CURRENT_PATH/server/projects/analysis/log
-    docker-compose up -d analysis-server
-    docker-compose exec analysis-server /bin/bash -c \
+    docker compose up -d analysis-server
+    docker compose exec analysis-server /bin/bash -c \
         "python manage.py migrate --noinput --traceback; \
          python manage.py createcachetable; \
          python manage.py initialuser; \
@@ -64,7 +64,7 @@ function init_analysis() {
 }
 
 function start_all_services() {
-    docker-compose up -d
+    docker compose up -d
 }
 
 
