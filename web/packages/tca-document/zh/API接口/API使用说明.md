@@ -2,7 +2,8 @@
 
 ## 接口地址
 
-http://{host}/server/
+`http://{host}/server/`
+
 注：host 指当前浏览器访问该文档的 URL 域名部分。
 
 ## 接口鉴权方式
@@ -11,36 +12,19 @@ http://{host}/server/
 
 ```json
 {
-  "TCA-USERID": "{当前user-id，比如xiaoming}",
-  "TCA-TIMESTAMP": "{当前时间戳，比如1614565593}",
-  "TCA-TICKET": "{当前user的token}"
+  "Authorization": "当前user的token"
 }
 ```
-获取 user_id 和 token 位置：
-![](../images/API的个人令牌.png)
 
-计算 带 TCA-TICKET 的头部方式(以 Python 代码为例):
+获取 token 位置（个人中心-个人令牌）：
 
-```python
-from time import time
-from hashlib import sha256
-
-def get_headers(user_id, token):
-    timestamp = int(time())
-    token_sig = "%s%s#%s#%s%s" % (timestamp, user_id, token, user_id, timestamp)
-    ticket = sha256(token_sig.encode("utf-8")).hexdigest().upper()
-    return {
-        "TCA-USERID": user_id,
-        "TCA-TIMESTAMP": str(timestamp),
-        "TCA-TICKET": ticket
-    }
-```
+![API的个人令牌](../images/API的个人令牌.png)
 
 ## 获取 org_sid 和 project_team 信息
 
 通过平台访问具体代码库扫描情况时，可从 URL 中获取对应 org_sid 和 project_team 字段，查看方式如下例子：
 
-代码库扫描地址：http://{host}/t/xxx/p/yyy/code-analysis/repos/1/projects?limit=10&offset=0
+代码库扫描地址：`http://{host}/t/xxx/p/yyy/code-analysis/repos/1/projects?limit=10&offset=0`
 
 其中，org_sid 为`xxx`字段，project_team 为 `yyy`字段
 
@@ -53,9 +37,7 @@ import requests
 # 获取helloworld团队下的hellotca项目下登记的代码库
 url="http://tca.com/server/main/api/orgs/helloworld/teams/hellotca/repos/?limit=12&offset=0"
 headers = {
-  "TCA-USERID": user_id,
-  "TCA-TIMESTAMP": str(timestamp),
-  "TCA-TICKET": ticket
+  "Authorization": token,
 }
 
 response = requests.get(url, headers=headers)
