@@ -103,7 +103,7 @@ class ToolEnvSet(object):
         return False
 
     @classmethod
-    def auto_set_py_env(cls, params, version=3):
+    def auto_set_py_env(cls, version=3):
         """
         如果机器中有python环境，则使用机器环境。否则加载Puppy自身Python环境到环境变量中
         :param params:
@@ -112,18 +112,17 @@ class ToolEnvSet(object):
         """
         if ToolEnvSet.is_py_avail(version=version):
             return
-        cls.set_py_env(params, version)
+        cls.set_py_env(version)
 
     @staticmethod
-    def set_py_env(params, version=3):
-        tool_name = params["tool_name"]
+    def set_py_env(version=3):
         python_home = "PYTHON%s7_HOME" % str(version)
         logger.info("正在启用CodeDog内置的Python环境")
         if sys.platform == "win32":
             path = [os.path.join(os.environ.get(python_home), "Scripts"), os.environ.get(python_home)]
         else:
             path = [os.path.join(os.environ.get(python_home), "bin")]
-        EnvSet().set_tool_env({tool_name: {"env_path": {}, "env_value": {}, "path": path, "tool_url": []}})
+        EnvSet().set_tool_env({"tool": {"env_path": {}, "env_value": {}, "path": path, "tool_url": []}})
 
     @staticmethod
     def search_tool_env(key):

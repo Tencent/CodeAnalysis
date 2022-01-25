@@ -69,7 +69,7 @@ class Cobra(CodeLintModel):
                 os.makedirs(os.path.dirname(file_path))
             shutil.copyfile(os.path.join(params.source_dir, path), file_path)
 
-        ToolEnvSet.auto_set_py_env(params=params, version=3)
+        ToolEnvSet.auto_set_py_env(version=3)
 
         scan_cmd = [
             "python3",
@@ -135,7 +135,7 @@ class Cobra(CodeLintModel):
         这里判断机器上是否可以正常执行cobra脚本，不行的话便把任务发布给其他公线机器执行
         :return:
         """
-        ToolEnvSet.auto_set_py_env(params=tool_params, version=3)
+        ToolEnvSet.auto_set_py_env(version=3)
         if SubProcController(["python3", "--version"]).wait() != 0:
             return []
         if SubProcController(["python3", "cobra.py", "--help"], cwd=os.environ.get("COBRA_HOME")).wait() != 0:

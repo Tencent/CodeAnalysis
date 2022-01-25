@@ -1,0 +1,32 @@
+<?jelly escape-by-default='true'?>
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form">
+
+    <f:entry title="CodeAnalysis目录绝对路径" field="codeAnalysisPath">
+        <f:textbox />
+    </f:entry>
+
+    <f:entry title="团队ID" field="teamId">
+        <f:textbox />
+    </f:entry>
+
+    <f:entry title="项目名称" field="projectName">
+        <f:textbox />
+    </f:entry>
+
+    <f:entry title="Token" field="token">
+        <f:textbox />
+    </f:entry>
+
+    <f:entry title="分支名称" field="branchName">
+        <f:textbox />
+    </f:entry>
+
+    <f:entry title="语言类别" field="languageType">
+        <f:textbox />
+    </f:entry>
+
+    <f:entry title="全量扫描" field="total">
+        <f:checkbox />
+    </f:entry>
+
+</j:jelly>

@@ -207,7 +207,7 @@
         "solution": null,
         "owner": null,
         "labels": [],
-        "description": "禁止直接使用File.createNewFile()，请使用com.tencent.nijigen.utils.FileUtil.createFile()\r\n\r\n波洞项目自制专用"
+        "description": "禁止直接使用File.createNewFile()"
       },
       {
         "real_name": "CutPasteId",
@@ -463,7 +463,7 @@
         "solution": null,
         "owner": null,
         "labels": [],
-        "description": "禁止直接使用Executor.execute()，请使用com.tencent.nijigen.thread.ThreadManager"
+        "description": "禁止直接使用Executor.execute()"
       },
       {
         "real_name": "ExportedContentProvider",
@@ -639,7 +639,7 @@
         "solution": null,
         "owner": null,
         "labels": [],
-        "description": "禁止直接使用Context.getSystemService()，请使用com.tencent.nijigen.utils.ContextUtil.getSystemService()"
+        "description": "禁止直接使用Context.getSystemService()"
       },
       {
         "real_name": "GifUsage",
@@ -1215,7 +1215,7 @@
         "solution": null,
         "owner": null,
         "labels": [],
-        "description": "请正确使用com.tencent.nijigen.util.LogUtil日志输出\r\n\r\n波洞项目自制专用"
+        "description": ""
       },
       {
         "real_name": "MangledCRLF",
@@ -1695,7 +1695,7 @@
         "solution": null,
         "owner": null,
         "labels": [],
-        "description": "禁止直接使用Color.parseColor()，请使用com.tencent.nijigen.utils.ColorUtil.parseColor()"
+        "description": ""
       },
       {
         "real_name": "PrivateResource",
@@ -1919,7 +1919,7 @@
         "solution": null,
         "owner": null,
         "labels": [],
-        "description": "禁止直接使用Schedulers做和线程相关的事，请使用com.tencent.nijigen.thread.ThreadManager.Schedulers"
+        "description": "禁止直接使用Schedulers做和线程相关的事"
       },
       {
         "real_name": "ScrollViewCount",
@@ -2287,7 +2287,7 @@
         "solution": null,
         "owner": null,
         "labels": [],
-        "description": "禁止直接使用Toast.Show()，请使用com.tencent.nijigen.utils.ToastUtil.show()"
+        "description": "禁止直接使用Toast.Show()"
       },
       {
         "real_name": "TooDeepLayout",
