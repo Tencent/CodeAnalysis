@@ -1,5 +1,14 @@
 FROM python:3.7.12-slim
 
+
+RUN mv /etc/apt/sources.list /etc/apt/sources.list.bak && \
+    echo "deb http://mirrors.ustc.edu.cn/debian bullseye main" >/etc/apt/sources.list && \
+    echo "deb http://mirrors.ustc.edu.cn/debian-security/ bullseye-security main" >>/etc/apt/sources.list && \
+    echo "deb http://mirrors.ustc.edu.cn/debian bullseye-updates main" >>/etc/apt/sources.list && \
+    echo "deb-src http://mirrors.ustc.edu.cn/debian bullseye main" >>/etc/apt/sources.list && \
+    echo "deb-src http://mirrors.ustc.edu.cn/debian-security/ bullseye-security main" >>/etc/apt/sources.list && \
+    echo "deb-src http://mirrors.ustc.edu.cn/debian bullseye-updates main" >>/etc/apt/sources.list
+
 ARG EXTRA_TOOLS="gnupg curl wget jq vim-tiny net-tools procps python3-dev default-libmysqlclient-dev locales inotify-tools gcc subversion git telnet iputils-ping vim openssh-client"
 
 RUN set -ex && cd / \
