@@ -34,6 +34,7 @@ public class TCABuilder extends Builder implements SimpleBuildStep {
     private String codeAnalysisPath;
     private boolean total;
     public String isTotal;
+    private String osName;
 
     @DataBoundConstructor
     public TCABuilder(String codeAnalysisPath,
@@ -85,7 +86,6 @@ public class TCABuilder extends Builder implements SimpleBuildStep {
     @Override
     public void perform(@NonNull Run<?, ?> run, @NonNull FilePath workspace, @NonNull EnvVars env,
                         @NonNull Launcher launcher, @NonNull TaskListener listener) {
-        String osName = null;
         try {
             Properties props = System.getProperties();
             String[] osNameArray = props.getProperty("os.name").split(" ");
