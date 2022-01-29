@@ -46,3 +46,5 @@
 
 - Q：TCA初始登录账号密码是什么？
   - A：初始登录账号是``CodeDog``，密码是``admin``，如果想要自定义，在初始化前，可以在[.env.local](https://github.com/Tencent/CodeAnalysis/blob/main/server/dockerconfs/.env.local)对``TCA_DEFAULT_ADMIN``和``TCA_DEFAULT_PASSWORD``变量值进行调整。如果初始化完成后需要调整，则需要登录到平台的``用户管理``页面进行调整。
+
+**详细Q&A文档可以查阅[TCA使用常见问题](https://github.com/Tencent/CodeAnalysis/blob/main/doc/Q%26A.md)**
