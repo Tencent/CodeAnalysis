@@ -16,6 +16,7 @@ Jinja2==2.11.3
 celery==5.2.2
 django-celery-results==2.2.0
 redis==4.1.1
+celery-redbeat==2.0.0
 
 # for rest api
 djangorestframework==3.11.2
