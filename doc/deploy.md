@@ -90,3 +90,6 @@
 #### 前端其他update、reset
 
 移步至`./web/tca-deploy-source`目录，查阅该目录下的 `README`
+
+
+**详细Q&A文档可以查阅[TCA使用常见问题](https://github.com/Tencent/CodeAnalysis/blob/main/doc/Q%26A.md)**
