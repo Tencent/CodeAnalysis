@@ -35,10 +35,10 @@ export MAIN_REDIS_DBID=1
 export MAIN_SENTRY_DSN=
 
 ## 服务交互配置
-export PASSWORD_KEY=a6x4c7esudcv396w
-export API_TICKET_SALT=a6x4c7esudcv396w
+export PASSWORD_KEY='a6x4c7esudcv396w'
+export API_TICKET_SALT='a6x4c7esudcv396w'
 export API_TICKET_TOKEN='tca@public@2021'
-export FILE_SERVER_TOKEN=0712b895f30c5e958ec71a7c22e1b1a2ad1d5c6b
+export FILE_SERVER_TOKEN='0712b895f30c5e958ec71a7c22e1b1a2ad1d5c6b'
 export CODEDOG_TOKEN='0712b895f30c5e958ec71a7c22e1b1a2ad1d5c6b'
 
 
