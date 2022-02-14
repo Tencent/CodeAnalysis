@@ -121,7 +121,8 @@ public class TCABuilder extends Builder implements SimpleBuildStep {
                                 branchName,
                                 languageType,
                                 isTotal,
-                                listener);
+                                listener,
+                                env);
         String fileName = clientPath + "/scan_status.json";
         String jsonStr = ReadJsonFile.readJsonFile(fileName);
         run.addAction(new ViewReportAction(jsonStr));
