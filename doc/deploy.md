@@ -45,7 +45,7 @@
 
 #### 部署步骤
 
-1. 进入Server服务工作目录后（假设工作目录为 ``/data/tca_open_source/server/``，以下路径均为工作目录内的相对路径）
+1. 进入Server服务工作目录后（假设工作目录为 ``/data/CodeAnalysis/server/``，以下路径均为工作目录内的相对路径）
 2. 配置MySQL和Redis服务，初始化数据（MySQL版本运行版本：5.7）
     - 执行``vi ./scripts/config.sh``：填写数据库和Redis信息以及根据需要调整配置信息，主要的工程配置已提供默认值，字段说明可以查看[文档](../server/README.md)
     - 执行``./scripts/deploy.sh init``：初始化DB、安装依赖和运行初始化脚本
@@ -71,7 +71,7 @@
 
 #### Web 部署步骤
 
-1. 进入`web`服务，并切换至`tca-deploy-source`目录，将其视为工作目录（假设工作目录为 `/data/tca_open_source/web/tca-deploy-source`）
+1. 进入web服务目录，并切换至`tca-deploy-source`目录，将其视为工作目录（假设工作目录为 `/data/CodeAnalysis/web/tca-deploy-source`）
 
 2. 方式一：执行`sh init.sh -d`即可：设置默认的环境变量，安装前端资源，配置 hosts、nginx 等，启动 nginx 服务
 
@@ -87,9 +87,8 @@
 |       INGRESS_SERVER_NAME | ingress 配置的服务名称，默认 tca.tencent.com              |
 |              INGRESS_PORT | ingress 配置的端口，默认 80                               |
 
-#### 前端其他update、reset
-
-移步至`./web/tca-deploy-source`目录，查阅该目录下的 `README`
+#### 前端其他update、reset操作
+请查阅[前端部署文档](../web/tca-deploy-source/README.md)
 
 
 **详细Q&A文档可以查阅[TCA使用常见问题](https://github.com/Tencent/CodeAnalysis/blob/main/doc/Q%26A.md)**
