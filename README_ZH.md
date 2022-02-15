@@ -28,7 +28,7 @@
 
 
 ## 快速入门
-- [快速入门](GettingStart(TCA快速入门).pdf)
+- [快速入门](GettingStart(TCA快速入门).md)
 - [如何在本地部署Server与Web](doc/deploy.md)
 - [如何通过Docker-Compose部署Server与Web](doc/deploy_dc.md)
 - [如何使用客户端](doc/client.md)
