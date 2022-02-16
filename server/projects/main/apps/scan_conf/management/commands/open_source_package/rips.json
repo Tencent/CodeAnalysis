@@ -1,0 +1,109 @@
+[
+    {
+        "name": "【PHP】安全检查2.0",
+        "description": "目前工具性能没做优化，大项目效率较低慎用",
+        "revision": null,
+        "package_type": "official",
+        "languages": [
+            "php"
+        ],
+        "labels": [
+            "安全"
+        ],
+        "checkrule_set": [
+            {
+                "checktool": "rips",
+                "checkrule": "Code Execution",
+                "severity": "fatal",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "rips",
+                "checkrule": "Command Execution",
+                "severity": "fatal",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "rips",
+                "checkrule": "Cross-Site Scripting",
+                "severity": "fatal",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "rips",
+                "checkrule": "File Disclosure",
+                "severity": "fatal",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "rips",
+                "checkrule": "File Inclusion",
+                "severity": "fatal",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "rips",
+                "checkrule": "File Manipulation",
+                "severity": "fatal",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "rips",
+                "checkrule": "HTTP Response Splitting",
+                "severity": "fatal",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "rips",
+                "checkrule": "LDAP Injection",
+                "severity": "fatal",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "rips",
+                "checkrule": "Protocol Injection",
+                "severity": "fatal",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "rips",
+                "checkrule": "Reflection Injection",
+                "severity": "fatal",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "rips",
+                "checkrule": "Session Fixation",
+                "severity": "fatal",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "rips",
+                "checkrule": "SQL Injection",
+                "severity": "fatal",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "rips",
+                "checkrule": "XPath Injection",
+                "severity": "fatal",
+                "rule_params": null,
+                "state": "enabled"
+            }
+        ],
+        "open_saas": false,
+        "envs": null
+    }
+]
