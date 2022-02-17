@@ -24,13 +24,14 @@ public class StartClient {
                                    TaskListener listener,
                                    EnvVars env) {
         try {
-            String pythonPath = env.get("PYTHONPATH");
-            if(!pythonPath.endsWith("/")){
-                pythonPath = pythonPath + "/";
+            String PythonPath = env.get("PYTHONPATH");
+            if(!PythonPath.endsWith("/")){
+                PythonPath = PythonPath + "/";
             }
-            String envPath = env.get("PATH");
+            String GitPath = env.get("GITPATH");
+            env.override("PATH", PythonPath + ":" + GitPath + ":" + "$PATH");
 
-            String startCommand = pythonPath
+            String startCommand = PythonPath
                     + "python3 codepuppy.py localscan"
                     + " -t " + token
                     + " --org-sid " + teamId
@@ -42,7 +43,7 @@ public class StartClient {
 
             Process p = Runtime.getRuntime().exec(
                     startCommand,
-                    new String[]{"PATH=" + envPath},
+                    new String[]{"PATH=" + env.get("PATH")},
                     new File(clientPath));
 
             final InputStream is = p.getErrorStream();
