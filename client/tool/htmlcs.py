@@ -18,6 +18,7 @@ from util.pathlib import PathMgr
 from task.codelintmodel import CodeLintModel
 from util.subprocc import SubProcController
 from util.pathfilter import FilterPathUtil
+from util.textutil import CodecClient
 from util.logutil import LogPrinter
 
 
@@ -87,11 +88,13 @@ class Htmlcs(CodeLintModel):
                 LogPrinter.info(f"{error_output} is empty")
                 continue
 
-            error_file = open(error_output)
-            for error in error_file:
+            error_file = open(error_output, "rb")
+            content = CodecClient().decode(error_file.read()).splitlines()
+            error_file.close()
+            for error in content:
                 # 文件路径
                 if not error.startswith("[WARN]"):
-                    path = error[:-2]
+                    path = error[:-1]
                 else:
                     tmp = error.split()
                     line = int(tmp[2][:-1])
