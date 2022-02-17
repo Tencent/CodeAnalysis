@@ -35,7 +35,8 @@
 
 ## 社区
 - [GitHub讨论区](https://github.com/Tencent/CodeAnalysis/discussions)
-
+- [Wiki](https://github.com/Tencent/CodeAnalysis/wiki)
+- [腾讯云代码分析白皮书](腾讯云代码分析白皮书.pdf)
 
 ## 更新
 变更内容[Changelogs](doc/changelogs.md)
