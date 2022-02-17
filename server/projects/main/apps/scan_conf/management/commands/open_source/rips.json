@@ -1,0 +1,261 @@
+
+[
+    {
+        "name": "rips",
+        "display_name": "Rips开源版",
+        "description": "检查PHP代码的安全漏洞",
+        "license": "GPL",
+        "libscheme_set": [],
+        "task_processes": [
+            "analyze",
+            "datahandle"
+        ],
+        "scan_app": "codelint",
+        "scm_url": "https://github.com/TCATools/rips-scanner.git",
+        "run_cmd": "./php main.php",
+        "envs": "",
+        "build_flag": false,
+        "checkrule_set": [
+            {
+                "real_name": "Code Execution",
+                "display_name": "代码执行漏洞",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "远程代码注入漏洞",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "php"
+                ],
+                "solution": "建议假定所有输入都是可疑的，尝试对所有输入提交可能执行命令的构造语句进行严格的检查或者控制外部输入，系统命令执行函数的参数不允许外部传递。\n·不仅要验证数据的类型，还要验证其格式、长度、范围和内容。\n·不要仅仅在客户端做数据的验证与过滤，关键的过滤步骤在服务端进行。\n·对输出的数据也要检查，数据库里的值有可能会在一个大网站的多处都有输出，即使在输入做了编码等操作，在各处的输出点时也要进行安全检查。",
+                "owner": "",
+                "labels": [],
+                "description": "远程命令执行漏洞，用户通过浏览器提交执行命令，由于服务器端没有针对执行函数做过滤，导致在没有指定绝对路径的情况下就执行命令，可能会允许攻击者通过改变 $PATH 或程序执行环境的其他方面来执行一个恶意构造的代码。\n```\nexample:\n       <?php\n             $log_string =$_GET[‘log’];\n             system(\"echo \\\"\".date(\"Y-m-d H:i:s \").\" \".$log_string.\"\\\" >> /logs/\".$pre.\"/\".$pre.\".\".date(\"Y-m-d\").\".log\");}\n      ?>\n恶意用户只需要构造xxx.php?log='id'形式的URL，即可通过浏览器在远程服务器上执行任意系统命令",
+                "disable": false
+            },
+            {
+                "real_name": "Command Execution",
+                "display_name": "命令执行漏洞",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "命令执行漏洞",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "php"
+                ],
+                "solution": "尽量不要使用命令执行函数。\n客户端提交的变量在进入执行命令函数前要做好过滤和检测。\n在使用动态函数之前，确保使用的函数是指定的函数之一。\n对PHP语言来说，不能完全控制的危险函数最好不要使用。",
+                "owner": "",
+                "labels": [],
+                "description": "由于开发人员在编写源代码时，没有对源代码中可执行的特殊函数入口做过滤，导致客户端可以提交一些cmd命令，并交由服务器程序执行。导致攻击者可以通过浏览器或者其他客户端软件提交一些cmd命令（或者bash命令）至服务器程序，服务器程序通过system、eval、exec等函数直接或者间接地调用cmd执行攻击者提交的命令。\n\n```\nexample:\n<?php\n    function c($c){\n        system($c);\n    }\n    c($_GET['b']);\n?>\n```",
+                "disable": false
+            },
+            {
+                "real_name": "Cross-Site Scripting",
+                "display_name": "XSS",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "XSS",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "php"
+                ],
+                "solution": "（1）不信任用户提交的任何内容，对所有用户提交内容进行可靠的输入验证，包括对URL、查询关键字、HTTP头、REFER、POST数据等，仅接受指定长度范围内、采用适当格式、采用所预期的字符的内容提交，对其他的一律过滤。尽量采用POST而非GET提交表单；对“<”，“>”，“；”，“””等字符做过滤；任何内容输出到页面之前都必须加以en-code，避免不小心把htmltag显示出来。\n（2）实现Session 标记（session tokens）、CAPTCHA（验证码）系统或者HTTP引用头检查，以防功能被第三方网站所执行，对于用户提交信息的中的img等link，检查是否有重定向回本站、不是真的图片等可疑操作。\n（3）cookie 防盗。避免直接在cookie中泄露用户隐私，例如email、密码，等等；通过使cookie和系统IP绑定来降低cookie泄露后的危险。这样攻击者得到的cookie没有实际价值，很难拿来直接进行重放攻击。\n（4）确认接收的内容被妥善地规范化，仅包含最小的、安全的Tag（没有JavaScript），去掉任何对远程内容的引用（尤其是样式表和JavaScript），使用HTTPonly的cookie。",
+                "owner": "",
+                "labels": [],
+                "description": "跨站脚本攻击（XSS），是最普遍的Web应用安全漏洞。这类漏洞能够使得攻击者嵌入恶意脚本代码到正常用户会访问到的页面中，当正常用户访问该页面时，则可导致嵌入的恶意脚本代码的执行，从而达到恶意攻击用户的目的。",
+                "disable": false
+            },
+            {
+                "real_name": "File Disclosure",
+                "display_name": "任意文件读取漏洞",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "任意文件读取漏洞",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "php"
+                ],
+                "solution": "读取文件操作禁止涉及用户输入的变量，对用户输入进行验证",
+                "owner": "",
+                "labels": [],
+                "description": "文件读取函数\nreadfile()、file_get_contents()、fopen()中，$filename没有经过校验或者校验不合格，用户可控制变量读取任意文件，如/etc/passwd、./index.php、/config.ini",
+                "disable": false
+            },
+            {
+                "real_name": "File Inclusion",
+                "display_name": "文件包含漏洞",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "文件包含漏洞",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "php"
+                ],
+                "solution": "1.使用 open_basedir 配置限制访问在指定的区域\n2.过滤.（点）/（反斜杠）\\（反斜杠）\n3.参数禁止使用涉及用户输入的变量",
+                "owner": "",
+                "labels": [],
+                "description": "服务器通过php的特性函数去导入某些文件时，由于要导入的这个文件来源过滤不严，从而引入了恶意的代码文件\n```\nexample\nif ($_GET[page]) {\n    include $_GET[page];\n} else {\n    include ”home.php”;\n}\n```\n可能引发的函数有\n```\n\t\t'include' \n\t\t'include_once' \n\t\t'parsekit_compile_file'\t\n\t\t'require' \t\n\t\t'require_once' \n\t\t'runkit_import'\n\t\t'set_include_path' \n\t\t'virtual' \n```",
+                "disable": false
+            },
+            {
+                "real_name": "File Manipulation",
+                "display_name": "文件穿越漏洞",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "文件穿越漏洞",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "php"
+                ],
+                "solution": "对 .. 进行过滤\n参数禁止涉及用户输入",
+                "owner": "",
+                "labels": [],
+                "description": "文件穿越漏洞\n在读取或写入文件时没有对 `..`符号进行过滤导致路径可能包含`..`跳转到某些系统目录",
+                "disable": false
+            },
+            {
+                "real_name": "HTTP Response Splitting",
+                "display_name": "HTTP Response Splitting",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "Http头注入",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "php"
+                ],
+                "solution": "'header'函数参数过滤换行符",
+                "owner": "",
+                "labels": [],
+                "description": "在HTTP协议中，HTTP Header与HTTP Body是用两个CRLF分隔的，浏览器就是根据这两个CRLF来取出HTTP 内容并显示出来。所以，一旦我们能够控制HTTP 消息头中的字符，注入一些恶意的换行，这样我们就能注入一些会话Cookie或者HTML代码",
+                "disable": false
+            },
+            {
+                "real_name": "LDAP Injection",
+                "display_name": "LDAP注入",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "LDAP注入",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "php"
+                ],
+                "solution": "对以上函数的参数进行逻辑运算符过滤\n该参数禁止涉及用户输入内容",
+                "owner": "",
+                "labels": [],
+                "description": "LDAP(Lightweight Directory Access Protocol):轻量级目录访问协议，是一种在线目录访问协议。LDAP主要用于目录中资源的搜索和查询，是X.500的一种简便的实现。\n存在于这些函数中\n```\n'ldap_add'\t  第二和第三个参数\n'ldap_delete'\t  第二个参数\n'ldap_list'       第三个参数\n'ldap_read'       第三个参数\n'ldap_search'     第三个参数\n```",
+                "disable": false
+            },
+            {
+                "real_name": "PHP Object Injection",
+                "display_name": "PHP对象注入",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "PHP对象注入",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "php"
+                ],
+                "solution": "对 'unserialize'的第一个参数\n对'yaml_parse'的第一个参数\n进行过滤，且禁止该参数涉及用户输入",
+                "owner": "",
+                "labels": [],
+                "description": "PHP的序列化的不正确使用有关。PHP对象注入其实本质上也是由于序列化引起的。\nphp可以将序列化的值保存在文件中，这样需要用的时候就可以直接从文件中读取数据然后进行反序列化就可以了。在PHP使用serialize()和unserialize()来进行序列化和反序列化的。\n而序列化的危害就在于如果序列化的内容是用户可控的，那么用户就可以注入精心构造的payload。当进行发序列化的时候就有可能会出发对象中的一些魔术方法，造成意想不到的危害。\n参考：https://blog.spoock.com/2016/10/29/php-object-injection/",
+                "disable": false
+            },
+            {
+                "real_name": "Protocol Injection",
+                "display_name": "协议注入",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "协议注入",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "php"
+                ],
+                "solution": "对符号://进行过滤\n参数禁止涉及用户输入",
+                "owner": "",
+                "labels": [],
+                "description": "大多数PHP文件操作允许在访问文件路径时使用各种url样式，如data://、zlib://或php://。这些操作通常用于远程文件，攻击者可以在其中控制文件包含完整的文件路径。",
+                "disable": false
+            },
+            {
+                "real_name": "Reflection Injection",
+                "display_name": "反射型注入",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "反射型注入",
+                "rule_params": "",
+                "custom": true,
+                "languages": [],
+                "solution": "报错函数禁止涉及用户输入内容",
+                "owner": "",
+                "labels": [],
+                "description": "反射型注入",
+                "disable": false
+            },
+            {
+                "real_name": "Session Fixation",
+                "display_name": "Session Fixation",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "会话固定",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "php"
+                ],
+                "solution": "'setcookie', 'setrawcookie' 第二个参数，'session_id'第一个参数进行过滤验证",
+                "owner": "",
+                "labels": [],
+                "description": "会话固定（Session fixation）是一种诱骗受害者使用攻击者指定的会话标识（SessionID）的攻击手段。这是攻击者获取合法会话标识的最简单的方法。会话固定也可以看成是会话劫持的一种类型，原因是会话固定的攻击的主要目的同样是获得目标用户的合法会话，不过会话固定还可以是强迫受害者使用攻击者设定的一个有效会话，以此来获得用户的敏感信息",
+                "disable": false
+            },
+            {
+                "real_name": "SQL Injection",
+                "display_name": "SQL注入",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "SQL注入",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "php"
+                ],
+                "solution": "SQL语句对用户输入进行过滤，尽量使用安全的查询函数",
+                "owner": "",
+                "labels": [],
+                "description": "SQL注入即是指web应用程序对用户输入数据的合法性没有判断或过滤不严，攻击者可以在web应用程序中事先定义好的查询语句的结尾上添加额外的SQL语句，在管理员不知情的情况下实现非法操作，以此来实现欺骗数据库服务器执行非授权的任意查询，从而进一步得到相应的数据信息。",
+                "disable": false
+            },
+            {
+                "real_name": "XPath Injection",
+                "display_name": "XPATH注入",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "XPATH注入",
+                "rule_params": "",
+                "custom": true,
+                "languages": [
+                    "php"
+                ],
+                "solution": "'xpath_eval'，'xpath_eval_expression'，'xptr_eval'的第二个参数禁止涉及用户输入或对用户输入进行过滤验证",
+                "owner": "",
+                "labels": [],
+                "description": "XPath即为XML路径语言，它是一种用来确定XML（标准通用标记语言的子集）文档中某部分位置的语言。XPath基于XML的树状结构，有不同类型的节点，包括元素节点，属性节点和文本节点，提供在数据结构树中找寻节点的能力\n参考：https://xz.aliyun.com/t/7791",
+                "disable": false
+            }
+        ],
+        "open_user": true,
+        "open_saas": false,
+        "virtual_name": "Rips",
+        "show_display_name": true
+    }
+]

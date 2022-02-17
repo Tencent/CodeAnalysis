@@ -1,12 +1,12 @@
 #!/bin/sh
 # -*-*-*- 需要关注的配置内容 -*-*-*-
-# 数据库配置
+# 数据库配置，默认MySQL端口号为3306
 export MYSQL_HOST=
 export MYSQL_PORT=
 export MYSQL_USER=
 export MYSQL_PASSWORD=
 
-# Redis配置
+# Redis配置，默认Redis端口号为6379
 export REDIS_HOST=
 export REDIS_PORT=
 export REDIS_PASSWD=
