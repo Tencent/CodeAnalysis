@@ -22,6 +22,7 @@ django-guardian==2.3.0
 
 # for django template
 Jinja2==2.11.3
+markupsafe==2.0.1
 
 # for rest api
 djangorestframework==3.11.2
