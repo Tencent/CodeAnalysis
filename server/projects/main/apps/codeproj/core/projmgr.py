@@ -12,7 +12,6 @@ import json
 import uuid
 import logging
 
-from django.conf import settings
 from django.db.models import Q
 from django.db.utils import IntegrityError
 from django.utils.timezone import now
@@ -140,6 +139,7 @@ class RepositoryManager(object):
             repository.name = kwargs["name"]
         else:
             repository.name = scm_url.split('/')[-1]
+        repository.ssh_url = kwargs.get("ssh_url")
         repository.created_from = kwargs.get("created_from") or models.Project.CreatedFromEnum.WEB
         repository.organization = pt.organization
         repository.assign_perm(user, models.Repository.PermissionEnum.ADMIN)
