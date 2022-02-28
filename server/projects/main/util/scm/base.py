@@ -94,6 +94,9 @@ class ScmUrlFormatter(object):
         elif scm_url.startswith("ssh://git@"):
             # ssh://git协议转换成http会去掉端口号
             scm_url = re.sub(r"(:\d+/)", "/", scm_url.replace("ssh://git@", "http://"))
+        elif scm_url.startswith("ssh://"):
+            # ssh://协议转换成http会去掉端口号
+            scm_url = re.sub(r"(:\d+/)", "/", scm_url.replace("ssh://", "http://"))
         elif not scm_url.startswith(("https://", "http://")):
             scm_url = "http://%s" % scm_url
         return scm_url
@@ -125,20 +128,10 @@ class ScmUrlFormatter(object):
         if not path:
             logger.warning("git scm_url[%s] 无法解析出repository" % scm_url)
             return None
-
-        paths = path.strip('/').split('/')
-        if len(paths) == 1:
-            logger.warning("git scm_url[%s] 无法解析出repository" % scm_url)
-            return None
+        project_name = path.strip('/')
 
         if port:
             host_name = "%s:%s" % (host_name, port)
-
-        # 关键字匹配进行截取
-        valid_paths = []
-        for item in paths:
-            valid_paths.append(item)
-        project_name = "/".join(valid_paths)
 
         # 可能存在使用@来连接分支
         if "@" in project_name:
@@ -152,15 +145,40 @@ class ScmUrlFormatter(object):
     def get_git_ssh_url(cls, scm_url):
         """格式化SSH URL
         """
-        # 可能存在使用@来连接分支
-        if "@" in scm_url:
-            scm_url = scm_url.split('@')[0]
         if "#" in scm_url:
             scm_url = scm_url.split('#')[0]
         # 可能存在.git后缀
         scm_url = cls.remove_git_suffix(scm_url)
-
         return scm_url
+
+    @classmethod
+    def check_git_ssh_url(cls, scm_url):
+        """检查是否为git ssh格式的代码库地址
+        """
+        if scm_url.startswith(("git@", "ssh://")):
+            return True
+        else:
+            return False
+
+    @classmethod
+    def check_svn_ssh_url(cls, scm_url):
+        """检查是否为svn ssh格式的代码库地址
+        """
+        if scm_url.startswith("svn+ssh:"):
+            return True
+        else:
+            return False
+
+    @classmethod
+    def check_ssh_url(cls, scm_type, scm_url):
+        """检查是否为ssh格式的代码库地址
+        """
+        if scm_type.lower() == "svn":
+            return cls.check_svn_ssh_url(scm_url)
+        elif scm_type.lower() == "git":
+            return cls.check_git_ssh_url(scm_url)
+        else:
+            raise Exception('not yet support scm_type: %s' % scm_type)
 
 
 class ScmError(Exception):
