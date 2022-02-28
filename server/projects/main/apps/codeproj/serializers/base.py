@@ -662,7 +662,7 @@ class RepositoryCreateSerializer(CDBaseModelSerializer):
         ssh_url = validated_data.pop("ssh_url", None)
         scm_client = scm.ScmClient(scm_type, scm_url, "password")
         scm_url = scm_client.get_repository()
-        ssh_url = scm.ScmUrlFormatter.get_git_ssh_url(scm_url) if ssh_url else \
+        ssh_url = scm.ScmUrlFormatter.get_git_ssh_url(ssh_url) if ssh_url else \
             scm.ScmClient(scm_type, scm_url, "password").get_ssh_url()
         admins = validated_data.get("admins", [])
         users = validated_data.get("users", [])

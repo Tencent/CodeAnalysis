@@ -126,24 +126,6 @@ class RepositoryCreateSerializer(CDBaseModelSerializer):
 
     scm_auth = ScmAuthCreateSerializer(help_text="关联授权信息", required=False)
 
-    def validate_scm_url(self, scm_url):
-        """校验SCM Url格式是否准确（不做鉴权判断）
-        """
-        if not scm_url:
-            raise serializers.ValidationError("该项为必填项")
-        scm_type = self.initial_data.get("scm_type")
-        scm_client = scm.ScmClient(scm_type, scm_url, "password")
-        svn_scm_url = scm_url if scm_type == models.Repository.ScmTypeEnum.SVN else None
-
-        try:
-            scm_url = scm_client.get_repository()
-        except Exception as e:
-            raise serializers.ValidationError("scm_url格式错误：%s" % str(e))
-        if scm_url:
-            return svn_scm_url if svn_scm_url else scm_url
-        else:
-            raise serializers.ValidationError("scm_url格式错误")
-
     def validate(self, attrs):
         scm_type = attrs["scm_type"]
         scm_url = attrs["scm_url"]
@@ -187,6 +169,23 @@ class RepositoryCreateSerializer(CDBaseModelSerializer):
             raise serializers.ValidationError({"cd_error": "代码库及帐号不匹配"})
         return serializers.ModelSerializer.validate(self, attrs)
 
+    def get_scm_url(self, scm_type, scm_url, ssh_url):
+        """获取scm_url
+        """
+        if scm.ScmUrlFormatter.check_ssh_url(scm_type, scm_url):
+            logger.info("current scm url is ssh format: %s" % scm_url)
+            if not ssh_url:
+                ssh_url = scm_url
+            scm_client = scm.ScmClient(scm_type, scm_url, models.ScmAuth.ScmAuthTypeEnum.SSHTOKEN)
+            http_url = scm_client.get_repository()
+        else:
+            scm_client = scm.ScmClient(scm_type, scm_url, models.ScmAuth.ScmAuthTypeEnum.PASSWORD)
+            http_url = scm_client.get_repository()
+            if not ssh_url:
+                ssh_url = scm_client.get_ssh_url()
+        ssh_url = scm.ScmUrlFormatter.get_git_ssh_url(ssh_url)
+        return http_url, ssh_url
+
     def set_scm_auth(self, repo, scm_auth, user):
         """获取SCM鉴权信息
         """
@@ -205,9 +204,13 @@ class RepositoryCreateSerializer(CDBaseModelSerializer):
         scm_auth = validated_data.pop("scm_auth", None)
         scm_type = validated_data.pop("scm_type")
         scm_url = validated_data.pop("scm_url")
+        ssh_url = validated_data.pop("ssh_url", None)
+        scm_url, ssh_url = self.get_scm_url(scm_type, scm_url, ssh_url)
+        logger.info("create repo, scm_url: %s, ssh_url: %s" % (scm_url, ssh_url))
+
         with transaction.atomic():
             repo = core.RepositoryManager.v3_create_repo(pt, scm_type=scm_type, scm_url=scm_url,
-                                                         user=user, **validated_data)
+                                                         ssh_url=ssh_url, user=user, **validated_data)
             OperationRecordHandler.add_repo_operation_record(repo, "接入代码库", user, validated_data)
             if scm_auth:
                 self.set_scm_auth(repo, scm_auth, user)
@@ -245,6 +248,7 @@ class RepositoryAuthUpdateSerializer(serializers.Serializer):
         user = request.user
         scm_type = self.instance.scm_type
         scm_url = self.instance.scm_url
+        ssh_url = self.instance.ssh_url or scm_url
 
         # 与RepositoryCreateSerializer校验鉴权相同
         scm_auth = attrs.get("scm_auth")
@@ -263,7 +267,7 @@ class RepositoryAuthUpdateSerializer(serializers.Serializer):
             scm_ssh_info = core.ScmAuthManager.get_scm_sshinfo_with_id(user, scm_ssh_id)
             if not scm_ssh_info:
                 raise serializers.ValidationError({"scm_ssh": "您名下没有指定的SSH授权信息: %s" % scm_ssh})
-            scm_client = scm.ScmClient(scm_type, scm_url, auth_type,
+            scm_client = scm.ScmClient(scm_type, ssh_url, auth_type,
                                        ssh_key=scm_ssh_info.ssh_private_key, ssh_password=scm_ssh_info.password)
         else:
             raise serializers.ValidationError({"auth_type": "不支持%s鉴权方式" % auth_type})
