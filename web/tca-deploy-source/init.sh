@@ -6,6 +6,8 @@
 # | SERVER_ENV | | 访问的后端地址，必填项 |
 # | INGRESS_PORT | 80 | ingress 配置的端口，默认 80 |
 # | INGRESS_SERVER_NAME | tca.tencent.com | ingress 配置的服务名称，默认 tca.tencent.com |
+# | NINGX_CONF_PATH | /etc/nginx/conf.d | nginx配置地址，默认 /etc/nginx/conf.d |
+# | WEB_DEPLOY_PATH | /usr/share/nginx/www | 前端资源部署地址，默认 /usr/share/nginx/www |
 # | IS_DOCKER | FALSE | 是否DOCKER启动 |
 # +---------+-------------------+----------------------------------------------+
 
@@ -26,12 +28,15 @@ if [ "$1" = "default" -o "$1" = "-d" ]; then
 fi
 
 # 微前端静态资源存放位置
-WWW_DIR_PATH="/usr/share/nginx/www"
+WEB_DEPLOY_PATH=${WEB_DEPLOY_PATH:-"/usr/share/nginx/www"}
 
 if [ ! -n "${SERVER_ENV}" ]; then
   echo "请指定访问服务地址"
   exit 1
 fi
+
+# nginx 配置地址，默认/etc/nginx/conf.d
+NINGX_CONF_PATH=${NINGX_CONF_PATH:-"/etc/nginx/conf.d"}
 
 # 配置host，追加到hosts文件内
 function conf_hosts() {
@@ -48,13 +53,13 @@ EOF
 # 初始化解压编译后文件
 function init_unzip_build() {
   echo "初始化解压编译后文件 ..."
-  mkdir -p ${WWW_DIR_PATH}
+  mkdir -p ${WEB_DEPLOY_PATH}
   cd ${CUR_RUN_PATH}/build_zip/
-  unzip -o framework.zip -d ${WWW_DIR_PATH}/framework
-  unzip -o tca-layout.zip -d ${WWW_DIR_PATH}/tca-layout
-  unzip -o login.zip -d ${WWW_DIR_PATH}/login
-  unzip -o tca-analysis.zip -d ${WWW_DIR_PATH}/tca-analysis
-  unzip -o tca-document.zip -d ${WWW_DIR_PATH}/tca-document
+  unzip -o framework.zip -d ${WEB_DEPLOY_PATH}/framework
+  unzip -o tca-layout.zip -d ${WEB_DEPLOY_PATH}/tca-layout
+  unzip -o login.zip -d ${WEB_DEPLOY_PATH}/login
+  unzip -o tca-analysis.zip -d ${WEB_DEPLOY_PATH}/tca-analysis
+  unzip -o tca-document.zip -d ${WEB_DEPLOY_PATH}/tca-document
   cd ${CUR_RUN_PATH}
 }
 
@@ -78,8 +83,8 @@ function init_framework_web() {
     "
     echo "[INFO]:index.html RUNTIME is enabled"
     echo "[INFO]: change 404.html, unsupported-browser.html"
-    sed -i "${replace_content}" ${WWW_DIR_PATH}/framework/404.html
-    sed -i "${replace_content}" ${WWW_DIR_PATH}/framework/unsupported-browser.html
+    sed -i "${replace_content}" ${WEB_DEPLOY_PATH}/framework/404.html
+    sed -i "${replace_content}" ${WEB_DEPLOY_PATH}/framework/unsupported-browser.html
 
     echo "[INFO]: change index.html"
     sed \
@@ -88,28 +93,28 @@ function init_framework_web() {
       s|__MICRO_FRONTEND_API__|${MICRO_FRONTEND_API}|g; \
       s|__MICRO_FRONTEND_SETTING_API__|${MICRO_FRONTEND_SETTING_API}|g; \
       " \
-      ${WWW_DIR_PATH}/framework/index.runtime.html >${WWW_DIR_PATH}/framework/index.html
+      ${WEB_DEPLOY_PATH}/framework/index.runtime.html >${WEB_DEPLOY_PATH}/framework/index.html
 
     if [ "$DEBUG" = "TRUE" ]; then
-      cat ${WWW_DIR_PATH}/framework/index.html
+      cat ${WEB_DEPLOY_PATH}/framework/index.html
       echo ""
       echo "[INFO]:index.html content is above"
     fi
   fi
 
   # 将conf目录中的配置文件拷贝到 framework static目录下
-  cp ${CUR_RUN_PATH}/conf/settings.json ${WWW_DIR_PATH}/framework/static/settings.json
-  cp ${CUR_RUN_PATH}/conf/configs.json ${WWW_DIR_PATH}/framework/static/configs.json
+  cp ${CUR_RUN_PATH}/conf/settings.json ${WEB_DEPLOY_PATH}/framework/static/settings.json
+  cp ${CUR_RUN_PATH}/conf/configs.json ${WEB_DEPLOY_PATH}/framework/static/configs.json
 }
 
 # 初始化各个微前端的nginx配置
 function init_web_nginx() {
   echo "初始化各个微前端的nginx配置 ..."
-  sed "s|APP_NAME|framework|g; s|SERVER_ENV|${SERVER_ENV}|g;" ${CUR_RUN_PATH}/nginx/framework_template.conf >/etc/nginx/conf.d/framework.conf
-  sed "s|APP_NAME|tca-layout|g;" ${CUR_RUN_PATH}/nginx/template.conf >/etc/nginx/conf.d/tca-layout.conf
-  sed "s|APP_NAME|login|g;" ${CUR_RUN_PATH}/nginx/template.conf >/etc/nginx/conf.d/login.conf
-  sed "s|APP_NAME|tca-analysis|g;" ${CUR_RUN_PATH}/nginx/template.conf >/etc/nginx/conf.d/tca-analysis.conf
-  sed "s|APP_NAME|tca-document|g;" ${CUR_RUN_PATH}/nginx/document.conf >/etc/nginx/conf.d/tca-document.conf
+  sed "s|APP_NAME|framework|g; s|SERVER_ENV|${SERVER_ENV}|g;" ${CUR_RUN_PATH}/nginx/framework_template.conf >${NINGX_CONF_PATH}/framework.conf
+  sed "s|APP_NAME|tca-layout|g;" ${CUR_RUN_PATH}/nginx/template.conf >${NINGX_CONF_PATH}/tca-layout.conf
+  sed "s|APP_NAME|login|g;" ${CUR_RUN_PATH}/nginx/template.conf >${NINGX_CONF_PATH}/login.conf
+  sed "s|APP_NAME|tca-analysis|g;" ${CUR_RUN_PATH}/nginx/template.conf >${NINGX_CONF_PATH}/tca-analysis.conf
+  sed "s|APP_NAME|tca-document|g;" ${CUR_RUN_PATH}/nginx/document.conf >${NINGX_CONF_PATH}/tca-document.conf
 }
 
 # 初始化配置ingress的nginx配置
@@ -127,7 +132,7 @@ function init_ingress_nginx() {
     s|SERVER_NAME|${INGRESS_SERVER_NAME}|g; \
     s|SET_DEFAULT_SERVER|${SET_DEFAULT_SERVER}|g; \
     " \
-    ${CUR_RUN_PATH}/nginx/ingress.conf >/etc/nginx/conf.d/tca_ingress.conf
+    ${CUR_RUN_PATH}/nginx/ingress.conf >${NINGX_CONF_PATH}/tca_ingress.conf
 }
 
 # 启动nginx
