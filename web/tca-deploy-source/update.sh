@@ -9,6 +9,7 @@
 # | UPDATE_LOGIN | <none> | 更新login微前端 |
 # | UPDATE_ANALYSIS | <none> | 更新tca-analysis微前端 |
 # | UPDATE_DOCUMENT | <none> | 更新document |
+# | WEB_DEPLOY_PATH | /usr/share/nginx/www | 前端资源部署地址，默认 /usr/share/nginx/www |
 # +---------+-------------------+----------------------------------------------+
 
 ###########################
@@ -53,47 +54,47 @@ for var in ${array[@]}; do
 done
 
 # 微前端静态资源存放位置
-WWW_DIR_PATH="/usr/share/nginx/www"
+WEB_DEPLOY_PATH=${WEB_DEPLOY_PATH:-"/usr/share/nginx/www"}
 
 # 根据更新参数判断更新内容
 function update_unzip_build() {
 
-  mkdir -p ${WWW_DIR_PATH}
+  mkdir -p ${WEB_DEPLOY_PATH}
   cd ${CUR_RUN_PATH}/build_zip/
 
   if [ -n "${UPDATE_ALL}" ] || [ -n "${UPDATE_FRAMEWORK}" ]; then
     echo "移除 framework 内容 ..."
-    rm -rf ${WWW_DIR_PATH}/framework/
+    rm -rf ${WEB_DEPLOY_PATH}/framework/
     echo "解压并更新 framework ..."
-    unzip -d ${WWW_DIR_PATH}/framework framework.zip
+    unzip -d ${WEB_DEPLOY_PATH}/framework framework.zip
   fi
 
   if [ -n "${UPDATE_ALL}" ] || [ -n "${UPDATE_LAYOUT}" ]; then
     echo "移除 tca-layout 内容 ..."
-    rm -rf ${WWW_DIR_PATH}/tca-layout/
+    rm -rf ${WEB_DEPLOY_PATH}/tca-layout/
     echo "解压并更新 tca-layout ..."
-    unzip -d ${WWW_DIR_PATH}/tca-layout tca-layout.zip
+    unzip -d ${WEB_DEPLOY_PATH}/tca-layout tca-layout.zip
   fi
 
   if [ -n "${UPDATE_ALL}" ] || [ -n "${UPDATE_LOGIN}" ]; then
     echo "移除 login_web 内容 ..."
-    rm -rf ${WWW_DIR_PATH}/login/
+    rm -rf ${WEB_DEPLOY_PATH}/login/
     echo "解压并更新 login_web ..."
-    unzip -d ${WWW_DIR_PATH}/login login.zip
+    unzip -d ${WEB_DEPLOY_PATH}/login login.zip
   fi
 
   if [ -n "${UPDATE_ALL}" ] || [ -n "${UPDATE_ANALYSIS}" ]; then
     echo "移除 tca-analysis 内容 ..."
-    rm -rf ${WWW_DIR_PATH}/tca-analysis/
+    rm -rf ${WEB_DEPLOY_PATH}/tca-analysis/
     echo "解压并更新 tca-analysis ..."
-    unzip -d ${WWW_DIR_PATH}/tca-analysis tca-analysis.zip
+    unzip -d ${WEB_DEPLOY_PATH}/tca-analysis tca-analysis.zip
   fi
 
   if [ -n "${UPDATE_ALL}" ] || [ -n "${UPDATE_DOCUMENT}" ]; then
     echo "移除 tca-document 内容 ..."
-    rm -rf ${WWW_DIR_PATH}/tca-document/
+    rm -rf ${WEB_DEPLOY_PATH}/tca-document/
     echo "解压并更新 tca-document ..."
-    unzip -d ${WWW_DIR_PATH}/tca-document tca-document.zip
+    unzip -d ${WEB_DEPLOY_PATH}/tca-document tca-document.zip
   fi
 
   cd ${CUR_RUN_PATH}
@@ -119,8 +120,8 @@ function init_framework_web() {
     "
     echo "[INFO]:index.html RUNTIME is enabled"
     echo "[INFO]: change 404.html, unsupported-browser.html"
-    sed -i "${replace_content}" ${WWW_DIR_PATH}/framework/404.html
-    sed -i "${replace_content}" ${WWW_DIR_PATH}/framework/unsupported-browser.html
+    sed -i "${replace_content}" ${WEB_DEPLOY_PATH}/framework/404.html
+    sed -i "${replace_content}" ${WEB_DEPLOY_PATH}/framework/unsupported-browser.html
 
     echo "[INFO]: change index.html"
     sed \
@@ -129,7 +130,7 @@ function init_framework_web() {
       s|__MICRO_FRONTEND_API__|${MICRO_FRONTEND_API}|g; \
       s|__MICRO_FRONTEND_SETTING_API__|${MICRO_FRONTEND_SETTING_API}|g; \
       " \
-      ${WWW_DIR_PATH}/framework/index.runtime.html >${WWW_DIR_PATH}/framework/index.html
+      ${WEB_DEPLOY_PATH}/framework/index.runtime.html >${WEB_DEPLOY_PATH}/framework/index.html
   fi
 }
 
@@ -137,8 +138,8 @@ function init_framework_web() {
 function init_conf() {
   echo "将配置项拷贝至 framework static目录下"
   # \cp强制覆盖
-  \cp ${CUR_RUN_PATH}/conf/settings.json ${WWW_DIR_PATH}/framework/static/settings.json
-  \cp ${CUR_RUN_PATH}/conf/configs.json ${WWW_DIR_PATH}/framework/static/configs.json
+  \cp ${CUR_RUN_PATH}/conf/settings.json ${WEB_DEPLOY_PATH}/framework/static/settings.json
+  \cp ${CUR_RUN_PATH}/conf/configs.json ${WEB_DEPLOY_PATH}/framework/static/configs.json
 }
 
 # 重启nginx
