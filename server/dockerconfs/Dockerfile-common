@@ -1,4 +1,5 @@
 FROM python:3.7.12-slim
+#FROM arm64v8/python:3.7.12-slim  # For ARM
 
 ARG EXTRA_TOOLS="gnupg curl wget jq vim-tiny net-tools procps python3-dev default-libmysqlclient-dev locales inotify-tools gcc subversion git telnet iputils-ping vim openssh-client"
 
