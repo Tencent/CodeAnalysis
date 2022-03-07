@@ -31,11 +31,13 @@ Using TCA can help team find normative, structural, security vulnerabilities and
 - [How to deploy server and web](doc/deploy.md)
 - [How to deploy server and web with docker-compose](doc/deploy_dc.md)
 - [How to use client](doc/client.md)
+- [Deploy Q&A](doc/Q&A.md)
 
 ## Community
 - [Discussion](https://github.com/Tencent/CodeAnalysis/discussions)
 - [Wiki](https://github.com/Tencent/CodeAnalysis/wiki)
 - [White Paper](腾讯云代码分析白皮书.pdf)
+
 ## Changelogs
 - Check our [Changelogs](doc/changelogs.md)
 
