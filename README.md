@@ -34,12 +34,13 @@ Using TCA can help team find normative, structural, security vulnerabilities and
 - [Deploy Q&A](doc/Q&A.md)
 
 ## Community
+- QQ Group: 361791391
 - [Discussion](https://github.com/Tencent/CodeAnalysis/discussions)
 - [Wiki](https://github.com/Tencent/CodeAnalysis/wiki)
 - [White Paper](腾讯云代码分析白皮书.pdf)
 
 ## Changelogs
-- Check our [Changelogs](doc/changelogs.md)
+- Check our [Changelog](CHANGELOG.md)
 
 ## Contributing
 - Check out [CONTRIBUTING](CONTRIBUTING.md) to see how to develop with TCA.
