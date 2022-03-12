@@ -40,7 +40,7 @@ public class StartClient {
                     + " --branch " + branchName
                     + " --language " + languageType;
 
-            if (null != isTotal && !isTotal.isEmpty() {
+            if (null != isTotal && !isTotal.isEmpty()) {
                 startCommand += isTotal;
             }
 
