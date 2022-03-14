@@ -32,13 +32,16 @@
 - [如何在本地部署Server与Web](doc/deploy.md)
 - [如何通过Docker-Compose部署Server与Web](doc/deploy_dc.md)
 - [如何使用客户端](doc/client.md)
+- [部署常见问题与解决方式](doc/Q&A.md)
 
 ## 社区
+- QQ交流群：361791391
 - [GitHub讨论区](https://github.com/Tencent/CodeAnalysis/discussions)
-
+- [Wiki](https://github.com/Tencent/CodeAnalysis/wiki)
+- [腾讯云代码分析白皮书](腾讯云代码分析白皮书.pdf)
 
 ## 更新
-变更内容[Changelogs](doc/changelogs.md)
+[Changelog](CHANGELOG.md)
 
 ## 贡献
 - 查看我们的[贡献说明](CONTRIBUTING.md)

@@ -301,7 +301,7 @@ TCA 本地部署启动后，会监听多个端口：
     $ curl -v http://xxx/server/main/
     ```
     如果不通，则需要检查客户端机器访问Server机器是否有网络限制
-3. 检查当前在``codedog.ini``-``[config]token与``config.ini``文件配置的``[FILE_SERVER]TOKEN``是否一致，如果不一致需要调整为一致
+3. 检查当前在``codedog.ini``-``[config]token``与``config.ini``文件配置的``[FILE_SERVER]TOKEN``是否一致，如果不一致需要调整为一致
 4. 检查用户``CodeDog``的``Token``是否被刷新了然后没有更新到配置文件中
 
 #### 1.3.6 客户端访问文件服务器，提示``Connection timed out``
