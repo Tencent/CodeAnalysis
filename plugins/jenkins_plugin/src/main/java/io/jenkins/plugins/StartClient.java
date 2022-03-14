@@ -38,11 +38,8 @@ public class StartClient {
                     + " --team-name " + projectName
                     + " -s " + localCodePath
                     + " --branch " + branchName
-                    + " --language " + languageType;
-
-            if (null != isTotal && !isTotal.isEmpty()) {
-                startCommand += isTotal;
-            }
+                    + " --language " + languageType
+                    + isTotal;
 
             Process p = Runtime.getRuntime().exec(
                     startCommand,
