@@ -13,6 +13,7 @@ import Teams from '@src/modules/team';
 import Invite from '@src/modules/team/components/invite';
 import Team from '@src/modules/layout/team';
 import Home from '@src/modules/home';
+import Manage from '@src/modules/layout/manage';
 import LoadInitService from './load-init-service';
 
 const Root = () => (
@@ -23,6 +24,7 @@ const Root = () => (
         <Route path="/login" render={() => ''} />
         <LoadInitService>
           <Switch>
+            <Route path="/manage" component={Manage} />
             <Route path="/user" component={User} />
             <Route path="/teams" component={Teams} />
             <Route path="/t/invite/:code" component={Invite} />

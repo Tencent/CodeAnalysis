@@ -8,6 +8,8 @@ export const getHomeRouter = () => '/';
 
 export const getTeamsRouter = () => '/teams';
 
+export const getManageRouter = () => '/manage';
+
 export const getTeamRouter = (orgSid: string) => `/t/${orgSid}`;
 
 export const getProjectRouter = (orgSid: string, name: string) => `/t/${orgSid}/p/${name}`;
