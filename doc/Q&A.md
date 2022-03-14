@@ -4,11 +4,11 @@
 - [TCA常见问题](#tca常见问题)
   - [1. Server常见问题与处理方法](#1-server常见问题与处理方法)
     - [1.1 环境部署](#11-环境部署)
-      - [1.1.1 Docker未安装或版本过低](#111-docker未安装或版本过低)
-      - [1.1.2 Docker-Compose启动失败](#112-docker-compose启动失败)
-      - [1.1.3 Docker镜像源下载超时或失败](#113-docker镜像源下载超时或失败)
-      - [1.1.4 Python安装或执行失败](#114-python安装或执行失败)
-      - [1.1.5 pypi下载超时或失败](#115-pypi下载超时或失败)
+      - [1.1.1 pypi下载超时或失败](#111-pypi下载超时或失败)
+      - [1.1.2 Docker未安装或版本过低](#112-docker未安装或版本过低)
+      - [1.1.3 Docker-Compose启动失败](#113-docker-compose启动失败)
+      - [1.1.4 Docker镜像源下载超时或失败](#114-docker镜像源下载超时或失败)
+      - [1.1.5 Python安装或执行失败](#115-python安装或执行失败)
       - [1.1.6 MacBook M1 使用 Docker-Compose报错](#116-macbook-m1-使用-docker-compose报错)
       - [1.1.7 celery、gunicorn命令找不到](#117-celerygunicorn命令找不到)
     - [1.2 服务启动与初始化](#12-服务启动与初始化)
@@ -29,83 +29,7 @@
 
 ### 1.1 环境部署
 
-#### 1.1.1 Docker未安装或版本过低
-TCA Server使用Docker-Compose依赖的Docker版本需要是``1.13.0``及以上，可以执行以下命令查看Docker版本
-```bash
-$ docker --version
-Docker version 18.09.7, build 2d0083d
-```
-
-文档相关：
-- [Compose文件版本与对应的Docker版本说明文档](https://docs.docker.com/compose/compose-file/compose-versioning/)
-- [CentOS安装Docker官方文档](https://docs.docker.com/engine/install/centos/)
-- [Ubuntu安装Docker文档](https://docs.docker.com/engine/install/ubuntu/)
-
-#### 1.1.2 Docker-Compose启动失败
-如果启动Docker-Compose输出以下错误：
-
-```
-* Error response from daemon: Error processing tar file(exit status 1): unexpected EOF
-* Error response from daemon: Error processing tar file(exit status 1): unexpected EOF
-* Error response from daemon: Error processing tar file(exit status 1): unexpected EOF
-```
-问题原因：可能镜像构建目录权限不足，导致异常。
-解决方案：
-1. 执行``docker-compose build``可以通过日志查看是哪个镜像构建异常
-2. 切换到具体目录执行``docker build .``可以看到详细错误信息，结合具体错误信息进行处理
-3. 收集常见的错误日志，整理相关解决方案(注：欢迎大家补充)
-
-文档相关：
-- [Docker-Compose官方安装文档](https://docs.docker.com/compose/install/)
-- [Docker-ComposeV2官方安装文档](https://docs.docker.com/compose/cli-command/)
-
-#### 1.1.3 Docker镜像源下载超时或失败
-目前TCA基础镜像是使用``python:3.7.12-slim``，该镜像是基于``debian bullseye(debian 11)``版本构建的，对应的源需要选择 ``bullseye`` 版本的源。
-
-如果使用默认的下载源会报错或访问速度比较慢，可以调整``server/dockerconfs/Dockerfile-common``，指定其他国内下载源：
-
-```DockerFile
-# FROM python:3.7.12-slim
-
-# 增加一下内容用于指定下载源
-RUN mv /etc/apt/sources.list /etc/apt/sources.list.bak && \
-    echo 'deb http://mirrors.tencent.com/debian/ bullseye main non-free contrib' > /etc/apt/sources.list && \
-    echo 'deb http://mirrors.tencent.com/debian/ bullseye-updates main non-free contrib' >> /etc/apt/sources.list && \
-    echo 'deb http://mirrors.tencent.com/debian-security bullseye-security main non-free contrib' >> /etc/apt/sources.list
-
-# ARG EXTRA_TOOLS=...
-```
-
-如果出现以下错误：``E: Error, pkgProblemResolver::Resolve generated breaks, this may be caused by held packages``
-可以做以下检查，确认是什么原因：
-1. 检查一下本地服务器的时间配置是否正常
-2. 调整下载源
-
-#### 1.1.4 Python安装或执行失败
-使用Python执行时提示``ImportError: libpython3.7m.so.1.0: cannot open shared object file: No such file or directory
-``，该如何处理
-
-1. 在本地安装Python的目录中查找该文件，比如Python的安装目录是``/usr/local/python3``，可以执行``find /usr/local/python3 -name "libpython3.7m.so.1.0"``，确认本地是否存在该文件
-2. 如果本地存在该文件，则执行以下命令：（注：需要将``/usr/local/python3``调整为本地实际的Python3安装路径）
-
-    ```bash
-    # 链接构建产出的Python动态库
-    $ ln -s /usr/local/python3/lib/libpython3.7m.so.1.0 /usr/lib/libpython3.7m.so.1.0
-    # 配置动态库
-    $ ldconfig
-    ```
-3. 如果本地不存在该文件，则可能需要重新安装Python3：（注：以下是将Python安装到``/usr/local/python3``，可以根据实际情况进行调整）
-
-    ```bash
-    # 编译前配置，注意重点：需要加上参数 --enable-shared
-    $ ./configure prefix=/usr/local/python3 --enable-shared
-    ```
-
-文档相关：
-- [CentOS安装Python3.7文档](https://github.com/Tencent/CodeAnalysis/blob/main/doc/references/install_python37_on_centos.md)
-- [Ubuntu安装Python3.7文档](https://github.com/Tencent/CodeAnalysis/blob/main/doc/references/install_python37_on_ubuntu.md)
-
-#### 1.1.5 pypi下载超时或失败
+#### 1.1.1 pypi下载超时或失败
 如果在执行``pip install``环节出现以下错误，可以调整一下镜像源：
 ```
 WARNING: Retrying (Retry(total=4, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ReadTimeoutError("HTTPSConnectionPool(host='files.pythonhosted. org', port=443): Read timed out.(read timeout=15)") '
@@ -137,6 +61,82 @@ RUN mkdir -p log/ && \
 WARNING: Retrying (Retry(total=4, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<pip._vendor.urllib3.connection.HTTPSConnection object at 0x7f6d4ac24910>: Failed to establish a new connection: [Errno -3] Temporary failure in name resolution')': /simple/setuptools/
 ```
 该错误是无法正常解析``pypi``访问域名，需要检查一下本地的dns配置是否正常
+
+#### 1.1.2 Docker未安装或版本过低
+TCA Server使用Docker-Compose依赖的Docker版本需要是``1.13.0``及以上，可以执行以下命令查看Docker版本
+```bash
+$ docker --version
+Docker version 18.09.7, build 2d0083d
+```
+
+文档相关：
+- [Compose文件版本与对应的Docker版本说明文档](https://docs.docker.com/compose/compose-file/compose-versioning/)
+- [CentOS安装Docker官方文档](https://docs.docker.com/engine/install/centos/)
+- [Ubuntu安装Docker文档](https://docs.docker.com/engine/install/ubuntu/)
+
+#### 1.1.3 Docker-Compose启动失败
+如果启动Docker-Compose输出以下错误：
+
+```
+* Error response from daemon: Error processing tar file(exit status 1): unexpected EOF
+* Error response from daemon: Error processing tar file(exit status 1): unexpected EOF
+* Error response from daemon: Error processing tar file(exit status 1): unexpected EOF
+```
+问题原因：可能镜像构建目录权限不足，导致异常。
+解决方案：
+1. 执行``docker-compose build``可以通过日志查看是哪个镜像构建异常
+2. 切换到具体目录执行``docker build .``可以看到详细错误信息，结合具体错误信息进行处理
+3. 收集常见的错误日志，整理相关解决方案(注：欢迎大家补充)
+
+文档相关：
+- [Docker-Compose官方安装文档](https://docs.docker.com/compose/install/)
+- [Docker-ComposeV2官方安装文档](https://docs.docker.com/compose/cli-command/)
+
+#### 1.1.4 Docker镜像源下载超时或失败
+目前TCA基础镜像是使用``python:3.7.12-slim``，该镜像是基于``debian bullseye(debian 11)``版本构建的，对应的源需要选择 ``bullseye`` 版本的源。
+
+如果使用默认的下载源会报错或访问速度比较慢，可以调整``server/dockerconfs/Dockerfile-common``，指定其他国内下载源：
+
+```DockerFile
+# FROM python:3.7.12-slim
+
+# 增加一下内容用于指定下载源
+RUN mv /etc/apt/sources.list /etc/apt/sources.list.bak && \
+    echo 'deb http://mirrors.tencent.com/debian/ bullseye main non-free contrib' > /etc/apt/sources.list && \
+    echo 'deb http://mirrors.tencent.com/debian/ bullseye-updates main non-free contrib' >> /etc/apt/sources.list && \
+    echo 'deb http://mirrors.tencent.com/debian-security bullseye-security main non-free contrib' >> /etc/apt/sources.list
+
+# ARG EXTRA_TOOLS=...
+```
+
+如果出现以下错误：``E: Error, pkgProblemResolver::Resolve generated breaks, this may be caused by held packages``
+可以做以下检查，确认是什么原因：
+1. 检查一下本地服务器的时间配置是否正常
+2. 调整下载源
+
+#### 1.1.5 Python安装或执行失败
+使用Python执行时提示``ImportError: libpython3.7m.so.1.0: cannot open shared object file: No such file or directory
+``，该如何处理
+
+1. 在本地安装Python的目录中查找该文件，比如Python的安装目录是``/usr/local/python3``，可以执行``find /usr/local/python3 -name "libpython3.7m.so.1.0"``，确认本地是否存在该文件
+2. 如果本地存在该文件，则执行以下命令：（注：需要将``/usr/local/python3``调整为本地实际的Python3安装路径）
+
+    ```bash
+    # 链接构建产出的Python动态库
+    $ ln -s /usr/local/python3/lib/libpython3.7m.so.1.0 /usr/lib/libpython3.7m.so.1.0
+    # 配置动态库
+    $ ldconfig
+    ```
+3. 如果本地不存在该文件，则可能需要重新安装Python3：（注：以下是将Python安装到``/usr/local/python3``，可以根据实际情况进行调整）
+
+    ```bash
+    # 编译前配置，注意重点：需要加上参数 --enable-shared
+    $ ./configure prefix=/usr/local/python3 --enable-shared
+    ```
+
+文档相关：
+- [CentOS安装Python3.7文档](https://github.com/Tencent/CodeAnalysis/blob/main/doc/references/install_python37_on_centos.md)
+- [Ubuntu安装Python3.7文档](https://github.com/Tencent/CodeAnalysis/blob/main/doc/references/install_python37_on_ubuntu.md)
 
 #### 1.1.6 MacBook M1 使用 Docker-Compose报错
 在M1机器上使用默认配置启动docker-compose，会出现``mysql``和``scmproxy``服务启动失败，需要做以下两步调整
