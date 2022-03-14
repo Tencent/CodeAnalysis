@@ -46,6 +46,7 @@ function rm_all() {
   rm -f ${NINGX_CONF_PATH}/tca-layout.conf
   rm -f ${NINGX_CONF_PATH}/login.conf
   rm -f ${NINGX_CONF_PATH}/tca-analysis.conf
+  rm -f ${NINGX_CONF_PATH}/tca-manage.conf
   rm -f ${NINGX_CONF_PATH}/tca-document.conf
   echo "移除nginx conf.d ingress相关conf"
   rm -f ${NINGX_CONF_PATH}/tca_ingress.conf
