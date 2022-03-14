@@ -165,7 +165,7 @@ const FirstModal = (props: FirstModalProps) => {
                     ))}
                   </Select>
                 </Form.Item>
-                {/* <Form.Item
+                <Form.Item
                   name="tag"
                   label="运行环境"
                   rules={[{ required: true, message: '请选择运行环境' }]}
@@ -185,7 +185,7 @@ const FirstModal = (props: FirstModalProps) => {
                       ))}
                     </Row>
                   </Radio.Group>
-                </Form.Item> */}
+                </Form.Item>
                 <Form.Item
                   name="funcList"
                   label="功能开启"

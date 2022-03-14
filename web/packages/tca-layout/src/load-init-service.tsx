@@ -39,6 +39,10 @@ const LoadInitService: FC = ({ children }: any) => {
       // layout加载完毕
       info('loading finished');
       storeDispatch({
+        type: Constant.SET_USERINFO,
+        payload: res
+      })
+      storeDispatch({
         type: Constant.SET_LAYOUT_COMPLETED,
         payload: true,
       });

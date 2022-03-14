@@ -8,13 +8,14 @@
  * 仓库登记入口文件
  */
 import React, { useState, useEffect } from 'react';
-import { find, isEmpty } from 'lodash';
+import { find, isEmpty, get } from 'lodash';
 import { Button, Form, Select, message } from 'coding-oa-uikit';
 import PlusIcon from 'coding-oa-uikit/lib/icon/Plus';
 import RefreshIcon from 'coding-oa-uikit/lib/icon/Refresh';
 
 // 项目内
 import { t } from '@src/i18n/i18next';
+import { SCM_PLATFORM } from '@src/common/constants';
 import { AUTH_TYPE, AUTH_TYPE_TXT } from '@src/modules/repos/constants';
 import { getPCAuthRouter } from '@src/modules/repos/routes';
 import { getSSHInfo, getScmAccounts, putRepoAuth } from '@src/services/repos';
@@ -163,7 +164,7 @@ const Authority = ({ curRepo, orgSid, teamName, repoId }: IProps) => {
                     key={`${AUTH_TYPE.SSH}#${auth.id}`}
                     value={`${AUTH_TYPE.SSH}#${auth.id}`}
                   >
-                    {auth.name}
+                    {get(SCM_PLATFORM, auth.scm_platform, '其他')}：{auth.name}
                   </Option>
                 ))}
               </OptGroup>
@@ -175,7 +176,7 @@ const Authority = ({ curRepo, orgSid, teamName, repoId }: IProps) => {
                     key={`${AUTH_TYPE.HTTP}#${auth.id}`}
                     value={`${AUTH_TYPE.HTTP}#${auth.id}`}
                   >
-                    {auth.scm_username}
+                    {get(SCM_PLATFORM, auth.scm_platform, '其他')}：{auth.scm_username}
                   </Option>
                 ))}
               </OptGroup>

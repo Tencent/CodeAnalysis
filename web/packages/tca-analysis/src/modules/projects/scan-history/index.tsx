@@ -8,7 +8,7 @@
  * 分析历史
  */
 import React, { useEffect, useState, useRef } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import qs from 'qs';
 import { toNumber, get } from 'lodash';
@@ -21,6 +21,7 @@ import Tips from '@src/components/tips';
 import { getScans, cancelScan } from '@src/services/projects';
 import { DEFAULT_PAGER } from '@src/common/constants';
 import { formatDate, secondToDate, getQuery } from '@src/utils';
+import { getProjectRouter } from '@src/utils/getRoutePath';
 
 import successSvg from '@src/images/success.svg';
 import failureSvg from '@src/images/failure.svg';
@@ -141,39 +142,39 @@ const ScanHistory = (props: ScanHistoryProps) => {
           title="版本"
           dataIndex="current_revision"
           render={(version: string) => version && (
-              <span className={style.copyIcon}>
-                {version.substring(0, 8)}
-                <Tooltip title={version}>
-                  <CopyToClipboard
-                    text={version}
-                    onCopy={() => message.success('复制成功')}
-                  >
-                    <Copy />
-                  </CopyToClipboard>
-                </Tooltip>
-              </span>
+            <span className={style.copyIcon}>
+              {version.substring(0, 8)}
+              <Tooltip title={version}>
+                <CopyToClipboard
+                  text={version}
+                  onCopy={() => message.success('复制成功')}
+                >
+                  <Copy />
+                </CopyToClipboard>
+              </Tooltip>
+            </span>
           )
           }
         />
         <Column
           title="总耗时"
           dataIndex="total_time"
-          render={(time: string) => (time ? secondToDate(toNumber(time)) : '--') }
+          render={(time: string) => (time ? secondToDate(toNumber(time)) : '--')}
         />
         <Column
           title="状态"
           dataIndex="result_code"
           render={(status, data: any) => (status === null ? (
-              <>
-                <RunningIcon />
-                <span className={style.running}>执行中</span>
-              </>
+            <>
+              <RunningIcon />
+              <span className={style.running}>执行中</span>
+            </>
           ) : (
-                <div className={style.status}>
-                  <img src={getStatusIcon(status)} />
-                  <span>{data.result_code_msg}</span>
-                  {data.result_msg && <Tips title={data.result_msg} />}
-                </div>
+            <div className={style.status}>
+              <img src={getStatusIcon(status)} />
+              <span>{data.result_code_msg}</span>
+              {data.result_msg && <Tips title={data.result_msg} />}
+            </div>
           ))
           }
         />
@@ -197,6 +198,10 @@ const ScanHistory = (props: ScanHistoryProps) => {
               >
                 分析结果
               </Button>
+              <Link
+                style={{ marginLeft: 10 }}
+                to={`${getProjectRouter(orgSid, teamName, repoId, projectId)}/scan-history/${data.job_gid}`}
+              >详情</Link>
               {data.result_code === null && (
                 <Button
                   style={{ marginLeft: 10 }}

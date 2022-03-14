@@ -22,3 +22,12 @@ export const PROJECT_ROUTE_PREFIX = `${BASE_ROUTE_PREFIX}/code-analysis/repos/:r
 export const SCHEMES_ROUTE_PREFIX = `${BASE_ROUTE_PREFIX}/code-analysis/repos/:repoId/schemes/:schemeId`;
 
 export const TMPL_ROUTE_PREFIX = `${BASE_ROUTE_PREFIX}/template`;
+
+export const SCM_PLATFORM = {
+  1: '其他',
+  2: '腾讯工蜂',
+  3: 'CODING',
+  4: 'GitHub',
+  5: 'Gitee',
+  6: 'GitLab',
+};

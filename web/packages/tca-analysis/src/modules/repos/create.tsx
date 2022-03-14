@@ -14,6 +14,7 @@ import RefreshIcon from 'coding-oa-uikit/lib/icon/Refresh';
 
 // 项目内
 import { useStateStore, useDispatchStore } from '@src/context/store';
+import { SCM_PLATFORM } from '@src/common/constants';
 import { SET_CUR_REPO, SET_REPOS } from '@src/context/constant';
 import { getScmAccounts, postRepo, getSSHInfo } from '@src/services/repos';
 import { t } from '@src/i18n/i18next';
@@ -151,17 +152,17 @@ const Create = () => {
   };
 
   return (
-        <div className={s.repoCreateContainer}>
-            <div className={s.tit}>{t('代码库登记')}</div>
-            <Form
-                {...layout}
-                name="repo-create"
-                form={form}
-                onFinish={onFinish}
-                initialValues={initialValues}
-                style={{ width: '820px' }}
-            >
-                {/* <Form.Item required label={t('仓库所属')} name="repo_type" >
+    <div className={s.repoCreateContainer}>
+      <div className={s.tit}>{t('代码库登记')}</div>
+      <Form
+        {...layout}
+        name="repo-create"
+        form={form}
+        onFinish={onFinish}
+        initialValues={initialValues}
+        style={{ width: '820px' }}
+      >
+        {/* <Form.Item required label={t('仓库所属')} name="repo_type" >
                     <Radio.Group>
                         {REPO_ORG_TYPE_OPTIONS.map(item => (
                             <Radio.Button key={item.value} value={item.value}>
@@ -171,119 +172,119 @@ const Create = () => {
                     </Radio.Group>
                 </Form.Item> */}
 
-                <Form.Item required label={t('仓库地址')}>
-                    <Input.Group compact>
-                        <Form.Item name={['address', 'scm_type']} noStyle>
-                            <Select style={{ width: 70 }}>
-                                {REPO_TYPE_OPTIONS.map((item: string, index) => (
-                                    <Option key={index} value={item}>
-                                        {item.toUpperCase()}
-                                    </Option>
-                                ))}
-                            </Select>
-                        </Form.Item>
+        <Form.Item required label={t('仓库地址')}>
+          <Input.Group compact>
+            <Form.Item name={['address', 'scm_type']} noStyle>
+              <Select style={{ width: 70 }}>
+                {REPO_TYPE_OPTIONS.map((item: string, index) => (
+                  <Option key={index} value={item}>
+                    {item.toUpperCase()}
+                  </Option>
+                ))}
+              </Select>
+            </Form.Item>
 
-                        <Form.Item
-                            name={['address', 'scm_url']}
-                            noStyle
-                            rules={[
-                              { required: true, message: t('请输入代码库地址') },
-                              // {
-                              //     pattern: /(https?):\/\/[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]/,
-                              //     message: t('请输入合法的代码库地址'),
-                              // },
-                            ]}
-                        >
-                            <Input style={{ width: 430 }} />
-                        </Form.Item>
-                        <p className={s.formDesc}>
-                            由于境外代码托管平台可能存在网络问题，建议使用境内托管平台的代码库
-                        </p>
-                    </Input.Group>
-                </Form.Item>
-                <Form.Item
-                    name="name"
-                    label={t('仓库别名')}
-                    rules={[{ required: true, message: t('请输入代码库别名') }]}
-                >
-                    <Input style={{ width: 500 }} onFocus={onRepoNameFocus} />
-                </Form.Item>
-                <Form.Item label={t('认证')} required>
-                    <Form.Item
-                        name="scm_auth_id"
-                        style={{
-                          display: 'inline-block',
-                          marginBottom: 0,
-                          width: '500px',
-                        }}
-                        rules={[{ required: true, message: t('请选择一项仓库认证方式') }]}
+            <Form.Item
+              name={['address', 'scm_url']}
+              noStyle
+              rules={[
+                { required: true, message: t('请输入代码库地址') },
+                // {
+                //     pattern: /(https?):\/\/[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]/,
+                //     message: t('请输入合法的代码库地址'),
+                // },
+              ]}
+            >
+              <Input style={{ width: 430 }} />
+            </Form.Item>
+            <p className={s.formDesc}>
+              由于境外代码托管平台可能存在网络问题，建议使用境内托管平台的代码库
+            </p>
+          </Input.Group>
+        </Form.Item>
+        <Form.Item
+          name="name"
+          label={t('仓库别名')}
+          rules={[{ required: true, message: t('请输入代码库别名') }]}
+        >
+          <Input style={{ width: 500 }} onFocus={onRepoNameFocus} />
+        </Form.Item>
+        <Form.Item label={t('认证')} required>
+          <Form.Item
+            name="scm_auth_id"
+            style={{
+              display: 'inline-block',
+              marginBottom: 0,
+              width: '500px',
+            }}
+            rules={[{ required: true, message: t('请选择一项仓库认证方式') }]}
+          >
+            <Select style={{ width: 500 }} getPopupContainer={() => document.body}>
+              {!isEmpty(sshAuthList) && (
+                <OptGroup label={AUTH_TYPE_TXT.SSH}>
+                  {sshAuthList.map((auth: any) => (
+                    <Option
+                      key={auth.authId}
+                      value={auth.authId}
+                      auth_type={AUTH_TYPE.SSH}
                     >
-                        <Select style={{ width: 500 }} getPopupContainer={() => document.body}>
-                            {!isEmpty(sshAuthList) && (
-                                <OptGroup label={AUTH_TYPE_TXT.SSH}>
-                                    {sshAuthList.map((auth: any) => (
-                                        <Option
-                                            key={auth.authId}
-                                            value={auth.authId}
-                                            auth_type={AUTH_TYPE.SSH}
-                                        >
-                                            {auth.name}
-                                        </Option>
-                                    ))}
-                                </OptGroup>
-                            )}
-                            {!isEmpty(httpAuthList) && (
-                                <OptGroup label={AUTH_TYPE_TXT.HTTP}>
-                                    {httpAuthList.map((auth: any) => (
-                                        <Option
-                                            key={auth.authId}
-                                            value={auth.authId}
-                                            auth_type={AUTH_TYPE.HTTP}
-                                        >
-                                            {auth.scm_username}
-                                        </Option>
-                                    ))}
-                                </OptGroup>
-                            )}
-                        </Select>
-                    </Form.Item>
-                    <Button
-                        className="ml-12 mt-xs"
-                        type="link"
-                        target="_blank"
-                        href={getPCAuthRouter()}
-                        icon={<PlusIcon />}
+                      {get(SCM_PLATFORM, auth.scm_platform, '其他')}：{auth.name}
+                    </Option>
+                  ))}
+                </OptGroup>
+              )}
+              {!isEmpty(httpAuthList) && (
+                <OptGroup label={AUTH_TYPE_TXT.HTTP}>
+                  {httpAuthList.map((auth: any) => (
+                    <Option
+                      key={auth.authId}
+                      value={auth.authId}
+                      auth_type={AUTH_TYPE.HTTP}
                     >
-                        {t('新增凭证')}
-                    </Button>
-                    <Button
-                        className="ml-12 mt-xs"
-                        type="text"
-                        icon={<RefreshIcon />}
-                        loading={authLoading}
-                        onClick={() => setReload(reload => !reload)}
-                    >
-                        {t('重新拉取凭证')}
-                    </Button>
-                </Form.Item>
-                <div style={{ marginTop: '30px' }}>
-                    <Button type="primary" htmlType="submit" key="submit" loading={submitLoading}>
-                        {t('确定')}
-                    </Button>
-                    <Button className=" ml-12" htmlType="button" onClick={onReset}>
-                        {t('取消')}
-                    </Button>
-                    <Button
-                        className=" ml-12"
-                        htmlType="button"
-                        type="text"
-                        onClick={() => history.goBack()}
-                    >
-                        {t('返回')}
-                    </Button>
-                </div>
-            </Form>
+                      {get(SCM_PLATFORM, auth.scm_platform, '其他')}：{auth.scm_username}
+                    </Option>
+                  ))}
+                </OptGroup>
+              )}
+            </Select>
+          </Form.Item>
+          <Button
+            className="ml-12 mt-xs"
+            type="link"
+            target="_blank"
+            href={getPCAuthRouter()}
+            icon={<PlusIcon />}
+          >
+            {t('新增凭证')}
+          </Button>
+          <Button
+            className="ml-12 mt-xs"
+            type="text"
+            icon={<RefreshIcon />}
+            loading={authLoading}
+            onClick={() => setReload(reload => !reload)}
+          >
+            {t('重新拉取凭证')}
+          </Button>
+        </Form.Item>
+        <div style={{ marginTop: '30px' }}>
+          <Button type="primary" htmlType="submit" key="submit" loading={submitLoading}>
+            {t('确定')}
+          </Button>
+          <Button className=" ml-12" htmlType="button" onClick={onReset}>
+            {t('取消')}
+          </Button>
+          <Button
+            className=" ml-12"
+            htmlType="button"
+            type="text"
+            onClick={() => history.goBack()}
+          >
+            {t('返回')}
+          </Button>
         </div>
+      </Form>
+    </div>
   );
 };
 

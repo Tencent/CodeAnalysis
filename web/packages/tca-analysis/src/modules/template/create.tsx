@@ -11,7 +11,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { pick, trim } from 'lodash';
-import { Form, Input, Checkbox, Row, Col, Select, message, Modal } from 'coding-oa-uikit';
+import { Form, Input, Checkbox, Row, Col, Select, message, Modal, Radio } from 'coding-oa-uikit';
 
 import { SCAN_LIST } from '../schemes/constants';
 import { createTmpl } from '@src/services/template';
@@ -100,27 +100,27 @@ const CreatSchemeModal = (props: IProps) => {
             ))}
           </Select>
         </Form.Item>
-        {/* <Form.Item
-           name="tag"
-           label="运行环境"
-           rules={[{ required: true, message: '请选择运行环境' }]}
-         >
-           <Radio.Group>
-             <Row>
-               {tags.map(item => item.public && (
-                 <Col
-                   span={8}
-                   key={item.name}
-                 >
-                   <Radio value={item.name}>
-                     {item.name}
-                   </Radio>
-                 </Col>
-               ))}
- 
-             </Row>
-           </Radio.Group>
-         </Form.Item> */}
+        <Form.Item
+          name="tag"
+          label="运行环境"
+          rules={[{ required: true, message: '请选择运行环境' }]}
+        >
+          <Radio.Group>
+            <Row>
+              {tags.map(item => item.public && (
+                <Col
+                  span={8}
+                  key={item.name}
+                >
+                  <Radio value={item.name}>
+                    {item.name}
+                  </Radio>
+                </Col>
+              ))}
+
+            </Row>
+          </Radio.Group>
+        </Form.Item>
         <Form.Item
           name="description"
           label="模板描述"
