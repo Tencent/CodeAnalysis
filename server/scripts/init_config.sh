@@ -64,6 +64,10 @@ function init_db() {
 
 function init_requirments() {
     echo "Start to install requirement..."
+    echo -e "\033[33m-*-*-*-*-*-*-注意-*-*-*-*-*-*-*-"
+    echo "如果访问官方pypi源（files.pythonhosted.org）超时或访问失败，可以配置腾讯云pypi源进行替代，配置方式可以执行以下命令："
+    echo "mkdir ~/.pip/ && echo "[global]\nindex-url = https://mirrors.cloud.tencent.com/pypi/simple" >> ~/.pip/pip.conf"
+    echo -e "-*-*-*-*-*-*-注意-*-*-*-*-*-*-*-\033[0m"
     pip install -r $CONFIG_PATH/requirements.txt
 }
 
