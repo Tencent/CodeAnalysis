@@ -98,6 +98,8 @@ class GitRemoteClient(IScmClient):
             http_url = re.sub("^git@", "http://", self._scm_url.replace(":", "/", 1))
         elif self._scm_url.startswith("ssh://git@"):
             http_url = re.sub(r"(:\d+/)", "/", self._scm_url.replace("ssh://git@", "http://"))
+        elif self._scm_url.startswith("ssh://"):
+            http_url = re.sub(r"(:\d+/)", "/", self._scm_url.replace("ssh://", "http://"))
         elif not self._scm_url.startswith("http"):
             http_url = "http://%s" % self._scm_url.replace(":", "/", 1)
         else:
@@ -156,7 +158,6 @@ class GitRemoteClient(IScmClient):
 
     def cat(self, path, revision):
         """获取文件内容
-        
         :param path: 文件路径
         :param revision: 文件版本
         :type revision: str
