@@ -1,3 +1,4 @@
+# 如果需要在ARM架构上运行，可以将第一个 FROM指令 进行注释，然后将第二个 FROM指令 取消注释
 FROM python:3.7.12-slim
 #FROM arm64v8/python:3.7.12-slim  # For ARM
 
@@ -20,7 +21,13 @@ WORKDIR /var/www/django/codedog
 
 COPY . .
 
+# 如果访问官方pypi源（files.pythonhosted.org）超时或访问失败，
+# 可以将下面第一个 RUN指令 进行注释，然后将第二个 RUN指令 取消注释，配置为腾讯云pypi源进行下载
 RUN mkdir -p log/ && \
     pip install -U setuptools pip && \
     pip install -r requirements.txt
-    
+
+# RUN mkdir -p log/ && \
+#     mkdir ~/.pip/ && echo "[global]\nindex-url = https://mirrors.cloud.tencent.com/pypi/simple" >> ~/.pip/pip.conf && \
+#     pip install -U setuptools pip && \
+#     pip install -r requirements.txt
