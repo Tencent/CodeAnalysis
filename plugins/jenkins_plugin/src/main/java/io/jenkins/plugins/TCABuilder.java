@@ -110,8 +110,6 @@ public class TCABuilder extends Builder implements SimpleBuildStep {
         }
         if(total) {
             isTotal = " --total";
-        }else{
-            isTotal = " ";
         }
         String clientPath = codeAnalysisPath + "client";
         StartClient.startClient(osName,
