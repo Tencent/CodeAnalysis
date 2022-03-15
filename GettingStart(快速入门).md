@@ -6,7 +6,7 @@
 
 ## 2. 配置项目
 
-![homepage](https://tencent.github.io/codeanalysis/https://tencent.github.io/CodeAnalysis/media/homepage.png)
+![homepage](https://tencent.github.io/CodeAnalysis/media/homepage.png)
 
 ### a. 创建团队，创建项目
 
