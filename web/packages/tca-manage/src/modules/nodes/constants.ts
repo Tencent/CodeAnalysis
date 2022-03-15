@@ -12,6 +12,16 @@ export const STATUS_CHOICES = {
   [STATUS_ENUM.OFFLINE]: t('离线'),
 };
 
+export const STATE_ENUM = {
+  FREE: 0,
+  BUSY: 1
+}
+
+export const STATE_CHOICES = {
+  [STATE_ENUM.BUSY]: '忙碌',
+  [STATE_ENUM.FREE]: '空闲'
+}
+
 export const STATUS_OPTIONS = [{
   text: STATUS_CHOICES[STATUS_ENUM.ACTIVE],
   value: STATUS_ENUM.ACTIVE,
