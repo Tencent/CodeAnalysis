@@ -5,7 +5,7 @@ import { MAIN_SERVER_API } from './common';
  * 获取节点列表
  * @param params 筛选参数
  */
-export const getNodes = (params: any = null) => get(`${MAIN_SERVER_API}/nodes/?limit=500`, params);
+export const getNodes = (params: any = null) => get(`${MAIN_SERVER_API}/nodes/`, params);
 
 export const getNode = (nodeId: number | string) => get(`${MAIN_SERVER_API}/nodes/${nodeId}/`);
 

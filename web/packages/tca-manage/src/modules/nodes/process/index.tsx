@@ -3,7 +3,6 @@ import { useParams } from 'react-router-dom';
 import {
   Descriptions,
   Tag,
-  Badge,
   Table,
   Row,
   Col,
@@ -14,6 +13,10 @@ import {
 import { CheckboxChangeEvent } from 'coding-oa-uikit/lib/checkbox';
 import SaveIcon from 'coding-oa-uikit/lib/icon/Save';
 import { omit } from 'lodash';
+import Loading from 'coding-oa-uikit/lib/icon/Loading'
+import Stop from 'coding-oa-uikit/lib/icon/Stop'
+import ExclamationCircle from 'coding-oa-uikit/lib/icon/ExclamationCircle'
+import DotCircle from 'coding-oa-uikit/lib/icon/DotCircle'
 
 // 项目内
 import { bytesToSize, formatDateTime } from '@src/utils';
@@ -21,7 +24,7 @@ import { t } from '@src/i18n/i18next';
 import { getNodeProcess, getNode, putNodeProcess } from '@src/services/nodes';
 
 // 模块内
-import { STATUS_ENUM, STATUS_CHOICES } from '../constants';
+import { STATUS_ENUM, STATE_ENUM } from '../constants';
 
 const { Column } = Table;
 
@@ -118,12 +121,14 @@ const Process = () => {
   };
 
   if (nodeInfo) {
-    const { name, manager, addr, enabled } = nodeInfo;
-    let color = 'grey';
-    if (enabled === STATUS_ENUM.ACTIVE) {
-      color = 'green';
+    const { name, manager, addr, enabled, state } = nodeInfo;
+    let nodeStatusRender = <Tag icon={<ExclamationCircle spin />} color='warning'>离线</Tag>
+    if (enabled === STATUS_ENUM.ACTIVE && state === STATE_ENUM.BUSY) {
+      nodeStatusRender = <Tag icon={<Loading spin />} color='processing'>运行中</Tag>
+    } else if (enabled === STATUS_ENUM.ACTIVE) {
+      nodeStatusRender = <Tag icon={<DotCircle spin />} color='success'>在线</Tag>
     } else if (enabled === STATUS_ENUM.DISACTIVE) {
-      color = 'red';
+      nodeStatusRender = <Tag icon={<Stop spin />}>失效</Tag>
     }
     return (
       <div className="px-lg">
@@ -132,7 +137,7 @@ const Process = () => {
           <Descriptions.Item label={t('负责人')}>{manager}</Descriptions.Item>
           <Descriptions.Item label={t('IP 地址')}>{addr}</Descriptions.Item>
           <Descriptions.Item label={t('节点状态')}>
-            <Badge color={color} text={STATUS_CHOICES[enabled]} />
+            {nodeStatusRender}
           </Descriptions.Item>
           <Descriptions.Item label={t('最近上报心跳')} span={2}>
             {formatDateTime(nodeInfo.last_beat_time) || '- -'}

@@ -2,33 +2,61 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Table, Tag, Button, message } from 'coding-oa-uikit';
 
+import Loading from 'coding-oa-uikit/lib/icon/Loading'
+import Stop from 'coding-oa-uikit/lib/icon/Stop'
+import ExclamationCircle from 'coding-oa-uikit/lib/icon/ExclamationCircle'
+import DotCircle from 'coding-oa-uikit/lib/icon/DotCircle'
+
+
 // 项目内
 import { t } from '@src/i18n/i18next';
 import DangerModal from '@src/components/modal/danger-modal';
-import { formatDateTime } from '@src/utils';
+import { formatDateTime, getPaginationParams, getFilterURLPath } from '@src/utils';
+import { DEFAULT_PAGER } from '@src/common/constants';
+import { useDeepEffect, useURLParams } from '@src/utils/hooks';
 import { getNodes, delNode, getTags } from '@src/services/nodes';
 
 // 模块内
-import { STATUS_ENUM, STATUS_CHOICES } from './constants';
+import { STATUS_ENUM, STATE_ENUM } from './constants';
 import NodeModal from './node-modal';
+
+import s from './style.scss';
+import Search from './node-search';
+
+const FILTER_FIELDS = [
+  'name',
+  'manager',
+  'exec_tags',
+  'state',
+  'enabled'
+];
+
+const customFilterURLPath = (params = {}) => getFilterURLPath(FILTER_FIELDS, params);
 
 const { Column } = Table;
 
 const NodeTable = () => {
   const [listData, setListData] = useState<Array<any>>([]);
+  const [count, setCount] = useState(DEFAULT_PAGER.count);
+  const [loading, setLoading] = useState(false);
   const [tagOptions, setTagOptions] = useState<Array<any>>([]);
   const [visible, setVisible] = useState(false);
   const [selectNode, setSelectNode] = useState(null);
   const [visibleDel, setVisibleDel] = useState(false);
+  const { filter, currentPage, searchParams } = useURLParams(FILTER_FIELDS);
   const history = useHistory();
 
   /**
      * 根据路由参数获取团队列表
      */
   const getListData = () => {
-    getNodes().then((response) => {
+    setLoading(true);
+    getNodes(filter).then((response) => {
+      setCount(response.count);
       setListData(response.results || []);
-    });
+    }).finally(() => {
+      setLoading(false);
+    })
   };
 
   const onDelNodeClick = (node: any = null) => {
@@ -37,19 +65,13 @@ const NodeTable = () => {
   };
 
   const onDelNodeHandle = (node: any) => {
-    message.success(t('已删除'));
-    console.log(node)
-    // eslint-disable-next-line no-constant-condition
-    if (false) {
-      delNode(node.id).then(() => {
-        message.success(t('已删除'));
-        getListData();
-      });
-    }
+    delNode(node.id).then(() => {
+      message.success(t('已删除'));
+      getListData();
+    });
   };
 
   useEffect(() => {
-    getListData();
     getTags().then((response) => {
       setTagOptions(response.results.map((item: any) => ({
         text: item.name,
@@ -61,6 +83,26 @@ const NodeTable = () => {
   const onCreateOrUpdateHandle = (node: any = null) => {
     setVisible(true);
     setSelectNode(node);
+  };
+
+  // 当路由参数变化时触发
+  useDeepEffect(() => {
+    getListData();
+  }, [filter]);
+
+  // 筛选
+  const onSearch = (params: any) => {
+    history.push(customFilterURLPath({
+      limit: DEFAULT_PAGER.pageSize,
+      offset: DEFAULT_PAGER.pageStart,
+      ...params,
+    }));
+  };
+
+  // 翻页
+  const onChangePageSize = (page: number, pageSize: number) => {
+    const params = getPaginationParams(page, pageSize);
+    history.push(customFilterURLPath(params));
   };
 
   return (
@@ -88,7 +130,16 @@ const NodeTable = () => {
           </div>
         }
       />
-      <Table pagination={false} rowKey={(item: any) => item.id} dataSource={listData}>
+      <div className={s.filterContent}>
+        <Search loading={loading} searchParams={searchParams} tagOptions={tagOptions} callback={onSearch} />
+      </div>
+      <Table pagination={{
+
+        current: currentPage,
+        total: count,
+        showTotal: (total: any, range: any) => `${range[0]} - ${range[1]} 条数据，共 ${total} 条`,
+        onChange: onChangePageSize,
+      }} rowKey={(item: any) => item.id} dataSource={listData}>
         <Column title={t('节点名称')} dataIndex="name" />
         <Column title={t('负责人')} dataIndex="manager" key="manager" />
         <Column title={t('IP 地址')} dataIndex="addr" key="addr" />
@@ -109,14 +160,16 @@ const NodeTable = () => {
           title={t('节点状态')}
           dataIndex="enabled"
           key="enabled"
-          render={(enabled: any) => {
-            let color = 'grey-5';
-            if (enabled === STATUS_ENUM.ACTIVE) {
-              color = 'green-5';
+          render={(enabled: any, node: any) => {
+            if (enabled === STATUS_ENUM.ACTIVE && node.state === STATE_ENUM.BUSY) {
+              return <Tag icon={<Loading spin />} color='processing'>运行中</Tag>
+            } else if (enabled === STATUS_ENUM.ACTIVE) {
+              return <Tag icon={<DotCircle spin />} color='success'>在线</Tag>
             } else if (enabled === STATUS_ENUM.DISACTIVE) {
-              color = 'red-5';
+              return <Tag icon={<Stop spin />}>失效</Tag>
+            } else {
+              return <Tag icon={<ExclamationCircle spin />} color='warning'>离线</Tag>
             }
-            return <span className={`text-${color}`}>{STATUS_CHOICES[enabled]}</span>;
           }}
         />
         <Column
