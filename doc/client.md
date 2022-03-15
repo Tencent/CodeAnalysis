@@ -13,6 +13,7 @@ b. 在命令行中执行安装脚本`install.sh`(linux/mac环境)或`install.bat
 ## 3. 配置client/config.ini文件
 
 配置客户端执行环境：将`<Server IP地址>`替换成实际的serve ip（可包含端口号）。  
+
 <img src="https://tencent.github.io/CodeAnalysis/media/clientConfigIni.png" width = "80%" />
 
 ## 4. 配置client/codedog.ini文件，完成项目配置以启动项目扫描
@@ -20,10 +21,13 @@ b. 在命令行中执行安装脚本`install.sh`(linux/mac环境)或`install.bat
 ### 填写以下必填项：`token`,`org_sid`,`team_name`,`source_dir`
 
 - **token**：从web页面获取，前往[个人中心]-[个人令牌]-复制Token
-![personalToken](https://tencent.github.io/CodeAnalysis/media/personalToken.png)
+
+  ![personalToken](https://tencent.github.io/CodeAnalysis/media/personalToken.png)
 - **org_sid**：进入项目概览页，从URL中获取
+
 - **team_name**： 进入项目概览页，从URL中获取  
-![orgsid](https://tencent.github.io/CodeAnalysis/media/orgsid.png)
+
+  ![orgsid](https://tencent.github.io/CodeAnalysis/media/orgsid.png)
 
 > 说明：项目概览URL格式：<http://{域名}/t/{org_sid}/p/{team_name}/profile>  
 >从中可获取到：  
@@ -37,7 +41,7 @@ b. 在命令行中执行安装脚本`install.sh`(linux/mac环境)或`install.bat
 其他为可选参数，按需填写，默认可以不填。  
 如果项目代码为编译型语言（比如：C/C++，C#，Go，Java，Kotlin，Objective-C等），且使用的分析方案中配置了编译型工具（如图，使用了OC推荐规则包），需要填写`build_cmd`编译命令。
 
-**其他可选项按需填写，不填写时按默认配置执行**
+**其他可选项按需填写，不填写时按默认配置执行**。
 
 ## 5. 启动一次代码分析
 
