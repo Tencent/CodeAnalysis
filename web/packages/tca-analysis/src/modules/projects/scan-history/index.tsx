@@ -34,7 +34,6 @@ import Result from './result';
 import style from './style.scss';
 
 const { Column } = Table;
-let timer: any = null;
 
 interface ScanHistoryProps {
   orgSid: string;
@@ -47,7 +46,8 @@ interface ScanHistoryProps {
 const ScanHistory = (props: ScanHistoryProps) => {
   const query = getQuery();
   const history = useHistory();
-  const savedCallback = useRef<Function>(() => { });
+  const timer = useRef<any>();
+
   const [count, setCount] = useState(DEFAULT_PAGER.count);
   const [list, setList] = useState([]);
   const [visible, setVisible] = useState(false);
@@ -59,18 +59,10 @@ const ScanHistory = (props: ScanHistoryProps) => {
   const refresh = get(history, 'location.state.refresh');
 
   useEffect(() => {
-    savedCallback.current = getListData;
-  });
-
-  useEffect(() => {
-    if (curTab === 'scan-history') {
-      timer = setInterval(() => {
-        savedCallback.current();
-      }, 6000);
-    } else {
-      clearInterval(timer);
+    if (curTab !== 'scan-history') {
+      clearTimer();
     }
-    return () => clearInterval(timer);
+    return clearTimer;
   }, [curTab]);
 
   useEffect(() => {
@@ -87,10 +79,28 @@ const ScanHistory = (props: ScanHistoryProps) => {
       offset,
     };
     getScans(orgSid, teamName, repoId, projectId, params).then((response) => {
-      history.push(`${location.pathname}?${qs.stringify(params)}`);
-      setList(response.results);
+      const results = response.results || [];
+      setList(results);
       setCount(response.count);
+
+      if (results?.[0]?.result_code === null) {
+        if (!timer.current) {
+          timer.current = setInterval(() => {
+            getListData();
+          }, 1000);
+        }
+      } else {
+        clearTimer();
+      }
+      history.push(`${location.pathname}?${qs.stringify(params)}`);
     });
+  };
+
+  const clearTimer = () => {
+    if(timer.current) {
+      clearInterval(timer.current);
+      timer.current = null;
+    }
   };
 
   const onChangePageSize = (page: number, pageSize: number) => {

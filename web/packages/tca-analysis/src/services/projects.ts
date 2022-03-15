@@ -29,6 +29,16 @@ export const getProjects = (org_sid: string, team_name: string, repoId: string |
 export const createProject = (org_sid: string, team_name: string, repoId: string | number, data: any) => post(`${getMainBaseURL(org_sid, team_name)}/repos/${repoId}/projects/`, data);
 
 /**
+ * 启动分析
+ * @param org_sid 
+ * @param team_name 
+ * @param repoId 
+ * @param projectId 
+ * @param data 
+ */
+export const createJob = (org_sid: string, team_name: string, repoId: string | number, projectId: string | number, data: any) => post(`${getMainBaseURL(org_sid, team_name)}/repos/${repoId}/projects/${projectId}/scans/`, data);
+
+/**
  * 获取分支项目信息
  * @param repoId - 代码库ID
  * @param projectId - 项目ID
