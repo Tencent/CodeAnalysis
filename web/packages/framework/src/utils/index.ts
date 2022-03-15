@@ -4,12 +4,9 @@
 // See LICENSE for details
 // ==============================================================================
 
-import Cookies from 'universal-cookie';
 import isEmpty from 'lodash/isEmpty';
 
 import Constant from '@src/constant';
-
-export const cookies = new Cookies();
 
 
 /**

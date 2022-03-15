@@ -23,7 +23,10 @@ const DevUI = () => {
   useHotkeys('escape', () => setVisible(false));
 
   const onOK = (data: string) => {
-    cookies.set(Constant.MICRO_FRONTEND_API_LIST, data);
+    cookies.set(Constant.MICRO_FRONTEND_API_LIST, data, {
+      path: '/',
+      domain: window.location.hostname
+    });
     setVisible(false);
     location.reload();
   };
