@@ -361,6 +361,17 @@ export const getDupFileIssueComments = (orgSid: string, teamName: string, repoId
 export const getScans = (org_sid: string, team_name: string, repoId: number, projectId: number, query: any) => get(`${getAnalysisBaseURL(org_sid, team_name)}/repos/${repoId}/projects/${projectId}/scans/`, query);
 
 /**
+ * 获取分析历史结果
+ * @param org_sid 
+ * @param team_name 
+ * @param repoId 
+ * @param projectId 
+ * @param scanId 
+ */
+export const getScansResult = (org_sid: string, team_name: string, repoId: number, projectId: number, scanId: number) => get(`${getAnalysisBaseURL(org_sid, team_name)}/repos/${repoId}/projects/${projectId}/scans/${scanId}/`);
+
+
+/**
  * 分析历史 - 获取分析历史详情
  * @param org_sid
  * @param team_name

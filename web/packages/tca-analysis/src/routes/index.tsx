@@ -186,7 +186,7 @@ const Routers = () => {
       />
       <Route
         exact
-        path={`${PROJECT_ROUTE_PREFIX}/scan-history/:jobId`}
+        path={`${PROJECT_ROUTE_PREFIX}/scan-history/:jobId/:scanTab?`}
         component={ScanDetail}
       />
       <Route path={`${PROJECT_ROUTE_PREFIX}`} component={Projects} />

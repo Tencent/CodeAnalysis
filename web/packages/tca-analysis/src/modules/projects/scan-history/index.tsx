@@ -29,8 +29,6 @@ import abortedSvg from '@src/images/aborted.svg';
 
 import { SCAN_TYPE_CHOICES } from '../constants';
 
-import Result from './result';
-
 import style from './style.scss';
 
 const { Column } = Table;
@@ -50,8 +48,6 @@ const ScanHistory = (props: ScanHistoryProps) => {
 
   const [count, setCount] = useState(DEFAULT_PAGER.count);
   const [list, setList] = useState([]);
-  const [visible, setVisible] = useState(false);
-  const [resData, setResData] = useState({});
 
   const { orgSid, teamName, repoId, projectId, curTab } = props;
   const pageSize = toNumber(query.limit) || DEFAULT_PAGER.pageSize;
@@ -199,15 +195,10 @@ const ScanHistory = (props: ScanHistoryProps) => {
           dataIndex="id"
           render={(id, data: any) => (
             <>
-              <Button
-                type="link"
-                onClick={() => {
-                  setVisible(true);
-                  setResData(data as any);
-                }}
-              >
-                分析结果
-              </Button>
+            <Link
+                style={{ marginLeft: 10 }}
+                to={`${getProjectRouter(orgSid, teamName, repoId, projectId)}/scan-history/${data.job_gid}/result`}
+              >结果</Link>
               <Link
                 style={{ marginLeft: 10 }}
                 to={`${getProjectRouter(orgSid, teamName, repoId, projectId)}/scan-history/${data.job_gid}`}
@@ -225,7 +216,6 @@ const ScanHistory = (props: ScanHistoryProps) => {
           )}
         />
       </Table>
-      <Result data={resData} visible={visible} onClose={() => setVisible(false)} />
     </>
   );
 };

@@ -34,6 +34,8 @@
 }
 
 .result {
+  max-width: 1000px;
+
   .module {
     font-size: 13px;
     padding-bottom: 16px;
@@ -46,6 +48,7 @@
 
     h4 {
       font-size: 16px;
+      margin-bottom: 10px;
     }
 
     .no-data {
@@ -57,6 +60,10 @@
 
 .scan-detail {
   padding: 30px;
+
+  :global(.ant-tabs-content) {
+    margin-top: 24px;
+  }
 
   :global(.ant-steps-item-title) {
     margin-bottom: 10px;
