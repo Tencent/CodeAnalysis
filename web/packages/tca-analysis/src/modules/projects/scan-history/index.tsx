@@ -93,7 +93,7 @@ const ScanHistory = (props: ScanHistoryProps) => {
   };
 
   const clearTimer = () => {
-    if(timer.current) {
+    if (timer.current) {
       clearInterval(timer.current);
       timer.current = null;
     }
@@ -145,7 +145,7 @@ const ScanHistory = (props: ScanHistoryProps) => {
           render={(time: any) => time && formatDate(time, 'YYYY-MM-DD HH:mm')}
         />
         <Column
-          title="版本"
+          title="分析版本"
           dataIndex="current_revision"
           render={(version: string) => version && (
             <span className={style.copyIcon}>
@@ -165,7 +165,12 @@ const ScanHistory = (props: ScanHistoryProps) => {
         <Column
           title="总耗时"
           dataIndex="total_time"
-          render={(time: string) => (time ? secondToDate(toNumber(time)) : '--')}
+          render={(time: string, data: any) => <Tooltip title={<>
+            <p>等待耗时：{secondToDate(toNumber(data.waiting_time))}</p>
+            <p>执行耗时：{secondToDate(toNumber(data.execute_time))}</p>
+          </>}>
+            <span>{time ? secondToDate(toNumber(time)) : '--'}</span>
+          </Tooltip>}
         />
         <Column
           title="状态"
@@ -195,14 +200,14 @@ const ScanHistory = (props: ScanHistoryProps) => {
           dataIndex="id"
           render={(id, data: any) => (
             <>
-            <Link
-                style={{ marginLeft: 10 }}
-                to={`${getProjectRouter(orgSid, teamName, repoId, projectId)}/scan-history/${data.job_gid}/result`}
-              >结果</Link>
               <Link
                 style={{ marginLeft: 10 }}
                 to={`${getProjectRouter(orgSid, teamName, repoId, projectId)}/scan-history/${data.job_gid}`}
               >详情</Link>
+              <Link
+                style={{ marginLeft: 10 }}
+                to={`${getProjectRouter(orgSid, teamName, repoId, projectId)}/scan-history/${data.job_gid}/result`}
+              >结果</Link>
               {data.result_code === null && (
                 <Button
                   style={{ marginLeft: 10 }}

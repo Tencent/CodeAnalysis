@@ -14,6 +14,7 @@ const envs = {
   KEYWORDS: process.env.KEYWORDS,
   FAVICON: process.env.FAVICON,
   MICRO_FRONTEND_API: process.env.MICRO_FRONTEND_API,
+  GIT_REVISION: process.env.GIT_REVISION || 'dirty',
 };
 
 // 用于生成index.runtime.html 可被替换的值

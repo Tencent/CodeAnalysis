@@ -133,10 +133,30 @@
       }
     }
 
-    .title {
+    .right {
       flex: 1;
+
+      .desc {
+        color: #606c80;
+
+        a {
+          color: #606c80;
+
+          &:hover {
+            color: #0066ff;
+          }
+        }
+      }
+    }
+
+    .title {
+      margin-bottom: 8px;
       font-size: 18px;
       font-weight: 500;
+
+      a {
+        font-size: 13px;
+      }
     }
   }
 
@@ -228,5 +248,21 @@
       display: inline-block;
       width: 140px;
     }
+  }
+}
+
+.detail-btn {
+  display: inline-block;
+  color: #606c80;
+  // font-size: 12px;
+  padding: 0 10px;
+  line-height: 22px;
+  background-color: #f5f7fa;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: #e6e9ed;
   }
 }

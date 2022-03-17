@@ -4,11 +4,12 @@
 
 import React, { useEffect, useState, useRef } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import cn from 'classnames';
 import qs from 'qs';
-import { find, isEmpty, toNumber } from 'lodash';
+import { find, isEmpty, toNumber, get } from 'lodash';
 
-import { Steps, Tooltip, Tabs } from 'coding-oa-uikit';
+import { Steps, Tooltip, Tabs, Tag } from 'coding-oa-uikit';
 import ArrowLeft from 'coding-oa-uikit/lib/icon/ArrowLeft';
 import Waiting from 'coding-oa-uikit/lib/icon/Waiting';
 import Success from 'coding-oa-uikit/lib/icon/Success';
@@ -16,8 +17,9 @@ import Failed from 'coding-oa-uikit/lib/icon/Failed';
 import Runing from 'coding-oa-uikit/lib/icon/Runing';
 import AttentionRed from 'coding-oa-uikit/lib/icon/AttentionRed';
 import Attention from 'coding-oa-uikit/lib/icon/Attention';
+import CloudDownload from 'coding-oa-uikit/lib/icon/CloudDownload';
 
-import { getProjectRouter } from '@src/utils/getRoutePath';
+import { getProjectRouter, getSchemeRouter } from '@src/utils/getRoutePath';
 import { getScanDetail, getTaskDetail, getLog } from '@src/services/projects';
 import { getQuery, formatDateTime } from '@src/utils';
 
@@ -53,6 +55,8 @@ const ScanDetail = () => {
   const [data, setData] = useState<any>({});
   const [curTask, setCurTask] = useState<any>({});
   const taskRef = useRef() as any; // 存储当前任务的id，解决定时器中的闭包问题 - 获取不到最新的 curTask 值
+  const APP = useSelector((state: any) => state.APP);
+  const isSuperuser = get(APP, 'user.is_superuser', false);
 
   useEffect(() => {
     const query = getQuery();
@@ -100,7 +104,12 @@ const ScanDetail = () => {
     // 跨域兼容处理，将log内的url的origin进行替换
     const a = document.createElement('a');
     a.href = decodeURIComponent(url) || '';
-    url = `${window.location.origin}${a.pathname}`;
+    // 替换为前端域名地址
+    let pathname = a.pathname
+    if (!pathname.startsWith('/server')) {
+      pathname = `/server${pathname}`
+    }
+    url = `${window.location.origin}${pathname}`;
     const filename = url.substr(url.lastIndexOf('/') + 1);
     getLog(url).then(res => res.blob().then((blob) => {
       const blobUrl = window.URL.createObjectURL(blob);
@@ -254,7 +263,27 @@ const ScanDetail = () => {
         >
           <ArrowLeft />
         </span>
-        <h2 className={style.title}>任务 {jobId} 执行情况</h2>
+        <div className={style.right}>
+          <h2 className={style.title}>
+            任务执行情况
+            <Tag className='ml-sm'>Job ID: {jobId}</Tag>
+            <Tag>Scan ID: {data?.scan_id}</Tag>
+            <a
+              className={style.detailBtn}
+              target='_blank'
+              href={`${getSchemeRouter(
+                orgSid,
+                teamName,
+                repoId,
+                data?.project?.scan_scheme
+              )}/basic`} rel="noreferrer"
+            >查看分析方案</a>
+          </h2>
+          <p className={style.desc}>
+            代码库：{data?.project?.repo_scm_url}
+            <span className='ml-sm'>分支：{data?.project?.branch}</span>
+          </p>
+        </div>
       </div>
       <Tabs
         activeKey={scanTab || 'detail'}
@@ -289,7 +318,7 @@ const ScanDetail = () => {
                   {data.state !== StatusCode.WAITING && data.start_time && (
                     <p style={{ marginBottom: 10 }}>
                       执行开始时间：{formatDateTime(data.start_time)} &nbsp;
-                  执行耗时：{data.execute_time?.split('.')[0]}
+                      执行耗时：{data.execute_time?.split('.')[0]}
                     </p>
                   )}
                   <div className={style.taskItemWrapper}>
@@ -372,19 +401,19 @@ const ScanDetail = () => {
                                                 .node
                                                 ?.name
                                             }
-                                        （
+                                            （
                                             {
                                               queueProcess
                                                 .node
                                                 ?.get_enabled_display
                                             }{' '}
-                                        --{' '}
+                                            --{' '}
                                             {
                                               queueProcess
                                                 .node
                                                 ?.get_state_display
                                             }
-                                        ）
+                                            ）
                                           </li>
                                         ))}
                                       </ul>
@@ -408,7 +437,7 @@ const ScanDetail = () => {
                                       }}
                                     >
                                       进程日志
-                                </a>
+                                    </a>
                                   </p>
                                 )}
                               </div>
@@ -423,16 +452,16 @@ const ScanDetail = () => {
                         <span className={style.time}>
                           {formatDateTime(curTask.create_time)}
                         </span>
-                    等待耗时：{curTask.waiting_time?.split('.')[0]}{' '}
-                    创建任务，等待执行
-                  </p>
+                        等待耗时：{curTask.waiting_time?.split('.')[0]}{' '}
+                        创建任务，等待执行
+                      </p>
                       {curTask.start_time && (
                         <p>
                           <span className={style.time}>
                             {formatDateTime(curTask.start_time)}
                           </span>
-                      执行耗时：{curTask.execute_time?.split('.')[0]}{' '}
-                      开始执行子任务
+                          执行耗时：{curTask.execute_time?.split('.')[0]}{' '}
+                          开始执行子任务
                         </p>
                       )}
                       {curTask.taskprogress_set?.map((item: any, index: number) => (
@@ -440,11 +469,11 @@ const ScanDetail = () => {
                           <span className={style.time}>
                             {formatDateTime(item.create_time)}
                           </span>
-                      步骤 {index + 1} &nbsp;
+                          步骤 {index + 1} &nbsp;
                           {item.node?.name && (
                             <span>[节点：{item.node.name}]</span>
                           )}
-                      ：{item.progress_rate}%&nbsp;&nbsp;----&nbsp;&nbsp;
+                          ：{item.progress_rate}%&nbsp;&nbsp;----&nbsp;&nbsp;
                           {item.message}
                         </p>
                       ))}
@@ -459,17 +488,20 @@ const ScanDetail = () => {
                           执行版本：{curTask.execute_version}
                         </span>
                       )}
+                      {curTask.params_path && isSuperuser && (
+                        <a style={{ marginRight: 10 }} onClick={() => {
+                          downloadLog(curTask.params_path);
+                        }} className={style.detailBtn}> <CloudDownload /> 下载任务参数</a>
+                      )}
+                      {curTask.result_path && (
+                        <a style={{ marginRight: 10 }} onClick={() => {
+                          downloadLog(curTask.result_path);
+                        }} className={style.detailBtn}> <CloudDownload /> 下载任务结果</a>
+                      )}
                       {curTask.log_url && (
-                        <span>
-                          执行日志：
-                          <a
-                            onClick={() => {
-                              downloadLog(curTask.log_url);
-                            }}
-                          >
-                            点击下载
-                      </a>
-                        </span>
+                        <a onClick={() => {
+                          downloadLog(curTask.log_url);
+                        }} className={style.detailBtn}> <CloudDownload /> 下载执行日志</a>
                       )}
                     </p>
                   </div>
