@@ -19,6 +19,8 @@ export INGRESS_SERVER_NAME=${LOCAL_IP}
 # 前端 nginx 配置服务端口号
 export INGRESS_PORT=80
 # nginx 配置地址
-export NINGX_CONF_PATH="/etc/nginx/conf.d"
+export NGINX_CONF_PATH="/etc/nginx/conf.d"
 # 前端资源部署地址
 export WEB_DEPLOY_PATH="/usr/share/nginx/www"
+# nginx 日志文件地址
+export NGINX_LOG_PATH="/var/log/nginx"
