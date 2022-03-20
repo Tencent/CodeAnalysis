@@ -6,7 +6,7 @@
 # | SERVER_ENV | | 访问的后端地址，必填项 |
 # | INGRESS_PORT | 80 | ingress 配置的端口，默认 80 |
 # | INGRESS_SERVER_NAME | tca.tencent.com | ingress 配置的服务名称，默认 tca.tencent.com |
-# | NINGX_CONF_PATH | /etc/nginx/conf.d | nginx配置地址，默认 /etc/nginx/conf.d |
+# | NGINX_CONF_PATH | /etc/nginx/conf.d | nginx配置地址，默认 /etc/nginx/conf.d |
 # | WEB_DEPLOY_PATH | /usr/share/nginx/www | 前端资源部署地址，默认 /usr/share/nginx/www |
 # | IS_DOCKER | FALSE | 是否DOCKER启动 |
 # +---------+-------------------+----------------------------------------------+
@@ -36,7 +36,9 @@ if [ ! -n "${SERVER_ENV}" ]; then
 fi
 
 # nginx 配置地址，默认/etc/nginx/conf.d
-NINGX_CONF_PATH=${NINGX_CONF_PATH:-"/etc/nginx/conf.d"}
+NGINX_CONF_PATH=${NGINX_CONF_PATH:-"/etc/nginx/conf.d"}
+# nginx 日志文件地址，默认/var/log/nginx
+NGINX_LOG_PATH=${NGINX_LOG_PATH:-"/var/log/nginx"}
 
 # 配置host，追加到hosts文件内
 function conf_hosts() {
@@ -112,12 +114,11 @@ function init_framework_web() {
 # 初始化各个微前端的nginx配置
 function init_web_nginx() {
   echo "初始化各个微前端的nginx配置 ..."
-  sed "s|APP_NAME|framework|g; s|SERVER_ENV|${SERVER_ENV}|g;" ${CUR_RUN_PATH}/nginx/framework_template.conf >${NINGX_CONF_PATH}/framework.conf
-  sed "s|APP_NAME|tca-layout|g;" ${CUR_RUN_PATH}/nginx/template.conf >${NINGX_CONF_PATH}/tca-layout.conf
-  sed "s|APP_NAME|login|g;" ${CUR_RUN_PATH}/nginx/template.conf >${NINGX_CONF_PATH}/login.conf
-  sed "s|APP_NAME|tca-analysis|g;" ${CUR_RUN_PATH}/nginx/template.conf >${NINGX_CONF_PATH}/tca-analysis.conf
-  sed "s|APP_NAME|tca-manage|g;" ${CUR_RUN_PATH}/nginx/template.conf >${NINGX_CONF_PATH}/tca-manage.conf
-  sed "s|APP_NAME|tca-document|g;" ${CUR_RUN_PATH}/nginx/document.conf >${NINGX_CONF_PATH}/tca-document.conf
+  sed "s|WEB_DEPLOY_PATH|${WEB_DEPLOY_PATH}|g; s|NGINX_LOG_PATH|${NGINX_LOG_PATH}|g; s|APP_NAME|framework|g; s|SERVER_ENV|${SERVER_ENV}|g;" ${CUR_RUN_PATH}/nginx/framework_template.conf >${NGINX_CONF_PATH}/framework.conf
+  sed "s|WEB_DEPLOY_PATH|${WEB_DEPLOY_PATH}|g; s|NGINX_LOG_PATH|${NGINX_LOG_PATH}|g; s|APP_NAME|tca-layout|g;" ${CUR_RUN_PATH}/nginx/template.conf >${NGINX_CONF_PATH}/tca-layout.conf
+  sed "s|WEB_DEPLOY_PATH|${WEB_DEPLOY_PATH}|g; s|NGINX_LOG_PATH|${NGINX_LOG_PATH}|g; s|APP_NAME|login|g;" ${CUR_RUN_PATH}/nginx/template.conf >${NGINX_CONF_PATH}/login.conf
+  sed "s|WEB_DEPLOY_PATH|${WEB_DEPLOY_PATH}|g; s|NGINX_LOG_PATH|${NGINX_LOG_PATH}|g; s|APP_NAME|tca-analysis|g;" ${CUR_RUN_PATH}/nginx/template.conf >${NGINX_CONF_PATH}/tca-analysis.conf
+  sed "s|WEB_DEPLOY_PATH|${WEB_DEPLOY_PATH}|g; s|NGINX_LOG_PATH|${NGINX_LOG_PATH}|g; s|APP_NAME|tca-document|g;" ${CUR_RUN_PATH}/nginx/document.conf >${NGINX_CONF_PATH}/tca-document.conf
 }
 
 # 初始化配置ingress的nginx配置
@@ -134,8 +135,9 @@ function init_ingress_nginx() {
     s|PORT|${INGRESS_PORT}|g; \
     s|SERVER_NAME|${INGRESS_SERVER_NAME}|g; \
     s|SET_DEFAULT_SERVER|${SET_DEFAULT_SERVER}|g; \
+    s|NGINX_LOG_PATH|${NGINX_LOG_PATH}|g; \
     " \
-    ${CUR_RUN_PATH}/nginx/ingress.conf >${NINGX_CONF_PATH}/tca_ingress.conf
+    ${CUR_RUN_PATH}/nginx/ingress.conf >${NGINX_CONF_PATH}/tca_ingress.conf
 }
 
 # 启动nginx

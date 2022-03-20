@@ -6,7 +6,7 @@
 # | SERVER_ENV | | 访问的后端地址，必填项 |
 # | INGRESS_PORT | 80 | ingress 配置的端口，默认 80 |
 # | INGRESS_SERVER_NAME | tca.tencent.com | ingress 配置的服务名称，默认 tca.tencent.com |
-# | NINGX_CONF_PATH | /etc/nginx/conf.d | nginx配置地址，默认 /etc/nginx/conf.d |
+# | NGINX_CONF_PATH | /etc/nginx/conf.d | nginx配置地址，默认 /etc/nginx/conf.d |
 # | WEB_DEPLOY_PATH | /usr/share/nginx/www | 前端资源部署地址，默认 /usr/share/nginx/www |
 # +---------+-------------------+----------------------------------------------+
 
@@ -35,21 +35,22 @@ if [ ! -n "${SERVER_ENV}" ]; then
 fi
 
 # nginx 配置地址，默认/etc/nginx/conf.d
-NINGX_CONF_PATH=${NINGX_CONF_PATH:-"/etc/nginx/conf.d"}
+NGINX_CONF_PATH=${NGINX_CONF_PATH:-"/etc/nginx/conf.d"}
+# nginx 日志文件地址，默认/var/log/nginx
+NGINX_LOG_PATH=${NGINX_LOG_PATH:-"/var/log/nginx"}
 
 function rm_all() {
   mkdir -p ${WEB_DEPLOY_PATH}
   echo "移除全部静态资源文件 ..."
   rm -rf ${WEB_DEPLOY_PATH}/
   echo "移除nginx conf.d web相关conf"
-  rm -f ${NINGX_CONF_PATH}/framework.conf
-  rm -f ${NINGX_CONF_PATH}/tca-layout.conf
-  rm -f ${NINGX_CONF_PATH}/login.conf
-  rm -f ${NINGX_CONF_PATH}/tca-analysis.conf
-  rm -f ${NINGX_CONF_PATH}/tca-manage.conf
-  rm -f ${NINGX_CONF_PATH}/tca-document.conf
+  rm -f ${NGINX_CONF_PATH}/framework.conf
+  rm -f ${NGINX_CONF_PATH}/tca-layout.conf
+  rm -f ${NGINX_CONF_PATH}/login.conf
+  rm -f ${NGINX_CONF_PATH}/tca-analysis.conf
+  rm -f ${NGINX_CONF_PATH}/tca-document.conf
   echo "移除nginx conf.d ingress相关conf"
-  rm -f ${NINGX_CONF_PATH}/tca_ingress.conf
+  rm -f ${NGINX_CONF_PATH}/tca_ingress.conf
 }
 
 function reset_run() {
