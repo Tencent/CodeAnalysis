@@ -58,9 +58,9 @@ STORAGE = {
 # STORAGE = {
 #     "CLIENT": os.environ.get("FILE_STORAGE_CLIENT", "MINIO"),  # 存储方式
 #     "OPTIONS": {
-#         "MINIO_ENTRYPOINT": os.environ.get("FILE_MINIO_ENTRYPOINT", "<MinIO 服务host>"),
-#         "MINIO_ACCESS_KEY": os.environ.get("FILE_MINIO_ACCESS_KEY", "<MinIO access key>"),
-#         "MINIO_SECRET_KEY": os.environ.get("FILE_MINIO_SECRET_KEY", "<MinIO secret key>"),
+#         "MINIO_ENTRYPOINT": os.environ.get("FILE_MINIO_ENTRYPOINT"),  # MinIO平台地址（API地址，非Console地址）
+#         "MINIO_ACCESS_KEY": os.environ.get("FILE_MINIO_ACCESS_KEY"),  # MinIO登录账号
+#         "MINIO_SECRET_KEY": os.environ.get("FILE_MINIO_SECRET_KEY"),  # MinIO登录密码
 #     }
 # }
 
