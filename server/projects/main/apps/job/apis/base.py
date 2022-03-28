@@ -12,27 +12,57 @@ job - base apis
 import logging
 
 # 第三方 import
-from django.db.models import Count, Sum, Max
-from django.utils.timezone import now, localtime
+from django.utils.timezone import now
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import generics
-from rest_framework.response import Response
-from rest_framework.permissions import IsAdminUser
-from rest_framework.generics import get_object_or_404
 from rest_framework.exceptions import ParseError
+from rest_framework.generics import get_object_or_404
+from rest_framework.permissions import IsAdminUser
+from rest_framework.response import Response
 
 # 项目内 import
+from apps.authen.core import UserManager
+from apps.codeproj.apimixins import ProjectBaseAPIView
+from apps.job import core
 from apps.job import models
 from apps.job.api_filters import base as filters
-from apps.job.serializers import base as serializers
-from apps.job import core
 from apps.job.permissions import JobUserPermission
-from apps.authen.core import UserManager
-
+from apps.job.serializers import base as serializers
 from util import errcode
-
+from util.permissions import RepositoryUserPermission
 
 logger = logging.getLogger(__name__)
+
+
+class RepoJobListApiView(generics.ListAPIView, ProjectBaseAPIView):
+    """指定代码库任务列表接口
+
+    ### Get
+    应用场景：获取指定项目任务列表详情
+    """
+    serializer_class = serializers.JobSerializer
+    permission_classes = [RepositoryUserPermission]
+    filter_backends = (DjangoFilterBackend,)
+    filterset_class = filters.JobFilterSet
+
+    def get_queryset(self):
+        repo = self.get_repo()
+        return models.Job.objects.select_related("project__repo").filter(project__repo_id=repo.id).order_by("-id")
+
+
+class RepoJobDetailApiView(generics.RetrieveAPIView, ProjectBaseAPIView):
+    """指定代码库任务详情接口
+
+    ### Get
+    应用场景：获取项目指定扫描job的详情
+    """
+    serializer_class = serializers.JobSerializer
+    permission_classes = [RepositoryUserPermission]
+
+    def get_object(self):
+        repo = self.get_repo()
+        job_id = self.kwargs["job_id"]
+        return get_object_or_404(models.Job, id=job_id, project__repo_id=repo.id)
 
 
 class JobsApiView(generics.ListAPIView):
@@ -67,8 +97,8 @@ class JobCancelApiView(generics.GenericAPIView):
         if job.state not in [models.Job.StateEnum.CLOSED, models.Job.StateEnum.CLOSING]:
             """当前任务未关闭，可进行取消
             """
-            core.revoke_job(job, errcode.E_CLIENT_CANCELED,
-                            "User( %s ) Canceled: %s . " % (username, remarks))
+            core.JobCloseHandler.revoke_job(job, errcode.E_CLIENT_CANCELED,
+                                            "User( %s ) Canceled: %s . " % (username, remarks))
             job.refresh_from_db()
             job.remarks = remarks
             job.remarked_by = request.user
@@ -84,16 +114,15 @@ class JobCancelApiView(generics.GenericAPIView):
                 remarks=remarks,
                 remarked_by=request.user
             )
-            core.close_scan(job.id)
+            core.JobCloseHandler.close_scan(job.id)
         else:
-            core.close_scan(job.id)
+            core.JobCloseHandler.close_scan(job.id, force=True)
 
     def post(self, request, job_id):
         slz = self.get_serializer(data=request.data)
         if slz.is_valid(raise_exception=True):
             job = get_object_or_404(models.Job, id=job_id)
-            logger.info("User( %s ) cancel job %s" %
-                        (request.user.username, job_id))
+            logger.info("User( %s ) cancel job %s" % (request.user.username, job_id))
             try:
                 remarks = slz.validated_data["remarks"]
                 force = slz.validated_data["force"]
@@ -102,4 +131,3 @@ class JobCancelApiView(generics.GenericAPIView):
             except Exception as e:
                 logger.exception("Cancel job exception: %s" % e)
                 raise ParseError({"cd_error": "取消任务异常"})
-

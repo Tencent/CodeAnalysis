@@ -9,8 +9,9 @@
 celery 定时任务列表
 """
 
-from celery.schedules import crontab
+from datetime import timedelta
 
+from celery.schedules import crontab
 
 CELERY_BEAT_TASKS = {
 
@@ -25,4 +26,41 @@ CELERY_BEAT_TASKS = {
         "task": "apps.codeproj.tasks.base.check_project_active",
         "schedule": crontab(hour=14, minute=30)
     },
+
+    # 启动定时扫描，每隔10分钟执行1次
+    "handle-scheduled-projects-setting": {
+        "task": "apps.codeproj.tasks.base.handle_scheduled_projects",
+        "schedule": timedelta(minutes=10),
+    },
+
+    # 启动节点状态定时监控，每隔3分钟执行1次
+    "check-node-active": {
+        "task": "apps.nodemgr.tasks.nodecheck.check_node_active",
+        "schedule": timedelta(minutes=3),
+    },
+
+    # 启动任务超时定时监控，每隔10分钟执行一次
+    "handle-expired-job": {
+        "task": "apps.job.tasks.jobcheck.handle_expired_job",
+        "schedule": timedelta(minutes=10),
+    },
+
+    # 启动任务初始化超时监控，每隔5分钟执行一次
+    "monitor-initing-job": {
+        "task": "apps.job.tasks.jobcheck.monitor_initing_job",
+        "schedule": timedelta(minutes=5),
+    },
+
+    # 监控运行中的任务，每半个小时执行一次，将未正常关闭的任务进行关闭
+    "monitor-running-job": {
+        "task": "apps.job.tasks.jobcheck.monitor_running_job",
+        "schedule": timedelta(minutes=30),
+    },
+
+    # 启动任务入库超时监控，每隔30分钟执行一次，将未正常入库的任务进行取消
+    "monitor-closing-job": {
+        "task": "apps.job.tasks.jobcheck.monitor_closing_job",
+        "schedule": timedelta(minutes=30),
+    }
 }
+

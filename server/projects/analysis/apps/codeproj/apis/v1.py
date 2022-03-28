@@ -117,7 +117,7 @@ class ProjectScanDetailApiView(generics.UpdateAPIView):
                                  project_id=self.kwargs["project_id"])
 
 
-class ProjectScanResultDetailApiView(generics.RetrieveUpdateAPIView):
+class ProjectScanResultDetailApiView(generics.RetrieveUpdateAPIView, ProjectBaseAPIView):
     """项目扫描结果详情接口
     使用对象：服务内部
 
@@ -141,16 +141,21 @@ class ProjectScanResultDetailApiView(generics.RetrieveUpdateAPIView):
         return generics.GenericAPIView.get_serializer_class(self)
 
     def get_queryset(self):
-        project_id = self.kwargs["project_id"]
-        return models.Scan.objects.filter(project_id=int(project_id)).order_by("-id")
+        project = self.get_project()
+        return models.Scan.objects.filter(project_id=project.id).order_by("-id")
 
     def put(self, request, *args, **kwargs):
+        project = self.get_project()
         slz = self.get_serializer(data=request.data)
         slz.is_valid(raise_exception=True)
         get_object_or_404(models.Project, id=kwargs["project_id"])
+        get_object_or_404(models.Scan, id=kwargs["scan_id"], project_id=kwargs["project_id"])
         logger.info("Scan数据入库参数校验通过，开始入库，参数如下：")
         logger.info(json.dumps(request.data))
-        tasks.put_scan_result.delay(kwargs["project_id"], kwargs["scan_id"], slz.validated_data)
+        if slz.validated_data.get("sync_flag") is True:
+            tasks.put_scan_result(kwargs["project_id"], kwargs["scan_id"], slz.validated_data)
+        else:
+            tasks.put_scan_result.delay(kwargs["project_id"], kwargs["scan_id"], slz.validated_data)
         return Response("OK")
 
 

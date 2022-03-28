@@ -44,6 +44,7 @@ class RetryDecor(object):
                     if self._check_error_ignore(err):
                         raise
                     if cnt >= self._total:
+                        logger.exception("method <%s> exception: %s", func.__name__, err)
                         raise
                     else:
                         cnt += 1

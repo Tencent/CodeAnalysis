@@ -142,8 +142,8 @@ class CodeLintIssueResolutionManager(object):
             ignore_reason
         )
         message += scope_msg
-        CodeLintIssueCommentManager.create_issue_comment(operator, issue_id=issue.id,
-                                                         action=action, message=message)
+        CodeLintIssueCommentManager.create_issue_comment(operator, issue_id=issue.id, action=action,
+                                                         message=message, project_id=issue.project_id)
         return issue
 
 
@@ -163,7 +163,7 @@ class CodeLintIssueAuthorManager(object):
             action = action or "修改责任人"
             message = "%s -> %s" % (old_author, new_author)
             CodeLintIssueCommentManager.create_issue_comment(
-                creator=operator, issue_id=issue.id, message=message, action=action)
+                creator=operator, issue_id=issue.id, message=message, action=action, project_id=issue.project_id)
         else:
             issues = models.Issue.everything.filter(
                 Q(project=issue.project, author=old_author,
@@ -175,7 +175,7 @@ class CodeLintIssueAuthorManager(object):
             message = "%s -> %s (源issue id:%d)" % (old_author,
                                                    new_author, issue.id)
             CodeLintIssueCommentManager.bulk_create_issue_comment(
-                creator=operator, issue_ids=issue_ids, message=message, action=action)
+                creator=operator, issue_ids=issue_ids, message=message, action=action, project_id=issue.project_id)
         issue.refresh_from_db()
         return issue
 
@@ -210,33 +210,35 @@ class CodeLintIssueSeverityManager(object):
         message = "%s -> %s" % (models.Issue.SEVERITY_CHOICES_DICT.get(old_severity),
                                 models.Issue.SEVERITY_CHOICES_DICT[new_severity])
         CodeLintIssueCommentManager.create_issue_comment(
-            operator, issue.id, action="修改优先级", message=message)
+            operator, issue.id, action="修改优先级", message=message, project_id=issue.project_id)
         return issue
 
 
 class CodeLintIssueCommentManager(object):
     @classmethod
-    def create_issue_comment(cls, creator, issue_id, action, message):
+    def create_issue_comment(cls, creator, issue_id, action, message, project_id):
         """创建Issue评论
         :param creator: str，创建人
         :param issue_id: int，Issue编号
         :param action: str，操作
         :param message: str，描述
+        :param project_id: int，项目编号
         """
         models.IssueComment.objects.create(
-            creator=creator, issue_id=issue_id, action=action, message=message)
+            creator=creator, issue_id=issue_id, project_id=project_id, action=action, message=message)
 
     @classmethod
-    def bulk_create_issue_comment(cls, creator, issue_ids, action, message):
+    def bulk_create_issue_comment(cls, creator, issue_ids, action, message, project_id):
         """批量创建Issue评论
         :param creator: str，创建人
         :param issue_ids: list，Issue列表
         :param action: str，操作
         :param message: str，描述
+        :param project_id: int，项目编号
         :return:
         """
         comments = [models.IssueComment(
-            issue_id=issue_id, action=action, message=message, creator=creator)
+            issue_id=issue_id, action=action, project_id=project_id, message=message, creator=creator)
             for issue_id in issue_ids
         ]
         models.IssueComment.objects.bulk_create(comments, 1000)

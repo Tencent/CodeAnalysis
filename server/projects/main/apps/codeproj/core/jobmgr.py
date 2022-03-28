@@ -19,15 +19,15 @@ from django.utils import timezone
 from apps.codeproj import models
 from apps.codeproj.core.projmgr import ScanSchemeManager
 from apps.codeproj.core.scmmgr import ScmClientManager
-from apps.job.core.jobhandler import revoke_job, close_job
-from apps.job.models import Job, Task, TaskProcessRelation, ScanTypeEnum
+from apps.job.core import JobCloseHandler, JobDispatchHandler
+from apps.job.models import Job, ScanTypeEnum, Task, TaskProcessRelation
 from apps.nodemgr.models import ExecTag
 from apps.scan_conf.core.pkgmgr import CheckPackageManager
-from apps.scan_conf.models import CheckTool, ToolProcessRelation, ScanApp, Language, PackageMap, Label
+from apps.scan_conf.models import CheckTool, Label, Language, PackageMap, ScanApp, ToolProcessRelation
 from util import errcode
-from util.exceptions import ClientError, CDErrorBase, CDScmError
+from util.exceptions import CDErrorBase, CDScmError, ClientError
 from util.retrylib import RetryDecor
-from util.scm.base import ScmAccessDeniedError, ScmNotFoundError, ScmClientError, ScmError
+from util.scm.base import ScmAccessDeniedError, ScmClientError, ScmError, ScmNotFoundError
 from util.webclients import AnalyseClient
 
 logger = logging.getLogger(__name__)
@@ -176,9 +176,14 @@ class JobManager(object):
         if job_context is None:
             job_context = {}
         scan_scheme = self._project.scan_scheme
+        project_team = self._project.repo.project_team
+        organization = self._project.repo.organization
         job_context.update({
             "project_id": self._project.id,
             "repo_id": self._project.repo.id,
+            "repo_id": self._project.repo.id,
+            "team_name": project_team.name if project_team else None,
+            "org_sid": organization.org_sid if organization else None,
             "scheme_id": scan_scheme.id,
             "scheme_name": scan_scheme.name,
             "issue_global_ignore": scan_scheme.issue_global_ignore,
@@ -604,7 +609,7 @@ class JobManager(object):
             else:
                 result_code = errcode.E_SERVER
                 result_msg = "创建任务异常: %s" % str(err)
-            revoke_job(task.job, result_code=result_code, result_msg=result_msg)
+            JobCloseHandler.revoke_job(task.job, result_code=result_code, result_msg=result_msg)
             raise
 
     def _upload_job_context(self, job, job_context):
@@ -621,7 +626,7 @@ class JobManager(object):
             else:
                 result_code = errcode.E_SERVER
                 result_msg = "创建任务异常: %s" % str(err)
-            revoke_job(job, result_code=result_code, result_msg=result_msg)
+            JobCloseHandler.revoke_job(job, result_code=result_code, result_msg=result_msg)
             raise
 
     def _check_task_need_scan(self, task_params, incr_scan, puppy_create):
@@ -712,7 +717,7 @@ class JobManager(object):
             else:
                 result_code = errcode.E_SERVER_JOB_INIT_ERROR
                 result_msg = "初始化任务异常: %s" % str(err)
-            revoke_job(job, result_code=result_code, result_msg=result_msg)
+            JobCloseHandler.revoke_job(job, result_code=result_code, result_msg=result_msg)
             raise
 
     def create_scan_on_analysis_server(self, job, job_context, scan_type):
@@ -742,7 +747,7 @@ class JobManager(object):
             else:
                 result_code = errcode.E_SERVER
                 result_msg = "创建任务异常: %s" % str(err)
-            revoke_job(job, result_code=result_code, result_msg=result_msg)
+            JobCloseHandler.revoke_job(job, result_code=result_code, result_msg=result_msg)
             raise
 
     def _start_job_task(self, job, job_context, task_confs, puppy_create=False):
@@ -767,17 +772,34 @@ class JobManager(object):
         with transaction.atomic():
             # 判断是否新建任务，如是则创建，否则抛出异常结束
             if not force_create:
-                exist_job_count = Job.objects.select_for_update().filter(project=self._project).exclude(
-                    state=Job.StateEnum.CLOSED).count()
+                exist_job = Job.objects.select_for_update().filter(project=self._project).exclude(
+                    state=Job.StateEnum.CLOSED)
                 # force_create为False的情况下，不允许重复启动任务
-                if exist_job_count != 0:
+                if exist_job.count() != 0:
+                    scan_ids = list(exist_job.values_list("scan_id", flat=True))
                     raise CDErrorBase(
-                        errcode.E_CLIENT, "分支%s: %s 还有未完成任务" % (self._project.id, self._project.branch),
+                        errcode.E_CLIENT, "当前项目分支[%s]%s还有未完成任务，编号为: %s" % (
+                            self._project.id, self._project.branch, scan_ids),
                         data={"job_context": error.get("job_context", []) +
                                              ["分支%s: %s 还有未完成任务" % (self._project.id, self._project.branch)]})
             job = Job.objects.create(project=self._project, creator=creator, created_from=created_from,
                                      async_flag=async_flag, client_flag=client_flag)
         return job
+
+    def start_job(self, job, job_context, puppy_create=False):
+        """启动任务
+        """
+        try:
+            logger.info("%s[Job: %d]开始初始化任务参数" % (self._log_prefix, job.id))
+            job_context = self.get_job_basic_confs(job_context)
+            task_confs = self._get_task_confs(job_context, job_context.get("scm_last_revision"))
+            self._start_job_task(job, job_context, task_confs, puppy_create)
+        except CDErrorBase as err:
+            logger.exception("%s[Job: %d]任务启动失败，异常原因: %s" % (self._log_prefix, job.id, err))
+            JobCloseHandler.revoke_job(job, err.code, err.msg)
+        except Exception as err:
+            logger.exception("%s[Job: %d]任务启动失败，异常原因: %s" % (self._log_prefix, job.id, err))
+            JobCloseHandler.revoke_job(job, errcode.E_SERVER_JOB_CREATE_ERROR, err)
 
     def update_job(self, job, job_confs):
         """更新任务
@@ -930,11 +952,12 @@ class JobManager(object):
         if failed_tasks:
             logger.info("job[%d]存在失败的tasks，开始取消任务..." % job.id)
             task = failed_tasks.order_by("result_code").first()
-            revoke_job(job, task.result_code, "task[%d] %s" % (task.id, task.result_msg))
+            JobCloseHandler.revoke_job(job, task.result_code, "task[%d] %s" % (task.id, task.result_msg))
         elif ignore_task_num and ignore_task_num == job.task_num:
             logger.info("job[%d]创建完成，因代码无变更，不需要启动扫描，开始结束任务..." % job.id)
-            revoke_job(job, errcode.INCR_IGNORE, "代码无变更，无需再次增量扫描。如有需要，请启动全量扫描。")
+            JobCloseHandler.revoke_job(job, errcode.INCR_IGNORE, "代码无变更，无需再次增量扫描。如有需要，请启动全量扫描。")
         else:
             logger.info("job[%d]创建完成，尝试结束任务..." % job.id)
-            close_job(job.id)
+            JobCloseHandler.close_job(job.id)
         self.finish_initialized_job(job)
+        JobDispatchHandler.add_job_to_queue(job)

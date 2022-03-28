@@ -16,11 +16,12 @@ from django.conf import settings
 from rest_framework import serializers
 
 # 项目内 import
-from apps.job import models
-from apps.codeproj.models import Project
-from apps.base.serializers import TimeDeltaSerializer
-from apps.codeproj.serializers.base import ProjectTeamSimpleSerializer
 from apps.authen.serializers.base_org import OrganizationSimpleSerializer
+from apps.base.serializers import TimeDeltaSerializer
+from apps.codeproj.models import Project
+from apps.codeproj.serializers.base import ProjectTeamSimpleSerializer
+from apps.job import models
+
 
 logger = logging.getLogger(__name__)
 
@@ -31,8 +32,7 @@ class TaskBriefSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Task
         fields = ["id", "module", "task_name", "progress_rate",
-                  "state", "result_code", "result_msg", "result_path", ]
-
+                  "state", "result_code", "result_msg", "result_path"]
 
 class JobProjectSerializer(serializers.ModelSerializer):
     """任务项目信息序列化
@@ -65,10 +65,11 @@ class JobSerializer(serializers.ModelSerializer):
     project = JobProjectSerializer(read_only=True)
     waiting_time = TimeDeltaSerializer(read_only=True)
     execute_time = TimeDeltaSerializer(read_only=True)
+    save_time = TimeDeltaSerializer(read_only=True)
 
     class Meta:
         model = models.Job
-        fields = ["id", "scan_id", "create_time", "waiting_time", "start_time", "execute_time", "project",
+        fields = ["id", "scan_id", "create_time", "waiting_time", "start_time", "execute_time", "save_time", "project",
                   "end_time", "expire_time", "context_path", "task_num", "task_done", "tasks",
                   "state", "result_code", "result_code_msg", "result_msg", "result_path", "remarks", "remarked_by",
                   "code_line_num", "comment_line_num", "blank_line_num", "total_line_num", "efficient_comment_line_num",
@@ -99,6 +100,30 @@ class JobInfoSimpleSerializer(serializers.ModelSerializer):
         model = models.Job
         fields = ["id", "project", "code_line_num", "comment_line_num", "blank_line_num",
                   "total_line_num", "state"]
+
+
+class TaskProcessSerializer(serializers.ModelSerializer):
+    process = serializers.SlugRelatedField(read_only=True, slug_field="name")
+
+    class Meta:
+        model = models.TaskProcessRelation
+        fields = "__all__"
+
+
+class ExcutableTaskSerializer(serializers.ModelSerializer):
+    """提供给节点端执行的任务参数
+    """
+    task_params = serializers.JSONField()
+    taskprocessrelation_set = TaskProcessSerializer(many=True, read_only=True)
+    tag = serializers.SlugRelatedField(read_only=True, slug_field="name")
+    task_version = serializers.CharField(
+        source="create_version", read_only=True)
+
+    class Meta:
+        model = models.Task
+        exclude = ["processes", "exec_tags", "result_code",
+                   "result_msg", "result_path", "node", "params_path"]
+
 
 
 class TaskInfoSerializer(serializers.ModelSerializer):
@@ -194,3 +219,14 @@ class TaskProgressSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.TaskProgress
         fields = "__all__"
+
+
+class TaskResultSerializer(serializers.Serializer):
+    task_version = serializers.CharField(max_length=56, help_text="任务的执行版本")
+    result_code = serializers.IntegerField(help_text="结果码")
+    result_data_url = serializers.URLField(help_text="结果路径", allow_null=True, allow_blank=True)
+    result_msg = serializers.CharField(max_length=256, help_text="结果信息")
+    log_url = serializers.URLField(help_text="日志链接", allow_null=True, allow_blank=True)
+    processes = serializers.ListField(child=serializers.CharField(
+        max_length=64, help_text="进程"), allow_null=True)
+

@@ -11,10 +11,10 @@ TaskProcessMgr
 import os
 import logging
 
-from node.loadtool import ToolLoader, ToolConfigLoader
+from node.toolloader.loadtool import ToolLoader, ToolConfigLoader
 from util.exceptions import NodeError
 from util import errcode
-from node.userinput import UserInput
+from node.common.userinput import UserInput
 from util.textutil import StringMgr
 from node.localtask.filtermgr import FilterManager
 from node.localtask.taskprocessmgr import TaskProcessMgr
@@ -31,8 +31,8 @@ logger = logging.getLogger(__name__)
 class TaskRequestGenerator(object):
     def __init__(self, dog_server, source_dir, total_scan, scm_info, scm_auth_info,
                  scm_client, report_file, server_url, scan_history_url, job_web_url,
-                 exclude_paths, include_paths, pre_cmd, build_cmd, skip_processes, origin_os_env,
-                 repo_id, proj_id, org_sid, team_name, create_from, remote_task_names):
+                 exclude_paths, include_paths, pre_cmd, build_cmd, origin_os_env,
+                 repo_id, proj_id, org_sid, team_name, create_from):
         self._total_scan = total_scan
         self._source_dir = source_dir
         self._scm_info = scm_info
@@ -56,11 +56,11 @@ class TaskRequestGenerator(object):
         self._create_from = create_from
         self._exclude_paths = exclude_paths
         self._include_paths = include_paths
-        self._skip_processes = skip_processes
+        self._skip_processes = {}
         self._origin_os_env = origin_os_env
         self._pre_cmd = pre_cmd
         self._build_cmd = build_cmd
-        self._remote_task_names = remote_task_names
+        self._remote_task_names = []
 
     def generate_request(self, proj_conf):
         """
@@ -150,11 +150,11 @@ class TaskRequestGenerator(object):
             # git拉取不输出日志，因为print输出会覆盖到logging日志
             ToolLoader(tool_names=local_task_names, task_list=task_list).git_load_tools(print_enable=False)
 
-        execute_request_list = self._get_execute_request_list(job_context, task_list)
+        execute_request_list, self._skip_processes = self._get_execute_request_list(job_context, task_list, self._remote_task_names)
 
-        return execute_request_list, job_id, job_heartbeat, task_name_id_maps
+        return execute_request_list, self._skip_processes, job_id, job_heartbeat, task_name_id_maps, self._remote_task_names
 
-    def _get_execute_request_list(self, job_context, task_list):
+    def _get_execute_request_list(self, job_context, task_list, remote_task_names):
         """获取本地执行的任务参数列表"""
         execute_request_list = []
 
@@ -173,16 +173,18 @@ class TaskRequestGenerator(object):
             task_params = task_request.get("task_params")
             task_display_name = ToolDisplay.get_tool_display_name(task_request)
 
-            if task_name in self._remote_task_names:
+            if task_name in remote_task_names:
                 self._skip_processes[task_display_name] = task_request["processes"]
             else:
                 supported_processes = TaskProcessMgr.get_supported_processes(self._origin_os_env,
                                                                              task_name, task_params)
                 remote_procs = list(set(task_request["processes"]) - set(supported_processes))
                 if remote_procs:
-                    raise NodeError(code=errcode.E_NODE_TASK_CONFIG, msg=f"当前环境不支持{task_name}工具步骤:{remote_procs}.")
+                    # raise NodeError(code=errcode.E_NODE_TASK_CONFIG, msg=f"当前环境不支持{task_name}工具步骤:{remote_procs}.")
+                    logger.warning(f"当前环境不支持{task_name}工具步骤:{remote_procs}.")
+                    self._skip_processes[task_display_name] = remote_procs
 
-                if self._remote_task_names:
+                if remote_task_names:
                     task_request["private_processes"] = supported_processes
                 else:
                     execute_processes = TaskProcessMgr.get_execute_processes(task_display_name, supported_processes,
@@ -193,4 +195,4 @@ class TaskRequestGenerator(object):
                     # 有当前可执行的进程,才添加到待执行列表中
                     if execute_processes:
                         execute_request_list.append(task_request)
-        return execute_request_list
+        return execute_request_list, self._skip_processes

@@ -11,11 +11,14 @@ scan_conf - profile core
 """
 import logging
 
+# 第三方
+from django.conf import settings
+
 # 项目内
+from apps.codeproj.models import LintBaseSetting
 from apps.scan_conf import models
 from apps.scan_conf.core.basemgr import ModelManager
 from apps.scan_conf.core.pkgmgr import CheckPackageManager
-from apps.codeproj.models import LintBaseSetting
 from util.operationrecord import OperationRecordHandler
 
 logger = logging.getLogger(__name__)
@@ -24,6 +27,18 @@ logger = logging.getLogger(__name__)
 class CheckProfileManager(object):
     """规则配置manager
     """
+
+    @classmethod
+    def after_updating_profile(cls, checkprofile):
+        """更新规则集后
+        """
+        tool_ids = list(checkprofile.get_checktools().values_list("id", flat=True))
+        lintsetting = LintBaseSetting.objects.filter(checkprofile_id=checkprofile).first()
+        if not lintsetting:
+            return
+        scheme = lintsetting.scan_scheme
+        scheme.checktool_ids = tool_ids
+        scheme.save()
 
     @classmethod
     def create_or_update(cls, name, user, instance=None, **kwargs):
@@ -58,6 +73,7 @@ class CheckProfileManager(object):
             action = "更新规则配置"
             message = "规则配置名称: %s, 其他参数: %s" % (name, kwargs)
         OperationRecordHandler.add_checkprofile_operation_record(checkprofile, action, user.username, message)
+        cls.after_updating_profile(checkprofile)
         return checkprofile, created
 
     @classmethod
@@ -70,6 +86,7 @@ class CheckProfileManager(object):
         checkprofile.checkpackages.add(*checkpackages)
         checkpackage_names = [checkpackage.name for checkpackage in checkpackages]
         message = "添加%d条规则包：%s" % (len(checkpackage_names), checkpackage_names)
+        cls.after_updating_profile(checkprofile)
         OperationRecordHandler.add_checkprofile_operation_record(checkprofile, "添加官方规则包", user, message)
 
     @classmethod
@@ -82,6 +99,7 @@ class CheckProfileManager(object):
         checkprofile.checkpackages.remove(*checkpackages)
         checkpackage_names = [checkpackage.name for checkpackage in checkpackages]
         message = "移除%d条规则包：%s" % (len(checkpackage_names), checkpackage_names)
+        cls.after_updating_profile(checkprofile)
         OperationRecordHandler.add_checkprofile_operation_record(checkprofile, "移除官方规则包", user, message)
 
     @classmethod
@@ -91,7 +109,7 @@ class CheckProfileManager(object):
         :params kwargs: 其他参数
         """
         checkpackage_list = kwargs.get("checkpackages", [])
-        checkpackage_names = ";".join(['[%s]%s' % (checkpackage.id, checkpackage.name)
+        checkpackage_names = ";".join(["[%s]%s" % (checkpackage.id, checkpackage.name)
                                        for checkpackage in checkpackage_list])
         checkrule_list = kwargs.get("checkrules", [])
         operation_type = kwargs.get("operation_type")
@@ -99,8 +117,9 @@ class CheckProfileManager(object):
         if operation_type == models.CheckProfile.OperationTypeEnum.ALLDELETE:  # 删除所有规则包的自定义规则
             checkprofile.custom_checkpackage.get_package_maps().delete()
             checkprofile.checkpackages.clear()
-            OperationRecordHandler.add_checkprofile_operation_record(checkprofile, 'api批量移除规则配置', user,
-                                                                     message='批量移除所有官方规则包和自定义规则')
+            cls.after_updating_profile(checkprofile)
+            OperationRecordHandler.add_checkprofile_operation_record(checkprofile, "api批量移除规则配置", user,
+                                                                     message="批量移除所有官方规则包和自定义规则")
             return
         if not (checkrule_list or checkpackage_list):
             # 对于其他操作，如果没有传递规则包或自定义规则则跳过
@@ -109,11 +128,12 @@ class CheckProfileManager(object):
             if checkpackage_list:
                 checkprofile.checkpackages.remove(*checkpackage_list)
             if checkrule_list:
-                checkrules = [checkrule_dict.get('checkrule') for checkrule_dict in checkrule_list]
+                checkrules = [checkrule_dict.get("checkrule") for checkrule_dict in checkrule_list]
                 models.PackageMap.objects.filter(checkpackage=checkprofile.custom_checkpackage,
                                                  checkrule__in=checkrules).delete()
+            cls.after_updating_profile(checkprofile)
             OperationRecordHandler.add_checkprofile_operation_record(
-                checkprofile, 'api批量移除规则配置', user, message='批量移除官方规则包：%s。移除自定义规则：%s' % (
+                checkprofile, "api批量移除规则配置", user, message="批量移除官方规则包：%s。移除自定义规则：%s" % (
                     checkpackage_names, checkrule_list))
             return
         else:
@@ -126,21 +146,22 @@ class CheckProfileManager(object):
                 custom_checkpackage = checkprofile.custom_checkpackage
                 if operation_type == models.CheckProfile.OperationTypeEnum.ALLUPDATE:  # 需先移除所有规则
                     custom_checkpackage.get_package_maps().delete()
-                checkrules = [checkrule_dict.get('checkrule') for checkrule_dict in checkrule_list]
+                checkrules = [checkrule_dict.get("checkrule") for checkrule_dict in checkrule_list]
                 # 规则添加到自定义规则包
                 CheckPackageManager.add_rules(custom_checkpackage, checkrules, user)
                 # 修改packagemap
                 for checkrule_dict in checkrule_list:
-                    checkrule = checkrule_dict.get('checkrule')
+                    checkrule = checkrule_dict.get("checkrule")
                     packagemap = models.PackageMap.objects.filter(checkpackage=custom_checkpackage,
                                                                   checkrule=checkrule).first()
                     if packagemap:
-                        packagemap.severity = checkrule_dict.get('severity', packagemap.severity)
-                        packagemap.rule_params = checkrule_dict.get('rule_params', packagemap.rule_params)
-                        packagemap.state = checkrule_dict.get('state', packagemap.state)
+                        packagemap.severity = checkrule_dict.get("severity", packagemap.severity)
+                        packagemap.rule_params = checkrule_dict.get("rule_params", packagemap.rule_params)
+                        packagemap.state = checkrule_dict.get("state", packagemap.state)
                         packagemap.save()
+            cls.after_updating_profile(checkprofile)
             OperationRecordHandler.add_checkprofile_operation_record(
-                checkprofile, 'api批量更新规则配置', user, message='操作类型：%s。官方规则包：%s。自定义规则：%s' % (
+                checkprofile, "api批量更新规则配置", user, message="操作类型：%s。官方规则包：%s。自定义规则：%s" % (
                     operation_type, checkpackage_names, checkrule_list))
             return
 
@@ -180,6 +201,7 @@ class CheckProfileManager(object):
         #     languages__in=languages,
         #     labels__in=labels)
         checkprofile.checkpackages.set(official_packages)
+        cls.after_updating_profile(checkprofile)
         if user:
             message = "官方规则集设置为：%s" % ";".join(
                 official_packages.values_list("name", flat=True).distinct())
@@ -213,6 +235,7 @@ class CheckProfileManager(object):
                                   state=packagemap.state)
             )
         models.PackageMap.objects.bulk_create(new_packagemaps, 1000)
+        cls.after_updating_profile(checkprofile)
         if user:
             message = "拷贝规则集[%s]的所有内容到规则集[%s]内" % (from_checkprofile.id, checkprofile.id)
             OperationRecordHandler.add_checkprofile_operation_record(checkprofile=checkprofile,

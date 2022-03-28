@@ -12,10 +12,10 @@ codeproj - base core
 import json
 import logging
 
-from apps.job.models import ScanTypeEnum
-from apps.job.core.jobhandler import revoke_job
 from apps.codeproj.core.jobmgr import JobManager
-
+from apps.job.core import JobCloseHandler
+from apps.job.models import ScanTypeEnum
+from apps.job.tasks.jobcheck import start_server_job
 from util import errcode
 from util.exceptions import CDErrorBase
 
@@ -77,7 +77,65 @@ def create_local_scan(project, creator, scan_data, created_from="codedog_client"
         else:
             result_msg = "创建扫描异常: %s" % str(err)
             result_code = errcode.E_SERVER_JOB_CREATE_ERROR
-        revoke_job(job, result_code=result_code, result_msg=result_msg)
+        JobCloseHandler.revoke_job(job, result_code=result_code, result_msg=result_msg)
+        raise
+
+
+def create_server_scan(project, creator, scan_data, async_flag=True, **kwargs):
+    """异步启动扫描
+
+    1. 创建任务和Scan，然后返回job_id,scan_id
+    2. 异步获取并更新任务参数
+    3. 启动任务
+
+    :param project: Project, 项目
+    :param creator: str，创建人
+    :param scan_data: dict，扫描数据
+        {
+            "force_create": True/False，表示是否强制启动
+            "incr_scan": True/False，表示是否增量扫描
+        }
+    :param async_flag: boolean, 异步启动标识
+    :param kwargs:
+        - client_flag: boolean, 客户端启动标识
+    :return: int,int 任务编号和扫描编号
+    """
+    tag = scan_data.pop("tag", None)
+    labels = scan_data.pop("labels", None)
+    job_context = {
+        "force_create": scan_data.get("force_create", False),
+        "incr_scan": scan_data.get("incr_scan", True) is True,
+        "init_scan": scan_data.get("init_scan", False) or kwargs.get("init_scan", False),
+        "created_from": scan_data.get("created_from", "tca_web"),
+        "tag": str(tag) if tag else None,
+        "scm_revision": scan_data.get("revision", None),
+        "scm_last_revision": scan_data.get("last_revision", None),
+        "labels": [label.name for label in labels] if labels else None,
+    }
+    job_context.update(**scan_data)
+    job_manager = JobManager(project)
+    logger.info("开始初始化任务，任务参数: %s" % json.dumps(job_context, indent=2))
+    scan_type = job_manager.get_scan_type(scan_data, job_context)
+    job = job_manager.initialize_job(
+        force_create=job_context["force_create"],
+        creator=creator, created_from=job_context["created_from"],
+        async_flag=async_flag, client_flag=kwargs.get("client_flag", False)
+    )
+    try:
+        job.context = job_context
+        job.save()
+        job_manager.create_waiting_scan_on_analysis_server(job, scan_type)
+        if async_flag:
+            start_server_job.delay(job.id)
+        return job.id, job.scan_id
+    except Exception as err:  # 访问analyse server异常时，取消任务
+        if isinstance(err, CDErrorBase):
+            result_msg = err.msg
+            result_code = err.code
+        else:
+            result_msg = "创建扫描异常: %s" % str(err)
+            result_code = errcode.E_SERVER_JOB_CREATE_ERROR
+        JobCloseHandler.revoke_job(job, result_code=result_code, result_msg=result_msg)
         raise
 
 

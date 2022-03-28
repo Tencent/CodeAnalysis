@@ -11,4 +11,7 @@
 
 
 class TaskScene(object):
+    # 本地启动的任务
     LOCAL = "localtask"
+    # 通过server启动的任务
+    NORMAL = "servertask"

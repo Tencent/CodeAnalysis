@@ -10,7 +10,7 @@ TaskProcessMgr
 """
 
 from util.logutil import LogPrinter
-from node.jobheartbeat import JobHeartBeat
+from node.localtask.jobheartbeat import JobHeartBeat
 
 
 class JobInit(object):
@@ -34,6 +34,6 @@ class JobInit(object):
 
         # 启动任务心跳线程
         LogPrinter.info("Job starts ...")
-        job_heartbeat = JobHeartBeat(job_id, dog_server)
+        job_heartbeat = JobHeartBeat(org_sid, team_name, repo_id, proj_id, job_id, dog_server)
         job_heartbeat.start()
         return job_id, job_heartbeat, task_name_id_maps

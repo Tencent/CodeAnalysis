@@ -14,12 +14,12 @@ import logging
 from django.db import IntegrityError
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
-from rest_framework.exceptions import NotFound
 from rest_framework import generics
+from rest_framework.exceptions import NotFound
 
 from apps.authen.models import Organization
-from apps.codeproj.models import ProjectTeam, Repository, Project, ScanScheme
-from apps.scan_conf.models import CheckPackage, CheckTool, CheckRule, ToolLib, ToolLibScheme
+from apps.codeproj.models import Project, ProjectTeam, Repository, ScanScheme
+from apps.scan_conf.models import CheckPackage, CheckRule, CheckTool, ToolLib, ToolLibScheme
 
 logger = logging.getLogger(__name__)
 

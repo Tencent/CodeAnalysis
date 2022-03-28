@@ -18,11 +18,13 @@ from logging.handlers import RotatingFileHandler
 
 from node import app
 from node.app import settings
-from node.cmdarg import CmdArgParser
+from node.common.cmdarg import CmdArgParser
+from node.toolloader.loadtool import ToolLoader, ToolConfigLoader
 from tool.util.pythontool import PythonTool
 from util.exceptions import ConfigError
 from util.gitconfig import GitConfig
 from util.logutil import LogPrinter
+from util.textutil import StringMgr
 
 logger = logging.getLogger("codepuppy")
 
@@ -93,8 +95,28 @@ class CodePuppy(object):
 
         if args.command == 'localscan':
             '''执行本地项目扫描'''
-            from node.localrunner import LocalRunner
+            from node.localtask.localrunner import LocalRunner
             LocalRunner(args).run()
+
+        elif args.command == 'start':
+            '''启动任务执行端,持续获取并执行任务'''
+            from node.servertask.looprunner import LoopRunner
+            if args.token:
+                LoopRunner(args.token).run()
+            else:
+                LogPrinter.error("缺少token参数,请通过-t <token>启动start命令.")
+
+        elif args.command == 'updatetool':
+            '''更新工具库'''
+            # 从git拉取工具配置库
+            ToolConfigLoader().load_tool_config()
+            if args.tool:  # 更新指定工具
+                tool_name_list = StringMgr.str_to_list(args.tool)
+                ToolLoader(tool_names=tool_name_list, os_type=args.os_type).git_load_tools(print_enable=False)
+            elif args.all_tools:  # 更新全量工具
+                ToolLoader(os_type=args.os_type).git_load_tools(print_enable=False)
+            else:
+                LogPrinter.error("请输入必要的参数(-a|-t)! 输入 -h 查看帮助文档.")
 
         elif args.command == 'help':
             '''输出帮助文档'''

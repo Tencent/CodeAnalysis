@@ -137,6 +137,7 @@ class OrganizationPermissionApply(models.Model):
     check_result = models.IntegerField(help_text="审批结果", null=True, blank=True, choices=CHECKRESULTENUM_CHOICES)
     check_remark = models.CharField(max_length=255, help_text="审批备注", null=True, blank=True)
     check_time = models.DateTimeField(help_text="审批时间", null=True, blank=True)
+    remark = models.CharField(max_length=255, null=True, blank=True, help_text="备注，用于管理员审批进行的额外备注")
 
     def validate_apply_pass(self):
         """判断当前申请单是否审核通过
@@ -196,6 +197,7 @@ class CodeDogUser(models.Model):
     avatar = models.URLField(verbose_name="头像地址", blank=True, null=True)
     tel_number = models.CharField(max_length=32, help_text="用户手机号", null=True, blank=True)
     level = models.IntegerField(help_text="用户级别", default=LevelEnum.NORMAL, choices=LEVELENUM_CHOICES)
+    latest_login_time = models.DateTimeField(help_text="最近一次登录时间", null=True, blank=True)
     # 待废弃
     org = models.ForeignKey(Organization, help_text="组织信息", on_delete=models.SET_NULL, null=True, blank=True)
 

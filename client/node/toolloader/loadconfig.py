@@ -9,6 +9,7 @@
 """
 
 import os
+import platform
 import sys
 import configparser
 
@@ -16,6 +17,7 @@ from node.app import settings
 from util.configlib import ConfigReader
 from util.textutil import StringMgr
 from util.logutil import LogPrinter
+from util.exceptions import NodeConfigError
 
 
 class ConfigLoader(object):
@@ -25,7 +27,18 @@ class ConfigLoader(object):
             os_type = settings.PLATFORMS[sys.platform]
         tool_config_dir_name = settings.TOOL_CONFIG_URL.split('/')[-1].strip().replace(".git", "")
         tool_config_dir = os.path.join(settings.TOOL_BASE_DIR, tool_config_dir_name)
+        # linux arm64使用单独的tool配置文件
+        if os_type == "linux" and platform.machine() == "aarch64":
+            os_type = f"{os_type}_arm64"
         self._tool_config_file = os.path.join(tool_config_dir, "%s_tools.ini" % os_type)
+
+    def check_config_exists(self):
+        """检查配置文件是否存在"""
+        if not os.path.exists(self._tool_config_file):
+            error_msg = f"Tool config ({self._tool_config_file}) not exists!" \
+                        f"\nPlease run this command to load tools: python3 codepuppy.py updatetool -a"
+            LogPrinter.error(error_msg)
+            raise NodeConfigError(error_msg)
 
     def __str_to_dict(self, key_str, ref_dict):
         """
@@ -72,6 +85,7 @@ class ConfigLoader(object):
                 ...
             }
         """
+        self.check_config_exists()
         cfg = ConfigReader(cfg_file=self._tool_config_file, interpolation=configparser.ExtendedInterpolation())
 
         # 读取env_path
@@ -97,7 +111,7 @@ class ConfigLoader(object):
         if not tool_names:
             config_all_tools = True
             tool_names = [sec_name for sec_name in section_names
-                          if sec_name not in ["server_config", "env_path", "env_value", "tool_url", "common"]]
+                          if sec_name not in ["server_config", "env_path", "env_value", "tool_url", "common", "base_value"]]
 
         # 读取工具配置
         for tool_name in tool_names:
