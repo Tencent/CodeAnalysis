@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Table, Tag, Button, message } from 'coding-oa-uikit';
+import { Table, Tag, Button } from 'coding-oa-uikit';
 
 import Loading from 'coding-oa-uikit/lib/icon/Loading'
 import Stop from 'coding-oa-uikit/lib/icon/Stop'
@@ -10,11 +10,10 @@ import DotCircle from 'coding-oa-uikit/lib/icon/DotCircle'
 
 // 项目内
 import { t } from '@src/i18n/i18next';
-import DangerModal from '@src/components/modal/danger-modal';
 import { formatDateTime, getPaginationParams, getFilterURLPath } from '@src/utils';
 import { DEFAULT_PAGER } from '@src/common/constants';
 import { useDeepEffect, useURLParams } from '@src/utils/hooks';
-import { getNodes, delNode, getTags } from '@src/services/nodes';
+import { getNodes, getTags } from '@src/services/nodes';
 
 // 模块内
 import { STATUS_ENUM, STATE_ENUM } from './constants';
@@ -42,7 +41,6 @@ const NodeTable = () => {
   const [tagOptions, setTagOptions] = useState<Array<any>>([]);
   const [visible, setVisible] = useState(false);
   const [selectNode, setSelectNode] = useState(null);
-  const [visibleDel, setVisibleDel] = useState(false);
   const { filter, currentPage, searchParams } = useURLParams(FILTER_FIELDS);
   const history = useHistory();
 
@@ -57,18 +55,6 @@ const NodeTable = () => {
     }).finally(() => {
       setLoading(false);
     })
-  };
-
-  const onDelNodeClick = (node: any = null) => {
-    setVisibleDel(true)
-    setSelectNode(node);
-  };
-
-  const onDelNodeHandle = (node: any) => {
-    delNode(node.id).then(() => {
-      message.success(t('已删除'));
-      getListData();
-    });
   };
 
   useEffect(() => {
@@ -116,19 +102,6 @@ const NodeTable = () => {
           setVisible(false);
         }}
         tagOptions={tagOptions}
-      />
-      <DangerModal
-        title={t('删除节点')}
-        visible={visibleDel}
-        onCancel={() => setVisibleDel(false)}
-        onOk={() => onDelNodeHandle(selectNode)}
-        content={
-          <div>
-            {t('确认删除节点')}{' '}
-            <Tag color="default">{selectNode?.name}</Tag>{' '}
-            {t('？')}
-          </div>
-        }
       />
       <div className={s.filterContent}>
         <Search loading={loading} searchParams={searchParams} tagOptions={tagOptions} callback={onSearch} />
@@ -182,15 +155,6 @@ const NodeTable = () => {
                 onClick={() => onCreateOrUpdateHandle(node)}
               >
                 {t('编辑')}
-              </Button>
-              <Button
-                className="mr-sm"
-                danger
-                onClick={() => {
-                  onDelNodeClick(node)
-                }}
-              >
-                {t('删除')}
               </Button>
               <Button
                 type="secondary"
