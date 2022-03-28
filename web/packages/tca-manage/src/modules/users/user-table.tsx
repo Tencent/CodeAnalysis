@@ -1,9 +1,3 @@
-// Copyright (c) 2021-2022 THL A29 Limited
-//
-// This source code file is made available under MIT License
-// See LICENSE for details
-// ==============================================================================
-
 import React from 'react';
 import { Table, Tag, Button } from 'coding-oa-uikit';
 import Success from 'coding-oa-uikit/lib/icon/Success';
@@ -14,7 +8,6 @@ import { t } from '@src/i18n/i18next';
 
 // 模块内
 import { LEVEL_CHOICES, LEVEL_TAG_CHOICES, STATUS_ENUM } from './constants';
-import style from './style.scss';
 
 const { Column } = Table;
 
@@ -27,7 +20,6 @@ interface IProps {
 const UserTable = ({ dataSource, pagination, onEdit }: IProps) => (
   <>
     <Table
-      className={style.userTable}
       pagination={pagination}
       rowKey={(item: any) => item.username}
       dataSource={dataSource}
@@ -52,7 +44,7 @@ const UserTable = ({ dataSource, pagination, onEdit }: IProps) => (
         render={(status: number) => (status > STATUS_ENUM.ACTIVE ? (
           <Tag>待激活</Tag>
         ) : (
-            <Tag color="success">已激活</Tag>
+          <Tag color="success">已激活</Tag>
         ))
         }
       />

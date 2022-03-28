@@ -8,6 +8,7 @@
 # | UPDATE_LAYOUT | <none> | 更新tca-layout微前端 |
 # | UPDATE_LOGIN | <none> | 更新login微前端 |
 # | UPDATE_ANALYSIS | <none> | 更新tca-analysis微前端 |
+# | UPDATE_MANAGE | <none> | 更新tca-manage微前端 |
 # | UPDATE_DOCUMENT | <none> | 更新document |
 # | WEB_DEPLOY_PATH | /usr/share/nginx/www | 前端资源部署地址，默认 /usr/share/nginx/www |
 # +---------+-------------------+----------------------------------------------+
@@ -16,8 +17,8 @@
 ### 更新脚本，用于更新前端镜像资源
 ### 执行方式：
 ### 方式一：直接执行 sh update.sh $param 即可，
-###        其中$param可以是 all framework layout login analysis document，多个用,分隔
-###        如：sh update.sh all, sh update.sh layout,analysis,document
+###        其中$param可以是 all framework layout login analysis manage document，多个用,分隔
+###        如：sh update.sh all, sh update.sh layout,analysis,manage,document
 ### 方式二：查阅上述环境变量，先export对应环境变量，再 sh update.sh
 ###########################
 
@@ -25,7 +26,7 @@
 CUR_RUN_PATH=$(cd $(dirname $0) && pwd)
 cd $CUR_RUN_PATH
 
-# 提供参数执行，eg sh update.sh login,layout
+# 提供参数执行，eg sh update.sh login,layout,analysis,manage,document
 array=(${1//\,/ })
 for var in ${array[@]}; do
   case "$var" in
@@ -43,6 +44,9 @@ for var in ${array[@]}; do
     ;;
   "analysis")
     UPDATE_ANALYSIS=TRUE
+    ;;
+  "manage")
+    UPDATE_MANAGE=TRUE
     ;;
   "document")
     UPDATE_DOCUMENT=TRUE
@@ -88,6 +92,13 @@ function update_unzip_build() {
     rm -rf ${WEB_DEPLOY_PATH}/tca-analysis/
     echo "解压并更新 tca-analysis ..."
     unzip -d ${WEB_DEPLOY_PATH}/tca-analysis tca-analysis.zip
+  fi
+
+  if [ -n "${UPDATE_ALL}" ] || [ -n "${UPDATE_MANAGE}" ]; then
+    echo "移除 tca-manage 内容 ..."
+    rm -rf ${WEB_DEPLOY_PATH}/tca-manage/
+    echo "解压并更新 tca-manage ..."
+    unzip -d ${WEB_DEPLOY_PATH}/tca-manage tca-manage.zip
   fi
 
   if [ -n "${UPDATE_ALL}" ] || [ -n "${UPDATE_DOCUMENT}" ]; then

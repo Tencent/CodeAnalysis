@@ -43,7 +43,7 @@ function sub_microfrontend() {
 }
 
 function run() {
-  BUILD_PKGS=("tca-document" "framework" "login" "tca-layout" "tca-analysis")
+  BUILD_PKGS=("tca-document" "framework" "login" "tca-layout" "tca-analysis" "tca-manage")
   for pkg_name in ${BUILD_PKGS[@]}; do
     if [ "$pkg_name" = "framework" ]; then
       default_frontend $pkg_name
@@ -57,7 +57,7 @@ function run() {
 
 function run_config() {
   cd ${ROOT_PATH}
-  SUB_MICRO_FRONTEND_PKGS=("tca-layout" "login" "tca-analysis")
+  SUB_MICRO_FRONTEND_PKGS=("tca-layout" "login" "tca-analysis" "tca-manage")
   configs=''
   for i in "${!SUB_MICRO_FRONTEND_PKGS[@]}"; do
     pkg_name=${SUB_MICRO_FRONTEND_PKGS[$i]}

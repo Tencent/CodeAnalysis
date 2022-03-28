@@ -39,8 +39,11 @@ const AuthTable = (props: IProps) => {
       title: t('凭证来源平台'),
       dataIndex: 'scm_platform',
       key: 'scm_platform',
-      render: (scm_platform: string) => (
-        <span>{get(SCM_PLATFORM, scm_platform) || scm_platform}</span>
+      render: (scm_platform: string, recode: any) => (
+        <>
+          <span>{get(SCM_PLATFORM, scm_platform) || scm_platform}</span>
+          <p className="text-grey-7 fs-12">{recode.scm_platform_desc}</p>
+        </>
       ),
     },
     {

@@ -16,6 +16,7 @@
   "dependencies": {
     "@antv/data-set": "0.8.7",
     "@types/classnames": "^2.2.9",
+    "@types/file-saver": "^2.0.1",
     "@types/lodash": "^4.14.175",
     "@types/nprogress": "^0.2.0",
     "@types/qs": "^6.9.7",

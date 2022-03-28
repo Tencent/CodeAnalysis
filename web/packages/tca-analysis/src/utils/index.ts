@@ -30,6 +30,7 @@ export const formatDateTime = (time: any) => formatDate(time, 'YYYY-MM-DD HH:mm:
  * @param second 秒
  */
 export const secondToDate = (second: number) => {
+  if (second < 0) return '';
   const h = Math.floor(second / 3600);
   const m = Math.floor((second / 60) % 60);
   const s = Math.floor(second % 60);

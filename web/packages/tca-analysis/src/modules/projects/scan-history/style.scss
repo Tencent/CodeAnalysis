@@ -1,56 +1,268 @@
-@import '@src/common/style/color.scss';
+@import "@src/common/style/color.scss";
 
 .scans {
-	:global(.ant-table-thead>tr:first-child>th) {
-		border-top: none;
-	}
+  :global(.ant-table-thead > tr:first-child > th) {
+    border-top: none;
+  }
 
-	.copy-icon {
-		svg {
-			color: $grey-6;
-			margin-left: 8px;
-			transition: color 0.3s;
-			cursor: pointer;
+  .copy-icon {
+    svg {
+      color: $grey-6;
+      margin-left: 8px;
+      transition: color 0.3s;
+      cursor: pointer;
 
-			&:hover {
-				color: $grey-8;
-			}
-		}
-	}
+      &:hover {
+        color: $grey-8;
+      }
+    }
+  }
 
-	.status {
-		display: flex;
-		align-items: center;
+  .status {
+    display: flex;
+    align-items: center;
 
-		img {
-			margin-right: 6px;
-		}
-	}
+    img {
+      margin-right: 6px;
+    }
+  }
 
-	.running {
-		margin-left: 6px;
-		vertical-align: middle;
-	}
+  .running {
+    margin-left: 6px;
+    vertical-align: middle;
+  }
 }
 
 .result {
-	.module {
-		font-size: 13px;
-		padding-bottom: 16px;
-		margin-bottom: 20px;
-		border-bottom: 1px solid $grey-2;
+  max-width: 1000px;
 
-		&:last-child {
-			border-bottom: none;
-		}
+  .module {
+    font-size: 13px;
+    padding-bottom: 16px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid $grey-2;
 
-		h4 {
-			font-size: 16px;
-		}
+    &:last-child {
+      border-bottom: none;
+    }
 
-		.no-data {
-			color: $grey-6;
-			text-align: center;
-		}
-	}
+    h4 {
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+
+    .no-data {
+      color: $grey-6;
+      text-align: center;
+    }
+  }
+}
+
+.scan-detail {
+  padding: 30px;
+
+  :global(.ant-tabs-content) {
+    margin-top: 24px;
+  }
+
+  :global(.ant-steps-item-title) {
+    margin-bottom: 10px;
+    font-weight: 500;
+  }
+
+  :global(.ant-steps-item-error > .ant-steps-item-container > .ant-steps-item-content > .ant-steps-item-description) {
+    color: unset;
+  }
+
+  :global(.ant-steps-item-error > .ant-steps-item-container > .ant-steps-item-content > .ant-steps-item-title) {
+    color: unset;
+  }
+
+  :global(.ant-steps-item-error .ant-steps-item-tail) {
+    &::after {
+      background: $red-2;
+    }
+  }
+
+  .desc {
+    font-size: 13px;
+    color: $grey-7;
+  }
+
+  .tag {
+    margin-bottom: 10px;
+  }
+
+  .running {
+    animation: spin 1.2s linear infinite;
+  }
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  .header {
+    display: flex;
+    margin-bottom: 20px;
+
+    .backIcon {
+      width: 28px;
+      height: 28px;
+      color: $blue-5;
+      margin-right: 20px;
+      text-align: center;
+      background: #fff;
+      border-radius: 50%;
+      box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+      cursor: pointer;
+      transition: all 0.3s;
+
+      svg {
+        font-size: 18px;
+        vertical-align: middle !important;
+      }
+
+      &:hover {
+        box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+      }
+    }
+
+    .right {
+      flex: 1;
+
+      .desc {
+        color: #606c80;
+
+        a {
+          color: #606c80;
+
+          &:hover {
+            color: #0066ff;
+          }
+        }
+      }
+    }
+
+    .title {
+      margin-bottom: 8px;
+      font-size: 18px;
+      font-weight: 500;
+
+      a {
+        font-size: 13px;
+      }
+    }
+  }
+
+  .task-item-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+
+    .task-item {
+      position: relative;
+      margin-right: 20px;
+      margin-bottom: 20px;
+      padding: 10px;
+      min-height: 88px;
+      border: 1px solid $grey-3;
+      border-radius: 2px;
+      cursor: pointer;
+
+      &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background-color: transparent;
+        transition: all 0.3s;
+      }
+
+      &.active::before {
+        background-color: $blue-5;
+      }
+
+      .task-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 4px;
+        color: $grey-8;
+      }
+
+      .finish-icon {
+        color: $green-5;
+      }
+
+      .warning-icon {
+        color: $red-5;
+      }
+    }
+  }
+
+  .task-detail-progress {
+    :global(.ant-steps-item-title) {
+      font-size: 14px;
+    }
+
+    :global(.ant-steps-item-content) {
+      width: auto;
+    }
+
+    .progress-item {
+      font-size: 13px;
+
+      p {
+        margin-bottom: 6px;
+      }
+
+      .nodes {
+        ul {
+          list-style-type: disc;
+          padding-inline-start: 40px;
+        }
+      }
+    }
+  }
+
+  .task-log {
+    padding: 12px 20px;
+    font-size: 13px;
+    background-color: $grey-1;
+    border: 1px solid $grey-3;
+    border-radius: 2px;
+    margin-bottom: 10px;
+
+    p {
+      margin-bottom: 4px;
+    }
+
+    .time {
+      display: inline-block;
+      width: 140px;
+    }
+  }
+}
+
+.detail-btn {
+  display: inline-block;
+  color: #606c80;
+  // font-size: 12px;
+  padding: 0 10px;
+  line-height: 22px;
+  background-color: #f5f7fa;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: #e6e9ed;
+  }
 }

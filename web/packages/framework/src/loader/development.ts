@@ -75,7 +75,10 @@ export class MicroApplicationDevelopmentLoader implements MicroApplicationLoader
 
   public exit(reload = false) {
     // cookies中移除开发模式微前端资源配置
-    cookies.remove(Constant.MICRO_FRONTEND_API_LIST);
+    cookies.remove(Constant.MICRO_FRONTEND_API_LIST, {
+      path: '/',
+      domain: window.location.hostname
+    });
     if (reload) {
       debug('Exit development success and reload page');
       window.location.replace(window.location.href);

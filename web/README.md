@@ -8,7 +8,7 @@ TCA Web 采用 [Lerna](https://www.lernajs.cn/) 进行 `monorepo` 管理。
 >
 > [Lerna 中文命令文档](http://www.febeacon.com/lerna-docs-zh-cn/)
 
-由 `framework`、`login`、`tca-layout`、`tca-analysis`微前端以及`tca-document`前端帮助文档组成。
+由 `framework`、`login`、`tca-layout`、`tca-analysis`、`tca-manage`微前端以及`tca-document`前端帮助文档组成。
 
 ### packages 目录说明
 
@@ -21,6 +21,8 @@ TCA Web 采用 [Lerna](https://www.lernajs.cn/) 进行 `monorepo` 管理。
 - `tca-layout`: 腾讯云代码分析layout微前端
 
 - `tca-analysis`: 腾讯云代码分析analysis微前端
+
+- `tca-manage`: 腾讯云代码分析后台管理微前端
 
 - `tca-document`: 腾讯云代码分析帮助文档
 
@@ -47,6 +49,8 @@ TCA Web 采用 [Lerna](https://www.lernajs.cn/) 进行 `monorepo` 管理。
   PUBLIC_PATH=http://127.0.0.1:5056/ yarn dev --scope tca-layout
   # tca-analysis
   PUBLIC_PATH=http://127.0.0.1:5057/ yarn dev --scope tca-analysis
+  # tca-analysis
+  PUBLIC_PATH=http://127.0.0.1:5058/ yarn dev --scope tca-manage
   # tca-document
   yarn dev --scope tca-document
   # 或进入对应项目内，查阅对应README

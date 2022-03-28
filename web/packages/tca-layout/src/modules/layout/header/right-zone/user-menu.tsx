@@ -12,7 +12,7 @@ import classnames from 'classnames';
 // 项目内
 import { t } from '@src/i18n/i18next';
 import { gUserImgUrl, logout } from '@src/utils';
-import { DOC_PATH } from '@src/utils/getRoutePath';
+import { getManageRouter, DOC_PATH } from '@src/utils/getRoutePath';
 import Language from './language';
 import Org from './org';
 import s from './style.scss';
@@ -39,9 +39,11 @@ const menu = (userinfo: any, org: any) => (
     <Menu.Item key="user-auth">
       <Link to="/user/auth">{t('凭证管理')}</Link>
     </Menu.Item>
-    <Menu.Item key="user-manage">
-      <Link to="/user/manage">{t('用户管理')}</Link>
-    </Menu.Item>
+    {userinfo.is_superuser && (
+      <Menu.Item key="manage">
+        <Link to={getManageRouter()}>{t('管理入口')}</Link>
+      </Menu.Item>
+    )}
     {org.org_sid && (
       <Menu.Item key="org" className={s.orgPopover}>
         <Org org={org} />

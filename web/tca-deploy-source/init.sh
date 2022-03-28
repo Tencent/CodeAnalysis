@@ -48,6 +48,7 @@ function conf_hosts() {
 127.0.0.1 login
 127.0.0.1 tca-layout
 127.0.0.1 tca-analysis
+127.0.0.1 tca-manage
 127.0.0.1 tca-document
 EOF
 }
@@ -61,6 +62,7 @@ function init_unzip_build() {
   unzip -o tca-layout.zip -d ${WEB_DEPLOY_PATH}/tca-layout
   unzip -o login.zip -d ${WEB_DEPLOY_PATH}/login
   unzip -o tca-analysis.zip -d ${WEB_DEPLOY_PATH}/tca-analysis
+  unzip -o tca-manage.zip -d ${WEB_DEPLOY_PATH}/tca-manage
   unzip -o tca-document.zip -d ${WEB_DEPLOY_PATH}/tca-document
   cd ${CUR_RUN_PATH}
 }
@@ -116,6 +118,7 @@ function init_web_nginx() {
   sed "s|WEB_DEPLOY_PATH|${WEB_DEPLOY_PATH}|g; s|NGINX_LOG_PATH|${NGINX_LOG_PATH}|g; s|APP_NAME|tca-layout|g;" ${CUR_RUN_PATH}/nginx/template.conf >${NGINX_CONF_PATH}/tca-layout.conf
   sed "s|WEB_DEPLOY_PATH|${WEB_DEPLOY_PATH}|g; s|NGINX_LOG_PATH|${NGINX_LOG_PATH}|g; s|APP_NAME|login|g;" ${CUR_RUN_PATH}/nginx/template.conf >${NGINX_CONF_PATH}/login.conf
   sed "s|WEB_DEPLOY_PATH|${WEB_DEPLOY_PATH}|g; s|NGINX_LOG_PATH|${NGINX_LOG_PATH}|g; s|APP_NAME|tca-analysis|g;" ${CUR_RUN_PATH}/nginx/template.conf >${NGINX_CONF_PATH}/tca-analysis.conf
+  sed "s|WEB_DEPLOY_PATH|${WEB_DEPLOY_PATH}|g; s|NGINX_LOG_PATH|${NGINX_LOG_PATH}|g; s|APP_NAME|tca-manage|g;" ${CUR_RUN_PATH}/nginx/template.conf >${NGINX_CONF_PATH}/tca-manage.conf
   sed "s|WEB_DEPLOY_PATH|${WEB_DEPLOY_PATH}|g; s|NGINX_LOG_PATH|${NGINX_LOG_PATH}|g; s|APP_NAME|tca-document|g;" ${CUR_RUN_PATH}/nginx/document.conf >${NGINX_CONF_PATH}/tca-document.conf
 }
 

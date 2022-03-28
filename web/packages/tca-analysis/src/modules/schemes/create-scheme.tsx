@@ -185,23 +185,23 @@ const CreatSchemeModal = (props: IProps) => {
                         ))}
                       </Select>
                     </Form.Item>
-                    {/* <Form.Item
-                       name="tag"
-                       label="运行环境"
-                       rules={[{ required: true, message: '请选择运行环境' }]}
-                     >
-                       <Radio.Group>
-                         <Row>
-                           {tags.map(item => item.public && (
-                             <Col span={8} key={item.name}>
-                               <Radio value={item.name}>
-                                 {item.name}
-                               </Radio>
-                             </Col>
-                           ))}
-                         </Row>
-                       </Radio.Group>
-                     </Form.Item> */}
+                    <Form.Item
+                      name="tag"
+                      label="运行环境"
+                      rules={[{ required: true, message: '请选择运行环境' }]}
+                    >
+                      <Radio.Group>
+                        <Row>
+                          {tags.map(item => item.public && (
+                            <Col span={8} key={item.name}>
+                              <Radio value={item.name}>
+                                {item.name}
+                              </Radio>
+                            </Col>
+                          ))}
+                        </Row>
+                      </Radio.Group>
+                    </Form.Item>
                     <Form.Item
                       name="funcList"
                       label="功能开启"

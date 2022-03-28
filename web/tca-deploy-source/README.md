@@ -40,7 +40,7 @@
 
 2. 方式一：直接执行 `sh update.sh param` 即可
 
-    其中 `param` 可以是 `all` `framework` `layout` `login` `analysis` `document` 其中的一个或多个，代表更新不同的模块，多个用`,`分隔，
+    其中 `param` 可以是 `all` `framework` `layout` `login` `analysis` `manage` `document` 其中的一个或多个，代表更新不同的模块，多个用`,`分隔，
 
     ```bash
     # 如更新全部
@@ -73,6 +73,7 @@
 |   UPDATE_LAYOUT | 更新 tca-layout 微前端   |
 |    UPDATE_LOGIN | 更新 login 微前端    |
 | UPDATE_ANALYSIS | 更新 tca-analysis 微前端 |
+| UPDATE_MANAGE | 更新 tca-manage 微前端 |
 |     UPDATE_DOCUMENT | 更新 tca-document     |
 
 ### 停止服务

@@ -1,28 +1,33 @@
-// Copyright (c) 2021-2022 THL A29 Limited
-//
-// This source code file is made available under MIT License
-// See LICENSE for details
-// ==============================================================================
-
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Row, Col, Tabs, Button } from 'coding-oa-uikit';
+import { Row, Col, Tabs } from 'coding-oa-uikit';
+import { toNumber } from 'lodash';
 
 // 项目内
 import { t } from '@src/i18n/i18next';
 import { getPaginationParams, getFilterURLPath } from '@src/utils';
 import { DEFAULT_PAGER } from '@src/common/constants';
 import { useURLParams, useDeepEffect } from '@src/utils/hooks';
-import { getUsers } from '@src/services/users';
+import { getJobs } from '@src/services/jobs';
 
 // 模块内
 import s from './style.scss';
-import UserTable from './user-table';
-import UserModal from './user-modal';
+import Search from './search';
+import JobTable from './job-table';
 
 const { TabPane } = Tabs;
 
-const FILTER_FIELDS: Array<string> = [];
+const FILTER_FIELDS = [
+  // 'run_type',
+  'state',
+  'repo',
+  'result',
+  // 'origin',
+  // 'platform',
+  // 'project',
+  // 'organization',
+  // 'project_team',
+];
 
 const customFilterURLPath = (params = {}) => getFilterURLPath(FILTER_FIELDS, params);
 
@@ -30,26 +35,30 @@ const Jobs = () => {
   const history = useHistory();
   const [listData, setListData] = useState<Array<any>>([]);
   const [count, setCount] = useState(DEFAULT_PAGER.count);
-  // const [loading, setLoading] = useState(false);
-  const { filter, currentPage } = useURLParams(FILTER_FIELDS);
-
-  const [visible, setVisible] = useState(false);
-  const [selectUser, setSelectUser] = useState(null);
-
-  const onCreateOrUpdateHandle = (user: any = null) => {
-    setVisible(true);
-    setSelectUser(user);
-  };
+  const [loading, setLoading] = useState(false);
+  const { filter, currentPage, searchParams } = useURLParams(FILTER_FIELDS);
 
   /**
-   * 根据路由参数获取团队列表
-   */
+     * 根据路由参数获取团队列表
+     */
   const getListData = () => {
-    // setLoading(true);
-    getUsers(filter).then((response) => {
+    setLoading(true);
+
+    // result_code <= 99 表示通过，result_code >= 99 表示异常
+    const { result } = filter;
+    const params: any = {};
+    if (toNumber(result) === 0) {
+      params.result_code_lte = 99;
+    }
+
+    if (toNumber(result) === 1) {
+      params.result_code_gte = 99;
+    }
+
+    getJobs({ ...filter, ...params }).then((response) => {
       setCount(response.count);
       setListData(response.results || []);
-      // setLoading(false);
+      setLoading(false);
     });
   };
 
@@ -57,6 +66,15 @@ const Jobs = () => {
   useDeepEffect(() => {
     getListData();
   }, [filter]);
+
+  // 筛选
+  const onSearch = (params: any) => {
+    history.push(customFilterURLPath({
+      limit: DEFAULT_PAGER.pageSize,
+      offset: DEFAULT_PAGER.pageStart,
+      ...params,
+    }));
+  };
 
   // 翻页
   const onChangePageSize = (page: number, pageSize: number) => {
@@ -68,28 +86,16 @@ const Jobs = () => {
     <>
       <Row className={s.header} align="middle">
         <Col flex="auto">
-          <Tabs defaultActiveKey="users" size="large">
-            <TabPane tab={t('用户管理列表')} key="users" />
+          <Tabs defaultActiveKey="project" size="large">
+            <TabPane tab={t('分析记录列表')} key="project" />
           </Tabs>
         </Col>
-        <Col flex="none">
-          <Button onClick={() => onCreateOrUpdateHandle()} type="primary">
-            {t('创建用户')}
-          </Button>
-        </Col>
       </Row>
+      <div className={s.filterContent}>
+        <Search loading={loading} searchParams={searchParams} callback={onSearch} />
+      </div>
       <div className="px-lg">
-        <UserModal
-          visible={visible}
-          onCancel={() => setVisible(false)}
-          onOk={() => {
-            getListData();
-            setVisible(false);
-          }}
-          userinfo={selectUser}
-        />
-        <UserTable
-          onEdit={onCreateOrUpdateHandle}
+        <JobTable
           dataSource={listData}
           pagination={{
             current: currentPage,

@@ -39,6 +39,7 @@ import Detail from '@src/modules/projects/issues/detail';
 import CCFilesDetail from '@src/modules/projects/metric/ccfiles/detail';
 import CCIssuesDetail from '@src/modules/projects/metric/ccissues/detail';
 import DupDetail from '@src/modules/projects/metric/dupfiles/detail';
+import ScanDetail from '@src/modules/projects/scan-history/detail';
 
 // const Projects = lazy(() => import('@src/modules/projects'));
 // const Repos = lazy(() => import('@src/modules/repos'));
@@ -182,6 +183,11 @@ const Routers = () => {
         exact
         path={`${PROJECT_ROUTE_PREFIX}/metric/dupfiles/:issueId`}
         component={DupDetail}
+      />
+      <Route
+        exact
+        path={`${PROJECT_ROUTE_PREFIX}/scan-history/:jobId/:scanTab?`}
+        component={ScanDetail}
       />
       <Route path={`${PROJECT_ROUTE_PREFIX}`} component={Projects} />
       <Route

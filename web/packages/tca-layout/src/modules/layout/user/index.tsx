@@ -13,7 +13,6 @@ import SiderBarUser from './components/siderbar-user';
 import Profile from './profile';
 import Auth from './auth';
 import Token from './token';
-import Users from './users';
 
 const User = () => {
   const { url } = useRouteMatch();
@@ -27,7 +26,6 @@ const User = () => {
           <Switch>
             <Route path={`${url}/profile`} component={Profile} />
             <Route path={`${url}/auth`} component={Auth} />
-            <Route path={`${url}/manage`} component={Users} />
             <Route path={`${url}/token`} component={Token} />
             <Redirect to={`${url}/profile`} />
           </Switch>,

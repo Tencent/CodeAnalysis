@@ -29,6 +29,16 @@ export const getProjects = (org_sid: string, team_name: string, repoId: string |
 export const createProject = (org_sid: string, team_name: string, repoId: string | number, data: any) => post(`${getMainBaseURL(org_sid, team_name)}/repos/${repoId}/projects/`, data);
 
 /**
+ * 启动分析
+ * @param org_sid 
+ * @param team_name 
+ * @param repoId 
+ * @param projectId 
+ * @param data 
+ */
+export const createJob = (org_sid: string, team_name: string, repoId: string | number, projectId: string | number, data: any) => post(`${getMainBaseURL(org_sid, team_name)}/repos/${repoId}/projects/${projectId}/scans/`, data);
+
+/**
  * 获取分支项目信息
  * @param repoId - 代码库ID
  * @param projectId - 项目ID
@@ -349,6 +359,17 @@ export const getDupFileIssueComments = (orgSid: string, teamName: string, repoId
  * @param query - 查询参数
  */
 export const getScans = (org_sid: string, team_name: string, repoId: number, projectId: number, query: any) => get(`${getAnalysisBaseURL(org_sid, team_name)}/repos/${repoId}/projects/${projectId}/scans/`, query);
+
+/**
+ * 获取分析历史结果
+ * @param org_sid 
+ * @param team_name 
+ * @param repoId 
+ * @param projectId 
+ * @param scanId 
+ */
+export const getScansResult = (org_sid: string, team_name: string, repoId: number, projectId: number, scanId: number) => get(`${getAnalysisBaseURL(org_sid, team_name)}/repos/${repoId}/projects/${projectId}/scans/${scanId}/`);
+
 
 /**
  * 分析历史 - 获取分析历史详情

@@ -8,7 +8,7 @@
  * 分析历史
  */
 import React, { useEffect, useState, useRef } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import qs from 'qs';
 import { toNumber, get } from 'lodash';
@@ -21,6 +21,7 @@ import Tips from '@src/components/tips';
 import { getScans, cancelScan } from '@src/services/projects';
 import { DEFAULT_PAGER } from '@src/common/constants';
 import { formatDate, secondToDate, getQuery } from '@src/utils';
+import { getProjectRouter } from '@src/utils/getRoutePath';
 
 import successSvg from '@src/images/success.svg';
 import failureSvg from '@src/images/failure.svg';
@@ -28,12 +29,9 @@ import abortedSvg from '@src/images/aborted.svg';
 
 import { SCAN_TYPE_CHOICES } from '../constants';
 
-import Result from './result';
-
 import style from './style.scss';
 
 const { Column } = Table;
-let timer: any = null;
 
 interface ScanHistoryProps {
   orgSid: string;
@@ -46,11 +44,10 @@ interface ScanHistoryProps {
 const ScanHistory = (props: ScanHistoryProps) => {
   const query = getQuery();
   const history = useHistory();
-  const savedCallback = useRef<Function>(() => { });
+  const timer = useRef<any>();
+
   const [count, setCount] = useState(DEFAULT_PAGER.count);
   const [list, setList] = useState([]);
-  const [visible, setVisible] = useState(false);
-  const [resData, setResData] = useState({});
 
   const { orgSid, teamName, repoId, projectId, curTab } = props;
   const pageSize = toNumber(query.limit) || DEFAULT_PAGER.pageSize;
@@ -58,18 +55,10 @@ const ScanHistory = (props: ScanHistoryProps) => {
   const refresh = get(history, 'location.state.refresh');
 
   useEffect(() => {
-    savedCallback.current = getListData;
-  });
-
-  useEffect(() => {
-    if (curTab === 'scan-history') {
-      timer = setInterval(() => {
-        savedCallback.current();
-      }, 6000);
-    } else {
-      clearInterval(timer);
+    if (curTab !== 'scan-history') {
+      clearTimer();
     }
-    return () => clearInterval(timer);
+    return clearTimer;
   }, [curTab]);
 
   useEffect(() => {
@@ -86,10 +75,28 @@ const ScanHistory = (props: ScanHistoryProps) => {
       offset,
     };
     getScans(orgSid, teamName, repoId, projectId, params).then((response) => {
-      history.push(`${location.pathname}?${qs.stringify(params)}`);
-      setList(response.results);
+      const results = response.results || [];
+      setList(results);
       setCount(response.count);
+
+      if (results?.[0]?.result_code === null) {
+        if (!timer.current) {
+          timer.current = setInterval(() => {
+            getListData();
+          }, 1000);
+        }
+      } else {
+        clearTimer();
+      }
+      history.push(`${location.pathname}?${qs.stringify(params)}`);
     });
+  };
+
+  const clearTimer = () => {
+    if (timer.current) {
+      clearInterval(timer.current);
+      timer.current = null;
+    }
   };
 
   const onChangePageSize = (page: number, pageSize: number) => {
@@ -138,42 +145,47 @@ const ScanHistory = (props: ScanHistoryProps) => {
           render={(time: any) => time && formatDate(time, 'YYYY-MM-DD HH:mm')}
         />
         <Column
-          title="版本"
+          title="分析版本"
           dataIndex="current_revision"
           render={(version: string) => version && (
-              <span className={style.copyIcon}>
-                {version.substring(0, 8)}
-                <Tooltip title={version}>
-                  <CopyToClipboard
-                    text={version}
-                    onCopy={() => message.success('复制成功')}
-                  >
-                    <Copy />
-                  </CopyToClipboard>
-                </Tooltip>
-              </span>
+            <span className={style.copyIcon}>
+              {version.substring(0, 8)}
+              <Tooltip title={version}>
+                <CopyToClipboard
+                  text={version}
+                  onCopy={() => message.success('复制成功')}
+                >
+                  <Copy />
+                </CopyToClipboard>
+              </Tooltip>
+            </span>
           )
           }
         />
         <Column
           title="总耗时"
           dataIndex="total_time"
-          render={(time: string) => (time ? secondToDate(toNumber(time)) : '--') }
+          render={(time: string, data: any) => <Tooltip title={<>
+            <p>等待耗时：{secondToDate(toNumber(data.waiting_time))}</p>
+            <p>执行耗时：{secondToDate(toNumber(data.execute_time))}</p>
+          </>}>
+            <span>{time ? secondToDate(toNumber(time)) : '--'}</span>
+          </Tooltip>}
         />
         <Column
           title="状态"
           dataIndex="result_code"
           render={(status, data: any) => (status === null ? (
-              <>
-                <RunningIcon />
-                <span className={style.running}>执行中</span>
-              </>
+            <>
+              <RunningIcon />
+              <span className={style.running}>执行中</span>
+            </>
           ) : (
-                <div className={style.status}>
-                  <img src={getStatusIcon(status)} />
-                  <span>{data.result_code_msg}</span>
-                  {data.result_msg && <Tips title={data.result_msg} />}
-                </div>
+            <div className={style.status}>
+              <img src={getStatusIcon(status)} />
+              <span>{data.result_code_msg}</span>
+              {data.result_msg && <Tips title={data.result_msg} />}
+            </div>
           ))
           }
         />
@@ -188,15 +200,14 @@ const ScanHistory = (props: ScanHistoryProps) => {
           dataIndex="id"
           render={(id, data: any) => (
             <>
-              <Button
-                type="link"
-                onClick={() => {
-                  setVisible(true);
-                  setResData(data as any);
-                }}
-              >
-                分析结果
-              </Button>
+              <Link
+                style={{ marginLeft: 10 }}
+                to={`${getProjectRouter(orgSid, teamName, repoId, projectId)}/scan-history/${data.job_gid}`}
+              >详情</Link>
+              <Link
+                style={{ marginLeft: 10 }}
+                to={`${getProjectRouter(orgSid, teamName, repoId, projectId)}/scan-history/${data.job_gid}/result`}
+              >结果</Link>
               {data.result_code === null && (
                 <Button
                   style={{ marginLeft: 10 }}
@@ -210,7 +221,6 @@ const ScanHistory = (props: ScanHistoryProps) => {
           )}
         />
       </Table>
-      <Result data={resData} visible={visible} onClose={() => setVisible(false)} />
     </>
   );
 };

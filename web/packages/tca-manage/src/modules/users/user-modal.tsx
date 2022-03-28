@@ -1,9 +1,3 @@
-// Copyright (c) 2021-2022 THL A29 Limited
-//
-// This source code file is made available under MIT License
-// See LICENSE for details
-// ==============================================================================
-
 import React, { useEffect } from 'react';
 import { Modal, Form, Input, message, Switch, Select, notification, Button } from 'coding-oa-uikit';
 import Copy from 'coding-oa-uikit/lib/icon/Copy';
@@ -43,7 +37,7 @@ const openNotificationWithIcon = (users: Array<any>) => {
         >
           <Button className="mt-md" type="secondary" icon={<Copy />}>
             复制账户信息
-                    </Button>
+          </Button>
         </CopyToClipboard>
       </>
     ),
