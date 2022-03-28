@@ -9,6 +9,7 @@
 """
 
 import os
+import platform
 import sys
 import configparser
 
@@ -26,6 +27,9 @@ class ConfigLoader(object):
             os_type = settings.PLATFORMS[sys.platform]
         tool_config_dir_name = settings.TOOL_CONFIG_URL.split('/')[-1].strip().replace(".git", "")
         tool_config_dir = os.path.join(settings.TOOL_BASE_DIR, tool_config_dir_name)
+        # linux arm64使用单独的tool配置文件
+        if os_type == "linux" and platform.machine() == "aarch64":
+            os_type = f"{os_type}_arm64"
         self._tool_config_file = os.path.join(tool_config_dir, "%s_tools.ini" % os_type)
 
     def check_config_exists(self):
