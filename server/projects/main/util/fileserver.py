@@ -86,7 +86,7 @@ class FileServer(object):
             file_url = urllib.parse.urljoin(self._server_url, "%s_%s/unnamed/%s.file" % (
                 self._type_prefix, self.TypeEnum.TEMPORARY, uuid.uuid1().hex))
         headers = copy.copy(self._headers)
-        headers.update({"Content-SHA256": self.get_data_sha256(data)})
+        headers.update({"Content-SHA256": self.get_data_sha256(data), "Content-MD5": self.get_data_md5(data)})
         rsp = self._http_client.put(file_url, data=data, headers=headers)
         if rsp.status == self.OK_STATUS:
             return file_url
