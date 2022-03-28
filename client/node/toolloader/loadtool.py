@@ -15,8 +15,8 @@ import time
 from tqdm import tqdm
 
 from node.app import settings
-from node.gitload import GitLoader
-from node.loadconfig import ConfigLoader
+from node.toolloader.gitload import GitLoader
+from node.toolloader.loadconfig import ConfigLoader
 from util.envset import EnvSet
 from util.exceptions import ConfigError
 from util.pathlib import PathMgr

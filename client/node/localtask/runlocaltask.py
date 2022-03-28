@@ -10,7 +10,9 @@ RunTaskMgr
 """
 
 import copy
+import json
 import logging
+import time
 
 from node.app import settings
 from node.localtask.requestmodify import RequestModify
@@ -23,6 +25,8 @@ from util.exceptions import NodeError
 from util.codecount.localcount import LocalCountLine
 from node.localtask.scmrevision import ScmRevisionCheck
 from node.localtask.codecounttask import CodeCountTask
+from node.localtask.runtask import SingleTaskRuner, ResultCheck
+from util.tooldisplay import ToolDisplay
 
 logger = logging.getLogger(__name__)
 
@@ -30,7 +34,7 @@ logger = logging.getLogger(__name__)
 class RunTaskMgr(object):
     def __init__(self, source_dir, total_scan, proj_id, job_id, repo_id, token, dog_server, server_url, job_web_url,
                  scm_client, scm_info, scm_auth_info, task_name_id_maps, remote_task_names, origin_os_env,
-                 job_start_time, create_from, scan_history_url, report_file, org_sid, team_name):
+                 job_start_time, create_from, scan_history_url, report_file, org_sid, team_name, skip_processes):
         self._source_dir = source_dir
         self._total_scan = total_scan
         self._proj_id = proj_id
@@ -54,6 +58,7 @@ class RunTaskMgr(object):
         self._team_name = team_name
         self._local_task_dirs = []
         self._code_line_count = {}
+        self._skip_processes = skip_processes
 
     def scan_project(self, execute_request_list, proj_conf):
         """
@@ -119,6 +124,16 @@ class RunTaskMgr(object):
                                                               proj_scan_result, self._org_sid, self._team_name)
 
         if proj_scan_succ:
+            # 如果有跳过的进程,需要等云端分析完成;同时要轮询server,看是否有私有进程需要执行
+            if self._skip_processes:
+                logger.info("以下工具进程将发送给云端分析:")
+                for tool_display_name, tool_pro_list in self._skip_processes.items():
+                    logger.info("%s : %s" % (tool_display_name, tool_pro_list))
+                logger.info("云端分析正在进行中,请耐心等待,可查看分析进度: %s", self._job_web_url)
+
+                # 查询并执行需要执行的私有进程
+                self._wait_and_run_private_procs(self._proj_id, job_id)
+
             # 从server端查询本次扫描结果
             query_timeout = settings.POLLING_TMEOUT
             scan_result = ServerQuery.query_result(self._dog_server, self._server_url, self._repo_id, self._proj_id,
@@ -136,3 +151,52 @@ class RunTaskMgr(object):
                 "scan_report": {}
             }
             LocalReport.output_report(scan_result, self._report_file)
+
+    def _wait_and_run_private_procs(self, project_id, job_id):
+        """
+        轮询并执行私有子进程
+        :param job_id:
+        :return:
+        """
+        start_time = time.time()
+        timeout = settings.LOCAL_TASK_EXPIRED
+        while True:
+            now_time = time.time()
+            if now_time - start_time > timeout:
+                raise NodeError(code=errcode.E_NODE_TASK_EXPIRED, msg=f"任务执行超时(超时限制: {timeout/3600}小时)")
+            rt_data = self._dog_server.get_privete_task(self._org_sid, self._team_name, self._repo_id, project_id, job_id)
+            if rt_data["state"] == 0:  # 需要等待远端进程完成
+                time.sleep(settings.POLLING_INTERVAL)
+                continue
+            elif rt_data["state"] == 1:  # 有私有任务需要执行
+                logger.info("获取到任务,开始处理 ...")
+                task_list = rt_data["tasks"]
+                for task_request in task_list:
+                    RequestModify.modify_pri_task_request(task_request, self._token, self._server_url, self._source_dir,
+                                                          self._scm_info, self._scm_auth_info)
+                    # 执行单个任务分析
+                    task = SingleTaskRuner(task_request, env=self._origin_os_env).run()
+                    self._local_task_dirs.append(task_request["task_dir"])
+                    # 上传结果
+                    code, msg, log_url, data_url, execute_processes, node_task_version = ResultCheck.upload_task_result(task, self._proj_id)
+
+                    # 上报结果给server
+                    self._dog_server.send_task_result(task_request['task_params'], job_id, task.task_id, node_task_version, code, data_url, msg, log_url, execute_processes)
+
+                    if task.code is None:
+                        with open(task.response_file, 'r') as fp:
+                            task_response = json.load(fp)
+                            error_code = task_response['status']
+                            error_msg = task_response['message']
+                    else:
+                        error_code = task.code
+                        error_msg = task.msg
+                    if error_code != 0:  # 有一个任务分析失败,抛异常
+                        task_display_name = ToolDisplay.get_tool_display_name(task_request)
+                        error_msg = f"任务({task_display_name})分析失败: {error_msg}\n请查看本地日志文件({task.task_log})"
+                        error_msg += ",\n或前往 %s (点击异常子任务->下载进程日志)" % self._job_web_url
+                        error_msg += "查看失败原因."
+
+                        raise NodeError(code=error_code, msg=error_msg)
+            elif rt_data["state"] == 2:  # 已经没有私有任务需要执行
+                break

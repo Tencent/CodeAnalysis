@@ -9,7 +9,9 @@
 """
 
 import logging
+import sys
 
+from node.app import persist_data, settings
 from urllib.parse import quote
 from util.api.httpclient import HttpClient
 
@@ -43,16 +45,16 @@ class CodeDogApiServer(object):
                 return result["data"]
         return result
 
-    def job_heart_beat(self, job_id):
+    def job_heart_beat(self, org_sid, team_name, repo_id, project_id, job_id):
         """任务心跳上报
 
         :param job_id: 任务job id
         :return:
         """
-        rel_url = "api/jobs/%s/tasksbeat/" % job_id
+        rel_url = f"api/orgs/{org_sid}/teams/{team_name}/repos/{repo_id}/projects/{project_id}/jobs/{job_id}/tasksbeat/"
         CodeDogHttpClient(self._server_url, rel_url, headers=self._headers).post()
 
-    def update_task_progress(self, node_id, job_id, task_id, message, percent):
+    def update_task_progress(self, task_params, node_id, message, percent):
         """任务进度信息上报
 
         :param node_id: 节点标识号
@@ -62,11 +64,17 @@ class CodeDogApiServer(object):
         :param percent: int, 进度百分比
         :return:
         """
-        rel_url = "api/jobs/%s/tasks/%s/progresses/" % (job_id, task_id)
+        rel_url = "api/orgs/%s/teams/%s/repos/%s/projects/%s/" \
+                  "jobs/%s/tasks/%s/progresses/" % (task_params["org_sid"],
+                                                    task_params["team_name"],
+                                                    task_params["repo_id"],
+                                                    task_params["project_id"],
+                                                    task_params["job_id"],
+                                                    task_params["task_id"])
         data = {
             "message": message,
             "progress_rate": percent,
-            "task": task_id,
+            "task": task_params["task_id"],
             "node": node_id
         }
         CodeDogHttpClient(self._server_url, rel_url, headers=self._headers, json_data=data).post()
@@ -146,6 +154,24 @@ class CodeDogApiServer(object):
         """
         rel_url = f"api/orgs/{org_sid}/teams/{team_name}/projects/"
         rsp = CodeDogHttpClient(self._server_url, rel_url, headers=self._headers, json_data=proj_info).post()
+        return self.get_data_from_result(rsp)
+
+    def get_privete_task(self, org_sid, team_name, repo_id, project_id, job_id):
+        """
+        获取private任务
+        :param job_id:
+        :return: {
+                    "state_msg": "finish",
+                    "state": 0|1|2,
+                    "tasks": []
+                 }
+                 state:
+                       0 - 需要等待远程进程跑完;
+                       1 - 有私有进程可以执行,进程参数通过tasks传递;
+                       2 - 已经没有私有进程需要执行
+        """
+        rel_url = f"api/orgs/{org_sid}/teams/{team_name}/repos/{repo_id}/projects/{project_id}/jobs/{job_id}/privatetasks/"
+        rsp = CodeDogHttpClient(self._server_url, rel_url, headers=self._headers).post()
         return self.get_data_from_result(rsp)
 
     def get_default_filtered_paths(self, repo_id, project_id, org_sid, team_name):
@@ -285,3 +311,136 @@ class CodeDogApiServer(object):
         rsp = CodeDogHttpClient(self._server_url, rel_url, headers=self._headers, json_data=scheme_info).post()
         scheme_params = self.get_data_from_result(rsp)
         return scheme_params
+
+    # ------------------------------------------------------------------------------------- #
+    # 格式: server task api
+    # ------------------------------------------------------------------------------------- #
+
+    def register(self, node_uuid, tag):
+        """
+        用本地node_uuid向server注册，获取server给的node_id
+        :param node_uuid: server的node rpc接口
+        :param tag: 机器标签
+        :return: node_id
+        """
+        rel_url = "api/nodes/register/"
+        data = {
+            "uuid": node_uuid,
+            "tag": tag,
+            "os_info": settings.PLATFORMS[sys.platform]
+        }
+        rsp = CodeDogHttpClient(self._server_url, rel_url, headers=self._headers, json_data=data).post()
+        rsp_dict = self.get_data_from_result(rsp)
+        return rsp_dict['id']
+
+    def update_status(self, status_info):
+        """
+        机器状态信息上报
+        :param status_info: dict,机器状态信息
+        :return: True|False, 上报是否成功
+        """
+        rel_url = "api/nodes/%s/status/" % persist_data["NODE_ID"]
+        CodeDogHttpClient(self._server_url, rel_url, headers=self._headers, json_data=status_info).post()
+
+    def heart_beat(self, data):
+        """
+        节点心跳上报
+        :return:
+        """
+        rel_url = "api/nodes/%s/heartbeat/" % persist_data["NODE_ID"]
+        CodeDogHttpClient(self._server_url, rel_url, headers=self._headers, json_data=data).post()
+
+    def get_task(self, node_is_free):
+        """
+        获取任务
+        :param node_is_free: 当前节点是否空闲
+        :return: 任务参数信息json;无任务返回空
+        """
+        rel_url = "api/jobs/taskqueue/nodes/%s/tasks/register/" % persist_data["NODE_ID"]
+        data = {"free": node_is_free}
+        rsp = CodeDogHttpClient(self._server_url, rel_url, headers=self._headers, json_data=data).post()
+        return self.get_data_from_result(rsp)
+
+    def confirm_task(self, task_id):
+        """
+        获取任务
+        :return: 任务参数信息json;无任务返回空
+        """
+        rel_url = "api/jobs/taskqueue/nodes/%s/tasks/%s/ack/" % (persist_data["NODE_ID"], task_id)
+        CodeDogHttpClient(self._server_url, rel_url, headers=self._headers).post()
+
+    def send_task_result(self, task_params, job_id, task_id, node_task_version, code, data_url, message, log_url, execute_processes):
+        """任务结果上报
+
+        :param job_id: job标识号
+        :param task_id: 任务标识号
+        :param node_task_version: 任务版本号
+        :param code: 任务返回码
+        :param data_url: 分析结果在文件服务器的地址
+        :param message: 成功或失败提示信息
+        :param log_url: 分析日志文件在文件服务器的url
+        :param execute_processes: 执行的任务进程
+        :return:True|False, 上报是否成功
+        """
+        org_sid = task_params["org_sid"]
+        team_name = task_params["team_name"]
+        repo_id = task_params["repo_id"]
+        project_id = task_params["project_id"]
+        rel_url = f"api/orgs/{org_sid}/teams/{team_name}/repos/{repo_id}/projects/{project_id}" \
+                  f"/jobs/{job_id}/tasks/{task_id}/"
+        # result_msg字段在server上长度限制为256
+        if len(message) > 256:
+            message = message[:256]
+        data = {
+            "task_version": node_task_version,
+            "result_code": code,
+            "result_data_url": data_url,
+            "result_msg": message,
+            "log_url": log_url,
+            "processes": execute_processes
+        }
+        CodeDogHttpClient(self._server_url, rel_url, headers=self._headers, json_data=data).put()
+
+    def get_job_code_line(self, task_params, job_id):
+        """
+        获取分析任务job的代码行统计数据
+        :param job_id:
+        :return:
+        """
+        org_sid = task_params["org_sid"]
+        team_name = task_params["team_name"]
+        repo_id = task_params["repo_id"]
+        project_id = task_params["project_id"]
+        rel_url = f"api/orgs/{org_sid}/teams/{team_name}/repos/{repo_id}/projects/{project_id}/jobs/{job_id}/codeline/"
+        rsp = CodeDogHttpClient(self._server_url, rel_url, headers=self._headers).get()
+        return self.get_data_from_result(rsp)
+
+    def update_job_code_line(self, task_params, job_id, code_line_dict):
+        """
+        上报分析任务job的代码行统计数据
+        :param job_id:
+        :param code_line_dict:
+            {
+                "code_line_num":
+                "comment_line_num":
+                "blank_line_num":
+                "total_line_num":
+            }
+        :return:
+        """
+        org_sid = task_params["org_sid"]
+        team_name = task_params["team_name"]
+        repo_id = task_params["repo_id"]
+        project_id = task_params["project_id"]
+        rel_url = f"api/orgs/{org_sid}/teams/{team_name}/repos/{repo_id}/projects/{project_id}/jobs/{job_id}/codeline/"
+        CodeDogHttpClient(self._server_url, rel_url, headers=self._headers, json_data=code_line_dict).put()
+
+    def get_scan_conf(self, org_sid, team_name, repo_id, proj_id):
+        """
+        获取项目分析配置
+        :param proj_id:
+        :return:
+        """
+        rel_url = f"api/orgs/{org_sid}/teams/{team_name}/repos/{repo_id}/projects/{proj_id}/confs/"
+        rsp = CodeDogHttpClient(self._server_url, rel_url, headers=self._headers).get()
+        return self.get_data_from_result(rsp)

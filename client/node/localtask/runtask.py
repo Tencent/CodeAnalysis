@@ -15,8 +15,8 @@ import json
 import logging
 import collections
 
-from node.taskrunner import TaskRunner
-from node.task import Task
+from node.common.taskrunner import TaskRunner
+from node.common.task import Task
 from task.toolmodel import IToolModel
 from util.exceptions import FileServerError
 from util.tooldisplay import ToolDisplay

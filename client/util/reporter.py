@@ -85,9 +85,8 @@ class Reporter(object):
 
             dog_server = RetryDogServer(server_url, token).get_api_server(retry_times=0)
             # 非节点模式，不存在NODE_ID字段，此时传参为None
-            dog_server.update_task_progress(persist_data.get('NODE_ID'),
-                                            self._task_params['job_id'],
-                                            self._task_params['task_id'],
+            dog_server.update_task_progress(self._task_params,
+                                            persist_data.get('NODE_ID'),
                                             info.message,
                                             info.percent)
         except Exception as err:

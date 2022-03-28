@@ -8,7 +8,6 @@
 """
 本地任务执行器,只执行本地配置好的项目的扫描
 """
-import json
 import logging
 import os
 import sys
@@ -20,8 +19,8 @@ from node.localtask.localreport import LocalReport
 from node.localtask.scminfo import ScmInfo, ScmAuthInfo
 from node.localtask.localsrccheck import LocalSourcedir
 from node.localtask.urlmgr import UrlMgr, UrlMap
-from node.taskrunner import TaskRunner
-from node.userinput import UserInput
+from node.common.taskrunner import TaskRunner
+from node.common.userinput import UserInput
 from node.localtask.requestgenerator import TaskRequestGenerator
 from util import errcode
 from util.configlib import ConfigReader
@@ -112,9 +111,6 @@ class LocalRunner(TaskRunner):
 
         # 与server通信的api实例
         self._dog_server = None
-
-        # 指定发送到云端节点执行的任务名列表
-        self._remote_task_names = []
 
     def _get_value_from_config_file(self, config_dict, key, default=None):
         value = config_dict.get(key)
@@ -371,16 +367,17 @@ class LocalRunner(TaskRunner):
             self._scan_history_url = url_mgr_client.get_scan_history_url()
 
             # 解析项目配置,获取当前可以直接执行的task request list
-            request_generator = TaskRequestGenerator(self._dog_server, self._source_dir, self._total_scan,
-                                                     self._scm_info, self._scm_auth_info, self._scm_client,
-                                                     self._report_file, self._server_url, self._scan_history_url,
-                                                     self._job_web_url, self._exclude_paths, self._include_paths,
-                                                     self._pre_cmd, self._build_cmd, self._skip_processes,
-                                                     self._origin_os_env, self._repo_id, self._proj_id,
-                                                     self._org_sid, self._team_name, self._create_from,
-                                                     self._remote_task_names)
+            request_generator = TaskRequestGenerator(
+                self._dog_server, self._source_dir, self._total_scan,
+                self._scm_info, self._scm_auth_info, self._scm_client,
+                self._report_file, self._server_url, self._scan_history_url,
+                self._job_web_url, self._exclude_paths, self._include_paths,
+                self._pre_cmd, self._build_cmd,
+                self._origin_os_env, self._repo_id, self._proj_id,
+                self._org_sid, self._team_name, self._create_from
+            )
 
-            cur_execute_request_list, self._job_id, self._job_heartbeat, self._task_name_id_maps = \
+            cur_execute_request_list, self._skip_processes, self._job_id, self._job_heartbeat, self._task_name_id_maps, remote_task_names = \
                 request_generator.generate_request(proj_conf)
 
             # 此时已经有job_id，生成job页面
@@ -390,9 +387,9 @@ class LocalRunner(TaskRunner):
             run_task_mgr = RunTaskMgr(self._source_dir, self._total_scan, self._proj_id, self._job_id, self._repo_id,
                                       self._token, self._dog_server, self._server_url, self._job_web_url,
                                       self._scm_client, self._scm_info, self._scm_auth_info, self._task_name_id_maps,
-                                      self._remote_task_names, self._origin_os_env, self._job_start_time,
+                                      remote_task_names, self._origin_os_env, self._job_start_time,
                                       self._create_from, self._scan_history_url, self._report_file,
-                                      self._org_sid, self._team_name)
+                                      self._org_sid, self._team_name, self._skip_processes)
             run_task_mgr.scan_project(cur_execute_request_list, proj_conf)
         except Exception as err:
             # 优先使用：job页面 > 扫描历史页面 > 主页

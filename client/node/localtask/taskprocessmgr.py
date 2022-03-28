@@ -12,7 +12,7 @@ import os
 import sys
 import logging
 
-from node.loadtool import ToolLoader
+from node.toolloader.loadtool import ToolLoader
 from task.taskmgr import TaskMgr
 from util.envset import EnvSet
 
