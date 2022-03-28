@@ -77,12 +77,14 @@ class Scan(models.Model):
     project = models.ForeignKey(Project, verbose_name="产品名称", on_delete=models.CASCADE)
     create_time = models.DateTimeField(verbose_name="扫描创建时间", null=True, blank=True)
     scan_time = models.DateTimeField(auto_now_add=True, verbose_name="扫描起始时间")
+    closing_time = models.DateTimeField(verbose_name="结果入库时间", null=True, blank=True)
     end_time = models.DateTimeField(verbose_name="扫描结束时间", null=True, blank=True)
     current_revision = models.CharField(max_length=512, verbose_name="扫描版本号", null=True, blank=True)
     scm_time = models.DateTimeField(verbose_name="扫描版本时间", null=True, blank=True)
     result_code = models.IntegerField(verbose_name="结果状态码", null=True, blank=True)
     result_msg = models.TextField(verbose_name="结果详细信息", null=True, blank=True)
     job_gid = models.IntegerField(null=True, blank=True)
+    job_archived = models.BooleanField(verbose_name="job是否已归档", null=True, blank=True)
     type = models.IntegerField(verbose_name="扫描类型", null=True, blank=True)
     creator = models.CharField(max_length=128, blank=True, null=True, verbose_name="启动人")
     daily_save = models.BooleanField(default=False, verbose_name="扫描结果数据保存开关，默认为False")
@@ -101,6 +103,17 @@ class Scan(models.Model):
             return self.end_time - self.scan_time
         else:  # 正在执行中
             return timezone.now().replace(microsecond=0) - self.scan_time
+
+    @property
+    def save_time(self):
+        """结果保存时间
+        """
+        if not self.closing_time:
+            return None
+        if self.end_time:
+            return self.end_time - self.closing_time
+        else:
+            return timezone.now().replace(microsecond=0) - self.closing_time
 
     @property
     def waiting_time(self):

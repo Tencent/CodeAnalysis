@@ -18,7 +18,7 @@ from rest_framework import serializers
 # 项目内 import
 from apps.authen import models
 from apps.authen.serializers.base import UserSimpleSerializer
-from apps.authen.core.orgmgr import OrganizationManager, OrganizationPermApplyManager
+from apps.authen.core import OrganizationManager, OrganizationPermApplyManager
 from apps.base.serializers import CDBaseModelSerializer
 from apps.codeproj.models import ProjectTeam, Repository
 
@@ -63,7 +63,8 @@ class OrganizationSerializer(CDBaseModelSerializer):
     def create(self, validated_data):
         user = self.context["request"].user
         name = validated_data.pop("name")
-        return OrganizationManager.create_org(name, user, **validated_data)
+        apply_msg = validated_data.pop("apply_msg", None)
+        return OrganizationManager.create_org(name, user, apply_msg=apply_msg, **validated_data)
 
     def update(self, instance, validated_data):
         user = self.context["request"].user

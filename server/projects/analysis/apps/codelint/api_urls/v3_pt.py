@@ -25,6 +25,8 @@ urlpatterns = [
          name="apiv3_issue_resolution_bulk_update"),
     path("issues/author/", v3.PTIssueAuthorBulkUpdateView.as_view(),
          name="apiv3_issue_author_bulk_update"),
+    path("issues/authors/", v3.PTProjectIssueAuthorsView.as_view(),
+         name="apiv3_issue_authors"),
     path("issues/<int:issue_id>/", v3.PTIssueDetailView.as_view(),
          name="apiv3_issue_detail"),
     path("issues/<int:issue_id>/comments/", v3.PTIssueCommentsView.as_view(),

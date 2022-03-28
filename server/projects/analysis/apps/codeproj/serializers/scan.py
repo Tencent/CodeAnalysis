@@ -77,7 +77,7 @@ class ScanLatestResultSerializer(serializers.ModelSerializer):
         model = models.Scan
         fields = ["id", "repo_id", "project_id", "job_gid", "scan_time", "current_revision", "result_code",
                   "result_code_msg", "result_msg", "url", "lintscan", "duplicatescan", "cyclomaticcomplexityscan",
-                  "clocscan"]
+                  "clocscan", "job_archived"]
 
 
 class ScanSerializer(serializers.ModelSerializer):
@@ -119,7 +119,7 @@ class ScanSerializer(serializers.ModelSerializer):
         fields = ["id", "repo_id", "project_id", "job_gid", "scan_time", "state", "type", "current_revision",
                   "result_code", "result_msg", "create_time", "creator", "execute_time", "waiting_time", "total_time",
                   "status", "text", "url", "description", "lintscan", "duplicatescan", "cyclomaticcomplexityscan",
-                  "clocscan", "result_code_msg", "daily_save"]
+                  "clocscan", "result_code_msg", "daily_save", "job_archived"]
 
 
 class ProjectScanPutResultsSerializer(serializers.Serializer):
@@ -128,6 +128,7 @@ class ProjectScanPutResultsSerializer(serializers.Serializer):
     job = _ScanJobSerializer(help_text="Job 信息", required=False)
     tasks = _ScanTaskSerializer(many=True, help_text="Tasks 列表信息", allow_null=True, required=False)
     reset = serializers.BooleanField(help_text="重新入库", required=False, allow_null=True, default=False)
+    sync_flag = serializers.BooleanField(help_text="同步入库", required=False, allow_null=True, default=False)
 
 
 class ProjectScanSerializer(serializers.ModelSerializer):

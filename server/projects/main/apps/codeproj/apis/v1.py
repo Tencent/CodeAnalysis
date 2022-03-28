@@ -19,24 +19,23 @@ from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 from django_filters.rest_framework.backends import DjangoFilterBackend
 from rest_framework import generics, status
-from rest_framework.exceptions import ParseError, NotFound, PermissionDenied
+from rest_framework.exceptions import NotFound, ParseError, PermissionDenied
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 # 项目内 import
-from apps.codeproj import models, core
-from apps.authen.core import UserManager
 from apps.authen.backends import TCANodeTokenBackend
-from apps.codeproj.apimixins import ProjectBaseAPIView
+from apps.authen.core import UserManager
+from apps.codeproj import core, models
 from apps.codeproj.api_filters import base as base_filters
+from apps.codeproj.apimixins import ProjectBaseAPIView
 from apps.codeproj.serializers import base as serializers
-
-from util.exceptions import CDErrorBase
-from util.operationrecord import OperationRecordHandler
-from util.httpclient import HttpClient
-from util.webclients import AnalyseClient
-from util.permissions import RepositoryPermission, RepositoryProjectPermission
 from util.authticket import ServerInternalTicket
+from util.exceptions import CDErrorBase
+from util.httpclient import HttpClient
+from util.operationrecord import OperationRecordHandler
+from util.permissions import RepositoryPermission, RepositoryProjectPermission
+from util.webclients import AnalyseClient
 
 logger = logging.getLogger(__name__)
 
@@ -57,9 +56,9 @@ class AnalyseServerProxyApi(APIView):
         headers = {"SERVER-TICKET": ServerInternalTicket.generate_ticket(),
                    "CONTENT-TYPE": "application/json"}
         logger.debug("转发到：%s" % url)
-        if request.method == 'GET':
+        if request.method == "GET":
             rsp = HttpClient().get(url, headers=headers)
-        elif request.method == 'POST':
+        elif request.method == "POST":
             data = request.data or {}
             rsp = HttpClient().post(url, data=data, headers=headers)
         else:
@@ -67,7 +66,7 @@ class AnalyseServerProxyApi(APIView):
         return HttpResponse(
             content=rsp.data,
             status=rsp.status,
-            content_type=rsp.headers['Content-Type'],
+            content_type=rsp.headers["Content-Type"],
         )
 
     def get(self, request, **kwargs):
@@ -115,7 +114,7 @@ class ScanDirListApiView(generics.ListCreateAPIView):
         serializer.save()
 
 
-class ProjectConfApiView(generics.GenericAPIView):
+class ProjectConfApiView(generics.GenericAPIView, ProjectBaseAPIView):
     """项目扫描配置接口
     使用对象：节点
 
@@ -125,8 +124,8 @@ class ProjectConfApiView(generics.GenericAPIView):
     schema = None
     authentication_classes = [TCANodeTokenBackend]
 
-    def get(self, request, project_id):
-        project = get_object_or_404(models.Project.objects, id=project_id)
+    def get(self, request, **kwargs):
+        project = self.get_project()
         if project.scan_scheme:
             metric_setting = core.ScanSchemeManager.get_metric_setting(
                 project.scan_scheme)
@@ -225,7 +224,7 @@ class ProjectScanJobConfApiView(generics.GenericAPIView):
             schemeperm = models.ScanSchemePerm.objects.filter(scan_scheme=project.scan_scheme).first()
             if schemeperm and schemeperm.execute_scope == models.ScanSchemePerm.ScopeEnum.PRIVATE \
                     and not schemeperm.check_user_execute_manager_perm(request.user):
-                logger.error('本地扫描/CI流水线，代码库内创建分支项目/启动分支项目扫描无权限：%s' %
+                logger.error("本地扫描/CI流水线，代码库内创建分支项目/启动分支项目扫描无权限：%s" %
                              UserManager.get_username(request.user))
                 raise PermissionDenied("您没有执行该操作的权限，该扫描方案已私有化，您不在该方案权限配置的关联分支项目权限成员列表中！！！")
         slz = self.get_serializer(data=request.data)
@@ -236,8 +235,8 @@ class ProjectScanJobConfApiView(generics.GenericAPIView):
                 job_id, scan_id = core.create_job(
                     project, slz.validated_data, creator=UserManager.get_username(request.user),
                     puppy_create=True, scan_type=slz.validated_data.get("scan_type"))
-                return Response({'job': {'id': job_id},
-                                 'scan': {'id': scan_id}})
+                return Response({"job": {"id": job_id},
+                                 "scan": {"id": scan_id}})
             except CDErrorBase as e:
                 return Response(e.data, status=status.HTTP_400_BAD_REQUEST)
 
@@ -256,7 +255,7 @@ class ProjectScanDetailApiView(generics.GenericAPIView, ProjectBaseAPIView):
         project = self.get_project()
         try:
             result = AnalyseClient().api(
-                'get_scan', data=None, path_params=(project.id, scan_id))
+                "get_scan", data=None, path_params=(project.id, scan_id))
             return Response(result)
         except CDErrorBase as e:
             return Response(e.data, status=status.HTTP_400_BAD_REQUEST)
@@ -446,17 +445,15 @@ class ProjectDetailApiView(generics.RetrieveAPIView, ProjectBaseAPIView):
         return self.get_project()
 
 
-class ProjectScanSchemeDetailApiView(generics.RetrieveAPIView):
+class ProjectScanSchemeDetailApiView(generics.RetrieveAPIView, ProjectBaseAPIView):
     """项目扫描方案详情接口
 
     ### Get
     应用场景：获取项目扫描方案详情
     """
     permission_classes = [RepositoryProjectPermission]
-    queryset = models.Project.objects.all()
     serializer_class = serializers.ScanSchemeSerializer
 
     def get_object(self):
-        project_id = self.kwargs["project_id"]
-        project = get_object_or_404(models.Project, id=project_id)
+        project = self.get_project()
         return project.scan_scheme

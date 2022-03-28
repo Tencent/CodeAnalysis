@@ -9,16 +9,16 @@
 util.cdcrypto 密码加解密模块
 """
 
+from base64 import b64decode
 from binascii import b2a_hex, a2b_hex
+
+import Crypto
 import pyaes
+from Crypto.Cipher import PKCS1_OAEP
+from Crypto.PublicKey import RSA
 
 from util import errcode
 from util.exceptions import ServerError
-
-import Crypto
-from Crypto.PublicKey import RSA
-from Crypto.Cipher import PKCS1_OAEP
-from base64 import b64decode
 
 
 def __encode(content):

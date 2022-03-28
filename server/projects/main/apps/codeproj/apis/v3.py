@@ -5,46 +5,50 @@
 # See LICENSE for details
 # ==============================================================================
 
+# -*- coding: utf-8 -*-
 """
 codeproj - v3 apis
 """
 # python 原生import
-import os
 import logging
+import os
 
 # 第三方 import
 from django.conf import settings
-from django.http import HttpResponse
 from django.contrib.auth.models import User
+from django.http import HttpResponse
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import generics, status
-from rest_framework.generics import get_object_or_404
+from rest_framework.authtoken.models import Token
 from rest_framework.exceptions import ParseError
+from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.serializers import ValidationError
 from rest_framework.views import APIView
 from rest_framework.authtoken.models import Token
 
 # 项目内 import
+from apps.authen.core import UserManager
+from apps.authen.permissions import OrganizationDefaultPermission, OrganizationOperationPermission
+from apps.authen.serializers.base import UserSimpleSerializer
+from apps.base.apimixins import CustomSerilizerMixin, V3GetModelMixinAPIView
 from apps.codeproj import models
-from apps.codeproj.serializers import v3 as v3_serializers
+from apps.codeproj.api_filters import base as base_filters, v3 as v3_filters
+from apps.codeproj.core import LabelManager, ProjectTeamManager, ScmClientManager
+from apps.codeproj.core import RepositoryManager, ScanSchemeManager, ScanSchemePermManager
+from apps.codeproj.core import create_server_scan
+from apps.codeproj.permissions import ProjectTeamDefaultPermission, ProjectTeamOperationPermission, \
+    RepositoryDefaultPermission, RepositoryProjectDefaultPermission, RepositorySchemeDefaultPermission, \
+    SchemeDefaultPermission
 from apps.codeproj.serializers import base as base_serializers
 from apps.codeproj.serializers import base_scheme as base_scheme_serializers
-from apps.codeproj.api_filters import base as base_filters, v3 as v3_filters
-from apps.codeproj.core import ScmClientManager
-from apps.codeproj.core.projteammgr import ProjectTeamManager, LabelManager
-from apps.codeproj.core.projmgr import RepositoryManager, ScanSchemeManager, ScanSchemePermManager
-from apps.codeproj.permissions import ProjectTeamDefaultPermission, ProjectTeamOperationPermission, \
-    RepositoryDefaultPermission, RepositorySchemeDefaultPermission, \
-    RepositoryProjectDefaultPermission, SchemeDefaultPermission
-from apps.authen.serializers.base import UserSimpleSerializer
-from apps.authen.permissions import OrganizationOperationPermission, OrganizationDefaultPermission
-from apps.base.apimixins import CustomSerilizerMixin, V3GetModelMixinAPIView
-from apps.job.models import Job, Task
+from apps.codeproj.serializers import v3 as v3_serializers
 from apps.job.apis import base as job_base
-
-from util.puppy import configlib
+from apps.job.models import Job, Task
+from util.errcode import E_SERVER_JOB_CREATE_ERROR
+from util.exceptions import CDErrorBase, ProjectScanCreateError
 from util.operationrecord import OperationRecordHandler
+from util.puppy import configlib
 
 logger = logging.getLogger(__name__)
 
@@ -946,3 +950,30 @@ class ProjectScanPuppyiniApiView(generics.GenericAPIView, V3GetModelMixinAPIView
             response = HttpResponse(content, content_type='APPLICATION/OCTET-STREAM')
             response['Content-Disposition'] = 'attachment; filename=codedog.ini'
             return response
+
+
+class ProjectScanCreateApiView(generics.CreateAPIView, V3GetModelMixinAPIView):
+    """项目创建扫描接口
+
+    ### post
+    应用场景：启动一次项目的扫描任务
+    """
+    throttle_scope = "create_scan"
+    permission_classes = [RepositoryDefaultPermission]
+    serializer_class = base_serializers.ServerScanCreateSerializer
+
+    def post(self, request, *args, **kwargs):
+        project = self.get_project()
+        slz = self.get_serializer(data=request.data)
+        slz.is_valid(raise_exception=True)
+        try:
+            job_id, scan_id = create_server_scan(
+                project, creator=UserManager.get_username(request.user), scan_data=slz.validated_data)
+            return Response({"job": {"id": job_id}, "scan": {"id": scan_id}})
+        except CDErrorBase as err:
+            logger.exception(err)
+            raise ProjectScanCreateError(code=err.code, msg=err.msg)
+        except Exception as err:
+            err_msg = "启动任务异常: %s" % err
+            logger.exception(err_msg)
+            raise ProjectScanCreateError(code=E_SERVER_JOB_CREATE_ERROR, msg=err_msg)

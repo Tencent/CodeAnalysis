@@ -17,6 +17,8 @@ project_urlpatterns = [
 
     path("<int:project_id>/scans/", v1_pt.PTProjectScanListCreateApiView.as_view(),
          name="apiv1_pt_project_scan_list"),
+    path("<int:project_id>/scans/<int:scan_id>/", v1_pt.PTProjectScanResultDetailApiView.as_view(),
+         name="apiv1_project_scan_result_detail"),
     path("<int:project_id>/overview/", v1_pt.PTProjectOverviewApiView.as_view(),
          name="apiv1_pt_project_overview"),
     path("<int:project_id>/overview/lintscans/", v1_pt.PTProjectOverviewLintScanListView.as_view(),

@@ -6,19 +6,19 @@
 # ==============================================================================
 
 """
-apps.codeproj.permission 模块
+codeproj - permission 模块
 """
-# 原生
+# 原生 import
 import logging
 
-# 第三方
+# 第三方 import
 from django.shortcuts import get_object_or_404
 from rest_framework import permissions
 
-# 项目内
+# 项目内 import
 from apps.authen.permissions import CodeDogUserPermission
 from apps.codeproj.core import ScanSchemePermManager
-from apps.codeproj.models import ProjectTeam, Repository, ScanScheme, Project, Organization
+from apps.codeproj.models import Organization, Project, ProjectTeam, Repository, ScanScheme
 
 logger = logging.getLogger(__name__)
 
@@ -76,7 +76,6 @@ class ProjectTeamOperationPermission(CodeDogUserPermission):
         return self.is_check_adminuser(request.user) \
                or request.user.has_perm(ProjectTeam.PermissionNameEnum.VIEW_TEAM_PERM, project_team) \
                or request.user.has_perm(Organization.PermissionNameEnum.CHANGE_ORG_PERM, project_team.organization)
-
 
 class RepositoryDefaultPermission(CodeDogUserPermission):
     """代码库默认权限判断
@@ -216,7 +215,6 @@ class SchemeDefaultPermission(RepositorySchemeDefaultPermission):
 
     > 分析方案模板：需团队验证通过，如果当前用户是方案模板管理员可操作，否则团队内成员可查看
     """
-
     def has_global_scheme_permission(self, request, org_sid, scheme_id):
         """分析方案模板默认权限判断
 

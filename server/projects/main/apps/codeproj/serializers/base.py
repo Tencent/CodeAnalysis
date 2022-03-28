@@ -23,7 +23,7 @@ from apps.codeproj import core, models
 from apps.codeproj.core.projteammgr import ProjectTeamManager, LabelManager
 from apps.base.serializers import CDBaseModelSerializer
 from apps.job import models as job_models
-from apps.nodemgr.models import ExecTag
+from apps.nodemgr.models import ExecTag, Node
 from apps.authen.serializers.base import ScmAuthSerializer, ScmAuthCreateSerializer, CodedogUserInfoSerializer
 from apps.authen.serializers.base import UserSimpleSerializer
 from apps.authen.serializers.base_org import OrganizationSimpleSerializer
@@ -1359,12 +1359,20 @@ class ProjectBranchNameSerializer(serializers.Serializer):
     branch = serializers.CharField(read_only=True, help_text="分支名称")
 
 
+class TaskNodeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Node
+        fields = ['id', 'name', 'get_enabled_display', 'get_state_display']
+
+
 class ProjectTaskBriefSerializer(serializers.ModelSerializer):
     result_code_msg = serializers.CharField(read_only=True)
     waiting_time = serializers.DurationField(read_only=True)
     execute_time = serializers.DurationField(read_only=True)
     params_path = OnlySuperAdminReadField()
+    result_path = OnlySuperAdminReadField()
     task_name = serializers.SerializerMethodField()
+    node = TaskNodeSerializer()
 
     def get_task_name(self, task):
         user = self.context["request"].user
@@ -1376,7 +1384,7 @@ class ProjectTaskBriefSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = job_models.Task
-        exclude = ['exec_tags', 'progress_rate', 'result_path', 'log_url']
+        exclude = ['exec_tags', 'progress_rate']
 
 
 class JobRemarkSerializer(serializers.ModelSerializer):
@@ -1423,7 +1431,7 @@ class TaskDetailSerializer(ProjectTaskBriefSerializer):
 
     class Meta:
         model = job_models.Task
-        exclude = ['exec_tags', 'processes', 'progress_rate', 'result_path', 'log_url']
+        exclude = ['exec_tags', 'processes', 'progress_rate']
 
 
 class ProjectScanPuppyIniSerializer(serializers.Serializer):
@@ -1825,3 +1833,12 @@ class APIProjectsSerializer(CDBaseModelSerializer):
         model = models.Project
         fields = "__all__"
         read_only_fields = ["branch", "status", "scan_scheme", "refer_project"]
+
+
+class ServerScanCreateSerializer(serializers.Serializer):
+    """扫描启动序列化
+    """
+    incr_scan = serializers.BooleanField(help_text="是否增量", required=False)
+    force_create = serializers.BooleanField(help_text="是否忽略已有任务强制启动", default=False, write_only=True)
+    created_from = serializers.CharField(help_text="扫描渠道", required=False, default="tca_web")
+

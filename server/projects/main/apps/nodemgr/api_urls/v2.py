@@ -18,4 +18,9 @@ from apps.nodemgr.apis import v2
 urlpatterns = [
     path("tags/", v2.ExecTagListView.as_view(), name="apiv2_tag_list"),
     path("tags/<int:tag_id>/", v2.ExecTagDetailView.as_view(), name="apiv1_tag_detail"),
+    path("nodes/", v2.NodeListView.as_view(), name="apiv2_node_list"),
+    path("nodes/options/", v2.NodeOptionApiView.as_view(), name="apiv2_node_option_list"),
+    path("nodes/<int:node_id>/", v2.NodeApiView.as_view(), name="apiv2_node_detail"),
+    path("nodes/<int:node_id>/processes/", v2.NodeProcessesApiView.as_view(), name="apiv2_node_processes"),
+    path("nodes/<int:node_id>/tasks/", v2.NodeTaskListApiView.as_view(), name="apiv2_node_task_list"),
 ]

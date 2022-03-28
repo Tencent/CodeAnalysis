@@ -86,6 +86,14 @@ class PTIssueAuthorBulkUpdateView(v2.IssueAuthorBulkUpdateView, ProjectTeamBaseA
     """
 
 
+class PTProjectIssueAuthorsView(v2.ProjectIssueAuthorsView, ProjectTeamBaseAPIView):
+    """问题责任人列表
+
+    ### get
+    应用场景：获取项目问题全部责任人列表，用于issue责任人筛选
+    """
+
+
 class PTIssueDetailView(v2.IssueDetailView, ProjectTeamBaseAPIView):
     """问题详情接口
 

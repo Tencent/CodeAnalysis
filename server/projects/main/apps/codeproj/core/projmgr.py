@@ -9,24 +9,23 @@
 codeproj - project core
 """
 import json
-import uuid
 import logging
+import uuid
 
 from django.db.models import Q
 from django.db.utils import IntegrityError
 from django.utils.timezone import now
 
-from apps.codeproj import models
 from apps.authen.models import Organization, ScmAuth, ScmAccount
-from apps.scan_conf.models import CheckProfile, PackageMap
+from apps.codeproj import models
 from apps.scan_conf.core import add_checkrules_to_checkpackage
 from apps.scan_conf.core.profilemgr import CheckProfileManager
 from apps.scan_conf.core.rulemgr import CheckRuleManager
-
-from util.scm import ScmClient
-from util.webclients import AnalyseClient
+from apps.scan_conf.models import CheckProfile, PackageMap
 from util.exceptions import ServerConfigError, ServerOperationError, RepositoryCreateError, errcode, ProjectCreateError
 from util.operationrecord import OperationRecordHandler
+from util.scm import ScmClient
+from util.webclients import AnalyseClient
 
 logger = logging.getLogger(__name__)
 

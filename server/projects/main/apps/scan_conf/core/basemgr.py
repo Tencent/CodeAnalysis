@@ -116,11 +116,19 @@ class ModelManager(object):
 class FilterManger(object):
     """筛选项manager
     """
+    @classmethod
+    def format_fk_display_name(cls, model_field, user=None):
+        """格式化外建显示名称"""
+        if isinstance(model_field, models.CheckTool):
+            # 兼容工具名称隐藏
+            return model_field.get_show_name(user)
+        return str(model_field)
 
     @classmethod
-    def _get_filter(cls, queryset, field_maps, model):
+    def _get_filter(cls, queryset, field_maps, model, user=None):
         filter_map = {}
         for field, field_name in field_maps.items():
+            # 获取字段model
             model_field = model
             for f in field_name.split("__"):
                 if hasattr(model_field, '_meta'):
@@ -139,7 +147,8 @@ class FilterManger(object):
                                         "count": choice["count"]})
             elif isinstance(model_field, ForeignKey):
                 for choice in queryset.values(field_name).annotate(count=Count('id')):
-                    display_name = str(model_field.related_model.objects.get(id=choice[field_name]))
+                    row = model_field.related_model.objects.get(id=choice[field_name])
+                    display_name = cls.format_fk_display_name(model_field=row, user=user)
                     choices.append({"display_name": display_name,
                                     "value": choice[field_name],
                                     "count": choice["count"]})
@@ -157,7 +166,7 @@ class FilterManger(object):
         return filter_map
 
     @classmethod
-    def get_checktool_rules_filter(cls, queryset):
+    def get_checktool_rules_filter(cls, queryset, user=None):
         """获取工具规则的filter map
         :param queryset: CheckRule queryset
         :return: filter_map
@@ -166,10 +175,10 @@ class FilterManger(object):
             field: base_filters.CheckRuleFilter.base_filters[field].field_name
             for field in base_filters.CheckRuleFilter.Meta.fields
         }
-        return cls._get_filter(queryset, field_maps, models.CheckRule)
-
+        return cls._get_filter(queryset, field_maps, models.CheckRule, user=user)
+    
     @classmethod
-    def get_checkpackage_rules_filter(cls, queryset, filter_class=base_filters.PackageMapFilter):
+    def get_checkpackage_rules_filter(cls, queryset, filter_class=base_filters.PackageMapFilter, user=None):
         """获取规则包规则的filter map
         :param queryset: CheckRule queryset
         :return: filter_map
@@ -178,4 +187,4 @@ class FilterManger(object):
             field: filter_class.base_filters[field].field_name
             for field in filter_class.Meta.fields
         }
-        return cls._get_filter(queryset, field_maps, models.PackageMap)
+        return cls._get_filter(queryset, field_maps, models.PackageMap, user=user)

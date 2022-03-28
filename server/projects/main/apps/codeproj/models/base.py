@@ -69,8 +69,8 @@ class ProjectTeam(CDBaseModel, BasePerm):
         group, created = Group.objects.get_or_create(name=group_name)
         if created:
             if perm == self.PermissionEnum.ADMIN:
-                assign_perm("change_projectteam", group, self)
-            assign_perm("view_projectteam", group, self)
+                assign_perm(self.PermissionNameEnum.CHANGE_TEAM_PERM, group, self)
+            assign_perm(self.PermissionNameEnum.VIEW_TEAM_PERM, group, self)
         return group
 
     def __unicode__(self):

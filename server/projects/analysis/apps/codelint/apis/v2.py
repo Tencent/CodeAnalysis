@@ -20,6 +20,7 @@ from rest_framework import generics
 from rest_framework.exceptions import ParseError
 from rest_framework.filters import OrderingFilter
 from rest_framework.response import Response
+from rest_framework.views import APIView
 
 # 项目内 import
 from apps.base.apimixins import ExportMixin
@@ -114,13 +115,14 @@ class IssueResolutionBulkUpdateView(generics.GenericAPIView, ProjectBaseAPIView)
         issue_ids = request.data.get("issue_ids")
         new_resolution = request.data.get("resolution")
         scope = request.data.get("scope")
+        ignore_reason = request.data.get("ignore_reason")
         if not isinstance(issue_ids, list):
             raise ParseError("参数异常, `issue_ids`不是list格式")
         self.check_resolution_valid(new_resolution)
         self.check_scope_valid(scope)
         issues = models.Issue.everything.filter(project_id=project.id, id__in=issue_ids)
         core.CodeLintIssueResolutionManager.update_issues_resolution(
-            request.user.username, issues, new_resolution, scope)
+            request.user.username, issues, new_resolution, scope, ignore_reason)
         return Response(data={"msg": "success"})
 
 
@@ -157,6 +159,20 @@ class IssueAuthorBulkUpdateView(generics.GenericAPIView, ProjectBaseAPIView):
         issues = models.Issue.everything.filter(project_id=project.id, id__in=issue_ids)
         core.CodeLintIssueAuthorManager.update_issues_author(request.user.username, issues, new_author)
         return Response(data={"msg": "success"})
+
+
+class ProjectIssueAuthorsView(APIView, ProjectBaseAPIView):
+    """问题责任人列表
+
+    ### get
+    应用场景：获取项目问题全部责任人列表，用于issue责任人筛选
+    """
+    
+    def get(self, request, *args, **kwargs):
+        project = self.get_project()
+        authors = list(models.Issue.everything.filter(project=project, author__isnull=False) \
+            .exclude(author='').values_list('author', flat=True).order_by('author').distinct())
+        return Response(data=authors)
 
 
 class IssueDetailView(generics.RetrieveAPIView, ProjectBaseAPIView):
@@ -328,11 +344,12 @@ class IssueResolutionUpdateView(generics.GenericAPIView, ProjectBaseAPIView):
         project = self.get_project()
         new_resolution = request.data.get("resolution")
         scope = request.data.get("scope")
+        ignore_reason = request.data.get("ignore_reason")
         self.check_resolution_valid(new_resolution)
         self.check_scope_valid(scope)
         issue = get_object_or_404(models.Issue, project_id=project.id, id=issue_id)
         issue = core.CodeLintIssueResolutionManager.update_one_issue_resolution(
-            request.user.username, issue, new_resolution, scope)
+            request.user.username, issue, new_resolution, scope, ignore_reason)
         serializer = serializers.DetailedIssueSerializer(instance=issue)
         return Response(serializer.data)
 
