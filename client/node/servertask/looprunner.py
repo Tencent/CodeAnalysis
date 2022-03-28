@@ -228,5 +228,7 @@ class LoopRunner(TaskRunner):
                 task.start()
                 self._running_task.append(task)
             except:
-                # 遇到异常,输出异常信息,继续运行,节点不退出
-                LogPrinter.exception("task loop encounter error, skip and continue.")
+                # 遇到异常,输出异常信息
+                LogPrinter.exception("task loop encounter error.")
+                # 如果希望节点遇到异常不退出，避免掉线，可以注释掉raise
+                raise
