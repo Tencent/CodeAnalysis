@@ -16,22 +16,22 @@ from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import generics, status
+from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from rest_framework.serializers import ValidationError
 from rest_framework.views import APIView
-from rest_framework.authtoken.models import Token
 
 # 项目内 import
 from apps.authen import models
-from apps.authen.core.orgmgr import OrganizationManager
-from apps.authen.serializers.base import UserSerializer, UserSimpleSerializer, ScmAccountSerializer, \
-                                         ScmSshInfoUpdateSerializer, ScmSshInfoSerializer
-from apps.authen.serializers.base_org import OrganizationSerializer
 from apps.authen.api_filters import base as base_filters
-from apps.authen.permissions import OrganizationDefaultPermission, OrganizationDetailUpdatePermission, \
-    CodeDogUserPermission, CodeDogSuperVipUserLevelPermission
+from apps.authen.core import OrganizationManager
+from apps.authen.permissions import CodeDogSuperVipUserLevelPermission, CodeDogUserPermission, \
+    OrganizationDefaultPermission, OrganizationDetailUpdatePermission
+from apps.authen.serializers import base_org
+from apps.authen.serializers.base import ScmAccountSerializer, ScmSshInfoSerializer, ScmSshInfoUpdateSerializer, \
+    UserSerializer, UserSimpleSerializer
 from apps.codeproj.models import ProjectTeam
-
+from util.operationrecord import OperationRecordHandler
 
 logger = logging.getLogger(__name__)
 
@@ -97,7 +97,7 @@ class OrganizationListApiView(generics.ListCreateAPIView):
     应用场景：创建团队
     """
     permission_classes = [CodeDogUserPermission]
-    serializer_class = OrganizationSerializer
+    serializer_class = base_org.OrganizationSerializer
     filter_backends = (DjangoFilterBackend,)
     filterset_class = base_filters.OrganizationFilter
 
@@ -123,7 +123,7 @@ class OrganizationDetailApiView(generics.RetrieveUpdateAPIView):
     应用场景：更新团队
     """
     permission_classes = [OrganizationDetailUpdatePermission]
-    serializer_class = OrganizationSerializer
+    serializer_class = base_org.OrganizationSerializer
     queryset = models.Organization.objects.all()
     lookup_field = 'org_sid'
 
@@ -202,13 +202,14 @@ class OrganizationMemberConfInvitedApiView(generics.GenericAPIView):
     应用场景：根据邀请码将用户添加到组织内
     """
     permission_classes = [CodeDogUserPermission]
-    serializer_class = OrganizationSerializer
+    serializer_class = base_org.OrganizationSerializer
 
     def post(self, request, code):
         org_id, perm, inviter_username = OrganizationManager.decode_invite_code(code)
         org = get_object_or_404(models.Organization, id=org_id)
         org.assign_perm(request.user, perm)
-        # TODO：日志
+        OperationRecordHandler.add_organization_operation_record(
+            org, "邀请成员", inviter_username, "邀请%s加入团队，角色为%s" % (request.user, perm))
         slz = self.get_serializer(instance=org)
         return Response(slz.data)
 

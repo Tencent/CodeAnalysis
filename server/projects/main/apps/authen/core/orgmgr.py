@@ -7,24 +7,22 @@
 
 """项目通用逻辑
 """
-# 原生
-import time
+# 原生 import
+import logging
 import random
 import string
-import logging
+import time
 
-# 第三方
-from django.conf import settings
+# 第三方 import
 from django.db import transaction
-from django.contrib.auth.models import User
 from django.utils import timezone
 
-# 项目内
-from apps.authen.models import Organization, CodeDogUser, OrganizationPermissionApply
-
+# 项目内 import
+from apps.authen.models import CodeDogUser, Organization, OrganizationPermissionApply
+from util.cipher import Base62Cipher, CaesarCipher
 from util.exceptions import InviteCodeError, OrganizationCreateError, errcode
+from util.operationrecord import OperationRecordHandler
 from util.shortuuid import ShortIDGenerator
-from util.cipher import CaesarCipher, Base62Cipher
 
 logger = logging.getLogger(__file__)
 
@@ -101,17 +99,21 @@ class OrganizationManager(object):
         if user.is_superuser:
             org.status = status
             org.save()
+            OperationRecordHandler.add_organization_operation_record(org, "团队审核", user, "审核结果: %s" % status)
 
     @classmethod
     def update_org_level(cls, org, user, level):
-        """更新组织级别，仅平台管理员可操作
+        """更新团队级别，仅平台管理员可操作
         :param org: Organization, 团队
         :param user: User, 审核人
         :param level: int, 级别
         """
         if user.is_superuser:
+            old_level = org.level
             org.level = level
             org.save()
+            OperationRecordHandler.add_organization_operation_record(
+                org, "团队级别变更", user, "变更情况: %s -> %s" % (old_level, level))
 
     @classmethod
     def get_invite_code(cls, org, perm, user):
@@ -217,19 +219,6 @@ class OrganizationManager(object):
             raise InviteCodeError(code=errcode.E_SERVER_INVITE_CODE_EXPIRED)
         return org_id, perm, username
 
-    @classmethod
-    def add_org_members(cls, org, users, perm):
-        """增加团队成员，适用于V2接口，即OA版添加团队成员
-        :param org: Organization, 团队
-        :param users: List<str> username 列表
-        :param perm: int, 角色
-        """
-        if perm == Organization.PermissionEnum.ADMIN or perm == Organization.PermissionEnum.USER:
-            for username in users:
-                username = username.split('(')[0]
-                user, _ = User.objects.get_or_create(username=username)
-                org.assign_perm(user, perm)
-
 
 class OrganizationPermApplyManager(object):
     """团队申请单管理
@@ -276,7 +265,7 @@ class OrganizationPermApplyManager(object):
                 apply.save()
 
     @classmethod
-    def check_org(cls, apply_id, checker, check_result, check_remark=None):
+    def check_org(cls, apply_id, checker, check_result=None, check_remark=None, **kwargs):
         """审核团队
         """
         org_perm_apply = OrganizationPermissionApply.objects.get(id=apply_id)

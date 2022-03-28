@@ -5,9 +5,8 @@
 # See LICENSE for details
 # ==============================================================================
 
-
 from django.apps import AppConfig
 
 
 class NodemgrConfig(AppConfig):
-    name = 'apps.nodemgr'
+    name = "apps.nodemgr"

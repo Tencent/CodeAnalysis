@@ -95,7 +95,6 @@ class ScmUrlFormatter(object):
             # ssh://git协议转换成http会去掉端口号
             scm_url = re.sub(r"(:\d+/)", "/", scm_url.replace("ssh://git@", "http://"))
         elif scm_url.startswith("ssh://"):
-            # ssh://协议转换成http会去掉端口号
             scm_url = re.sub(r"(:\d+/)", "/", scm_url.replace("ssh://", "http://"))
         elif not scm_url.startswith(("https://", "http://")):
             scm_url = "http://%s" % scm_url

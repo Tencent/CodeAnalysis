@@ -122,7 +122,7 @@ class FileServer(object):
     def download_file(self, file_url):
         """下载指定路径文件"""
         file_name = os.path.basename(file_url)
-        dir_path = os.path.join(settings.BASE_DIR, 'tempdata', gen_path_key(file_url))
+        dir_path = os.path.join(settings.BASE_DIR, 'tempdata', "%s_%s" % (gen_path_key(file_url), uuid.uuid1().hex))
         file_path = os.path.join(dir_path, file_name)
         logger.info("Downloading file from %s to %s", file_url, file_path)
         if os.path.exists(file_path):

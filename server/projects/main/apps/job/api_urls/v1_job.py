@@ -6,28 +6,21 @@
 # ==============================================================================
 
 """
-v1 接口定义，供节点端调用
+v1_job 接口定义
+
+URL前缀： /api/jobs/
 """
+
 # 第三方 import
 from django.urls import path
-from django.conf import settings
 
 # 项目内 import
-from apps.job.apis import base as apis
-from apps.job.apis import v1 as apis_v1
+from apps.job.apis import v1_pt as apis_v1_pt
 
-# url前缀：/api/jobs/
+# 前缀 /api/jobs/
 urlpatterns = [
-    path("", apis.JobsApiView.as_view(),
-         name="apiv1_jobs"),
-    path("<int:job_id>/", apis_v1.JobApiView.as_view(),
-         name="apiv1_job_detail"),
-    path("<int:job_id>/tasks/", apis_v1.JobTasksApiView.as_view(),
-         name="apiv1_job_tasks"),
-    path("<int:job_id>/tasksbeat/", apis_v1.JobTasksBeatApiView.as_view(),
-         name="apiv1_job_tasksbeat"),
-    path("<int:job_id>/tasks/<int:task_id>/", apis_v1.TaskDetailApiView.as_view(),
-         name="apiv1_job_task_detail"),
-    path("<int:job_id>/tasks/<int:task_id>/progresses/", apis_v1.TaskProgressApiView.as_view(),
-         name="apiv1_job_task_progresses"),
+    path("taskqueue/nodes/<int:node_id>/tasks/register/", apis_v1_pt.NodeTaskRegisterAPIView.as_view(),
+         name="apiv1_node_task_register"),
+    path("taskqueue/nodes/<int:node_id>/tasks/<int:task_id>/ack/", apis_v1_pt.NodeTaskAckApiView.as_view(),
+         name="apiv1_node_task_ack"),
 ]

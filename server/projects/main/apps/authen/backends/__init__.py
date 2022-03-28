@@ -1,6 +1,11 @@
 # -*- coding: utf-8 -*-
+# Copyright (c) 2021-2022 THL A29 Limited
+#
+# This source code file is made available under MIT License
+# See LICENSE for details
+# ==============================================================================
 """
-apps.authen.backends
+authen - backends
 
 授权模块，包含服务支持的各种授权功能处理
 """

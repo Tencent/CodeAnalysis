@@ -105,6 +105,11 @@ export FILE_SENTRY_DSN=
 ## 上报文件存储位置
 export FILE_STORAGE_DIR='data/file/'
 
+## MinIO服务配置
+export FILE_MINIO_ENTRYPOINT=
+export FILE_MINIO_ACCESS_KEY=
+export FILE_MINIO_SECRET_KEY=
+
 ## 服务交互配置
 export PASSWORD_KEY='a6x4c7esudcv396w'
 export API_TICKET_SALT='a6x4c7esudcv396w'

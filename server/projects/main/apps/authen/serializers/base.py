@@ -40,6 +40,7 @@ class CodeDogUserSerializer(serializers.ModelSerializer):
     """CodeDog用户序列化，仅适用于登录用户
     """
     username = serializers.CharField(source="user.username", read_only=True)
+    is_superuser = serializers.BooleanField(source="user.is_superuser", read_only=True)
 
     class Meta:
         model = models.CodeDogUser
@@ -77,7 +78,12 @@ class UserSimpleSerializer(serializers.ModelSerializer):
         # 根据配置展示不同的user序列化内容
         if hasattr(settings, "LOGIN_USER_TYPE") and settings.LOGIN_USER_TYPE == self.LoginUserTypeEnum.CODEDOG_USER:
             try:
-                return self.codedog_serializer(instance=instance.codedoguser).data
+                data = self.codedog_serializer(instance=instance.codedoguser).data
+                # 非超管访问此序列化，排除is_superuser字段
+                request = self.context.get("request")
+                if not (request and request.user and request.user.is_staff):
+                    data.pop('is_superuser', '')
+                return data
             except models.CodeDogUser.DoesNotExist:
                 pass
         return instance.username
@@ -150,6 +156,7 @@ class ScmAccountSerializer(serializers.ModelSerializer):
     user = UserSimpleSerializer(read_only=True)
     auth_origin = serializers.StringRelatedField()
     scm_password = serializers.CharField(max_length=64, write_only=True, help_text="账号密码")
+    display_scm_platform = serializers.CharField(source="get_scm_platform_display", read_only=True)
 
     class Meta:
         model = models.ScmAccount
@@ -205,6 +212,7 @@ class ScmSshInfoSerializer(serializers.ModelSerializer):
     password = serializers.CharField(max_length=64, write_only=True, help_text="代码库SSH密钥口令",
                                      allow_null=True, allow_blank=True)
     ssh_private_key = serializers.CharField(write_only=True, help_text="代码库SSH密钥")
+    display_scm_platform = serializers.CharField(source="get_scm_platform_display", read_only=True)
 
     class Meta:
         model = models.ScmSshInfo

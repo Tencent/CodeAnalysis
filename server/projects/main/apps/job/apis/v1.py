@@ -14,61 +14,29 @@ import json
 import logging
 
 # 第三方 import
-from django_filters.rest_framework import DjangoFilterBackend
 from django.utils.timezone import now
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import generics, status
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework.generics import get_object_or_404
 from rest_framework.exceptions import PermissionDenied
+from rest_framework.generics import get_object_or_404
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
 # 项目内 import
+from apps.authen.backends import ServerAPIAuthentication, TCANodeTokenBackend
 from apps.authen.core import UserManager
-from apps.job import models, core
+from apps.codeproj import core as codeproj_core
+from apps.codeproj.apimixins import ProjectBaseAPIView
+from apps.codeproj.models import ScanSchemePerm
+from apps.codeproj.serializers.base import ScanJobCreateSerializer, ScanJobInitSerializer
+from apps.job import core, models
 from apps.job.api_filters import base as filters
 from apps.job.serializers import base as serializers
-from apps.codeproj.models import ScanSchemePerm
-from apps.codeproj.apimixins import ProjectBaseAPIView
-from apps.codeproj import core as codeproj_core
-from apps.codeproj.serializers.base import ScanJobCreateSerializer, ScanJobInitSerializer
-from apps.authen.backends import ServerAPIAuthentication, TCANodeTokenBackend
-
+from apps.nodemgr.models import Node
 from util import errcode
 from util.exceptions import CDErrorBase
-from util.permissions import RepositoryUserPermission
 
 logger = logging.getLogger(__name__)
-
-
-class RepoJobListApiView(generics.ListAPIView):
-    """指定代码库任务列表接口
-
-    ### get
-    应用场景：获取指定项目任务列表详情
-    """
-    serializer_class = serializers.JobSerializer
-    permission_classes = [RepositoryUserPermission]
-    filter_backends = (DjangoFilterBackend,)
-    filterset_class = filters.JobFilterSet
-
-    def get_queryset(self):
-        repo_id = self.kwargs["repo_id"]
-        return models.Job.objects.select_related("project__repo").filter(project__repo_id=repo_id).order_by("-id")
-
-
-class RepoJobDetailApiView(generics.RetrieveAPIView):
-    """指定代码库任务详情接口
-
-    ### get
-    应用场景：获取项目指定扫描job的详情
-    """
-    serializer_class = serializers.JobSerializer
-    permission_classes = [RepositoryUserPermission]
-
-    def get_object(self):
-        repo_id = self.kwargs["repo_id"]
-        job_id = self.kwargs["job_id"]
-        return get_object_or_404(models.Job, id=job_id, project__repo_id=repo_id)
 
 
 class ProjectJobListApiView(generics.ListAPIView, ProjectBaseAPIView):
@@ -113,7 +81,7 @@ class ProjectJobApiView(generics.GenericAPIView):
     serializer_class = serializers.JobClosedSerializer
 
     def put(self, request, **kwargs):
-        project = get_object_or_404(models.Project, id=kwargs["project_id"])
+        get_object_or_404(models.Project, id=kwargs["project_id"])
         slz = self.get_serializer(data=request.data)
         if slz.is_valid(raise_exception=True):
             logger.info("[Job: %d] 开始执行回调..." % kwargs["job_id"])
@@ -145,7 +113,7 @@ class ProjectScanJobInitApiView(generics.GenericAPIView, ProjectBaseAPIView):
         if not request.user.is_superuser:
             schemeperm = ScanSchemePerm.objects.filter(scan_scheme=project.scan_scheme).first()
             if schemeperm and schemeperm.execute_scope == ScanSchemePerm.ScopeEnum.PRIVATE \
-               and not schemeperm.check_user_execute_manager_perm(request.user):
+                    and not schemeperm.check_user_execute_manager_perm(request.user):
                 logger.error("本地扫描/CI流水线，代码库内创建分支项目/启动分支项目扫描无权限：%s" % request.user)
                 raise PermissionDenied("您没有执行该操作的权限，该扫描方案已私有化，您不在该方案权限配置的关联分支项目权限成员列表中！！！")
         slz = self.get_serializer(data=request.data)
@@ -179,7 +147,7 @@ class ProjectJobFinishApiView(generics.GenericAPIView, ProjectBaseAPIView):
         if not request.user.is_superuser:
             schemeperm = ScanSchemePerm.objects.filter(scan_scheme=project.scan_scheme).first()
             if schemeperm and schemeperm.execute_scope == ScanSchemePerm.ScopeEnum.PRIVATE \
-               and not schemeperm.check_user_execute_manager_perm(request.user):
+                    and not schemeperm.check_user_execute_manager_perm(request.user):
                 logger.error("本地扫描/CI流水线，代码库内创建分支项目/启动分支项目扫描无权限：%s" % request.user)
                 raise PermissionDenied("您没有执行该操作的权限，该扫描方案已私有化，您不在该方案权限配置的关联分支项目权限成员列表中！！！")
         slz = self.get_serializer(data=request.data)
@@ -192,6 +160,75 @@ class ProjectJobFinishApiView(generics.GenericAPIView, ProjectBaseAPIView):
                 return Response({"job": job_id, "scan": scan_id})
             except CDErrorBase as e:
                 return Response(e.data, status=status.HTTP_400_BAD_REQUEST)
+
+
+class NodeTaskAckApiView(APIView):
+    """指定节点的Task确认接口
+    """
+
+    # authentication_classes = [TCANodeTokenBackend]
+
+    def post(self, request, node_id, task_id):
+        """
+        ### post
+        应用场景：更新指定节点注册的指定Task状态为执行中，表示Task已被节点正常获取
+        """
+        nrows = models.Task.objects.filter(id=task_id, node_id=node_id, state=models.Task.StateEnum.ACKING).update(
+            state=models.Task.StateEnum.RUNNING)
+        if nrows:
+            core.NodeTaskRegisterManager.update_task_state_with_running(task_id, node_id)
+            return Response({"msg": "Task-%s ack success" % task_id})
+        else:
+            logger.warning("[Node: %s] task-%s ack failed, release node" % (node_id, task_id))
+            core.NodeTaskRegisterManager.release_node(node_id)
+            return Response(None)
+
+
+class NodeTaskRegisterApiView(APIView):
+    """
+    get: 获取节点的排队中的Task 或Process， 但不修改任务的执行状态，因为服务端不同步修改状态，所以不可以作为任务执行
+    post: 获取节点的排队中的Task 或Process， 同时修改任务的执行状态
+    """
+    schema = None
+
+    # authentication_classes = [TCANodeTokenBackend]
+
+    def _get_task_request(self, task, processes):
+        """获取任务执行参数
+        """
+        task_request = serializers.ExcutableTaskSerializer(instance=task).data
+        task_request.update(
+            {"execute_processes": [process.name for process in processes]})
+        return task_request
+
+    def _get_task(self, request, node_id, occupy=False):
+        """注册可执行的任务
+
+        1. 查询当前节点是否有待执行关闭任务
+        2. 判断当前节点的状态是否忙碌
+        3. 获取当前节点队列下待运行的Task列表
+        """
+        node = get_object_or_404(Node, id=node_id)
+        if occupy:
+            # 返回被终止的任务
+            killed_task = core.NodeTaskRegisterManager.get_killed_task(node)
+            if killed_task:
+                return killed_task
+            # 查询并占用节点，如果节点忙碌，则返回空
+            if not core.NodeTaskRegisterManager.set_node_busy_state(node_id, **request.data):
+                return None
+
+        task, processes = core.NodeTaskRegisterManager.register_task(node, occupy)
+        task_request = None
+        if task:
+            task_request = self._get_task_request(task, processes)
+        return task_request
+
+    def get(self, request, node_id):
+        return Response(self._get_task(request, node_id, occupy=False))
+
+    def post(self, request, node_id):
+        return Response(self._get_task(request, node_id, occupy=True))
 
 
 class TaskProgressApiView(generics.ListCreateAPIView):
@@ -207,7 +244,7 @@ class TaskProgressApiView(generics.ListCreateAPIView):
     serializer_class = serializers.TaskProgressSerializer
 
     def get_queryset(self):
-        return models.TaskProgress.objects.filter(task__id=int(self.kwargs["task_id"]))
+        return models.TaskProgress.objects.filter(task__id=self.kwargs["task_id"])
 
 
 class TaskDetailApiView(generics.GenericAPIView):
@@ -220,27 +257,53 @@ class TaskDetailApiView(generics.GenericAPIView):
     authentication_classes = [TCANodeTokenBackend]
     serializer_class = serializers.TaskResultSerializer
 
-    def put(self, request, job_id, task_id):
-        task = get_object_or_404(models.Task, id=task_id)
-        logger.info("[Job: %s][Task: %s] 收到上报结果请求，执行节点：%s" % (
-            job_id, task_id, task.node))
-        logger.info(json.dumps(request.data, indent=2))
+    def put(self, request, **kwargs):
+        job_id = kwargs["job_id"]
+        task_id = kwargs["task_id"]
+        task = get_object_or_404(models.Task, id=task_id, job_id=job_id)
+        logger.info("[Job: %s][Task: %s] 收到上报结果请求，执行节点: %s，执行参数: %s" % (
+            job_id, task_id, task.node, json.dumps(request.data)))
         slz = self.get_serializer(data=request.data)
         if slz.is_valid(raise_exception=True):
-            core.save_task_result(task_id, slz.validated_data["task_version"],
-                                  slz.validated_data["result_code"],
-                                  slz.validated_data["result_msg"],
-                                  slz.validated_data["result_data_url"],
-                                  slz.validated_data["log_url"],
-                                  slz.validated_data["processes"])
+            core.JobCloseHandler.save_task_result(task_id, slz.validated_data["task_version"],
+                                                  slz.validated_data["result_code"],
+                                                  slz.validated_data["result_msg"],
+                                                  slz.validated_data["result_data_url"],
+                                                  slz.validated_data["log_url"],
+                                                  slz.validated_data["processes"])
             if errcode.is_success(slz.validated_data["result_code"]):
-                core.close_job(task.job_id)
+                core.JobCloseHandler.close_job(task.job_id)
             else:
-                core.revoke_job(task.job, slz.validated_data["result_code"], slz.validated_data["result_msg"])
+                core.JobCloseHandler.revoke_job(
+                    task.job, slz.validated_data["result_code"], slz.validated_data["result_msg"])
             return Response(slz.data)
 
 
-class JobTasksBeatApiView(APIView):
+class ExcutePrivateTask(generics.GenericAPIView):
+    """
+    ### post
+    应用场景：获取未执行的私有任务
+    """
+    schema = None
+    authentication_classes = [TCANodeTokenBackend]
+
+    def post(self, request, **kwargs):
+        job = get_object_or_404(models.Job, id=kwargs["job_id"])
+        result = core.PrivateTaskManager.get_private_task(job)
+        state = result["state"]
+        state_msg = result["state_msg"]
+        tasks = result["tasks"]
+        task_jsons = []
+        for task_info in tasks.values():
+            task = task_info["task"]
+            execute_processes = task_info["execute_processes"]
+            task_json = serializers.ExcutableTaskSerializer(instance=task).data
+            task_json.update({"execute_processes": [process.name for process in execute_processes]})
+            task_jsons.append(task_json)
+        return Response({"state": state, "state_msg": state_msg, "tasks": task_jsons})
+
+
+class JobTasksBeatApiView(generics.GenericAPIView):
     """指定Task的心跳上报接口
 
     ### post
@@ -249,7 +312,8 @@ class JobTasksBeatApiView(APIView):
     schema = None
     authentication_classes = [TCANodeTokenBackend]
 
-    def post(self, request, job_id):
+    def post(self, request, **kwargs):
+        job_id = kwargs["job_id"]
         task_ids = list(models.Task.objects.filter(job_id=job_id).exclude(
             state=models.Task.StateEnum.CLOSED).values_list("id", flat=True))
         task_num = models.Task.objects.filter(id__in=task_ids).update(last_beat_time=now())
@@ -281,6 +345,8 @@ class JobTasksApiView(generics.ListAPIView):
     应用场景：获取Job的Task列表
     """
     schema = None
+    filter_backends = (DjangoFilterBackend,)
+    filterset_class = filters.TaskFilterSet
     serializer_class = serializers.TaskSerializer
 
     def get_queryset(self):

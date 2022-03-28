@@ -46,12 +46,17 @@ class AuthAPIView(APIView, PermissionCheckMixIn):
         return app_unit
 
     @staticmethod
-    def _format_auth_response(method, app, dir_path, file_name, params, content_sha256=None):
+    def _format_auth_response(method, app, dir_path, file_name, params, **kwargs):
         host, path = storage_client.format_host_path(app, dir_path, file_name)
         try:
             auth_headers = storage_client.format_auth(
-                method.lower(), path, params, {'host': host}, content_sha256=content_sha256)
+                method.lower(), path, params, {'host': host}, 
+                content_sha256=kwargs.get("content_sha256"))
         except Exception as e:
+            if "NoSuchBucket" in str(e):
+                result, msg = storage_client.create_bucket(app)
+                if not (result or 'bucket already exist' in msg):
+                    raise error.QFSRequestError(msg, error.BUCKET_CREATE_FAIL)
             raise error.QFSParamConfigError('Url invalid. %s ' % repr(e))
 
         response = HttpResponse('')

@@ -15,8 +15,8 @@ from django.conf import settings
 from django.shortcuts import get_object_or_404
 from rest_framework import permissions
 
-from apps.authen.models import Organization, CodeDogUser
 from apps.authen.core import usermgr
+from apps.authen.models import CodeDogUser, Organization
 
 logger = logging.getLogger(__name__)
 
@@ -24,6 +24,7 @@ logger = logging.getLogger(__name__)
 class CodeDogUserPermission(permissions.BasePermission):
     """CodeDog用户鉴权权限判断
     """
+
     def has_permission(self, request, view):
         """检查当前用户是否审批通过
         """
@@ -37,7 +38,7 @@ class CodeDogUserPermission(permissions.BasePermission):
             return False
         else:
             return True
-    
+
     def is_check_adminuser(self, user):
         """校验是否
         """
@@ -49,6 +50,7 @@ class CodeDogUserPermission(permissions.BasePermission):
 class CodeDogSuperVipUserLevelPermission(CodeDogUserPermission):
     """IPT用户鉴权权限判断
     """
+
     def has_permission(self, request, view):
         result = super(CodeDogSuperVipUserLevelPermission, self).has_permission(request, view)
         if result and request.user.codedoguser.level == CodeDogUser.LevelEnum.SUPER_VIP:
@@ -75,9 +77,9 @@ class OrganizationDetailUpdatePermission(CodeDogUserPermission):
             return False
         org = get_object_or_404(Organization, org_sid=org_sid)
         return self.is_check_adminuser(request.user) \
-            or (request.method in permissions.SAFE_METHODS
-                and request.user.has_perm(org.PermissionNameEnum.VIEW_ORG_PERM, org)) \
-            or request.user.has_perm(org.PermissionNameEnum.CHANGE_ORG_PERM, org)
+               or (request.method in permissions.SAFE_METHODS
+                   and request.user.has_perm(org.PermissionNameEnum.VIEW_ORG_PERM, org)) \
+               or request.user.has_perm(org.PermissionNameEnum.CHANGE_ORG_PERM, org)
 
 
 class OrganizationDefaultPermission(CodeDogUserPermission):
@@ -101,9 +103,9 @@ class OrganizationDefaultPermission(CodeDogUserPermission):
         if not org.validate_org_checked():
             return False
         return self.is_check_adminuser(request.user) \
-            or (request.method in permissions.SAFE_METHODS and
-                request.user.has_perm(org.PermissionNameEnum.VIEW_ORG_PERM, org)) \
-            or request.user.has_perm(org.PermissionNameEnum.CHANGE_ORG_PERM, org)
+               or (request.method in permissions.SAFE_METHODS and
+                   request.user.has_perm(org.PermissionNameEnum.VIEW_ORG_PERM, org)) \
+               or request.user.has_perm(org.PermissionNameEnum.CHANGE_ORG_PERM, org)
 
 
 class OrganizationAdminPermission(CodeDogUserPermission):
@@ -158,6 +160,7 @@ class OrganizationPermApplyPermission(CodeDogUserPermission):
     """团队审批单权限判断
     仅ORG_PERM_ADMINS的超管可审批，否则仅可查看
     """
+
     def has_permission(self, request, view):
         """检查当前用户是否有当前组织操作权限
         """
@@ -166,4 +169,3 @@ class OrganizationPermApplyPermission(CodeDogUserPermission):
             return False
         return (request.method in permissions.SAFE_METHODS or request.user.username in settings.ORG_PERM_ADMINS) \
                and bool(request.user and request.user.is_staff)
-

@@ -1,4 +1,4 @@
-# # -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 # Copyright (c) 2021-2022 THL A29 Limited
 #
 # This source code file is made available under MIT License
@@ -184,7 +184,7 @@ class CodeMetricDupInfo(ProjectScanInfoBase):
 
 
 class CodeMetricClocInfo(ProjectScanInfoBase):
-    """上次成功扫描信息 - codemetric cloc代码统计
+    """上次成功扫描信息 - codemetric codecount代码统计
     """
     last_revision = models.CharField(max_length=256, verbose_name="旧版本号", blank=True, null=True)
     code_line_num = models.IntegerField(verbose_name="代码行数", blank=True, null=True)

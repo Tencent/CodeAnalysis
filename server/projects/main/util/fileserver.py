@@ -47,7 +47,7 @@ class FileServer(object):
         self._server_url = server_conf["URL"]
         self._server_token = server_conf["TOKEN"]
         self._type_prefix = server_conf["TYPE_PREFIX"]
-        self._headers = {'Authorization': 'Token %s' % self._server_token}
+        self._headers = {"Authorization": "Token %s" % self._server_token}
 
     @classmethod
     def get_data_md5(cls, data):
@@ -101,7 +101,7 @@ class FileServer(object):
         if rsp.status == self.OK_STATUS:
             return rsp.data
         else:
-            logger.error('return code %d when get file %s' % (rsp.status, file_url))
+            logger.error('return code %d when get file %s, content: %s' % (rsp.status, file_url, rsp.data))
             raise ServerError(errcode.E_SERVER, 'return code %d when get file %s' % (rsp.status, file_url))
 
     def delete_file(self, file_url):

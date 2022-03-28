@@ -22,6 +22,22 @@ class TimeDeltaSerializer(serializers.Serializer):
         return str(instance.total_seconds())
 
 
+class OnlySuperAdminReadField(serializers.Field):
+    """仅超级管理员可见的字段
+    """
+
+    def __init__(self, **kwargs):
+        kwargs['read_only'] = True
+        super().__init__(**kwargs)
+
+    def to_representation(self, value):
+        request = self.context.get("request")
+        if request and request.user and request.user.is_staff:
+            return value
+        else:
+            return ""
+
+
 class CDBaseModelSerializer(serializers.ModelSerializer):
     creator = UserSimpleSerializer(read_only=True)
     created_time = serializers.StringRelatedField()

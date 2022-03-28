@@ -91,9 +91,7 @@ class CheckToolSimpleSerializer(serializers.ModelSerializer):
         """
         request = self.context.get("request")
         user = request.user if request else None
-        if checktool.show_display_name or (user and user.is_superuser):
-            return checktool.display_name
-        return checktool.virtual_name
+        return checktool.get_show_name(user=user)
 
     def get_scope(self, checktool):
         """公有True/私有False工具

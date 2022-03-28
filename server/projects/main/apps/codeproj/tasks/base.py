@@ -13,16 +13,18 @@ import logging
 from datetime import datetime
 
 # 第三方 import
+from croniter import croniter
 from django.conf import settings
-from django.utils import timezone
 from django.contrib.auth.models import User
+from django.db.models import Q
+from django.utils import timezone
 
 # 项目内 import
-from codedog.celery import celery_app
-from apps.codeproj import models
+from apps.codeproj import core, models
 from apps.codeproj.core import ScanSchemeManager
 from apps.job.models import Job
-
+from codedog.celery import celery_app
+from util import errcode
 from util.operationrecord import OperationRecordHandler
 from util.webclients import AnalyseClient
 
@@ -67,6 +69,26 @@ def check_project_active():
             OperationRecordHandler.add_project_operation_record(
                 project, "项目失活", codedog_user, message="项目于%s自动标记为失活" % current_time
             )
+    logger.info("2. 开始检查开启定时扫描的项目近10次扫描是否存在SCM相关异常")
+    project_schedules = models.ScanSchedule.objects.filter(
+        enabled=True,
+        project__status=models.Project.StatusEnum.ACTIVE,
+        project__scan_scheme__status=models.ScanScheme.StatusEnum.ACTIVE
+    ).exclude(scan_sched=None)
+
+    for project_sched in project_schedules:
+        project = project_sched.project
+        result_codes = Job.objects.filter(project=project).order_by(
+            "-create_time").values_list("result_code", flat=True)[:10]
+        result_codes = list(set(result_codes))
+        if len(result_codes) == 1 and errcode.is_scm_error(result_codes[0]):
+            msg = "项目近10次扫描错误码均为%s，关闭定时扫描任务" % result_codes[0]
+            logger.warning("[Project: %s] %s" % (project.id, msg))
+            OperationRecordHandler.add_project_operation_record(
+                project, "项目更新配置", codedog_user, message=msg
+            )
+            project_sched.enabled = False
+            project_sched.save()
 
 
 @celery_app.task
@@ -87,3 +109,39 @@ def push_scanscheme_template(scheme_ids, ref_scheme_id, username, **kwargs):
         scan_scheme_message.append("%s" % scan_scheme)
     ref_scheme_message = "%s，同步扫描方案：%s" % (op_message, "、".join(scan_scheme_message))
     OperationRecordHandler.add_scanscheme_operation_record(ref_scheme, "方案模板同步", username, ref_scheme_message)
+
+
+@celery_app.task
+def handle_scheduled_projects():
+    """根据project的配置定时创建扫描
+    筛选范围：
+    1. 配置了定时任务
+    2. 项目为活跃状态
+    3. 扫描方案为活跃状态
+    """
+    current_time = _now()
+    project_schedules = models.ScanSchedule.objects.filter(
+        enabled=True,
+        project__status=models.Project.StatusEnum.ACTIVE,
+        project__scan_scheme__status=models.ScanScheme.StatusEnum.ACTIVE,
+    ).filter(Q(next_scan_time__lte=current_time) | Q(next_scan_time__isnull=True)).exclude(scan_sched=None)
+
+    for project_sched in project_schedules:
+        project = project_sched.project
+        project_sched = models.ScanSchedule.objects.get(project=project)
+        incr_scan = False if project_sched.total_scan_flag else True
+        if project_sched.next_scan_time and project_sched.next_scan_time <= current_time:
+            try:
+                logger.info("[Project: %s] create scheduled scan job, incr_scan: %s" % (project.id, incr_scan))
+                core.create_server_scan(project, creator="codedog", scan_data={"incr_scan": incr_scan})
+            except Exception as err:
+                logger.exception("[Project: %s] create scheduled scan job exception, err: %s" % (project.id, err))
+            ct = croniter(project_sched.scan_sched, current_time)
+            project_sched.next_scan_time = ct.get_next(datetime)
+            logger.info("[Project: %s] next scheduled scan time: %s" % (project.id, project_sched.next_scan_time))
+            project_sched.save()
+        elif not project_sched.next_scan_time:
+            ct = croniter(project_sched.scan_sched, current_time)
+            project_sched.next_scan_time = ct.get_next(datetime)
+            logger.info("[Project: %s] update scheduled scan time: %s" % (project.id, project_sched.next_scan_time))
+            project_sched.save()

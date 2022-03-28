@@ -132,7 +132,6 @@ class RepositoryCreateSerializer(CDBaseModelSerializer):
         scm_auth = attrs.get("scm_auth")
         request = self.context.get("request")
         user = request.user
-
         if not scm_auth:
             return serializers.ModelSerializer.validate(self, attrs)
 
@@ -185,7 +184,7 @@ class RepositoryCreateSerializer(CDBaseModelSerializer):
                 ssh_url = scm_client.get_ssh_url()
         ssh_url = scm.ScmUrlFormatter.get_git_ssh_url(ssh_url)
         return http_url, ssh_url
-
+    
     def set_scm_auth(self, repo, scm_auth, user):
         """获取SCM鉴权信息
         """
@@ -220,6 +219,7 @@ class RepositoryCreateSerializer(CDBaseModelSerializer):
     class Meta:
         model = models.Repository
         fields = ["id", "name", "scm_url", "scm_type", "created_from", "scm_auth", "labels"]
+
 
 
 class RepositoryAuthSerializer(CDBaseModelSerializer):
@@ -267,6 +267,7 @@ class RepositoryAuthUpdateSerializer(serializers.Serializer):
             scm_ssh_info = core.ScmAuthManager.get_scm_sshinfo_with_id(user, scm_ssh_id)
             if not scm_ssh_info:
                 raise serializers.ValidationError({"scm_ssh": "您名下没有指定的SSH授权信息: %s" % scm_ssh})
+            
             scm_client = scm.ScmClient(scm_type, ssh_url, auth_type,
                                        ssh_key=scm_ssh_info.ssh_private_key, ssh_password=scm_ssh_info.password)
         else:

@@ -8,19 +8,20 @@
 """codedog.celery 说明
 """
 
-
-import os
 import logging
+import os
 
-from django.conf import settings
+
 from celery import Celery
 from celery.signals import after_setup_logger
+from django.conf import settings
+
+from .celerybeats import CELERY_BEAT_TASKS
 
 from .celerybeats import CELERY_BEAT_TASKS
 
 # set the default Django settings module for the "celery" program.
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "codedog.settings.local")
-
 
 celery_app = Celery("codedog")
 
@@ -28,6 +29,7 @@ celery_app = Celery("codedog")
 # pickle the object when using Windows.
 celery_app.config_from_object("django.conf:settings", namespace="CELERY")
 celery_app.autodiscover_tasks()
+
 
 # 定时任务配置
 celery_app.conf.timezone = settings.TIME_ZONE
@@ -42,7 +44,7 @@ logger = logging.getLogger(__name__)
 def setup_loggers(*args, **kwargs):
     _logger = logging.getLogger()
     formatter = logging.Formatter(
-        '-%(asctime)s-%(levelname)s-%(name)s: %(message)s')
+        "-%(asctime)s-%(levelname)s-%(name)s: %(message)s")
 
     # StreamHandler
     console_handler = logging.StreamHandler()
@@ -51,6 +53,6 @@ def setup_loggers(*args, **kwargs):
 
     # FileHandler
     fh = logging.FileHandler(os.path.join(
-        settings.BASE_DIR, 'log', 'celery.log'))
+        settings.BASE_DIR, "log", "celery.log"))
     fh.setFormatter(formatter)
     _logger.addHandler(fh)

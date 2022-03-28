@@ -390,11 +390,14 @@ class LintResultHandler(object):
                 new_issue_details.append(
                     self._init_issuedetail(issue_hash, issuedetail_uuid, raw_issue, scm_url, real_revision))
                 for seq, raw_ref in enumerate(raw_issue.get('refs', [])):
-                    new_issue_refs.append(models.IssueRefer(issuedetail_uuid=issuedetail_uuid,
-                                                            file_path=raw_ref['path'],
-                                                            line=raw_ref['line'],
-                                                            msg=raw_ref['msg'],
-                                                            seq=seq + 1))
+                    new_issue_refs.append(models.IssueRefer(
+                        project_id=self._project.id,
+                        issue_hash=issue_hash,
+                        issuedetail_uuid=issuedetail_uuid,
+                        file_path=raw_ref['path'],
+                        line=raw_ref['line'],
+                        msg=raw_ref['msg'],
+                        seq=seq + 1))
                 if issue_hash not in issue_hash_set:
                     issue_hash_set.add(issue_hash)
                     rule = self.get_scan_rule_info(raw_issue)
