@@ -15,7 +15,7 @@ import logging
 import platform
 
 from node.app import settings
-from node.loadconfig import ConfigLoader
+from node.toolloader.loadconfig import ConfigLoader
 from util.textutil import StringMgr
 
 logger = logging.getLogger(__name__)

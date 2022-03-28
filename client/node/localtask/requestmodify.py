@@ -13,7 +13,7 @@ import logging
 
 from node.app import settings
 from util.taskscene import TaskScene
-from node.taskdirmgr import TaskDirCtl
+from node.common.taskdirmgr import TaskDirCtl
 from util.crypto import Crypto
 
 logger = logging.getLogger(__name__)
@@ -29,6 +29,8 @@ class RequestModify(object):
         task_params["scm_type"] = scm_info.scm_type
         task_params["project_id"] = job_context["project_id"]
         task_params["repo_id"] = job_context["repo_id"]
+        task_params["team_name"] = job_context["team_name"]
+        task_params["org_sid"] = job_context["org_sid"]
 
         # 使用本地设置的前置命令和编译命令
         if pre_cmd:

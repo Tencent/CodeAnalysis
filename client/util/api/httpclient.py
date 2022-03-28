@@ -38,14 +38,20 @@ class HttpRequest(object):
             body = body.encode("utf-8")
 
         try:
-            req = Request(url=url, data=body, headers=headers)
-            req.get_method = lambda: method.upper()
-            response = urlopen(req).read()
-            str_result = response.decode("utf8")
-            dict_result = json.loads(str_result)
-            return dict_result
+            request = Request(url=url, data=body, headers=headers)
+            request.get_method = lambda: method.upper()
+            response = urlopen(request)
+            # status = response.getcode()
+            return_data = response.read()
+            return_str = return_data.decode("utf8")
+            # 可能为空字符串，直接返回，不需要转换json
+            if not return_str:
+                return return_str
+            return_dict = json.loads(return_str)
+            return return_dict
         except HTTPError as err:
-            logger.error(f"error code: {err.code}, reason: {err.reason}, headers: {err.headers}")
+            error_msg = err.read().decode('utf-8')
+            logger.error(f"api request error: {error_msg}\nurl: {url}")
             raise
 
 
@@ -61,6 +67,7 @@ class HttpClient(object):
         :param proxies:
         """
         self.url = urljoin(server_url, rel_url)
+        # logger.info(f">> self.url= {self.url}")
         self.headers = headers
         if data:
             self.data = data

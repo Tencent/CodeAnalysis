@@ -16,12 +16,12 @@ import json
 import psutil
 import threading
 
-from node.loadtool import ToolLoader
+from node.toolloader.loadtool import ToolLoader
 from util.pathlib import PathMgr
 from task.initparams import InitParams
 from util.codecount.codestat import CodeLineCount
 from util.logutil import LogPrinter
-from node.processmgr import ProcMgr
+from node.common.processmgr import ProcMgr
 
 
 class CountLineThread(threading.Thread):

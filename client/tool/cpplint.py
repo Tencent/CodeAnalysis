@@ -13,14 +13,13 @@ cpplint 扫描任务
 import os
 import re
 import time
-import logging
 import threading
 from functools import reduce
 
 from task.scmmgr import SCMMgr
 from util.logutil import LogPrinter
 from util.pathlib import PathMgr
-from node.processmgr import ProcMgr
+from node.common.processmgr import ProcMgr
 from task.codelintmodel import CodeLintModel
 from util.pathfilter import FilterPathUtil
 from util.configlib import ConfigReader

@@ -11,7 +11,7 @@
 import logging
 
 from node.localtask.filtermgr import FilterManager
-from node.userinput import UserInput
+from node.common.userinput import UserInput
 from task.initparams import InitParams
 from util.checklanguage import LanguageChecker
 from util.logutil import LogPrinter
