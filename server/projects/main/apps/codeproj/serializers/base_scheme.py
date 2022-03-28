@@ -16,7 +16,7 @@ from rest_framework import serializers
 
 # 项目内 import
 from apps.codeproj import models
-from apps.codeproj.core.projmgr import ScanSchemeManager, ScanSchemePermManager
+from apps.codeproj.core import ScanSchemeManager, ScanSchemePermManager
 from apps.base.serializers import CDBaseModelSerializer
 from apps.nodemgr.models import ExecTag
 from apps.scan_conf.models import Label

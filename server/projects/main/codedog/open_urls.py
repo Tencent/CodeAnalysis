@@ -78,10 +78,13 @@ urlpatterns += [
     path("api/projects/", include("apps.codeproj.api_urls.v1_project")),
     path("api/conf/", include("apps.scan_conf.api_urls.v1")),
     path("api/jobs/", include("apps.job.api_urls.v1_job")),
+    path("api/nodes/", include("apps.nodemgr.api_urls.v1")),
     path("api/orgs/<str:org_sid>/teams/", include("apps.codeproj.api_urls.v1_pt")),
 
     # V2 APIs
     path("api/v2/authen/", include("apps.authen.api_urls.v2")),
+    path("api/v2/jobs/", include("apps.job.api_urls.v2_job")),
+    path("api/v2/", include('apps.nodemgr.api_urls.v2')),
 
     # V3 APIs
     path("api/v3/", include("apps.base.api_urls.v3")),

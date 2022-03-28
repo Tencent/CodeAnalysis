@@ -18,8 +18,7 @@ from .base import StorageClient
 
 class MinioStorageClient(StorageClient):
     """
-    目前使用的是众测的腾讯云公共COS，实际上所有内容都存放在同一个BUCKET。
-    但文件服务器对外的逻辑依然是将文件分bucket存放。
+    基于Minio进行存储
     """
 
     def __init__(self, options=None):
@@ -77,18 +76,16 @@ class MinioStorageClient(StorageClient):
         """
         bucket, file_name = uri.strip('/').split('/', 1)
         region = self.client._get_region(bucket, None)
-        # Construct target url.
         url = self.client._base_url.build(
             method.upper(), region, bucket_name=bucket, object_name=file_name,
             query_params=params)
-
-        content_sha256 = kwargs.get('content_sha256')
-        date = time.utcnow()
-        headers["x-amz-date"] = time.to_amz_date(date)
-        headers["x-amz-content-sha256"] = content_sha256
+        headers, date = self.client._build_headers(url.netloc, headers, None, self.credentials.retrieve())
+        
+        if kwargs.get("content_sha256"):
+            headers["x-amz-content-sha256"] = kwargs["content_sha256"]
         headers = sign_v4_s3(method.upper(), url, region,
                              headers, self.credentials.retrieve(),
-                             content_sha256, date)
+                             headers.get("x-amz-content-sha256"), date)
         return headers
 
     def download_auth(self, bucket, file_name):

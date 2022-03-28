@@ -10,16 +10,13 @@ job - base filters
 """
 
 # 原生 import
-import re
 import logging
 
 # 第三方 import
-from django.db.models import Q
 from django_filters import rest_framework as filters
 
 # 项目内 import
 from apps.job import models
-from apps.scan_conf.models import CheckTool
 
 logger = logging.getLogger(__name__)
 
@@ -52,6 +49,50 @@ class JobFilterSet(filters.FilterSet):
 
     class Meta:
         model = models.Job
-        fields = ["repo", "project", "create_time_gte", "create_time_lte",  "end_time_gte", "end_time_lte",
-                  "result_code_gte",  "result_code_lte", "state", "result_msg", "created_from", "creator", "scm_url"]
+        fields = ["repo", "project", "create_time_gte", "create_time_lte", "end_time_gte", "end_time_lte",
+                  "result_code_gte", "result_code_lte", "state", "result_msg", "created_from", "creator", "scm_url"]
 
+
+class TaskFilterSet(filters.FilterSet):
+    start_time_gte = filters.DateTimeFilter(
+        field_name="start_time", help_text="工具开始时间", lookup_expr="gte")
+    start_time_lte = filters.DateTimeFilter(
+        field_name="start_time", help_text="工具结束时间", lookup_expr="lte")
+    result_code_gte = filters.NumberFilter(
+        help_text="错误码", lookup_expr="gte", field_name="result_code")
+    result_code_lte = filters.NumberFilter(
+        help_text="错误码", lookup_expr="lte", field_name="result_code")
+    result_msg = filters.CharFilter(help_text="结果信息", lookup_expr="icontains")
+    state = filters.BaseInFilter(
+        help_text="任务状态, 0为等待中，1为执行中，2为关闭，3为入库中，可多选，格式为1,2,3")
+    task_name = filters.CharFilter(help_text="工具名称")
+    created_from = filters.CharFilter(help_text="启动渠道", field_name="job__created_from")
+
+    class Meta:
+        model = models.Task
+        fields = ["start_time_gte", "start_time_lte",
+                  "result_code_gte", "result_code_lte", "state",
+                  "result_msg", "task_name", "tag", "node", "created_from"]
+
+
+class TaskProcessFilterSet(filters.FilterSet):
+    start_time_gte = filters.DateTimeFilter(
+        field_name="start_time", help_text="工具进程开始时间", lookup_expr="gte")
+    start_time_lte = filters.DateTimeFilter(
+        field_name="start_time", help_text="工具进程结束时间", lookup_expr="lte")
+    result_code_gte = filters.NumberFilter(
+        help_text="错误码", lookup_expr="gte", field_name="result_code")
+    result_code_lte = filters.NumberFilter(
+        help_text="错误码", lookup_expr="lte", field_name="result_code")
+    result_msg = filters.CharFilter(help_text="结果信息", lookup_expr="icontains")
+    state = filters.BaseInFilter(
+        help_text="任务状态, 0为等待中，1为执行中，2为关闭，3为入库中，可多选，格式为1,2,3")
+    task_name = filters.CharFilter(help_text="工具名称", field_name="task__name")
+    tag = filters.NumberFilter(
+        field_name="task__tag_id", help_text="节点标签")
+
+    class Meta:
+        model = models.TaskProcessRelation
+        fields = ["start_time_gte", "start_time_lte",
+                  "result_code_gte", "result_code_lte", "state",
+                  "result_msg", "task_name", "tag", "node"]

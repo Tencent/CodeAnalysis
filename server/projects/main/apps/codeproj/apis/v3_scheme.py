@@ -21,7 +21,7 @@ from rest_framework.response import Response
 from apps.codeproj import models, tasks
 from apps.codeproj.serializers import v3_scheme as v3_scheme_serializers, v3 as v3_serializers
 from apps.codeproj.api_filters import base as base_filters
-from apps.codeproj.core.projmgr import ScanSchemeManager
+from apps.codeproj.core import ScanSchemeManager
 from apps.codeproj.permissions import GlobalSchemeDefaultPermission
 from apps.authen.permissions import OrganizationOperationPermission
 

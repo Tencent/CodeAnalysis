@@ -41,6 +41,13 @@ class OperationRecordHandler(object):
                                        message=message)
 
     @classmethod
+    def add_organization_operation_record(cls, organization, action, username, message=None):
+        """
+        统一处理组织操作相关的记录，默认scenario_key为 "organization_%d" % organization.id
+        """
+        add_operation_record("organization_%d" % organization.id, action, username, message)
+
+    @classmethod
     def add_project_operation_record(cls, project, action, username, message=None):
         """
         统一处理项目操作相关的记录，默认scenario_key为 "project_%d"%project.id
@@ -73,7 +80,7 @@ class OperationRecordHandler(object):
         """
         统一处理扫描方案模板操作相关记录，默认scenario_key为 "schemetemplate_%d" % schemetemplate.id
         """
-        add_operation_record("schemetemplate%d" % schemetemplate.id, action, username, message)
+        add_operation_record("schemetemplate_%d" % schemetemplate.id, action, username, message)
 
     @classmethod
     def add_checktool_operation_record(cls, checktool, action, username, message=None):

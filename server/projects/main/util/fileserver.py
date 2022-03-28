@@ -47,7 +47,7 @@ class FileServer(object):
         self._server_url = server_conf["URL"]
         self._server_token = server_conf["TOKEN"]
         self._type_prefix = server_conf["TYPE_PREFIX"]
-        self._headers = {'Authorization': 'Token %s' % self._server_token}
+        self._headers = {"Authorization": "Token %s" % self._server_token}
 
     @classmethod
     def get_data_md5(cls, data):
@@ -86,7 +86,7 @@ class FileServer(object):
             file_url = urllib.parse.urljoin(self._server_url, "%s_%s/unnamed/%s.file" % (
                 self._type_prefix, self.TypeEnum.TEMPORARY, uuid.uuid1().hex))
         headers = copy.copy(self._headers)
-        headers.update({"Content-SHA256": self.get_data_sha256(data), "Content-MD5": self.get_data_md5(data)})
+        headers.update({"Content-SHA256": self.get_data_sha256(data)})
         rsp = self._http_client.put(file_url, data=data, headers=headers)
         if rsp.status == self.OK_STATUS:
             return file_url
@@ -101,7 +101,7 @@ class FileServer(object):
         if rsp.status == self.OK_STATUS:
             return rsp.data
         else:
-            logger.error('return code %d when get file %s' % (rsp.status, file_url))
+            logger.error('return code %d when get file %s, content: %s' % (rsp.status, file_url, rsp.data))
             raise ServerError(errcode.E_SERVER, 'return code %d when get file %s' % (rsp.status, file_url))
 
     def delete_file(self, file_url):

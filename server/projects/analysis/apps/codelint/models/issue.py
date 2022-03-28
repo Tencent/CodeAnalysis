@@ -8,6 +8,7 @@
 """codeLint的db模块
 """
 
+import json
 import uuid
 
 from django.core.cache import cache
@@ -33,6 +34,34 @@ class LintScan(models.Model):
     scan_summary = models.TextField(verbose_name="本次扫描总结报告", blank=True, null=True)
     total_summary = models.TextField(verbose_name="累计总结报告", blank=True, null=True)
 
+    @property
+    def active_severity_detail_dict(self):
+        return json.loads(self.active_severity_detail or "{}")
+
+    @property
+    def active_category_detail_dict(self):
+        return json.loads(self.active_category_detail or "{}")
+
+    @property
+    def total_state_detail_dict(self):
+        return json.loads(self.total_state_detail or "{}")
+
+    @property
+    def total_severity_detail_dict(self):
+        return json.loads(self.total_severity_detail or "{}")
+
+    @property
+    def total_category_detail_dict(self):
+        return json.loads(self.total_category_detail or "{}")
+
+    @property
+    def scan_summary_dict(self):
+        return json.loads(self.scan_summary or "{}")
+
+    @property
+    def total_summary_dict(self):
+        return json.loads(self.total_summary or "{}")
+
 
 class CheckToolScan(models.Model):
     """代码扫描 - 工具数据
@@ -48,6 +77,22 @@ class CheckToolScan(models.Model):
 
     class Meta:
         unique_together = ("scan", "name")
+
+    @property
+    def active_severity_detail_dict(self):
+        return json.loads(self.active_severity_detail or "{}")
+
+    @property
+    def total_state_detail_dict(self):
+        return json.loads(self.total_state_detail or "{}")
+
+    @property
+    def total_severity_detail_dict(self):
+        return json.loads(self.total_severity_detail or "{}")
+
+    @property
+    def author_issue_detail_dict(self):
+        return json.loads(self.author_issue_detail or "{}")
 
 
 class Issue(CDBaseModel):
@@ -215,6 +260,7 @@ class Issue(CDBaseModel):
 
 
 class IssueComment(models.Model):
+    project_id = models.IntegerField(verbose_name="项目编号", null=True, blank=True)
     issue_id = models.IntegerField(verbose_name="issue编号，不使用外键，以防止被删除后无记录")
     issue_hash = models.CharField(max_length=128, verbose_name="问题标记值", db_index=True, blank=True, null=True)
     action = models.CharField(max_length=128, verbose_name="执行操作")
@@ -242,7 +288,8 @@ class BaseIgnoreIssue(CDBaseModel):
     )
 
     SCOPEENUM_CHOICES_DICT = dict(SCOPEENUM_CHOICES)
-    issue = models.ForeignKey(Issue, verbose_name="关联issue", on_delete=models.SET_NULL, blank=True, null=True)
+    issue = models.ForeignKey(Issue, verbose_name="关联issue", on_delete=models.SET_NULL,
+                              blank=True, null=True, db_constraint=False)
     issue_hash = models.CharField(max_length=128, verbose_name="问题标记值", db_index=True, blank=True, null=True)
     g_issue_hash = models.CharField(max_length=128, verbose_name="全局hash值", blank=True, null=True)
     project = models.ForeignKey(Project, on_delete=models.SET_NULL, blank=True, null=True)
@@ -296,6 +343,7 @@ class IssueDetail(CDBaseModel):
 class IssueRefer(CDBaseModel):
     """Issue的参考信息，issue产生的路径
     """
+    project_id = models.IntegerField(verbose_name="项目编号", null=True, blank=True)
     issuedetail_uuid = models.UUIDField(verbose_name="issuedetail uuid hex", null=True, db_index=True)
     issue_hash = models.CharField(db_index=True, max_length=40, verbose_name="hash值", null=True)
     file_path = models.CharField(verbose_name="产生issue的文件路径", max_length=512)

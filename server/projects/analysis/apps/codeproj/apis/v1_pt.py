@@ -33,6 +33,18 @@ class PTProjectScanListCreateApiView(v1.ProjectScanListCreateApiView, ProjectTea
     """
 
 
+class PTProjectScanResultDetailApiView(v1.ProjectScanResultDetailApiView, ProjectTeamBaseAPIView):
+    """项目扫描结果详情接口
+    使用对象：服务内部
+
+    ### Get
+    应用场景：获取Scan详情，包括关联的各个功能模块的Scan信息
+
+    ### put
+    应用场景：任务完成后，将任务执行结果保存到扫描中
+    """
+
+
 class PTProjectOverviewApiView(v1.ProjectOverviewApiView, ProjectTeamBaseAPIView):
     """项目扫描概览接口
 

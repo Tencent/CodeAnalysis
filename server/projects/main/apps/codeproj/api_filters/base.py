@@ -17,11 +17,24 @@ from django_filters import rest_framework as filters
 
 # 项目内
 from apps.codeproj import models
-from apps.authen.core.usermgr import CodeDogUserManager
-
 from util.scm import ScmClient
 
 logger = logging.getLogger(__name__)
+
+
+class ProjectTeamFilter(filters.FilterSet):
+    """项目组筛选项
+
+    ```python
+    display_name: str, 项目显示名称, 包含
+    status: int, 项目状态
+    ```
+    """
+    display_name = filters.CharFilter(help_text="项目显示名称", lookup_expr="icontains")
+
+    class Meta:
+        model = models.ProjectTeam
+        fields = ["status", "display_name"]
 
 
 class ApiProjectFilter(filters.FilterSet):
@@ -47,14 +60,14 @@ class ApiProjectFilter(filters.FilterSet):
         """
         if "svn" in value:
             svn_client = ScmClient(models.Repository.ScmTypeEnum.SVN, value,
-                                   models.Repository.ScmAuthTypeEnum.PASSWORD)
+                                   models.ScmAuth.ScmAuthTypeEnum.PASSWORD)
             git_client = ScmClient(models.Repository.ScmTypeEnum.GIT, value,
-                                   models.Repository.ScmAuthTypeEnum.PASSWORD)
+                                   models.ScmAuth.ScmAuthTypeEnum.PASSWORD)
             return queryset.filter(repo__scm_url__in=[git_client.get_repository(), svn_client.get_repository()],
                                    branch__in=[git_client.branch, svn_client.branch])
         else:
             git_client = ScmClient(models.Repository.ScmTypeEnum.GIT, value,
-                                   models.Repository.ScmAuthTypeEnum.PASSWORD)
+                                   models.ScmAuth.ScmAuthTypeEnum.PASSWORD)
             queryset = queryset.filter(repo__scm_url=git_client.get_repository(), branch=git_client.branch)
             return queryset
 
@@ -62,30 +75,15 @@ class ApiProjectFilter(filters.FilterSet):
         """项目代码库地址筛选
         """
         git_client = ScmClient(models.Repository.ScmTypeEnum.GIT, value,
-                               models.Repository.ScmAuthTypeEnum.PASSWORD)
+                               models.ScmAuth.ScmAuthTypeEnum.PASSWORD)
         svn_client = ScmClient(models.Repository.ScmTypeEnum.SVN, value,
-                               models.Repository.ScmAuthTypeEnum.PASSWORD)
+                               models.ScmAuth.ScmAuthTypeEnum.PASSWORD)
         return queryset.filter(repo__scm_url__in=[git_client.get_repository(), svn_client.get_repository()])
 
     class Meta:
         model = models.Project
         fields = ["scm_url", "scm_url__exact", "scan_scheme__name", "scan_scheme__default_flag",
                   "scan_scheme_id", "branch", "created_time__gte", "created_time__lte"]
-
-
-class ProjectTeamFilter(filters.FilterSet):
-    """项目组筛选项
-
-    ```python
-    display_name: str, 项目显示名称, 包含
-    status: int, 项目状态
-    ```
-    """
-    display_name = filters.CharFilter(help_text="项目显示名称", lookup_expr="icontains")
-
-    class Meta:
-        model = models.ProjectTeam
-        fields = ["status", "display_name"]
 
 
 class ScanSchemeFilter(filters.FilterSet):

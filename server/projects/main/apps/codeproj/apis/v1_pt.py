@@ -16,13 +16,14 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import generics
 
 # 项目内 import
-from apps.codeproj import models, core
-from apps.codeproj.apis import v1, v3
-from apps.codeproj.apimixins import ProjectTeamBaseAPIView
-from apps.codeproj.serializers import v3 as v3_serializers
-from apps.codeproj.api_filters import v3 as v3_filters
-from apps.codeproj import permissions
+from apps.authen.backends import TCANodeTokenBackend
 from apps.base.apimixins import CustomSerilizerMixin
+from apps.codeproj import core, models
+from apps.codeproj import permissions
+from apps.codeproj.api_filters import v3 as v3_filters
+from apps.codeproj.apimixins import ProjectTeamBaseAPIView
+from apps.codeproj.apis import v1, v3
+from apps.codeproj.serializers import v3 as v3_serializers
 
 logger = logging.getLogger(__name__)
 
@@ -59,7 +60,7 @@ class PTRepoDetailAPIView(v3.RepositoryDetailApiView):
     """
 
 
-class PTRepositorySchemeInfoApiView(v1.RepositorySchemesInfoApiView):
+class PTRepositorySchemeInfoAPIView(v1.RepositorySchemesInfoApiView):
     """查询指定代码指定扫描方案是否存在
 
     ### get
@@ -102,7 +103,7 @@ class PTRepoBranchListAPIView(v1.RepoBranchListApiView, ProjectTeamBaseAPIView):
     permission_classes = [permissions.RepositoryDefaultPermission]
 
 
-class PTProjectScanDetailApiView(v1.ProjectScanDetailApiView, ProjectTeamBaseAPIView):
+class PTProjectScanDetailAPIView(v1.ProjectScanDetailApiView, ProjectTeamBaseAPIView):
     """项目指定扫描详情接口
     使用对象：节点
 
@@ -130,6 +131,15 @@ class PTProjectListCreateView(v1.ProjectListCreateView, ProjectTeamBaseAPIView):
         org = models.Organization.objects.get(org_sid=self.kwargs["org_sid"])
         pt = models.ProjectTeam.objects.get(name=self.kwargs["team_name"], organization=org)
         return models.Project.objects.filter(repo__organization=org, repo__project_team=pt)
+
+
+class PTProjectScanSchemeDetailApiView(v1.ProjectScanSchemeDetailApiView, ProjectTeamBaseAPIView):
+    """项目扫描方案详情接口
+
+    ### Get
+    应用场景：获取项目扫描方案详情
+    """
+    permission_classes = [permissions.ProjectTeamOperationPermission]
 
 
 class PTProjectListAPIView(v3.ProjectListApiView):
@@ -220,13 +230,14 @@ class PTScanSchemeDirDetailAPIView(v3.ScanSchemeDirDetailApiView):
     """
 
 
-class PTAnalyseServerProxyApi(v1.AnalyseServerProxyApi):
+class PTAnalyseServerProxyAPIView(v1.AnalyseServerProxyApi):
     """转发到Analyse Server的Api接口，具体文档请查看Analyse Server域名下相同的url文档
     """
     permission_classes = [permissions.RepositoryDefaultPermission]
+    authentication_classes = [TCANodeTokenBackend]
 
 
-class PTProjectScanSchemeDefaultScanPathListApiView(v1.ProjectScanSchemeDefaultScanPathListApiView):
+class PTProjectScanSchemeDefaultScanPathListAPIView(v1.ProjectScanSchemeDefaultScanPathListApiView):
     """
     使用对象：节点
 
@@ -235,7 +246,16 @@ class PTProjectScanSchemeDefaultScanPathListApiView(v1.ProjectScanSchemeDefaultS
     """
 
 
-class PTProjectScanJobConfApiView(v1.ProjectScanJobConfApiView, ProjectTeamBaseAPIView):
+class PTProjectConfAPIView(v1.ProjectConfApiView, ProjectTeamBaseAPIView):
+    """项目扫描配置接口
+    使用对象：节点
+
+    ### Get
+    应用场景：获取项目的代码功能配置
+    """
+
+
+class PTProjectScanJobConfAPIView(v1.ProjectScanJobConfApiView, ProjectTeamBaseAPIView):
     """获取项目扫描配置
     使用对象：节点
 
@@ -289,5 +309,14 @@ class PTProjectScanJobConfApiView(v1.ProjectScanJobConfApiView, ProjectTeamBaseA
     job_context中scm_revision, scm_url, scan_type为必填。
 
     scan_type: 扫描类型,仅作扫描标识处理.**1增量扫描，2全量扫描，3合流任务
+    """
+    permission_classes = [permissions.RepositoryDefaultPermission]
+
+
+class PTProjectScanCreateAPIView(v3.ProjectScanCreateApiView, ProjectTeamBaseAPIView):
+    """项目创建扫描接口
+
+    ### POST
+    应用场景：启动一次项目的扫描任务
     """
     permission_classes = [permissions.RepositoryDefaultPermission]

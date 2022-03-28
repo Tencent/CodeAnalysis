@@ -6,18 +6,15 @@
 # ==============================================================================
 
 """
-v1 接口定义，供节点端、服务内部、外界调用
+v2 api 接口url定义，v2系列接口均供前端页面调用
 """
-
 # 第三方 import
 from django.urls import path
 
 # 项目内 import
-from apps.job.apis import v1_tiyan
+from apps.job.apis import base as apis
 
-# 前缀 /api/projects/<project_id>/jobs/
+# 前缀 /api/v2/jobs/
 urlpatterns = [
-    # 服务内部专用
-    path("<int:job_id>/", v1_tiyan.ProjectJobApiView.as_view(),
-         name="apiv1_project_job_detail"),
+    path("", apis.JobsApiView.as_view(), name="apiv2_job_list"),
 ]
