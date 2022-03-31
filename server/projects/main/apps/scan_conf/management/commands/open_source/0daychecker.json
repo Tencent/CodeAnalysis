@@ -1,0 +1,58 @@
+[
+    {
+        "name": "codedog_0Day_checker",
+        "display_name": "0DayChecker",
+        "description": "用于0day漏洞的依赖组件检查\n可以添加自定义规则规则参数格式如下\n{ \"name\": \"组建名称\", \"version\": \"组件安全版本号，小于该版本号的会报错\" }",
+        "license": "自研",
+        "libscheme_set": [],
+        "task_processes": [
+            "analyze",
+            "datahandle"
+        ],
+        "scan_app": "codelint",
+        "scm_url": "codedog_0Day_checker",
+        "run_cmd": "./main.bin",
+        "envs": null,
+        "build_flag": false,
+        "checkrule_set": [
+            {
+                "real_name": "log4j",
+                "display_name": "log4j 0day漏洞",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "log4j 0day漏洞",
+                "rule_params": "{\"name\": \"apache.logging.log4j:log4j-core\", \"version\": \"2.17.0\"}",
+                "custom": false,
+                "languages": [
+                    "java"
+                ],
+                "solution": "升级至2.17.0及以上，建议升级至2.17.0及以上版本",
+                "owner": "",
+                "labels": [],
+                "description": "12月9日，腾讯安全应急响应中心（TSRC）监测到外部曝光Apache Log4j2任意代码执行严重漏洞。\n\n经安平紧急评估确认，该组件存在Java JNDI注入漏洞，当程序使用Log4j2对恶意数据（如用户信息、访问请求等）进行日志处理时（如打印、记录），即会触发漏洞，该漏洞可导致业务服务器、用户客户端被黑客入侵控制。\n\nPS：一个视频告诉你 Apache Log4j2漏洞是什么？ https://www.bilibili.com/video/BV1FL411E7g3",
+                "disable": false
+            },
+            {
+                "real_name": "logback_cve_2021_42550",
+                "display_name": "LogBack漏洞",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "LogBack RCE漏洞",
+                "rule_params": "{\"name\": \"ch.qos.logback:logback-core\", \"version\": \"1.2.9\"}",
+                "custom": false,
+                "languages": [
+                    "java"
+                ],
+                "solution": "升级到1.2.9以上版本",
+                "owner": "",
+                "labels": [],
+                "description": "漏洞详情可以看：https://logback.qos.ch/news.html\nCVE详情：https://cve.report/CVE-2021-42550",
+                "disable": false
+            }
+        ],
+        "open_user": true,
+        "open_saas": false,
+        "virtual_name": "0DayChecker",
+        "show_display_name": false
+    }
+]

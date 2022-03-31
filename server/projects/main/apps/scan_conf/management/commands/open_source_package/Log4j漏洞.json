@@ -38,6 +38,13 @@
                 "severity": "error",
                 "rule_params": null,
                 "state": "disabled"
+            },
+            {
+                "checktool": "codedog_0Day_checker",
+                "checkrule": "log4j",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
             }
         ],
         "open_saas": false,

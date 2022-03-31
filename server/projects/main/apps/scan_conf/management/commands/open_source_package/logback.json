@@ -1,0 +1,25 @@
+[
+    {
+        "name": "Logback漏洞",
+        "description": "针对Logback 1.2.9版本以下爆出的CVE-2021-42550漏洞检查。",
+        "revision": null,
+        "package_type": "official",
+        "languages": [
+            "java"
+        ],
+        "labels": [
+            "安全"
+        ],
+        "checkrule_set": [
+            {
+                "checktool": "codedog_0Day_checker",
+                "checkrule": "logback_cve_2021_42550",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            }
+        ],
+        "open_saas": false,
+        "envs": null
+    }
+]
