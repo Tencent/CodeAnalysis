@@ -71,24 +71,21 @@
 
 #### Web 部署步骤
 
-1. 进入web服务目录，并切换至`tca-deploy-source`目录，将其视为工作目录（假设工作目录为 `/data/CodeAnalysis/web/tca-deploy-source`）
+1. **进入前端部署源码目录**
+  
+    进入web服务目录，并切换至`tca-deploy-source`目录，将其视为工作目录（假设工作目录为 `/data/CodeAnalysis/web/tca-deploy-source`）
 
-2. 方式一：执行`sh init.sh -d`即可：设置默认的环境变量，安装前端资源，配置 hosts、nginx 等，启动 nginx 服务
+2. **部署/更新前端服务**
 
-    方式二：先执行`source config.sh`设置环境变量，再执行`sh init.sh`
+    ```bash
+    # 部署、更新都使用此命令
+    sh ./scripts/deploy.sh init -d
+    ```
 
-3. 如果需要对默认环境变量进行调整，可`vi config.sh`文件，再执行步骤2
+    具体请查阅部署脚本内容，可根据业务调整配置。
 
-> 注：以下是 `init.sh` 环境变量配置。如不按照步骤2执行，可人工 `export 相关环境变量` 后再执行 `init.sh`
+3. **额外说明**
 
-|                      Name | 说明                                                      |
-| ------------------------: | :-------------------------------------------------------- |
-|                SERVER_ENV | 访问的后端地址，必填项                                    |
-|       INGRESS_SERVER_NAME | ingress 配置的服务名称，默认 tca.tencent.com              |
-|              INGRESS_PORT | ingress 配置的端口，默认 80                               |
-
-#### 前端其他update、reset操作
-请查阅[前端部署文档](../web/tca-deploy-source/README.md)
-
+    `tca-deploy-source/scripts/config.sh` 已配置默认环境变量，用户可根据需要调整环境变量再部署前端服务，具体可查阅脚本内容。
 
 **详细Q&A文档可以查阅[TCA使用常见问题](https://github.com/Tencent/CodeAnalysis/blob/main/doc/Q%26A.md)**

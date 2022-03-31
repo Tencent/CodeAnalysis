@@ -10,72 +10,19 @@
 
 ## 部署步骤
 
-1. clone 到服务器合适位置，建议/data 目录下，并进入该库根目录下。
+1. **进入前端部署源码目录**
+  
+    进入web服务目录，并切换至`tca-deploy-source`目录，将其视为工作目录（假设工作目录为 `/data/CodeAnalysis/web/tca-deploy-source`）
 
-2. 方式一：执行`sh init.sh -d`即可：设置默认的环境变量，安装前端资源，配置 hosts、nginx 等，启动 nginx 服务
-
-    方式二：先执行`source config.sh`设置环境变量，再执行`sh init.sh`
-
-3. 如果需要对默认环境变量进行调整，可`vi config.sh`文件，再执行步骤2
-
-> 注：以下是 `init.sh` 环境变量配置。如不按照步骤2执行，可人工 `export 相关环境变量` 后再执行 `init.sh`
-
-|                      Name | 说明                                                      |
-| ------------------------: | :-------------------------------------------------------- |
-|                SERVER_ENV | 访问的后端地址，必填项                                    |
-|       INGRESS_SERVER_NAME | ingress 配置的服务名称，默认 tca.tencent.com              |
-|              INGRESS_PORT | ingress 配置的端口，默认 80                               |
-
-## 其他
-
-### 重新部署前端
-
-1. 方式一：`sh reset.sh -d`
-
-2. 方式二：先执行`source config.sh`，再执行 `sh reset.sh`
-
-### 更新前端
-
-1. pull 最新代码
-
-2. 方式一：直接执行 `sh update.sh param` 即可
-
-    其中 `param` 可以是 `all` `framework` `layout` `login` `analysis` `manage` `document` 其中的一个或多个，代表更新不同的模块，多个用`,`分隔，
+2. **部署/更新前端服务**
 
     ```bash
-    # 如更新全部
-    sh update.sh all
-
-    # 如更新layout前端、帮助文档前端
-    sh update.sh layout,document
-
-    # 如更新layout前端、analysis前端
-    sh update.sh layout,analysis
+    # 部署、更新都使用此命令
+    sh ./scripts/deploy.sh init -d
     ```
 
-    方式二：先人工 `export 相关环境变量` 后再执行 `sh update.sh`
+    具体请查阅部署脚本内容，可根据业务调整配置。
 
-    ```bash
-    # 如更新全部
-    export UPDATE_All=TRUE
-    sh update.sh
+3. **额外说明**
 
-    # 如仅更新layout前端
-    export UPDATE_LAYOUT=TRUE
-    ```
-
-> 注：以下是更新前端的环境变量配置，用于方式二。
-
-|            Name | 说明                 |
-| --------------: | :------------------- |
-|      UPDATE_ALL | 全部更新             |
-|     UPDATE_FRAMEWORK | 更新 framework 基座     |
-|   UPDATE_LAYOUT | 更新 tca-layout 微前端   |
-|    UPDATE_LOGIN | 更新 login 微前端    |
-| UPDATE_ANALYSIS | 更新 tca-analysis 微前端 |
-| UPDATE_MANAGE | 更新 tca-manage 微前端 |
-|     UPDATE_DOCUMENT | 更新 tca-document     |
-
-### 停止服务
-
-`nginx -s stop`
+    `tca-deploy-source/scripts/config.sh` 已配置默认环境变量，用户可根据需要调整环境变量再部署前端服务，具体可查阅脚本内容。
