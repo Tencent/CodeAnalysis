@@ -46,4 +46,5 @@ b. 在命令行中执行安装脚本`install.sh`(linux/mac环境)或`install.bat
 ## 5. 启动一次代码分析
 
 进入到`client`目录下，执行命令：`python3 codepuppy.py localscan`  
-注：步骤4中codedog.ini各项参数可由命令行传入，获取详细参数说明可运行`python3 codepuppy.py localscan -h`。
+注：步骤4中codedog.ini各项参数可由命令行传入，获取详细参数说明可运行`python3 codepuppy.py localscan -h`。  
+使用`localscan`命令启动本地单次的代码分析，如需启动分布式并行分析任务，请参考[使用分布式节点模式](../client/README.md#五使用分布式节点模式执行客户端)进行配置。
