@@ -2,12 +2,12 @@
 
 ## 1. 安装Python环境和第三方库
 
-a. 预装Python3.7、pip，支持 `python3` 和 `pip3` 命令
-b. 在本地源码目录下安装依赖：`pip3 install -r client/requirements/app_reqs.pip`
+a. 预装Python3.7、pip，支持 `python3` 和 `pip3` 命令  
+b. 在本地源码目录下安装依赖：`pip3 install -r client/requirements/app_reqs.pip`  
 
 ## 2. 安装第三方工具
 
-a. 进入到`client/requirements`目录
+a. 进入到`client/requirements`目录  
 b. 在命令行中执行安装脚本`install.sh`(linux/mac环境)或`install.bat`(windows环境)
 
 ## 3. 配置client/config.ini文件
@@ -46,5 +46,7 @@ b. 在命令行中执行安装脚本`install.sh`(linux/mac环境)或`install.bat
 ## 5. 启动一次代码分析
 
 进入到`client`目录下，执行命令：`python3 codepuppy.py localscan`  
-注：步骤4中codedog.ini各项参数可由命令行传入，获取详细参数说明可运行`python3 codepuppy.py localscan -h`。  
-使用`localscan`命令启动本地单次的代码分析，如需启动分布式并行分析任务，请参考[使用分布式节点模式](../client/README.md#五使用分布式节点模式执行客户端)进行配置。
+>说明：
+>- 步骤4中codedog.ini各项参数可由命令行传入，获取详细参数说明可运行`python3 codepuppy.py localscan -h`。  
+>- client的实现及启动脚本均依赖Python3版本为3.7及以上，可执行``python3 --version``查看版本。若版本较低，可安装版本为3.7及以上的python并软链接到python3命令。  
+>- 使用`localscan`命令启动本地单次的代码分析，如需启动分布式并行分析任务，请参考[使用分布式节点模式](../client/README.md#五使用分布式节点模式执行客户端)进行配置。
