@@ -62,6 +62,8 @@ TEMP_PTP_DIR = join(DATA_DIR, 'temp_ptp')
 CACHE_FILE = join(DATA_DIR, "cache.json")
 # PUPPY所需的第三方工具目录
 LIB_BASE_DIR = join(BASE_DIR, 'lib')
+# TCA平台根目录
+TCA_BASE_DIR = join(BASE_DIR, "..")
 
 
 #========================
@@ -100,9 +102,9 @@ TASK_RETAIN_TIME = timedelta(days=7)
 # 默认从Git拉取工具；如果使用本地工具，可以在config.ini中配置该值为True，将不自动拉取内置工具和配置文件
 USE_LOCAL_TOOL = False
 # 默认的工具目录，即puppy根目录下的data/tools目录
-DEFAULT_TOOL_BASE_DIR = join(BASE_DIR, "data/tools")
+DEFAULT_TOOL_BASE_DIR = join(TCA_BASE_DIR, "tools")
 # 扫描工具目录
-TOOL_BASE_DIR = join(DATA_DIR, "tools")
+TOOL_BASE_DIR = join(TCA_BASE_DIR, "tools")
 # 扫描工具配置文件地址，需要在config.ini中配置
 TOOL_CONFIG_URL = ""
 
