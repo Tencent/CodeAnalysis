@@ -17,9 +17,7 @@ ACTION=${1:-'$1'}
 PARAMS=${2:-'$1'}
 
 if [ "$ACTION" == "init" ]; then
-  sh $WORK_PATH/init.sh $PARAMS
-elif [ "$ACTION" == "clear-old" ]; then
-  sh $WORK_PATH/clear-old.sh
+  bash $WORK_PATH/init.sh $PARAMS
 else
   LOG_WARN "$ACTION 参数无效"
   exit 1
