@@ -36,9 +36,10 @@ services:
   main-server:
     env_file:
       - ./server/dockerconfs/.env.local
+    image: tca-main:latest
     build:
       context: ./server/projects/main
-      dockerfile: ../../dockerconfs/Dockerfile-common # 相对于main目录的位置
+      dockerfile: ../../dockerconfs/Dockerfile-common-${ORIGIN:-mirror}
     command:
       [
         "gunicorn",
@@ -57,9 +58,7 @@ services:
   main-worker:
     env_file:
       - ./server/dockerconfs/.env.local
-    build:
-      context: ./server/projects/main
-      dockerfile: ../../dockerconfs/Dockerfile-common
+    image: tca-main:latest
     command:
       [
         "celery",
@@ -79,9 +78,7 @@ services:
   main-beat:
     env_file:
       - ./server/dockerconfs/.env.local
-    build:
-      context: ./server/projects/main
-      dockerfile: ../../dockerconfs/Dockerfile-common
+    image: tca-main:latest
     command:
       [
         "celery",
@@ -102,9 +99,10 @@ services:
   analysis-server:
     env_file:
       - ./server/dockerconfs/.env.local
+    image: tca-analysis:latest
     build:
       context: ./server/projects/analysis
-      dockerfile: ../../dockerconfs/Dockerfile-common
+      dockerfile: ../../dockerconfs/Dockerfile-common-${ORIGIN:-mirror}
     command:
       [
         "gunicorn",
@@ -123,9 +121,7 @@ services:
   analysis-worker:
     env_file:
       - ./server/dockerconfs/.env.local
-    build:
-      context: ./server/projects/analysis
-      dockerfile: ../../dockerconfs/Dockerfile-common
+    image: tca-analysis:latest
     command:
       [
         "celery",
@@ -147,7 +143,7 @@ services:
       - ./server/dockerconfs/.env.local
     build:
       context: ./server/projects/login
-      dockerfile: ../../dockerconfs/Dockerfile-common
+      dockerfile: ../../dockerconfs/Dockerfile-common-${ORIGIN:-mirror}
     command:
       [
         "gunicorn",
@@ -167,7 +163,7 @@ services:
       - ./server/dockerconfs/.env.local
     build:
       context: ./server/projects/file
-      dockerfile: ../../dockerconfs/Dockerfile-common
+      dockerfile: ../../dockerconfs/Dockerfile-common-${ORIGIN:-mirror}
     command:
       [
         "gunicorn",
@@ -182,19 +178,28 @@ services:
       - "8804"
     depends_on:
       - mysql
+  
+  file-nginx:
+    image: nginx:1.13.7
+    volumes:
+      - ./server/configs/nginx/tca_file_local_compose.conf:/etc/nginx/conf.d/tca_file_local_compose.conf
+    expose:
+      - "8004"
+    depends_on:
+      - file-server
 
   scmproxy:
     env_file:
       - ./server/dockerconfs/.env.local
     build:
       context: ./server/projects/scmproxy
-      dockerfile: ../../dockerconfs/Dockerfile-common # 相对于scmproxy目录的位置
+      dockerfile: ../../dockerconfs/Dockerfile-common-${ORIGIN:-mirror}
     command: [ "python", "proxyserver.py" ]
 
   nginx:
     build:
       context: ./web/tca-deploy-source
-      dockerfile: ../../server/dockerconfs/Dockerfile-nginx
+      dockerfile: ../../server/dockerconfs/Dockerfile-nginx-${ORIGIN:-mirror}
     env_file:
       - ./web/tca-deploy-source/docker_conf/.env
     volumes:

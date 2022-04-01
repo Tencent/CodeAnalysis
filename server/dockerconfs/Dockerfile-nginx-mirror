@@ -1,0 +1,8 @@
+FROM nginx:1.13.7
+
+RUN mv /etc/apt/sources.list /etc/apt/sources.list.bak && \
+    echo 'deb http://mirrors.tencent.com/debian/ stretch main' > /etc/apt/sources.list && \
+    echo 'deb http://mirrors.tencent.com/debian/ stretch-updates main' >> /etc/apt/sources.list && \
+    echo 'deb http://nginx.org/packages/mainline/debian/ stretch nginx' >> /etc/apt/sources.list
+
+RUN apt-get update && apt-get install -y unzip procps && rm /etc/nginx/conf.d/default.conf
