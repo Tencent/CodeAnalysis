@@ -1,7 +1,7 @@
 # 如果需要在ARM架构上运行，可以将第一个 FROM指令 进行注释，然后将第二个 FROM指令 取消注释
-# FROM python:3.7.12-slim
+FROM python:3.7.12-slim
 # For ARM
-FROM arm64v8/python:3.7.12-slim
+# FROM arm64v8/python:3.7.12-slim
 
 RUN mv /etc/apt/sources.list /etc/apt/sources.list.bak && \
     echo 'deb http://mirrors.tencent.com/debian/ bullseye main non-free contrib' > /etc/apt/sources.list && \
