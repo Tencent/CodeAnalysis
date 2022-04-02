@@ -158,7 +158,7 @@ class JobCloseHandler(object):
             "state": models.Job.StateEnum.RUNNING,
         }
         try:
-            AnalyseClient(job.project).api("update_scan", data, path_params=(job.project_id, job.scan_id,))
+            AnalyseClient().api("update_scan", data, path_params=(job.project_id, job.scan_id,))
         except Exception as err:
             logger.exception("[Job: %s] 更新扫描任务状态失败: %s" % (job_id, err))
             return
