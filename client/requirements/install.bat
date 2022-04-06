@@ -4,7 +4,7 @@ SETLOCAL
 
 CD %~dp0
 SET PWD=%CD%
-SET TOOLS_DIR="%PWD%\..\data\tools"
+SET TOOLS_DIR="%PWD%\..\..\tools"
 SET "dnld=bitsadmin /transfer myDownloadJob /download /priority normal"
 
 @REM ECHO install cppcheck
