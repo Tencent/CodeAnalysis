@@ -15,4 +15,5 @@ from apps.base import apis
 
 urlpatterns = [
     path("", apis.BaseApiView.as_view(), name="api_base_view"),
+    path("healthcheck/", apis.HealthCheckAPIVIew.as_view(), name="sever_health_check"),
 ]
