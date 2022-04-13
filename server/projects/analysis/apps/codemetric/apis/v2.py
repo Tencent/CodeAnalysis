@@ -437,6 +437,7 @@ class ClocFileListView(generics.ListAPIView, ProjectBaseAPIView):
     """
     filter_backends = (DjangoFilterBackend,)
     filterset_class = filters.MetricClocFileFilterSet
+    serializer_class = serializers.ClocFileSerializer
 
     def get_queryset(self):
         self.get_project()
@@ -449,6 +450,8 @@ class ClocFileDetailView(generics.RetrieveAPIView, ProjectBaseAPIView):
     ### GET
     应用场景：获取指定文件编号的统计信息
     """
+
+    serializer_class = serializers.ClocFileSerializer
 
     def get_queryset(self):
         self.get_project()
@@ -499,6 +502,8 @@ class ClocLanguageListView(generics.ListAPIView, ProjectBaseAPIView):
     ### GET
     应用场景：获取项目各个语言的行数信息
     """
+
+    serializer_class = serializers.ClocLanguageSerializer
 
     def get_queryset(self):
         self.get_project()
