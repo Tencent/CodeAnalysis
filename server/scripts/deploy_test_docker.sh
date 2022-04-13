@@ -6,10 +6,10 @@ echo "start detect every dependcy for tca server"
 
 # 检验磁盘空间
 function diskspace_detect() {
-    echo "make sure have enough disk space"
+    echo "[TCAServerDependcyCheck] *make sure have enough disk space*"
     result=$(du - sh)
     split_result=(${result// / })
-    disk_space="${array[0]}"
+    disk_space="${split_result[0]}"
     if ! [[ $disk_space =~ .*G$ ]]; then
         echo -e "\e[31m❌ your disk space $disk_space is less than 10G; please make sure you have enough space to supprt TCA\e[0m"
         exit -1
@@ -24,7 +24,7 @@ function diskspace_detect() {
 
 # 检验内存
 function memory_detect() {
-    echo "make sure have enough memory"
+    echo "[TCAServerDependcyCheck] *make sure have enough memory*"
     result=$(free)
     split_result=(${result// / })
     memory_avaliable=${split_result[12]}  # 可用内存在切分后的数组中的第13处
@@ -38,6 +38,7 @@ function memory_detect() {
 
 # 镜像下载源检测
 function network_detect() {
+    echo "[TCAServerDependcyCheck] *make sure docker download source is avaliable*"
     timeout_time=60
     # 监测镜像源网络状态
     starttime=`date +'%Y-%m-%d %H:%M:%S'`
@@ -48,12 +49,13 @@ function network_detect() {
     running_time=$((end_seconds-start_seconds))
     if [[ $running_time > $timeout ]]; then
         echo -e "\e[31m❌ docker pull mysql timed out, please check your network or docker image download source\e[0m"
+        exit -1
     fi
 }
 
 # 检验docker是否安装
 function docker_command_detect() {
-    echo "make sure command docker exist"
+    echo "[TCAServerDependcyCheck] *make sure command docker exist*"
     if ! command -v docker &> /dev/null
     then
         echo -e "\e[31m❌ command docker not found, please install docker first then start TCA\e[0m"
@@ -63,7 +65,7 @@ function docker_command_detect() {
 
 # 检验docker-compose是否安装
 function dockercompose_command_detect() {
-    echo "make sure command docker-compose exist"
+    echo "[TCAServerDependcyCheck] *make sure command docker-compose exist*"
     if ! command -v docker-compose &> /dev/null
     then
         echo -e "\e[31m❌ command docker-compose not found, please install docker-compose first then start TCA\e[0m"
@@ -73,7 +75,7 @@ function dockercompose_command_detect() {
 
 # 检验docker-compose版本
 func dockercompose_version_detect() {
-    echo "make sure docker-compose have right version"
+    echo "[TCAServerDependcyCheck] *make sure docker-compose have right version*"
     result=$(docker-compose version)
     split_result=(${result//v/ })
     version="${split_result[3]}"

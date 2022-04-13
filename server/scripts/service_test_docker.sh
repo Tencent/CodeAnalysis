@@ -1,7 +1,7 @@
 #!/bin/sh
 # TCA Server服务运行监测脚本（docker-compose启动方式）
 
-echo "start detect status of every service"
+echo "[TCAServerHealthCheck] *start detect status of every service*"
 
 function service_detect_for_dockercompose() {
     array=(codeanalysis_nginx codeanalysis_scmproxy codeanalysis_analysis-worker 
