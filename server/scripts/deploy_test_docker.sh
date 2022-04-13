@@ -2,12 +2,12 @@
 # TCA Server部署监测脚本（docker-compose启动方式）
 # 检测步骤为：可用磁盘/内存检测 -> 镜像下载源检测 -> docker/docker-compose命令检测 -> docker-compose版本检测
 
-echo "start detect every dependcy for tca server"
+echo "start detect every dependcy for tca server..."
 
 # 检验磁盘空间
 function diskspace_detect() {
     echo "[TCAServerDependcyCheck] *make sure have enough disk space*"
-    result=$(du - sh)
+    result=$(du -sh /)
     split_result=(${result// / })
     disk_space="${split_result[0]}"
     if ! [[ $disk_space =~ .*G$ ]]; then
@@ -47,7 +47,7 @@ function network_detect() {
     start_seconds=$(date --date="$starttime" +%s);
     end_seconds=$(date --date="$endtime" +%s);
     running_time=$((end_seconds-start_seconds))
-    if [[ $running_time > $timeout ]]; then
+    if [[ $running_time > $timeout_time ]]; then
         echo -e "\e[31m❌ docker pull mysql timed out, please check your network or docker image download source\e[0m"
         exit -1
     fi
@@ -74,7 +74,7 @@ function dockercompose_command_detect() {
 }
 
 # 检验docker-compose版本
-func dockercompose_version_detect() {
+function dockercompose_version_detect() {
     echo "[TCAServerDependcyCheck] *make sure docker-compose have right version*"
     result=$(docker-compose version)
     split_result=(${result//v/ })

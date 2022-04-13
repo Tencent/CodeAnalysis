@@ -67,7 +67,7 @@ function start_all_services() {
     docker-compose up -d
 }
 
-
+sh $CURRENT_PATH/server/scripts/deploy_test_docker.sh
 start_db
 init_db
 init_file
@@ -75,3 +75,4 @@ init_login
 init_analysis
 init_main
 start_all_services
+sh $CURRENT_PATH/server/scripts/service_test_docker.sh

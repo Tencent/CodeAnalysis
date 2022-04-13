@@ -6,7 +6,7 @@ CURRENT_PATH=$(dirname $(cd "$(dirname "$0")";pwd))
 SERVER_REQUIREMENTS_PATH=$CURRENT_PATH/configs/requirements.txt
 SERVER_CONFIG_PATH=$CURRENT_PATH/scripts/config.sh
 
-echo "start detect every dependcy for tca server"
+echo "start detect every dependcy for tca server..."
 
 # 校验python命令是否存
 function python_command_detect() {
@@ -160,7 +160,7 @@ function network_detect() {
     start_seconds=$(date --date="$starttime" +%s);
     end_seconds=$(date --date="$endtime" +%s);
     running_time=$((end_seconds-start_seconds))
-    if [[ $running_time > $timeout ]]; then
+    if [[ $running_time > $timeout_time ]]; then
         echo -e "\e[31m❌ pip install timed out, please check your network or pip download source\e[0m"
         exit -1
     fi
