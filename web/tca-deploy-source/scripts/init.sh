@@ -15,8 +15,8 @@
 ###########################
 ### 部署/更新web服务
 ### 执行方式：
-### 方式一：直接执行 sh deploy.sh init -d 或 sh init.sh -d 即可
-### 方式二：查阅上述环境变量，先export对应环境变量，再 sh init.sh
+### 方式一：直接执行 bash deploy.sh init -d 或 bash init.sh -d 即可
+### 方式二：查阅上述环境变量，先export对应环境变量，再 bash init.sh
 ###########################
 
 # 获取工作目录路径，绝对路径

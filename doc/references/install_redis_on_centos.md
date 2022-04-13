@@ -9,6 +9,7 @@ CentOS 7.3 版本
 ```bash
 $ yum install redis
 ```
+注：安装redis可能会出现"no package redis available"的错误提示，请执行``yum install epel-release``后重试redis安装命令。
 
 ## 修改redis密码
 ```bash

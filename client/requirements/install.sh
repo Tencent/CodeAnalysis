@@ -1,7 +1,7 @@
 #!/bin/bash
 
 PWD=$(cd "$(dirname "$0")"; pwd)
-TOOLS_DIR="$PWD/../data/tools"
+TOOLS_DIR="$PWD/../../tools"
 # echo $TOOLS_DIR
 OS=`uname -s`
 
