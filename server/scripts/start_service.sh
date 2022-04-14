@@ -49,6 +49,8 @@ analysis_celery_worker_log=$ANALYSIS_PROJECT_PATH/log/analysis_celery.log
 echo "Start configs..."
 source $CURRENT_PATH/scripts/config.sh
 
+sh $CURRENT_PATH/scripts/deploy_test.sh
+
 echo "Stop old server process..."
 killall python
 
@@ -126,3 +128,5 @@ echo "Analysis celery worker log: "$analysis_celery_worker_log
 cd $ANALYSIS_PROJECT_PATH && nohup celery -A codedog worker -l DEBUG --logfile $analysis_celery_worker_log  --pidfile $analysis_celery_worker_pid_file 2>&1 > nohup.out &
 
 echo "Server Log:" $PROJECT_LOG_PATH
+
+sh $CURRENT_PATH/scripts/service_test.sh

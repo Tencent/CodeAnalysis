@@ -16,6 +16,9 @@ from django.conf import settings
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from django.http import HttpResponse
+from rest_framework import status
+from django.contrib.auth.models import User
 
 # 项目内
 from login.core import UserManager
@@ -73,3 +76,20 @@ class UserDetailApiView(APIView):
             userauth.save()
         return Response({"username": userinfo.uid, "nickname": userinfo.nickname,
                          "password": crypto.decrypt(userauth.credential, settings.PASSWORD_KEY)})
+
+
+class HealthCheckAPIVIew(APIView):
+    """服务状态探测接口
+    """
+    schema = None
+    authentication_classes = []
+    permission_classes = []
+
+    def get(self, request):
+        logger.info("[LogInServerHealthCheck] check db connection and orm operation")
+        try:
+            User.objects.all()
+        except Exception as e:
+            logger.info("[LogInServerHealthCheck] check db failed, err msg: %s" % e)
+            return HttpResponse("DB connection or orm raise exception", status=status.HTTP_503_SERVICE_UNAVAILABLE)
+        return HttpResponse("login server status check success", status=status.HTTP_200_OK)
