@@ -1,18 +1,15 @@
-#!/bin/sh
+#!/bin/bash
 # TCA Server服务运行监测脚本
 
 echo "[TCAServerHealthCheck] *start detect status of every service*"
 
-LOCAL_IP=${LOCAL_IP:-"$(ip addr | awk '/^[0-9]+: / {}; /inet.*global/ {print gensub(/(.*)\/(.*)/, "\\1", "g", $2)}')"}
-array=(${LOCAL_IP//\ / })
-LOCAL_IP=${array[0]}
 
 function service_detect() {
-    array=("main" "analysis" "credential" "files")
+    array=("http://0.0.0.0:8000/main" "http://127.0.0.1:8002" "http://127.0.0.1:8003" "http://127.0.0.1:8004")
     for service in ${array[@]}
     do
         timeout=1
-        target="http://$LOCAL_IP/$service/healthcheck/"
+        target="$service/healthcheck/"
         ret_code=$(curl -I -s --connect-timeout ${timeout} ${target} -w %{http_code} | tail -n1)
         if [[ "x$ret_code" == "x200" ]]; then
             echo "service $service health check succeed"

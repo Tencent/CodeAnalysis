@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 CURRENT_PATH=$(dirname $(cd "$(dirname "$0")";pwd))
 PROJECT_TMP_PATH=$CURRENT_PATH/tmp
