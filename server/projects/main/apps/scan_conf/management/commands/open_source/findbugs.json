@@ -66,38 +66,6 @@
         "description": "这个类比可以有效处理的更大，并且没有完全分析错误。\n[参考官方文档](http://findbugs.sourceforge.net/bugDescriptions.html#SKIPPED_CLASS_TOO_BIG)"
       },
       {
-        "real_name": "AVOID_OLD_STYLE_CONNECTIVITY_ACTION",
-        "display_name": "AvoidOldStyleConnectivityAction",
-        "severity": "error",
-        "category": "correctness",
-        "rule_title": "AvoidOldStyleConnectivityAction",
-        "rule_params": "",
-        "custom": true,
-        "languages": [
-          "java"
-        ],
-        "solution": null,
-        "owner": null,
-        "labels": [],
-        "description": "后续补充\n[参考官方文档](http://findbugs.sourceforge.net/bugDescriptions.html#AVOID_OLD_STYLE_CONNECTIVITY_ACTION)"
-      },
-      {
-        "real_name": "AVOID_OLD_STYLE_GETACTIVITYNETWORKINFO",
-        "display_name": "AvoidOldStyleGetactivitynetworkinfo",
-        "severity": "error",
-        "category": "correctness",
-        "rule_title": "AvoidOldStyleGetactivitynetworkinfo",
-        "rule_params": "",
-        "custom": true,
-        "languages": [
-          "java"
-        ],
-        "solution": null,
-        "owner": null,
-        "labels": [],
-        "description": "后续补充\n[参考官方文档](http://findbugs.sourceforge.net/bugDescriptions.html#AVOID_OLD_STYLE_GETACTIVITYNETWORKINFO)"
-      },
-      {
         "real_name": "REC_CATCH_EXCEPTION",
         "display_name": "RecCatchException",
         "severity": "warning",
@@ -784,22 +752,6 @@
         "owner": null,
         "labels": [],
         "description": "这个类定义了一个<code> equals（）</ code>的协变版本。＆nbsp;\n  要正确覆盖<code>中的equals（）</ code>方法\n  <code> java.lang.Object </ code>，<code> equals（）</ code>的参数\n  必须有<code> java.lang.Object </ code>类型。\n[参考官方文档](http://findbugs.sourceforge.net/bugDescriptions.html#EQ_ABSTRACT_SELF)"
-      },
-      {
-        "real_name": "CY_SWITCHBREAK",
-        "display_name": "SwitchCaseBreakChecker",
-        "severity": "warning",
-        "category": "convention",
-        "rule_title": "switch分支中每一个case都需要使用break进行结尾",
-        "rule_params": "",
-        "custom": true,
-        "languages": [
-          "java"
-        ],
-        "solution": null,
-        "owner": null,
-        "labels": [],
-        "description": "switch分支中每一个case需要使用break进行结尾。请确认是否遗漏。有问题可咨询chacechen,xuezenghan.\n[参考官方文档](http://findbugs.sourceforge.net/bugDescriptions.html#CY_SWITCHBREAK)"
       },
       {
         "real_name": "QBA_QUESTIONABLE_BOOLEAN_ASSIGNMENT",
@@ -3570,22 +3522,6 @@
         "description": "Class是一个JUnit TestCase并实现了setUp方法。 setUp方法应该调用\nsuper.setUp（），但不。\n[参考官方文档](http://findbugs.sourceforge.net/bugDescriptions.html#IJU_SETUP_NO_SUPER)"
       },
       {
-        "real_name": "LOADPICTURE",
-        "display_name": "LoadPicture",
-        "severity": "error",
-        "category": "correctness",
-        "rule_title": "LOADPICTURE",
-        "rule_params": "",
-        "custom": true,
-        "languages": [
-          "java"
-        ],
-        "solution": null,
-        "owner": null,
-        "labels": [],
-        "description": "####问题描述：\r\n\r\n当图片过大或图片数量较多时使用BitmapFactory解码图片会出现OOM异常：java.lang.OutOfMemoryError: bitmap size exceeds VM budget，导致app Crash。\r\n\r\n####解决方案：\r\n\r\n对过大的图片可通过先设置缩放选项，再读取缩放的图片数据到内存，有效避免了内存引起的OOM。\r\n\r\n####不恰当用法：\r\n\r\n{decodeXXX : decodeByteArray(), decodeFile(), decodeResource(), decodeResourceStream(),decodeStream(),decodeFileDescriptor() etc.} \r\n1. decodeXXX无option参数，无try的违规\r\n2. decodeXXX有option参数，option的inJustDecodeBounds=false，无try的违规\r\n3. decodeXXX有option参数，option的inJustDecodeBounds=false，有try但catch的不是OutOfMemoryError违规【注：勿用Throwable：这里仍视为违规-背景见参考资料】\r\n\r\n####推荐用法：\r\n\r\n对过大的图片进行压缩或修改采样值BitmapFactory.Options.inSampleSize，设置inJustDecodeBounds为true后，decodeFile并不分配空间，但可计算出原\r\n始图片的长度和宽度，即opts.width和opts.height。有了这两个参数，再通过一定的算法，即可得到一个恰当的inSampleSize。\r\n[参考官方文档](http://findbugs.sourceforge.net/bugDescriptions.html#LOADPICTURE)"
-      },
-      {
         "real_name": "NM_LCASE_TOSTRING",
         "display_name": "NmLcaseTostring",
         "severity": "warning",
@@ -4816,22 +4752,6 @@
         "owner": null,
         "labels": [],
         "description": "这种方法在似乎是企图的领域同步\n以防止同时更新该字段。但守卫一个领域\n获取对引用对象的锁定，而不是在该字段上。这可能不会\n提供您需要的互斥，以及其他线程可能\n获取引用对象上的锁（用于其他目的）。一个例子\n这种模式将是：\n<PRE>\nprivate Long myNtfSeqNbrCounter = new Long（0）;\nprivate Long getNotificationSequenceNumber（）{Long result = null; synchronized（myNtfSeqNbrCounter）{result = new Long（myNtfSeqNbrCounter.longValue（）+ 1）; myNtfSeqNbrCounter = new Long（result.longValue（））; }返回结果;\n }\n</ PRE>\n[参考官方文档](http://findbugs.sourceforge.net/bugDescriptions.html#ML_SYNC_ON_FIELD_TO_GUARD_CHANGING_THAT_FIELD)"
-      },
-      {
-        "real_name": "ObjectInOutputStream",
-        "display_name": "ObjectInOutputStream",
-        "severity": "error",
-        "category": "correctness",
-        "rule_title": "ObjectInOutputStream",
-        "rule_params": "",
-        "custom": true,
-        "languages": [
-          "java"
-        ],
-        "solution": null,
-        "owner": null,
-        "labels": [],
-        "description": "后续补充\n[参考官方文档](http://findbugs.sourceforge.net/bugDescriptions.html#ObjectInOutputStream)"
       },
       {
         "real_name": "OBL_UNSATISFIED_OBLIGATION_EXCEPTION_EDGE",
@@ -6768,22 +6688,6 @@
         "owner": null,
         "labels": [],
         "description": "指定为不携带类型限定符注释的值保证在要求该值携带该注释的位置或位置消耗。\n           更确切地说，使用类型限定符注释的值指定when = NEVER将保证达到某个用途，或者在相同类型限定符指定when = ALWAYS时使用该值。\n           TODO：例子\n[参考官方文档](http://findbugs.sourceforge.net/bugDescriptions.html#TQ_NEVER_VALUE_USED_WHERE_ALWAYS_REQUIRED)"
-      },
-      {
-        "real_name": "TSF_THREAD_START_FORBIDDEN",
-        "display_name": "TSF_THREAD_START_FORBIDDEN",
-        "severity": "error",
-        "category": "correctness",
-        "rule_title": "TSF_THREAD_START_FORBIDDEN",
-        "rule_params": "",
-        "custom": true,
-        "languages": [
-          "java"
-        ],
-        "solution": null,
-        "owner": null,
-        "labels": [],
-        "description": "后续补充\n[参考官方文档](http://findbugs.sourceforge.net/bugDescriptions.html#TSF_THREAD_START_FORBIDDEN)"
       },
       {
         "real_name": "RC_REF_COMPARISON_BAD_PRACTICE",

@@ -237,23 +237,6 @@
         "disable": false
       },
       {
-        "real_name": "bad-bool-option",
-        "display_name": "bad-bool-option",
-        "severity": "warning",
-        "category": "convention",
-        "rule_title": "不要用 `==` 与 `True`、 `False` 进行布尔运算; 不建议使用len(List), len(Dict)的方式判断是否为空序列",
-        "rule_params": null,
-        "custom": true,
-        "languages": [
-          "python"
-        ],
-        "solution": "可以参考详情描述中的文献修改。",
-        "owner": null,
-        "labels": [],
-        "description": "不要用 `==` 与 `True`、 `False` 进行布尔运算; \n不建议使用len(List), len(Dict)的方式判断是否为空序列.\n",
-        "disable": false
-      },
-      {
         "real_name": "bad-builtin",
         "display_name": "bad-builtin",
         "severity": "warning",
@@ -268,23 +251,6 @@
         "owner": null,
         "labels": [],
         "description": "当使用黑色列出的内置功能时使用（请参阅功能不良选项）。常用的黑名单函数是map或filter，Python现在提供了一些更简洁的替代方法，例如列表理解。",
-        "disable": false
-      },
-      {
-        "real_name": "bad-class-name",
-        "display_name": "bad-class-name",
-        "severity": "warning",
-        "category": "convention",
-        "rule_title": "错误的类命名",
-        "rule_params": null,
-        "custom": true,
-        "languages": [
-          "python"
-        ],
-        "solution": "建议修改为驼峰格式。",
-        "owner": null,
-        "labels": [],
-        "description": "检测错误的类命名。建议是驼峰格式。",
         "disable": false
       },
       {
@@ -339,23 +305,6 @@
         "disable": false
       },
       {
-        "real_name": "bad-format",
-        "display_name": "bad-format",
-        "severity": "warning",
-        "category": "convention",
-        "rule_title": "错误的格式化方式你需要在+和%之间权衡.",
-        "rule_params": null,
-        "custom": true,
-        "languages": [
-          "python"
-        ],
-        "solution": "可以参考详情描述中的文献，使用正确的格式化字符串。",
-        "owner": null,
-        "labels": [],
-        "description": "错误的格式化方式你需要在+和%之间权衡.\n",
-        "disable": false
-      },
-      {
         "real_name": "bad-format-character",
         "display_name": "bad-format-character",
         "severity": "error",
@@ -404,23 +353,6 @@
         "owner": null,
         "labels": [],
         "description": "当使用命名转换说明符的格式字符串与其键不是全部字符串的字典一起使用时使用。",
-        "disable": false
-      },
-      {
-        "real_name": "bad-function-name",
-        "display_name": "bad-function-name",
-        "severity": "warning",
-        "category": "convention",
-        "rule_title": "错误的函数命名",
-        "rule_params": null,
-        "custom": true,
-        "languages": [
-          "python"
-        ],
-        "solution": "建议修改为小写加下划线的方式命名(如lower_with_under)",
-        "owner": null,
-        "labels": [],
-        "description": "建议使用小写加下划线的方式命名(如lower_with_under)",
         "disable": false
       },
       {
@@ -526,23 +458,6 @@
         "disable": false
       },
       {
-        "real_name": "bad-param-name",
-        "display_name": "bad-param-name",
-        "severity": "warning",
-        "category": "convention",
-        "rule_title": "错误的参数命名",
-        "rule_params": null,
-        "custom": true,
-        "languages": [
-          "python"
-        ],
-        "solution": "建议使用小写加下划线的方式命名(如lower_with_under)",
-        "owner": null,
-        "labels": [],
-        "description": "建议使用小写加下划线的方式命名(如lower_with_under)",
-        "disable": false
-      },
-      {
         "real_name": "bad-reversed-sequence",
         "display_name": "bad-reversed-sequence",
         "severity": "error",
@@ -594,40 +509,6 @@
         "disable": false
       },
       {
-        "real_name": "bad-string-option",
-        "display_name": "bad-string-option",
-        "severity": "warning",
-        "category": "convention",
-        "rule_title": "避免在循环中用`+`和`+=`操作符来累加字符串",
-        "rule_params": null,
-        "custom": true,
-        "languages": [
-          "python"
-        ],
-        "solution": "可以参考详情描述中的文献，使用正确的格式化字符串。",
-        "owner": null,
-        "labels": [],
-        "description": "避免在循环中用`+`和`+=`操作符来累加字符串.\n",
-        "disable": false
-      },
-      {
-        "real_name": "bad-string-slice",
-        "display_name": "bad-string-slice",
-        "severity": "warning",
-        "category": "convention",
-        "rule_title": "使用使用 `.startswith()` 和 `.endswith()` 代替字符串切片来检查前缀和后缀",
-        "rule_params": null,
-        "custom": true,
-        "languages": [
-          "python"
-        ],
-        "solution": "可以参考详情描述中的文献，使用正确的格式化字符串。",
-        "owner": null,
-        "labels": [],
-        "description": "使用使用 `.startswith()` 和 `.endswith()` 代替字符串切片来检查前缀和后缀.\n",
-        "disable": false
-      },
-      {
         "real_name": "bad-super-call",
         "display_name": "bad-super-call",
         "severity": "error",
@@ -642,23 +523,6 @@
         "owner": null,
         "labels": [],
         "description": "当将当前类以外的其他参数作为超级内置函数的第一个参数给出时使用。",
-        "disable": false
-      },
-      {
-        "real_name": "bad-var-name",
-        "display_name": "bad-var-name",
-        "severity": "warning",
-        "category": "convention",
-        "rule_title": "错误的变量命名",
-        "rule_params": null,
-        "custom": true,
-        "languages": [
-          "python"
-        ],
-        "solution": "建议使用小写加下划线的方式命名(如lower_with_under)",
-        "owner": null,
-        "labels": [],
-        "description": "建议使用小写加下划线的方式命名(如lower_with_under)",
         "disable": false
       },
       {
@@ -897,23 +761,6 @@
         "owner": null,
         "labels": [],
         "description": "在定义__coerce__方法时使用（Python 3不使用该方法）当使用Python> = 3.0时，不会发出此消息。",
-        "disable": false
-      },
-      {
-        "real_name": "complex-bool-option",
-        "display_name": "complex-bool-option",
-        "severity": "error",
-        "category": "convention",
-        "rule_title": "逻辑判断复杂难懂建议使用`x = a if a >= b else b`形式",
-        "rule_params": null,
-        "custom": true,
-        "languages": [
-          "python"
-        ],
-        "solution": "逻辑判断复杂难懂建议使用`x = a if a >= b else b`形式",
-        "owner": null,
-        "labels": [],
-        "description": "逻辑判断复杂难懂建议使用`x = a if a >= b else b`形式\n",
         "disable": false
       },
       {
@@ -1988,23 +1835,6 @@
         "disable": false
       },
       {
-        "real_name": "keep-exception-traceback",
-        "display_name": "keep-exception-traceback",
-        "severity": "warning",
-        "category": "convention",
-        "rule_title": "在 `except` 子句中重新抛出原有异常时，保留原来的异常信息",
-        "rule_params": null,
-        "custom": true,
-        "languages": [
-          "python"
-        ],
-        "solution": "在 except 子句中重新抛出原有异常时，不能用 raise ex，而是用 raise。",
-        "owner": null,
-        "labels": [],
-        "description": "在 except 子句中重新抛出原有异常时，不能用 raise ex，而是用 raise。",
-        "disable": false
-      },
-      {
         "real_name": "len-as-condition",
         "display_name": "len-as-condition",
         "severity": "info",
@@ -2617,23 +2447,6 @@
         "disable": false
       },
       {
-        "real_name": "no-import-all",
-        "display_name": "no-import-all",
-        "severity": "warning",
-        "category": "convention",
-        "rule_title": "不应导入*",
-        "rule_params": null,
-        "custom": true,
-        "languages": [
-          "python"
-        ],
-        "solution": "不应该使用import *",
-        "owner": null,
-        "labels": [],
-        "description": "不应该使用import *\n",
-        "disable": false
-      },
-      {
         "real_name": "no-init",
         "display_name": "no-init",
         "severity": "warning",
@@ -2648,23 +2461,6 @@
         "owner": null,
         "labels": [],
         "description": "当类没有__init__方法，也没有其父类时使用。",
-        "disable": false
-      },
-      {
-        "real_name": "no-lambda",
-        "display_name": "no-lambda",
-        "severity": "warning",
-        "category": "convention",
-        "rule_title": "使用 def 定义简短函数而不是使用lambda",
-        "rule_params": null,
-        "custom": true,
-        "languages": [
-          "python"
-        ],
-        "solution": "使用 def 定义简短函数而不是使用lambda.",
-        "owner": null,
-        "labels": [],
-        "description": "使用 def 定义简短函数而不是使用lambda.\n",
         "disable": false
       },
       {
@@ -2716,23 +2512,6 @@
         "owner": null,
         "labels": [],
         "description": "在模块中找不到名称时使用。",
-        "disable": false
-      },
-      {
-        "real_name": "no-old-raise",
-        "display_name": "no-old-raise",
-        "severity": "warning",
-        "category": "convention",
-        "rule_title": "检查旧的养育风格",
-        "rule_params": null,
-        "custom": true,
-        "languages": [
-          "python"
-        ],
-        "solution": "像这样触发异常: raise MyException(\"Error message\") 或者 raise MyException。",
-        "owner": null,
-        "labels": [],
-        "description": "像这样触发异常: raise MyException(\"Error message\") 或者 raise MyException。不要使用两个参数的形式( raise MyException, \"Error message\" )或者过时的字符串异常( raise \"Error message\" )。",
         "disable": false
       },
       {
@@ -2801,23 +2580,6 @@
         "owner": null,
         "labels": [],
         "description": "当函数调用传递的参数太少时使用。",
-        "disable": false
-      },
-      {
-        "real_name": "no-variable-argument",
-        "display_name": "no-variable-argument",
-        "severity": "warning",
-        "category": "convention",
-        "rule_title": "函数参数中，不允许出现可变类型变量作为默认值。",
-        "rule_params": null,
-        "custom": true,
-        "languages": [
-          "python"
-        ],
-        "solution": "函数参数中，不允许出现可变类型变量作为默认值。",
-        "owner": null,
-        "labels": [],
-        "description": "函数参数中，不允许出现可变类型变量作为默认值。\n",
         "disable": false
       },
       {
@@ -3110,23 +2872,6 @@
         "disable": false
       },
       {
-        "real_name": "one-line",
-        "display_name": "one-line",
-        "severity": "warning",
-        "category": "convention",
-        "rule_title": "每个语句应该独占一行, 如果是if语句, 只有在没有else时才能这样做.",
-        "rule_params": null,
-        "custom": true,
-        "languages": [
-          "python"
-        ],
-        "solution": "每个语句应该独占一行",
-        "owner": null,
-        "labels": [],
-        "description": "每个语句应该独占一行, 如果是if语句, 只有在没有else时才能这样做.\n",
-        "disable": false
-      },
-      {
         "real_name": "parameter-unpacking",
         "display_name": "parameter-unpacking",
         "severity": "error",
@@ -3209,91 +2954,6 @@
         "owner": null,
         "labels": [],
         "description": null,
-        "disable": false
-      },
-      {
-        "real_name": "prefer-double-underline",
-        "display_name": "prefer-double-underline",
-        "severity": "warning",
-        "category": "convention",
-        "rule_title": "使用双下划线 `__` 来代表不需要的变量，单下划线 `_` 容易与 `gettext()` 函数的别名冲突。",
-        "rule_params": null,
-        "custom": true,
-        "languages": [
-          "python"
-        ],
-        "solution": "使用双下划线 `__` 来代表不需要的变量，单下划线 `_` 容易与 `gettext()` 函数的别名冲突。",
-        "owner": null,
-        "labels": [],
-        "description": "使用双下划线 `__` 来代表不需要的变量，单下划线 `_` 容易与 `gettext()` 函数的别名冲突。\n",
-        "disable": false
-      },
-      {
-        "real_name": "prefer-return-none",
-        "display_name": "prefer-return-none",
-        "severity": "warning",
-        "category": "convention",
-        "rule_title": "函数或者方法在没有返回时要明确返回None。",
-        "rule_params": null,
-        "custom": true,
-        "languages": [
-          "python"
-        ],
-        "solution": "函数或者方法在没有返回时要明确返回None。",
-        "owner": null,
-        "labels": [],
-        "description": "函数或者方法在没有返回时要明确返回None。\n",
-        "disable": false
-      },
-      {
-        "real_name": "preferred-detailed-exception",
-        "display_name": "preferred-detailed-exception",
-        "severity": "warning",
-        "category": "convention",
-        "rule_title": "永远不要使用 `except:` 语句来捕获所有异常,也不要捕获 Exception 或 者 StandardError",
-        "rule_params": null,
-        "custom": true,
-        "languages": [
-          "python"
-        ],
-        "solution": "永远不要使用 `except:` 语句来捕获所有异常,也不要捕获 Exception 或 者 StandardError",
-        "owner": null,
-        "labels": [],
-        "description": "永远不要使用 `except:` 语句来捕获所有异常,也不要捕获 Exception 或者 StandardError",
-        "disable": false
-      },
-      {
-        "real_name": "preferred-import-module-name",
-        "display_name": "preferred-import-module-name",
-        "severity": "warning",
-        "category": "convention",
-        "rule_title": "使用模块的全路径名来导入",
-        "rule_params": null,
-        "custom": true,
-        "languages": [
-          "python"
-        ],
-        "solution": "用完整包名来导入每个模块",
-        "owner": null,
-        "labels": [],
-        "description": "用完整包名来导入每个模块",
-        "disable": false
-      },
-      {
-        "real_name": "preferred-use-as",
-        "display_name": "preferred-use-as",
-        "severity": "warning",
-        "category": "convention",
-        "rule_title": "当捕获异常时, 使用 as 而不要用逗号",
-        "rule_params": null,
-        "custom": true,
-        "languages": [
-          "python"
-        ],
-        "solution": "当捕获异常时, 使用 as 而不要用逗号",
-        "owner": null,
-        "labels": [],
-        "description": "当捕获异常时, 使用 as 而不要用逗号",
         "disable": false
       },
       {
@@ -3804,23 +3464,6 @@
         "owner": null,
         "labels": [],
         "description": "当旧样式类使用__slots__属性时使用。使用Python> = 3.0时无法发出此消息。",
-        "disable": false
-      },
-      {
-        "real_name": "smaller-try-block",
-        "display_name": "smaller-try-block",
-        "severity": "warning",
-        "category": "convention",
-        "rule_title": "尽量减少try/except块中的代码量。try块的体积越大，期望之外的异常就越容易被触发。",
-        "rule_params": null,
-        "custom": true,
-        "languages": [
-          "python"
-        ],
-        "solution": "减少try/except块中的代码行数",
-        "owner": null,
-        "labels": [],
-        "description": "尽量减少try/except块中的代码量。try块的体积越大，期望之外的异常就越容易被触发。",
         "disable": false
       },
       {
