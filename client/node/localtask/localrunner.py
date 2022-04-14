@@ -106,9 +106,6 @@ class LocalRunner(TaskRunner):
 
         self._skip_processes = {}
 
-        # sonar负债率数据
-        self._sonar_debt = None
-
         # 与server通信的api实例
         self._dog_server = None
 
