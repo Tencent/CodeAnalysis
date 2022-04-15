@@ -23,6 +23,6 @@ def server_health_check(file_name):
     current_path = os.getcwd()
     logger.info("[AnalysisServerStatusCheck] write file %s.txt" % file_name)
     if not os.path.exists(os.path.join(current_path, "%s.txt" % file_name)):
-        f = open(os.path.join(current_path, "%s.txt" % file_name), "a")
+        f = open(os.path.join(current_path, "%s.txt" % file_name), "w")
         f.write("main server health check: celery and asynchronous task check")
     return

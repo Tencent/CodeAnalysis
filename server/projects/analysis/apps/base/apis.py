@@ -54,7 +54,7 @@ class HealthCheckAPIVIew(APIView):
             return HttpResponse("DB connection or orm raise exception", status=status.HTTP_503_SERVICE_UNAVAILABLE)
 
         logger.info("[AnalysisServerHealthCheck] Step 2: check celery status and asynchronous tasks")
-        file_name = request.get("file_name", None)
+        file_name = request.GET.get("file_name", None)
         if file_name:
             server_health_check.delay(file_name)
 
