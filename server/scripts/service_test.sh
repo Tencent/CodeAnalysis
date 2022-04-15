@@ -4,7 +4,7 @@
 echo "[TCAServerHealthCheck] *start detect status of every service*"
 
 function delete_txt_file() {
-    rm -rf $1/*.txt
+    rm -rf $1/healthcheck_*.txt
 }
 
 function main_server_detect() {
