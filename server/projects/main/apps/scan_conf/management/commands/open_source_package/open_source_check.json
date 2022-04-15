@@ -1,0 +1,177 @@
+[
+    {
+        "name": "【全语种】对外开源扫描",
+        "description": "适用于各语言项目外部开源扫描。",
+        "revision": "0.1",
+        "package_type": "official",
+        "languages": [
+            "cpp",
+            "cs",
+            "css",
+            "Go",
+            "html",
+            "java",
+            "js",
+            "kotlin",
+            "Lua",
+            "oc",
+            "php",
+            "python",
+            "ruby",
+            "scala",
+            "swift",
+            "ts",
+            "visualbasic",
+            "abap",
+            "apex",
+            "cobol",
+            "flex",
+            "pli",
+            "plsql",
+            "rpg",
+            "tsql",
+            "xml",
+            "dart"
+        ],
+        "labels": [
+            "开源"
+        ],
+        "checkrule_set": [
+            {
+                "checktool": "regexscan",
+                "checkrule": "HttpHardcoded",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "regexscan",
+                "checkrule": "DirtyWord",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "regexscan",
+                "checkrule": "PassworkLeak",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "regexscan",
+                "checkrule": "InnerIPLeak",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "customscan",
+                "checkrule": "NewlineChecker",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "customfilescan",
+                "checkrule": "WrongEncoding",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "customfilescan",
+                "checkrule": "LowCommentRatio",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "customfilescan",
+                "checkrule": "FilesNotFound",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "regexscan",
+                "checkrule": "GPLLicenseCheck",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "regexscan",
+                "checkrule": "InnerMailLeak",
+                "severity": "warning",
+                "rule_params": "",
+                "state": "enabled"
+            },
+            {
+                "checktool": "customfilescan",
+                "checkrule": "CopyrightChecker",
+                "severity": "warning",
+                "rule_params": "",
+                "state": "enabled"
+            },
+            {
+                "checktool": "regexscan",
+                "checkrule": "PythonSoftwareFoundationLicenseCheck",
+                "severity": "info",
+                "rule_params": "",
+                "state": "enabled"
+            },
+            {
+                "checktool": "regexscan",
+                "checkrule": "MozillaPublicLicenseCheck",
+                "severity": "info",
+                "rule_params": "",
+                "state": "enabled"
+            },
+            {
+                "checktool": "regexscan",
+                "checkrule": "MITLicenseCheck",
+                "severity": "info",
+                "rule_params": "",
+                "state": "enabled"
+            },
+            {
+                "checktool": "regexscan",
+                "checkrule": "LGPLicenseChecker",
+                "severity": "warning",
+                "rule_params": "",
+                "state": "enabled"
+            },
+            {
+                "checktool": "regexscan",
+                "checkrule": "EclipsePublicLicenseCheck",
+                "severity": "info",
+                "rule_params": "",
+                "state": "enabled"
+            },
+            {
+                "checktool": "regexscan",
+                "checkrule": "CommonDevelopmentLicenseCheck",
+                "severity": "info",
+                "rule_params": "",
+                "state": "enabled"
+            },
+            {
+                "checktool": "regexscan",
+                "checkrule": "BSDLicenseCheck",
+                "severity": "info",
+                "rule_params": "",
+                "state": "enabled"
+            },
+            {
+                "checktool": "regexscan",
+                "checkrule": "ApacheLicenseCheck",
+                "severity": "info",
+                "rule_params": "",
+                "state": "enabled"
+            }
+        ],
+        "open_saas": false,
+        "envs": null
+    }
+]
