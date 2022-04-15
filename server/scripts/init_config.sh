@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 PYVERSION=`python -c 'import sys; print(sys.version_info.major, sys.version_info.minor)'`
 if [ "$PYVERSION" != "3 7" ]; then

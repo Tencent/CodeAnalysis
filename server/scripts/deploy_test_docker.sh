@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # TCA Server部署监测脚本（docker-compose启动方式）
 # 检测步骤为：可用磁盘/内存检测 -> 镜像下载源检测 -> docker/docker-compose命令检测 -> docker-compose版本检测
 

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # TCA Server部署检测脚本
 # 检测步骤为：python命令检测 -> python版本检测 -> 依赖完整度检测 -> celery命令检测 -> gunicorn命令检测 -> 配置完整度检测 -> redis/mysql登陆检测 -> 可用磁盘/内存检测 -> pip下载源检测
 

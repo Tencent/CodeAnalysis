@@ -54,19 +54,8 @@ class HealthCheckAPIVIew(APIView):
             return HttpResponse("DB connection or orm raise exception", status=status.HTTP_503_SERVICE_UNAVAILABLE)
 
         logger.info("[AnalysisServerHealthCheck] Step 2: check celery status and asynchronous tasks")
-        try:
-            res = server_health_check.delay()
-            cycle_time = 10
-            while cycle_time >= 0:
-                async_task = AsyncResult(id=res.id, app=celery_app)
-                if async_task.successful():
-                    return HttpResponse("analysis server status check success", status=status.HTTP_200_OK)
-                elif cycle_time == 0:
-                    return HttpResponse("celery and asynchronous task raise exception",
-                                        status=status.HTTP_424_FAILED_DEPENDENCY)
-                cycle_time -= 1
-            return HttpResponse("celery and asynchronous task raise exception",
-                                status=status.HTTP_424_FAILED_DEPENDENCY)
-        except Exception as e:
-            logger.info("[AnalysisServerHealthCheck] step 2 failed, err msg: %s" % e)
-            return HttpResponse("celery and asynchronous task raise exception", status=status.HTTP_424_FAILED_DEPENDENCY)
+        file_name = request.GET.get("file_name", None)
+        if file_name:
+            server_health_check.delay(file_name)
+
+        return HttpResponse("analysis server status check success", status=status.HTTP_200_OK)
