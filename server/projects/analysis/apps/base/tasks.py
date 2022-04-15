@@ -8,6 +8,7 @@
 """apps.base的tasks模块
 """
 # 原生 import
+import os
 import logging
 
 # 第三方 import
@@ -16,8 +17,12 @@ from celery import shared_task
 logger = logging.getLogger(__name__)
 
 @shared_task
-def server_health_check():
+def server_health_check(file_name):
     """main服务异步任务执行状态监测
     """
-    logger.info("[AnalysisServerStatusCheck] status is normal")
+    current_path = os.getcwd()
+    logger.info("[AnalysisServerStatusCheck] write file %s.txt" % file_name)
+    if not os.path.exists(os.path.join(current_path, "%s.txt" % file_name)):
+        f = open(os.path.join(current_path, "%s.txt" % file_name), "a")
+        f.write("main server health check: celery and asynchronous task check")
     return
