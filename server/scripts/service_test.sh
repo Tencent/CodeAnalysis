@@ -45,7 +45,7 @@ function analysis_server_detect() {
     delete_txt_file $file_path
     current_timestamp=`date '+%s'`
     file_path="$file_path/$current_timestamp.txt"
-    target="http://127.0.0.1:8001/healthcheck/?file_name=$current_timestamp"
+    target="http://127.0.0.1:8002/healthcheck/?file_name=$current_timestamp"
     ret_code=$(curl -I -s --connect-timeout 1 ${target} -w %{http_code} | tail -n1)
 
     if [[ "x$ret_code" == "x200" ]]; then
@@ -72,7 +72,7 @@ function analysis_server_detect() {
 }
 
 function login_server_detect() {
-    target="http://127.0.0.1:8003/healthcheck/"
+    target="http://127.0.0.1:8003/api/v1/login/healthcheck/"
     ret_code=$(curl -I -s --connect-timeout 1 ${target} -w %{http_code} | tail -n1)
 
     if [[ "x$ret_code" == "x200" ]]; then
@@ -87,7 +87,7 @@ function login_server_detect() {
 }
 
 function file_server_detect() {
-    target="http://127.0.0.1:8004/healthcheck/"
+    target="http://127.0.0.1:8804/healthcheck/"
     ret_code=$(curl -I -s --connect-timeout 1 ${target} -w %{http_code} | tail -n1)
 
     if [[ "x$ret_code" == "x200" ]]; then
