@@ -140,3 +140,12 @@ FILE_SERVER = {
 SERVER_URL = {
     "URL": ""
 }
+
+# ========================
+# license服务器url, base_path, license,需要在config.ini中配置
+# ========================
+LICENSE_CONFIG = {
+    "URL": "",
+    "BASE_PATH": "",
+    "LICENSE": ""
+}
