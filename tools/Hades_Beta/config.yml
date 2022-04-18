@@ -1,0 +1,10 @@
+input:
+  [ "get_include_files",
+    "get_dir_files",
+    "get_scm_diff"
+  ]
+filter:
+  [
+    "HTMLEscapeString",
+    "JSEscapeString",
+  ]
