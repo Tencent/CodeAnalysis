@@ -1,7 +1,7 @@
 [
     {
-        "name": "【全语种】对外开源扫描",
-        "description": "适用于各语言项目外部开源扫描。",
+        "name": "【全语种】开源合规检查",
+        "description": "适用于各语言项目开源合规检查，主要针对敏感信息和部分开源license的检查。",
         "revision": "0.1",
         "package_type": "official",
         "languages": [
