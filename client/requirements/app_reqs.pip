@@ -29,7 +29,7 @@ html5lib
 openpyxl
 
 # required for auth
-# LICENSE: MIT
+# LICENSE: Apache Licence version 2.0
 rsa==4.7.2
 
 # required for load tool

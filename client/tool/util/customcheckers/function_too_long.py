@@ -14,7 +14,7 @@
 import os
 import logging
 
-from tool.lizard import Lizard
+from tool.lizard import tool as Lizard
 from util.configlib import ConfigReader
 
 logger = logging.getLogger(__name__)
