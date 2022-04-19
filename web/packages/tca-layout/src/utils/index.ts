@@ -116,6 +116,11 @@ export const getRuntimeEnv = (key: string, defaultValue = '') => {
 };
 
 /**
+ * 是否开启后台管理版本
+ */
+export const isEnableManage = () => getRuntimeEnv('ENABLE_MANAGE', process.env.ENABLE_MANAGE) === 'TRUE';
+
+/**
  * 获取用户名
  * @param user 用户，可能是字符串，可能是一个 user对象
  */
