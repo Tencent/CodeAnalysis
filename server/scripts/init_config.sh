@@ -56,23 +56,6 @@ ln -s $CURRENT_PATH/configs/nginx/tca_8000.conf /etc/nginx/conf.d/tca_8000.conf
 ln -s $CURRENT_PATH/configs/nginx/tca_file_local.conf /etc/nginx/conf.d/tca_file_local.conf
 # ln -s $CURRENT_PATH/configs/nginx/tca_file_minio.conf /etc/nginx/conf.d/tca_file_local.conf
 
-# 启动nginx
-function start_nginx() {
-    echo "start nginx ..."
-    # wc -l 行数计算。当nginx无进程时，启动nginx，否则reload nginx
-    nginx_is_start=$(ps -C nginx --no-header | wc -l)
-    if [ $nginx_is_start -eq 0 ]; then
-      nginx -t
-      if [ "$IS_DOCKER" == "TRUE" ]; then
-        nginx -g "daemon off;"
-      else
-        nginx
-      fi
-    else
-      nginx -s reload
-    fi
-}
-
 function init_db() {
     echo "Start to init db, create database..."
     mysql -u$MYSQL_USER -p$MYSQL_PASSWORD -h$MYSQL_HOST -P$MYSQL_PORT < $CURRENT_PATH/sql/init.sql
@@ -115,7 +98,6 @@ function init_file() {
     python manage.py migrate --noinput --traceback
 }
 
-start_nginx
 init_db
 init_requirments
 init_main

@@ -11,13 +11,13 @@ function diskspace_detect() {
     split_result=(${ret// / })
     disk_space="${split_result[3]}"
     if ! [[ $disk_space =~ .*G$ ]]; then
-        echo -e "\033[33m⚠️ your disk space $disk_space is less than 10G; please make sure you have enough space to supprt TCA"
+        echo -e "\033[33m⚠️ your disk space $disk_space is less than 10G; please make sure you have enough space to supprt TCA\033[0m"
     fi
 
     split_space=(${disk_space//G/ })
     number_of_gb="${split_space[0]}"
     if ! [[ $number_of_gb =~ ^[0-9]{2,}.* ]]; then
-        echo -e "\033[33m⚠️ your disk space $disk_space is less than 10G; please make sure you have enough space to supprt TCA"
+        echo -e "\033[33m⚠️ your disk space $disk_space is less than 10G; please make sure you have enough space to supprt TCA\033[0m"
     fi
 }
 
@@ -30,7 +30,7 @@ function memory_detect() {
     div="1048576"
     memory_avaliable_gb=$(awk '{print $1/$2}' <<<"${memory_avaliable} ${div}")  # 转换为gb
     if ! [[ $memory_avaliable_gb =~ ^([2-9]|([0-9]{2,})).* ]]; then
-        echo -e "\033[33m⚠️ your avaliable memory $memory_avaliable_gb G is less than 2G; please make sure you have enough memory to supprt TCA"
+        echo -e "\033[33m⚠️ your avaliable memory $memory_avaliable_gb G is less than 2G; please make sure you have enough memory to supprt TCA\033[0m"
     fi
 }
 
