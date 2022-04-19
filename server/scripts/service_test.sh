@@ -12,7 +12,7 @@ function main_server_detect() {
     file_path="$current_path/projects/main"
     delete_txt_file $file_path
     current_timestamp=`date '+%s'`
-    file_path="$file_path/$current_timestamp.txt"
+    file_path="$file_path/healthcheck_$current_timestamp.txt"
     target="http://0.0.0.0:8000/main/healthcheck/?file_name=$current_timestamp"
     ret_code=$(curl -I -s --connect-timeout 1 ${target} -w %{http_code} | tail -n1)
 
@@ -22,7 +22,7 @@ function main_server_detect() {
         echo -e "\e[31m❌ service main failed, reason might be db connection fail or database/table initialization fail\e[0m"
         exit -1
     else
-        echo -e "\e[31m❌ service main failed, please view logs to locate the issue\e[0m"
+        echo -e "\e[31m❌ nginx or service main failed, please reload nginx or view logs to locate the issue\e[0m"
         exit -1
     fi
 
@@ -44,7 +44,7 @@ function analysis_server_detect() {
     file_path="$current_path/projects/analysis"
     delete_txt_file $file_path
     current_timestamp=`date '+%s'`
-    file_path="$file_path/$current_timestamp.txt"
+    file_path="$file_path/healthcheck_$current_timestamp.txt"
     target="http://127.0.0.1:8002/healthcheck/?file_name=$current_timestamp"
     ret_code=$(curl -I -s --connect-timeout 1 ${target} -w %{http_code} | tail -n1)
 
