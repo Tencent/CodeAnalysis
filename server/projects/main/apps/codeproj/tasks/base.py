@@ -119,29 +119,4 @@ def handle_scheduled_projects():
     2. 项目为活跃状态
     3. 扫描方案为活跃状态
     """
-    current_time = _now()
-    project_schedules = models.ScanSchedule.objects.filter(
-        enabled=True,
-        project__status=models.Project.StatusEnum.ACTIVE,
-        project__scan_scheme__status=models.ScanScheme.StatusEnum.ACTIVE,
-    ).filter(Q(next_scan_time__lte=current_time) | Q(next_scan_time__isnull=True)).exclude(scan_sched=None)
-
-    for project_sched in project_schedules:
-        project = project_sched.project
-        project_sched = models.ScanSchedule.objects.get(project=project)
-        incr_scan = False if project_sched.total_scan_flag else True
-        if project_sched.next_scan_time and project_sched.next_scan_time <= current_time:
-            try:
-                logger.info("[Project: %s] create scheduled scan job, incr_scan: %s" % (project.id, incr_scan))
-                core.create_server_scan(project, creator="codedog", scan_data={"incr_scan": incr_scan})
-            except Exception as err:
-                logger.exception("[Project: %s] create scheduled scan job exception, err: %s" % (project.id, err))
-            ct = croniter(project_sched.scan_sched, current_time)
-            project_sched.next_scan_time = ct.get_next(datetime)
-            logger.info("[Project: %s] next scheduled scan time: %s" % (project.id, project_sched.next_scan_time))
-            project_sched.save()
-        elif not project_sched.next_scan_time:
-            ct = croniter(project_sched.scan_sched, current_time)
-            project_sched.next_scan_time = ct.get_next(datetime)
-            logger.info("[Project: %s] update scheduled scan time: %s" % (project.id, project_sched.next_scan_time))
-            project_sched.save()
+    # Todo
