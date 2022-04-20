@@ -34,23 +34,6 @@ function memory_detect() {
     fi
 }
 
-# 镜像下载源检测
-function network_detect() {
-    echo "[TCAServerDependcyCheck] *make sure docker download source is avaliable*"
-    timeout_time=60
-    # 监测镜像源网络状态
-    starttime=`date +'%Y-%m-%d %H:%M:%S'`
-    result=`timeout $timeout_time docker pull mysql`
-    endtime=`date +'%Y-%m-%d %H:%M:%S'`
-    start_seconds=$(date --date="$starttime" +%s);
-    end_seconds=$(date --date="$endtime" +%s);
-    running_time=$((end_seconds-start_seconds))
-    if [[ $running_time > $timeout_time ]]; then
-        echo -e "\e[31m❌ docker pull mysql timed out, please check your network or docker image download source\e[0m"
-        exit -1
-    fi
-}
-
 # 检验docker是否安装
 function docker_command_detect() {
     echo "[TCAServerDependcyCheck] *make sure command docker exist*"
@@ -85,7 +68,6 @@ function dockercompose_version_detect() {
 
 diskspace_detect
 memory_detect
-network_detect
 docker_command_detect
 dockercompose_command_detect
 dockercompose_version_detect
