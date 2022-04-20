@@ -75,4 +75,3 @@ init_login
 init_analysis
 init_main
 start_all_services
-bash $CURRENT_PATH/server/scripts/service_test_docker.sh
