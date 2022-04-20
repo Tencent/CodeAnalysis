@@ -31,7 +31,7 @@ Using TCA can help team find normative, structural, security vulnerabilities and
 
 ## Getting Started
 
-- [How to get start](GettingStart(快速入门).md)
+- [How to get start](GettingStart.md)
 - [How to deploy server and web](doc/deploy.md)
 - [How to deploy server and web with docker-compose](doc/deploy_dc.md)
 - [How to use client](doc/client.md)

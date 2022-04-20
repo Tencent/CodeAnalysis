@@ -29,7 +29,7 @@
 
 ## 快速入门
 
-- [快速入门](GettingStart(快速入门).md)
+- [快速入门](GettingStart.md)
 - [如何在本地部署Server与Web](doc/deploy.md)
 - [如何通过Docker-Compose部署Server与Web](doc/deploy_dc.md)
 - [如何使用客户端](doc/client.md)
