@@ -1,4 +1,3 @@
-# 如果需要在ARM架构上运行，可以将第一个 FROM指令 进行注释，然后将第二个 FROM指令 取消注释
 FROM python:3.7.12-slim
 # For ARM
 # FROM arm64v8/python:3.7.12-slim
