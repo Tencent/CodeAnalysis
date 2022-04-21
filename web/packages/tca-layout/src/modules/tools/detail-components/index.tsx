@@ -11,7 +11,6 @@ import { getToolsRouter } from '@src/utils/getRoutePath';
 import { getToolDetail } from '@src/services/tools';
 import { getTeamMember } from '@src/services/team';
 import { useStateStore } from '@src/context/store';
-import { isEnableManage } from '@src/utils';
 
 import BaseInfo from './baseinfo';
 import BaseInfoManage from './baseinfo-manage';
@@ -29,7 +28,7 @@ const ToolDetail = () => {
   const [admins, setAdmins] = useState([]);
   const isAdmin = !!find(admins, { username: userinfo.username });  // 当前用户是否是管理员
   const isCustom = orgSid === detail?.org_detail?.org_sid;   // 当前工具为自定义工具
-  const isManage = isEnableManage();    // 管理页面
+  const isSuperuser = userinfo.is_superuser;  // 是否为超级管理员
 
   useEffect(() => {
     getTeamMember(orgSid).then((res) => {
@@ -62,7 +61,7 @@ const ToolDetail = () => {
           <div>
             <span
               className={style.backIcon}
-              onClick={() => history.push(`${isManage ? '/manage/tools' : getToolsRouter(orgSid)}`)}
+              onClick={() => history.push(getToolsRouter(orgSid))}
             >
               <ArrowLeft />
             </span>
@@ -72,7 +71,7 @@ const ToolDetail = () => {
 
         <TabPane tab="基础信息" key="baseinfo">
           {
-            isManage ? (
+            isSuperuser ? (
               <BaseInfoManage
                 data={detail}
                 orgSid={orgSid}
@@ -90,7 +89,7 @@ const ToolDetail = () => {
         </TabPane>
         <TabPane tab="规则列表" key="rules">
           <Rules
-            editable={(isCustom && isAdmin) || isManage}
+            editable={(isCustom && isAdmin) || isSuperuser}
             toolDetail={detail}
             orgSid={orgSid}
             toolId={toolId}
@@ -101,7 +100,7 @@ const ToolDetail = () => {
           detail.open_maintain && (
             <TabPane tab="自定义规则" key="customRules">
               <CustomRules
-                editable={isAdmin || isManage}
+                editable={isAdmin || isSuperuser}
                 toolDetail={detail}
                 orgSid={orgSid}
                 toolId={toolId}

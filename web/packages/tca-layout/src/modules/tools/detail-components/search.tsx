@@ -102,12 +102,11 @@ const Search = (props: SearchProps) => {
         </Filter.Item>
         <Filter.Item label="规则状态" name="disable">
           <Select
-            mode='multiple'
             style={{ minWidth: 100 }}
             allowClear
             placeholder='全部' size='middle'
             options={[{ value: 'false', label: '可用' }, { value: 'true', label: '不可用' }]}
-            onChange={(value: []) => onChange('disable', value.join(','))} />
+            onChange={(value: []) => onChange('disable', value)} />
         </Filter.Item>
         {/* <Filter.Item label='严重级别' name='severity' >
           <SelectBorderless
