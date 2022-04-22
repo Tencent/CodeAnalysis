@@ -367,7 +367,6 @@ const BaseInfo = ({ orgSid, data, editable, getDetail }: BaseInfoProps) => {
             )
           }
         </Form.Item>
-
         <Form.Item label='语言' >
           {data.languages?.join(' | ')}
         </Form.Item>
@@ -377,7 +376,6 @@ const BaseInfo = ({ orgSid, data, editable, getDetail }: BaseInfoProps) => {
         <Form.Item label='创建时间'>
           {formatDateTime(data.created_time)}
         </Form.Item>
-
         <Form.Item label="" name="build_flag" valuePropName="checked">
           <Checkbox disabled={!isEdit}>是否为编译型工具</Checkbox>
         </Form.Item>

@@ -16,6 +16,7 @@ import BaseInfo from './baseinfo';
 import BaseInfoManage from './baseinfo-manage';
 import Rules from './rules';
 import CustomRules from './custom-rules';
+import WhiteList from './white-list';
 import style from './style.scss';
 
 const { TabPane } = Tabs;
@@ -101,6 +102,18 @@ const ToolDetail = () => {
             <TabPane tab="自定义规则" key="customRules">
               <CustomRules
                 editable={isAdmin || isSuperuser}
+                toolDetail={detail}
+                orgSid={orgSid}
+                toolId={toolId}
+                tab={tab}
+              />
+            </TabPane>
+          )
+        }
+        {
+          ((isCustom && isAdmin) || isSuperuser) && (
+            <TabPane tab="工具白名单" key="whitelist">
+              <WhiteList
                 toolDetail={detail}
                 orgSid={orgSid}
                 toolId={toolId}

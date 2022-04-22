@@ -39,6 +39,8 @@ export const updateToolStatus = (orgId: string, toolId: number, status: any) => 
  */
 export const getToolDetail = (orgId: string, toolId: number) => get(`${getToolPrefix(orgId)}${toolId}/`);
 
+
+
 /**
  * 获取语言
  */
@@ -123,3 +125,46 @@ export const updateCustomRule = (orgId: string, toolId: number, ruleId: number, 
  * @param ruleId
  */
 export const deleteCustomRule = (orgId: string, toolId: number, ruleId: number) => del(`${getToolPrefix(orgId)}${toolId}/rules/custom/${ruleId}/`);
+
+
+
+/**
+ * 获取指定工具白名单列表
+ * @param orgId 
+ * @param toolId 
+ * @returns 
+ */
+export const getToolWhiteList = (orgId: string, toolId: number) => get(`${getToolPrefix(orgId)}${toolId}/whitelist/`);
+
+/**
+ * 添加工具白名单
+ * @param orgId 
+ * @param toolId 
+ * @param orgSids - 团队 org_sid
+ * @returns 
+ */
+export const updateToolWhiteList = (orgId: string, toolId: number, string: string) =>
+  post(`${getToolPrefix(orgId)}${toolId}/whitelist/`, {
+    org_sid: string
+  });
+
+/**
+  * 添加工具白名单
+  * @param orgId 
+  * @param toolId 
+  * @param orgSids - 团队 org_sid
+  * @returns 
+  */
+export const addToolWhiteList = (orgId: string, toolId: number, orgSids: Array<string>) =>
+  post(`${getToolPrefix(orgId)}${toolId}/whitelist/create/`, {
+    organizations: orgSids
+  });
+
+/**
+ * 删除工具白名单
+ * @param orgId - 当前团队
+ * @param toolId 
+ * @param id - 白名单id
+ * @returns 
+ */
+export const delToolWhiteList = (orgId: string, toolId: number, id: number) => del(`${getToolPrefix(orgId)}${toolId}/whitelist/${id}/`);
