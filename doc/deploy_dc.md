@@ -31,7 +31,7 @@
 >注：
 >
 >- ``quick_start.sh``脚本中会自动下载[``docker``安装脚本](https://get.docker.com)、启动Docker服务、下载``docker-compose``可执行文件以及执行``compose_init.sh``脚本启动Server、Web服务
->- 如果提示脚本没有执行权限，可以在源码执行命令：``chmod +x compose_init.sh``
+>- 如果提示脚本没有执行权限，可以在源码执行命令：``chmod +x compose_init.sh quick_start.sh``
 
 
 #### 部署方案二：手动部署

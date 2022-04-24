@@ -1,12 +1,11 @@
 #!/bin/sh
-# 持续完善ING
+# -*-*-*-*-*- 持续完善ING -*-*-*-*-*-
 # TCA Server与Web Docker-Compose 一键部署脚本
-# 1. 支持检测Docker
-# 2. 支持协助安装Docker
-# 3. 支持检测Docker状态，并进行启动
-# 4. 支持检测Docker-Compose
-# 5. 支持协助安装Docker-Compose
-# 6. 一键部署整套服务
+# 1. 支持检测Docker和安装Docker
+# 2. 支持检测Docker状态，并进行启动
+# 3. 支持检测Docker-Compose和安装Docker-Compose
+# 4. 一键部署Server与Web服务
+# -*-*-*-*-*- 持续完善ING -*-*-*-*-*-
 
 
 is_dry_run() {
