@@ -55,16 +55,16 @@ function dockercompose_command_detect() {
 }
 
 # 检验docker-compose版本
-function dockercompose_version_detect() {
-    echo "[TCAServerDependcyCheck] *make sure docker-compose have right version*"
-    result=$(docker-compose version)
-    split_result=(${result//v/ })
-    version="${split_result[3]}"
-    if ! [[ $version =~ ^[2-9].* ]]; then
-        echo -e "\e[31m❌ version of  docker-compose is $version right now, please install docker-compose 2.0 or above\e[0m"
-        exit -1 
-    fi
-}
+# function dockercompose_version_detect() {
+#     echo "[TCAServerDependcyCheck] *make sure docker-compose have right version*"
+#     result=$(docker-compose version)
+#     split_result=(${result//v/ })
+#     version="${split_result[3]}"
+#     if ! [[ $version =~ ^[2-9].* ]]; then
+#         echo -e "\e[31m❌ version of  docker-compose is $version right now, please install docker-compose 2.0 or above\e[0m"
+#         exit -1 
+#     fi
+# }
 
 diskspace_detect
 memory_detect
