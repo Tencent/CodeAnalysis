@@ -41,6 +41,7 @@ class ScanSchemeTemplate(CDBaseModel):
     public = models.BooleanField(help_text="是否开放", default=False)
     hidden = models.BooleanField(help_text="是否隐藏", default=False)
     recommend = models.BooleanField(help_text="是否推荐", default=False)
+    need_compile = models.BooleanField(help_text="是否依赖编译", default=False)
     checkprofile = models.ForeignKey(CheckProfile, on_delete=models.SET_NULL, verbose_name="检测检测集",
                                      blank=True, null=True)
     owners = models.ManyToManyField(User, related_name="own_schemetemplate", help_text="负责人")

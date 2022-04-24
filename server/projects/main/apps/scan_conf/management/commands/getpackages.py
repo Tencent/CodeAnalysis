@@ -1,23 +1,22 @@
-# # -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 # Copyright (c) 2021-2022 THL A29 Limited
 #
 # This source code file is made available under MIT License
 # See LICENSE for details
 # ==============================================================================
 
-"""获取指定规则包并加载到Json文件中
+"""获取指定规则并以json格式存入本地
 """
-# 原生 import
+import os
 import json
 import logging
-import os
 
-# 第三方 import
+# 第三方
 from django.core.management.base import BaseCommand
 
-# 项目内 import
-from apps.scan_conf.utils import get_checkpackage_data
+# 项目内
 from apps.scan_conf.models import CheckPackage
+from apps.scan_conf.utils import CheckPackageLoadManager
 
 logger = logging.getLogger(__name__)
 
@@ -26,7 +25,7 @@ SCAN_CONF_COMMANDS_PATH = os.path.join(os.path.dirname(os.path.abspath("__file__
 
 
 class Command(BaseCommand):
-    help = "get json file of checkpackage"
+    help = "get checkpackage json file"
 
     def add_arguments(self, parser):
         parser.add_argument("checkpackage_id", nargs="+", type=int)
@@ -43,11 +42,10 @@ class Command(BaseCommand):
             self.stdout.write("正在下载规则包[%s]..." % package_id)
             file_name = "package_%d_new.json" % package_id
             file_path = os.path.join(SCAN_CONF_COMMANDS_PATH, dirname, file_name)
-            result = get_checkpackage_data(package_id)
+            result = CheckPackageLoadManager.getpkg(package_id)
             with open(file_path, "w") as fd:
                 fd.write(json.dumps([result], indent=2, ensure_ascii=False))
-                self.stdout.write("规则包[%s] 线上规则已经加载到文件: %s" %
-                                  (package_id, file_path))
+                self.stdout.write("规则包[%s] 线上规则已经加载到文件: %s" % (package_id, file_path))
         # 检查执行完毕
         package_names = "; ".join(["package_%d" % pid for pid in package_ids])
         self.stdout.write(

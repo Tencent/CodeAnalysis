@@ -37,7 +37,7 @@ def start_server_job(job_id):
         return
     job = Job.objects.get(id=job_id)
     try:
-        from apps.codeproj.core.jobmgr import JobManager
+        from apps.codeproj.core import JobManager
         JobManager(job.project).start_job(job, job.context)
     except Exception as err:
         logger.exception("[Project: %d][Job: %d] start job failed: %s" % (job.project_id, job.id, err))

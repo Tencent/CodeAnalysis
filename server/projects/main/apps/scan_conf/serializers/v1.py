@@ -27,9 +27,9 @@ class CheckToolNameSimpleSerializer(serializers.ModelSerializer):
     def get_display_name(self, checktool):
         """获取工具展示名称
         """
-        if checktool.show_display_name:
-            return checktool.display_name
-        return checktool.virtual_name
+        request = self.context.get("request")
+        user = request.user if request else None
+        return checktool.get_show_name(user=user)
 
     class Meta:
         model = models.CheckTool

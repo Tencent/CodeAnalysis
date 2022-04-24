@@ -6,13 +6,9 @@
 # ==============================================================================
 
 """
-scan_conf - profile core
-规则配置相关管理
+scan_conf - checkprofile core
 """
 import logging
-
-# 第三方
-from django.conf import settings
 
 # 项目内
 from apps.codeproj.models import LintBaseSetting
@@ -260,7 +256,7 @@ class CheckProfileManager(object):
 
     @classmethod
     def get_org(cls, checkprofile):
-        """获取规则配置对应的团队，体验版获取
+        """获取规则配置对应的团队
         :param checkprofile: CheckProfile, 规则配置
         :return: org
         """

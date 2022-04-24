@@ -18,9 +18,7 @@ from django.utils.timezone import now
 
 from apps.authen.models import Organization, ScmAuth, ScmAccount
 from apps.codeproj import models
-from apps.scan_conf.core import add_checkrules_to_checkpackage
-from apps.scan_conf.core.profilemgr import CheckProfileManager
-from apps.scan_conf.core.rulemgr import CheckRuleManager
+from apps.scan_conf.core import add_checkrules_to_checkpackage, CheckProfileManager, CheckRuleManager
 from apps.scan_conf.models import CheckProfile, PackageMap
 from util.exceptions import ServerConfigError, ServerOperationError, RepositoryCreateError, errcode, ProjectCreateError
 from util.operationrecord import OperationRecordHandler
@@ -835,6 +833,8 @@ class ScanSchemeTemplateManager(object):
         name = scheme_template_data.get("name")
         display_name = scheme_template_data.get("display_name")
         public = scheme_template_data.get("public")
+        recommend = scheme_template_data.get("recommend")
+        need_compile = scheme_template_data.get("need_compile")
         basic_conf_data = scheme_template_data["basic_conf"] if scheme_template_data.get("basic_conf") else {}
         lint_conf_data = scheme_template_data["lint_conf"] if scheme_template_data.get("lint_conf") else {}
         metric_conf_data = scheme_template_data["metric_conf"] if scheme_template_data.get("metric_conf") else {}
@@ -849,6 +849,8 @@ class ScanSchemeTemplateManager(object):
             name=name,
             display_name=display_name,
             public=public,
+            recommend=recommend,
+            need_compile=need_compile,
             short_desc=scheme_template_data.get("short_desc"),
             description=scheme_template_data.get("description"),
             tag=scheme_template_data.get("tag"),

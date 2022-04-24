@@ -1,14 +1,13 @@
-
+# -*- coding: utf-8 -*-
 # Copyright (c) 2021-2022 THL A29 Limited
 #
 # This source code file is made available under MIT License
 # See LICENSE for details
 # ==============================================================================
-# -*- coding: utf-8 -
+
 """
 scan_conf - toollib core
 """
-# python 原生
 import logging
 
 # 第三方
@@ -62,7 +61,7 @@ class BaseLibManager(object):
 
     @classmethod
     def filter_usable(cls, **kwargs):
-        """筛选可用工具
+        """筛选可用工具依赖
         """
         raise NotImplementedError
 
@@ -73,25 +72,32 @@ class ToolLibManager(BaseLibManager):
 
     @classmethod
     def get_lib_key(cls, **kwargs):
+        """获取工具依赖key值
+        :kwargs:
+            org, Organization, 团队，必填参数
+        :return: org_{org_id}
+        """
         org = kwargs.get("org", None)
         if not org:
             raise Exception("未获取到团队 ，无法获取工具依赖key值")
-        return "org_%s" % org.org_sid
-
+        return "org_%s" % org.id
+    
     @classmethod
     def get_org(cls, lib_key):
         """根据工具依赖key值获取团队，可为None
         :param lib_key: str, 工具依赖key
         :return: Organization
         """
-        org_sid = lib_key.split("org_")[-1]
-        return Organization.objects.filter(org_sid=org_sid).first()
+        try:
+            org_id = int(lib_key.split("org_")[-1])
+        except ValueError:
+            return None
+        return Organization.objects.filter(id=org_id).first()
 
     @classmethod
     def create_or_update(cls, name, user, instance=None, **kwargs):
         """创建、更新工具依赖
         :param name: str, 依赖名称
-        :param org: Organization, 团队
         :param user: User, 操作用户
         :param instance: ToolLib, 工具依赖
         :param kwargs: dict, 其他参数
@@ -114,6 +120,7 @@ class ToolLibManager(BaseLibManager):
         """
         lib_key = cls.get_lib_key(**kwargs)
         public_lib_type = models.ToolLib.LibTypeEnum.PUBLIC
+        # 公开依赖 + 团队依赖
         return models.ToolLib.objects.filter(Q(lib_key=lib_key) | Q(lib_type=public_lib_type)) \
             .distinct().order_by('-modified_time')
 
@@ -131,7 +138,7 @@ class ToolLibManager(BaseLibManager):
             return True
         lib_key = cls.get_lib_key(org=org)
         return toollib.lib_key == lib_key and user.has_perm(Organization.PermissionNameEnum.VIEW_ORG_PERM, org)
-
+    
     @classmethod
     def check_edit_perm(cls, org, toollib, user):
         """校验用户是否具备该工具依赖的编辑权限
@@ -251,8 +258,14 @@ class ToolLibSchemeManager(object):
     """
 
     @classmethod
-    def create_or_update(cls, checktool, user, tool_libs=[], instance=None, **kwargs):
+    def create_or_update(cls, checktool, user, tool_libs=None, instance=None, **kwargs):
         """创建/更新依赖方案
+        :param checktool: CheckTool, 工具
+        :param user: User, 用户
+        :param tool_libs: list<ToolLib>, 工具依赖
+        :param instance: ToolLibScheme, 工具依赖方案
+        :param kwargs: 其他参数
+        :return: ToolLibScheme
         """
         created = False
         if not instance:
@@ -293,6 +306,8 @@ class ToolLibSchemeManager(object):
     @classmethod
     def delete(cls, instance, user):
         """删除工具依赖方案，真删除
+        :param instance: ToolLibScheme, 工具依赖方案
+        :param user: User, 用户
         """
         message = "移除依赖方案：%s" % instance
         OperationRecordHandler.add_checktool_operation_record(instance.checktool, "移除依赖方案", user, message)

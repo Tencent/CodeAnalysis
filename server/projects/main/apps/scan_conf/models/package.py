@@ -9,15 +9,15 @@
 scan_conf - pkg,profile models
 """
 # 第三方
-from django.contrib.auth.models import User, Group
 from django.db import models, IntegrityError
+from django.contrib.auth.models import User, Group
 from guardian.shortcuts import assign_perm
 
 # 项目内
-from apps.base.basemodel import CDBaseModel
 from apps.scan_conf.models.base import Language, Label
 from apps.scan_conf.models.rule import CheckRule
 from apps.scan_conf.models.tool import CheckTool
+from apps.base.basemodel import CDBaseModel
 
 
 class CheckPackage(CDBaseModel):
@@ -135,6 +135,13 @@ class PackageMap(models.Model):
         return "packagemap-%s-%s" % (self.checkpackage_id, self.checkrule_id)
 
 
+
+def get_checkprofile_admins(checkprofile):
+    """获取规则集admins，开源版规则集无单独权限
+    """
+    return []
+
+
 class CheckProfile(CDBaseModel):
     """规则集表
     """
@@ -184,8 +191,8 @@ class CheckProfile(CDBaseModel):
         """
         package_ids = list(self.checkpackages.all().values_list("id", flat=True))
         package_ids.append(self.custom_checkpackage.id)
-        checktool_ids = PackageMap.objects.filter(
-            checkpackage_id__in=package_ids).values_list('checktool', flat=True).distinct()
+        checktool_ids = list(PackageMap.objects.filter(
+            checkpackage_id__in=package_ids).values_list('checktool', flat=True).distinct())
         return CheckTool.objects.filter(id__in=checktool_ids)
 
     def get_checkpackage_envs(self):
@@ -210,6 +217,7 @@ class CheckProfile(CDBaseModel):
 
     def get_admins(self):
         """由于规则集依附代码库admin权限，因此该方法获取规则集+对应代码库的admins
+        开源版规则集无单独的权限
         """
         return get_checkprofile_admins(self)
 
@@ -262,9 +270,3 @@ class CheckProfile(CDBaseModel):
 
     def __str__(self):
         return self.name
-
-
-def get_checkprofile_admins(checkprofile):
-    """获取规则集admins
-    """
-    return []
