@@ -70,4 +70,4 @@ diskspace_detect
 memory_detect
 docker_command_detect
 dockercompose_command_detect
-dockercompose_version_detect
+# dockercompose_version_detect
