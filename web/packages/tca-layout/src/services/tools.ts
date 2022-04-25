@@ -168,3 +168,9 @@ export const addToolWhiteList = (orgId: string, toolId: number, orgSids: Array<s
  * @returns 
  */
 export const delToolWhiteList = (orgId: string, toolId: number, id: number) => del(`${getToolPrefix(orgId)}${toolId}/whitelist/${id}/`);
+
+
+
+// ====================== 工具依赖 ======================
+
+

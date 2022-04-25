@@ -65,6 +65,20 @@ const SideBar = () => {
       link: `/t/${orgSid}/tools`,
       key: 'tools',
       regexMatch: /^\/t\/[^/]+\/tools/i,
+      childrens: [
+        {
+          title: t('工具列表'),
+          link: `/t/${orgSid}/tools`,
+          key: 'tools',
+          regexMatch: /^\/t\/[^/]+\/tools/i,
+        },
+        {
+          title: t('工具依赖'),
+          link: `/t/${orgSid}/tool-libs/`,
+          key: 'tool-libs',
+          regexMatch: /^\/t\/[^/]+\/tool-libs/i,
+        },
+      ],
     },
     {
       icon: <Api />,
