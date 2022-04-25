@@ -12,6 +12,8 @@ export const getManageRouter = () => '/manage';
 
 export const getTeamRouter = (orgSid: string) => `/t/${orgSid}`;
 
+export const getToolsRouter = (orgSid: string) => `/t/${orgSid}/tools`;
+
 export const getProjectRouter = (orgSid: string, name: string) => `/t/${orgSid}/p/${name}`;
 
 export const getRepoRouter = (orgSid: string, teamName: string, repoId: number | string) => `/t/${orgSid}/p/${teamName}/code-analysis/repos/${repoId}/projects`;

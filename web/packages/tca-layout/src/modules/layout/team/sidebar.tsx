@@ -13,7 +13,7 @@ import Group from 'coding-oa-uikit/lib/icon/Group';
 import Project from 'coding-oa-uikit/lib/icon/Project';
 import Api from 'coding-oa-uikit/lib/icon/Api';
 import TeamOverview from 'coding-oa-uikit/lib/icon/TeamOverview';
-// import Tiles from 'coding-oa-uikit/lib/icon/Tiles';
+import Tiles from 'coding-oa-uikit/lib/icon/Tiles';
 import MenuLayout from '@src/components/menu-layout';
 import { API_DOC_PATH } from '@src/utils/getRoutePath';
 
@@ -58,6 +58,13 @@ const SideBar = () => {
       title: '',
       key: 'divider-2',
       divider: true,
+    },
+    {
+      icon: <Tiles />,
+      title: t('工具管理'),
+      link: `/t/${orgSid}/tools`,
+      key: 'tools',
+      regexMatch: /^\/t\/[^/]+\/tools/i,
     },
     {
       icon: <Api />,
