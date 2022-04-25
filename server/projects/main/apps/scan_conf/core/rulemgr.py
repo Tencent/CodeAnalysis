@@ -6,9 +6,8 @@
 # ==============================================================================
 
 """
-scan_conf - rule core
+scan_conf - checkrule core
 """
-# python 原生
 import logging
 
 # 第三方
@@ -22,7 +21,7 @@ logger = logging.getLogger(__name__)
 
 
 class BaseRuleManager(object):
-    """规则管理base模块
+    """规则管理 base模块
     """
 
     class ToolKeyEnum(object):
@@ -56,11 +55,12 @@ class BaseRuleManager(object):
 class CheckRuleManager(BaseRuleManager):
     """规则manager
     """
-
+    
     @classmethod
-    def all(cls):
-        """获取全部规则
+    def all(cls, **kwargs):
+        """获取全部工具规则
         """
+        # 工具规则的tool_key为default，自定义规则的tool_key为该工具的tool_key
         return CheckRule.objects.filter(tool_key__isnull=False)
 
     @classmethod
@@ -77,7 +77,7 @@ class CheckRuleManager(BaseRuleManager):
 
     @classmethod
     def get_org_detail(cls, checkrule):
-        """根据工具tool_key获取团队详情
+        """根据工具tool_key获取团队详情，用于显示自定义规则来源
         :param checktool: str, 工具key
         :return: {"name": "xxx"}
         """
@@ -105,13 +105,13 @@ class CheckRuleManager(BaseRuleManager):
         tool_status = [CheckTool.StatusEnum.RUNNING, CheckTool.StatusEnum.TRIAL]
         # 获取所有公开工具(正常运营、体验运营)、白名单工具且未失效的规则
         rules = CheckRule.objects.filter(
-            tool_key=cls.ToolKeyEnum.DEFAULT, disable=False,
-            checktool__status__in=tool_status
-        ).filter(
-            Q(checktool__open_user=True) |
-            Q(checktool__open_maintain=True) |
-            Q(checktool__in=tool_ids)
-        )
+                    tool_key=cls.ToolKeyEnum.DEFAULT, disable=False,
+                    checktool__status__in=tool_status
+                ).filter(
+                    Q(checktool__open_user=True) |
+                    Q(checktool__open_maintain=True) |
+                    Q(checktool__in=tool_ids)
+                )
         # 自定义规则且未失效规则
         custom_rules = CheckRule.objects.filter(tool_key__in=tool_keys, disable=False,
                                                 checktool__status__in=tool_status)

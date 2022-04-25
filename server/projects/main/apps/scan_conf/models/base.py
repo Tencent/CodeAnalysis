@@ -8,6 +8,7 @@
 """
 scan_conf - base models
 """
+# 第三方
 from django.db import models
 
 # 项目内
@@ -47,6 +48,7 @@ class Language(models.Model):
         XML = 'xml'
         DART = 'dart'
         SHELL = 'shell'
+        PB = 'protobuf'
 
     LANGUAGE_CHOICES = (
         (LanguageEnum.CPP, 'C/C++'),
@@ -66,7 +68,6 @@ class Language(models.Model):
         (LanguageEnum.TYPESCRIPT, 'TypeScript'),
         (LanguageEnum.SCALA, 'Scala'),
         (LanguageEnum.VISUALBASIC, 'Visual Basic'),
-        # 2019-12-19 新增
         (LanguageEnum.PLSQL, 'PL/SQL'),
         (LanguageEnum.COBOL, 'COBOL'),
         (LanguageEnum.ABAP, 'ABAP'),
@@ -78,6 +79,7 @@ class Language(models.Model):
         (LanguageEnum.XML, 'XML'),
         (LanguageEnum.DART, "Dart"),
         (LanguageEnum.SHELL, "Shell"),
+        (LanguageEnum.PB, "Protocol Buffers"),
     )
 
     name = models.CharField(max_length=32, help_text='程序语言', choices=LANGUAGE_CHOICES, null=True)
@@ -115,3 +117,13 @@ class Process(models.Model):
 
     def __str__(self):
         return self.display_name
+
+
+class CheckToolWhiteKey(models.Model):
+    """工具可被使用的白名单表
+    """
+    tool_key = models.CharField(max_length=64, help_text="工具key值，org_'<org_id>'")
+    tool_id = models.IntegerField(help_text="工具id")
+
+    class Meta:
+        unique_together = ("tool_key", "tool_id")

@@ -209,4 +209,6 @@ urlpatterns = [
     path("orgs/<str:org_sid>/teams/<str:team_name>/repos/<int:repo_id>/projects/", include(project_urlpatterns)),
     path("orgs/<str:org_sid>/repos/", v3.OrgRepositoryListApiView.as_view(), name="apiv3_org_repo_list"),
     path("orgs/<str:org_sid>/schemes/", include(global_scheme_urlpatterns)),
+    path("orgs/<str:org_sid>/checktools/", include("apps.scan_conf.api_urls.v3_checktool")),
+    path("orgs/<str:org_sid>/toollibs/", include("apps.scan_conf.api_urls.v3_toollib")),
 ]

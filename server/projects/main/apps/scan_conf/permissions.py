@@ -15,10 +15,10 @@ from django.shortcuts import get_object_or_404
 from rest_framework import permissions
 
 # 项目内
-from apps.authen.models import Organization
-from apps.authen.permissions import CodeDogUserPermission
-from apps.scan_conf.core import CheckToolManager, ToolLibManager
 from apps.scan_conf.models import CheckTool, CheckRule, ToolLib
+from apps.scan_conf.core import ToolLibManager, CheckToolManager
+from apps.authen.permissions import CodeDogUserPermission
+from apps.authen.models import Organization
 
 logger = logging.getLogger(__name__)
 
@@ -43,10 +43,10 @@ class CheckToolDefaultPermission(CodeDogUserPermission):
         if not org.validate_org_checked():
             return False
         checktool = get_object_or_404(CheckTool, id=checktool_id)
-        return self.is_check_adminuser(request.user) \
-               or (request.method in permissions.SAFE_METHODS and
-                   CheckToolManager.check_usable_perm(org, checktool, request.user)) \
-               or CheckToolManager.check_edit_perm(org, checktool, request.user)
+        return self.is_check_adminuser(request.user) or \
+               (request.method in permissions.SAFE_METHODS and
+                CheckToolManager.check_usable_perm(org, checktool, request.user)) or \
+               CheckToolManager.check_edit_perm(org, checktool, request.user)
 
 
 class CheckToolAdminPermission(CodeDogUserPermission):
@@ -92,10 +92,10 @@ class CheckToolMaintainPermission(CodeDogUserPermission):
         if not org.validate_org_checked():
             return False
         checktool = get_object_or_404(CheckTool, id=checktool_id)
-        return self.is_check_adminuser(request.user) \
-               or (request.method in permissions.SAFE_METHODS
-                   and CheckToolManager.check_usable_perm(org, checktool, request.user)) \
-               or CheckToolManager.check_maintain_edit_perm(org, checktool, request.user)
+        return self.is_check_adminuser(request.user) or \
+               (request.method in permissions.SAFE_METHODS and
+                CheckToolManager.check_usable_perm(org, checktool, request.user)) or \
+               CheckToolManager.check_maintain_edit_perm(org, checktool, request.user)
 
 
 class CheckToolRuleDetaultPermission(CodeDogUserPermission):
@@ -118,11 +118,10 @@ class CheckToolRuleDetaultPermission(CodeDogUserPermission):
         if not org.validate_org_checked():
             return False
         checkrule = get_object_or_404(CheckRule, id=checkrule_id, checktool_id=checktool_id)
-        return self.is_check_adminuser(request.user) \
-               or (request.method in permissions.SAFE_METHODS
-                   and CheckToolManager.check_usable_perm(org, checkrule.checktool, request.user)) \
-               or CheckToolManager.check_edit_perm(org, checkrule.checktool, request.user)
-        # or CheckToolManager.check_rule_edit_perm(org, checkrule, request.user)
+        return self.is_check_adminuser(request.user) or \
+               (request.method in permissions.SAFE_METHODS and
+                CheckToolManager.check_usable_perm(org, checkrule.checktool, request.user)) or \
+               CheckToolManager.check_edit_perm(org, checkrule.checktool, request.user)
 
 
 class ToolLibDefaultPermission(CodeDogUserPermission):
@@ -143,7 +142,7 @@ class ToolLibDefaultPermission(CodeDogUserPermission):
         if not org.validate_org_checked():
             return False
         toollib = get_object_or_404(ToolLib, id=toollib_id)
-        return self.is_check_adminuser(request.user) \
-               or (request.method in permissions.SAFE_METHODS
-                   and ToolLibManager.check_usable_perm(org, toollib, request.user)) \
-               or ToolLibManager.check_edit_perm(org, toollib, request.user)
+        return self.is_check_adminuser(request.user) or \
+               (request.method in permissions.SAFE_METHODS and
+                ToolLibManager.check_usable_perm(org, toollib, request.user)) or \
+               ToolLibManager.check_edit_perm(org, toollib, request.user)

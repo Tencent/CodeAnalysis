@@ -20,7 +20,7 @@ from django.contrib.auth.models import User
 
 # 项目内 import
 from apps.codeproj import core, models
-from apps.codeproj.core.projteammgr import ProjectTeamManager, LabelManager
+from apps.codeproj.core import ProjectTeamManager, LabelManager
 from apps.base.serializers import CDBaseModelSerializer
 from apps.job import models as job_models
 from apps.nodemgr.models import ExecTag, Node
@@ -206,7 +206,7 @@ class ProjectCheckProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.CheckProfile
-        fields = ["id", "name", "profile_type", "custom_checkpackage", "checkpackages"]
+        fields = ["id", "name", "custom_checkpackage", "checkpackages"]
 
 
 class ScanSchemeCheckprofileCustomSerialiazer(serializers.Serializer):

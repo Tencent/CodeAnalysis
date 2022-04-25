@@ -96,7 +96,6 @@ class CheckRule(CDBaseModel):
     solution = models.TextField(blank=True, null=True, help_text='解决方法')
     labels = models.ManyToManyField(Label, help_text='标签')
     languages = models.ManyToManyField(Language, help_text='适用语言')
-    # 用于自定义
     tool_key = models.CharField(max_length=64, null=True, help_text="工具key值, org_'<org_id>'")
 
     def __str__(self):

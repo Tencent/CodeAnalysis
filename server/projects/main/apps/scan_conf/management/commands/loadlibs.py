@@ -5,7 +5,7 @@
 # See LICENSE for details
 # ==============================================================================
 
-"""获取指定工具依赖入库
+"""获取指定工具依赖json入库
 """
 import json
 import logging
@@ -20,7 +20,7 @@ from django.contrib.auth.models import User
 # 项目内 import
 from apps.authen.models import ScmAccount
 from apps.scan_conf.models import ToolLib
-from apps.scan_conf.utils import load_toollib
+from apps.scan_conf.utils import ToolLibLoadManager
 from util.cdcrypto import encrypt
 
 logger = logging.getLogger(__name__)
@@ -30,7 +30,7 @@ SCAN_CONF_COMMANDS_PATH = os.path.join(os.path.dirname(os.path.abspath("__file__
 
 
 class Command(BaseCommand):
-    help = "load toollib"
+    help = "load toollib json"
 
     def add_arguments(self, parser):
         parser.add_argument("lib_name_list", type=str, nargs="+", help="需要load的工具依赖列表")
@@ -73,35 +73,40 @@ class Command(BaseCommand):
         # 默认使用CodeDog用户
         codedog, _ = User.objects.get_or_create(username="CodeDog")
         # 执行工具依赖load
+        toollib_json_list = []
+        lib_kv = dict()
         scm_account = None
         failed_names = []
         for lib_name in lib_name_list:
-            self.stdout.write("loading toollib [%s] ..." % lib_name)
             try:
                 file_path = os.path.join(SCAN_CONF_COMMANDS_PATH, dirname, "%s.json" % lib_name)
                 with open(file_path, "r") as fd:
-                    toollib_info = json.load(fd)
+                    toollib_json = json.load(fd)
                 # 如果是json数组则只取第一项
-                if isinstance(toollib_info, list) and len(toollib_info) > 0:
-                    toollib_info = toollib_info[0]
+                if isinstance(toollib_json, list) and len(toollib_json) > 0:
+                    toollib_json = toollib_json[0]
                 # 存在非link类型的依赖，则需要凭证
-                if toollib_info.get("scm_type") != ToolLib.ScmTypeEnum.LINK and not scm_account:
+                if toollib_json.get("scm_type") != ToolLib.ScmTypeEnum.LINK and not scm_account:
                     if account and password:
                         scm_account, _ = self.get_or_create_account(account, password, codedog)
                     else:
                         raise Exception("account 或 password 为必传参数")
                 if scm_account:
-                    toollib_info.update({
-                        "scm_auth": {
-                            "scm_account": scm_account.id,
-                            "auth_type": "password"
-                        }
+                    toollib_json.update({
+                      "scm_auth": {
+                          "scm_account": scm_account.id,
+                          "auth_type": "password"
+                      }
                     })
-                # 执行工具依赖load
-                toollib = load_toollib(toollib_info, codedog)
+                lib_kv[toollib_json["name"]] = lib_name
+                toollib_json_list.append(toollib_json)
             except Exception as e:
                 logger.error(e)
                 failed_names.append(lib_name)
+        load_res_list = ToolLibLoadManager.loadlib_by_workers(toollib_json_list, user=codedog)
+        for status, toollib_name in load_res_list:
+            if not status:
+                failed_names.append(lib_kv[toollib_name])
         # 检查执行完毕
         names = ""
         for lib_name in lib_name_list:
