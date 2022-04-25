@@ -38,6 +38,22 @@ class OnlySuperAdminReadField(serializers.Field):
             return ""
 
 
+class ChoicesField(serializers.Field):
+    def __init__(self, choices, **kwargs):
+        self._choices = dict(choices)
+        super(ChoicesField, self).__init__(**kwargs)
+
+    def to_representation(self, obj):
+        return self._choices[obj]
+
+    def to_internal_value(self, data):
+        try:
+            return list(self._choices.keys())[list(self._choices.values()).index(data)]
+        except ValueError:
+            raise serializers.ValidationError("选项值只可为：%s" % '; '.join(
+                [str(i) for i in self._choices.values()]))
+
+
 class CDBaseModelSerializer(serializers.ModelSerializer):
     creator = UserSimpleSerializer(read_only=True)
     created_time = serializers.StringRelatedField()

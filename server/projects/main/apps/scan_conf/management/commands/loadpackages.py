@@ -1,25 +1,22 @@
-# # -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 # Copyright (c) 2021-2022 THL A29 Limited
 #
 # This source code file is made available under MIT License
 # See LICENSE for details
 # ==============================================================================
 
-"""获取指定规则包并存入库
+"""获取指定规则包json入库
 """
-# 原生 import
+import os
 import json
 import logging
-import os
 from os import walk
 
-from django.conf import settings
-# 第三方 import
+# 第三方
 from django.core.management.base import BaseCommand
 
-from apps.scan_conf.models import CheckPackage
-# 项目内 import
-from apps.scan_conf.utils import load_checkpackages, disable_checkpackages
+# 项目内
+from apps.scan_conf.utils import CheckPackageLoadManager
 
 logger = logging.getLogger(__name__)
 
@@ -33,24 +30,6 @@ class Command(BaseCommand):
     def add_arguments(self, parser):
         parser.add_argument("file_names", nargs="+", type=str)
         parser.add_argument("-dirname", "--dirname", type=str, help="load dirname path package")
-
-    def check_saas_enable(self, checkpackage_info):
-        """检查工具在saas版是否可用
-        """
-        if hasattr(settings, "CODEDOG_ENV") and settings.CODEDOG_ENV == "saas":
-            return checkpackage_info.get("open_saas", False)
-        else:
-            return True
-
-    def set_open_on_saas(self, checkpackage_info):
-        """saas版可用规则包均初始化为公开
-        """
-        if hasattr(settings, "CODEDOG_ENV") and settings.CODEDOG_ENV == "saas" \
-                and checkpackage_info.get("open_saas") is True:
-            # 无status或为disabled则更新为running
-            if not checkpackage_info.get("status") or checkpackage_info.get(
-                    "status") == CheckPackage.StatusEnum.DISABLED:
-                checkpackage_info.update({"status": CheckPackage.StatusEnum.RUNNING})
 
     def handle(self, *args, **options):
         # 获取规则包目录名称，默认为checkpackage_json
@@ -66,30 +45,27 @@ class Command(BaseCommand):
                         package_list.append(filename[:-5])
             file_names = package_list
         # 执行规则包load
+        checkpackage_json_list = []
+        pkg_kv = dict()
         failed_names = []
         for fn in file_names:
-            self.stdout.write("loading package [%s] ..." % fn)
             try:
                 file_name = fn + ".json"
                 file_path = os.path.join(SCAN_CONF_COMMANDS_PATH, dirname, file_name)
                 with open(file_path, "r") as fd:
-                    checkpackage_info = json.load(fd)
+                    checkpackage_json = json.load(fd)
                 # 如果是json数组则只取第一项
-                if isinstance(checkpackage_info, list) and len(checkpackage_info) > 0:
-                    checkpackage_info = checkpackage_info[0]
-                if not self.check_saas_enable(checkpackage_info):
-                    self.stdout.write("package[%s] disable at saas env" % fn)
-                    disable_checkpackages(checkpackage_info)
-                self.set_open_on_saas(checkpackage_info)
-                # 执行规则包load
-                checkpackage = load_checkpackages(checkpackage_info)
-                if checkpackage.package_type != CheckPackage.PackageTypeEnum.OFFICIAL:
-                    self.stdout.write("package[%s] is not official set to official..." % checkpackage.name)
-                    checkpackage.package_type = CheckPackage.PackageTypeEnum.OFFICIAL
-                    checkpackage.save()
+                if isinstance(checkpackage_json, list) and len(checkpackage_json) > 0:
+                    checkpackage_json = checkpackage_json[0]
+                pkg_kv[checkpackage_json["name"]] = fn
+                checkpackage_json_list.append(checkpackage_json)
             except Exception as e:
-                logging.exception(e)
+                logger.error(e)
                 failed_names.append(fn)
+        load_res_list = CheckPackageLoadManager.loadpkg_by_workers(checkpackage_json_list)
+        for status, checkpackage_json in load_res_list:
+            if not status:
+                failed_names.append(pkg_kv[checkpackage_json])
         # 检查执行完毕
         self.stdout.write("Finish load [%s]" % "; ".join(file_names))
         if failed_names:

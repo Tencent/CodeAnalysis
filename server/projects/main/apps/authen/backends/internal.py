@@ -20,7 +20,7 @@ from rest_framework.authentication import BaseAuthentication
 from rest_framework.exceptions import AuthenticationFailed
 
 # 项目内 import
-from apps.authen.core.usermgr import CodeDogUserManager
+from apps.authen.core import CodeDogUserManager
 from util.cdcrypto import decrypt
 
 

@@ -6,7 +6,7 @@
 # ==============================================================================
 
 """
-scan_conf - package core
+scan_conf - checkpackage core
 """
 import logging
 
@@ -23,7 +23,7 @@ logger = logging.getLogger(__name__)
 
 
 class BasePkgManager(object):
-    """规则包manager
+    """规则包管理 base模块
     """
 
     @classmethod
@@ -75,9 +75,9 @@ class BasePkgManager(object):
         :param checkpackage: CheckPackage, 规则包
         :param user: User, 操作人
         """
-        tool_ids = models.PackageMap.objects.filter(
-            checkpackage=checkpackage).values_list("checktool_id", flat=True).distinct()
-        exist_tool_ids = checkpackage.checktool.all().values_list("id", flat=True).distinct()
+        tool_ids = list(models.PackageMap.objects.filter(
+            checkpackage=checkpackage).values_list("checktool_id", flat=True).distinct())
+        exist_tool_ids = list(checkpackage.checktool.all().values_list("id", flat=True).distinct())
         add_tools = models.CheckTool.objects.filter(id__in=tool_ids).exclude(id__in=exist_tool_ids)
         if add_tools:
             tool_names = []
@@ -201,7 +201,7 @@ class BasePkgManager(object):
             raise ParseError("没有权限添加该工具规则")
         # 1. 公开工具，所有规则可直接添加到规则包
         # 2. 规则配置admins在工具allusers，则具有权限添加规则
-        pkg_rule_ids = checkpackage.checkrule.all().values_list("id", flat=True)
+        pkg_rule_ids = list(checkpackage.checkrule.all().values_list("id", flat=True))
         checkrules = CheckRuleManager.filter_tool_all(checktool).exclude(id__in=pkg_rule_ids)
         cls._add_checktool_rules_done(checkpackage, checktool, checkrules, user)
 

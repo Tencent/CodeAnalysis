@@ -19,7 +19,6 @@ from guardian.shortcuts import assign_perm
 
 # 项目内 import
 from apps.authen.models import ScmAuth, Organization
-from apps.authen.core import usermgr
 from apps.base.basemodel import CDBaseModel, BasePerm
 from apps.nodemgr.models import ExecTag
 from apps.scan_conf.models import Language

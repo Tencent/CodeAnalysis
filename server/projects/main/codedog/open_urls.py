@@ -84,7 +84,8 @@ urlpatterns += [
     # V2 APIs
     path("api/v2/authen/", include("apps.authen.api_urls.v2")),
     path("api/v2/jobs/", include("apps.job.api_urls.v2_job")),
-    path("api/v2/", include('apps.nodemgr.api_urls.v2')),
+    path("api/v2/checktools/", include("apps.scan_conf.api_urls.v2_checktool")),
+    path("api/v2/", include("apps.nodemgr.api_urls.v2")),
 
     # V3 APIs
     path("api/v3/", include("apps.base.api_urls.v3")),

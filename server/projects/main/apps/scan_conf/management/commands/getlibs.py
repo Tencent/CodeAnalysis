@@ -1,20 +1,20 @@
-# # -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 # Copyright (c) 2021-2022 THL A29 Limited
 #
 # This source code file is made available under MIT License
 # See LICENSE for details
 # ==============================================================================
 
-"""获取指定工具依赖json
+"""获取指定工具依赖并以json格式存入本地
 """
+import os
 import json
 import logging
-import os
 
-# 第三方 import
+# 第三方
 from django.core.management.base import BaseCommand
 
-# 项目内 import
+# 项目内
 from apps.scan_conf.models import ToolLib
 from apps.scan_conf.core import ToolLibManager
 
@@ -34,15 +34,15 @@ class Command(BaseCommand):
 
     def get_toollib_data(self, toollib):
         return {
-            "name": toollib.name,
-            "description": toollib.description,
-            "envs": toollib.envs,
-            "lib_type": toollib.lib_type,
-            "lib_os": toollib.lib_os,
-            "scm_url": toollib.scm_url,
-            "scm_type": toollib.scm_type,
-            "extra_data": toollib.extra_data,
-            "lib_key": toollib.lib_key
+          "name": toollib.name,
+          "description": toollib.description,
+          "envs": toollib.envs,
+          "lib_type": toollib.lib_type,
+          "lib_os": toollib.lib_os,
+          "scm_url": toollib.scm_url,
+          "scm_type": toollib.scm_type,
+          "extra_data": toollib.extra_data,
+          "lib_key": toollib.lib_key
         }
 
     def handle(self, *args, **options):

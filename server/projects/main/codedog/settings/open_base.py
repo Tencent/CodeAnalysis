@@ -236,6 +236,7 @@ CLOSING_JOB_TIMEOUT = timedelta(hours=12)          # 入库超时时间
 CLEAN_JOB_TIMEOUT = timedelta(days=1)              # 任务超时时间
 CLEAN_PRIVATE_JOB_TIMEOUT = timedelta(minutes=5)   # 私有任务超时时间
 INIT_JOB_TIMEOUT = timedelta(minutes=20)           # 任务初始化超时时间
+CLEAN_DIR_TIMEOUT = timedelta(days=10)             # jobdata目录下超时时间
 NODE_ACTIVE_TIMEOUT = timedelta(minutes=5)         # 节点端没有心跳则标记为offline时间
 PROJECT_DISACTIVE_TIMEOUT = timedelta(days=180)    # 项目失活时间
 JOB_RUNTIME_LIMIT = 600                            # 任务超时时间，单位分钟
