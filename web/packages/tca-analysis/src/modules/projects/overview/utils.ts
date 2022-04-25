@@ -222,6 +222,8 @@ export const getCyCLineChartData = (scans: any, standard: string) => {
         : scan.default_summary;
       if (summary) {
         const date = formatChartDate(scan.scan_time);
+        console.log(scan.scan_time)
+
         rowsTotal.push({
           date,
           num: summary.under_cc_func_count + summary.over_cc_func_count,
@@ -247,8 +249,8 @@ export const getCycPieChartData = (scans: any, standard: string) => {
         ? data.custom_summary
         : data.default_summary;
       return [
-        { item: CYC_TYPE_TXT.OVER, count: summary.over_cc_func_count },
-        { item: CYC_TYPE_TXT.EXCESS, count: summary.under_cc_func_count },
+        { type: CYC_TYPE_TXT.OVER, value: summary.over_cc_func_count },
+        { type: CYC_TYPE_TXT.EXCESS, value: summary.under_cc_func_count },
       ];
     }
   });
@@ -301,20 +303,20 @@ export const getDupBarChartData = (scans: any, standard: string) => {
         : data.default_summary;
       return [
         {
-          item: RISK_TYPE_TXT.EXHI,
-          count: get(summary, 'exhi_risk.file_count', 0),
+          type: RISK_TYPE_TXT.EXHI,
+          value: get(summary, 'exhi_risk.file_count', 0),
         },
         {
-          item: RISK_TYPE_TXT.HIGH,
-          count: get(summary, 'high_risk.file_count', 0),
+          type: RISK_TYPE_TXT.HIGH,
+          value: get(summary, 'high_risk.file_count', 0),
         },
         {
-          item: RISK_TYPE_TXT.MIDD,
-          count: get(summary, 'midd_risk.file_count', 0),
+          type: RISK_TYPE_TXT.MIDD,
+          value: get(summary, 'midd_risk.file_count', 0),
         },
         {
-          item: RISK_TYPE_TXT.LOW,
-          count: get(summary, 'low_risk.file_count', 0),
+          type: RISK_TYPE_TXT.LOW,
+          value: get(summary, 'low_risk.file_count', 0),
         },
       ];
     }
@@ -359,14 +361,14 @@ export const getClocLineChartData = (scans: any) => {
 export const getClocPieChartData = (scans: any) => {
   if (scans && scans.length > 0) {
     return [{
-      item: CLOC_TYPE_TXT.CODE,
-      count: scans[0].code_line_num,
+      type: CLOC_TYPE_TXT.CODE,
+      value: scans[0].code_line_num,
     }, {
-      item: CLOC_TYPE_TXT.COMMENT,
-      count: scans[0].comment_line_num,
+      type: CLOC_TYPE_TXT.COMMENT,
+      value: scans[0].comment_line_num,
     }, {
-      item: CLOC_TYPE_TXT.BLANK,
-      count: scans[0].blank_line_num,
+      type: CLOC_TYPE_TXT.BLANK,
+      value: scans[0].blank_line_num,
     }];
   }
   return [];

@@ -17,7 +17,7 @@ import { useStateStore } from '@src/context/store';
  * @param time 时间
  * @param format 格式化参数
  */
-export const formatDate = (time: any, format = 'YYYY-MM-DD') => Moment(time, format).format(format);
+export const formatDate = (time: any, format = 'YYYY-MM-DD') => Moment(time).format(format);
 
 /**
  * 格式化时间，返回时间的年月日，时分秒
