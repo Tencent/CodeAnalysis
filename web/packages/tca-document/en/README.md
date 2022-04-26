@@ -1,11 +1,11 @@
 ---
 home: true
-title: 腾讯云代码分析帮助文档
+title: Tencent Code Analysis Document
 actions:
-  - text: 帮助文档
-    link: /zh/guide/
+  - text: Document
+    link: /en/guide/
     type: primary
-  - text: 开源地址
+  - text: GitHub
     link: https://github.com/Tencent/CodeAnalysis
     type: secondary
 features:
