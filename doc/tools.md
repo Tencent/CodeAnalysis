@@ -1,54 +1,54 @@
 # TCA 工具列表
 目前TCA支持以下工具：
 
-|   工具    |   类型    |   状态    |
-| --------: | :------- | :------- |
-|[0daychecker](tools/codedog_0Day_checker)| 官方工具 | done     |
-|androidlint| 第三方工具 | done     |
-|checkstyle| 第三方工具 | done     |
-|clang| 第三方工具 | done     |
-|clangwarning| 官方工具 | done     |
-|cobra| 第三方工具 | done     |
-|codecount| 官方工具 | done     |
-|cpd| 第三方工具 | done     |
-|cppcheck| 第三方工具 | done     |
-|cpplint| 第三方工具 | done     |
-|customfilescan| 官方工具 | done     |
-|customscan| 官方工具 | done     |
-|dart_code_metrics| 第三方工具 | done     |
-|dartanalyzer| 第三方工具 | done     |
-|detekt| 第三方工具 | done     |
-|eslint| 第三方工具 | done     |
-|eslint_typescript| 第三方工具 | done     |
-|eslint_vue| 第三方工具 | done     |
-|fbrjs| 官方工具 | done     |
-|findbugs| 第三方工具 | done     |
-|flake8| 第三方工具 | done     |
-|[flawfinder](https://github.com/TCATools/flawfinder)| 第三方工具 | done     |
-|flow| 第三方工具 | done     |
-|golangcilint| 第三方工具 | done     |
-|gometalinter| 第三方工具 | done     |
-|htmlcs| 第三方工具 | done     |
-|infer_cpp| 第三方工具 | done     |
-|infer_java| 第三方工具 | done     |
-|infer_objectivec| 第三方工具 | done     |
-|javawarning| 官方工具 | done     |
-|ktlint| 第三方工具 | done     |
-|[kunlun-M](https://github.com/TCATools/common-kunlun.git)| 第三方工具 | done     |
-|lizard| 第三方工具 | done     |
-|luacheck| 第三方工具 | done     |
-|phpcs| 第三方工具 | done     |
-|pmd| 第三方工具 | done     |
-|pylint| 第三方工具 | done     |
-|regexfilescan| 官方工具 | done     |
-|regexscan| 官方工具 | done     |
-|[rips](https://github.com/TCATools/rips-scanner)| 第三方工具 | done     |
-|scalastyle| 第三方工具 | done     |
-|[semgrep](https://github.com/TCATools/custom-semgrep)| 第三方工具 | done     |
-|[shellcheck](https://github.com/TCATools/shellcheck)| 第三方工具 | done     |
-|[spotbugs](https://github.com/TCATools/spotbugs)| 第三方工具 | done     |
-|stylecop| 第三方工具 | done     |
-|stylelint| 第三方工具 | done     |
-|swiftlint| 第三方工具 | done     |
-|[tca_ql_php_beta](tools/Hades_Beta/README.md)| 官方工具 | done     |
-|unusedresource| 官方工具 | done     |
+|   工具    |   类型    |
+| --------: | :------- |
+|[0daychecker](tools/codedog_0Day_checker)| 官方工具 |
+|clangwarning| 官方工具 |
+|codecount| 官方工具 |
+|customfilescan| 官方工具 |
+|customscan| 官方工具 |
+|fbrjs| 官方工具 |
+|javawarning| 官方工具 |
+|regexfilescan| 官方工具 |
+|regexscan| 官方工具 |
+|[tca_ql_php_beta](tools/Hades_Beta/README.md)| 官方工具 |
+|unusedresource| 官方工具 |
+|androidlint| 第三方工具 |
+|checkstyle| 第三方工具 |
+|clang| 第三方工具 |
+|cobra| 第三方工具 |
+|cpd| 第三方工具 |
+|cppcheck| 第三方工具 |
+|cpplint| 第三方工具 |
+|dart_code_metrics| 第三方工具 |
+|dartanalyzer| 第三方工具 |
+|detekt| 第三方工具 |
+|eslint| 第三方工具 |
+|eslint_typescript| 第三方工具 |
+|eslint_vue| 第三方工具 |
+|findbugs| 第三方工具 |
+|flake8| 第三方工具 |
+|[flawfinder](https://github.com/TCATools/flawfinder)| 第三方工具 |
+|flow| 第三方工具 |
+|golangcilint| 第三方工具 |
+|gometalinter| 第三方工具 |
+|htmlcs| 第三方工具 |
+|infer_cpp| 第三方工具 |
+|infer_java| 第三方工具 |
+|infer_objectivec| 第三方工具 |
+|[ktlint](https://github.com/TCATools/custom-ktlint)| 第三方工具 |
+|[kunlun-M](https://github.com/TCATools/common-kunlun.git)| 第三方工具 |
+|lizard| 第三方工具 |
+|luacheck| 第三方工具 |
+|phpcs| 第三方工具 |
+|pmd| 第三方工具 |
+|pylint| 第三方工具 |
+|[rips](https://github.com/TCATools/rips-scanner)| 第三方工具 |
+|scalastyle| 第三方工具 |
+|[semgrep](https://github.com/TCATools/custom-semgrep)| 第三方工具 |
+|[shellcheck](https://github.com/TCATools/shellcheck)| 第三方工具 |
+|[spotbugs](https://github.com/TCATools/spotbugs)| 第三方工具 |
+|stylecop| 第三方工具 |
+|stylelint| 第三方工具 |
+|swiftlint| 第三方工具 |
