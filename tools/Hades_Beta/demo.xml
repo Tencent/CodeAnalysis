@@ -1,0 +1,11 @@
+<hades>
+    <sourcedir>/xxxxx</sourcedir>
+    <checkers>
+        <checker>
+            <name>sql</name>
+        </checker>
+    </checkers>
+    <filelist>
+        <file>xxxx/xxxx</file>        
+    </filelist>
+</hades>
