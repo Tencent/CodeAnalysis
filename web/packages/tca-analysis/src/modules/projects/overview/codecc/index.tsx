@@ -10,12 +10,12 @@
 import React, { useState } from 'react';
 import { Radio, Row, Col } from 'coding-oa-uikit';
 import classnames from 'classnames';
-import { get } from 'lodash';
+import { get, minBy } from 'lodash';
 
 // 项目内
 import NoData from '../no-data';
-import Line from '@src/components/charts/line';
-import DataPie from '@src/components/charts/data-pie';
+import PieCharts from '@src/components/charts/pie';
+import { Area } from '@ant-design/plots';
 import s from '../style.scss';
 import { t } from '@src/i18n/i18next';
 import { STANDARD_TYPE, STANDARD_OPTIONS } from '@src/modules/projects/constants';
@@ -44,6 +44,11 @@ const CYC_TYPE_OPTIONS = [
   },
 ];
 
+const colors: any = {
+  "超标数": "#eb333f",
+  "未超标数": "#0066ff",
+};
+
 interface IProps {
   cycScans: Array<any>;
 }
@@ -64,67 +69,80 @@ const CodeCC = ({ cycScans }: IProps) => {
     });
     return show;
   };
+
   return (
-        <div className={s.item}>
-            <div className={classnames(s.header, 'overflow-hidden')}>
-                <span className={s.tit}>{t('圈复杂度详情')}</span>
-                {isShowStandardRadio() && (
-                    <Radio.Group
-                        className="float-right"
-                        value={standardValue}
-                        size="small"
-                        onChange={e => setStandardValue(e.target.value)}
-                    >
-                        {STANDARD_OPTIONS.map(item => (
-                            <Radio.Button key={item.value} value={item.value}>
-                                {item.label}
-                            </Radio.Button>
-                        ))}
-                    </Radio.Group>
-                )}
-            </div>
-            <div className={s.content}>
-                <Row gutter={[40, 14]}>
-                    <Col span={12}>{t('方法圈复杂度分布')}</Col>
-                    <Col span={12}>{t('历史趋势')}</Col>
-                    <Col span={12} style={{ height: '222px' }}>
-                        {cycPieData.length > 0 ? (
-                            <DataPie data={cycPieData} />
-                        ) : (
-                            <NoData style={{ marginTop: '76px' }} />
-                        )}
-                    </Col>
-                    <Col span={12} className={s.borderLeft} style={{ height: '222px' }}>
-                        <Radio.Group
-                            value={typeValue}
-                            size="small"
-                            onChange={e => setTypeValue(e.target.value)}
-                        >
-                            {CYC_TYPE_OPTIONS.map(item => (
-                                <Radio.Button key={item.value} value={item.value}>
-                                    {item.label}
-                                </Radio.Button>
-                            ))}
-                        </Radio.Group>
-                        {cycLineData.length > 0 ? (
-                            <Line
-                                data={cycLineData}
-                                xAxisKey="date"
-                                yAxisKey="num"
-                                cols={{
-                                  date: {
-                                    range: [0, 1],
-                                    tickCount: 5,
-                                  },
-                                }}
-                                padding={[10, 'auto', 100, 'auto']}
-                            />
-                        ) : (
-                            <NoData style={{ marginTop: '52px' }} />
-                        )}
-                    </Col>
-                </Row>
-                {/* <div className={`${s.panelContent}`} style={{ marginTop: '14px' }}>
+    <div className={s.item}>
+      <div className={classnames(s.header, 'overflow-hidden')}>
+        <span className={s.tit}>{t('圈复杂度详情')}</span>
+        {isShowStandardRadio() && (
+          <Radio.Group
+            className="float-right"
+            value={standardValue}
+            size="small"
+            onChange={e => setStandardValue(e.target.value)}
+          >
+            {STANDARD_OPTIONS.map(item => (
+              <Radio.Button key={item.value} value={item.value}>
+                {item.label}
+              </Radio.Button>
+            ))}
+          </Radio.Group>
+        )}
+      </div>
+      <div className={s.content}>
+        <Row gutter={[40, 14]}>
+          <Col span={12}>{t('方法圈复杂度分布')}</Col>
+          <Col span={12}>{t('历史趋势')}</Col>
+          <Col span={12} style={{ height: '222px' }}>
+            {cycPieData.length > 0 ? (
+              <PieCharts
+                data={cycPieData}
+                confs={{
+                  color: ({ type }: { type: string }) => {
+                    return colors[type] || "#0066ff";
+                  }
+                }}
+              />
+            ) : (
+              <NoData style={{ marginTop: '76px' }} />
+            )}
+          </Col>
+          <Col span={12} className={s.borderLeft} style={{ height: '222px' }}>
+            <Radio.Group
+              value={typeValue}
+              size="small"
+              onChange={e => setTypeValue(e.target.value)}
+            >
+              {CYC_TYPE_OPTIONS.map(item => (
+                <Radio.Button key={item.value} value={item.value}>
+                  {item.label}
+                </Radio.Button>
+              ))}
+            </Radio.Group>
+            {cycLineData.length > 0 ? (
+              <Area
+                data={cycLineData}
+                xField="date"
+                yField="num"
+                padding={[20, 10, 50, 60]}
+                yAxis={{
+                  min: minBy(cycLineData, 'num')?.num - 1,
+                  grid: {
+                    line: {
+                      style: {
+                        stroke: '#e6e9ed',
+                        lineDash: [3, 2]
+                      }
+                    }
+                  }
+                }}
+              />
+            ) : (
+              <NoData style={{ marginTop: '52px' }} />
+            )}
+          </Col>
+        </Row>
+        {/* <div className={`${s.panelContent}`} style={{ marginTop: '14px' }}>
                     <div className={s.chartBox}>
                         <p>{t('超标圈复杂度总数趋势')}</p>
                         <div className={s.chartCell}></div>
@@ -134,8 +152,8 @@ const CodeCC = ({ cycScans }: IProps) => {
                         <div className={`${s.chartCell} ${s.borderLeft}`}></div>
                     </div>
                 </div> */}
-            </div>
-        </div>
+      </div>
+    </div>
   );
 };
 

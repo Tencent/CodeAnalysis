@@ -9,14 +9,14 @@
  */
 import React, { useState } from 'react';
 import { Radio, Row, Col } from 'coding-oa-uikit';
-import get from 'lodash/get';
+import { get, minBy } from 'lodash';
 
 // 项目内
 import s from '../style.scss';
 import { t } from '@src/i18n/i18next';
 import { getClocLineChartData, getClocPieChartData } from '../utils';
-import Line from '@src/components/charts/line';
-import DataPie from '@src/components/charts/data-pie';
+import PieCharts from '@src/components/charts/pie';
+import { Area } from '@ant-design/plots';
 import NoData from '../no-data';
 
 export const CLOC_TYPE = {
@@ -40,6 +40,12 @@ const CLOC_TYPE_OPTIONS = [
   { label: CLOC_TYPE_TXT.BLANK, value: CLOC_TYPE.BLANK },
 ];
 
+const colors: any = {
+  "代码": "#0066ff",
+  "注释": "#8cc6ff",
+  "空白": "#cceaff",
+};
+
 interface IProps {
   clocScans: Array<any>;
 }
@@ -48,7 +54,7 @@ const CodeCloc = ({ clocScans }: IProps) => {
   const [typeValue, setTypeValue] = useState(CLOC_TYPE.TOTAL);
   const lineChartDatas = getClocLineChartData(clocScans);
   // 获取当前类型的line数据
-  const clocLineData = get(lineChartDatas, typeValue, []);
+  const clocLineData: Array<any> = get(lineChartDatas, typeValue, []);
   // 获取饼图数据
   const clocPieData = getClocPieChartData(clocScans);
 
@@ -63,9 +69,16 @@ const CodeCloc = ({ clocScans }: IProps) => {
           <Col span={12}>{t('代码量趋势')}</Col>
           <Col span={12} style={{ height: '222px' }}>
             {clocPieData.length > 0 ? (
-              <DataPie data={clocPieData} />
+              <PieCharts
+                data={clocPieData}
+                confs={{
+                  color: ({ type }) => {
+                    return colors[type] || "#0066ff";
+                  }
+                }}
+              />
             ) : (
-                <NoData style={{ marginTop: '76px' }} />
+              <NoData style={{ marginTop: '76px' }} />
             )}
           </Col>
           <Col span={12} className={s.borderLeft} style={{ height: '222px' }}>
@@ -81,20 +94,25 @@ const CodeCloc = ({ clocScans }: IProps) => {
               ))}
             </Radio.Group>
             {clocLineData.length > 0 ? (
-              <Line
+              <Area
                 data={clocLineData}
-                xAxisKey="date"
-                yAxisKey="num"
-                cols={{
-                  date: {
-                    range: [0, 1],
-                    tickCount: 5,
-                  },
+                xField="date"
+                yField="num"
+                padding={[20, 10, 50, 60]}
+                yAxis={{
+                  min: minBy(clocLineData, 'num')?.num - 1,
+                  grid: {
+                    line: {
+                      style: {
+                        stroke: '#e6e9ed',
+                        lineDash: [3, 2]
+                      }
+                    }
+                  }
                 }}
-                padding={[10, 'auto', 100, 'auto']}
               />
             ) : (
-                <NoData style={{ marginTop: '52px' }} />
+              <NoData style={{ marginTop: '52px' }} />
             )}
           </Col>
         </Row>

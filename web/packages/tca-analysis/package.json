@@ -14,7 +14,7 @@
     "analyzer": "webpack-bundle-analyzer --port 8888 ./dist/stats.json"
   },
   "dependencies": {
-    "@antv/data-set": "0.8.7",
+    "@ant-design/plots": "^1.0.9",
     "@types/classnames": "^2.2.9",
     "@types/file-saver": "^2.0.1",
     "@types/lodash": "^4.14.175",
@@ -30,7 +30,6 @@
     "@types/react-router-redux": "^4.0.50",
     "@types/react-virtualized-auto-sizer": "^1.0.0",
     "@types/react-window": "^1.8.2",
-    "bizcharts": "3.4.2",
     "classnames": "^2.3.1",
     "coding-oa-uikit": "^4.3.9",
     "d3": "5.16.0",
@@ -38,7 +37,7 @@
     "i18next": "^21.2.4",
     "jquery": "^3.5.1",
     "lodash": "^4.17.21",
-    "moment": "^2.29.1",
+    "moment": "^2.29.3",
     "normalizr": "^3.6.1",
     "nprogress": "^0.2.0",
     "popmotion": "8.3.3",
@@ -49,7 +48,7 @@
     "react-dom": "^17.0.2",
     "react-highlight": "^0.14.0",
     "react-i18next": "^11.12.0",
-    "react-markdown": "4.2.2",
+    "react-markdown": "^8.0.3",
     "react-redux": "^7.2.5",
     "react-router": "5.2.0",
     "react-router-dom": "^5.3.0",
@@ -87,17 +86,16 @@
     "path-browserify": "^1.0.1",
     "postcss-loader": "^6.1.1",
     "postcss-preset-env": "^6.7.0",
+    "process": "0.11.10",
     "react-hot-loader": "^4.13.0",
     "sass": "^1.42.1",
     "sass-loader": "^12.1.0",
     "style-loader": "^3.3.0",
-    "uglifyjs-webpack-plugin": "^2.2.0",
     "webpack": "^5.54.0",
     "webpack-bundle-analyzer": "^4.4.2",
     "webpack-cli": "^4.8.0",
     "webpack-dev-server": "^4.3.0",
     "webpack-merge": "^5.8.0",
-    "webpackbar": "^5.0.0-3",
-    "process": "0.11.10"
+    "webpackbar": "^5.0.0-3"
   }
 }
