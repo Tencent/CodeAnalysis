@@ -1,6 +1,6 @@
 ---
 home: true
-title: Tencent Code Analysis Document Home
+title: 腾讯云代码分析帮助文档
 actions:
   - text: 帮助文档
     link: /zh/guide/
