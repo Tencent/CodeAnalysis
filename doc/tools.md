@@ -3,7 +3,7 @@
 
 |   官方工具    |   第三方工具    |
 | :--------: | :-------: |
-|[0daychecker](tools/codedog_0Day_checker)| androidlint |
+|[0daychecker](../tools/codedog_0Day_checker)| androidlint |
 |clangwarning| checkstyle |
 |codecount| clang |
 |customfilescan| cobra |
@@ -12,7 +12,7 @@
 |javawarning| cpplint |
 |regexfilescan| dart_code_metrics |
 |regexscan| dartanalyzer |
-|[tca_ql_php_beta](tools/Hades_Beta/README.md)| detekt |
+|[tca_ql_php_beta](../tools/Hades_Beta/README.md)| detekt |
 |unusedresource| eslint |
 || eslint_typescript |
 || eslint_vue |
