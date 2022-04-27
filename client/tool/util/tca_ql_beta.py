@@ -12,14 +12,11 @@
    \ \_\  \ \_____\  \ \_\ \_\     \ \___\_\  \ \_____\ 
     \/_/   \/_____/   \/_/\/_/      \/___/_/   \/_____/ 
                                                         
-
 """
 
 
 import os
 import shutil
-
-
 import json
 
 try:
@@ -31,13 +28,14 @@ from util.api.fileserver import RetryFileServer
 from util.configlib import ConfigReader
 from util.envset import EnvSet
 from util.errcode import E_NODE_TASK_PARAM
-from util.exceptions import AnalyzeTaskError, TaskError
+from util.exceptions import TaskError
 from util.pathfilter import FilterPathUtil
 from util.pathlib import PathMgr
-from task.codelintmodel import CodeLintModel
-from task.scmmgr import SCMMgr
 from util.subprocc import SubProcController
 from util.logutil import LogPrinter
+from task.codelintmodel import CodeLintModel
+from task.basic.common import subprocc_log
+from task.scmmgr import SCMMgr
 
 
 logger = LogPrinter()
@@ -51,16 +49,10 @@ lang_map = {
 
 
 class TcaQlBeta(CodeLintModel):
-    """
-    """
-
     def __init__(self, params):
         CodeLintModel.__init__(self, params)
 
-    # 没有使用mysql数据库，采用sqlite所以需要文件服务器存储数据用于增量分析
-    # 如果使用mysql数据库可以考虑替换掉数据库地址参数代替下载上传数据文件
     def __download_database(self, params, path):
-        """下载之前存储的数据库，增量使用"""
         base_dir = f"tcaql/repos/{params.repo_id}"
         try:
             file_name = os.path.join(base_dir, f"{path}.db")
@@ -75,7 +67,6 @@ class TcaQlBeta(CodeLintModel):
             return False
 
     def __upload_database(self, params, path):
-        """上传数据库"""
         logger.info("准备上传到云端存储数据库")
         base_dir = f"tcaql/repos/{params.repo_id}"
         try:
@@ -91,8 +82,7 @@ class TcaQlBeta(CodeLintModel):
             return False
 
     def __generate_config_file(self, rule_list, work_dir, source_dir, toscans):
-        """生成分析用的配置文件
-        """
+        """生成分析用的配置文件"""
         setting_file = os.path.join(work_dir, "config.xml")
         if os.path.exists(setting_file):
             os.remove(setting_file)
@@ -108,9 +98,9 @@ class TcaQlBeta(CodeLintModel):
             if rule_params:
                 rule_params = rule_params.split("<br>")
                 for rule_param in rule_params:
-                    if '[hades]' not in rule_param:
+                    if "[hades]" not in rule_param:
                         rule_param = "[hades]\r\n" + rule_param
-                    rule_param_dict = ConfigReader(cfg_string=rule_param).read("hades") 
+                    rule_param_dict = ConfigReader(cfg_string=rule_param).read("hades")
                     for key, value in rule_param_dict.items():
                         param = ET.SubElement(checker, "param")
                         param.text = value
@@ -120,13 +110,10 @@ class TcaQlBeta(CodeLintModel):
             file = ET.SubElement(files, "file")
             file.text = scan
         tree = ET.ElementTree(config_data)
-        tree.write(setting_file, encoding='utf-8')
+        tree.write(setting_file, encoding="utf-8")
         return setting_file
 
     def compile(self, params, lang):
-        """
-        编译函数，指代码生成数据流
-        """
         source_dir = params.source_dir
         logger.info("开始编译项目 %s" % source_dir)
         work_dir = params.work_dir
@@ -153,7 +140,6 @@ class TcaQlBeta(CodeLintModel):
                 shutil.copyfile(last_db_path, db_path)
                 want_suffix = lang_map[lang]
                 diffs = SCMMgr(params).get_scm_diff()
-                # 增量需要所有增量文件都重新生成，故这里不能过滤文件
                 toscans = [diff.path.replace(os.sep, "/") for diff in diffs if diff.path.endswith(tuple(want_suffix))]
                 inc_build_cmd = [
                     "./Zeus",
@@ -166,22 +152,20 @@ class TcaQlBeta(CodeLintModel):
                     db_dir,
                     "-s",
                     source_dir,
-                    # "-d",
                     "-f",
                 ]
                 logger.info(inc_build_cmd)
                 pre_cmd_len = len(inc_build_cmd)
                 CMD_ARG_MAX = PathMgr().get_cmd_arg_max()
                 LogPrinter.info("命令行长度限制：%d" % CMD_ARG_MAX)
-                # cmd_args += toscans
                 cmd_args_list = PathMgr().get_cmd_args_list(inc_build_cmd, toscans, CMD_ARG_MAX)
                 for cmd in cmd_args_list:
                     tmp_cmd = inc_build_cmd + [",".join(cmd[pre_cmd_len:])]
                     sp = SubProcController(
                         command=tmp_cmd,
                         cwd=ZEUS_HOME,
-                        stdout_line_callback=self.subprocc_log,
-                        stderr_line_callback=self.subprocc_log,
+                        stdout_line_callback=subprocc_log,
+                        stderr_line_callback=subprocc_log,
                     )
                     sp.wait()
                     logger.info(sp.returncode)
@@ -199,14 +183,13 @@ class TcaQlBeta(CodeLintModel):
             lang,
             "-s",
             source_dir,
-            # "-d",  # 调试使用
         ]
         logger.info(full_build_cmd)
         sp = SubProcController(
             command=full_build_cmd,
             cwd=ZEUS_HOME,
-            stdout_line_callback=self.subprocc_log,
-            stderr_line_callback=self.subprocc_log,
+            stdout_line_callback=subprocc_log,
+            stderr_line_callback=subprocc_log,
         )
         sp.wait()
         logger.info(sp.returncode)
@@ -214,11 +197,6 @@ class TcaQlBeta(CodeLintModel):
         return
 
     def analyze(self, params, lang):
-        """
-        tca ql 工具分析函数
-        :param params: 执行需要的参数
-        :return :
-        """
         source_dir = params.source_dir
         relpos = len(source_dir) + 1
         work_dir = params.work_dir
@@ -271,7 +249,6 @@ class TcaQlBeta(CodeLintModel):
             output_json,
             "-c",
             setting_file,
-            # "-d", 
         ]
         logger.info(analyze_cmd)
         task_dir = os.path.dirname(os.getcwd())
@@ -281,9 +258,9 @@ class TcaQlBeta(CodeLintModel):
         sp = SubProcController(
             command=analyze_cmd,
             cwd=HADES_HOME,
-            stdout_line_callback=self.subprocc_log,
-            stderr_line_callback=self.subprocc_log,
-            env = EnvSet().get_origin_env()
+            stdout_line_callback=subprocc_log,
+            stderr_line_callback=subprocc_log,
+            env=EnvSet().get_origin_env(),
         )
         sp.wait()
         if os.path.exists(output_json):
@@ -296,13 +273,8 @@ class TcaQlBeta(CodeLintModel):
             self.__upload_database(params, db_name)
         return issues
 
-    def subprocc_log(self, line):
-        """"""
-        logger.info(line)
-
 
 tool = TcaQlBeta
 
 if __name__ == "__main__":
     pass
- 

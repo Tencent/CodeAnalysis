@@ -4,6 +4,8 @@
     <em>腾讯云代码分析</em>
 </p>
 
+[![license](https://img.shields.io/badge/License-MIT-brightgreen.svg?style=flat)](LICENSE) 
+
 ## TCA
 
 腾讯云代码分析（Tencent Cloud Code Analysis，简称TCA，内部曾用研发代号CodeDog）是集众多分析工具的云原生、分布式、高性能的代码综合分析跟踪平台，包含服务端、Web端和客户端三个组件，已集成一批自研工具，同时也支持动态集成业界各编程语言的分析工具。

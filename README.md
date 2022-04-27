@@ -4,6 +4,8 @@
     <em>TCA, Tencent Cloud Code Analysis</em>
 </p>
 
+[![license](https://img.shields.io/badge/License-MIT-brightgreen.svg?style=flat)](LICENSE) 
+
 English | [简体中文](README_ZH.md)
 
 ## What is TCA
