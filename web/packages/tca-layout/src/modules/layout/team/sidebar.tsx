@@ -69,14 +69,14 @@ const SideBar = () => {
         {
           title: t('工具列表'),
           link: `/t/${orgSid}/tools`,
-          key: 'tools',
+          key: 'checktools',
           regexMatch: /^\/t\/[^/]+\/tools/i,
         },
         {
           title: t('工具依赖'),
-          link: `/t/${orgSid}/tool-libs/`,
-          key: 'tool-libs',
-          regexMatch: /^\/t\/[^/]+\/tool-libs/i,
+          link: `/t/${orgSid}/toollibs/`,
+          key: 'toollibs',
+          regexMatch: /^\/t\/[^/]+\/toollibs/i,
         },
       ],
     },

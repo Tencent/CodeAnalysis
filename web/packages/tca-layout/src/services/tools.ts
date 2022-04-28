@@ -173,4 +173,39 @@ export const delToolWhiteList = (orgId: string, toolId: number, id: number) => d
 
 // ====================== 工具依赖 ======================
 
+const getToollibsPrefix = (orgId: string) => `${MAIN_SERVER_API}/orgs/${orgId}/toollibs/`;
+
+/**
+ * 获取工具依赖列表
+ * @param orgId 
+ * @param params 
+ * @returns 
+ */
+export const getToolLibs = (orgId: string, params: any) => get(`${getToollibsPrefix(orgId)}`, params);
+
+/**
+ * 添加工具依赖
+ * @param orgId 
+ * @param data 
+ * @returns 
+ */
+export const addToolLib = (orgId: string, data: any) => post(`${getToollibsPrefix(orgId)}`, data);
+
+/**
+ * 获取工具依赖详情
+ * @param orgId 
+ * @param libId 
+ * @returns 
+ */
+export const getLibDetail = (orgId: string, libId: number) => get(`${getToollibsPrefix(orgId)}${libId}/`);
+
+/**
+ * 更新工具依赖
+ * @param orgId 
+ * @param libId 
+ * @param data 
+ * @returns 
+ */
+export const updateToolLib = (orgId: string, libId: number, data: any) => put(`${getToollibsPrefix(orgId)}${libId}/`, data);
+
 

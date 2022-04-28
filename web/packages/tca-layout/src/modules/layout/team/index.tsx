@@ -19,6 +19,7 @@ import Workspace from '@src/modules/team/components/workspace';
 import Analysis from '@src/modules/layout/project/index';
 import Tools from '@src/modules/tools';
 import ToolDetail from '@src/modules/tools/detail-components';
+import Toollibs from '@src/modules/tool-libs';
 
 
 // 项目内
@@ -95,6 +96,7 @@ const TeamLayout = () => {
         <Route path={'/t/:orgSid/members'} render={() => getComponent(Members)} />
         <Route key='detail' exact path="/t/:orgSid/tools/:toolId/:tab?" render={() => getComponent(ToolDetail)} />,
         <Route key='tools' exact path="/t/:orgSid/tools" render={() => getComponent(Tools)} />,
+        <Route key='toollibs' exact path="/t/:orgSid/toollibs" render={() => getComponent(Toollibs)} />,
         <Route path="/t/:orgSid/p/:name/" render={() => <Analysis />} />
         <Redirect to="/" />
       </Switch>
