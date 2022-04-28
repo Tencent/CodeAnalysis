@@ -48,7 +48,7 @@ function run() {
     if [ "$pkg_name" = "framework" ]; then
       default_frontend $pkg_name
     elif [ "$pkg_name" = "tca-document" ]; then
-      default_frontend $pkg_name _book
+      default_frontend $pkg_name
     else
       sub_microfrontend $pkg_name
     fi
