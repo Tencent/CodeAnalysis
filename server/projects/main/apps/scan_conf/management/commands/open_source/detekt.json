@@ -14,6 +14,7 @@
     "scm_url": null,
     "run_cmd": null,
     "envs": null,
+    "build_flag": false,
     "show_display_name": true,
     "checkrule_set": [
       {
