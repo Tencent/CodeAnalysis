@@ -208,4 +208,19 @@ export const getLibDetail = (orgId: string, libId: number) => get(`${getToollibs
  */
 export const updateToolLib = (orgId: string, libId: number, data: any) => put(`${getToollibsPrefix(orgId)}${libId}/`, data);
 
+/**
+ * 获取工具依赖方案列表
+ * @param orgId 
+ * @param toolId 
+ * @returns 
+ */
+export const getToolSchemes = (orgId: string, toolId: number) => get(`${getToolPrefix(orgId)}${toolId}/schemes/`);
 
+/**
+ * 创建工具依赖方案
+ * @param orgId 
+ * @param toolId 
+ * @param data 
+ * @returns 
+ */
+export const addToolSchemes = (orgId: string, toolId: number, data: any) => post(`${getToolPrefix(orgId)}${toolId}/schemes/`, data);

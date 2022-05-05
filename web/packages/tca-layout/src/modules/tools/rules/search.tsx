@@ -6,7 +6,7 @@ import { cloneDeep, isArray, isEmpty, isString, toNumber } from 'lodash';
 import { Button, Form, Input, Select } from 'coding-oa-uikit';
 import Filter from '@src/components/filter';
 
-import style from './style.scss';
+import style from '../detail.scss';
 
 const numberParams = ['category', 'severity'];
 const arrayParams = ['language_name'];

@@ -5,7 +5,7 @@ import { DEFAULT_PAGER } from '@src/common/constants';
 import { getTeams } from '@src/services/team';
 import { addToolWhiteList } from '@src/services/tools';
 
-import style from './style.scss';
+import style from '../detail.scss';
 
 const { Column } = Table;
 

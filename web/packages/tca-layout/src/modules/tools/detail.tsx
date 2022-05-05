@@ -12,12 +12,12 @@ import { getToolDetail } from '@src/services/tools';
 import { getTeamMember } from '@src/services/team';
 import { useStateStore } from '@src/context/store';
 
-import BaseInfo from './baseinfo';
-import BaseInfoManage from './baseinfo-manage';
+import BaseInfo from './baseinfo/baseinfo';
+import BaseInfoManage from './baseinfo/baseinfo-manage';
 import Rules from './rules';
-import CustomRules from './custom-rules';
+import CustomRules from './rules/custom-rules';
 import WhiteList from './white-list';
-import style from './style.scss';
+import style from './detail.scss';
 
 const { TabPane } = Tabs;
 
@@ -75,6 +75,7 @@ const ToolDetail = () => {
             isSuperuser ? (
               <BaseInfoManage
                 data={detail}
+                toolId={toolId}
                 orgSid={orgSid}
                 getDetail={getDetail}
               />

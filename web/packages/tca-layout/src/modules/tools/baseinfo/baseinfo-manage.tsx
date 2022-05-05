@@ -10,11 +10,11 @@ import RefreshIcon from 'coding-oa-uikit/lib/icon/Refresh';
 import EditIcon from 'coding-oa-uikit/lib/icon/Edit';
 
 import { formatDateTime } from '@src/utils';
-import { updateTool, updateToolStatus } from '@src/services/tools';
+import { updateTool, updateToolStatus, getToolSchemes } from '@src/services/tools';
 import { gScmAccounts, getSSHInfo } from '@src/services/user';
 import { AUTH_TYPE, AUTH_TYPE_TXT, AUTH_DICT, REPO_TYPE_OPTIONS, TOOL_STATUS, STATUSENUM } from '../constants';
 
-import style from './style.scss';
+import style from '../detail.scss';
 
 const { TextArea } = Input;
 const { Option, OptGroup } = Select;
@@ -27,11 +27,11 @@ const layout = {
 interface BaseInfoProps {
   data: any;
   orgSid: string;
-  editable: boolean;
+  toolId: number;
   getDetail: () => void;
 }
 
-const BaseInfo = ({ orgSid, data, editable, getDetail }: BaseInfoProps) => {
+const BaseInfo = ({ orgSid, toolId, data, getDetail }: BaseInfoProps) => {
   const [form] = Form.useForm();
   const [isEdit, setIsEdit] = useState(false);
   const [sshAuthList, setSshAuthList] = useState<any>([]);
@@ -40,6 +40,13 @@ const BaseInfo = ({ orgSid, data, editable, getDetail }: BaseInfoProps) => {
   const statusRef = useRef();
 
   useEffect(() => getAuth(), []);
+
+  useEffect(() => {
+    getToolSchemes(orgSid, toolId).then((res) => {
+      console.log(res)
+    })
+  }, [toolId])
+
 
   useEffect(() => {
     if (!authLoading && data.id && data.scm_auth) {
@@ -99,13 +106,15 @@ const BaseInfo = ({ orgSid, data, editable, getDetail }: BaseInfoProps) => {
     const [authType, id] = formData?.scm_auth_id?.split('#') ?? [];
     delete newFormData.scm_auth_id;
 
-    newFormData.scm_auth = { auth_type: authType };
-
-    if (newFormData.scm_auth.auth_type === AUTH_TYPE.HTTP) {
-      newFormData.scm_auth.scm_account = id;
-    } else {
-      newFormData.scm_auth.scm_ssh = id;
+    if (authType && id) {
+      newFormData.scm_auth = { auth_type: authType };
+      if (newFormData.scm_auth.auth_type === AUTH_TYPE.HTTP) {
+        newFormData.scm_auth.scm_account = id;
+      } else {
+        newFormData.scm_auth.scm_ssh = id;
+      }
     }
+
 
     updateTool(orgSid, data.id, {
       ...data,
@@ -170,7 +179,7 @@ const BaseInfo = ({ orgSid, data, editable, getDetail }: BaseInfoProps) => {
         initialValues={{
           ...data,
           status: STATUSENUM.NORMAL,
-          scm_auth_id: `${data.scm_auth?.auth_type}#${data.scm_auth?.auth_type === AUTH_TYPE.HTTP ? data.scm_auth?.scm_account?.id : data.scm_auth?.scm_ssh?.id}`,
+          scm_auth_id: data.scm_auth ? `${data.scm_auth?.auth_type}#${data.scm_auth?.auth_type === AUTH_TYPE.HTTP ? data.scm_auth?.scm_account?.id : data.scm_auth?.scm_ssh?.id}` : '',
         }}
         onFinish={isEdit ? onFinish : undefined}
       >
@@ -236,10 +245,9 @@ const BaseInfo = ({ orgSid, data, editable, getDetail }: BaseInfoProps) => {
           }
         </Form.Item>
         {
-          data.scm_url && (
+          (data.scm_url || isEdit) && (
             <Form.Item
               label="工具仓库地址"
-              required={isEdit}
             >
               {
                 getComponent(
@@ -256,9 +264,6 @@ const BaseInfo = ({ orgSid, data, editable, getDetail }: BaseInfoProps) => {
                     <Form.Item
                       name='scm_url'
                       noStyle
-                      rules={[
-                        { required: true, message: '请输入工具仓库地址' },
-                      ]}
                     >
                       <Input style={{ width: 380 }} />
                     </Form.Item>
@@ -270,12 +275,12 @@ const BaseInfo = ({ orgSid, data, editable, getDetail }: BaseInfoProps) => {
           )
         }
         {
-          data.scm_auth && (
-            <Form.Item label="凭证" required={isEdit}>
+          (data.scm_auth || isEdit) && (
+            <Form.Item label="凭证">
               {
                 getComponent(
                   <>
-                    <Form.Item noStyle name="scm_auth_id" rules={[{ required: true, message: '请选择仓库凭证' }]}>
+                    <Form.Item noStyle name="scm_auth_id">
                       <Select style={{ width: 380 }}>
                         {!isEmpty(sshAuthList) && (
                           <OptGroup label={AUTH_TYPE_TXT.SSH}>
@@ -322,18 +327,17 @@ const BaseInfo = ({ orgSid, data, editable, getDetail }: BaseInfoProps) => {
                       </Tooltip>
                     </div>
                   </>,
-                  getAuthDisplay(data.scm_auth),
+                  getAuthDisplay(data.scm_auth || {}),
                 )
               }
             </Form.Item>
           )
         }
         {
-          data.run_cmd && (
+          (data.run_cmd || isEdit) && (
             <Form.Item
               label="执行命令"
               name="run_cmd"
-              rules={isEdit ? [{ required: true, message: '请输入执行命令' }] : undefined}
             >
               {
                 getComponent(
@@ -367,6 +371,7 @@ const BaseInfo = ({ orgSid, data, editable, getDetail }: BaseInfoProps) => {
             )
           }
         </Form.Item>
+
         <Form.Item label='语言' >
           {data.languages?.join(' | ')}
         </Form.Item>
@@ -376,31 +381,29 @@ const BaseInfo = ({ orgSid, data, editable, getDetail }: BaseInfoProps) => {
         <Form.Item label='创建时间'>
           {formatDateTime(data.created_time)}
         </Form.Item>
+
         <Form.Item label="" name="build_flag" valuePropName="checked">
           <Checkbox disabled={!isEdit}>是否为编译型工具</Checkbox>
         </Form.Item>
-        {
-          editable && (
-            <Form.Item >
-              {
-                isEdit ? (
-                  <>
-                    <Button
-                      type='primary'
-                      htmlType='submit'
-                      key='edit'
-                    >确认</Button>
-                    <Button className="ml-12" onClick={() => setIsEdit(false)}>取消</Button>
-                  </>
-                ) : (
-                  <Button type='primary' onClick={() => {
-                    setIsEdit(true);
-                  }}>编辑</Button>
-                )
-              }
-            </Form.Item>
-          )
-        }
+
+        <Form.Item >
+          {
+            isEdit ? (
+              <>
+                <Button
+                  type='primary'
+                  htmlType='submit'
+                  key='edit'
+                >确认</Button>
+                <Button className="ml-12" onClick={() => setIsEdit(false)}>取消</Button>
+              </>
+            ) : (
+              <Button type='primary' onClick={() => {
+                setIsEdit(true);
+              }}>编辑</Button>
+            )
+          }
+        </Form.Item>
       </Form>
     </div>
   );

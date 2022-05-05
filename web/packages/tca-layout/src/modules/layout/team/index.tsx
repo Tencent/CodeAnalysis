@@ -18,7 +18,7 @@ import Projects from '@src/modules/team/components/projects';
 import Workspace from '@src/modules/team/components/workspace';
 import Analysis from '@src/modules/layout/project/index';
 import Tools from '@src/modules/tools';
-import ToolDetail from '@src/modules/tools/detail-components';
+import ToolDetail from '@src/modules/tools/detail';
 import Toollibs from '@src/modules/tool-libs';
 
 

@@ -8,7 +8,7 @@ import Trash from 'coding-oa-uikit/lib/icon/Trash';
 import { getToolWhiteList, delToolWhiteList } from '@src/services/tools';
 
 import AddWhiteListModal from './add-white-list-modal';
-import style from './style.scss';
+import style from '../detail.scss';
 
 const { Column } = Table;
 
@@ -58,7 +58,10 @@ const WhiteList = ({ orgSid, toolId, tab }: RulesProps) => {
 
   return (
     <>
-      <div className={style.filter}>
+      <div
+        className={style.filter}
+        style={{ padding: '9px 30px' }}
+      >
         <Input
           placeholder='团队名称'
           size='middle'
