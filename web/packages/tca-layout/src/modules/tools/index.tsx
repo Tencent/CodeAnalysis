@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import cn from 'classnames';
-import qs from 'qs';
 import { find, cloneDeep, get } from 'lodash';
 import { Typography, Tooltip, Tag } from 'coding-oa-uikit';
 import LogIcon from 'coding-oa-uikit/lib/icon/Log';
@@ -53,7 +52,6 @@ const Tools = () => {
       limit: DEFAULT_SIZE,
       ...params,
     }).then((res) => {
-      history.push(`${location.pathname}?${qs.stringify(params)}`);
       const list = res.results || [];
       setData(isMore ? [...data, ...list] : list);
       setPager({

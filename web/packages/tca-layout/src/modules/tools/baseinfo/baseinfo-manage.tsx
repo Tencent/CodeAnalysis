@@ -14,6 +14,7 @@ import { updateTool, updateToolStatus, getToolSchemes } from '@src/services/tool
 import { gScmAccounts, getSSHInfo } from '@src/services/user';
 import { AUTH_TYPE, AUTH_TYPE_TXT, AUTH_DICT, REPO_TYPE_OPTIONS, TOOL_STATUS, STATUSENUM } from '../constants';
 
+import LibScheme from './lib-scheme';
 import style from '../detail.scss';
 
 const { TextArea } = Input;
@@ -363,6 +364,7 @@ const BaseInfo = ({ orgSid, toolId, data, getDetail }: BaseInfoProps) => {
             </Form.Item>
           )
         }
+        <LibScheme/>
         <Form.Item label="License" name="license">
           {
             getComponent(
