@@ -19,7 +19,8 @@ Using TCA can help team find normative, structural, security vulnerabilities and
 ![组件图](https://tencent.github.io/CodeAnalysis/media/Components.png)
 
 ![流程图](https://tencent.github.io/CodeAnalysis/media/Flow.png)
-
+## Repo Mirror
+https://git.code.tencent.com/Tencent_Open_Source/CodeAnalysis.git  
 ## Experience
 
 [Apply Link](https://cloud.tencent.com/apply/p/44ncv4hzp1)
