@@ -2,14 +2,35 @@
 
 ## 一、基础配置
 
-### 机器配置推荐
+### 1. 机器配置推荐
 |   操作系统 | 推荐配置                                       |
 | --------: | :------------------------------------------- |
 |     Linux | 8核16G内存，硬盘空间256G（可用空间不低于100G）     |   
 |       Mac | 8核16G内存，硬盘空间256G（可用空间不低于100G）     |
 |   Windows | 8核16G内存，硬盘空间256G（可用空间不低于100G）     |
 
-> 以上为推荐配置，实际情况需要考虑扫描对象代码库的大小，按实际情况增加磁盘空间。
+以上为推荐配置，实际情况需要考虑扫描对象代码库的大小，按实际情况增加磁盘空间。
+
+### 2. 配置client/config.ini文件
+-（1）将`<Server IP地址>`替换成实际的serve ip（可包含端口号）。
+
+-（2）国内使用github拉取网络较慢，推荐使用腾讯工蜂拉取，需要修改以下配置：
+- 修改 TOOL_CONFIG_URL=https://git.code.tencent.com/TCA/tca-tools/puppy-tools-config.git
+- 前往[腾讯工蜂网站](https://git.code.tencent.com)注册账号，作为拉取工具使用（已经注册过的可以直接使用）
+- 将腾讯工蜂的账号密码填写到`TOOL_LOAD_ACCOUNT`中（由于腾讯工蜂的开源仓库也要求使用账号才能拉取，所以此处必须填写账号密码）
+
+### 3. 配置client/codedog.ini文件（分布式节点模式无需配置）
+填写以下必填项：`token`,`org_sid`,`team_name`,`source_dir`
+
+|   字段名 | 填写说明                                       |
+| --------: | :------------------------------------------- |
+| `token` | 从tca页面获取，前往[个人中心]-[个人令牌]-复制Token |
+|  `org_sid`(团队编号) | 从tca项目概览页面URL中获取，项目概览URL格式：`http://{域名}/t/{org_sid}/p/{team_name}/profile` |
+|  `team_name`(项目名称) | 同上 |
+|  `source_dir` | 本地代码目录路径 |
+
+其他可选项按需填写。各字段获取方式，详见文档`doc/client.md`。 
+
 
 ## 二、使用docker环境快速体验
 > 适用于快速上手体验。使用docker运行，可以免去客户端环境依赖的安装，避免环境兼容性问题。
@@ -20,18 +41,7 @@
 ### 2. 构建docker镜像
 在`client`目录下，执行以下命令：`docker build -t tca-client .`
 
-### 3. 配置client/config.ini文件
-将`<Server IP地址>`替换成实际的serve ip（可包含端口号）。
-
-### 4. 配置client/codedog.ini文件
-#### (1) 填写以下必填项：`token`,`org_sid`,`team_name`,`source_dir`
-- `token`: 从tca页面获取，前往[个人中心]-[个人令牌]-复制Token
--`org_sid`(团队编号),`team_name`(项目名称): 从tca项目概览页面URL中获取，项目概览URL格式：http://{域名}/t/{org_sid}/p/{team_name}/profile
-- `source_dir`: 本地代码目录路径
-- 各字段获取方式，详见文档`doc/client.md`
-#### (2) 按需填写其他可选项，也可以不填，按默认配置执行
-
-### 5. 执行docker容器，扫描代码，可选以下两种方式
+### 3. 执行docker容器，扫描代码，可选以下两种方式
 #### (1)直接使用docker运行
 - 在client目录下，执行以下命令：
 - (注意：按照实际情况填写`SOURCE_DIR`环境变量值)
@@ -63,28 +73,40 @@ python3 codepuppy.py localscan
 - (1) 进入到`client/requirements`目录
 - (2) 在命令行中执行安装脚本`install.sh`(linux/mac环境)或`install.bat`(windows环境)
 
-### 3. 配置client/config.ini文件
-- 将`<Server IP地址>`替换成实际的serve ip（可包含端口号）。
 
-### 4. 配置client/codedog.ini文件
-#### (1) 填写以下必填项：`token`,`org_sid`,`team_name`,`source_dir`
-- `token`: 从tca页面获取，前往[个人中心]-[个人令牌]-复制Token
--`org_sid`(团队编号),`team_name`(项目名称): 从tca项目概览页面URL中获取，项目概览URL格式：http://{域名}/t/{org_sid}/p/{team_name}/profile
-- `source_dir`: 本地代码目录路径
-- 各字段获取方式，详见文档`doc/client.md`
-#### (2) 按需填写其他可选项，也可以不填，按默认配置执行
-
-
-### 5. 启动代码分析
+### 3. 启动代码分析
 - (1) 进入到`client`目录下
 - (2) 执行命令：`python3 codepuppy.py localscan`
 
 
-## 四、其他配置与用法
+## 四、使用分布式节点模式执行客户端
+> TCA客户端除了通过`localscan`命令启动单次的代码分析，也可以作为一个分布式分析节点启动，作为常驻进程，多个节点可以分布式并行执行服务端下发的任务，提高扫描效率。
+> 和本地执行任务一样，需要先安装环境和必要的工具，并配置好服务端地址。
+ 
+### 1. 安装Python环境和第三方库
+- (1) 预装Python3.7、pip，支持 `python3` 和 `pip3` 命令 
+- (2) 安装依赖：`pip3 install -r client/requirements/app_reqs.pip`
+
+### 2. 安装第三方工具
+- 进入到`client/requirements`目录
+- 在命令行中执行安装脚本`install.sh`(linux/mac环境)或`install.bat`(windows环境)
+
+### 3. 启动代码分析节点
+- （1）从tca页面`个人中心`-`个人令牌`-复制Token
+- （2）进入到`client`目录下，执行命令：`python3 codepuppy.py -l codepuppy.log start -t <token>`
+- （3）启动后，可以在命令行输出或`codepuppy.log`中查看运行日志，如果未报异常，且输出`task loop is started.`，表示节点已经正常启动。
+
+### 4. 配置节点
+- 从tca页面`管理入口`-`节点管理`，可以看到当前在线的节点，可以修改节点名称、标签、负责人等信息。
+- 可以进入工具进程配置页面，对节点支持的工具进程进行管理（默认会全部勾选），未勾选的工具进程，将不会在该节点上执行。
+- 节点所属标签会与分析方案中的运行环境标签进行匹配，只有相同标签的任务才会下发到该机器节点上。
+
+
+## 五、其他配置与用法
 
 ### 1. 配置使用本地工具
 
-> 如果由于网络原因，执行时无法从github自动拉取工具，或拉取比较慢，可以预先下载好工具，配置使用本地工具目录。
+> 如果由于网络原因，执行时无法从github自动拉取工具，或拉取比较慢，可以参考基础配置腾讯工蜂工具地址，或使用以下方式预先下载好工具，配置使用本地工具目录。
 
 - （1）下载工具配置库 `https://github.com/TCATools/puppy-tools-config.git` ，存放到 `client/data/tools`目录下（如果未生成，可先创建该目录）。
 - （2）根据当前机器操作系统，查看`puppy-tools-config`目录下的`linux_tools.ini`或`mac_tools.ini`或`windows_tools.ini`文件，将`[tool_url]`中声明的所有工具下载到 `client/data/tools`目录下。
@@ -103,29 +125,3 @@ python3 codepuppy.py localscan
 ### 3. git lfs带宽和存储配额不够问题
 
 - 如果git拉取工具时，出现git lfs拉取失败，可能是lfs带宽和存储配额不够，可以打开对应的工具github页面，通过`Download ZIP`的方式下载工具压缩包，再解压到`client/data/tools`目录下。
-
-
-## 五、使用分布式节点模式执行客户端
-> TCA客户端除了通过`localscan`命令启动单次的代码分析，也可以作为一个分布式分析节点启动，作为常驻进程，多个节点可以分布式并行执行服务端下发的任务，提高扫描效率。
-> 和本地执行任务一样，需要先安装环境和必要的工具，并配置好服务端地址。
- 
-### 1. 安装Python环境和第三方库
-- (1) 预装Python3.7、pip，支持 `python3` 和 `pip3` 命令 
-- (2) 安装依赖：`pip3 install -r client/requirements/app_reqs.pip`
-
-### 2. 安装第三方工具
-- 进入到`client/requirements`目录
-- 在命令行中执行安装脚本`install.sh`(linux/mac环境)或`install.bat`(windows环境)
-
-### 3. 配置client/config.ini文件
-- 将`<Server IP地址>`替换成实际的serve ip（可包含端口号）。
-
-### 4. 启动代码分析节点
-- （1）从tca页面`个人中心`-`个人令牌`-复制Token
-- （2）进入到`client`目录下，执行命令：`python3 codepuppy.py -l codepuppy.log start -t <token>`
-- （3）启动后，可以在命令行输出或`codepuppy.log`中查看运行日志，如果未报异常，且输出`task loop is started.`，表示节点已经正常启动。
-
-### 5. 配置节点
-- 从tca页面`管理入口`-`节点管理`，可以看到当前在线的节点，可以修改节点名称、标签、负责人等信息。
-- 可以进入工具进程配置页面，对节点支持的工具进程进行管理（默认会全部勾选），未勾选的工具进程，将不会在该节点上执行。
-- 节点所属标签会与分析方案中的运行环境标签进行匹配，只有相同标签的任务才会下发到该机器节点上。
