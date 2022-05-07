@@ -12,15 +12,17 @@
 
 代码分析是通过词法分析、语法分析、控制流、数据流分析等技术对程序代码进行扫描，对代码进行综合分析，验证代码是否满足规范性、安全性、可靠性、可维护性等指标的一种代码分析技术。
 
-使用TCA可以帮助团队用代码分析技术查找代码中的规范性、结构性、安全漏洞等问题，持续监控项目代码质量并进行告警。同时TCA开放API，支持与上下游系统对接，从而集成代码分析能力，为代码质量提供保障，更有益于传承优良的团队代码文化。
+使用TCA可以帮助团队用代码分析技术查找代码中的规范性、结构性、安全漏洞等问题，持续监控项目代码质量并进行告警。同时TCA开放API，支持与上下游系统对接，从而集成代码分析能力，为代码质量提供保障，更有益于传承优良的团队代码文化。  
 
 ![组件图](https://tencent.github.io/CodeAnalysis/media/Components.png)
 
 ![流程图](https://tencent.github.io/CodeAnalysis/media/Flow.png)
 
+## 工蜂代码库镜像
+https://git.code.tencent.com/Tencent_Open_Source/CodeAnalysis.git  
 ## 体验
 
-[官方体验申请链接](https://cloud.tencent.com/apply/p/44ncv4hzp1)
+[官方版本体验申请链接](https://cloud.tencent.com/apply/p/44ncv4hzp1)
 
 ## 关键功能
 
