@@ -121,9 +121,9 @@ class StyleCop(CodeLintModel):
                 </Violation>
                 """
                 if (
-                    path is None
-                    and vio.attrib.get("Rule") == "ExceptionOccurred"
-                    and vio.attrib.get("RuleId") == "SA0001"
+                        path is None
+                        and vio.attrib.get("Rule") == "ExceptionOccurred"
+                        and vio.attrib.get("RuleId") == "SA0001"
                 ):
                     raise AnalyzeTaskError(f"工具解析异常, 建议切换为windows机器下执行: {vio.attrib} msg: {vio.text}")
 
@@ -135,7 +135,7 @@ class StyleCop(CodeLintModel):
                 # rule_id= vio.attrib.get("RuleId")
                 namespace = vio.attrib.get("RuleNamespace")
                 rule_name = vio.attrib.get("Rule")
-                
+
                 rule = "%s/%s" % (namespace, rule_name)
                 # 项目使用自己的规则配置文件，这里当项目指定了配置文件时候不做规则过滤
                 if stylecop_config not in envs and rule not in enabled_rules:
