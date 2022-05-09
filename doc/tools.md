@@ -14,8 +14,8 @@
 |regexscan| dartanalyzer |
 |[tca_ql_php_beta](../tools/Hades_Beta/README.md)| detekt |
 |unusedresource| eslint |
-|| eslint_typescript |
-|| eslint_vue |
+|[collie](../tools/collie/README.md)| eslint_typescript |
+|[compass](../tools/compass/README.md)| eslint_vue |
 || findbugs |
 || flake8 |
 || [flawfinder](https://github.com/TCATools/flawfinder) |
