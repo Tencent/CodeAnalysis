@@ -194,6 +194,3 @@ class Task(object):
             self.msg = u"%s: %s" % (type(err).__name__, err)
             self.data = traceback.format_exc()
             self._done = True
-
-
-

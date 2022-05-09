@@ -136,7 +136,10 @@ class StyleCop(CodeLintModel):
                 namespace = vio.attrib.get("RuleNamespace")
                 rule_name = vio.attrib.get("Rule")
                 
-                rule = "%s/%s" % (namespace, rule_name)
+                if namespace == "CSharpStandard.MainRule":
+                    rule = rule_name
+                else:
+                    rule = "%s/%s" % (namespace, vio.attrib.get("Rule"))
                 # 项目使用自己的规则配置文件，这里当项目指定了配置文件时候不做规则过滤
                 if stylecop_config not in envs and rule not in enabled_rules:
                     continue
@@ -183,9 +186,13 @@ class StyleCop(CodeLintModel):
         """
         tree = dict()
         for rule in rules:
-            info = rule.split("/")
-            namespace = info[0]
-            name = info[1]
+            if rule.find('/') == -1:
+                namespace = "CSharpStandard.MainRule"
+                name = rule
+            else:
+                info = rule.split("/")
+                namespace = info[0]
+                name = info[1]
             if namespace in tree:
                 tree[namespace].append(name)
             else:
