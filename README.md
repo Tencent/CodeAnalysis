@@ -41,7 +41,7 @@ https://git.code.tencent.com/Tencent_Open_Source/CodeAnalysis.git
 - [Deploy Q&A](doc/Q&A.md)
 
 ## Community
-- WeChat public account:腾讯云静态分析，Follow and send "进群" to join the official communication group.
+- WeChat official account:腾讯云静态分析
 - QQ Group: 361791391
 - [Discussion](https://github.com/Tencent/CodeAnalysis/discussions)
 - [Wiki](https://github.com/Tencent/CodeAnalysis/wiki)
