@@ -41,7 +41,7 @@ https://git.code.tencent.com/Tencent_Open_Source/CodeAnalysis.git
 - [Deploy Q&A](doc/Q&A.md)
 
 ## Community
-
+- WeChat official account:腾讯云静态分析
 - QQ Group: 361791391
 - [Discussion](https://github.com/Tencent/CodeAnalysis/discussions)
 - [Wiki](https://github.com/Tencent/CodeAnalysis/wiki)
@@ -54,6 +54,7 @@ https://git.code.tencent.com/Tencent_Open_Source/CodeAnalysis.git
 ## Contributing
 
 - Check out [CONTRIBUTING](CONTRIBUTING.md) to see how to develop with TCA.
+- [Tencent WeOpen Star Project](https://github.com/weopenprojects/WeOpen-Star/issues/19#issue-1228583868)（From May 2022 to September 2022）
 - [Tencent Open Source Incentive Program](https://opensource.tencent.com/contribution) encourages the participation and contribution of developers. We look forward to your active participation.
 
 ## License
