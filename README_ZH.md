@@ -40,8 +40,7 @@ https://git.code.tencent.com/Tencent_Open_Source/CodeAnalysis.git
 - [部署常见问题与解决方式](doc/Q&A.md)
 
 ## 社区
-
-- QQ交流群：361791391
+- 微信公众号：「腾讯云静态分析」，关注并发送“进群”即可加入官方开源交流微信群
 - [GitHub讨论区](https://github.com/Tencent/CodeAnalysis/discussions)
 - [Wiki](https://github.com/Tencent/CodeAnalysis/wiki)
 - [腾讯云代码分析白皮书](腾讯云代码分析白皮书.pdf)
@@ -51,10 +50,9 @@ https://git.code.tencent.com/Tencent_Open_Source/CodeAnalysis.git
 [Changelog](CHANGELOG.md)
 
 ## 贡献
-
 - 查看我们的[贡献说明](CONTRIBUTING.md)
+- [腾讯开源摘星计划2022](https://github.com/weopenprojects/WeOpen-Star/issues/19#issue-1228583868)（活动时间：2022年5月~12月）
 - [腾讯开源激励计划](https://opensource.tencent.com/contribution) 鼓励开发者的参与和贡献，期待你的加入
 
 ## 许可
-
 TCA 使用 [MIT 许可证](LICENSE)
