@@ -26,12 +26,12 @@
 ### 部署方案
 #### 【持续完善中】部署方案一：一键部署
 
-拉取代码进入源码根目录，执行``./quick_start.sh``命令，即可自动安装Docker、Docker-Compose和启动Server与Web服务
+拉取代码进入源码根目录，执行``./quick_install.sh``命令，即可自动安装Docker、Docker-Compose和启动Server与Web服务
 
 >注：
 >
->- ``quick_start.sh``脚本中会自动下载[``docker``安装脚本](https://get.docker.com)、启动Docker服务、下载``docker-compose``可执行文件以及执行``compose_init.sh``脚本启动Server、Web服务
->- 如果提示脚本没有执行权限，可以在源码执行命令：``chmod +x compose_init.sh quick_start.sh``
+>- ``quick_install.sh``脚本中会自动下载[``docker``安装脚本](https://get.docker.com)、启动Docker服务、下载``docker-compose``可执行文件以及执行``compose_init.sh``脚本启动Server、Web服务
+>- 如果提示脚本没有执行权限，可以在源码执行命令：``chmod +x compose_init.sh quick_install.sh``
 
 
 #### 部署方案二：手动部署
