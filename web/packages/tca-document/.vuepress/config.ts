@@ -5,7 +5,7 @@ import { navbar, sidebar } from './configs'
 const isProd = process.env.NODE_ENV === 'production'
 
 export default defineUserConfig({
-  base: `/${process.env.BASE}/` || '/',
+  base: process.env.BASE ? `/${process.env.BASE}/` : '/',
 
   head: [
     [
