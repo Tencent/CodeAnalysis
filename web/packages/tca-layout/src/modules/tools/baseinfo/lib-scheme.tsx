@@ -150,6 +150,8 @@ const LibScheme = (props: LibSchemeProps) => {
     <Form
       {...layout}
       form={form}
+      // 嵌套结构需要修改 Form 的 dom 类型
+      component='div'
       name='libScheme'
       initialValues={{
         ...toolSchemes[activeKey],
@@ -268,6 +270,7 @@ const LibScheme = (props: LibSchemeProps) => {
             type='primary'
             htmlType='submit'
             key='edit'
+            onClick={onFinish}
           >{activeKey === -1 ? '新增' : '编辑'}</Button>
           <Button
             className="ml-12"

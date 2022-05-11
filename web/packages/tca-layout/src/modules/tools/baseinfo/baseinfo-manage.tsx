@@ -186,6 +186,9 @@ const BaseInfo = ({ orgSid, toolId, data, getDetail }: BaseInfoProps) => {
           status: STATUSENUM.NORMAL,
           scm_auth_id: data.scm_auth ? `${data.scm_auth?.auth_type}#${data.scm_auth?.auth_type === AUTH_TYPE.HTTP ? data.scm_auth?.scm_account?.id : data.scm_auth?.scm_ssh?.id}` : '',
         }}
+        onValuesChange={(changedValues, allValues) => {
+          console.log(changedValues, allValues)
+        }}
         onFinish={isEdit ? onFinish : undefined}
       >
         <Form.Item label="运营状态">
@@ -378,11 +381,11 @@ const BaseInfo = ({ orgSid, toolId, data, getDetail }: BaseInfoProps) => {
         </Form.Item>
         {
           isEdit && (
-            <LibScheme
-              layout={layout}
-              orgSid={orgSid}
-              toolId={toolId}
-            />
+              <LibScheme
+                layout={layout}
+                orgSid={orgSid}
+                toolId={toolId}
+              />
           )
         }
         <Form.Item label='语言' >
