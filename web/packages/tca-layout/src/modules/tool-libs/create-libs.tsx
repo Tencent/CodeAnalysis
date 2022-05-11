@@ -10,6 +10,7 @@ import RefreshIcon from 'coding-oa-uikit/lib/icon/Refresh';
 import { gScmAccounts, getSSHInfo } from '@src/services/user';
 import { addToolLib, getLibDetail, updateToolLib } from '@src/services/tools';
 import { AUTH_TYPE, AUTH_TYPE_TXT, REPO_TYPE_OPTIONS, REPO_TYPE } from '@src/modules/tools/constants';
+// import { LIB_ENV, LIB_TYPE } from './constants';
 import { LIB_ENV } from './constants';
 
 const { TextArea } = Input;

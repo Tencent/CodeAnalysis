@@ -3,14 +3,14 @@
  */
 import React, { useState, useEffect, useRef } from 'react';
 import cn from 'classnames';
-import { isEmpty, toNumber, find, get } from 'lodash';
+import { isEmpty, toNumber, find, get, compact } from 'lodash';
 import { Form, Button, Input, Checkbox, Select, Tooltip, message, Tag, Modal, Radio } from 'coding-oa-uikit';
 import PlusIcon from 'coding-oa-uikit/lib/icon/Plus';
 import RefreshIcon from 'coding-oa-uikit/lib/icon/Refresh';
 import EditIcon from 'coding-oa-uikit/lib/icon/Edit';
 
 import { formatDateTime } from '@src/utils';
-import { updateTool, updateToolStatus, getToolSchemes } from '@src/services/tools';
+import { updateTool, updateToolStatus, addToolSchemes } from '@src/services/tools';
 import { gScmAccounts, getSSHInfo } from '@src/services/user';
 import { AUTH_TYPE, AUTH_TYPE_TXT, AUTH_DICT, REPO_TYPE_OPTIONS, TOOL_STATUS, STATUSENUM } from '../constants';
 
@@ -34,20 +34,13 @@ interface BaseInfoProps {
 
 const BaseInfo = ({ orgSid, toolId, data, getDetail }: BaseInfoProps) => {
   const [form] = Form.useForm();
-  const [isEdit, setIsEdit] = useState(false);
+  const [isEdit, setIsEdit] = useState(true);
   const [sshAuthList, setSshAuthList] = useState<any>([]);
   const [httpAuthList, setHttpAuthList] = useState<any>([]);
   const [authLoading, setAuthLoading] = useState(false);
   const statusRef = useRef();
 
   useEffect(() => getAuth(), []);
-
-  useEffect(() => {
-    getToolSchemes(orgSid, toolId).then((res) => {
-      console.log(res)
-    })
-  }, [toolId])
-
 
   useEffect(() => {
     if (!authLoading && data.id && data.scm_auth) {
@@ -116,6 +109,17 @@ const BaseInfo = ({ orgSid, toolId, data, getDetail }: BaseInfoProps) => {
       }
     }
 
+    // console.log(formData);
+    newFormData.tool_libs = compact(formData.tool_libs);
+
+    if (!isEmpty(newFormData.tool_libs)) {
+      addToolSchemes(orgSid, toolId, {
+        tool_libs: newFormData.tool_libs?.map((id: number) => ({ toollib: id })),
+        // condition: null
+      }).then((res) => {
+        console.log(res)
+      })
+    }
 
     updateTool(orgSid, data.id, {
       ...data,
@@ -175,7 +179,7 @@ const BaseInfo = ({ orgSid, toolId, data, getDetail }: BaseInfoProps) => {
     <div>
       <Form
         {...layout}
-        style={{ width: 660, padding: '20px 30px' }}
+        style={{ width: 800, padding: '20px 30px' }}
         form={form}
         initialValues={{
           ...data,
@@ -266,7 +270,7 @@ const BaseInfo = ({ orgSid, toolId, data, getDetail }: BaseInfoProps) => {
                       name='scm_url'
                       noStyle
                     >
-                      <Input style={{ width: 380 }} />
+                      <Input style={{ width: 486 }} />
                     </Form.Item>
                   </Input.Group>,
                   data.scm_url,
@@ -282,7 +286,7 @@ const BaseInfo = ({ orgSid, toolId, data, getDetail }: BaseInfoProps) => {
                 getComponent(
                   <>
                     <Form.Item noStyle name="scm_auth_id">
-                      <Select style={{ width: 380 }}>
+                      <Select style={{ width: 480 }}>
                         {!isEmpty(sshAuthList) && (
                           <OptGroup label={AUTH_TYPE_TXT.SSH}>
                             {sshAuthList.map((auth: any) => (
@@ -364,7 +368,6 @@ const BaseInfo = ({ orgSid, toolId, data, getDetail }: BaseInfoProps) => {
             </Form.Item>
           )
         }
-        <LibScheme/>
         <Form.Item label="License" name="license">
           {
             getComponent(
@@ -373,7 +376,15 @@ const BaseInfo = ({ orgSid, toolId, data, getDetail }: BaseInfoProps) => {
             )
           }
         </Form.Item>
-
+        {
+          isEdit && (
+            <LibScheme
+              layout={layout}
+              orgSid={orgSid}
+              toolId={toolId}
+            />
+          )
+        }
         <Form.Item label='语言' >
           {data.languages?.join(' | ')}
         </Form.Item>

@@ -224,3 +224,12 @@ export const getToolSchemes = (orgId: string, toolId: number) => get(`${getToolP
  * @returns 
  */
 export const addToolSchemes = (orgId: string, toolId: number, data: any) => post(`${getToolPrefix(orgId)}${toolId}/schemes/`, data);
+
+/**
+ * 移除工具依赖
+ * @param orgId 
+ * @param toolId 
+ * @param libSchemeId 
+ * @returns 
+ */
+export const delToolScheme = (orgId: string, toolId: number, libSchemeId: number) => del(`${getToolPrefix(orgId)}${toolId}/schemes/${libSchemeId}/`);
