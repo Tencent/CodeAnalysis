@@ -17,17 +17,17 @@
 }, {
   "name": "tca-analysis",
   "description": "TCA Analysis 微前端",
-  "commitId": "f4a20c87b0ba1b1150e216163b3fa3188982ad6c",
+  "commitId": "0bf6acf1b73eb83eed722737c867d6f57c6ea324",
   "match": "^/t/[^/]+/p/[^/]+/(code-analysis|repos|template|profile|group)",
-  "js": ["/static/tca-analysis/runtime~tca-analysis-ee70aba9.js", "/static/tca-analysis/vendors~tca-analysis-4d35a288.js", "/static/tca-analysis/tca-analysis-5fad4bee.js"],
-  "css": ["/static/tca-analysis/vendors~tca-analysis-9b6df0cb.css", "/static/tca-analysis/tca-analysis-6038b451.css"],
+  "js": ["/static/tca-analysis/runtime~tca-analysis-ee70aba9.js", "/static/tca-analysis/vendors~tca-analysis-4d35a288.js", "/static/tca-analysis/tca-analysis-004eda25.js"],
+  "css": ["/static/tca-analysis/vendors~tca-analysis-9b6df0cb.css", "/static/tca-analysis/tca-analysis-fbc8addf.css"],
   "prefix": ["/static/tca-analysis/"]
 }, {
   "name": "tca-manage",
   "description": "TCA 后台管理微前端",
-  "commitId": "6577ebb1bcaf8af2689248c3b921e35005798bdd",
+  "commitId": "256fb8e168b5199df92b0470449d91426559ffcc",
   "match": "^/manage",
-  "js": ["/static/tca-manage/runtime~tca-manage-60d68429.js", "/static/tca-manage/vendors~tca-manage-c2103afb.js", "/static/tca-manage/tca-manage-39fe1aa8.js"],
+  "js": ["/static/tca-manage/runtime~tca-manage-60d68429.js", "/static/tca-manage/vendors~tca-manage-6121a672.js", "/static/tca-manage/tca-manage-99d3fa97.js"],
   "css": ["/static/tca-manage/vendors~tca-manage-9b6df0cb.css", "/static/tca-manage/tca-manage-c5ccadad.css"],
   "prefix": ["/static/tca-manage/"]
 }]

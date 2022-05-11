@@ -41,6 +41,7 @@ const ScanModal = (props: ScanModalProps) => {
 
   const onReset = () => {
     onClose();
+    setScan('web')
     form.resetFields();
   };
 
@@ -54,7 +55,7 @@ const ScanModal = (props: ScanModalProps) => {
             const blob = new Blob([res], { type: 'text/plain;charset=utf-8' });
             saveAs(blob, 'codedog.ini');
             message.success('下载成功');
-  
+
             Modal.success({
               title: '下载配置文件成功',
               content: '请到客户端替换对应的 codedog.ini 文件',
@@ -62,7 +63,7 @@ const ScanModal = (props: ScanModalProps) => {
           } else { // 复制配置文件
             copy2Clipboard(res);
             message.success('复制成功');
-  
+
             Modal.success({
               title: '复制配置文件成功',
               content: '请到客户端替换对应的 codedog.ini 文件内容',
@@ -75,7 +76,7 @@ const ScanModal = (props: ScanModalProps) => {
     } else {
       setLoading(true);
       createJob(orgSid, teamName, repoId, projectId, {
-        incr_scan: data.total_scan,
+        incr_scan: !data.total_scan,
       }).then(() => {
         onReset();
         history.push(
@@ -89,11 +90,11 @@ const ScanModal = (props: ScanModalProps) => {
     }
   };
 
-  const handleOk = ( isDownload:boolean ) => {
+  const handleOk = (isDownload: boolean) => {
     if (isDownload) {
-      form.validateFields().then((data:any)=>{onFinish(data, true)});
+      form.validateFields().then((data: any) => { onFinish(data, true) });
     } else {
-      form.validateFields().then((data:any)=>{onFinish(data, false)});
+      form.validateFields().then((data: any) => { onFinish(data, false) });
     }
   }
 
@@ -105,18 +106,15 @@ const ScanModal = (props: ScanModalProps) => {
       className={style.antModalScanModal}
       visible={visible}
       onCancel={onReset}
-      confirmLoading={loading}
-      // okText={scan === 'client' ? '下载配置文件' : '启动分析'}
-      onOk={() => handleOk(false)}
       footer={[
-        <Button key="submit" type="primary" loading={loading} onClick={()=>{handleOk(true)}}>
-        {scan === 'client' ? '下载配置文件' : '启动分析'}
+        <Button key="submit" type="primary" loading={loading} onClick={() => { handleOk(true) }}>
+          {scan === 'client' ? '下载配置文件' : '启动分析'}
         </Button>,
         scan === 'client' && <Button
           className={style.btn}
           key="copy"
           loading={loading}
-          onClick={()=>{handleOk(false)}}
+          onClick={() => { handleOk(false) }}
         >
           复制配置文件
         </Button>,
@@ -130,7 +128,7 @@ const ScanModal = (props: ScanModalProps) => {
         form={form}
         initialValues={{
           scan: 'web',
-          total_scan: true
+          total_scan: false
         }}
       >
         <Form.Item
@@ -150,8 +148,8 @@ const ScanModal = (props: ScanModalProps) => {
           label=""
         >
           <Radio.Group onChange={e => setType(e.target.value)} value={type}>
-            <Radio value={true}>增量分析</Radio>
-            <Radio value={false}>全量分析</Radio>
+            <Radio value={false}>增量分析</Radio>
+            <Radio value={true}>全量分析</Radio>
           </Radio.Group>
         </Form.Item>
         <Form.Item noStyle shouldUpdate={(prevValues: any, curValues: any) => prevValues.scan !== curValues.scan}>
@@ -171,7 +169,7 @@ const ScanModal = (props: ScanModalProps) => {
       <p className={style.desc}>
         推荐使用增量分析，仅对上次分析后提交的 diff 代码进行分析，速度更快！
       </p>
-      <p className={style.desc}>全量分析将分析分支中全部文件，适合分析方案配置变更后执行。</p>
+      <p className={style.desc}>全量分析将分析分支中全部文件，<b>适合分析方案配置变更后执行</b>。</p>
     </Modal>
   );
 };
