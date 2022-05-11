@@ -64,7 +64,7 @@ const ScanModal = (props: ScanModalProps) => {
     } else {
       setLoading(true);
       createJob(orgSid, teamName, repoId, projectId, {
-        incr_scan: data.total_scan,
+        incr_scan: !data.total_scan,
       }).then(() => {
         onReset();
         history.push(
@@ -115,8 +115,8 @@ const ScanModal = (props: ScanModalProps) => {
           label=""
         >
           <Radio.Group onChange={e => setType(e.target.value)} value={type}>
-            <Radio value={true}>增量分析</Radio>
-            <Radio value={false}>全量分析</Radio>
+            <Radio value={false}>增量分析</Radio>
+            <Radio value={true}>全量分析</Radio>
           </Radio.Group>
         </Form.Item>
         <Form.Item noStyle shouldUpdate={(prevValues: any, curValues: any) => prevValues.scan !== curValues.scan}>
