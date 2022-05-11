@@ -105,6 +105,7 @@ const ScanModal = (props: ScanModalProps) => {
       width={466}
       className={style.antModalScanModal}
       visible={visible}
+      onCancel={onReset}
       footer={[
         <Button key="submit" type="primary" loading={loading} onClick={() => { handleOk(true) }}>
           {scan === 'client' ? '下载配置文件' : '启动分析'}

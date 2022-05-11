@@ -17,9 +17,9 @@
 }, {
   "name": "tca-analysis",
   "description": "TCA Analysis 微前端",
-  "commitId": "256fb8e168b5199df92b0470449d91426559ffcc",
+  "commitId": "0bf6acf1b73eb83eed722737c867d6f57c6ea324",
   "match": "^/t/[^/]+/p/[^/]+/(code-analysis|repos|template|profile|group)",
-  "js": ["/static/tca-analysis/runtime~tca-analysis-ee70aba9.js", "/static/tca-analysis/vendors~tca-analysis-4d35a288.js", "/static/tca-analysis/tca-analysis-1fba23b1.js"],
+  "js": ["/static/tca-analysis/runtime~tca-analysis-ee70aba9.js", "/static/tca-analysis/vendors~tca-analysis-4d35a288.js", "/static/tca-analysis/tca-analysis-004eda25.js"],
   "css": ["/static/tca-analysis/vendors~tca-analysis-9b6df0cb.css", "/static/tca-analysis/tca-analysis-fbc8addf.css"],
   "prefix": ["/static/tca-analysis/"]
 }, {
