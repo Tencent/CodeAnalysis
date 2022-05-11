@@ -138,7 +138,7 @@ module.exports = {
     new FriendlyErrorsWebpackPlugin(),
     new CleanWebpackPlugin(),
     new webpack.ProvidePlugin({
-      process: 'process/browser',
+      process: 'process/browser.js',
     }),
     new webpack.DefinePlugin({
       'process.env': Object.keys(envs).reduce((e, key) => {
