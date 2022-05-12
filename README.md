@@ -2,6 +2,8 @@
     <img src='https://tencent.github.io/CodeAnalysis/media/Logo.svg' width="200"/>
     <br />
     <em>TCA, Tencent Cloud Code Analysis</em>
+    <br />
+    <em>code-named: CodeDog</em>
 </p>
 
 [![license](https://img.shields.io/badge/License-MIT-brightgreen.svg?style=flat)](LICENSE) 
