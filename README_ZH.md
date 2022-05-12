@@ -2,6 +2,8 @@
     <img src='https://tencent.github.io/CodeAnalysis/media/Logo.png' width="200"/>
     <br />
     <em>腾讯云代码分析</em>
+    <br />
+    <em>代号：CodeDog</em>
 </p>
 
 [![license](https://img.shields.io/badge/License-MIT-brightgreen.svg?style=flat)](LICENSE) 
