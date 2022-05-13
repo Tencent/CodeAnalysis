@@ -4,7 +4,7 @@ PR全称为Pull Request，它是一种代码库的协作方式。开发者可以
 > Pull requests let you tell others about changes you've pushed to a branch in a repository on GitHub. Once a pull request is opened, you can discuss and review the potential changes with collaborators and add follow-up commits before your changes are merged into the base branch.
 
 
-#操作流程
+# 操作流程
 ## 一、Fork目标代码库
 ![fork](https://tencent.github.io/CodeAnalysis/media/Fork.png)
 
