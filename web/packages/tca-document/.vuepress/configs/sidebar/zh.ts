@@ -3,10 +3,9 @@ import type { SidebarConfig } from '@vuepress/theme-default'
 export const zh: SidebarConfig = {
   '/zh/guide/': [
     {
-      text: '快速入门',
+      text: '介绍',
       children: [
         '/zh/guide/README.md',
-        '/zh/guide/快速入门/快速启动一次代码分析.md',
       ],
     },
     {
@@ -38,6 +37,7 @@ export const zh: SidebarConfig = {
       text: '工具管理',
       children: [
         '/zh/guide/工具管理/工具管理说明.md',
+        '/zh/guide/工具管理/工具列表.md',
         '/zh/guide/工具管理/自定义规则.md',
         '/zh/guide/工具管理/自定义工具.md',
       ]
@@ -49,18 +49,42 @@ export const zh: SidebarConfig = {
       ]
     },
     {
-      text: 'CLIENT 客户端',
+      text: '客户端',
       children: [
         '/zh/guide/客户端/配置说明.md',
         '/zh/guide/客户端/本地分析.md',
         '/zh/guide/客户端/常驻节点分析.md',
       ]
     },
-
+    {
+      text: '服务端',
+      children: [
+        '/zh/guide/服务器/server.md',
+        '/zh/guide/服务器/deploy_with_minio.md',
+      ]
+    },
+    {
+      text: 'Web端',
+      children: [
+        '/zh/guide/web/web.md',
+        '/zh/guide/web/deploySource.md',
+      ]
+    },
+  ],
+  '/zh/community/': [
+    {
+      text: '社区资源',
+      children: [
+        '/zh/community/contribute.md',
+        '/zh/community/pr.md',
+        '/zh/community/changelog.md',
+        '/zh/community/joingroup.md',
+      ]
+    },
   ],
   '/zh/api/': [
     {
-      text: '开放 API',
+      text: 'API',
       children: [
         '/zh/api/README.md',
         '/zh/api/对象主要字段说明.md',
@@ -71,5 +95,20 @@ export const zh: SidebarConfig = {
         '/zh/api/代码度量数据模块接口.md',
       ]
     },
-  ]
+  ],
+  '/zh/quickStarted/': [
+    {
+      text: '快速入门',
+      children: [ 
+        {
+          text: '概述',
+          link: '/zh/quickStarted/intro.md',
+        },
+        '/zh/quickStarted/deploySever.md',
+        '/zh/quickStarted/setup.md',
+        '/zh/quickStarted/deployClient.md',
+        '/zh/quickStarted/FAQ.md',
+      ],
+    },
+  ],
 }

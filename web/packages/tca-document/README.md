@@ -2,11 +2,11 @@
 home: true
 title: 腾讯云代码分析帮助文档
 actions:
+  - text: 快速入门
+    link: /zh/quickStarted/intro.html
+    type: primary
   - text: 帮助文档
     link: /zh/guide/
-    type: primary
-  - text: 开源地址
-    link: https://github.com/Tencent/CodeAnalysis
     type: secondary
 features:
   - title: 稳定可靠的架构
