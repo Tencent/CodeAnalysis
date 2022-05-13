@@ -83,6 +83,7 @@ class Cleaner(object):
         # 如果不存在data目录,先创建,后续才能判断可用磁盘空间
         if not os.path.exists(settings.DATA_DIR):
             os.makedirs(settings.DATA_DIR)
+        # 如果磁盘空间小于MIN_REMAIN_SIZE，开始清理，直到空间达到MAX_REMAIN_SIZE
         if psutil.disk_usage(settings.DATA_DIR).free < settings.MIN_REMAIN_SIZE:
             while psutil.disk_usage(settings.DATA_DIR).free < settings.MAX_REMAIN_SIZE:
                 file_path = dir_dict.pop(file_create_time_list[index])

@@ -1,16 +1,32 @@
-# 拉取Python官方3.7.9镜像
-FROM csighub.tencentyun.com/sdet2/python:3.7.9-slim
+FROM python:3.7.12-slim
+# For ARM
+# FROM arm64v8/python:3.7.12-slim
 
-# 创建目录
-RUN mkdir -p /var/www/django/codedog
+RUN mv /etc/apt/sources.list /etc/apt/sources.list.bak && \
+    echo 'deb http://mirrors.tencent.com/debian/ bullseye main non-free contrib' > /etc/apt/sources.list && \
+    echo 'deb http://mirrors.tencent.com/debian/ bullseye-updates main non-free contrib' >> /etc/apt/sources.list && \
+    echo 'deb http://mirrors.tencent.com/debian-security bullseye-security main non-free contrib' >> /etc/apt/sources.list
 
-# 设置当前工作目录
+ARG EXTRA_TOOLS="gnupg curl wget jq net-tools procps default-libmysqlclient-dev locales inotify-tools gcc telnet iputils-ping vim openssh-client"
+
+RUN set -ex && cd / \
+    && apt-get update \
+    && apt-get install -y --no-install-recommends $EXTRA_TOOLS \
+    && apt-get update \
+    && apt-get install -y mariadb-client \
+    && apt-get clean \
+    && echo "LC_ALL=zh_CN.UTF-8" >> /etc/environment \
+    && echo "zh_CN.UTF-8 UTF-8" > /etc/locale.gen \
+    && echo "LANG=zh_CN.UTF-8" > /etc/locale.conf \
+    && locale-gen \
+    && ln -sf /usr/share/zoneinfo/Asia/Hong_Kong /etc/localtime \
+    && rm -rf /var/cache/apt/* /root/.cache
+
 WORKDIR /var/www/django/codedog
 
-# 拷贝源码
-COPY ./ ./
+COPY . .
 
-# 执行环境初始化
-RUN pip3 install -U setuptools pip && \
-    pip3 install -r requirements.txt && \
-    mkdir -p log/
+RUN mkdir -p log/ && \
+    mkdir ~/.pip/ && echo "[global]\nindex-url = https://mirrors.cloud.tencent.com/pypi/simple" >> ~/.pip/pip.conf && \
+    pip install -U setuptools pip && \
+    pip install -r requirements.txt

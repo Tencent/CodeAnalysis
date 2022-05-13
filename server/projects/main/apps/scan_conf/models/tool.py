@@ -132,6 +132,17 @@ class CheckTool(CDBaseModel):
                 return self.AccessRoleEnum.CO_ADMIN
         return self.AccessRoleEnum.OTHER
 
+    def get_show_name(self, user=None):
+        """获取展示名称
+        :param user: User, 访问用户
+        """
+        if self.show_display_name:
+            return self.display_name
+        if user and (user.is_superuser or self.get_all_users().filter(username=user.username).exists()):
+            # 超管或有使用权限的用户都可以查看到展示名称
+            return self.display_name
+        return self.virtual_name or self.id
+
     def __str__(self):
         return "%s" % self.display_name
 
@@ -246,8 +257,8 @@ class ToolLibScheme(CDBaseModel):
     """
     checktool = models.ForeignKey(CheckTool, related_name="libscheme", on_delete=models.CASCADE, help_text="工具")
     condition = models.CharField(max_length=128, null=True, help_text="条件")
-    tool_libs = models.ManyToManyField(ToolLib, through="ToolLibMap", related_name="libscheme", blank=True,
-                                       help_text="工具依赖")
+    tool_libs = models.ManyToManyField(ToolLib, through="ToolLibMap", related_name="libscheme",
+                                       blank=True, help_text="工具依赖")
     scheme_os = models.CharField(max_length=128, null=True, blank=True, help_text="适用系统")
     default_flag = models.BooleanField(default=False, help_text="默认依赖")
 
@@ -272,13 +283,3 @@ class ToolLibMap(models.Model):
     class Meta:
         unique_together = ("libscheme", "toollib")
         ordering = ["pos"]
-
-
-class CheckToolWhiteKey(models.Model):
-    """工具可被使用的白名单表
-    """
-    tool_key = models.CharField(max_length=64, help_text="工具key值，org_'<org_id>'")
-    tool_id = models.IntegerField(help_text="工具id")
-
-    class Meta:
-        unique_together = ("tool_key", "tool_id")

@@ -2,13 +2,19 @@
     <img src='https://tencent.github.io/CodeAnalysis/media/Logo.svg' width="200"/>
     <br />
     <em>TCA, Tencent Cloud Code Analysis</em>
+    <br />
+    <em>code-named: CodeDog</em>
 </p>
+
+[![license](https://img.shields.io/badge/License-MIT-brightgreen.svg?style=flat)](LICENSE) 
 
 English | [简体中文](README_ZH.md)
 
+## Repo Mirror
+https://git.code.tencent.com/Tencent_Open_Source/CodeAnalysis.git 
 ## What is TCA
 
-Tencent Cloud Code Analysis (TCA for short, code-named CodeDog inside the company early) is a comprehensive platform for code analysis and issue tracking. TCA consist of three components, server, web and client. It also supports the integration of other code analysis tools.
+Tencent Cloud Code Analysis (TCA for short, code-named CodeDog inside the company early) is a comprehensive platform for code analysis and issue tracking. TCA consist of three components, server, web and client. It integrates of a number of self-developed tools, and also supports dynamic integration of code analysis tools in various programming languages.
 
 Code analysis is a technology, using lexical analysis, syntax analysis, control-flow analysis, data-flow analysis to make a comprehensive analysis of the code, so as to verify whether the code meets the requirements of normative, security, reliability, maintainability and other indicators.
 
@@ -17,7 +23,7 @@ Using TCA can help team find normative, structural, security vulnerabilities and
 ![组件图](https://tencent.github.io/CodeAnalysis/media/Components.png)
 
 ![流程图](https://tencent.github.io/CodeAnalysis/media/Flow.png)
-
+ 
 ## Experience
 
 [Apply Link](https://cloud.tencent.com/apply/p/44ncv4hzp1)
@@ -31,14 +37,14 @@ Using TCA can help team find normative, structural, security vulnerabilities and
 
 ## Getting Started
 
-- [How to get start](GettingStart(快速入门).md)
+- [How to get start](GettingStart.md)
 - [How to deploy server and web](doc/deploy.md)
 - [How to deploy server and web with docker-compose](doc/deploy_dc.md)
 - [How to use client](doc/client.md)
 - [Deploy Q&A](doc/Q&A.md)
 
 ## Community
-
+- WeChat official account:腾讯云静态分析
 - QQ Group: 361791391
 - [Discussion](https://github.com/Tencent/CodeAnalysis/discussions)
 - [Wiki](https://github.com/Tencent/CodeAnalysis/wiki)
@@ -51,6 +57,7 @@ Using TCA can help team find normative, structural, security vulnerabilities and
 ## Contributing
 
 - Check out [CONTRIBUTING](CONTRIBUTING.md) to see how to develop with TCA.
+- [Tencent WeOpen Star Project](https://github.com/weopenprojects/WeOpen-Star/issues/19#issue-1228583868)（From May 2022 to September 2022）
 - [Tencent Open Source Incentive Program](https://opensource.tencent.com/contribution) encourages the participation and contribution of developers. We look forward to your active participation.
 
 ## License

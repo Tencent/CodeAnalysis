@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 echo "Check python version..."
 PYVERSION=`python -c 'import sys; print(sys.version_info.major, sys.version_info.minor)'`
@@ -45,9 +45,10 @@ main_celery_worker_log=$MAIN_PROJECT_PATH/log/main_celery.log
 main_celery_beat_log=$MAIN_PROJECT_PATH/log/main_beat.log
 analysis_celery_worker_log=$ANALYSIS_PROJECT_PATH/log/analysis_celery.log
 
-
 echo "Start configs..."
 source $CURRENT_PATH/scripts/config.sh
+
+bash $CURRENT_PATH/scripts/deploy_test.sh
 
 echo "Stop old server process..."
 killall python
@@ -126,3 +127,24 @@ echo "Analysis celery worker log: "$analysis_celery_worker_log
 cd $ANALYSIS_PROJECT_PATH && nohup celery -A codedog worker -l DEBUG --logfile $analysis_celery_worker_log  --pidfile $analysis_celery_worker_pid_file 2>&1 > nohup.out &
 
 echo "Server Log:" $PROJECT_LOG_PATH
+
+# 启动nginx
+function start_nginx() {
+    echo "start nginx ..."
+    # wc -l 行数计算。当nginx无进程时，启动nginx，否则reload nginx
+    nginx_is_start=$(ps -C nginx --no-header | wc -l)
+    if [ $nginx_is_start -eq 0 ]; then
+      nginx -t
+      if [ "$IS_DOCKER" == "TRUE" ]; then
+        nginx -g "daemon off;"
+      else
+        nginx
+      fi
+    else
+      nginx -s reload
+    fi
+}
+
+start_nginx
+
+bash $CURRENT_PATH/scripts/service_test.sh

@@ -1,0 +1,125 @@
+@import "@src/common/style/color.scss";
+
+.tools {
+  $header-height: 94px;
+  $top-height: 48px;
+  $filter-height: 48px;
+
+  .tag {
+    border: none;
+
+    &.build {
+      color: $red-8;
+      background-color: rgba($color: $red-8, $alpha: 0.07);
+    }
+
+    &.maintain {
+      color: $purple-8;
+      background-color: rgba($color: $purple-8, $alpha: 0.07);
+    }
+
+    &.custom {
+      color: $orange-7;
+      background-color: rgba($color: $orange-7, $alpha: 0.08);
+    }
+
+    &.status-0 {
+      color: $blue-7;
+      background-color: rgba($color: $blue-7, $alpha: 0.08);
+    }
+
+    &.status-1 {
+      color: $yellow-7;
+      background-color: rgba($color: $yellow-7, $alpha: 0.08);
+    }
+
+    &.status-2 {
+      color: $grey-7;
+      background-color: rgba($color: $grey-7, $alpha: 0.1);
+    }
+
+    &.status-3 {
+      color: $cyan-8;
+      background-color: rgba($color: $cyan-8, $alpha: 0.08);
+    }
+  }
+
+  .filter {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: $filter-height;
+    padding: 0 30px;
+    background-color: hsla(0, 0%, 98.8%, 0.98);
+    box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.1), 0 0.5px 0 0 rgba(0, 0, 0, 0.08);
+  }
+
+  .header {
+    height: $header-height;
+    padding: 20px 30px;
+
+    .title {
+      font-size: 18px;
+      font-weight: 500;
+      margin-bottom: 8px;
+    }
+
+    .desc {
+      font-size: 13px;
+      color: $grey-7;
+    }
+  }
+
+  .content-wrapper {
+    height: calc(100vh - #{$header-height} - #{$top-height} - #{$filter-height});
+    padding: 30px;
+    overflow: auto;
+  }
+
+  .content {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    grid-auto-rows: 160px;
+    justify-content: space-between;
+    grid-gap: 24px 32px;
+
+    & > div {
+      padding: 20px 24px;
+      border: 1px solid $grey-2;
+      border-radius: 2px;
+      box-shadow: 0px 6px 12px 0px rgba(197, 206, 219, 0.1);
+      transition: all 0.3s;
+      cursor: pointer;
+
+      &:hover {
+        box-shadow: 0px 6px 12px 0px rgba(197, 206, 219, 0.3);
+      }
+    }
+
+    .tool-header {
+      margin-bottom: 10px;
+
+      .title {
+        font-size: 16px;
+        font-weight: 500;
+        margin-right: 10px;
+      }
+    }
+
+    .detail-wrapper {
+      display: flex;
+      margin-bottom: 10px;
+
+      .icon {
+        flex: 0 0 32px;
+        color: $grey-7;
+        text-align: left;
+        padding-top: 3px;
+      }
+
+      .desc-paragraph {
+        margin-bottom: 0;
+      }
+    }
+  }
+}

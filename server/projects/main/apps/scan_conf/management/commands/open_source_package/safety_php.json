@@ -12,100 +12,107 @@
         ],
         "checkrule_set": [
             {
-                "checktool": "kunlunM",
-                "checkrule": "cURL SSRF",
-                "severity": "fatal",
-                "rule_params": null,
-                "state": "enabled"
-            },
-            {
-                "checktool": "kunlunM",
-                "checkrule": "file_get_contents SSRF",
-                "severity": "fatal",
-                "rule_params": null,
-                "state": "enabled"
-            },
-            {
-                "checktool": "kunlunM",
-                "checkrule": "get_headers SSRF",
-                "severity": "fatal",
-                "rule_params": null,
-                "state": "enabled"
-            },
-            {
-                "checktool": "kunlunM",
-                "checkrule": "Information Disclosure",
-                "severity": "fatal",
-                "rule_params": null,
-                "state": "enabled"
-            },
-            {
-                "checktool": "kunlunM",
-                "checkrule": "LDAP injection",
-                "severity": "fatal",
-                "rule_params": null,
-                "state": "enabled"
-            },
-            {
-                "checktool": "kunlunM",
-                "checkrule": "Reflected XSS",
-                "severity": "fatal",
-                "rule_params": null,
-                "state": "enabled"
-            },
-            {
-                "checktool": "kunlunM",
-                "checkrule": "Reflected XSS for echo",
-                "severity": "fatal",
-                "rule_params": null,
-                "state": "enabled"
-            },
-            {
-                "checktool": "kunlunM",
-                "checkrule": "Remote code execute",
-                "severity": "fatal",
-                "rule_params": null,
-                "state": "enabled"
-            },
-            {
-                "checktool": "kunlunM",
-                "checkrule": "remote file include",
-                "severity": "fatal",
-                "rule_params": null,
-                "state": "enabled"
-            },
-            {
-                "checktool": "kunlunM",
-                "checkrule": "SQL injection",
-                "severity": "fatal",
-                "rule_params": null,
-                "state": "enabled"
-            },
-            {
-                "checktool": "kunlunM",
-                "checkrule": "unserialize vulerablity",
-                "severity": "fatal",
-                "rule_params": null,
-                "state": "enabled"
-            },
-            {
-                "checktool": "kunlunM",
-                "checkrule": "URL Redirector Abuse",
-                "severity": "fatal",
-                "rule_params": null,
-                "state": "enabled"
-            },
-            {
-                "checktool": "kunlunM",
-                "checkrule": "variable shadowing",
+                "checktool": "tca_ql_php_beta",
+                "checkrule": "http",
                 "severity": "error",
                 "rule_params": null,
                 "state": "enabled"
             },
             {
-                "checktool": "kunlunM",
-                "checkrule": "Xml injection",
+                "checktool": "tca_ql_php_beta",
+                "checkrule": "ldap_injection",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "tca_ql_php_beta",
+                "checkrule": "phpinfo",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "tca_ql_php_beta",
+                "checkrule": "sql",
                 "severity": "fatal",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "tca_ql_php_beta",
+                "checkrule": "ssrf",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "tca_ql_php_beta",
+                "checkrule": "url",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "tca_ql_php_beta",
+                "checkrule": "xml",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "tca_ql_php_beta",
+                "checkrule": "xpath_injection",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "tca_ql_php_beta",
+                "checkrule": "xss",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "tca_ql_php_beta",
+                "checkrule": "code",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "tca_ql_php_beta",
+                "checkrule": "session",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "tca_ql_php_beta",
+                "checkrule": "reflectioni",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "tca_ql_php_beta",
+                "checkrule": "deser",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "tca_ql_php_beta",
+                "checkrule": "cmd",
+                "severity": "fatal",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "tca_ql_php_beta",
+                "checkrule": "file_inclusion",
+                "severity": "warning",
                 "rule_params": null,
                 "state": "enabled"
             }

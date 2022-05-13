@@ -55,6 +55,19 @@ MICRO_FRONTEND_DOCUMENT="tca-document"
 # 子微前端
 MICRO_FRONTEND_APPS="login tca-layout tca-analysis tca-manage"
 
+# 打印环境变量配置
+function log_env() {
+  LOG_INFO "============================前端配置说明============================"
+  LOG_INFO "| 前端服务访问的后端地址: SERVER_ENV --- $SERVER_ENV"
+  LOG_INFO "| 前端服务端口: INGRESS_PORT --- $INGRESS_PORT"
+  LOG_INFO "| 前端服务SERVER_NAME: INGRESS_SERVER_NAME --- $INGRESS_SERVER_NAME"
+  LOG_WARN "| 注意: 前端服务SERVER_NAME默认通过命令 curl ifconfig.me 获取，用户可自行根据需要在config配置中进行调整"
+  LOG_INFO "| 前端服务NGINX配置地址: NGINX_CONF_PATH --- $NGINX_CONF_PATH"
+  LOG_INFO "| 前端服务资源部署地址: WEB_DEPLOY_PATH --- $WEB_DEPLOY_PATH"
+  LOG_INFO "| 前端服务日志地址: NGINX_LOG_PATH --- $NGINX_LOG_PATH"
+  LOG_INFO "========================end 前端配置说明 end========================"
+}
+
 # 由于原来各个微前端采用了不同的nginx conf，后为简化开源版前端部署已重新调整配置，为兼容旧版此处默认使用清楚逻辑
 function clear_old_nginx_conf() {
   # 清除各个应用的nginx conf文件
@@ -84,7 +97,7 @@ function init_unzip_build() {
   # 遍历并解压
   MICRO_FRONTEND="$MICRO_FRONTEND_FRAMEWORK $MICRO_FRONTEND_APPS $MICRO_FRONTEND_DOCUMENT"
   for app in $MICRO_FRONTEND; do
-    unzip -o $app.zip -d $WEB_DEPLOY_PATH/$app
+    unzip -q -o $app.zip -d $WEB_DEPLOY_PATH/$app
   done
   cd $ROOT_PATH
 }
@@ -169,6 +182,7 @@ function start() {
   fi
 }
 
+log_env
 clear_old_nginx_conf
 clear_assets
 init_unzip_build

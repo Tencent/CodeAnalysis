@@ -14,11 +14,6 @@ URL前缀： /api/projects/
 """
 # 第三方 import
 from django.urls import path, include
-from django.conf import settings
-
-# 项目内 import
-from apps.codeproj.apis import v1 as apis
-from apps.scan_conf.apis import v1 as scan_conf_apis
 
 # /api/projects/
 urlpatterns = [

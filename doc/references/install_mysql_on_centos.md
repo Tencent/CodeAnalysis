@@ -43,11 +43,13 @@ mysql80-community-source             MySQL 8.0 Community Server - S 禁用
 ```bash
 $ yum install mysql-community-server
 ```
->如遇以下报错，可尝试运行`yum install mysql-community-server --nogpgcheck`安装  
-> Public key for mysql-community-libs-compat-5.7.37-1.el7.x86_64.rpm is not installed
->
+>1.如遇以下报错，可尝试运行`yum install mysql-community-server --nogpgcheck`安装  
+> Public key for mysql-community-libs-compat-5.7.37-1.el7.x86_64.rpm is not installed  
 > Failing package is: mysql-community-libs-compat-5.7.37-1.el7.x86_64    
-> GPG Keys are configured as: file:///etc/pki/rpm-gpg/RPM-GPG-KEY-mysql
+> GPG Keys are configured as: file:///etc/pki/rpm-gpg/RPM-GPG-KEY-mysql  
+>2.如遇以下报错，可执行`yum module disable mysql`后重试安装  
+>All matches were filtered out by modular filtering for argument: mysql-community-serve  
+>Error: Unable to find a match: mysql-community-server
 
 ## 配置MySQL服务
 安装好的MySQL配置文件路径是``/etc/my.cnf``，这里可以根据需要调整，比如可以调整：

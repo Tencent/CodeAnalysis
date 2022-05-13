@@ -48,16 +48,16 @@
 1. 进入Server服务工作目录后（假设工作目录为 ``/data/CodeAnalysis/server/``，以下路径均为工作目录内的相对路径）
 2. 配置MySQL和Redis服务，初始化数据（MySQL版本运行版本：5.7）
     - 执行``vi ./scripts/config.sh``：填写数据库和Redis信息以及根据需要调整配置信息，主要的工程配置已提供默认值，字段说明可以查看[文档](../server/README.md)
-    - 执行``./scripts/deploy.sh init``：初始化DB、安装依赖和运行初始化脚本
+    - 执行``bash ./scripts/deploy.sh init``：初始化DB、安装依赖和运行初始化脚本
     - 将安装好的``celery``与``gunicorn``可执行文件建立软链到``/usr/local/bin``路径下
         - ``ln -s /path/to/celery /usr/local/bin/celery``：``/path/to/``需要替换为``celery``可执行命令实际的路径，一般在python安装路径的``bin``目录下
         - ``ln -s /path/to/gunicorn /usr/local/bin/gunicorn``：``/path/to/``需要替换为实际的路径
-        - 如果您按Python3.7安装指导，这里的/path/to/路径为/usr/local/python3/bin/celery
+        - 如果您按Python3.7安装指导，这里的/path/to/路径为/usr/local/python3/bin/
     - 执行``export PATH=/usr/local/bin:$PATH``环境变量生效避免出现unknown command错误
 3. 启动服务
-    - 执行``./scripts/deploy.sh start``：启动服务
+    - 执行``bash ./scripts/deploy.sh start``：启动服务
 4. 停止服务
-    - 执行``./scripts/deploy.sh stop``：停止服务
+    - 执行``bash ./scripts/deploy.sh stop``：停止服务
 
 ### Web 部署
 
@@ -79,7 +79,7 @@
 
     ```bash
     # 部署、更新都使用此命令
-    sh ./scripts/deploy.sh init -d
+    bash ./scripts/deploy.sh init -d
     ```
 
     具体请查阅部署脚本内容，可根据业务调整配置。

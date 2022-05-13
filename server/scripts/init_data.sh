@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 echo "Start to init server data..."
 
@@ -13,7 +13,7 @@ PROJECT_LOG_PATH=$CURRENT_PATH/logs
 CONFIG_PATH=$CURRENT_PATH/configs
 
 source $CURRENT_PATH/scripts/config.sh
-sh $CURRENT_PATH/scripts/init_config.sh
+bash $CURRENT_PATH/scripts/init_config.sh
 
 function init_main() {
     echo "Init main db"

@@ -15,6 +15,7 @@
     "scm_url": null,
     "run_cmd": null,
     "envs": null,
+    "build_flag": true,
     "show_display_name": true,
     "checkrule_set": [
       {
@@ -64,22 +65,6 @@
         "owner": null,
         "labels": [],
         "description": "在菜单XML中使用showAsAction =“always”，或者在Java代码中使用MenuItem.SHOW_AS_ACTION_ALWAYS通常与用户界面风格指南有所偏差。请改用ifRoom或相应的MenuItem.SHOW_AS_ACTION_IF_ROOM。\n 如果总是谨慎使用，通常没有问题，行为大致相当于ifRoom，但优先于其他ifRoom项目。\n在同一菜单中使用它两次以上是一个坏主意。\n 此检查查找包含两个以上始终操作的菜单XML文件，或者一些总是操作且不包含ifRoom操作。在Java代码中，它会查找包含对MenuItem.SHOW_AS_ACTION_ALWAYS的引用的项目，并且不会引用MenuItem.SHOW_AS_ACTION_IF_ROOM。"
-      },
-      {
-        "real_name": "AsOperator",
-        "display_name": "AsOperator",
-        "severity": "error",
-        "category": "correctness",
-        "rule_title": "AsOperator",
-        "rule_params": "",
-        "custom": true,
-        "languages": [
-          "java"
-        ],
-        "solution": null,
-        "owner": null,
-        "labels": [],
-        "description": "禁止直接使用as操作符，请使用更安全的as?操作符"
       },
       {
         "real_name": "BackButton",
@@ -194,22 +179,6 @@
         "description": "非文本小部件（如ImageView和ImageButton）应使用contentdescriptionription属性来指定小部件的文本说明，以便屏幕阅读器和其他辅助工具可充分描述用户界面。\n 请注意，应用程序屏幕中的纯粹装饰性元素，不提供任何内容或不允许用户操作的元素不应具有辅助功能内容说明。在这种情况下，只需使用tools：ignore =“Contentdescriptionription”属性来抑制lint警告。\n 请注意，对于文本字段，您不应该同时设置提示和contentdescriptionription属性，因为该提示将永远不会显示。只需设置提示。请参阅http://developer.android.com/guide/topics/ui/accessibility/checklist.html#spec al-cases。"
       },
       {
-        "real_name": "CreateNewFile",
-        "display_name": "CreateNewFile",
-        "severity": "error",
-        "category": "correctness",
-        "rule_title": "CreateNewFile",
-        "rule_params": "",
-        "custom": true,
-        "languages": [
-          "java"
-        ],
-        "solution": null,
-        "owner": null,
-        "labels": [],
-        "description": "禁止直接使用File.createNewFile()"
-      },
-      {
         "real_name": "CutPasteId",
         "display_name": "CutPasteId",
         "severity": "warning",
@@ -256,22 +225,6 @@
         "owner": null,
         "labels": [],
         "description": "调用String＃toLowerCase（）或#toUpperCase（）而不指定显式语言环境是bug的常见来源。原因是这些方法将在用户的设备上使用当前的语言环境，即使代码在开发应用程序时似乎能够正常工作，它在某些语言环境中也会失败。例如，在土耳其语语言环境中，我的大写替换不是I.\n 如果您希望这些方法仅执行ASCII替换，例如转换枚举名称，请改为调用String＃toUpperCase（Locale.US）。如果您确实想要使用当前的语言环境，请调用String＃toUpperCase（Locale.getDefault（））。"
-      },
-      {
-        "real_name": "DelegateNotNull",
-        "display_name": "DelegateNotNull",
-        "severity": "warning",
-        "category": "other",
-        "rule_title": "DelegateNotNull",
-        "rule_params": "",
-        "custom": true,
-        "languages": [
-          "java"
-        ],
-        "solution": null,
-        "owner": null,
-        "labels": [],
-        "description": "不建议使用Delegate.notNull委托, 容易引发空指针"
       },
       {
         "real_name": "Deprecated",
@@ -450,22 +403,6 @@
         "description": "XML支持各种字符集中的编码。但是，并非所有工具都能正确处理XML编码属性，并且几乎所有的Android应用程序都使用UTF-8，所以使用UTF-8时，您可以在使用非ASCII字符时防止出现细微的错误。"
       },
       {
-        "real_name": "Executor",
-        "display_name": "Executor",
-        "severity": "error",
-        "category": "correctness",
-        "rule_title": "Executor",
-        "rule_params": "",
-        "custom": true,
-        "languages": [
-          "java"
-        ],
-        "solution": null,
-        "owner": null,
-        "labels": [],
-        "description": "禁止直接使用Executor.execute()"
-      },
-      {
         "real_name": "ExportedContentProvider",
         "display_name": "ExportedContentProvider",
         "severity": "warning",
@@ -562,22 +499,6 @@
         "description": "在为该字段定义一个getter的类中访问一个字段比调用getter至少快3倍。对于简单的getter来说，除了返回字段之外什么都不做，您可能只想直接引用本地字段。\n 注意：从Android 2.3（姜饼）开始，此优化由Dalvik自动执行，因此不需要更改代码;这只适用于您定位旧版Android的情况。"
       },
       {
-        "real_name": "FindViewById",
-        "display_name": "FindViewById",
-        "severity": "error",
-        "category": "correctness",
-        "rule_title": "FindViewById",
-        "rule_params": "",
-        "custom": true,
-        "languages": [
-          "java"
-        ],
-        "solution": null,
-        "owner": null,
-        "labels": [],
-        "description": "禁止在onCreate方法外使用findViewById"
-      },
-      {
         "real_name": "FloatMath",
         "display_name": "FloatMath",
         "severity": "warning",
@@ -592,54 +513,6 @@
         "owner": null,
         "labels": [],
         "description": "在较旧版本的Android中，使用android.util.FloatMath时，出于性能原因建议在浮点操作上使用。然而，在现代硬件上，双精度和浮点一样快（虽然它们需要更多的内存），而在最近的Android版本中，由于JIT优化java.lang.Math的方式，FloatMath实际上比使用java.lang.Math慢。因此，如果您只是针对Froyo或更高版本，则应该使用Math而不是FloatMath。"
-      },
-      {
-        "real_name": "FrescoLoad",
-        "display_name": "FrescoLoad",
-        "severity": "error",
-        "category": "correctness",
-        "rule_title": "FrescoLoad",
-        "rule_params": "",
-        "custom": true,
-        "languages": [
-          "java"
-        ],
-        "solution": null,
-        "owner": null,
-        "labels": [],
-        "description": "禁止直接使用DraweeView.setController，请使用FrescoUtil.load()方法"
-      },
-      {
-        "real_name": "GetQueryParameter",
-        "display_name": "GetQueryParameter",
-        "severity": "error",
-        "category": "correctness",
-        "rule_title": "GetQueryParameter",
-        "rule_params": "",
-        "custom": true,
-        "languages": [
-          "java"
-        ],
-        "solution": null,
-        "owner": null,
-        "labels": [],
-        "description": "禁止直接使用Uri.getQueryParameter()，请使用Uri.getQueryParameterSafely()"
-      },
-      {
-        "real_name": "GetSystemService",
-        "display_name": "GetSystemService",
-        "severity": "error",
-        "category": "correctness",
-        "rule_title": "GetSystemService",
-        "rule_params": "",
-        "custom": true,
-        "languages": [
-          "java"
-        ],
-        "solution": null,
-        "owner": null,
-        "labels": [],
-        "description": "禁止直接使用Context.getSystemService()"
       },
       {
         "real_name": "GifUsage",
@@ -1010,22 +883,6 @@
         "description": "此检查可确保在多个资源文件夹中定义的布局资源指定相同的一组小部件。\n 这会发现您不小心忘记将小部件添加到布局的所有变体的情况，这可能导致findViewById（）失败时某些资源配置的运行时崩溃。\n 有些情况下这是故意的。例如，您可能有一个专用的大型平板电脑布局，其中添加了一些额外的小部件，这些小部件不存在于布局的电话版本中。只要访问布局资源的代码仔细处理，它就是有效的。在这种情况下，您可以针对给定的额外视图或缺少视图或整个布局来抑制此lint检查"
       },
       {
-        "real_name": "IndexOutOfBounds",
-        "display_name": "IndexOutOfBounds",
-        "severity": "warning",
-        "category": "correctness",
-        "rule_title": "IndexOutOfBounds",
-        "rule_params": "",
-        "custom": true,
-        "languages": [
-          "java"
-        ],
-        "solution": null,
-        "owner": null,
-        "labels": [],
-        "description": "有可能出现索引越界问题，请注意判断索引边界值"
-      },
-      {
         "real_name": "InefficientWeight",
         "display_name": "InefficientWeight",
         "severity": "warning",
@@ -1200,22 +1057,6 @@
         "owner": null,
         "labels": [],
         "description": "@SuppressAnnotation用于抑制Java文件中的Lint警告。\n但是，虽然许多lint检查分析Java源代码，他们可以在其中找到（例如）局部变量的注释，但某些检查正在分析.class文件。而在类文件中，注释只出现在类，字段和方法上。置于局部变量上的注释消失。如果您尝试为基于类文件的lint检查取消lint错误，则禁止注释将不起作用。您必须将注释移出到周围的方法。"
-      },
-      {
-        "real_name": "LogSpec",
-        "display_name": "LogSpec",
-        "severity": "warning",
-        "category": "correctness",
-        "rule_title": "LogSpec",
-        "rule_params": "",
-        "custom": true,
-        "languages": [
-          "java"
-        ],
-        "solution": null,
-        "owner": null,
-        "labels": [],
-        "description": ""
       },
       {
         "real_name": "MangledCRLF",
@@ -1506,22 +1347,6 @@
         "description": "布局权重需要一个小部件进行两次测量。当具有非零权重的LinearLayout嵌套在具有非零权重的另一个LinearLayout内时，测量次数呈指数增长。"
       },
       {
-        "real_name": "NetworkUtil",
-        "display_name": "NetworkUtil",
-        "severity": "warning",
-        "category": "correctness",
-        "rule_title": "NetworkUtil",
-        "rule_params": "",
-        "custom": true,
-        "languages": [
-          "java"
-        ],
-        "solution": null,
-        "owner": null,
-        "labels": [],
-        "description": "主线程使用NetworkUtil.getNetworkType()可能会导致ANR，请确保是在子线程使用NetworkUtil.getNetworkType()"
-      },
-      {
         "real_name": "NewApi",
         "display_name": "NewApi",
         "severity": "warning",
@@ -1680,22 +1505,6 @@
         "owner": null,
         "labels": [],
         "description": "根据Parcelable接口文档，“实现Parcelable接口的类还必须有一个名为CREATOR的静态字段，它是实现Parcelable.Creator接口的对象。"
-      },
-      {
-        "real_name": "ParseColor",
-        "display_name": "ParseColor",
-        "severity": "error",
-        "category": "correctness",
-        "rule_title": "ParseColor",
-        "rule_params": "",
-        "custom": true,
-        "languages": [
-          "java"
-        ],
-        "solution": null,
-        "owner": null,
-        "labels": [],
-        "description": ""
       },
       {
         "real_name": "PrivateResource",
@@ -1904,22 +1713,6 @@
         "owner": null,
         "labels": [],
         "description": "在文本从右向左流动的区域设置中呈现布局时，使用Gravity＃LEFT和Gravity＃RIGHT可能会导致问题。改用Gravity＃START和Gravity＃END。同样，在XML gravity和layout_gravity属性中，使用start而不是left。\n对于paddingLeft和layout_marginLeft等XML属性，请使用paddingStart和layout_marginStart。注意：如果minSdkVersion小于17，则应添加较旧的左/右属性以及新的开始/右属性。在较旧的平台上，RTL不受支持且开始/权限属性未知且因此被忽略，您需要较旧的左/右属性。有一个单独的皮棉检查，捕捉这种类型的错误。\n（注意：对于Gravity＃LEFT和Gravity＃START，即使针对老平台，也可以使用这些常量，因为起始位掩码是左位掩码的超集，因此，您可以使用gravity =“start”而不是gravity =“左|启动”）。"
-      },
-      {
-        "real_name": "Schedulers",
-        "display_name": "Schedulers",
-        "severity": "error",
-        "category": "other",
-        "rule_title": "Schedulers",
-        "rule_params": "",
-        "custom": true,
-        "languages": [
-          "java"
-        ],
-        "solution": null,
-        "owner": null,
-        "labels": [],
-        "description": "禁止直接使用Schedulers做和线程相关的事"
       },
       {
         "real_name": "ScrollViewCount",
@@ -2178,22 +1971,6 @@
         "description": "这个lint检查确保了以下内容：（1）如果格式字符串有多个翻译，则所有翻译对于相同编号的参数使用相同类型（2）Java中格式字符串的用法与格式字符串一致，这意味着传递给String.format的参数类型与格式字符串中的参数类型相匹配。"
       },
       {
-        "real_name": "StringToNumberCast",
-        "display_name": "StringToNumberCast",
-        "severity": "error",
-        "category": "correctness",
-        "rule_title": "StringToNumberCast",
-        "rule_params": "",
-        "custom": true,
-        "languages": [
-          "java"
-        ],
-        "solution": null,
-        "owner": null,
-        "labels": [],
-        "description": "禁止使用String.toInt()，Integer.parseInt()等方法将字符串转换为数字，请使用Kotlin系列扩展方法String.toIntOrDefault()/toIntOrNull()"
-      },
-      {
         "real_name": "StyleCycle",
         "display_name": "StyleCycle",
         "severity": "fatal",
@@ -2272,22 +2049,6 @@
         "owner": null,
         "labels": [],
         "description": "使用<TextView>输入文本通常是一个错误，您应该使用<EditText>代替。 EditText是TextView的子类，一些编辑支持由TextView提供，因此可以在TextView上设置一些与输入相关的属性。但是，使用TextView和输入属性通常是剪切和粘贴错误。要输入文本，你应该使用<EditText>。\n此检查还检查TextView的子类，如Button和CheckBox，因为它们具有相同的问题：它们不应与可编辑属性一起使用。"
-      },
-      {
-        "real_name": "ToastShow",
-        "display_name": "ToastShow",
-        "severity": "error",
-        "category": "correctness",
-        "rule_title": "ToastShow",
-        "rule_params": "",
-        "custom": true,
-        "languages": [
-          "java"
-        ],
-        "solution": null,
-        "owner": null,
-        "labels": [],
-        "description": "禁止直接使用Toast.Show()"
       },
       {
         "real_name": "TooDeepLayout",

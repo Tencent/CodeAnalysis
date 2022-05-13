@@ -9,12 +9,14 @@
  */
 import React, { useState } from 'react';
 import { Radio, Row, Col } from 'coding-oa-uikit';
-import get from 'lodash/get';
+import { get, minBy } from 'lodash';
+
 
 // 项目内
 import NoData from '../no-data';
-import Line from '@src/components/charts/line';
-import DataCombinatePie from '@src/components/charts/data-combinate-pie';
+import PieCharts from '@src/components/charts/pie';
+import { Area } from '@ant-design/plots';
+
 import s from '../style.scss';
 import { t } from '@src/i18n/i18next';
 import { getLintPieChartData, getLintLineChartData } from '../utils';
@@ -66,6 +68,17 @@ const LINT_HISTORY_OPTIONS = [
     value: LINT_HISTORY_TYPE.UNDEAL,
   },
 ];
+
+const colors: any = {
+  "致命": "#eb333f",
+  "错误": "#f76469",
+  "警告": "#fba337",
+  "提示": "#ffe0b3",
+  "功能": "#0066ff",
+  "安全": "#3d98ff",
+  "代码风格": "#8cc6ff",
+  "其他": "#cceaff",
+};
 
 interface ITableProps {
   data: Array<any>;
@@ -128,7 +141,14 @@ const LintDetailChart = ({ type, data }: IChartProps) => {
   }
   if (!node) {
     return chanrtData?.length > 0 ? (
-      <DataCombinatePie data={chanrtData} />
+      <PieCharts
+      data={chanrtData}
+      confs={{
+        color: ({ type }: { type: string }) => {
+          return colors[type] || "#0066ff";
+        }
+      }}
+    />
     ) : (
       <NoData style={{ marginTop: '52px' }} />
     );
@@ -146,7 +166,7 @@ const CodeLint = ({ lintScans }: IProps) => {
   const [historyTypeValue, setHistoryTypeValue] = useState(LINT_HISTORY_TYPE.TOTAL);
   const { undealData, totalData } = getLintPieChartData(lintScans);
   const lineChartDatas = getLintLineChartData(lintScans);
-  const lintLineData = get(lineChartDatas, historyTypeValue, []);
+  const lintLineData: Array<any> = get(lineChartDatas, historyTypeValue, []);
   return (
     <div className={s.item}>
       <p className={s.header}>
@@ -200,15 +220,21 @@ const CodeLint = ({ lintScans }: IProps) => {
               ))}
             </Radio.Group>
             {lintLineData.length > 0 ? (
-              <Line
+              <Area
                 data={lintLineData}
-                xAxisKey="date"
-                yAxisKey="num"
-                cols={{
-                  date: {
-                    range: [0, 1],
-                    tickCount: 5,
-                  },
+                xField="date"
+                yField="num"
+                padding={[20, 10, 50, 40]}
+                yAxis={{
+                  min: minBy(lintLineData, 'num')?.num - 1,
+                  grid: {
+                    line: {
+                      style: {
+                        stroke: '#e6e9ed',
+                        lineDash: [3, 2]
+                      }
+                    }
+                  }
                 }}
               />
             ) : (

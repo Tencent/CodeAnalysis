@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { hot } from 'react-hot-loader';
@@ -9,6 +9,7 @@ import Users from '@src/modules/users';
 import Jobs from '@src/modules/jobs';
 import Nodes from '@src/modules/nodes';
 import NodeProcess from '@src/modules/nodes/process';
+const Tools = lazy(() => import('@src/modules/tools'));
 
 const Root = () => {
   const APP = useSelector((state: any) => state.APP);
@@ -27,6 +28,7 @@ const Root = () => {
           <Route path="/manage/jobs" component={Jobs} />
           <Route path="/manage/nodes/:nodeId/process" component={NodeProcess} />
           <Route path="/manage/nodes" component={Nodes} />
+          <Route path="/manage/tools" component={Tools} />
           <Redirect from="/manage" to="/manage/users" />
         </Switch>
       </Suspense>

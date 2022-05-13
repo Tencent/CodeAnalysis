@@ -10,8 +10,9 @@
       - [1.1.3 Docker-Compose启动失败](#113-docker-compose启动失败)
       - [1.1.4 Docker镜像源下载超时或失败](#114-docker镜像源下载超时或失败)
       - [1.1.5 Python安装或执行失败](#115-python安装或执行失败)
-      - [1.1.6 MacBook M1 使用 Docker-Compose报错](#116-macbook-m1-使用-docker-compose报错)
-      - [1.1.7 celery、gunicorn命令找不到](#117-celerygunicorn命令找不到)
+      - [1.1.6 执行``compose_init.sh``脚本的``pip install``提示``sha256``不匹配错误](#116-执行compose_initsh脚本的pip-install提示sha256不匹配错误)
+      - [1.1.7 MacBook M1 使用 Docker-Compose报错](#117-macbook-m1-使用-docker-compose报错)
+      - [1.1.8 celery、gunicorn命令找不到](#118-celerygunicorn命令找不到)
     - [1.2 服务启动与初始化](#12-服务启动与初始化)
       - [1.2.1 ``compose_init.sh``脚本需要填写的密码是什么？](#121-compose_initsh脚本需要填写的密码是什么)
       - [1.2.2 服务占用端口异常](#122-服务占用端口异常)
@@ -162,7 +163,18 @@ RUN mv /etc/apt/sources.list /etc/apt/sources.list.bak && \
 - [CentOS安装Python3.7文档](https://github.com/Tencent/CodeAnalysis/blob/main/doc/references/install_python37_on_centos.md)
 - [Ubuntu安装Python3.7文档](https://github.com/Tencent/CodeAnalysis/blob/main/doc/references/install_python37_on_ubuntu.md)
 
-#### 1.1.6 MacBook M1 使用 Docker-Compose报错
+#### 1.1.6 执行``compose_init.sh``脚本的``pip install``提示``sha256``不匹配错误
+在构建镜像的``pip install``步骤提示以下报错时：
+```
+ERROR: THESE PACKAGES DO NOT MATCH THE HASHES FROM THE REQUIREMENTS FILE. If you have updated the package versions, please update the hashes. Otherwise, examine the package contents carefully; someone may have tampered with them.
+    setuptools from https://mirrors.cloud.tencent.com/pypi/packages/fb/58/9efbfe68482dab9557c49d433a60fff9efd7ed8835f829eba8297c2c124a/setuptools-62.1.0-py3-none-any.whl#sha256=26ead7d1f93efc0f8c804d9fafafbe4a44b179580a7105754b245155f9af05a8:
+        Expected sha256 26ead7d1f93efc0f8c804d9fafafbe4a44b179580a7105754b245155f9af05a8
+             Got        ddaacc49de5c08c09d744573240a9a49f24f65c5c72380e972433784caa68d98
+```
+可以执行``export ORIGIN=normal``，然后再执行``./compose_init.sh``
+>注：执行``export``命令的作用是调整为``pypi``默认官方下载源进行``pip install``
+
+#### 1.1.7 MacBook M1 使用 Docker-Compose报错
 
 在M1机器上使用默认配置启动docker-compose，会出现``mysql``和``scmproxy``服务启动失败，需要做以下两步调整
 
@@ -186,7 +198,7 @@ RUN mv /etc/apt/sources.list /etc/apt/sources.list.bak && \
     FROM amd64/python:3.7.12-slim
     ```
 
-#### 1.1.7 celery、gunicorn命令找不到
+#### 1.1.8 celery、gunicorn命令找不到
 
 如果启动服务时，提示：``celery could not be found``或``gunicorn could not be found``，需要做以下检查
 
@@ -198,6 +210,7 @@ RUN mv /etc/apt/sources.list /etc/apt/sources.list.bak && \
 ln -s /usr/local/python3/bin/gunicorn /usr/local/bin/gunicorn
 ln -s /usr/local/python3/bin/celery /usr/local/bin/celery
 ```
+
 
 ### 1.2 服务启动与初始化
 

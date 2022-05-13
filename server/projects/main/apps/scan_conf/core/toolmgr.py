@@ -6,15 +6,13 @@
 # ==============================================================================
 
 """
-scan_conf - tool core
-工具管理
+scan_conf - checktool core
 """
 import logging
 
 # 第三方
-from django.conf import settings
 from django.db.models import Q
-from django.utils import datetime_safe
+from django.utils import timezone
 from rest_framework.exceptions import ParseError
 
 # 项目内
@@ -29,7 +27,7 @@ logger = logging.getLogger(__name__)
 
 
 class BaseToolManager(object):
-    """工具manager
+    """工具管理 base模块
     """
 
     class ToolKeyEnum(object):
@@ -41,12 +39,9 @@ class BaseToolManager(object):
         """更新工具包含的语言
         :param checktool: CheckTool, 工具
         """
-        checkrules = CheckRuleManager.filter_tool_all(checktool)
-        language_data = []
-        for checkrule in checkrules:
-            languages = checkrule.languages.all()
-            language_data.extend(languages)
-        checktool.languages.set(language_data)
+        rule_ids = CheckRuleManager.filter_tool_all(checktool).values_list('id', flat=True)
+        languages = models.Language.objects.filter(checkrule__id__in=list(rule_ids)).distinct()
+        checktool.languages.set(languages)
 
     @classmethod
     def update_open_status(cls, checktool, open_maintain, open_user, user):
@@ -83,11 +78,7 @@ class BaseToolManager(object):
         message = "更新工具运营状态为：%s" % status_dict[status]
         OperationRecordHandler.add_checktool_operation_record(checktool, "更新工具",
                                                               username=user.username, message=message)
-        # 如果工具状态变为已下架，需要删除相应规则集、规则包中该工具的规则
-        # 2020-9-23 经沟通，此处不做处理，在传递给客户端时处理即可
-        # if status == models.CheckTool.StatusEnum.DISABLE:
-        #     username = user.username if user else None
-        #     tasks.checktool_to_disable.delay(checktool.id, username)
+        # 如果工具状态变为已下架，暂不需删除相应规则配置和规则包中的规则，在传递给客户端前过滤掉该种工具规则即可
         return checktool
 
     @classmethod
@@ -100,21 +91,21 @@ class BaseToolManager(object):
         :params kwargs, 其他工具参数
         :return: CheckTool
         """
-        # 子进程单独配置
-        task_processes = kwargs.pop("task_processes", None) or models.Process.objects.filter(
-            name__in=["analyze", "datahandle"])
-        # 工具key兼容处理
+        # 子进程单独配置，如未传递则配置默认的子进程
+        task_processes = kwargs.pop("task_processes", None) or \
+                         models.Process.objects.filter(name__in=["analyze", "datahandle"])
+        # 工具key兼容处理，仅在创建工具时需要
         tool_key = kwargs.pop("tool_key")
         if not checktool:
             kwargs.update({"tool_key": tool_key})
-        # end
-        checktool, created = ModelManager.create_or_update(models.CheckTool, instance=checktool,
+        # 创建或更新工具
+        checktool, created = ModelManager.create_or_update(models.CheckTool, instance=checktool, 
                                                            user=user, name=name,
                                                            update_data={"name": name, **kwargs})
         # 特殊字段单独配置
         checktool.virtual_name = kwargs.get("virtual_name") or checktool.virtual_name or checktool.id
-        checktool.scan_app = kwargs.get("scan_app") or checktool.scan_app or models.ScanApp.objects.filter(
-            name="codelint").first()
+        checktool.scan_app = kwargs.get("scan_app") or checktool.scan_app or \
+                             models.ScanApp.objects.filter(name="codelint").first()
         checktool.save(user=user)
 
         # 子进程配置，更新进程，可创建不存在的进程，然后set，会删除表单没有的进程
@@ -154,12 +145,12 @@ class BaseToolManager(object):
             raise ParseError("已存在同名规则")
         # 规则描述
         checkruledesc = kwargs.pop("checkruledesc", None)
-        # 规则更新操作剔除tool_key，不能变更tool_key
+        # 工具规则tool_key兼容处理，仅在创建工具规则时需要
         tool_key = kwargs.pop("tool_key")
         if not checkrule:
             kwargs.update({"tool_key": tool_key})
-        # end
-        checkrule, created = ModelManager.create_or_update(models.CheckRule, instance=checkrule, user=user,
+        # 创建或更新工具规则
+        checkrule, created = ModelManager.create_or_update(models.CheckRule, instance=checkrule, user=user, 
                                                            checktool=checktool, real_name=real_name, update_data={
                 "real_name": real_name,
                 **kwargs
@@ -168,7 +159,7 @@ class BaseToolManager(object):
         # 失效，单独处理
         disable = kwargs.get("disable")
         if not checkrule.disable and disable:
-            checkrule.disabled_time = datetime_safe.datetime.now()
+            checkrule.disabled_time = timezone.now()
         if disable:
             checkrule.disabled_reason = kwargs.get("disabled_reason", checkrule.disabled_reason)
         else:
@@ -183,18 +174,15 @@ class BaseToolManager(object):
             check_rule_desc.desc = checkruledesc.get('desc')
             check_rule_desc.save()
 
-        # 更新工具语言，避免脚本批量操作时高耗时
-        if not is_script and checkrule.tool_key == cls.ToolKeyEnum.DEFAULT:
-            cls.update_languages(checktool)
-
         if created:
             action = "添加规则"
             message = "规则：%s(%s)" % (checkrule.display_name, checkrule.real_name)
         else:
             action = "更新规则"
             message = "规则名称: %s, 规则描述: %s, 其他参数：%s" % (real_name, checkruledesc, kwargs)
-        # 暂时兼容，不记录团队自定义规则
+        # 仅在非脚本且工具自身规则更新时更新工具语言，记录日志
         if not is_script and checkrule.tool_key == cls.ToolKeyEnum.DEFAULT:
+            cls.update_languages(checktool)
             OperationRecordHandler.add_checktool_operation_record(checktool, action, user, message)
         return checkrule
 
@@ -294,7 +282,7 @@ class BaseToolManager(object):
 
 
 class CheckToolManager(BaseToolManager):
-
+    
     @classmethod
     def get_tool_key(cls, **kwargs):
         """获取工具key
@@ -383,8 +371,8 @@ class CheckToolManager(BaseToolManager):
             kwargs["tool_key"] = cls.get_tool_key(org=org)
             if not checkrule:
                 real_name = "%s_%s" % (real_name, kwargs["tool_key"])
-        return super().create_or_update_rule(checktool, real_name, user, checkrule=checkrule, is_script=is_script,
-                                             **kwargs)
+        return super().create_or_update_rule(checktool, real_name, user, checkrule=checkrule,
+                                             is_script=is_script, **kwargs)
 
     @classmethod
     def check_maintain_edit_perm(cls, org, checktool, user):
@@ -396,7 +384,7 @@ class CheckToolManager(BaseToolManager):
         注：协同工具且当前用户为团队管理员可操作自定义规则。该权限仅控制自定义规则
         """
         return checktool.open_maintain and user.has_perm(Organization.PermissionNameEnum.CHANGE_ORG_PERM, org)
-
+  
     @classmethod
     def check_edit_perm(cls, org, checktool, user):
         """校验用户是否具有工具的编辑权限
@@ -438,12 +426,12 @@ class CheckToolManager(BaseToolManager):
         # 白名单工具
         tool_key = cls.get_tool_key(org=org)
         if models.CheckToolWhiteKey.objects.filter(tool_key=tool_key, tool_id=checktool.id).exists():
-            return user.has_perm('view_organization', org)
-        return False
+            return user.has_perm(Organization.PermissionNameEnum.VIEW_ORG_PERM, org)
+        return False 
 
     @classmethod
     def check_use_toollib_perm(cls, checktool, toollib):
         """校验工具使用依赖权限
         """
         return super().check_use_toollib_perm(checktool, toollib) or \
-            checktool and cls.get_org(checktool.tool_key) == ToolLibManager.get_org(toollib.lib_key)
+               checktool and cls.get_org(checktool.tool_key) == ToolLibManager.get_org(toollib.lib_key) 

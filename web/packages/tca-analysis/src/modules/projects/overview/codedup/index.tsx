@@ -14,8 +14,8 @@ import get from 'lodash/get';
 
 // 项目内
 import NoData from '../no-data';
-import Line from '@src/components/charts/line';
-import BarChart from '@src/components/charts/bar-chart';
+import { Area, Column } from '@ant-design/plots';
+
 import s from '../style.scss';
 import { t } from '@src/i18n/i18next';
 import {
@@ -51,74 +51,87 @@ const CodeDup = ({ dupScans }: IProps) => {
   };
 
   return (
-        <div className={s.item}>
-            <div className={classnames(s.header, 'overflow-hidden')}>
-                <span className={s.tit}>{t('重复代码详情')}</span>
-                {isShowStandardRadio() && (
-                    <Radio.Group
-                        className="float-right"
-                        value={standardValue}
-                        size="small"
-                        onChange={e => setStandardValue(e.target.value)}
-                    >
-                        {STANDARD_OPTIONS.map(item => (
-                            <Radio.Button key={item.value} value={item.value}>
-                                {item.label}
-                            </Radio.Button>
-                        ))}
-                    </Radio.Group>
-                )}
-            </div>
-            <div className={s.content}>
-                <Row gutter={[40, 14]}>
-                    <Col span={12}>{t('文件重复率分布')}</Col>
-                    <Col span={12}>{t('历史趋势')}</Col>
-                    <Col span={12} style={{ height: '222px' }}>
-                        {dupBarData.length > 0 ? (
-                            <BarChart
-                                data={dupBarData}
-                                xAxisKey="item"
-                                yAxisKey="count"
-                                cols={{
-                                  count: { tickInterval: 5 },
-                                }}
-                            />
-                        ) : (
-                            <NoData style={{ marginTop: '76px' }} />
-                        )}
-                    </Col>
-                    <Col span={12} className={s.borderLeft} style={{ height: '222px' }}>
-                        <Radio.Group
-                            value={riskValue}
-                            size="small"
-                            onChange={e => setRiskValue(e.target.value)}
-                        >
-                            {RISK_OPTIONS.map(item => (
-                                <Radio.Button key={item.value} value={item.value}>
-                                    {item.label}
-                                </Radio.Button>
-                            ))}
-                        </Radio.Group>
-                        {dupLineData.length > 0 ? (
-                            <Line
-                                data={dupLineData}
-                                xAxisKey="date"
-                                yAxisKey="num"
-                                cols={{
-                                  date: {
-                                    range: [0, 1],
-                                    tickCount: 5,
-                                  },
-                                }}
-                                padding={[10, 'auto', 100, 'auto']}
-                            />
-                        ) : (
-                            <NoData style={{ marginTop: '52px' }} />
-                        )}
-                    </Col>
-                </Row>
-            </div>
-        </div>
+    <div className={s.item}>
+      <div className={classnames(s.header, 'overflow-hidden')}>
+        <span className={s.tit}>{t('重复代码详情')}</span>
+        {isShowStandardRadio() && (
+          <Radio.Group
+            className="float-right"
+            value={standardValue}
+            size="small"
+            onChange={e => setStandardValue(e.target.value)}
+          >
+            {STANDARD_OPTIONS.map(item => (
+              <Radio.Button key={item.value} value={item.value}>
+                {item.label}
+              </Radio.Button>
+            ))}
+          </Radio.Group>
+        )}
+      </div>
+      <div className={s.content}>
+        <Row gutter={[40, 14]}>
+          <Col span={12}>{t('文件重复率分布')}</Col>
+          <Col span={12}>{t('历史趋势')}</Col>
+          <Col span={12} style={{ height: '222px' }}>
+            {dupBarData.length > 0 ? (
+              <Column
+                data={dupBarData}
+                xField="type"
+                yField="value"
+                maxColumnWidth={24}
+                padding={[20, 30, 20, 40]}
+                yAxis={{
+                  grid: {
+                    line: {
+                      style: {
+                        stroke: '#e6e9ed',
+                        lineDash: [3, 2]
+                      }
+                    }
+                  }
+                }}
+              />
+            ) : (
+              <NoData style={{ marginTop: '76px' }} />
+            )}
+          </Col>
+          <Col span={12} className={s.borderLeft} style={{ height: '222px' }}>
+            <Radio.Group
+              value={riskValue}
+              size="small"
+              onChange={e => setRiskValue(e.target.value)}
+            >
+              {RISK_OPTIONS.map(item => (
+                <Radio.Button key={item.value} value={item.value}>
+                  {item.label}
+                </Radio.Button>
+              ))}
+            </Radio.Group>
+            {dupLineData.length > 0 ? (
+              <Area
+                data={dupLineData}
+                xField="date"
+                yField="num"
+                padding={[20, 10, 50, 60]}
+                yAxis={{
+                  grid: {
+                    line: {
+                      style: {
+                        stroke: '#e6e9ed',
+                        lineDash: [3, 2]
+                      }
+                    }
+                  }
+                }}
+              />
+            ) : (
+              <NoData style={{ marginTop: '52px' }} />
+            )}
+          </Col>
+        </Row>
+      </div>
+    </div>
   );
 };
 

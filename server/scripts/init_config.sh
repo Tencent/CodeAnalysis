@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 PYVERSION=`python -c 'import sys; print(sys.version_info.major, sys.version_info.minor)'`
 if [ "$PYVERSION" != "3 7" ]; then
@@ -55,7 +55,6 @@ rm /etc/nginx/conf.d/tca_8000.conf /etc/nginx/conf.d/tca_file_local.conf
 ln -s $CURRENT_PATH/configs/nginx/tca_8000.conf /etc/nginx/conf.d/tca_8000.conf
 ln -s $CURRENT_PATH/configs/nginx/tca_file_local.conf /etc/nginx/conf.d/tca_file_local.conf
 # ln -s $CURRENT_PATH/configs/nginx/tca_file_minio.conf /etc/nginx/conf.d/tca_file_local.conf
-
 
 function init_db() {
     echo "Start to init db, create database..."

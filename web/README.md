@@ -49,7 +49,7 @@ TCA Web 采用 [Lerna](https://www.lernajs.cn/) 进行 `monorepo` 管理。
   PUBLIC_PATH=http://127.0.0.1:5056/ yarn dev --scope tca-layout
   # tca-analysis
   PUBLIC_PATH=http://127.0.0.1:5057/ yarn dev --scope tca-analysis
-  # tca-analysis
+  # tca-manage
   PUBLIC_PATH=http://127.0.0.1:5058/ yarn dev --scope tca-manage
   # tca-document
   yarn dev --scope tca-document

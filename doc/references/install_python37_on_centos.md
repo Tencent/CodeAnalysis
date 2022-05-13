@@ -50,5 +50,5 @@ pip默认是到``pypi``官方源下载第三方依赖包，下载速度可能会
 
 ```bash
 $ mkdir ~/.pip/
-$ echo "[global]\nindex-url = https://mirrors.cloud.tencent.com/pypi/simple" >> ~/.pip/pip.conf
+$ echo "extra-index-url = https://mirrors.cloud.tencent.com/pypi/simple" >> ~/.pip/pip.conf
 ```

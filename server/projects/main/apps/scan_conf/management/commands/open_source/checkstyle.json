@@ -14,6 +14,7 @@
     "scm_url": null,
     "run_cmd": null,
     "envs": null,
+    "build_flag": false,
     "show_display_name": true,
     "checkrule_set": [
       {
@@ -679,7 +680,7 @@
         "category": "convention",
         "rule_title": "检查文件的长度（行）",
         "rule_params": "max=2500",
-        "custom": true,
+        "custom": false,
         "languages": [
           "java"
         ],

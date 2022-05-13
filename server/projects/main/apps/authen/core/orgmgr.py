@@ -27,7 +27,7 @@ from util.shortuuid import ShortIDGenerator
 logger = logging.getLogger(__file__)
 
 
-class OrganizationManager(object):
+class BaseOrganizationManager(object):
     """组织管理
     """
 
@@ -220,7 +220,11 @@ class OrganizationManager(object):
         return org_id, perm, username
 
 
-class OrganizationPermApplyManager(object):
+class OrganizationManager(BaseOrganizationManager):
+    pass
+
+
+class BaseOrganizationPermApplyManager(object):
     """团队申请单管理
     """
 
@@ -286,3 +290,7 @@ class OrganizationPermApplyManager(object):
                 check_remark=check_remark, check_time=timezone.now(), status=org_perm_apply.ApplyStatusEnum.CHECKED)
         org_perm_apply.refresh_from_db()
         return org_perm_apply
+
+
+class OrganizationPermApplyManager(BaseOrganizationPermApplyManager):
+    pass
