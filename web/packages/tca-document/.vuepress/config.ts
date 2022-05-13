@@ -1,8 +1,10 @@
 import { defineUserConfig } from '@vuepress/cli'
 import { defaultTheme } from '@vuepress/theme-default'
 import { navbar, sidebar } from './configs'
+const { searchPlugin } = require('@vuepress/plugin-search')
 
 const isProd = process.env.NODE_ENV === 'production'
+
 
 export default defineUserConfig({
   base: process.env.BASE ? `/${process.env.BASE}/` : '/',
@@ -20,17 +22,29 @@ export default defineUserConfig({
     ['meta', { name: 'theme-color', content: '#3eaf7c' }],
   ],
 
+  plugins: [
+    searchPlugin({
+      // 配置项
+    }),
+  ],
+
+  markdown: {
+    toc: {
+      level: [2,3,4],
+    }
+  },
+
   // site-level locales config
   locales: {
     '/': {
       lang: 'zh-CN',
       title: '腾讯云代码分析',
-      description: '腾讯云代码分析帮助文档',
+      description: '用心关注每行代码迭代、助力传承卓越代码文化！',
     },
     '/en': {
       lang: 'en-US',
       title: 'Tencent Code Analysis',
-      description: 'Tencent Code Analysis Document',
+      description: '用心关注每行代码迭代、助力传承卓越代码文化！',
     },
   },
 
@@ -77,6 +91,7 @@ export default defineUserConfig({
 
         // sidebar
         sidebar: sidebar.zh,
+        sidebarDepth: 1,
 
         // page meta
         editLinkText: '在 GitHub 上编辑此页',
@@ -101,6 +116,7 @@ export default defineUserConfig({
         openInNewWindow: '在新窗口打开',
         toggleDarkMode: '切换夜间模式',
         toggleSidebar: '切换侧边栏',
+
       },
     },
 
@@ -110,5 +126,6 @@ export default defineUserConfig({
       // use shiki plugin in production mode instead
       prismjs: !isProd,
     },
+
   }),
 })
