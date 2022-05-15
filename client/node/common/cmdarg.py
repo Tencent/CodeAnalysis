@@ -64,9 +64,9 @@ class CmdArgParser(object):
 
         # updatetool命令
         updatetool_parser = subparsers.add_parser('updatetool', help="拉取工具")
-        updatetool_parser.add_argument('-t', "--tool", dest='tool', type=str, help="更新指定工具,可以指定多个工具,用英文逗号(,)分隔")
+        updatetool_parser.add_argument('-t', '--tool', dest='tool', type=str, help="更新指定工具,可以指定多个工具,用英文逗号(,)分隔")
         updatetool_parser.add_argument('-a', '--all', dest='all_tools', action="store_true", help="更新全量工具")
-        updatetool_parser.add_argument("--os", dest='os_type', type=str, choices=['mac', 'linux', 'windows'],
+        updatetool_parser.add_argument('-o', '--os', dest='os_type', type=str, choices=['mac', 'linux', 'windows'],
                                        help="拉取指定操作系统下的工具")
 
         # start命令
