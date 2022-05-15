@@ -6,29 +6,15 @@ from codepuppy import CodePuppy
 
 class TestCodePuppy(unittest.TestCase):
 
-    @classmethod
-    def setUpClass(cls):
-        """
-        这里是所有测试用例前的准备工作
-        """
-        pass
-
-    @classmethod
-    def tearDownClass(cls):
-        """
-        这里是所有测试用例后的清理工作
-        """
-        pass
-
     def setUp(self):
         """
-        这里是一个测试用例前的准备工作
+        单一测试用例前的准备工作
         """
         print("TestCodePuppy > " + "=" * 120)
 
     def tearDown(self):
         """
-        这里是一个测试用例后的清理工作
+        单一测试用例后的清理工作
         """
         print("TestCodePuppy < " + "=" * 120)
 
