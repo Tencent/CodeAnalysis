@@ -11,7 +11,7 @@ import Trash from 'coding-oa-uikit/lib/icon/Trash';
 
 import { SEVERITYENUM, SEVERITY } from '../constants';
 import RuleDetail from './rule-detail';
-import style from './style.scss';
+import style from '../detail.scss';
 
 const { Column } = Table;
 

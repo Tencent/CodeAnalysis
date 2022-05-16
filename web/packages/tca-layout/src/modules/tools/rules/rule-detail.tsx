@@ -5,7 +5,7 @@ import { invert, get } from 'lodash';
 import { Drawer, Row, Col, Tag } from 'coding-oa-uikit';
 import { SEVERITYENUM, SEVERITY } from '../constants';
 
-import style from './style.scss';
+import style from '../detail.scss';
 
 interface RuleDetailProps {
   visible: boolean;

@@ -101,3 +101,70 @@
     color: $grey-7;
   }
 }
+
+.lib-scheme-tabs {
+  position: relative;
+  display: flex;
+  padding: 0 2px;
+  background: #eceef0;
+  border-radius: 3px;
+  overflow: hidden;
+
+  .scheme-tab-item {
+    position: relative;
+    height: 28px;
+    line-height: 28px;
+    padding: 0 2px;
+    font-size: 13px;
+    color: #455166;
+    cursor: pointer;
+
+    &:not(:first-of-type):before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 6px;
+      width: 1px;
+      height: 16px;
+      background: #000;
+      opacity: 0.08;
+    }
+
+    .item-content {
+      padding: 2px 6px;
+      transition: all 0.3s;
+
+      &.active {
+        font-weight: bold;
+        background-color: #fff;
+      }
+    }
+  }
+}
+
+.lib-scheme {
+  padding: 20px 26px 10px;
+  background-color: #f5f7fa;
+
+  .add-icon {
+    color: $grey-7;
+    padding-left: 16px;
+    cursor: pointer;
+    transition: all 0.3s;
+
+    &:hover {
+      color: $grey-8;
+    }
+  }
+
+  .del-icon {
+    color: $red-4;
+    padding-left: 16px;
+    cursor: pointer;
+    transition: all 0.3s;
+
+    &:hover {
+      color: $red-5;
+    }
+  }
+}

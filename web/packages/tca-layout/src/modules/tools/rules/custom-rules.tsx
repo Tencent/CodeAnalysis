@@ -72,7 +72,7 @@ const CustomRules = ({ orgSid, toolId, toolDetail, editable, tab }: RulesProps) 
         }
         callback?.(response.results || []);
         setCount(response.count);
-        history.push(`${location.pathname}?${qs.stringify(params)}`);
+        history.replace(`${location.pathname}?${qs.stringify(params)}`);
         setList(response.results || []);
       })
       .finally(() => {
