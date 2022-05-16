@@ -6,3 +6,4 @@ client/data/taskdirs/*
 */*.log
 
 __pycache__
+*.iml
