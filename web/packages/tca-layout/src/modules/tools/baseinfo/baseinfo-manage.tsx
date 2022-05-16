@@ -3,14 +3,14 @@
  */
 import React, { useState, useEffect, useRef } from 'react';
 import cn from 'classnames';
-import { isEmpty, toNumber, find, get, compact } from 'lodash';
+import { isEmpty, toNumber, find, get } from 'lodash';
 import { Form, Button, Input, Checkbox, Select, Tooltip, message, Tag, Modal, Radio } from 'coding-oa-uikit';
 import PlusIcon from 'coding-oa-uikit/lib/icon/Plus';
 import RefreshIcon from 'coding-oa-uikit/lib/icon/Refresh';
 import EditIcon from 'coding-oa-uikit/lib/icon/Edit';
 
 import { formatDateTime } from '@src/utils';
-import { updateTool, updateToolStatus, addToolSchemes } from '@src/services/tools';
+import { updateTool, updateToolStatus } from '@src/services/tools';
 import { gScmAccounts, getSSHInfo } from '@src/services/user';
 import { AUTH_TYPE, AUTH_TYPE_TXT, AUTH_DICT, REPO_TYPE_OPTIONS, TOOL_STATUS, STATUSENUM } from '../constants';
 
@@ -34,7 +34,7 @@ interface BaseInfoProps {
 
 const BaseInfo = ({ orgSid, toolId, data, getDetail }: BaseInfoProps) => {
   const [form] = Form.useForm();
-  const [isEdit, setIsEdit] = useState(true);
+  const [isEdit, setIsEdit] = useState(false);
   const [sshAuthList, setSshAuthList] = useState<any>([]);
   const [httpAuthList, setHttpAuthList] = useState<any>([]);
   const [authLoading, setAuthLoading] = useState(false);
@@ -95,35 +95,24 @@ const BaseInfo = ({ orgSid, toolId, data, getDetail }: BaseInfoProps) => {
       });
   };
 
-  const onFinish = (formData: any) => {
-    const newFormData = formData;
+  const onFinish = () => {
+
+    const formData = form.getFieldsValue();
     const [authType, id] = formData?.scm_auth_id?.split('#') ?? [];
-    delete newFormData.scm_auth_id;
+    delete formData.scm_auth_id;
 
     if (authType && id) {
-      newFormData.scm_auth = { auth_type: authType };
-      if (newFormData.scm_auth.auth_type === AUTH_TYPE.HTTP) {
-        newFormData.scm_auth.scm_account = id;
+      formData.scm_auth = { auth_type: authType };
+      if (formData.scm_auth.auth_type === AUTH_TYPE.HTTP) {
+        formData.scm_auth.scm_account = id;
       } else {
-        newFormData.scm_auth.scm_ssh = id;
+        formData.scm_auth.scm_ssh = id;
       }
-    }
-
-    // console.log(formData);
-    newFormData.tool_libs = compact(formData.tool_libs);
-
-    if (!isEmpty(newFormData.tool_libs)) {
-      addToolSchemes(orgSid, toolId, {
-        tool_libs: newFormData.tool_libs?.map((id: number) => ({ toollib: id })),
-        // condition: null
-      }).then((res) => {
-        console.log(res)
-      })
     }
 
     updateTool(orgSid, data.id, {
       ...data,
-      ...newFormData,
+      ...formData,
     }).then(() => {
       message.success('修改成功');
       getDetail();
@@ -186,10 +175,6 @@ const BaseInfo = ({ orgSid, toolId, data, getDetail }: BaseInfoProps) => {
           status: STATUSENUM.NORMAL,
           scm_auth_id: data.scm_auth ? `${data.scm_auth?.auth_type}#${data.scm_auth?.auth_type === AUTH_TYPE.HTTP ? data.scm_auth?.scm_account?.id : data.scm_auth?.scm_ssh?.id}` : '',
         }}
-        onValuesChange={(changedValues, allValues) => {
-          console.log(changedValues, allValues)
-        }}
-        onFinish={isEdit ? onFinish : undefined}
       >
         <Form.Item label="运营状态">
           <Tag className={cn(style.tag, style[`status${data.status}`])}>
@@ -379,15 +364,15 @@ const BaseInfo = ({ orgSid, toolId, data, getDetail }: BaseInfoProps) => {
             )
           }
         </Form.Item>
-        {
-          isEdit && (
-              <LibScheme
-                layout={layout}
-                orgSid={orgSid}
-                toolId={toolId}
-              />
-          )
-        }
+
+        <LibScheme
+          layout={layout}
+          orgSid={orgSid}
+          toolId={toolId}
+          isEdit={isEdit}
+          getComponent={getComponent}
+        />
+
         <Form.Item label='语言' >
           {data.languages?.join(' | ')}
         </Form.Item>
@@ -408,8 +393,15 @@ const BaseInfo = ({ orgSid, toolId, data, getDetail }: BaseInfoProps) => {
               <>
                 <Button
                   type='primary'
-                  htmlType='submit'
                   key='edit'
+                  onClick={() => form
+                    .validateFields()
+                    .then(onFinish)
+                    .catch(errorInfo => {
+                      // 滚动到第一个错误表单
+                      form.scrollToField(errorInfo?.errorFields?.[0]?.name?.[0])
+                    })
+                  }
                 >确认</Button>
                 <Button className="ml-12" onClick={() => setIsEdit(false)}>取消</Button>
               </>

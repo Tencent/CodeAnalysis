@@ -226,6 +226,15 @@ export const getToolSchemes = (orgId: string, toolId: number) => get(`${getToolP
 export const addToolSchemes = (orgId: string, toolId: number, data: any) => post(`${getToolPrefix(orgId)}${toolId}/schemes/`, data);
 
 /**
+ * 修改工具依赖方案
+ * @param orgId 
+ * @param toolId 
+ * @param data 
+ * @returns 
+ */
+ export const updateToolSchemes = (orgId: string, toolId: number, schemeId:number , data: any) => put(`${getToolPrefix(orgId)}${toolId}/schemes/${schemeId}/`, data);
+
+/**
  * 移除工具依赖
  * @param orgId 
  * @param toolId 

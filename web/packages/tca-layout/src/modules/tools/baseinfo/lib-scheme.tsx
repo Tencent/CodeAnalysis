@@ -9,7 +9,7 @@ import { Form, Select, Input, Checkbox, Tooltip, Button, message } from 'coding-
 import PlusIcon from 'coding-oa-uikit/lib/icon/Plus';
 import TrashIcon from 'coding-oa-uikit/lib/icon/Trash';
 
-import { getToolLibs, getToolSchemes, addToolSchemes, delToolScheme } from '@src/services/tools';
+import { getToolLibs, getToolSchemes, addToolSchemes, updateToolSchemes, delToolScheme } from '@src/services/tools';
 import { LIB_ENV } from '@src/modules/tool-libs/constants';
 
 import style from '../detail.scss';
@@ -21,6 +21,8 @@ interface LibSchemeProps {
   layout: any;
   orgSid: string;
   toolId: number;
+  isEdit: boolean;
+  getComponent: (editComponent: any, defaultData: any) => React.ReactDOM
 }
 
 const defaultFields = [{
@@ -30,7 +32,7 @@ const defaultFields = [{
 
 const LibScheme = (props: LibSchemeProps) => {
   const [form] = Form.useForm();
-  const { layout, orgSid, toolId } = props;
+  const { layout, orgSid, toolId, isEdit, getComponent } = props;
   const [toolSchemes, setToolSchemes] = useState([]);
   const [toolLibs, setToolLibs] = useState<Array<any>>([]);
   const [activeKey, setActiveKey] = useState(toolSchemes?.[0]?.id);
@@ -51,10 +53,9 @@ const LibScheme = (props: LibSchemeProps) => {
   useEffect(() => getLibSchemes(), [toolId])
 
   useEffect(() => {
-    console.log('activeKey', activeKey)
     if (activeKey) {
       initFields(activeKey);
-      form.resetFields();
+      initFormFields(activeKey);
     }
   }, [activeKey])
 
@@ -72,6 +73,20 @@ const LibScheme = (props: LibSchemeProps) => {
       setActiveKey(activeKey || ids[0]);
     }
   }
+
+  const initFormFields = (activeKey: number) => {
+    const curScheme = find(toolSchemes, { id: activeKey }) ?? {};
+    if (isEmpty(curScheme)) {  // 新增
+      form.resetFields();
+    } else {
+      form.setFieldsValue({
+        ...curScheme,
+        scheme_os: curScheme?.scheme_os?.split(','),
+        tool_libs: curScheme?.toollib_maps?.map((item: any) => item.toollib.id) ?? []
+      })
+    }
+  }
+
   /**
    * 设置工具依赖表单初始值
    * @param schemeId 依赖方案 ID
@@ -79,23 +94,27 @@ const LibScheme = (props: LibSchemeProps) => {
   const initFields = (schemeId: number) => {
     const arrs = find(toolSchemes, { id: schemeId })?.toollib_maps?.map((item: any, index: number) => ({
       name: index,
-      key: item.id
+      key: index
     })) ?? defaultFields;
-
-    console.log(find(toolSchemes, { id: schemeId })?.toollib_maps?.map((item: any) => item.toollib.id))
-    console.log(arrs)
 
     if (!isEmpty(arrs)) {
       setFields(arrs);
+      setMaxFieldKey(arrs.length - 1);
     }
   }
-
-  // console.log(toolSchemes)
 
   const add = (index: number) => {
     const arrs = fields;
 
     if (index >= 0 && index <= arrs.length) {
+      const values = form.getFieldValue('tool_libs');
+      form.setFieldsValue({
+        tool_libs: [
+          ...values.slice(0, index + 1),
+          undefined,
+          ...values.slice(index + 1)
+        ]
+      })
       setFields([
         ...arrs.slice(0, index + 1),
         {
@@ -107,44 +126,58 @@ const LibScheme = (props: LibSchemeProps) => {
           name: item.name + 1
         }))
       ]);
+
       setMaxFieldKey(maxFieldKey + 1)
     }
   }
 
   const remove = (index: number) => {
-    // 因为key不重复，移除操作会导致表单获取的数据为空，表单提交需注意清理数据
-    setFields(
-      [...fields.filter((item) => item.name !== index)]
-    )
+    const values = form.getFieldValue('tool_libs');
+    const arrs = fields;
+
+    values.splice(index, 1);
+    form.setFieldsValue({ tool_libs: values });
+
+    setFields([
+      ...arrs.slice(0, index),
+      ...arrs.slice(index + 1).map((item) => ({
+        ...item,
+        name: item.name - 1
+      }))
+    ])
   }
 
-  const onFinish = (formData: any) => {
-    console.log('formData', formData)
-    addToolSchemes(orgSid, toolId, {
+  const onFinish = () => {
+    const formData = form.getFieldsValue();
+    const params = {
+      ...formData,
+      scheme_os: formData.scheme_os?.join(','),
       tool_libs: compact(formData.tool_libs)?.map((id: number) => ({ toollib: id })),
-      // condition: null
-    }).then((res) => {
-      getLibSchemes(res.id);
-      message.success('依赖方案添加成功');
-      console.log(res)
-    })
+    };
+    if (activeKey !== -1) {
+      updateToolSchemes(orgSid, toolId, activeKey, params).then((res) => {
+        getLibSchemes(res.id);
+        message.success('依赖方案编辑成功');
+      })
+    } else {
+      addToolSchemes(orgSid, toolId, params).then((res) => {
+        getLibSchemes(res.id);
+        message.success('依赖方案添加成功');
+      })
+    }
   }
 
   const onDelLibScheme = () => {
     if (activeKey === -1) { // 新增方案时
       setTabs([...dropRight(tabs)]);
     } else {
-      delToolScheme(orgSid, toolId, activeKey).then((res) => {
-        console.log(res);
+      delToolScheme(orgSid, toolId, activeKey).then(() => {
         message.success('依赖删除成功');
         getLibSchemes();
       })
     }
-
     setActiveKey(tabs[0])
   }
-
-  // console.log(activeKey)
 
   return (
     <Form
@@ -153,12 +186,6 @@ const LibScheme = (props: LibSchemeProps) => {
       // 嵌套结构需要修改 Form 的 dom 类型
       component='div'
       name='libScheme'
-      initialValues={{
-        ...toolSchemes[activeKey],
-        tool_libs: find(toolSchemes, { id: activeKey })?.toollib_maps?.map((item: any) => item.toollib.id) ?? []
-        // tool_libs: [4, 3]
-      }}
-      onFinish={onFinish}
     >
       <Form.Item label='依赖方案'>
         <div style={{ display: 'flex' }}>
@@ -170,7 +197,6 @@ const LibScheme = (props: LibSchemeProps) => {
                   className={style.schemeTabItem}
                   onClick={() => {
                     setActiveKey(id);
-                    // form.resetFields();
                   }}
                 >
                   <span className={cn(style.itemContent, {
@@ -180,7 +206,7 @@ const LibScheme = (props: LibSchemeProps) => {
               ))
             }
             {
-              !tabs.includes(-1) && (
+              !tabs.includes(-1) && isEdit && (
                 <div className={style.schemeTabItem}>
                   <Tooltip
                     title='添加方案'
@@ -205,23 +231,33 @@ const LibScheme = (props: LibSchemeProps) => {
           label="适用系统"
           name="scheme_os"
         >
-          <Select mode='multiple'>
-            {
-              Object.entries(LIB_ENV).map(([key, text]) => (
-                <Option key={key} value={key}>{text}</Option>
-              ))
-            }
-          </Select>
+          {
+            getComponent(
+              <Select mode='multiple'>
+                {
+                  Object.entries(LIB_ENV).map(([key, text]) => (
+                    <Option key={key} value={key}>{text}</Option>
+                  ))
+                }
+              </Select>,
+              find(toolSchemes, { id: activeKey })?.scheme_os
+            )
+          }
         </Form.Item>
         <Form.Item
           label="判断条件"
           name="condition"
         >
-          <TextArea rows={3} placeholder='仅支持=条件' />
+          {
+            getComponent(
+              <TextArea rows={3} placeholder='仅支持=条件' />,
+              find(toolSchemes, { id: activeKey })?.condition
+            )
+          }
         </Form.Item>
         <Form.Item label='工具依赖' {...layout} required>
           {
-            fields.map((item, index) => {
+            isEdit ? fields.map((item, index) => {
               return (
                 <Form.Item key={item.key}>
                   <Form.Item
@@ -230,7 +266,7 @@ const LibScheme = (props: LibSchemeProps) => {
                       required: true,
                       message: '请选择工具依赖',
                     }]}
-                    name={['tool_libs', item.key]}
+                    name={['tool_libs', item.name]}
                     noStyle
                   >
                     <Select style={{ width: '440px' }}>
@@ -259,25 +295,36 @@ const LibScheme = (props: LibSchemeProps) => {
                   }
                 </Form.Item>
               )
-            })
+            }) : (
+              find(toolSchemes, { id: activeKey })?.toollib_maps?.map((item: any) => (
+                <p key={item.id} style={{ marginBottom: '10px' }}>{item.toollib.name}</p>
+              ))
+            )
           }
         </Form.Item>
         <Form.Item label="" name="default_flag" valuePropName="checked">
-          <Checkbox >默认方案</Checkbox>
+          <Checkbox disabled={!isEdit}>默认方案</Checkbox>
         </Form.Item>
-        <Form.Item>
-          <Button
-            type='primary'
-            htmlType='submit'
-            key='edit'
-            onClick={onFinish}
-          >{activeKey === -1 ? '新增' : '编辑'}</Button>
-          <Button
-            className="ml-12"
-            danger
-            onClick={onDelLibScheme}
-          >删除</Button>
-        </Form.Item>
+        {
+          isEdit && (
+            <Form.Item>
+              <Button
+                type='primary'
+                htmlType='submit'
+                key='edit'
+                onClick={() => form
+                  .validateFields()
+                  .then(onFinish)
+                }
+              >{activeKey === -1 ? '新增' : '修改'}</Button>
+              <Button
+                className="ml-12"
+                danger
+                onClick={onDelLibScheme}
+              >删除</Button>
+            </Form.Item>
+          )
+        }
       </div>
     </Form>
   )
