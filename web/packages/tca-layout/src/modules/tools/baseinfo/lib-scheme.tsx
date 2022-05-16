@@ -35,7 +35,7 @@ const LibScheme = (props: LibSchemeProps) => {
   const { layout, orgSid, toolId, isEdit, getComponent } = props;
   const [toolSchemes, setToolSchemes] = useState([]);
   const [toolLibs, setToolLibs] = useState<Array<any>>([]);
-  const [activeKey, setActiveKey] = useState(toolSchemes?.[0]?.id);
+  const [activeKey, setActiveKey] = useState(toolSchemes?.[0]?.id ?? -1); // 有依赖方案默认展示第一个，没有默认为新增依赖
   const [tabs, setTabs] = useState([]);
   // tool_libs max key
   const [maxFieldKey, setMaxFieldKey] = useState<number>(0);
@@ -67,11 +67,9 @@ const LibScheme = (props: LibSchemeProps) => {
   }
 
   const initTabs = (toolSchemes: any, activeKey?: number) => {
-    if (!isEmpty(toolSchemes)) {
-      const ids = toolSchemes.map((item: any) => item.id);
-      setTabs(ids);
-      setActiveKey(activeKey || ids[0]);
-    }
+    const ids = toolSchemes.map((item: any) => item.id) ?? [];
+    setTabs(ids);
+    setActiveKey(activeKey || ids[0] || -1);
   }
 
   const initFormFields = (activeKey: number) => {
@@ -151,6 +149,7 @@ const LibScheme = (props: LibSchemeProps) => {
     const formData = form.getFieldsValue();
     const params = {
       ...formData,
+      condition: formData.condition || null,
       scheme_os: formData.scheme_os?.join(','),
       tool_libs: compact(formData.tool_libs)?.map((id: number) => ({ toollib: id })),
     };
@@ -179,6 +178,10 @@ const LibScheme = (props: LibSchemeProps) => {
     setActiveKey(tabs[0])
   }
 
+  if (!isEdit && isEmpty(toolSchemes)) {
+    return null;
+  }
+
   return (
     <Form
       {...layout}
@@ -201,7 +204,7 @@ const LibScheme = (props: LibSchemeProps) => {
                 >
                   <span className={cn(style.itemContent, {
                     [style.active]: activeKey === id
-                  })}>{id === -1 ? '添加依赖方案' : `方案${id}`}</span>
+                  })}>{id === -1 ? '添加依赖方案' : `方案ID: ${id}`}</span>
                 </div>
               ))
             }

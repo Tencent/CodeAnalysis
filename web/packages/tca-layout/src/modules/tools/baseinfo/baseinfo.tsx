@@ -14,6 +14,7 @@ import { updateTool, updateToolStatus } from '@src/services/tools';
 import { gScmAccounts, getSSHInfo } from '@src/services/user';
 import { AUTH_TYPE, AUTH_TYPE_TXT, AUTH_DICT, REPO_TYPE_OPTIONS, TOOL_STATUS, STATUSENUM } from '../constants';
 
+import LibScheme from './lib-scheme';
 import style from '../detail.scss';
 
 const { TextArea } = Input;
@@ -28,10 +29,11 @@ interface BaseInfoProps {
   data: any;
   orgSid: string;
   editable: boolean;
+  toolId: number;
   getDetail: () => void;
 }
 
-const BaseInfo = ({ orgSid, data, editable, getDetail }: BaseInfoProps) => {
+const BaseInfo = ({ orgSid, toolId, data, editable, getDetail }: BaseInfoProps) => {
   const [form] = Form.useForm();
   const [isEdit, setIsEdit] = useState(false);
   const [sshAuthList, setSshAuthList] = useState<any>([]);
@@ -165,7 +167,7 @@ const BaseInfo = ({ orgSid, data, editable, getDetail }: BaseInfoProps) => {
     <div>
       <Form
         {...layout}
-        style={{ width: 660, padding: '20px 30px' }}
+        style={{ width: 800, padding: '20px 30px' }}
         form={form}
         initialValues={{
           ...data,
@@ -260,7 +262,7 @@ const BaseInfo = ({ orgSid, data, editable, getDetail }: BaseInfoProps) => {
                         { required: true, message: '请输入工具仓库地址' },
                       ]}
                     >
-                      <Input style={{ width: 380 }} />
+                      <Input style={{ width: 486 }} />
                     </Form.Item>
                   </Input.Group>,
                   data.scm_url,
@@ -276,7 +278,7 @@ const BaseInfo = ({ orgSid, data, editable, getDetail }: BaseInfoProps) => {
                 getComponent(
                   <>
                     <Form.Item noStyle name="scm_auth_id" rules={[{ required: true, message: '请选择仓库凭证' }]}>
-                      <Select style={{ width: 380 }}>
+                      <Select style={{ width: 480 }}>
                         {!isEmpty(sshAuthList) && (
                           <OptGroup label={AUTH_TYPE_TXT.SSH}>
                             {sshAuthList.map((auth: any) => (
@@ -367,6 +369,13 @@ const BaseInfo = ({ orgSid, data, editable, getDetail }: BaseInfoProps) => {
             )
           }
         </Form.Item>
+        <LibScheme
+          layout={layout}
+          orgSid={orgSid}
+          toolId={toolId}
+          isEdit={isEdit}
+          getComponent={getComponent}
+        />
         <Form.Item label='语言' >
           {data.languages?.join(' | ')}
         </Form.Item>

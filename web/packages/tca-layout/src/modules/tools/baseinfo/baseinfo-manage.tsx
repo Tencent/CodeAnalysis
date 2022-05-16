@@ -364,7 +364,6 @@ const BaseInfo = ({ orgSid, toolId, data, getDetail }: BaseInfoProps) => {
             )
           }
         </Form.Item>
-
         <LibScheme
           layout={layout}
           orgSid={orgSid}
@@ -372,7 +371,6 @@ const BaseInfo = ({ orgSid, toolId, data, getDetail }: BaseInfoProps) => {
           isEdit={isEdit}
           getComponent={getComponent}
         />
-
         <Form.Item label='语言' >
           {data.languages?.join(' | ')}
         </Form.Item>

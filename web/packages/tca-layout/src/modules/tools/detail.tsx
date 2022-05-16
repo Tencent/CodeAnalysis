@@ -83,6 +83,7 @@ const ToolDetail = () => {
               <BaseInfo
                 data={detail}
                 orgSid={orgSid}
+                toolId={toolId}
                 editable={isCustom && isAdmin}
                 getDetail={getDetail}
               />

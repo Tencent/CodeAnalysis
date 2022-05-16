@@ -5,16 +5,17 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import qs from 'qs';
-import { omitBy, toNumber, omit, isString, cloneDeep } from 'lodash';
+import { omitBy, toNumber, omit, isString, cloneDeep, find } from 'lodash';
 import { Table, Button } from 'coding-oa-uikit';
 import EditIcon from 'coding-oa-uikit/lib/icon/Edit';
 
 import { getQuery, formatDateTime } from '../../utils';
 import { getToolLibs } from '@src/services/tools';
+import { getTeamMember } from '@src/services/team';
 import { DEFAULT_PAGER } from '@src/common/constants';
+import { useStateStore } from '@src/context/store';
+
 import { LIB_TYPE } from './constants';
-
-
 import CreateToollibs from './create-libs';
 import Search from './search';
 import style from './style.scss';
@@ -24,6 +25,8 @@ const Column = Table.Column;
 export const ToolLibs = () => {
   const history = useHistory();
   const { orgSid }: any = useParams();
+  const { userinfo } = useStateStore();
+  const [admins, setAdmins] = useState([]);
   const [modalData, setModalData] = useState({
     visible: false,
     libId: null
@@ -36,6 +39,13 @@ export const ToolLibs = () => {
   const pageSize = toNumber(query.limit) || DEFAULT_PAGER.pageSize;
   const pageStart = toNumber(query.offset) || DEFAULT_PAGER.pageStart;
   const searchParams: any = omit(query, ['offset', 'limit']);
+  const isAdmin = !!find(admins, { username: userinfo.username });  // 当前用户是否是管理员
+
+  useEffect(() => {
+    getTeamMember(orgSid).then((res) => {
+      setAdmins(res.admins || []);
+    });
+  }, [orgSid]);
 
   useEffect(() => {
     getListData();
@@ -72,6 +82,7 @@ export const ToolLibs = () => {
       <Search
         orgSid={orgSid}
         loading={loading}
+        editable={isAdmin}
         searchParams={cloneDeep(searchParams)}
         onAdd={() => setModalData({
           visible: true,
@@ -125,31 +136,39 @@ export const ToolLibs = () => {
           title='创建人'
           dataIndex={['creator', 'nickname']}
         />
-        <Column
-          title='操作'
-          dataIndex='id'
-          render={(id: number) => (
-            <Button
-              type='text'
-              icon={<EditIcon />}
-              onClick={() => setModalData({
-                visible: true,
-                libId: id
-              })}
+        {
+          isAdmin && (
+            <Column
+              title='操作'
+              dataIndex='id'
+              render={(id: number) => (
+                <Button
+                  type='text'
+                  icon={<EditIcon />}
+                  onClick={() => setModalData({
+                    visible: true,
+                    libId: id
+                  })}
+                />
+              )}
             />
-          )}
-        />
+          )
+        }
       </Table>
-      <CreateToollibs
-        orgSid={orgSid}
-        visible={modalData.visible}
-        libId={modalData.libId}
-        onClose={() => setModalData({
-          visible: false,
-          libId: null
-        })}
-        callback={() => getListData()}
-      />
+      {
+        isAdmin && (
+          <CreateToollibs
+            orgSid={orgSid}
+            visible={modalData.visible}
+            libId={modalData.libId}
+            onClose={() => setModalData({
+              visible: false,
+              libId: null
+            })}
+            callback={() => getListData()}
+          />
+        )
+      }
     </div>
   )
 }

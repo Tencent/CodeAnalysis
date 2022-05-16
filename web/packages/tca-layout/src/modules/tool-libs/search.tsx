@@ -11,13 +11,14 @@ import style from './style.scss';
 interface SearchProps {
   orgSid: string;
   loading: boolean;
+  editable: boolean;
   searchParams: any;
   onAdd: () => void;
   callback: (params: any) => void;
 }
 
 const Search = (props: SearchProps) => {
-  const { searchParams, loading, onAdd, callback } = props;
+  const { searchParams, loading, editable, onAdd, callback } = props;
   const [form] = Form.useForm();
   const initialValues = cloneDeep(searchParams);
 
@@ -64,7 +65,11 @@ const Search = (props: SearchProps) => {
           )
         }
       </Filter>
-      <Button type='primary' onClick={onAdd}>添加依赖</Button>
+      {
+        editable && (
+          <Button type='primary' onClick={onAdd}>添加依赖</Button>
+        )
+      }
     </div>
   );
 };
