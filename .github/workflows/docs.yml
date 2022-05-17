@@ -32,6 +32,7 @@ jobs:
           # 选择要使用的 node 版本
           node-version: "14"
           cache: "yarn"
+          cache-dependency-path: "doc/yarn.lock"
 
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
