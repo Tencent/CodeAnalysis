@@ -30,7 +30,7 @@
 
 ## 体验
 
-[官方线上版本](http://tca.tencent.com)
+[官方版本](http://tca.tencent.com)
 
 ## 关键功能
 

@@ -49,7 +49,7 @@ footer: MIT Licensed | Copyright © 1998-present Tencent. All Rights Reserved.
 
 ### 体验
 
-[官方线上版本](http://tca.tencent.com)
+[官方版本](http://tca.tencent.com)
 
 ### 快速入门
 
