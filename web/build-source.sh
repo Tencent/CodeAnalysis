@@ -43,7 +43,7 @@ function sub_microfrontend() {
 }
 
 function run() {
-  BUILD_PKGS=("tca-document" "framework" "login" "tca-layout" "tca-analysis" "tca-manage")
+  BUILD_PKGS=("tca-analysis")
   for pkg_name in ${BUILD_PKGS[@]}; do
     if [ "$pkg_name" = "framework" ]; then
       default_frontend $pkg_name
