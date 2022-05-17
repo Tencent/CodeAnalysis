@@ -1,7 +1,8 @@
 import React from 'react';
-import { Table, Button } from 'coding-oa-uikit';
+import { Table, Button, Tag } from 'coding-oa-uikit';
 import Edit from 'coding-oa-uikit/lib/icon/Edit';
 import Trash from 'coding-oa-uikit/lib/icon/Trash';
+import Plus from 'coding-oa-uikit/lib/icon/Plus';
 import { get } from 'lodash';
 
 // 项目内
@@ -31,24 +32,16 @@ const OAuthTable = ({ dataSource, onEdit, onDelete }: IProps) => {
       title: t('平台描述'),
       dataIndex: 'scm_platform_desc',
       key: 'scm_platform_desc',
-      render: (scm_platform_desc: number) => (
+      render: (scm_platform_desc: string) => (
         <span>{scm_platform_desc}</span>
       ),
     },
     {
-      title: t('Client ID'),
+      title: t('配置状态'),
       dataIndex: 'client_id',
       key: 'client_id',
       render: (client_id: string) => (
-        <span>{client_id}</span>
-      ),
-    },
-    {
-      title: t('回调地址'),
-      dataIndex: 'redirect_uri',
-      key: 'redirect_uri',
-      render: (redirect_uri: string) => (
-        <span>{redirect_uri}</span>
+        client_id ? <Tag color='success'>已配置</Tag> : <Tag color='default'>未配置</Tag>
       ),
     },
     {
@@ -57,9 +50,11 @@ const OAuthTable = ({ dataSource, onEdit, onDelete }: IProps) => {
       key: 'op',
       width: 100,
       render: (_: string, platform_info: any) => (
-        <>
-        <Button type="text" icon={<Edit />} onClick={() => onEdit?.(platform_info)}/>
+        platform_info?.client_id ? <>
+        <Button type="text" icon={<Edit/>} onClick={() => onEdit?.(platform_info)}/>
         <Button type="text" icon={<Trash />} onClick={() => onDelete?.(platform_info)}/>
+        </> : <>
+        <Button type="text" icon={<Plus />} onClick={() => onEdit?.(platform_info)}/>
         </>
       ),
     },

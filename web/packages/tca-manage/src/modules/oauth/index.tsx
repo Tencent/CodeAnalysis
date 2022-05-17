@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Row, Col, Tabs, Button } from 'coding-oa-uikit';
+import { Row, Col, Tabs } from 'coding-oa-uikit';
 import { concat } from 'lodash';
 
 // 项目内
@@ -31,6 +31,18 @@ const oauthData = [
 		scm_platform : 3,			
 		scm_platform_name : "github",
 		scm_platform_desc : '12313',
+	},
+  {
+    id: 3,
+		scm_platform : 4,	
+	},
+  {
+    id: 4,
+		scm_platform : 5,			
+	},
+  {
+    id: 5,
+		scm_platform : 6,			
 	},
 ];
 
@@ -86,11 +98,11 @@ const OAuth = () => {
             <TabPane tab={t('OAuth管理列表')} key="apps" />
           </Tabs>
         </Col>
-        <Col flex="none">
+        {/* <Col flex="none">
           <Button type="primary" onClick={onCreateOrUpdateHandle}>
             {t('登记OAuth应用')}
           </Button>
-        </Col>
+        </Col> */}
       </Row>
       <div className="px-lg">
         <OAuthTable
