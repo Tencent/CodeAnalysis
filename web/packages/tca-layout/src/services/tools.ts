@@ -168,3 +168,77 @@ export const addToolWhiteList = (orgId: string, toolId: number, orgSids: Array<s
  * @returns 
  */
 export const delToolWhiteList = (orgId: string, toolId: number, id: number) => del(`${getToolPrefix(orgId)}${toolId}/whitelist/${id}/`);
+
+
+
+// ====================== 工具依赖 ======================
+
+const getToollibsPrefix = (orgId: string) => `${MAIN_SERVER_API}/orgs/${orgId}/toollibs/`;
+
+/**
+ * 获取工具依赖列表
+ * @param orgId 
+ * @param params 
+ * @returns 
+ */
+export const getToolLibs = (orgId: string, params: any) => get(`${getToollibsPrefix(orgId)}`, params);
+
+/**
+ * 添加工具依赖
+ * @param orgId 
+ * @param data 
+ * @returns 
+ */
+export const addToolLib = (orgId: string, data: any) => post(`${getToollibsPrefix(orgId)}`, data);
+
+/**
+ * 获取工具依赖详情
+ * @param orgId 
+ * @param libId 
+ * @returns 
+ */
+export const getLibDetail = (orgId: string, libId: number) => get(`${getToollibsPrefix(orgId)}${libId}/`);
+
+/**
+ * 更新工具依赖
+ * @param orgId 
+ * @param libId 
+ * @param data 
+ * @returns 
+ */
+export const updateToolLib = (orgId: string, libId: number, data: any) => put(`${getToollibsPrefix(orgId)}${libId}/`, data);
+
+/**
+ * 获取工具依赖方案列表
+ * @param orgId 
+ * @param toolId 
+ * @returns 
+ */
+export const getToolSchemes = (orgId: string, toolId: number) => get(`${getToolPrefix(orgId)}${toolId}/schemes/`);
+
+/**
+ * 创建工具依赖方案
+ * @param orgId 
+ * @param toolId 
+ * @param data 
+ * @returns 
+ */
+export const addToolSchemes = (orgId: string, toolId: number, data: any) => post(`${getToolPrefix(orgId)}${toolId}/schemes/`, data);
+
+/**
+ * 修改工具依赖方案
+ * @param orgId 
+ * @param toolId 
+ * @param data 
+ * @returns 
+ */
+ export const updateToolSchemes = (orgId: string, toolId: number, schemeId:number , data: any) => put(`${getToolPrefix(orgId)}${toolId}/schemes/${schemeId}/`, data);
+
+/**
+ * 移除工具依赖
+ * @param orgId 
+ * @param toolId 
+ * @param libSchemeId 
+ * @returns 
+ */
+export const delToolScheme = (orgId: string, toolId: number, libSchemeId: number) => del(`${getToolPrefix(orgId)}${toolId}/schemes/${libSchemeId}/`);
