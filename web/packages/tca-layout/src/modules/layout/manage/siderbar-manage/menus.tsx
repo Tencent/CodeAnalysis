@@ -40,6 +40,12 @@ const MENUS: MenuItem[] = [
     link: '/manage/tools',
     key: 'tools',
   },
+  {
+    icon: <Tiles />,
+    title: t('OAuth管理'),
+    link: '/manage/oauth',
+    key: 'oauth',
+  },
 ];
 
 export default MENUS;
