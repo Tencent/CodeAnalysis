@@ -53,11 +53,11 @@ Using TCA can help team find normative, structural, security vulnerabilities and
 
 ### Getting Started
 
-- [How to get start](./en/quickStarted/intro.md)
-- [How to deploy server and web](./en/quickStarted/deploySever.md#通过源代码)
-- [How to deploy server and web with docker-compose](./en/quickStarted/deploySever.md#通过docker-compose)
-- [How to use client](./en/quickStarted/deployClient.md)
-- [Deploy Q&A](./en/quickStarted/FAQ.md)
+- [How to get start](./quickStarted/intro.md)
+- [How to deploy server and web](./quickStarted/deploySever.md#通过源代码)
+- [How to deploy server and web with docker-compose](./quickStarted/deploySever.md#通过docker-compose)
+- [How to use client](./quickStarted/deployClient.md)
+- [Deploy Q&A](./quickStarted/FAQ.md)
 
 ### Community
 
