@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Row, Col, Tabs, Tag } from 'coding-oa-uikit';
+import { Row, Col, Tabs, Tag, message } from 'coding-oa-uikit';
 import { unionBy, get } from 'lodash';
 
 // 项目内
 import { t } from '@src/i18n/i18next';
 import DangerModal from '@src/components/modal/danger-modal';
+// import { getAllSettings, delOAuthSetting, postOAuthSetting } from '@src/services/oauth';
 
 // 模块内
 import s from './style.scss';
@@ -45,6 +46,13 @@ const OAuth = () => {
    * 根据路由参数获取团队列表
    */
   const getListData = () => {
+    // getAllSettings().then((response) => {
+    //   console.log(response);
+    //   setListData(unionBy(response,DEFAULT_SCM_PLATFORM,'scm_platform'));
+    // }).catch((e)=>{
+    //   console.log(e);
+    //   message.error(`获取配置列表失败：${e}`);
+    // });
     setListData(unionBy(downloadData,DEFAULT_SCM_PLATFORM,'scm_platform'));
   };
 
@@ -60,9 +68,17 @@ const OAuth = () => {
   };
 
   const onEditFinish = ( platform_info:any ) => {
+    message.success('已更新配置');
     console.log(platform_info);
     // setListData(unionBy([platform_info],listData,'scm_platform'));
     // console.log(listData);
+    // postOAuthSetting(platformInfo).then((response) => {
+    //   console.log(response);
+    //   message.success('已更新配置');
+    // }).catch((e)=>{
+    //   console.log(e);
+    //   message.error(`更新配置失败：${e}`);
+    // });
     onEditCancel();
   }
 
@@ -78,8 +94,15 @@ const OAuth = () => {
   }
 
   const onDeleteFinish = ( platform_info:any ) => {
-    console.log('yes delete');
+    message.success('已删除配置');
     console.log(platform_info?.scm_platform_name);
+    // delOAuthSetting(platform_info?.scm_platform_name).then((response) => {
+    //   console.log(response);
+    //   message.success('已删除配置');
+    // }).catch((e)=>{
+    //   console.log(e);
+    //   message.error(`删除配置失败：${e}`);
+    // });
     setVisibleDel(false);
   }
 
