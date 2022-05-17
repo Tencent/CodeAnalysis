@@ -8,7 +8,7 @@ import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { Form, Select, Input, Button, message } from 'coding-oa-uikit';
 // Radio
-import { get, isEmpty } from 'lodash';
+import { get, isEmpty, filter } from 'lodash';
 import PlusIcon from 'coding-oa-uikit/lib/icon/Plus';
 import RefreshIcon from 'coding-oa-uikit/lib/icon/Refresh';
 
@@ -19,7 +19,7 @@ import { SET_CUR_REPO, SET_REPOS } from '@src/context/constant';
 import { getScmAccounts, postRepo, getSSHInfo } from '@src/services/repos';
 import { t } from '@src/i18n/i18next';
 import { getPCAuthRouter, getRepoRouter } from '@src/modules/repos/routes';
-import { AUTH_TYPE, AUTH_TYPE_TXT, REPO_TYPE, REPO_TYPE_OPTIONS } from './constants';
+import { AUTH_TYPE, AUTH_TYPE_TXT, REPO_TYPE, REPO_TYPE_OPTIONS, DEFAULT_SCM_PLATFORM } from './constants';
 import s from './style.scss';
 
 const { Option, OptGroup } = Select;
@@ -41,6 +41,15 @@ const { Option, OptGroup } = Select;
 //     },
 // ];
 
+const downloadData = {
+  "tgit": true,
+  "tgitsaas": false,
+  "coding": false,
+  "github": false,
+  "gitee": true,
+  "gitlab": false,
+};
+
 const layout = {
   labelCol: { span: 3 },
 };
@@ -55,6 +64,7 @@ const Create = () => {
   // const [allAuthList, setAllAuthList] = useState<Array<any>>([]);
   const [sshAuthList, setSshAuthList] = useState<any>([]);
   const [httpAuthList, setHttpAuthList] = useState<any>([]);
+  const [OAuthList, setOAuthList] = useState<any>([]);
   const [submitLoading, setSubmitLoading] = useState(false);
   const [reload, setReload] = useState(false);
   const [authLoading, setAuthLoading] = useState(false);
@@ -79,6 +89,13 @@ const Create = () => {
           ...item,
           authId: `${AUTH_TYPE.HTTP}#${item.id}`,
         })));
+        setOAuthList(
+          filter(DEFAULT_SCM_PLATFORM.map((item:any)=>({ 
+            ...item, 
+            oauth_status: get(downloadData, item.scm_platform_name, [false]),
+            authId: `${AUTH_TYPE.OAUTH}#${item.scm_platform}`,
+          })),'oauth_status')
+        );
       })
       .finally(() => {
         setAuthLoading(false);
@@ -86,6 +103,7 @@ const Create = () => {
   };
 
   const onFinish = (values: any) => {
+    console.log(values);
     const { name, scm_auth_id: scmAuthId, address, symbol } = values;
     const [authType, id] = scmAuthId?.split('#') ?? [];
     const data = {
@@ -220,6 +238,19 @@ const Create = () => {
             rules={[{ required: true, message: t('请选择一项仓库认证方式') }]}
           >
             <Select style={{ width: 500 }} getPopupContainer={() => document.body}>
+              {!isEmpty(OAuthList) && (
+                <OptGroup label={AUTH_TYPE_TXT.OAUTH}>
+                  {OAuthList.map((auth: any) => (
+                    <Option
+                      key={auth.authId}
+                      value={auth.authId}
+                      auth_type={AUTH_TYPE.OAUTH}
+                    >
+                      {get(SCM_PLATFORM, auth.scm_platform, '其他')}
+                    </Option>
+                  ))}
+                </OptGroup>
+              )}
               {!isEmpty(sshAuthList) && (
                 <OptGroup label={AUTH_TYPE_TXT.SSH}>
                   {sshAuthList.map((auth: any) => (
