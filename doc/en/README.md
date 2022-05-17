@@ -53,11 +53,11 @@ Using TCA can help team find normative, structural, security vulnerabilities and
 
 ### Getting Started
 
-- [How to get start](GettingStart.md)
-- [How to deploy server and web](doc/deploy.md)
-- [How to deploy server and web with docker-compose](doc/deploy_dc.md)
-- [How to use client](doc/client.md)
-- [Deploy Q&A](doc/Q&A.md)
+- [How to get start](./quickStarted/intro.md)
+- [How to deploy server and web](./quickStarted/deploySever.md#通过源代码)
+- [How to deploy server and web with docker-compose](./quickStarted/deploySever.md#通过docker-compose)
+- [How to use client](./quickStarted/deployClient.md)
+- [Deploy Q&A](./quickStarted/FAQ.md)
 
 ### Community
 
@@ -65,18 +65,18 @@ Using TCA can help team find normative, structural, security vulnerabilities and
 - QQ Group: 361791391
 - [Discussion](https://github.com/Tencent/CodeAnalysis/discussions)
 - [Wiki](https://github.com/Tencent/CodeAnalysis/wiki)
-- [White Paper](腾讯云代码分析白皮书.pdf)
+- [White Paper](https://github.com/Tencent/CodeAnalysis/tree/main/腾讯云代码分析白皮书.pdf)
 
 ### Changelogs
 
-- Check our [Changelog](CHANGELOG.md)
+- Check our [Changelog](https://github.com/Tencent/CodeAnalysis/tree/main/CHANGELOG.md)
 
 ### Contributing
 
-- Check out [CONTRIBUTING](CONTRIBUTING.md) to see how to develop with TCA.
+- Check out [CONTRIBUTING](https://github.com/Tencent/CodeAnalysis/tree/main/CONTRIBUTING.md) to see how to develop with TCA.
 - [Tencent WeOpen Star Project](https://github.com/weopenprojects/WeOpen-Star/issues/19#issue-1228583868)（From May 2022 to September 2022）
 - [Tencent Open Source Incentive Program](https://opensource.tencent.com/contribution) encourages the participation and contribution of developers. We look forward to your active participation.
 
 ### License
 
-TCA is [MIT licensed](LICENSE)
+TCA is [MIT licensed](https://github.com/Tencent/CodeAnalysis/tree/main/LICENSE)
