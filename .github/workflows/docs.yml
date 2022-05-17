@@ -23,8 +23,6 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Checkout Repo
         uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
 
       - name: Setup Node 14
         uses: actions/setup-node@v3
@@ -34,18 +32,13 @@ jobs:
           cache: "yarn"
           cache-dependency-path: "doc/yarn.lock"
 
-      - name: Get yarn cache directory path
-        id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn cache dir)"
-
       # 缓存 node_modules
       - name: Cache node modules
         id: yarn-cache
         uses: actions/cache@v3
         with:
-          path: |
-            **/node_modules
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          path: doc/node_modules
+          key: ${{ runner.os }}-yarn-${{ hashFiles('doc/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-
 
