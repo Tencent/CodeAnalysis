@@ -1,7 +1,7 @@
 ---
 home: true
 title: 腾讯云代码分析文档
-heroImage: /images/logo.svg
+heroImage: /images/Logo.svg
 actions:
   - text: 快速入门
     link: /zh/quickStarted/intro.html
