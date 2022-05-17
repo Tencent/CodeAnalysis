@@ -55,7 +55,8 @@ jobs:
         run: |
           cd doc
           pwd
-          yarn run build
+          rm -rf old
+          yarn build
 
       # 查看 workflow 的文档来获取更多信息
       # @see https://github.com/crazy-max/ghaction-github-pages
