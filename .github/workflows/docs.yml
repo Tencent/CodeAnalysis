@@ -6,7 +6,8 @@ name: Doc to Github Page
 on:
   # Triggers the workflow on push events but only for the main branch
   push:
-    branches: [main]
+    branches:
+      - "main"
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
@@ -20,20 +21,26 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v3
+      - name: Checkout Repo
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v1
+      - name: Setup Node 14
+        uses: actions/setup-node@v3
         with:
           # 选择要使用的 node 版本
           node-version: "14"
+          cache: "yarn"
+
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
 
       # 缓存 node_modules
-      - name: Cache dependencies
-        uses: actions/cache@v2
+      - name: Cache node modules
         id: yarn-cache
+        uses: actions/cache@v3
         with:
           path: |
             **/node_modules
@@ -42,10 +49,11 @@ jobs:
             ${{ runner.os }}-yarn-
 
       # 如果缓存没有命中，安装依赖
-      - name: Install dependencies
-        if: steps.yarn-cache.outputs.cache-hit != 'true'
+      - if: ${{ steps.yarn-cache.outputs.cache-hit == false }}
+        name: Install dependencies
         run: |
           cd doc
+          pwd
           yarn --frozen-lockfile
 
       # 打包文档
