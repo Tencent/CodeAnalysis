@@ -13,7 +13,7 @@ import { get } from 'lodash';
 import { t } from '@src/i18n/i18next';
 import DangerModal from '@src/components/modal/danger-modal';
 import { AUTH_TYPE, DEFAULT_SCM_PLATFORM } from '@src/utils/constant';
-import { gScmAccounts, getSSHInfo, delScmAccount, delSSHInfo } from '@src/services/user';
+import { gScmAccounts, getSSHInfo, delScmAccount, delSSHInfo, getOAuthStatus, delOAuthStatus } from '@src/services/user';
 
 import AuthModal from './auth-modal';
 import AuthTable from './auth-table';
@@ -94,19 +94,26 @@ const Auth = () => {
   const onOAuthStart = (oauthInfo: any) => {
     console.log('去授权');
     console.log(oauthInfo);
-    // getOAuthStatus(oauthInfo?.scm_platform_name).then((res)=>{
-    //   window.location.assign(oauthback.git_auth_url);
-    // });
-    window.location.assign(oauthback.git_auth_url);
+    getOAuthStatus(oauthInfo?.scm_platform_name).then((res)=>{
+      console.log(res);
+      window.location.assign(res?.git_auth_url);
+    }).catch((e)=>{
+      console.log(e);
+      message.error('授权失败');
+      window.location.assign(oauthback.git_auth_url);
+    });
   };
 
   const onOAuthUpdate = (oauthInfo: any) => {
     console.log('更新授权');
     console.log(oauthInfo);
-    // getOAuthStatus(oauthInfo?.scm_platform_name).then((res)=>{
-    //   window.location.assign(oauthback.git_auth_url);
-    // });
-    window.location.assign(oauthback.git_auth_url);
+    getOAuthStatus(oauthInfo?.scm_platform_name).then((res)=>{
+      console.log(res);
+      window.location.assign(res?.git_auth_url);
+    }).catch((e)=>{
+      console.log(e);
+      message.error(t('更新授权失败'));
+    });
   };
 
   const onOAuthDelStart = (oauthInfo: any) => {
@@ -118,12 +125,16 @@ const Auth = () => {
   const onOAuthDel = (oauthInfo: any) => {
     console.log('解除授权');
     console.log(oauthInfo);
-    // delOAuthStatus(oauthInfo?.scm_platform_name).then((res)=>{
-    //   message.success(t('已解除授权'));
-    // });
-    message.success('已解除授权');
-    setVisibleCancel(false);
-    setReload(!reload);
+    delOAuthStatus(oauthInfo?.scm_platform_name).then((res)=>{
+      console.log(res);
+      message.success(t('已解除授权'));
+      setReload(!reload);
+    }).catch((e)=>{
+      console.log(e);
+      message.error(t('解除授权失败'));
+    }).finally(()=>{
+      setVisibleCancel(false);
+    });
   };
 
   return (

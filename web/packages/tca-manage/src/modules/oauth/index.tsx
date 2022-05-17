@@ -5,7 +5,7 @@ import { unionBy, get } from 'lodash';
 // 项目内
 import { t } from '@src/i18n/i18next';
 import DangerModal from '@src/components/modal/danger-modal';
-// import { getAllSettings, delOAuthSetting, postOAuthSetting } from '@src/services/oauth';
+import { getAllSettings, delOAuthSetting, postOAuthSetting } from '@src/services/oauth';
 
 // 模块内
 import s from './style.scss';
@@ -40,21 +40,21 @@ const OAuth = () => {
   const [listData, setListData] = useState<Array<any>>([]);
   const [visibleEdit, setVisibleEdit] = useState<boolean>(false);
   const [visibleDel, setVisibleDel] = useState<boolean>(false);
-  const [platformInfo, setPlatformInfo] = useState<boolean>(null);
+  const [platformInfo, setPlatformInfo] = useState<any>(null);
   const [reload, setReload] = useState<boolean>(false);
 
   /**
    * 根据路由参数获取团队列表
    */
   const getListData = () => {
-    // getAllSettings().then((response) => {
-    //   console.log(response);
-    //   setListData(unionBy(response,DEFAULT_SCM_PLATFORM,'scm_platform'));
-    // }).catch((e)=>{
-    //   console.log(e);
-    //   message.error(`获取配置列表失败：${e}`);
-    // });
-    setListData(unionBy(downloadData,DEFAULT_SCM_PLATFORM,'scm_platform'));
+    getAllSettings().then((response) => {
+      console.log(response);
+      setListData(unionBy(response,DEFAULT_SCM_PLATFORM,'scm_platform'));
+    }).catch((e)=>{
+      console.log(e);
+      message.error('获取配置列表失败');
+      setListData(unionBy(downloadData,DEFAULT_SCM_PLATFORM,'scm_platform'));
+    });
     console.log('update data');
   };
 
@@ -72,17 +72,18 @@ const OAuth = () => {
   const onEditFinish = ( platform_info:any ) => {
     message.success('已更新配置');
     console.log(platform_info);
-    // setListData(unionBy([platform_info],listData,'scm_platform'));
-    // console.log(listData);
-    // postOAuthSetting(platformInfo).then((response) => {
-    //   console.log(response);
-    //   message.success('已更新配置');
-    // }).catch((e)=>{
-    //   console.log(e);
-    //   message.error(`更新配置失败：${e}`);
-    // });
-    setReload(!reload);
-    onEditCancel();
+    setListData(unionBy([platform_info],listData,'scm_platform'));
+    console.log(listData);
+    postOAuthSetting(platformInfo).then((response) => {
+      console.log(response);
+      message.success('已更新配置');
+      setReload(!reload);
+    }).catch((e)=>{
+      console.log(e);
+      message.error('更新配置失败');
+    }).finally(()=>{
+      onEditCancel();
+    });
   }
 
   const onEditCancel = () => {
@@ -99,15 +100,16 @@ const OAuth = () => {
   const onDeleteFinish = ( platform_info:any ) => {
     message.success('已删除配置');
     console.log(platform_info?.scm_platform_name);
-    // delOAuthSetting(platform_info?.scm_platform_name).then((response) => {
-    //   console.log(response);
-    //   message.success('已删除配置');
-    // }).catch((e)=>{
-    //   console.log(e);
-    //   message.error(`删除配置失败：${e}`);
-    // });
-    setVisibleDel(false);
-    setReload(!reload);
+    delOAuthSetting(platform_info?.scm_platform_name).then((response) => {
+      console.log(response);
+      message.success('已删除配置');
+      setReload(!reload);
+    }).catch((e)=>{
+      console.log(e);
+      message.error('删除配置失败');
+    }).finally(()=>{
+      setVisibleDel(false);
+    });
   }
 
   return (
