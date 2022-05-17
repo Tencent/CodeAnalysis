@@ -1,12 +1,12 @@
 # This is a basic workflow to help you get started with Actions
 
-name: docs
+name: Doc to Github Page
 
 # Controls when the workflow will run
 on:
   # Triggers the workflow on push events but only for the main branch
   push:
-    branches: [ main ]
+    branches: [main]
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
@@ -22,14 +22,14 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
         with:
-            fetch-depth: 0
-      
+          fetch-depth: 0
+
       - name: Setup Node.js
         uses: actions/setup-node@v1
         with:
           # 选择要使用的 node 版本
-          node-version: '14'
-          
+          node-version: "14"
+
       # 缓存 node_modules
       - name: Cache dependencies
         uses: actions/cache@v2
@@ -40,18 +40,18 @@ jobs:
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-
-            
+
       # 如果缓存没有命中，安装依赖
       - name: Install dependencies
         if: steps.yarn-cache.outputs.cache-hit != 'true'
         run: |
-          cd ./web/packages/tca-document
+          cd doc
           yarn --frozen-lockfile
 
       # 打包文档
       - name: Build document
         run: |
-          cd ./web/packages/tca-document
+          cd doc
           pwd
           yarn run build
 
@@ -63,7 +63,7 @@ jobs:
           # 部署到 gh-pages 分支
           target_branch: gh-pages
           # 部署目录为 VuePress 的默认输出目录
-          build_dir: web/packages/tca-document/dist
+          build_dir: doc/dist
         env:
           # @see https://docs.github.com/cn/actions/reference/authentication-in-a-workflow#about-the-github_token-secret
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
