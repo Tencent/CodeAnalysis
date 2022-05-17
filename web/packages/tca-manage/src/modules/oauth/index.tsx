@@ -38,9 +38,10 @@ const downloadData = [
 
 const OAuth = () => {
   const [listData, setListData] = useState<Array<any>>([]);
-  const [visibleEdit, setVisibleEdit] = useState(false);
-  const [visibleDel, setVisibleDel] = useState(false);
-  const [platformInfo, setPlatformInfo] = useState(null);
+  const [visibleEdit, setVisibleEdit] = useState<boolean>(false);
+  const [visibleDel, setVisibleDel] = useState<boolean>(false);
+  const [platformInfo, setPlatformInfo] = useState<boolean>(null);
+  const [reload, setReload] = useState<boolean>(false);
 
   /**
    * 根据路由参数获取团队列表
@@ -54,12 +55,13 @@ const OAuth = () => {
     //   message.error(`获取配置列表失败：${e}`);
     // });
     setListData(unionBy(downloadData,DEFAULT_SCM_PLATFORM,'scm_platform'));
+    console.log('update data');
   };
 
   // 当路由参数变化时触发
   useEffect(() => {
     getListData();
-  }, []);
+  }, [reload]);
 
   const onEditStart = ( platform_info:any ) => {
     console.log('edit start');
@@ -79,6 +81,7 @@ const OAuth = () => {
     //   console.log(e);
     //   message.error(`更新配置失败：${e}`);
     // });
+    setReload(!reload);
     onEditCancel();
   }
 
@@ -104,6 +107,7 @@ const OAuth = () => {
     //   message.error(`删除配置失败：${e}`);
     // });
     setVisibleDel(false);
+    setReload(!reload);
   }
 
   return (

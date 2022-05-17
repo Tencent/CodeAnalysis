@@ -14,6 +14,7 @@ import Invite from '@src/modules/team/components/invite';
 import Team from '@src/modules/layout/team';
 import Home from '@src/modules/home';
 import Manage from '@src/modules/layout/manage';
+import GitOAuth from '@src/modules/git-oauth';
 import LoadInitService from './load-init-service';
 
 const Root = () => (
@@ -27,6 +28,7 @@ const Root = () => (
             <Route path="/manage" component={Manage} />
             <Route path="/user" component={User} />
             <Route path="/teams" component={Teams} />
+            <Route path="/cb_git_auth/:scm_platform_name" component={GitOAuth} />
             <Route path="/t/invite/:code" component={Invite} />
             <Route path="/t/:orgSid" component={Team} />
             <Redirect to="/" />
