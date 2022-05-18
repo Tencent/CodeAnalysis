@@ -45,7 +45,7 @@ const CreateToollibs = (props: CreateToollibsProps) => {
       getAuth();
     }
 
-    if(visible && libId !== detail.id) {
+    if(visible && libId && libId !== detail.id) {
       getLibDetail(orgSid, libId).then((res) => {
         setDetail(res);
         form.resetFields();
