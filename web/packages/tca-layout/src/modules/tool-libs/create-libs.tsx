@@ -2,10 +2,12 @@
  * 创建工具依赖
  */
 import React, { useState, useEffect } from 'react';
-import { isEmpty } from 'lodash';
-import { Modal, Form, Input, Select, Tooltip, Button, message } from 'coding-oa-uikit';
+import { isEmpty, fromPairs, toPairs } from 'lodash';
+import { Modal, Form, Input, Select, Tooltip, Button, message, Space } from 'coding-oa-uikit';
 import PlusIcon from 'coding-oa-uikit/lib/icon/Plus';
 import RefreshIcon from 'coding-oa-uikit/lib/icon/Refresh';
+import TrashIcon from 'coding-oa-uikit/lib/icon/Trash';
+
 
 import { gScmAccounts, getSSHInfo } from '@src/services/user';
 import { addToolLib, getLibDetail, updateToolLib } from '@src/services/tools';
@@ -94,6 +96,10 @@ const CreateToollibs = (props: CreateToollibsProps) => {
 
     data.lib_os = formData.lib_os?.join(';');
 
+    if (!isEmpty(formData.envs)) {
+      data.envs = fromPairs(formData.envs?.map((item: { key: string, value: string }) => [item.key, item.value]))
+    }
+
     if (isEdit) {
       updateToolLib(orgSid, libId, data).then(() => {
         message.success('更新成功');
@@ -124,6 +130,7 @@ const CreateToollibs = (props: CreateToollibsProps) => {
         initialValues={isEdit ? {
           ...detail,
           lib_os: detail?.lib_os?.split(';'),
+          envs: detail.envs ? toPairs(detail?.envs)?.map((item) => ({ key: item[0], value: item[1] })) : [],
           scm_auth_id: detail.scm_auth ? `${detail.scm_auth?.auth_type}#${detail.scm_auth?.auth_type === AUTH_TYPE.HTTP ? detail.scm_auth?.scm_account?.id : detail.scm_auth?.scm_ssh?.id}` : '',
         } : {
           scm_type: REPO_TYPE.GIT
@@ -246,11 +253,49 @@ const CreateToollibs = (props: CreateToollibsProps) => {
             </Tooltip>
           </div>
         </Form.Item>
+
         <Form.Item
           label="环境变量"
           name="envs"
         >
-          <TextArea rows={3} />
+          <Form.List name="envs">
+            {(fields, { add, remove }) => (
+              <>
+                {fields.map(({ key, name, ...restField }) => (
+                  <Space key={key} style={{ display: 'flex' }} align="baseline">
+                    <Form.Item
+                      {...restField}
+                      name={[name, 'key']}
+                      rules={[{ required: true, message: '请输入变量名' }]}
+                    >
+                      <Input placeholder="变量名" style={{ width: '175px' }} />
+                    </Form.Item>
+                    <Form.Item
+                      {...restField}
+                      name={[name, 'value']}
+                      rules={[{ required: true, message: '请输入变量值' }]}
+                    >
+                      <Input placeholder="变量值" style={{ width: '175px' }} />
+                    </Form.Item>
+                    <Tooltip title='移除'>
+                      <Button
+                        type='text'
+                        style={{ marginLeft: '3px' }}
+                        onClick={() => remove(name)}
+                      ><TrashIcon /></Button>
+                    </Tooltip>
+                  </Space>
+                ))}
+                <Form.Item>
+
+                  <Button type="dashed" onClick={() => add()} block >
+                    添加环境变量
+                  </Button>
+                </Form.Item>
+              </>
+            )}
+          </Form.List>
+          {/* <TextArea rows={3} /> */}
         </Form.Item>
       </Form>
     </Modal>

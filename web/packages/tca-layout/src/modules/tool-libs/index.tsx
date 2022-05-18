@@ -112,12 +112,12 @@ export const ToolLibs = () => {
         <Column
           title='环境变量'
           dataIndex='envs'
-        // render={(envs: any) => envs && (
-        //   // todo: 没有按顺序遍历出环境变量，环境变量是否有顺序依赖关系？
-        //   Object.entries(envs).map(([key, value]) => (
-        //     <p className={style.envs} key={key}>&quot;{key}&ldquo;:&quot;{value}&ldquo;</p>
-        //   ))
-        // )}
+        render={(envs: any) => envs && (
+          // todo: 没有按顺序遍历出环境变量，环境变量是否有顺序依赖关系？
+          Object.entries(envs).map(([key, value]) => (
+            <p className={style.envs} key={key}>{key} = {value}</p>
+          ))
+        )}
         />
         <Column
           title='依赖系统'
