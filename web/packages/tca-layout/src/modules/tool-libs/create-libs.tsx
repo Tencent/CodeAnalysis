@@ -83,16 +83,19 @@ const CreateToollibs = (props: CreateToollibsProps) => {
 
   const onFinish = (formData: any) => {
     const data = formData;
-    const [authType, id] = formData?.scm_auth_id?.split('#') ?? [];
-    delete data.scm_auth_id;
 
-    data.scm_auth = { auth_type: authType };
+    if (formData.scm_auth_id) {
+      const [authType, id] = formData?.scm_auth_id?.split('#') ?? [];
+      delete data.scm_auth_id;
+      data.scm_auth = { auth_type: authType };
 
-    if (data.scm_auth.auth_type === AUTH_TYPE.HTTP) {
-      data.scm_auth.scm_account = id;
-    } else {
-      data.scm_auth.scm_ssh = id;
+      if (data.scm_auth.auth_type === AUTH_TYPE.HTTP) {
+        data.scm_auth.scm_account = id;
+      } else {
+        data.scm_auth.scm_ssh = id;
+      }
     }
+
 
     data.lib_os = formData.lib_os?.join(';');
 
@@ -205,8 +208,8 @@ const CreateToollibs = (props: CreateToollibsProps) => {
             </Form.Item>
           </Input.Group>
         </Form.Item>
-        <Form.Item label="凭证" required>
-          <Form.Item noStyle name="scm_auth_id" rules={[{ required: true, message: '请选择凭证' }]}>
+        <Form.Item label="凭证">
+          <Form.Item noStyle name="scm_auth_id">
             <Select style={{ width: 360 }}>
               {!isEmpty(sshAuthList) && (
                 <OptGroup label={AUTH_TYPE_TXT.SSH}>
