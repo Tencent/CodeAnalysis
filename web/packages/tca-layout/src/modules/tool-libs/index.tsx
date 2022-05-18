@@ -40,6 +40,7 @@ export const ToolLibs = () => {
   const pageStart = toNumber(query.offset) || DEFAULT_PAGER.pageStart;
   const searchParams: any = omit(query, ['offset', 'limit']);
   const isAdmin = !!find(admins, { username: userinfo.username });  // 当前用户是否是管理员
+  const isSuperuser = userinfo.is_superuser;  // 是否为超级管理员
 
   useEffect(() => {
     getTeamMember(orgSid).then((res) => {
@@ -156,9 +157,10 @@ export const ToolLibs = () => {
         }
       </Table>
       {
-        isAdmin && (
+        (isAdmin || isSuperuser) && (
           <CreateToollibs
             orgSid={orgSid}
+            isSuperuser={isSuperuser}
             visible={modalData.visible}
             libId={modalData.libId}
             onClose={() => setModalData({

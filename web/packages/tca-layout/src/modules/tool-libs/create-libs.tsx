@@ -10,8 +10,7 @@ import RefreshIcon from 'coding-oa-uikit/lib/icon/Refresh';
 import { gScmAccounts, getSSHInfo } from '@src/services/user';
 import { addToolLib, getLibDetail, updateToolLib } from '@src/services/tools';
 import { AUTH_TYPE, AUTH_TYPE_TXT, REPO_TYPE_OPTIONS, REPO_TYPE } from '@src/modules/tools/constants';
-// import { LIB_ENV, LIB_TYPE } from './constants';
-import { LIB_ENV } from './constants';
+import { LIB_ENV, LIB_TYPE } from './constants';
 
 const { TextArea } = Input;
 const { Option, OptGroup } = Select;
@@ -24,19 +23,20 @@ const layout = {
 interface CreateToollibsProps {
   orgSid: string;
   visible: boolean;
+  isSuperuser: boolean;
   libId: number;
   onClose: () => void;
   callback: () => void;
 }
 
 const CreateToollibs = (props: CreateToollibsProps) => {
-  const { orgSid, visible, libId, onClose, callback } = props;
+  const { orgSid, visible, libId, isSuperuser, onClose, callback } = props;
   const [form] = Form.useForm();
 
   const [sshAuthList, setSshAuthList] = useState<any>([]);
   const [httpAuthList, setHttpAuthList] = useState<any>([]);
   const [authLoading, setAuthLoading] = useState(false);
-  const [detail, setDetail] = useState<any>({}); 
+  const [detail, setDetail] = useState<any>({});
 
   const isEdit = !!libId;
 
@@ -45,14 +45,14 @@ const CreateToollibs = (props: CreateToollibsProps) => {
       getAuth();
     }
 
-    if(visible && libId && libId !== detail.id) {
+    if (visible && libId) {
       getLibDetail(orgSid, libId).then((res) => {
         setDetail(res);
         form.resetFields();
       })
     }
 
-    if(visible) {
+    if (visible) {
       form.resetFields();
     }
   }, [visible]);
@@ -94,7 +94,7 @@ const CreateToollibs = (props: CreateToollibsProps) => {
 
     data.lib_os = formData.lib_os?.join(';');
 
-    if(isEdit) {
+    if (isEdit) {
       updateToolLib(orgSid, libId, data).then(() => {
         message.success('更新成功');
         callback?.();
@@ -142,20 +142,24 @@ const CreateToollibs = (props: CreateToollibsProps) => {
         >
           <TextArea placeholder="长度限制256个字符。" rows={3} />
         </Form.Item>
-        {/* 默认都是私有依赖，只有管理员有权限更改类型 */}
-        {/* <Form.Item
-          label="依赖类型"
-          name="lib_type"
-          rules={[{ required: true, message: '请选择依赖类型' }]}
-        >
-          <Select>
-            {
-              Object.entries(LIB_TYPE).map(([key, text]) => (
-                <Option key={key} value={key}>{text}</Option>
-              ))
-            }
-          </Select>
-        </Form.Item> */}
+        {/* 默认都是私有依赖，只有超级管理员有权限更改类型 */}
+        {
+          isSuperuser && (
+            <Form.Item
+              label="依赖类型"
+              name="lib_type"
+              rules={[{ required: true, message: '请选择依赖类型' }]}
+            >
+              <Select>
+                {
+                  Object.entries(LIB_TYPE).map(([key, text]) => (
+                    <Option key={key} value={key}>{text}</Option>
+                  ))
+                }
+              </Select>
+            </Form.Item>
+          )
+        }
         <Form.Item
           label="适用系统"
           name="lib_os"
