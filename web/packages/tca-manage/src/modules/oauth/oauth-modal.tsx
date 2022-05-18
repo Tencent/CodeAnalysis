@@ -25,6 +25,7 @@ const OAuthModal = ({ scminfo, visible, onCancel, onOk }: IProps) => {
 
   useEffect(() => {
     if (visible) {
+      // 格式化回调地址
       if (scminfo?.redirect_uri) {
         const urlList = scminfo?.redirect_uri.split('/');
         const hostname = (urlList.length>3) ? get(urlList,2):scminfo?.redirect_uri;
@@ -44,7 +45,9 @@ const OAuthModal = ({ scminfo, visible, onCancel, onOk }: IProps) => {
      */
   const onSubmitHandle = () => {
     form.validateFields().then((formData) => {
-      formData.redirect_uri=`http://${formData.redirect_uri}/cb_git_auth/${appInfo?.scm_platform_name}/`
+      // 格式化回调地址
+      formData.redirect_uri=`http://${formData.redirect_uri}/cb_git_auth/${appInfo?.scm_platform_name}`
+      console.log(formData);
       onOk(formData);
     });
   };
@@ -94,15 +97,16 @@ const OAuthModal = ({ scminfo, visible, onCancel, onOk }: IProps) => {
         >
           <Input 
             addonBefore="http://" 
-            addonAfter={`/cb_git_auth/${appInfo?.scm_platform_name}/`} 
+            addonAfter={`/cb_git_auth/${appInfo?.scm_platform_name}`} 
             placeholder="部署机IP"
           />
         </Form.Item>
         <Form.Item
           name="scm_platform_desc"
           label={t('平台描述')}
+          rules={[{ max: 32 }]}
         >
-          <TextArea />
+          <TextArea maxLength={32} placeholder={'最多32个字符'}/>
         </Form.Item>
       </Form>
     </Modal>

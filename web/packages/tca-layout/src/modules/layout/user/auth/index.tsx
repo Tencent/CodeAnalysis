@@ -22,20 +22,6 @@ import s from '../style.scss';
 
 const { Content } = Layout;
 
-const downloadData = {
-  "tgit": true,
-  "tgitsaas": false,
-  "coding": false,
-  "github": false,
-  "gitee": true,
-  "gitlab": false,
-};
-
-const oauthback = {
-  'git': true,
-  'git_auth_url': 'https://git.woa.com/applications/authorized',
-}
-
 const Auth = () => {
   const [oauthData, setOAuthData] = useState<any>([]);
   const [curOAuthData, setCurOAuthData] = useState<any>({});
@@ -54,17 +40,16 @@ const Auth = () => {
     Promise.all([
       getSSHInfo().then(r => r.results || []),
       gScmAccounts().then(r => r.results || []),
-      // getOAuthStatus().then(r => r.results || []),
+      getOAuthStatus().then(r => r || []),
     ]).then((result) => {
       setDataSource([
         ...(result[0] || []).map((item: any) => ({ ...item, auth_type: AUTH_TYPE.SSH })),
         ...(result[1] || []).map((item: any) => ({ ...item, auth_type: AUTH_TYPE.HTTP })),
       ]);
       setOAuthData(
-        DEFAULT_SCM_PLATFORM.map((item:any)=>({ ...item, oauth_status: get(downloadData, item.scm_platform_name, [false])}))
+        DEFAULT_SCM_PLATFORM.map((item:any)=>({ ...item, oauth_status: get(result[2], item.scm_platform_name, [false])}))
       );
     });
-    console.log('load data');
   }, [reload]);
 
   /**
@@ -91,47 +76,49 @@ const Auth = () => {
     });
   };
 
+  /**
+     * 首次授权OAuth
+     * @param oauthInfo 选中OAuth平台信息
+     */
   const onOAuthStart = (oauthInfo: any) => {
-    console.log('去授权');
-    console.log(oauthInfo);
-    getOAuthStatus(oauthInfo?.scm_platform_name).then((res)=>{
-      console.log(res);
+    getOAuthStatus({scm_platform_name: oauthInfo?.scm_platform_name}).then((res)=>{
       window.location.assign(res?.git_auth_url);
-    }).catch((e)=>{
-      console.log(e);
-      message.error('授权失败');
-      window.location.assign(oauthback.git_auth_url);
+    }).catch(()=>{
+      message.error('平台暂未配置OAuth应用，无法去授权，请联系管理员。');
     });
   };
 
+  /**
+   * 重新授权OAuth
+   * @param oauthInfo 选中OAuth平台信息
+   */
   const onOAuthUpdate = (oauthInfo: any) => {
-    console.log('更新授权');
-    console.log(oauthInfo);
-    getOAuthStatus(oauthInfo?.scm_platform_name).then((res)=>{
-      console.log(res);
+    getOAuthStatus({scm_platform_name: oauthInfo?.scm_platform_name}).then((res)=>{
       window.location.assign(res?.git_auth_url);
-    }).catch((e)=>{
-      console.log(e);
+    }).catch(()=>{
       message.error(t('更新授权失败'));
     });
   };
 
+  /**
+     * 尝试解除OAuth授权，弹出提示
+     * @param oauthInfo 选中OAuth平台信息
+     */
   const onOAuthDelStart = (oauthInfo: any) => {
-    console.log('开始解除授权');
     setVisibleCancel(true);
     setCurOAuthData(oauthInfo);
   };
 
+  /**
+     * 解除OAuth授权
+     * @param oauthInfo 选中OAuth平台信息
+     */
   const onOAuthDel = (oauthInfo: any) => {
-    console.log('解除授权');
-    console.log(oauthInfo);
-    delOAuthStatus(oauthInfo?.scm_platform_name).then((res)=>{
-      console.log(res);
+    delOAuthStatus({scm_platform_name: oauthInfo?.scm_platform_name}).then(()=>{
       message.success(t('已解除授权'));
       setReload(!reload);
-    }).catch((e)=>{
-      console.log(e);
-      message.error(t('解除授权失败'));
+    }).catch(()=>{
+      message.error(t('无法解除授权'));
     }).finally(()=>{
       setVisibleCancel(false);
     });
