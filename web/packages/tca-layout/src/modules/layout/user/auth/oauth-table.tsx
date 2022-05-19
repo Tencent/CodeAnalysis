@@ -14,6 +14,7 @@ import { get } from 'lodash';
 // 项目内
 import { t } from '@src/i18n/i18next';
 import { SCM_PLATFORM } from '@src/utils/constant';
+import s from '../style.scss';
 
 interface IProps {
   dataSource: Array<any>;
@@ -35,7 +36,7 @@ const OAuthTable = (props: IProps) => {
       ),
     },
     {
-      title: t('状态'),
+      title: t('OAuth状态'),
       dataIndex: 'oauth_status',
       key: 'oauth_status',
       width: 200,
@@ -64,7 +65,7 @@ const OAuthTable = (props: IProps) => {
       rowKey={(item: any) => item.scm_platform }
       dataSource={dataSource}
       columns={columns}
-      style={{ marginBottom: '20px' }}
+      className={s.oauthTable}
     />
   );
 };

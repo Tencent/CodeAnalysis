@@ -8,7 +8,7 @@ import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { Form, Select, Input, Button, message } from 'coding-oa-uikit';
 // Radio
-import { get, isEmpty, filter } from 'lodash';
+import { get, isEmpty } from 'lodash';
 import PlusIcon from 'coding-oa-uikit/lib/icon/Plus';
 import RefreshIcon from 'coding-oa-uikit/lib/icon/Refresh';
 
@@ -16,10 +16,10 @@ import RefreshIcon from 'coding-oa-uikit/lib/icon/Refresh';
 import { useStateStore, useDispatchStore } from '@src/context/store';
 import { SCM_PLATFORM } from '@src/common/constants';
 import { SET_CUR_REPO, SET_REPOS } from '@src/context/constant';
-import { getScmAccounts, postRepo, getSSHInfo } from '@src/services/repos';
+import { getScmAccounts, postRepo, getSSHInfo, getALLOAuthInfos } from '@src/services/repos';
 import { t } from '@src/i18n/i18next';
 import { getPCAuthRouter, getRepoRouter } from '@src/modules/repos/routes';
-import { AUTH_TYPE, AUTH_TYPE_TXT, REPO_TYPE, REPO_TYPE_OPTIONS, DEFAULT_SCM_PLATFORM } from './constants';
+import { AUTH_TYPE, AUTH_TYPE_TXT, REPO_TYPE, REPO_TYPE_OPTIONS } from './constants';
 import s from './style.scss';
 
 const { Option, OptGroup } = Select;
@@ -40,15 +40,6 @@ const { Option, OptGroup } = Select;
 //         value: REPO_ORG_TYPE.ORG,
 //     },
 // ];
-
-const downloadData = {
-  "tgit": true,
-  "tgitsaas": false,
-  "coding": false,
-  "github": false,
-  "gitee": true,
-  "gitlab": false,
-};
 
 const layout = {
   labelCol: { span: 3 },
@@ -78,6 +69,7 @@ const Create = () => {
     Promise.all([
       getSSHInfo().then(r => r.results || []),
       getScmAccounts().then(r => r.results || []),
+      getALLOAuthInfos().then(r => r.results || []),
     ])
       .then((result) => {
         // HTTP 和 SSH ID可能重复
@@ -89,13 +81,10 @@ const Create = () => {
           ...item,
           authId: `${AUTH_TYPE.HTTP}#${item.id}`,
         })));
-        setOAuthList(
-          filter(DEFAULT_SCM_PLATFORM.map((item:any)=>({ 
+        setOAuthList(result[2].map((item:any)=>({ 
             ...item, 
-            oauth_status: get(downloadData, item.scm_platform_name, [false]),
-            authId: `${AUTH_TYPE.OAUTH}#${item.scm_platform}`,
-          })),'oauth_status')
-        );
+            authId: `${AUTH_TYPE.OAUTH}#${item.id}`,
+        })));
       })
       .finally(() => {
         setAuthLoading(false);
@@ -116,10 +105,16 @@ const Create = () => {
       ...address,
     };
 
-    if (data.scm_auth.auth_type === AUTH_TYPE.HTTP) {
-      data.scm_auth.scm_account = id;
-    } else {
-      data.scm_auth.scm_ssh = id;
+    switch (data.scm_auth.auth_type) {
+      case AUTH_TYPE.HTTP:
+        data.scm_auth.scm_account = id;
+        break;
+      case AUTH_TYPE.SSH:
+        data.scm_auth.scm_ssh = id;
+        break;
+      case AUTH_TYPE.OAUTH:
+        data.scm_auth.scm_authinfo = id;
+        break;
     }
 
     if (symbol) {

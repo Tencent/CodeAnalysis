@@ -7,13 +7,13 @@
 import React, { useState, useEffect } from 'react';
 import { Layout, Button, Row, Col, Tag, message } from 'coding-oa-uikit';
 import Plus from 'coding-oa-uikit/lib/icon/Plus';
-import { get } from 'lodash';
+import { get, filter } from 'lodash';
 
 // 项目内
 import { t } from '@src/i18n/i18next';
 import DangerModal from '@src/components/modal/danger-modal';
 import { AUTH_TYPE, DEFAULT_SCM_PLATFORM } from '@src/utils/constant';
-import { gScmAccounts, getSSHInfo, delScmAccount, delSSHInfo, getOAuthStatus, delOAuthStatus } from '@src/services/user';
+import { gScmAccounts, getSSHInfo, delScmAccount, delSSHInfo, getOAuthStatus, delOAuthStatus, getPlatformStatus } from '@src/services/user';
 
 import AuthModal from './auth-modal';
 import AuthTable from './auth-table';
@@ -40,6 +40,7 @@ const Auth = () => {
     Promise.all([
       getSSHInfo().then(r => r.results || []),
       gScmAccounts().then(r => r.results || []),
+      getPlatformStatus().then(r => r || []),
       getOAuthStatus().then(r => r || []),
     ]).then((result) => {
       setDataSource([
@@ -47,7 +48,14 @@ const Auth = () => {
         ...(result[1] || []).map((item: any) => ({ ...item, auth_type: AUTH_TYPE.HTTP })),
       ]);
       setOAuthData(
-        DEFAULT_SCM_PLATFORM.map((item:any)=>({ ...item, oauth_status: get(result[2], item.scm_platform_name, [false])}))
+        filter(
+          DEFAULT_SCM_PLATFORM.map((item:any)=>({ 
+            ...item, 
+            oauth_status: get(result[3], item.scm_platform_name, [false]),
+            platform_status: get(result[2], item.scm_platform_name, [false]),
+          })),
+          'platform_status'
+        )
       );
     });
   }, [reload]);

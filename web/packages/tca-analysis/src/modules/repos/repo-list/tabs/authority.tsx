@@ -18,7 +18,7 @@ import { t } from '@src/i18n/i18next';
 import { SCM_PLATFORM } from '@src/common/constants';
 import { AUTH_TYPE, AUTH_TYPE_TXT } from '@src/modules/repos/constants';
 import { getPCAuthRouter } from '@src/modules/repos/routes';
-import { getSSHInfo, getScmAccounts, putRepoAuth } from '@src/services/repos';
+import { getSSHInfo, getScmAccounts, putRepoAuth, getALLOAuthInfos } from '@src/services/repos';
 
 const { Option, OptGroup } = Select;
 
@@ -40,16 +40,28 @@ const Authority = ({ curRepo, orgSid, teamName, repoId }: IProps) => {
   const [selectedAuth, setSelectedAuth] = useState<any>({});
   const [sshAuthList, setSshAuthList] = useState<any>([]);
   const [httpAuthList, setHttpAuthList] = useState<any>([]);
+  const [OAuthList, setOAuthList] = useState<any>([]);
   // const [allAuthList, setAllAuthList] = useState<Array<any>>([]);
   const [authLoading, setAuthLoading] = useState(false);
 
   const scmAuth: any = curRepo?.scm_auth ?? {};
-  const curAuth: any = (scmAuth.auth_type === AUTH_TYPE.HTTP ? scmAuth.scm_account : scmAuth.scm_ssh) || {};
+  let curAuth: any = {};
   if (scmAuth.auth_type) {
+    switch (scmAuth?.auth_type) {
+      case AUTH_TYPE.HTTP:
+        curAuth = scmAuth.scm_account;
+        break;
+      case AUTH_TYPE.SSH:
+        curAuth = scmAuth.scm_ssh;
+        break;
+      case AUTH_TYPE.OAUTH:
+        curAuth = scmAuth.scm_oauth;
+        break;
+    }
     curAuth.auth_type = curRepo.scm_auth.auth_type;
   }
 
-  const setCurAuth = (sshList = sshAuthList, httpList = httpAuthList) => {
+  const setCurAuth = (sshList = sshAuthList, httpList = httpAuthList, oauthList = OAuthList) => {
     // 确保当前凭证在select数据内
     if (
       curAuth.id
@@ -65,6 +77,13 @@ const Authority = ({ curRepo, orgSid, teamName, repoId }: IProps) => {
     ) {
       setHttpAuthList([curAuth, ...httpList]);
     }
+    if (
+      curAuth.id
+      && curAuth.auth_type === AUTH_TYPE.OAUTH
+      && !find(oauthList, { id: curAuth.id })
+    ) {
+      setOAuthList([curAuth, ...oauthList]);
+    }
   };
 
   const getAuth = () => {
@@ -72,11 +91,12 @@ const Authority = ({ curRepo, orgSid, teamName, repoId }: IProps) => {
     Promise.all([
       getSSHInfo().then(r => r.results || []),
       getScmAccounts().then(r => r.results || []),
+      getALLOAuthInfos().then(r => r.results || []),
     ]).then((result) => {
       setSshAuthList(result[0]);
       setHttpAuthList(result[1]);
-
-      setCurAuth(result[0], result[1]);
+      setOAuthList(result[2]);
+      setCurAuth(result[0], result[1], result[2]);
       setAuthLoading(false);
     });
   };
@@ -94,11 +114,19 @@ const Authority = ({ curRepo, orgSid, teamName, repoId }: IProps) => {
         if (selectedAuth.auth_type === AUTH_TYPE.HTTP) {
           scmAuth.scm_account = selectedAuth.id;
           scmAuth.scm_ssh = null;
+          scmAuth.scm_authinfo = null;
         }
 
         if (selectedAuth.auth_type === AUTH_TYPE.SSH) {
           scmAuth.scm_ssh = selectedAuth.id;
           scmAuth.scm_account = null;
+          scmAuth.scm_authinfo = null;
+        }
+
+        if (selectedAuth.auth_type === AUTH_TYPE.OAUTH) {
+          scmAuth.scm_authinfo = selectedAuth.id;
+          scmAuth.scm_account = null;
+          scmAuth.scm_ssh = null;
         }
 
         putRepoAuth(orgSid, teamName, repoId, { scm_auth: scmAuth }).then(() => {
@@ -157,6 +185,18 @@ const Authority = ({ curRepo, orgSid, teamName, repoId }: IProps) => {
             }}
             getPopupContainer={() => document.body}
           >
+            {!isEmpty(OAuthList) && (
+              <OptGroup label={AUTH_TYPE_TXT.OAUTH}>
+                {OAuthList.map((auth: any) => (
+                  <Option
+                    key={`${AUTH_TYPE.OAUTH}#${auth.id}`}
+                    value={`${AUTH_TYPE.OAUTH}#${auth.id}`}
+                  >
+                    {get(SCM_PLATFORM, auth.scm_platform, '其他')}
+                  </Option>
+                ))}
+              </OptGroup>
+            )}
             {!isEmpty(sshAuthList) && (
               <OptGroup label={AUTH_TYPE_TXT.SSH}>
                 {sshAuthList.map((auth: any) => (

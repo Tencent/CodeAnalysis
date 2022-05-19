@@ -77,7 +77,7 @@ const OAuthModal = ({ scminfo, visible, onCancel, onOk }: IProps) => {
           label={t('Client Secret')}
           rules={[{ required: true, message: t('Client Secret为必填项') }]}
         >
-          <Input />
+          <Input.Password />
         </Form.Item>
         <Form.Item
           name="redirect_uri"

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Table, Button, Tag } from 'coding-oa-uikit';
-// import Edit from 'coding-oa-uikit/lib/icon/Edit';
+import Edit from 'coding-oa-uikit/lib/icon/Edit';
 import Trash from 'coding-oa-uikit/lib/icon/Trash';
 import Plus from 'coding-oa-uikit/lib/icon/Plus';
 import { get } from 'lodash';
@@ -13,7 +13,7 @@ import { SCM_PLATFORM } from './constants';
 
 interface IProps {
   dataSource: Array<any>;
-  onEdit: (platform_info: any) => void;
+  onEdit: (platform_info: any, create: boolean) => void;
   onDelete: (platform_info: any) => void;
 }
 
@@ -51,10 +51,10 @@ const OAuthTable = ({ dataSource, onEdit, onDelete }: IProps) => {
       width: 100,
       render: (_: string, platform_info: any) => (
         platform_info?.client_id ? <>
-        {/* <Button type="text" icon={<Edit/>} onClick={() => onEdit?.(platform_info)}/> */}
+        <Button type="text" icon={<Edit/>} onClick={() => onEdit?.(platform_info, false)}/>
         <Button type="text" icon={<Trash />} onClick={() => onDelete?.(platform_info)}/>
         </> : <>
-        <Button type="text" icon={<Plus />} onClick={() => onEdit?.(platform_info)}/>
+        <Button type="text" icon={<Plus />} onClick={() => onEdit?.(platform_info, true)}/>
         </>
       ),
     },

@@ -146,10 +146,16 @@ export const getUserToken = () => get(`${MAIN_SERVER_API}/authen/userinfo/token/
 export const putUserToken = () => put(`${MAIN_SERVER_API}/authen/userinfo/token/`, null);
 
 /**
+ * 查询OAuth授权配置状况
+ * @param scm_platform_name 平台名
+ */
+export const getPlatformStatus = (param: any = null) => get(`${MAIN_SERVER_API}/authen/oauthsettings/`,param);
+
+/**
  * 查询OAuth授权状况
  * @param scm_platform_name 平台名
  */
-export const getOAuthStatus = (param: any = null) => get(`${MAIN_SERVER_API}/authen/scmauthinfo/`,param);
+ export const getOAuthStatus = (param: any = null) => get(`${MAIN_SERVER_API}/authen/scmauthinfo/`,param);
 
 /**
  * 解除OAuth授权
@@ -163,3 +169,8 @@ export const getOAuthStatus = (param: any = null) => get(`${MAIN_SERVER_API}/aut
  * @param params 参数
  */
 export const getOAuthCallBack = (scm_platform_name: string, param: any = {}) => get(`${MAIN_SERVER_API}/authen/gitcallback/${scm_platform_name}/`,param);
+
+ /**
+ * 查询所有OAuth授权状况
+ */
+  export const getALLOAuthInfos = () => get(`${MAIN_SERVER_API}/authen/scmauthinfos/`);

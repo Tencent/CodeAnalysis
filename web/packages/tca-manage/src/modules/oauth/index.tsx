@@ -15,33 +15,13 @@ import OAuthModal from './oauth-modal';
 
 const { TabPane } = Tabs;
 
-// const downloadData = [
-//   {
-//     id: 1,
-// 		client_id: '12313',
-// 		client_secret : '13514365',
-// 		redirect_uri : 'localhost',
-// 		scm_platform : 6,
-//     scm_platform_name : "gitlab",
-//     scm_platform_desc : "由GitLab Inc.开发，一款基于Git的完全集成的软件开发平台",
-// 	},
-//   {
-//     id: 2,
-// 		client_id: '12313',
-// 		client_secret : '13514365',
-// 		redirect_uri : 'http://127.0.0.1/cb_git_auth/<str:scm_platform_name>/',
-// 		scm_platform : 5,		
-//     scm_platform_name : "gitee",	
-//     scm_platform_desc : '开源中国于2013年推出的基于Git的代码托管和协作开发平台',
-// 	},
-// ];
-
 const OAuth = () => {
   const [listData, setListData] = useState<Array<any>>([]);
   const [visibleEdit, setVisibleEdit] = useState<boolean>(false);
   const [visibleDel, setVisibleDel] = useState<boolean>(false);
   const [platformInfo, setPlatformInfo] = useState<any>(null);
   const [reload, setReload] = useState<boolean>(false);
+  const [create, setCreate] = useState<boolean>(false);
 
   /**
    * 获取OAuth平台列表
@@ -66,10 +46,11 @@ const OAuth = () => {
    * 编辑OAuth配置
    * @param platform_info 选中平台的配置信息
    */
-  const onEditStart = ( platform_info:any ) => {
+  const onEditStart = ( platform_info:any, create:boolean ) => {
     console.log('edit start');
     setVisibleEdit(true);
     setPlatformInfo(platform_info);
+    setCreate(create);
   };
 
   /**
@@ -77,15 +58,31 @@ const OAuth = () => {
    * @param platform_info 表单内容
    */
   const onEditFinish = ( platform_info:any ) => {
-    console.log(platform_info);
-    postOAuthSetting(platform_info).then(() => {
-      message.success('已更新配置');
-      setReload(!reload);
-    }).catch(()=>{
-      message.error('更新配置失败');
-    }).finally(()=>{
-      onEditCancel();
-    });
+
+    if (create) {
+      //初次创建配置
+      postOAuthSetting(platform_info).then(() => {
+        message.success('已创建配置');
+        setReload(!reload);
+      }).catch(()=>{
+        message.error('创建配置失败');
+      }).finally(()=>{
+        onEditCancel();
+      });
+    } else {
+      //编辑已有配置
+      delOAuthSetting(platformInfo?.scm_platform_name).then(() => {
+        postOAuthSetting(platform_info).then(() => {
+          message.success('已更新配置');
+          setReload(!reload);
+        });
+      }).catch(()=>{
+        message.error('更新配置失败');
+      }).finally(()=>{
+        onEditCancel();
+      });
+    }
+
   }
 
   const onEditCancel = () => {
