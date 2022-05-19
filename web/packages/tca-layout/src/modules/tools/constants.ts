@@ -30,16 +30,19 @@ export const TOOL_TYPE = {
 export const AUTH_TYPE = {
   HTTP: 'password',
   SSH: 'ssh_token',
+  OAUTH: 'oauth',
 };
 
 export const AUTH_TYPE_TXT = {
   HTTP: t('用户名 + 密码'),
   SSH: t('ssh'),
+  OAUTH: t('OAuth'),
 };
 
 export const AUTH_DICT = {
   [AUTH_TYPE.HTTP]: AUTH_TYPE_TXT.HTTP,
   [AUTH_TYPE.SSH]: AUTH_TYPE_TXT.SSH,
+  [AUTH_TYPE.OAUTH]: AUTH_TYPE_TXT.OAUTH,
 };
 
 /**
@@ -111,3 +114,18 @@ export const CATEGORY = [
     name: 'other',
   },
 ];
+
+export const SCM_PLATFORM = {
+  1: '其他',
+  2: '腾讯工蜂',
+  3: 'CODING',
+  4: 'GitHub',
+  5: 'Gitee',
+  6: 'GitLab',
+};
+
+export const AUTH_ID_PATH = {
+  [AUTH_TYPE.HTTP]: 'scm_account',
+  [AUTH_TYPE.SSH]: 'scm_ssh',
+  [AUTH_TYPE.OAUTH]: 'scm_oauth',
+}

@@ -5,40 +5,29 @@
 // ==============================================================================
 
 import React from 'react';
-import { Table, Avatar, Button } from 'coding-oa-uikit';
+import { Table, Button } from 'coding-oa-uikit';
 import Edit from 'coding-oa-uikit/lib/icon/Edit';
 import Trash from 'coding-oa-uikit/lib/icon/Trash';
 import { get } from 'lodash';
 
 // 项目内
 import { t } from '@src/i18n/i18next';
-import { gUserImgUrl } from '@src/utils';
 import { AUTH_TYPE_CHOICES, AUTH_TYPE, SCM_PLATFORM } from '@src/utils/constant';
 
 interface IProps {
   dataSource: Array<any>;
-  onEdit?: (authoinfo: any) => void;
-  onDel?: (authoinfo: any) => void;
+  onEdit?: (authinfo: any) => void;
+  onDel?: (authinfo: any) => void;
 }
 const AuthTable = (props: IProps) => {
   const { dataSource, onEdit, onDel } = props;
 
   const columns = [
     {
-      title: t('凭证'),
-      dataIndex: 'scm_username',
-      key: 'scm_username',
-      render: (scm_username: string, authinfo: any) => (
-        <div className=" text-weight-medium">
-          {AUTH_TYPE_CHOICES[authinfo.auth_type]} {t('：')}
-          {authinfo.auth_type === AUTH_TYPE.HTTP ? scm_username : authinfo.name}
-        </div>
-      ),
-    },
-    {
-      title: t('凭证来源平台'),
+      title: t('平台'),
       dataIndex: 'scm_platform',
       key: 'scm_platform',
+      width: 200,
       render: (scm_platform: string, recode: any) => (
         <>
           <span>{get(SCM_PLATFORM, scm_platform) || scm_platform}</span>
@@ -47,20 +36,22 @@ const AuthTable = (props: IProps) => {
       ),
     },
     {
-      title: t('创建人'),
-      dataIndex: 'user',
-      key: 'user',
-      render: (user: any) => (
-        <>
-          <Avatar size="small" src={gUserImgUrl(user)} />
-          <span className="ml-sm">{user.nickname}</span>
-        </>
+      title: t('凭证'),
+      dataIndex: 'scm_username',
+      key: 'scm_username',
+      width: 200,
+      render: (scm_username: string, authinfo: any) => (
+        <div className=" text-weight-medium">
+          {AUTH_TYPE_CHOICES[authinfo.auth_type]} {t('：')}
+          {authinfo.auth_type === AUTH_TYPE.HTTP ? scm_username : authinfo.name}
+        </div>
       ),
     },
     {
       title: t('操作'),
       dataIndex: 'op',
       key: 'op',
+      width: 200,
       render: (_: string, authinfo: any) => (
         <>
           <Button
