@@ -8,11 +8,12 @@ import { isEmpty } from 'lodash';
 import { Modal, Form, Input, Checkbox, Select, Tooltip, Button, message } from 'coding-oa-uikit';
 import PlusIcon from 'coding-oa-uikit/lib/icon/Plus';
 import RefreshIcon from 'coding-oa-uikit/lib/icon/Refresh';
+import { get } from 'lodash';
 
 import { getToolsRouter } from '@src/utils/getRoutePath';
-import { gScmAccounts, getSSHInfo } from '@src/services/user';
+import { gScmAccounts, getSSHInfo, getALLOAuthInfos } from '@src/services/user';
 import { createTool } from '@src/services/tools';
-import { AUTH_TYPE, AUTH_TYPE_TXT, REPO_TYPE_OPTIONS, REPO_TYPE } from './constants';
+import { AUTH_TYPE, AUTH_TYPE_TXT, REPO_TYPE_OPTIONS, REPO_TYPE, SCM_PLATFORM } from './constants';
 
 
 const { TextArea } = Input;
@@ -35,6 +36,7 @@ const CreateToolModal = (props: CreateToolModalProps) => {
   const { orgId, visible, onClose } = props;
   const [sshAuthList, setSshAuthList] = useState<any>([]);
   const [httpAuthList, setHttpAuthList] = useState<any>([]);
+  const [OAuthList, setOAuthList] = useState<any>([]);
   const [authLoading, setAuthLoading] = useState(false);
 
   useEffect(() => {
@@ -48,6 +50,7 @@ const CreateToolModal = (props: CreateToolModalProps) => {
     Promise.all([
       getSSHInfo().then(r => r.results || []),
       gScmAccounts().then(r => r.results || []),
+      getALLOAuthInfos().then(r => r.results || []),
     ])
       .then((result) => {
         // HTTP 和 SSH ID可能重复
@@ -58,6 +61,10 @@ const CreateToolModal = (props: CreateToolModalProps) => {
         setHttpAuthList(result[1].map((item: any) => ({
           ...item,
           authId: `${AUTH_TYPE.HTTP}#${item.id}`,
+        })));
+        setOAuthList(result[2].map((item:any)=>({ 
+          ...item, 
+          authId: `${AUTH_TYPE.OAUTH}#${item.id}`,
         })));
       })
       .finally(() => {
@@ -72,10 +79,16 @@ const CreateToolModal = (props: CreateToolModalProps) => {
 
     newFormData.scm_auth = { auth_type: authType };
 
-    if (newFormData.scm_auth.auth_type === AUTH_TYPE.HTTP) {
-      newFormData.scm_auth.scm_account = id;
-    } else {
-      newFormData.scm_auth.scm_ssh = id;
+    switch (newFormData.scm_auth.auth_type) {
+      case AUTH_TYPE.HTTP:
+        newFormData.scm_auth.scm_account = id;
+        break;
+      case AUTH_TYPE.SSH:
+        newFormData.scm_auth.scm_ssh = id;
+        break;
+      case AUTH_TYPE.OAUTH:
+        newFormData.scm_auth.scm_authinfo = id;
+        break;
     }
 
     createTool(orgId, newFormData).then((res) => {
@@ -151,6 +164,19 @@ const CreateToolModal = (props: CreateToolModalProps) => {
         <Form.Item label="凭证" required>
           <Form.Item noStyle name="scm_auth_id" rules={[{ required: true, message: '请选择仓库凭证' }]}>
             <Select style={{ width: 360 }}>
+              {!isEmpty(OAuthList) && (
+                <OptGroup label={AUTH_TYPE_TXT.OAUTH}>
+                  {OAuthList.map((auth: any) => (
+                    <Option
+                      key={auth.authId}
+                      value={auth.authId}
+                      auth_type={AUTH_TYPE.OAUTH}
+                    >
+                      {get(SCM_PLATFORM, auth.scm_platform, '其他')}
+                    </Option>
+                  ))}
+                </OptGroup>
+              )}
               {!isEmpty(sshAuthList) && (
                 <OptGroup label={AUTH_TYPE_TXT.SSH}>
                   {sshAuthList.map((auth: any) => (
