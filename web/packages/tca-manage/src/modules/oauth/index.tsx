@@ -115,7 +115,7 @@ const OAuth = () => {
       <Row className={s.header} align="middle">
         <Col flex="auto">
           <Tabs defaultActiveKey="apps" size="large">
-            <TabPane tab={t('OAuth管理列表')} key="apps" />
+            <TabPane tab={t('OAuth配置列表')} key="apps" />
           </Tabs>
         </Col>
       </Row>

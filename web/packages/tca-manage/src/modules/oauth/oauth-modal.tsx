@@ -55,7 +55,7 @@ const OAuthModal = ({ scminfo, visible, onCancel, onOk }: IProps) => {
   return (
     <Modal
       forceRender
-      title={scminfo ? t('更新配置') : t('创建配置')}
+      title={scminfo?.client_id ? t('更新配置') : t('创建配置')}
       visible={visible}
       onOk={onSubmitHandle}
       onCancel={onCancel}
