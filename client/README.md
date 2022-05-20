@@ -96,6 +96,8 @@ python3 codepuppy.py localscan
 - （2）进入到`client`目录下，执行命令：`python3 codepuppy.py -l codepuppy.log start -t <token>`
 - （3）启动后，可以在命令行输出或`codepuppy.log`中查看运行日志，如果未报异常，且输出`task loop is started.`，表示节点已经正常启动。
 
+> 注：节点首次运行会提示“节点处于不可用状态”，此时需要到平台上管理后台的“节点管理”模块将节点标记为“活跃”（[参考文档](https://github.com/Tencent/CodeAnalysis/blob/main/doc/%E3%80%90%E8%85%BE%E8%AE%AF%E4%BA%91%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90%E3%80%91%E4%BB%BB%E5%8A%A1%E5%88%86%E5%B8%83%E5%BC%8F%E6%89%A7%E8%A1%8C%E8%83%BD%E5%8A%9B.md)）
+
 ### 4. 配置节点
 - 从tca页面`管理入口`-`节点管理`，可以看到当前在线的节点，可以修改节点名称、标签、负责人等信息。
 - 可以进入工具进程配置页面，对节点支持的工具进程进行管理（默认会全部勾选），未勾选的工具进程，将不会在该节点上执行。
