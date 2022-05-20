@@ -36,7 +36,7 @@ const CreateToolModal = (props: CreateToolModalProps) => {
   const { orgId, visible, onClose } = props;
   const [sshAuthList, setSshAuthList] = useState<any>([]);
   const [httpAuthList, setHttpAuthList] = useState<any>([]);
-  const [OAuthList, setOAuthList] = useState<any>([]);
+  const [oauthAuthList, setOauthAuthList] = useState<any>([]);
   const [authLoading, setAuthLoading] = useState(false);
 
   useEffect(() => {
@@ -62,7 +62,7 @@ const CreateToolModal = (props: CreateToolModalProps) => {
           ...item,
           authId: `${AUTH_TYPE.HTTP}#${item.id}`,
         })));
-        setOAuthList(result[2].map((item:any)=>({ 
+        setOauthAuthList(result[2].map((item:any)=>({ 
           ...item, 
           authId: `${AUTH_TYPE.OAUTH}#${item.id}`,
         })));
@@ -164,9 +164,9 @@ const CreateToolModal = (props: CreateToolModalProps) => {
         <Form.Item label="凭证" required>
           <Form.Item noStyle name="scm_auth_id" rules={[{ required: true, message: '请选择仓库凭证' }]}>
             <Select style={{ width: 360 }}>
-              {!isEmpty(OAuthList) && (
+              {!isEmpty(oauthAuthList) && (
                 <OptGroup label={AUTH_TYPE_TXT.OAUTH}>
-                  {OAuthList.map((auth: any) => (
+                  {oauthAuthList.map((auth: any) => (
                     <Option
                       key={auth.authId}
                       value={auth.authId}

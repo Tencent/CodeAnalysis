@@ -40,7 +40,7 @@ const Authority = ({ curRepo, orgSid, teamName, repoId }: IProps) => {
   const [selectedAuth, setSelectedAuth] = useState<any>({});
   const [sshAuthList, setSshAuthList] = useState<any>([]);
   const [httpAuthList, setHttpAuthList] = useState<any>([]);
-  const [OAuthList, setOAuthList] = useState<any>([]);
+  const [oauthAuthList, setOauthAuthList] = useState<any>([]);
   // const [allAuthList, setAllAuthList] = useState<Array<any>>([]);
   const [authLoading, setAuthLoading] = useState(false);
 
@@ -61,7 +61,7 @@ const Authority = ({ curRepo, orgSid, teamName, repoId }: IProps) => {
     curAuth.auth_type = curRepo.scm_auth.auth_type;
   }
 
-  const setCurAuth = (sshList = sshAuthList, httpList = httpAuthList, oauthList = OAuthList) => {
+  const setCurAuth = (sshList = sshAuthList, httpList = httpAuthList, oauthList = oauthAuthList) => {
     // 确保当前凭证在select数据内
     if (
       curAuth.id
@@ -82,7 +82,7 @@ const Authority = ({ curRepo, orgSid, teamName, repoId }: IProps) => {
       && curAuth.auth_type === AUTH_TYPE.OAUTH
       && !find(oauthList, { id: curAuth.id })
     ) {
-      setOAuthList([curAuth, ...oauthList]);
+      setOauthAuthList([curAuth, ...oauthList]);
     }
   };
 
@@ -95,7 +95,7 @@ const Authority = ({ curRepo, orgSid, teamName, repoId }: IProps) => {
     ]).then((result) => {
       setSshAuthList(result[0]);
       setHttpAuthList(result[1]);
-      setOAuthList(result[2]);
+      setOauthAuthList(result[2]);
       setCurAuth(result[0], result[1], result[2]);
       setAuthLoading(false);
     });
@@ -185,9 +185,9 @@ const Authority = ({ curRepo, orgSid, teamName, repoId }: IProps) => {
             }}
             getPopupContainer={() => document.body}
           >
-            {!isEmpty(OAuthList) && (
+            {!isEmpty(oauthAuthList) && (
               <OptGroup label={AUTH_TYPE_TXT.OAUTH}>
-                {OAuthList.map((auth: any) => (
+                {oauthAuthList.map((auth: any) => (
                   <Option
                     key={`${AUTH_TYPE.OAUTH}#${auth.id}`}
                     value={`${AUTH_TYPE.OAUTH}#${auth.id}`}

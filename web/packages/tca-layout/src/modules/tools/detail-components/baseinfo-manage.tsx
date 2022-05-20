@@ -35,7 +35,7 @@ const BaseInfo = ({ orgSid, data, getDetail }: BaseInfoProps) => {
   const [isEdit, setIsEdit] = useState(false);
   const [sshAuthList, setSshAuthList] = useState<any>([]);
   const [httpAuthList, setHttpAuthList] = useState<any>([]);
-  const [OAuthList, setOAuthList] = useState<any>([]);
+  const [oauthAuthList, setOauthAuthList] = useState<any>([]);
   const [authLoading, setAuthLoading] = useState(false);
   const statusRef = useRef();
 
@@ -67,12 +67,12 @@ const BaseInfo = ({ orgSid, data, getDetail }: BaseInfoProps) => {
       if (
         curAuth.scm_account?.id
         && curAuth.auth_type === AUTH_TYPE.OAUTH
-        && !find(OAuthList, { id: curAuth.scm_account?.id })
+        && !find(oauthAuthList, { id: curAuth.scm_account?.id })
       ) {
-        setOAuthList([{
+        setOauthAuthList([{
           ...curAuth.scm_oauth,
           authId: `${curAuth.auth_type}#${curAuth.scm_oauth?.id}`,
-        }, ...OAuthList]);
+        }, ...oauthAuthList]);
       }
     }
   }, [authLoading, data.id]);
@@ -99,7 +99,7 @@ const BaseInfo = ({ orgSid, data, getDetail }: BaseInfoProps) => {
           ...item,
           authId: `${AUTH_TYPE.HTTP}#${item.id}`,
         })));
-        setOAuthList(result[2].map((item:any)=>({ 
+        setOauthAuthList(result[2].map((item:any)=>({ 
           ...item, 
           authId: `${AUTH_TYPE.OAUTH}#${item.id}`,
         })));
@@ -299,9 +299,9 @@ const BaseInfo = ({ orgSid, data, getDetail }: BaseInfoProps) => {
                   <>
                     <Form.Item noStyle name="scm_auth_id">
                       <Select style={{ width: 380 }}>
-                        {!isEmpty(OAuthList) && (
+                        {!isEmpty(oauthAuthList) && (
                           <OptGroup label={AUTH_TYPE_TXT.OAUTH}>
-                            {OAuthList.map((auth: any) => (
+                            {oauthAuthList.map((auth: any) => (
                               <Option
                                 key={auth.authId}
                                 value={auth.authId}

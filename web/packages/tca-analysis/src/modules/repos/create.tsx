@@ -55,7 +55,7 @@ const Create = () => {
   // const [allAuthList, setAllAuthList] = useState<Array<any>>([]);
   const [sshAuthList, setSshAuthList] = useState<any>([]);
   const [httpAuthList, setHttpAuthList] = useState<any>([]);
-  const [OAuthList, setOAuthList] = useState<any>([]);
+  const [oauthAuthList, setOauthAuthList] = useState<any>([]);
   const [submitLoading, setSubmitLoading] = useState(false);
   const [reload, setReload] = useState(false);
   const [authLoading, setAuthLoading] = useState(false);
@@ -81,7 +81,7 @@ const Create = () => {
           ...item,
           authId: `${AUTH_TYPE.HTTP}#${item.id}`,
         })));
-        setOAuthList(result[2].map((item:any)=>({ 
+        setOauthAuthList(result[2].map((item:any)=>({ 
             ...item, 
             authId: `${AUTH_TYPE.OAUTH}#${item.id}`,
         })));
@@ -92,7 +92,6 @@ const Create = () => {
   };
 
   const onFinish = (values: any) => {
-    console.log(values);
     const { name, scm_auth_id: scmAuthId, address, symbol } = values;
     const [authType, id] = scmAuthId?.split('#') ?? [];
     const data = {
@@ -233,9 +232,9 @@ const Create = () => {
             rules={[{ required: true, message: t('请选择一项仓库认证方式') }]}
           >
             <Select style={{ width: 500 }} getPopupContainer={() => document.body}>
-              {!isEmpty(OAuthList) && (
+              {!isEmpty(oauthAuthList) && (
                 <OptGroup label={AUTH_TYPE_TXT.OAUTH}>
-                  {OAuthList.map((auth: any) => (
+                  {oauthAuthList.map((auth: any) => (
                     <Option
                       key={auth.authId}
                       value={auth.authId}

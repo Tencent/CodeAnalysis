@@ -46,8 +46,7 @@ const OAuthModal = ({ scminfo, visible, onCancel, onOk }: IProps) => {
   const onSubmitHandle = () => {
     form.validateFields().then((formData) => {
       // 格式化回调地址
-      formData.redirect_uri=`http://${formData.redirect_uri}/cb_git_auth/${appInfo?.scm_platform_name}`
-      console.log(formData);
+      formData.redirect_uri=`http://${formData.redirect_uri}/cb_git_auth/${appInfo?.scm_platform_name}`;
       onOk(formData);
     });
   };
