@@ -14,7 +14,6 @@ import { updateTool, updateToolStatus } from '@src/services/tools';
 import { gScmAccounts, getSSHInfo, getALLOAuthInfos } from '@src/services/user';
 import { AUTH_TYPE, AUTH_TYPE_TXT, AUTH_DICT, REPO_TYPE_OPTIONS, TOOL_STATUS, STATUSENUM, SCM_PLATFORM, AUTH_ID_PATH } from '../constants';
 
-import LibScheme from './lib-scheme';
 import style from '../detail.scss';
 
 const { TextArea } = Input;
@@ -33,7 +32,7 @@ interface BaseInfoProps {
   getDetail: () => void;
 }
 
-const BaseInfo = ({ orgSid, toolId, data, editable, getDetail }: BaseInfoProps) => {
+const BaseInfo = ({ orgSid, data, editable, getDetail }: BaseInfoProps) => {
   const [form] = Form.useForm();
   const [isEdit, setIsEdit] = useState(false);
   const [sshAuthList, setSshAuthList] = useState<any>([]);
@@ -408,13 +407,6 @@ const BaseInfo = ({ orgSid, toolId, data, editable, getDetail }: BaseInfoProps) 
             )
           }
         </Form.Item>
-        <LibScheme
-          layout={layout}
-          orgSid={orgSid}
-          toolId={toolId}
-          isEdit={isEdit}
-          getComponent={getComponent}
-        />
         <Form.Item label='语言' >
           {data.languages?.join(' | ')}
         </Form.Item>
