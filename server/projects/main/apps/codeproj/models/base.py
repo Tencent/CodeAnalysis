@@ -13,6 +13,7 @@ codeproj - base models
 import logging
 
 # 第三方 import
+from django.conf import settings
 from django.db import models, IntegrityError
 from django.contrib.auth.models import User, Group
 from guardian.shortcuts import assign_perm
@@ -165,7 +166,7 @@ class BaseRepository(CDBaseModel):
         if git_suffix:
             if not scm_url.endswith(".git") and self.scm_type == self.ScmTypeEnum.GIT:
                 scm_url = "%s.git" % scm_url
-        if https_prefix:
+        if https_prefix or (hasattr(settings, "HTTPS_CLONE_FLAG") and settings.HTTPS_CLONE_FLAG is True):
             scm_url = scm_url.replace("http://", "https://")
         return scm_url
 
