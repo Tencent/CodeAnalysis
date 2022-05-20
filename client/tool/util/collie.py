@@ -51,8 +51,12 @@ class Collie(object):
             self.source_dir = params.source_dir if source_dir is None else source_dir
             self.relpos = len(self.source_dir) + 1
             self.work_dir = params.work_dir if work_dir is None else work_dir
-            self.scan_languages = scan_languages if scan_languages is not None else self.params.get("scan_languages", [])
-            self.scan_languages = [lang.lower() for lang in self.scan_languages if lang.lower() in self.support_languages]
+            self.scan_languages = (
+                scan_languages if scan_languages is not None else self.params.get("scan_languages", [])
+            )
+            self.scan_languages = [
+                lang.lower() for lang in self.scan_languages if lang.lower() in self.support_languages
+            ]
 
         self.tool_home = os.environ.get("COLLIE_HOME")
         self.tool_name = self.__class__.__name__
@@ -171,11 +175,11 @@ class Collie(object):
         fieldnames = (
             "checker",
             "description",
-            "path"
+            "path",
             "line",
             "column",
         )
-        csv_f = (line for line in f if '\0' not in line)
+        csv_f = (line for line in f if "\0" not in line)
         reader = csv.DictReader(csv_f, fieldnames)
         next(reader)
         for row in reader:
@@ -207,7 +211,7 @@ class Collie(object):
             "long_name",
             "scope",
         )
-        csv_f = (line for line in f if '\0' not in line)
+        csv_f = (line for line in f if "\0" not in line)
         reader = csv.DictReader(csv_f, fieldnames)
         next(reader)
         for row in reader:
@@ -308,4 +312,3 @@ tool = Collie
 
 if __name__ == "__main__":
     pass
- 
