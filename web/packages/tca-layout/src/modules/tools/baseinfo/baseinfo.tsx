@@ -11,8 +11,8 @@ import EditIcon from 'coding-oa-uikit/lib/icon/Edit';
 
 import { formatDateTime } from '@src/utils';
 import { updateTool, updateToolStatus } from '@src/services/tools';
-import { gScmAccounts, getSSHInfo } from '@src/services/user';
-import { AUTH_TYPE, AUTH_TYPE_TXT, AUTH_DICT, REPO_TYPE_OPTIONS, TOOL_STATUS, STATUSENUM } from '../constants';
+import { gScmAccounts, getSSHInfo, getALLOAuthInfos } from '@src/services/user';
+import { AUTH_TYPE, AUTH_TYPE_TXT, AUTH_DICT, REPO_TYPE_OPTIONS, TOOL_STATUS, STATUSENUM, SCM_PLATFORM, AUTH_ID_PATH } from '../constants';
 
 import style from '../detail.scss';
 
@@ -38,6 +38,7 @@ const BaseInfo = ({ orgSid, data, editable, getDetail }: BaseInfoProps) => {
   const [sshAuthList, setSshAuthList] = useState<any>([]);
   const [httpAuthList, setHttpAuthList] = useState<any>([]);
   const [authLoading, setAuthLoading] = useState(false);
+  const [oauthAuthList, setOauthAuthList] = useState<any>([]);
   const statusRef = useRef();
 
   useEffect(() => getAuth(), []);
@@ -65,6 +66,16 @@ const BaseInfo = ({ orgSid, data, editable, getDetail }: BaseInfoProps) => {
           authId: `${curAuth.auth_type}#${curAuth.scm_account?.id}`,
         }, ...httpAuthList]);
       }
+      if (
+        curAuth.scm_account?.id
+        && curAuth.auth_type === AUTH_TYPE.OAUTH
+        && !find(oauthAuthList, { id: curAuth.scm_account?.id })
+      ) {
+        setOauthAuthList([{
+          ...curAuth.scm_oauth,
+          authId: `${curAuth.auth_type}#${curAuth.scm_oauth?.id}`,
+        }, ...oauthAuthList]);
+      }
     }
   }, [authLoading, data.id]);
 
@@ -78,6 +89,7 @@ const BaseInfo = ({ orgSid, data, editable, getDetail }: BaseInfoProps) => {
     Promise.all([
       getSSHInfo().then(r => r.results || []),
       gScmAccounts().then(r => r.results || []),
+      getALLOAuthInfos().then(r => r.results || []),
     ])
       .then((result) => {
         // HTTP 和 SSH ID可能重复
@@ -88,6 +100,10 @@ const BaseInfo = ({ orgSid, data, editable, getDetail }: BaseInfoProps) => {
         setHttpAuthList(result[1].map((item: any) => ({
           ...item,
           authId: `${AUTH_TYPE.HTTP}#${item.id}`,
+        })));
+        setOauthAuthList(result[2].map((item:any)=>({ 
+          ...item, 
+          authId: `${AUTH_TYPE.OAUTH}#${item.id}`,
         })));
       })
       .finally(() => {
@@ -102,10 +118,16 @@ const BaseInfo = ({ orgSid, data, editable, getDetail }: BaseInfoProps) => {
 
     newFormData.scm_auth = { auth_type: authType };
 
-    if (newFormData.scm_auth.auth_type === AUTH_TYPE.HTTP) {
+    switch (newFormData.scm_auth.auth_type) {
+      case AUTH_TYPE.HTTP:
       newFormData.scm_auth.scm_account = id;
-    } else {
+        break;
+      case AUTH_TYPE.SSH:
       newFormData.scm_auth.scm_ssh = id;
+        break;
+      case AUTH_TYPE.OAUTH:
+        newFormData.scm_auth.scm_authinfo = id;
+        break;
     }
 
     updateTool(orgSid, data.id, {
@@ -157,6 +179,10 @@ const BaseInfo = ({ orgSid, data, editable, getDetail }: BaseInfoProps) => {
       return `${auth?.scm_ssh?.name}（${AUTH_DICT[data?.scm_auth?.auth_type]}）`;
     }
 
+    if (auth.auth_type === AUTH_TYPE.OAUTH) {
+      return `${get(SCM_PLATFORM, auth?.scm_oauth?.scm_platform, '其他')}（${AUTH_DICT[data?.scm_auth?.auth_type]}）`;
+    }
+
     return '';
   };
 
@@ -171,7 +197,7 @@ const BaseInfo = ({ orgSid, data, editable, getDetail }: BaseInfoProps) => {
         initialValues={{
           ...data,
           status: STATUSENUM.NORMAL,
-          scm_auth_id: `${data.scm_auth?.auth_type}#${data.scm_auth?.auth_type === AUTH_TYPE.HTTP ? data.scm_auth?.scm_account?.id : data.scm_auth?.scm_ssh?.id}`,
+          scm_auth_id: `${data.scm_auth?.auth_type}#${get(data,['scm_auth',AUTH_ID_PATH[data.scm_auth?.auth_type],'id'])}`,
         }}
         onFinish={isEdit ? onFinish : undefined}
       >
@@ -277,7 +303,20 @@ const BaseInfo = ({ orgSid, data, editable, getDetail }: BaseInfoProps) => {
                 getComponent(
                   <>
                     <Form.Item noStyle name="scm_auth_id" rules={[{ required: true, message: '请选择仓库凭证' }]}>
-                      <Select style={{ width: 480 }}>
+                      <Select style={{ width: 380 }}>
+                        {!isEmpty(oauthAuthList) && (
+                          <OptGroup label={AUTH_TYPE_TXT.OAUTH}>
+                            {oauthAuthList.map((auth: any) => (
+                              <Option
+                                key={auth.authId}
+                                value={auth.authId}
+                                auth_type={AUTH_TYPE.OAUTH}
+                              >
+                                {get(SCM_PLATFORM, auth.scm_platform, '其他')}
+                              </Option>
+                            ))}
+                          </OptGroup>
+                        )}
                         {!isEmpty(sshAuthList) && (
                           <OptGroup label={AUTH_TYPE_TXT.SSH}>
                             {sshAuthList.map((auth: any) => (

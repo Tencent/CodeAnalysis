@@ -15,10 +15,11 @@ interface IProps {
   onCancel: (e: React.MouseEvent<HTMLElement, MouseEvent>) => void;
   onOk: (e: React.MouseEvent<HTMLElement, MouseEvent>) => void;
   content?: ReactNode;
+  okText?: string ;
 }
 
 const DangerModal = (props: IProps) => {
-  const { visible, title, onCancel, onOk, content } = props;
+  const { visible, title, onCancel, onOk, content, okText = t('确认删除') } = props;
 
   return (
     <Modal
@@ -27,7 +28,7 @@ const DangerModal = (props: IProps) => {
       onCancel={onCancel}
       footer={[
         <Button key="submit" type="primary" danger onClick={onOk}>
-          {t('确认删除')}
+          {okText}
         </Button>,
         <Button key="back" onClick={onCancel}>
           {t('取消')}
