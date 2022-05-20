@@ -14,6 +14,7 @@ import { useStateStore } from '@src/context/store';
 
 import BaseInfo from './baseinfo/baseinfo';
 import BaseInfoManage from './baseinfo/baseinfo-manage';
+import LibScheme from './lib-scheme';
 import Rules from './rules';
 import CustomRules from './rules/custom-rules';
 import WhiteList from './white-list';
@@ -89,6 +90,12 @@ const ToolDetail = () => {
               />
             )
           }
+        </TabPane>
+        <TabPane tab='依赖配置' key='tool-libs'>
+          <LibScheme
+            orgSid={orgSid}
+            toolId={toolId}
+          />
         </TabPane>
         <TabPane tab="规则列表" key="rules">
           <Rules

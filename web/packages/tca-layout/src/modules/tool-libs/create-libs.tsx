@@ -2,16 +2,17 @@
  * 创建工具依赖
  */
 import React, { useState, useEffect } from 'react';
-import { isEmpty } from 'lodash';
-import { Modal, Form, Input, Select, Tooltip, Button, message } from 'coding-oa-uikit';
+import { isEmpty, fromPairs, toPairs } from 'lodash';
+import { Modal, Form, Input, Select, Tooltip, Button, message, Space } from 'coding-oa-uikit';
 import PlusIcon from 'coding-oa-uikit/lib/icon/Plus';
 import RefreshIcon from 'coding-oa-uikit/lib/icon/Refresh';
+import TrashIcon from 'coding-oa-uikit/lib/icon/Trash';
+
 
 import { gScmAccounts, getSSHInfo } from '@src/services/user';
 import { addToolLib, getLibDetail, updateToolLib } from '@src/services/tools';
 import { AUTH_TYPE, AUTH_TYPE_TXT, REPO_TYPE_OPTIONS, REPO_TYPE } from '@src/modules/tools/constants';
-// import { LIB_ENV, LIB_TYPE } from './constants';
-import { LIB_ENV } from './constants';
+import { LIB_ENV, LIB_TYPE } from './constants';
 
 const { TextArea } = Input;
 const { Option, OptGroup } = Select;
@@ -24,19 +25,20 @@ const layout = {
 interface CreateToollibsProps {
   orgSid: string;
   visible: boolean;
+  isSuperuser: boolean;
   libId: number;
   onClose: () => void;
   callback: () => void;
 }
 
 const CreateToollibs = (props: CreateToollibsProps) => {
-  const { orgSid, visible, libId, onClose, callback } = props;
+  const { orgSid, visible, libId, isSuperuser, onClose, callback } = props;
   const [form] = Form.useForm();
 
   const [sshAuthList, setSshAuthList] = useState<any>([]);
   const [httpAuthList, setHttpAuthList] = useState<any>([]);
   const [authLoading, setAuthLoading] = useState(false);
-  const [detail, setDetail] = useState<any>({}); 
+  const [detail, setDetail] = useState<any>({});
 
   const isEdit = !!libId;
 
@@ -45,14 +47,14 @@ const CreateToollibs = (props: CreateToollibsProps) => {
       getAuth();
     }
 
-    if(visible && libId && libId !== detail.id) {
+    if (visible && libId) {
       getLibDetail(orgSid, libId).then((res) => {
         setDetail(res);
         form.resetFields();
       })
     }
 
-    if(visible) {
+    if (visible) {
       form.resetFields();
     }
   }, [visible]);
@@ -81,20 +83,27 @@ const CreateToollibs = (props: CreateToollibsProps) => {
 
   const onFinish = (formData: any) => {
     const data = formData;
-    const [authType, id] = formData?.scm_auth_id?.split('#') ?? [];
-    delete data.scm_auth_id;
 
-    data.scm_auth = { auth_type: authType };
+    if (formData.scm_auth_id) {
+      const [authType, id] = formData?.scm_auth_id?.split('#') ?? [];
+      delete data.scm_auth_id;
+      data.scm_auth = { auth_type: authType };
 
-    if (data.scm_auth.auth_type === AUTH_TYPE.HTTP) {
-      data.scm_auth.scm_account = id;
-    } else {
-      data.scm_auth.scm_ssh = id;
+      if (data.scm_auth.auth_type === AUTH_TYPE.HTTP) {
+        data.scm_auth.scm_account = id;
+      } else {
+        data.scm_auth.scm_ssh = id;
+      }
     }
+
 
     data.lib_os = formData.lib_os?.join(';');
 
-    if(isEdit) {
+    if (!isEmpty(formData.envs)) {
+      data.envs = fromPairs(formData.envs?.map((item: { key: string, value: string }) => [item.key, item.value]))
+    }
+
+    if (isEdit) {
       updateToolLib(orgSid, libId, data).then(() => {
         message.success('更新成功');
         callback?.();
@@ -124,6 +133,7 @@ const CreateToollibs = (props: CreateToollibsProps) => {
         initialValues={isEdit ? {
           ...detail,
           lib_os: detail?.lib_os?.split(';'),
+          envs: detail.envs ? toPairs(detail?.envs)?.map((item) => ({ key: item[0], value: item[1] })) : [],
           scm_auth_id: detail.scm_auth ? `${detail.scm_auth?.auth_type}#${detail.scm_auth?.auth_type === AUTH_TYPE.HTTP ? detail.scm_auth?.scm_account?.id : detail.scm_auth?.scm_ssh?.id}` : '',
         } : {
           scm_type: REPO_TYPE.GIT
@@ -142,20 +152,24 @@ const CreateToollibs = (props: CreateToollibsProps) => {
         >
           <TextArea placeholder="长度限制256个字符。" rows={3} />
         </Form.Item>
-        {/* 默认都是私有依赖，只有管理员有权限更改类型 */}
-        {/* <Form.Item
-          label="依赖类型"
-          name="lib_type"
-          rules={[{ required: true, message: '请选择依赖类型' }]}
-        >
-          <Select>
-            {
-              Object.entries(LIB_TYPE).map(([key, text]) => (
-                <Option key={key} value={key}>{text}</Option>
-              ))
-            }
-          </Select>
-        </Form.Item> */}
+        {/* 默认都是私有依赖，只有超级管理员有权限更改类型 */}
+        {
+          isSuperuser && (
+            <Form.Item
+              label="依赖类型"
+              name="lib_type"
+              rules={[{ required: true, message: '请选择依赖类型' }]}
+            >
+              <Select>
+                {
+                  Object.entries(LIB_TYPE).map(([key, text]) => (
+                    <Option key={key} value={key}>{text}</Option>
+                  ))
+                }
+              </Select>
+            </Form.Item>
+          )
+        }
         <Form.Item
           label="适用系统"
           name="lib_os"
@@ -194,8 +208,8 @@ const CreateToollibs = (props: CreateToollibsProps) => {
             </Form.Item>
           </Input.Group>
         </Form.Item>
-        <Form.Item label="凭证" required>
-          <Form.Item noStyle name="scm_auth_id" rules={[{ required: true, message: '请选择凭证' }]}>
+        <Form.Item label="凭证">
+          <Form.Item noStyle name="scm_auth_id">
             <Select style={{ width: 360 }}>
               {!isEmpty(sshAuthList) && (
                 <OptGroup label={AUTH_TYPE_TXT.SSH}>
@@ -242,11 +256,49 @@ const CreateToollibs = (props: CreateToollibsProps) => {
             </Tooltip>
           </div>
         </Form.Item>
+
         <Form.Item
           label="环境变量"
           name="envs"
         >
-          <TextArea rows={3} />
+          <Form.List name="envs">
+            {(fields, { add, remove }) => (
+              <>
+                {fields.map(({ key, name, ...restField }) => (
+                  <Space key={key} style={{ display: 'flex' }} align="baseline">
+                    <Form.Item
+                      {...restField}
+                      name={[name, 'key']}
+                      rules={[{ required: true, message: '请输入变量名' }]}
+                    >
+                      <Input placeholder="变量名" style={{ width: '175px' }} />
+                    </Form.Item>
+                    <Form.Item
+                      {...restField}
+                      name={[name, 'value']}
+                      rules={[{ required: true, message: '请输入变量值' }]}
+                    >
+                      <Input placeholder="变量值" style={{ width: '175px' }} />
+                    </Form.Item>
+                    <Tooltip title='移除'>
+                      <Button
+                        type='text'
+                        style={{ marginLeft: '3px' }}
+                        onClick={() => remove(name)}
+                      ><TrashIcon /></Button>
+                    </Tooltip>
+                  </Space>
+                ))}
+                <Form.Item>
+
+                  <Button type="dashed" onClick={() => add()} block >
+                    添加环境变量
+                  </Button>
+                </Form.Item>
+              </>
+            )}
+          </Form.List>
+          {/* <TextArea rows={3} /> */}
         </Form.Item>
       </Form>
     </Modal>

@@ -79,7 +79,7 @@ const LibScheme = (props: LibSchemeProps) => {
     } else {
       form.setFieldsValue({
         ...curScheme,
-        scheme_os: curScheme?.scheme_os?.split(','),
+        scheme_os: curScheme?.scheme_os?.split(';'),
         tool_libs: curScheme?.toollib_maps?.map((item: any) => item.toollib.id) ?? []
       })
     }
@@ -150,7 +150,7 @@ const LibScheme = (props: LibSchemeProps) => {
     const params = {
       ...formData,
       condition: formData.condition || null,
-      scheme_os: formData.scheme_os?.join(','),
+      scheme_os: formData.scheme_os?.join(';'),
       tool_libs: compact(formData.tool_libs)?.map((id: number) => ({ toollib: id })),
     };
     if (activeKey !== -1) {

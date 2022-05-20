@@ -42,11 +42,13 @@ export const REPO_TAB_OPTIONS = [
 export const AUTH_TYPE = {
   HTTP: 'password',
   SSH: 'ssh_token',
+  OAUTH: 'oauth',
 };
 
 export const AUTH_TYPE_TXT = {
   HTTP: t('用户名 + 密码'),
   SSH: t('ssh'),
+  OAUTH: t('OAuth'),
 };
 
 export const AUTH_TYPE_OPTIONS = [
@@ -73,3 +75,31 @@ export const REPO_TYPE = {
 };
 
 export const REPO_TYPE_OPTIONS = [REPO_TYPE.GIT, REPO_TYPE.SVN];
+
+export const DEFAULT_SCM_PLATFORM = [
+  {
+    scm_platform: 2,
+    scm_platform_name: 'tgitsaas',
+  },
+  {
+    scm_platform: 4,
+    scm_platform_name: 'github',
+  },
+  {
+    scm_platform: 5,
+    scm_platform_name: 'gitee',
+  },
+  {
+    scm_platform: 6,
+    scm_platform_name: 'gitlab',
+  },
+];
+
+export const SCM_PLATFORM = {
+  1: t('其他'),
+  2: t('腾讯工蜂'),
+  3: t('CODING'),
+  4: t('GitHub'),
+  5: t('Gitee'),
+  6: t('GitLab'),
+};

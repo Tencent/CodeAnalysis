@@ -40,6 +40,7 @@ export const ToolLibs = () => {
   const pageStart = toNumber(query.offset) || DEFAULT_PAGER.pageStart;
   const searchParams: any = omit(query, ['offset', 'limit']);
   const isAdmin = !!find(admins, { username: userinfo.username });  // 当前用户是否是管理员
+  const isSuperuser = userinfo.is_superuser;  // 是否为超级管理员
 
   useEffect(() => {
     getTeamMember(orgSid).then((res) => {
@@ -111,12 +112,12 @@ export const ToolLibs = () => {
         <Column
           title='环境变量'
           dataIndex='envs'
-        // render={(envs: any) => envs && (
-        //   // todo: 没有按顺序遍历出环境变量，环境变量是否有顺序依赖关系？
-        //   Object.entries(envs).map(([key, value]) => (
-        //     <p className={style.envs} key={key}>&quot;{key}&ldquo;:&quot;{value}&ldquo;</p>
-        //   ))
-        // )}
+        render={(envs: any) => envs && (
+          // todo: 没有按顺序遍历出环境变量，环境变量是否有顺序依赖关系？
+          Object.entries(envs).map(([key, value]) => (
+            <p className={style.envs} key={key}>{key} = {value}</p>
+          ))
+        )}
         />
         <Column
           title='依赖系统'
@@ -156,9 +157,10 @@ export const ToolLibs = () => {
         }
       </Table>
       {
-        isAdmin && (
+        (isAdmin || isSuperuser) && (
           <CreateToollibs
             orgSid={orgSid}
+            isSuperuser={isSuperuser}
             visible={modalData.visible}
             libId={modalData.libId}
             onClose={() => setModalData({

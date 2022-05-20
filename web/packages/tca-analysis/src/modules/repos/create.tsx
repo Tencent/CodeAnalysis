@@ -16,7 +16,7 @@ import RefreshIcon from 'coding-oa-uikit/lib/icon/Refresh';
 import { useStateStore, useDispatchStore } from '@src/context/store';
 import { SCM_PLATFORM } from '@src/common/constants';
 import { SET_CUR_REPO, SET_REPOS } from '@src/context/constant';
-import { getScmAccounts, postRepo, getSSHInfo } from '@src/services/repos';
+import { getScmAccounts, postRepo, getSSHInfo, getALLOAuthInfos } from '@src/services/repos';
 import { t } from '@src/i18n/i18next';
 import { getPCAuthRouter, getRepoRouter } from '@src/modules/repos/routes';
 import { AUTH_TYPE, AUTH_TYPE_TXT, REPO_TYPE, REPO_TYPE_OPTIONS } from './constants';
@@ -55,6 +55,7 @@ const Create = () => {
   // const [allAuthList, setAllAuthList] = useState<Array<any>>([]);
   const [sshAuthList, setSshAuthList] = useState<any>([]);
   const [httpAuthList, setHttpAuthList] = useState<any>([]);
+  const [oauthAuthList, setOauthAuthList] = useState<any>([]);
   const [submitLoading, setSubmitLoading] = useState(false);
   const [reload, setReload] = useState(false);
   const [authLoading, setAuthLoading] = useState(false);
@@ -68,6 +69,7 @@ const Create = () => {
     Promise.all([
       getSSHInfo().then(r => r.results || []),
       getScmAccounts().then(r => r.results || []),
+      getALLOAuthInfos().then(r => r.results || []),
     ])
       .then((result) => {
         // HTTP 和 SSH ID可能重复
@@ -78,6 +80,10 @@ const Create = () => {
         setHttpAuthList(result[1].map((item: any) => ({
           ...item,
           authId: `${AUTH_TYPE.HTTP}#${item.id}`,
+        })));
+        setOauthAuthList(result[2].map((item:any)=>({ 
+            ...item, 
+            authId: `${AUTH_TYPE.OAUTH}#${item.id}`,
         })));
       })
       .finally(() => {
@@ -98,10 +104,16 @@ const Create = () => {
       ...address,
     };
 
-    if (data.scm_auth.auth_type === AUTH_TYPE.HTTP) {
-      data.scm_auth.scm_account = id;
-    } else {
-      data.scm_auth.scm_ssh = id;
+    switch (data.scm_auth.auth_type) {
+      case AUTH_TYPE.HTTP:
+        data.scm_auth.scm_account = id;
+        break;
+      case AUTH_TYPE.SSH:
+        data.scm_auth.scm_ssh = id;
+        break;
+      case AUTH_TYPE.OAUTH:
+        data.scm_auth.scm_authinfo = id;
+        break;
     }
 
     if (symbol) {
@@ -220,6 +232,19 @@ const Create = () => {
             rules={[{ required: true, message: t('请选择一项仓库认证方式') }]}
           >
             <Select style={{ width: 500 }} getPopupContainer={() => document.body}>
+              {!isEmpty(oauthAuthList) && (
+                <OptGroup label={AUTH_TYPE_TXT.OAUTH}>
+                  {oauthAuthList.map((auth: any) => (
+                    <Option
+                      key={auth.authId}
+                      value={auth.authId}
+                      auth_type={AUTH_TYPE.OAUTH}
+                    >
+                      {get(SCM_PLATFORM, auth.scm_platform, '其他')}
+                    </Option>
+                  ))}
+                </OptGroup>
+              )}
               {!isEmpty(sshAuthList) && (
                 <OptGroup label={AUTH_TYPE_TXT.SSH}>
                   {sshAuthList.map((auth: any) => (
