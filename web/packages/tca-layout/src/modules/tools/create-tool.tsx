@@ -93,7 +93,7 @@ const CreateToolModal = (props: CreateToolModalProps) => {
 
     createTool(orgId, newFormData).then((res) => {
       message.success('创建成功');
-      history.push(`${getToolsRouter(orgId)}/${res.id}/rules`);
+      history.push(`${getToolsRouter(orgId)}/${res.id}/tool-libs`);
     });
   };
 
@@ -138,7 +138,6 @@ const CreateToolModal = (props: CreateToolModalProps) => {
         <Form.Item
           label="工具仓库地址"
           name="scm_url"
-          required
         >
           <Input.Group compact>
             <Form.Item name='scm_type' noStyle>
@@ -153,16 +152,13 @@ const CreateToolModal = (props: CreateToolModalProps) => {
             <Form.Item
               name='scm_url'
               noStyle
-              rules={[
-                { required: true, message: '请输入工具仓库地址' },
-              ]}
             >
               <Input style={{ width: 357 }} />
             </Form.Item>
           </Input.Group>
         </Form.Item>
-        <Form.Item label="凭证" required>
-          <Form.Item noStyle name="scm_auth_id" rules={[{ required: true, message: '请选择仓库凭证' }]}>
+        <Form.Item label="凭证">
+          <Form.Item noStyle name="scm_auth_id">
             <Select style={{ width: 360 }}>
               {!isEmpty(oauthAuthList) && (
                 <OptGroup label={AUTH_TYPE_TXT.OAUTH}>
