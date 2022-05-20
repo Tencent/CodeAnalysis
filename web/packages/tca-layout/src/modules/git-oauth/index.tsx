@@ -27,13 +27,9 @@ const GitOAuth = () => {
   const { scm_platform_name }: any = useParams();
 
   useEffect(() => {
-    console.log(scm_platform_name);
-    console.log(query);
-    getOAuthCallBack(scm_platform_name,query).then((response)=>{
-      console.log(response);
+    getOAuthCallBack(scm_platform_name,query).then(()=>{
       message.success('授权成功');
-    }).catch(e=>{
-      console.log(e);
+    }).catch(()=>{
       message.error('授权失败');
     }).finally(()=>{
       history.push('/user/auth');

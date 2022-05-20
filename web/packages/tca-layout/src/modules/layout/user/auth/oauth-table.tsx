@@ -7,7 +7,7 @@
 import React from 'react';
 import { Table, Button, Tag } from 'coding-oa-uikit';
 import Refresh from 'coding-oa-uikit/lib/icon/Refresh';
-import Stop from 'coding-oa-uikit/lib/icon/Stop';
+import Close2 from 'coding-oa-uikit/lib/icon/Close2';
 import Link from 'coding-oa-uikit/lib/icon/Link';
 import { get } from 'lodash';
 
@@ -52,7 +52,7 @@ const OAuthTable = (props: IProps) => {
       render: (oauth_status: boolean, oauth_info:any) => (
         oauth_status === true ? <>
         <Button type="text" icon={<Refresh/>} onClick={()=>onUpdate(oauth_info)}/>
-        <Button type="text" icon={<Stop />} onClick={()=>onDel(oauth_info)}/>
+        <Button type="text" icon={<Close2 />} onClick={()=>onDel(oauth_info)}/>
         </> : <>
         <Button type="text" icon={<Link />} onClick={()=>onOAuth(oauth_info)}/>
         </>

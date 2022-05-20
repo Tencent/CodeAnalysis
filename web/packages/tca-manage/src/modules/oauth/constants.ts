@@ -38,23 +38,23 @@ export const SCM_PLATFORM_OPTIONS = [{
 
 export const DEFAULT_SCM_PLATFORM = [
   {
-		scm_platform : 2,			
-		scm_platform_name : "tgitsaas",
-		scm_platform_desc : '基于Git的企业级协作开发解决方案，腾讯研发关键系统',
-	},
+    scm_platform : 2,
+    scm_platform_name : "tgitsaas",
+    scm_platform_desc : '基于Git的企业级协作开发解决方案，腾讯研发关键系统',
+  },
   {
-		scm_platform : 4,			
-		scm_platform_name : "github",
-		scm_platform_desc : '通过Git进行版本控制的软件源代码托管服务平台',
-	},
+    scm_platform : 4,
+    scm_platform_name : "github",
+    scm_platform_desc : '通过Git进行版本控制的软件源代码托管服务平台',
+  },
   {
-		scm_platform : 5,		
-    scm_platform_name : "gitee",	
+    scm_platform : 5,
+    scm_platform_name : "gitee",  
     scm_platform_desc : '开源中国于2013年推出的基于Git的代码托管和协作开发平台',
-	},
+  },
   {
-		scm_platform : 6,
+    scm_platform : 6,
     scm_platform_name : "gitlab",
     scm_platform_desc : "由GitLab Inc.开发，一款基于Git的完全集成的软件开发平台",
-	},
+  },
 ];

@@ -198,6 +198,7 @@ const Auth = () => {
         visible={visibleCancel}
         onCancel={() => setVisibleCancel(false)}
         onOk={() => onOAuthDel(curOAuthData)}
+        okText={t('确认取消')}
         content={
           <div>Git Oauth授权能够免密执行腾讯代码分析代码分析，提供更快的分析速度，确定取消Git OAuth授权?</div>
         }

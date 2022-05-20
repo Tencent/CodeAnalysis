@@ -39,7 +39,7 @@ const BaseInfo = ({ orgSid, toolId, data, editable, getDetail }: BaseInfoProps) 
   const [sshAuthList, setSshAuthList] = useState<any>([]);
   const [httpAuthList, setHttpAuthList] = useState<any>([]);
   const [authLoading, setAuthLoading] = useState(false);
-  const [OAuthList, setOAuthList] = useState<any>([]);
+  const [oauthAuthList, setOauthAuthList] = useState<any>([]);
   const statusRef = useRef();
 
   useEffect(() => getAuth(), []);
@@ -70,12 +70,12 @@ const BaseInfo = ({ orgSid, toolId, data, editable, getDetail }: BaseInfoProps) 
       if (
         curAuth.scm_account?.id
         && curAuth.auth_type === AUTH_TYPE.OAUTH
-        && !find(OAuthList, { id: curAuth.scm_account?.id })
+        && !find(oauthAuthList, { id: curAuth.scm_account?.id })
       ) {
-        setOAuthList([{
+        setOauthAuthList([{
           ...curAuth.scm_oauth,
           authId: `${curAuth.auth_type}#${curAuth.scm_oauth?.id}`,
-        }, ...OAuthList]);
+        }, ...oauthAuthList]);
       }
     }
   }, [authLoading, data.id]);
@@ -102,7 +102,7 @@ const BaseInfo = ({ orgSid, toolId, data, editable, getDetail }: BaseInfoProps) 
           ...item,
           authId: `${AUTH_TYPE.HTTP}#${item.id}`,
         })));
-        setOAuthList(result[2].map((item:any)=>({ 
+        setOauthAuthList(result[2].map((item:any)=>({ 
           ...item, 
           authId: `${AUTH_TYPE.OAUTH}#${item.id}`,
         })));
@@ -304,10 +304,10 @@ const BaseInfo = ({ orgSid, toolId, data, editable, getDetail }: BaseInfoProps) 
                 getComponent(
                   <>
                     <Form.Item noStyle name="scm_auth_id" rules={[{ required: true, message: '请选择仓库凭证' }]}>
-                      <Select style={{ width: 480 }}>
-                        {!isEmpty(OAuthList) && (
+                      <Select style={{ width: 380 }}>
+                        {!isEmpty(oauthAuthList) && (
                           <OptGroup label={AUTH_TYPE_TXT.OAUTH}>
-                            {OAuthList.map((auth: any) => (
+                            {oauthAuthList.map((auth: any) => (
                               <Option
                                 key={auth.authId}
                                 value={auth.authId}

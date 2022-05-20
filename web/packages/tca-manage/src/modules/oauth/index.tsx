@@ -28,13 +28,10 @@ const OAuth = () => {
    */
   const getListData = () => {
     getAllSettings().then((response) => {
-      console.log(response.results);
       setListData(unionBy(response.results,DEFAULT_SCM_PLATFORM,'scm_platform'));
-    }).catch((e)=>{
-      console.log(e);
+    }).catch(()=>{
       message.error('获取配置列表失败');
     });
-    console.log('update data');
   };
 
 
@@ -47,7 +44,6 @@ const OAuth = () => {
    * @param platform_info 选中平台的配置信息
    */
   const onEditStart = ( platform_info:any, create:boolean ) => {
-    console.log('edit start');
     setVisibleEdit(true);
     setPlatformInfo(platform_info);
     setCreate(create);
@@ -115,7 +111,7 @@ const OAuth = () => {
       <Row className={s.header} align="middle">
         <Col flex="auto">
           <Tabs defaultActiveKey="apps" size="large">
-            <TabPane tab={t('OAuth管理列表')} key="apps" />
+            <TabPane tab={t('OAuth配置列表')} key="apps" />
           </Tabs>
         </Col>
       </Row>
