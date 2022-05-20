@@ -35,11 +35,7 @@ class Collie(CodeLintModel):
         cmds = Tool().get_cmd(["-v"])
         if settings.PLATFORMS[sys.platform] == "mac":
             return []
-        elif SubProcController(
-                cmds,             
-                # stdout_line_callback=print,
-                # stderr_line_callback=print,
-            ).wait() != 0:
+        elif SubProcController(cmds).wait() != 0:
             return []
         return ["analyze"]
 
