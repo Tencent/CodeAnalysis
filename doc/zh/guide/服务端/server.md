@@ -130,3 +130,4 @@ File存储引擎配置
 - SCMPROXY_HOST：ScmProxy服务的HOST，默认为``0.0.0.0``
 - SCMPROXY_PORT：ScmProxy服务监听端口，默认为``8009``
 - SCMPROXY_SENTRY_URL：ScmProxy服务异常日志上报至sentry配置
+- SCMPROXY: 通过本环境变量去指定其他服务调用ScmProxy服务的地址，默认值为``127.0.0.1:8009``
