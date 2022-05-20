@@ -9,6 +9,7 @@ import Users from '@src/modules/users';
 import Jobs from '@src/modules/jobs';
 import Nodes from '@src/modules/nodes';
 import NodeProcess from '@src/modules/nodes/process';
+import OAuth from './modules/oauth';
 const Tools = lazy(() => import('@src/modules/tools'));
 
 const Root = () => {
@@ -29,6 +30,7 @@ const Root = () => {
           <Route path="/manage/nodes/:nodeId/process" component={NodeProcess} />
           <Route path="/manage/nodes" component={Nodes} />
           <Route path="/manage/tools" component={Tools} />
+          <Route path="/manage/oauth" component={OAuth} />
           <Redirect from="/manage" to="/manage/users" />
         </Switch>
       </Suspense>

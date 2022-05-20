@@ -13,6 +13,7 @@ import { MenuItem } from '@src/components/menu-layout';
 import Group from 'coding-oa-uikit/lib/icon/Group';
 import Scan from 'coding-oa-uikit/lib/icon/Scan';
 import Sitemap from 'coding-oa-uikit/lib/icon/Sitemap';
+import Key from 'coding-oa-uikit/lib/icon/Key';
 import Tiles from 'coding-oa-uikit/lib/icon/Tiles';
 
 const MENUS: MenuItem[] = [
@@ -39,6 +40,12 @@ const MENUS: MenuItem[] = [
     title: t('工具管理'),
     link: '/manage/tools',
     key: 'tools',
+  },
+  {
+    icon: <Key />,
+    title: t('OAuth管理'),
+    link: '/manage/oauth',
+    key: 'oauth',
   },
 ];
 
