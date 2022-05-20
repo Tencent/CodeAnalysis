@@ -59,18 +59,20 @@ const UpdateLibSchemeModal = (props: UpdateLibSchemeModalProps) => {
 
   }, [visible])
 
-  useEffect(() => {
+  useEffect(() => getLibs(), [orgSid]);
+
+  const getLibs = (params = {}) => {
     getToolLibs(orgSid, {
+      ...params,
       offset: 0,
       limit: 100
     }).then((res) => {
       setToolLibs(res.results);
     })
-  }, [orgSid])
+  }
 
   /**
   * 设置工具依赖表单初始值
-  * @param schemeId 依赖方案 ID
   */
   const initFields = () => {
     const arrs = initData?.toollib_maps?.map((item: any, index: number) => ({
@@ -162,22 +164,24 @@ const UpdateLibSchemeModal = (props: UpdateLibSchemeModalProps) => {
     >
       <Form {...layout} form={form}>
         <Form.Item
+          label="判断条件"
+          name="condition"
+        >
+          <TextArea rows={3} placeholder='仅支持=条件' />
+        </Form.Item>
+        <Form.Item
           label="适用系统"
           name="scheme_os"
         >
-          <Select mode='multiple'>
+          <Select mode='multiple' onChange={(values: Array<string>) => {
+            getLibs({ os: values?.join(',') });
+          }}>
             {
               Object.entries(LIB_ENV).map(([key, text]) => (
                 <Option key={key} value={key}>{text}</Option>
               ))
             }
           </Select>
-        </Form.Item>
-        <Form.Item
-          label="判断条件"
-          name="condition"
-        >
-          <TextArea rows={3} placeholder='仅支持=条件' />
         </Form.Item>
         <Form.Item label='工具依赖' {...layout} required>
           {
