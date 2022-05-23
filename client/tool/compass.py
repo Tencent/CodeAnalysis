@@ -22,12 +22,11 @@ logger = LogPrinter
 
 
 class Compass(CodeLintModel):
-
     def __init__(self, params):
         CodeLintModel.__init__(self, params)
         self.tool_home = os.environ.get("COMPASS_HOME")
         self.tool_name = self.__class__.__name__
-        
+
     def analyze(self, params):
         source_dir = params["source_dir"]
         self.relpos = len(source_dir) + 1
@@ -43,20 +42,20 @@ class Compass(CodeLintModel):
             cwd=work_dir,
             stdout_line_callback=self.print_log,
             stderr_line_callback=self.print_log,
-            env = EnvSet().get_origin_env()
+            env=EnvSet().get_origin_env(),
         )
         sp.wait()
         result_path = os.path.join(work_dir, "result.json")
         if not os.path.exists(result_path):
             logger.info("没有生成结果文件")
             raise AnalyzeTaskError("工具执行错误")
-        with open(result_path, 'r') as result_reader:
+        with open(result_path, "r") as result_reader:
             issues = json.load(result_reader)
             if not issues:
                 return []
             issues = self._format_issue(issues)
         return issues
-    
+
     def check_tool_usable(self, tool_params):
         if settings.PLATFORMS[sys.platform] == "mac":
             return []
@@ -71,7 +70,7 @@ class Compass(CodeLintModel):
                     "line": i["line"],
                     "msg": i["msg"],
                     "rule": i["rule"],
-                    "path": i["path"][self.relpos:],
+                    "path": i["path"][self.relpos :],
                     "refs": [],
                 }
             )
@@ -82,6 +81,7 @@ class Compass(CodeLintModel):
         if settings.PLATFORMS[sys.platform] == "windows":
             tool_path = f"{tool_path}.exe"
         return __lu__().format_cmd(tool_path, args)
+
 
 tool = Compass
 
