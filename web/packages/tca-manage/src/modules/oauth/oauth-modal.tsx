@@ -84,7 +84,7 @@ const OAuthModal = ({ scminfo, visible, onCancel, onOk }: IProps) => {
             <>
             {t('回调地址')}
             <Tooltip
-              title="请填入部署机IP"
+              title={<p>请填入当前TCA平台配置的域名或IP地址<br/>（如当前页面非80端口，需要显式指定端口号）</p>}
               placement="top"
               getPopupContainer={() => document.body	}
             >
