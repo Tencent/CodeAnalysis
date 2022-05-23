@@ -11,7 +11,7 @@ import EditIcon from 'coding-oa-uikit/lib/icon/Edit';
 
 import { formatDateTime } from '@src/utils';
 import { updateTool, updateToolStatus } from '@src/services/tools';
-import { gScmAccounts, getSSHInfo, getALLOAuthInfos } from '@src/services/user';
+import { gScmAccounts, getSSHInfo, getOAuthInfo } from '@src/services/user';
 import { AUTH_TYPE, AUTH_TYPE_TXT, AUTH_DICT, REPO_TYPE_OPTIONS, TOOL_STATUS, STATUSENUM, SCM_PLATFORM, AUTH_ID_PATH } from '../constants';
 
 import style from './style.scss';
@@ -88,7 +88,7 @@ const BaseInfo = ({ orgSid, data, editable, getDetail }: BaseInfoProps) => {
     Promise.all([
       getSSHInfo().then(r => r.results || []),
       gScmAccounts().then(r => r.results || []),
-      getALLOAuthInfos().then(r => r.results || []),
+      getOAuthInfo().then(r => r.results || []),
     ])
       .then((result) => {
         // HTTP 和 SSH ID可能重复

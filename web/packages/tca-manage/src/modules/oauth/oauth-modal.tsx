@@ -60,7 +60,11 @@ const OAuthModal = ({ scminfo, visible, onCancel, onOk }: IProps) => {
       onCancel={onCancel}
       afterClose={form.resetFields}
     >
-      <Form layout={'vertical'} form={form} initialValues={appInfo || {}}>
+      <Form 
+        layout={'vertical'} 
+        form={form} 
+        initialValues={appInfo || {}}
+      >
         <Form.Item name="scm_platform" label="平台类型">
           <Select options={SCM_PLATFORM_OPTIONS} disabled/>
         </Form.Item>
