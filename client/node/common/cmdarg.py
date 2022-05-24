@@ -84,4 +84,4 @@ class CmdArgParser(object):
         输出帮助文档
         :return:
         """
-        print("请输入-h/--help参数，查看帮助文档。")
+        logger.info("请输入-h/--help参数，查看帮助文档。")
