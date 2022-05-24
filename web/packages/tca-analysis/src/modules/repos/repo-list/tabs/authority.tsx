@@ -18,7 +18,7 @@ import { t } from '@src/i18n/i18next';
 import { SCM_PLATFORM } from '@src/common/constants';
 import { AUTH_TYPE, AUTH_TYPE_TXT } from '@src/modules/repos/constants';
 import { getPCAuthRouter } from '@src/modules/repos/routes';
-import { getSSHInfo, getScmAccounts, putRepoAuth, getALLOAuthInfos } from '@src/services/repos';
+import { getSSHInfo, getScmAccounts, putRepoAuth, getOAuthInfo } from '@src/services/repos';
 
 const { Option, OptGroup } = Select;
 
@@ -91,7 +91,7 @@ const Authority = ({ curRepo, orgSid, teamName, repoId }: IProps) => {
     Promise.all([
       getSSHInfo().then(r => r.results || []),
       getScmAccounts().then(r => r.results || []),
-      getALLOAuthInfos().then(r => r.results || []),
+      getOAuthInfo().then(r => r.results || []),
     ]).then((result) => {
       setSshAuthList(result[0]);
       setHttpAuthList(result[1]);

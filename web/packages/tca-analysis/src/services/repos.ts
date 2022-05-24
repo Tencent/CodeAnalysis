@@ -26,7 +26,7 @@ export const getSSHInfo = () => get(`${MAIN_SERVER_API}/authen/scmsshinfos/`, { 
  /**
  * 查询所有OAuth授权状况
  */
-  export const getALLOAuthInfos = () => get(`${MAIN_SERVER_API}/authen/scmauthinfos/`);
+  export const getOAuthInfo = () => get(`${MAIN_SERVER_API}/authen/scmauthinfos/`);
 
 /**
  * 登记代码库
