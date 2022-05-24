@@ -61,6 +61,16 @@ const Auth = () => {
   }, [reload]);
 
   /**
+     * 监听OAuth事件
+     */
+  useEffect(() => {
+    window.addEventListener("message", receiveOAuthStatus, false);
+    return () => {
+      window.removeEventListener('message',receiveOAuthStatus);
+    };
+  }, []);
+
+  /**
      * 创建/更新凭证信息
      * @param authinfo 凭证信息
      */
@@ -85,13 +95,41 @@ const Auth = () => {
   };
 
   /**
+     * 接收OAuth授权结果
+     */
+  const receiveOAuthStatus = (event: any) => {
+    const curLocation = window.location;
+    if (event.origin === curLocation.origin) {
+      if(event.data === 'oauth succeeded') {
+        message.success('授权成功');
+        setReload(!reload);
+      } else if (event.data === 'oauth failed') {
+        message.error('授权失败');
+      }
+    }
+  }
+
+  /**
+     * 计算OAuth窗口居中弹出位置
+     */
+  const getWindowSize = () => {
+    const width = 800;
+    const height = 800;
+    const top = window.innerHeight > height ? (window.innerHeight-height)/2 : 0;
+    const left = window.innerWidth > width ? (window.innerWidth -width)/2 : 0;
+    return `top=${top},left=${left},width=${width},height=${height}`;
+  }
+
+  /**
      * 首次授权OAuth
      * @param oauthInfo 选中OAuth平台信息
      */
   const onOAuthStart = (oauthInfo: any) => {
+    var winRef = window.open('',"oauthWindow",getWindowSize());
     getOAuthStatus({scm_platform_name: oauthInfo?.scm_platform_name}).then((res)=>{
-      window.location.assign(res?.git_auth_url);
+      winRef.location = res?.git_auth_url;
     }).catch(()=>{
+      winRef.close();
       message.error('平台暂未配置OAuth应用，无法去授权，请联系管理员。');
     });
   };
@@ -101,9 +139,11 @@ const Auth = () => {
    * @param oauthInfo 选中OAuth平台信息
    */
   const onOAuthUpdate = (oauthInfo: any) => {
+    var winRef = window.open('',"oauthWindow",getWindowSize());
     getOAuthStatus({scm_platform_name: oauthInfo?.scm_platform_name}).then((res)=>{
-      window.location.assign(res?.git_auth_url);
+      winRef.location = res?.git_auth_url;
     }).catch(()=>{
+      winRef.close();
       message.error(t('更新授权失败'));
     });
   };

@@ -16,7 +16,7 @@ import RefreshIcon from 'coding-oa-uikit/lib/icon/Refresh';
 import { useStateStore, useDispatchStore } from '@src/context/store';
 import { SCM_PLATFORM } from '@src/common/constants';
 import { SET_CUR_REPO, SET_REPOS } from '@src/context/constant';
-import { getScmAccounts, postRepo, getSSHInfo, getALLOAuthInfos } from '@src/services/repos';
+import { getScmAccounts, postRepo, getSSHInfo, getOAuthInfo } from '@src/services/repos';
 import { t } from '@src/i18n/i18next';
 import { getPCAuthRouter, getRepoRouter } from '@src/modules/repos/routes';
 import { AUTH_TYPE, AUTH_TYPE_TXT, REPO_TYPE, REPO_TYPE_OPTIONS } from './constants';
@@ -69,7 +69,7 @@ const Create = () => {
     Promise.all([
       getSSHInfo().then(r => r.results || []),
       getScmAccounts().then(r => r.results || []),
-      getALLOAuthInfos().then(r => r.results || []),
+      getOAuthInfo().then(r => r.results || []),
     ])
       .then((result) => {
         // HTTP 和 SSH ID可能重复

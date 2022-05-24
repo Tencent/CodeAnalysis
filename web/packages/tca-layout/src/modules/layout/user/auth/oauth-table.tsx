@@ -5,7 +5,7 @@
 // ==============================================================================
 
 import React from 'react';
-import { Table, Button, Tag } from 'coding-oa-uikit';
+import { Table, Button, Tag, Tooltip } from 'coding-oa-uikit';
 import Refresh from 'coding-oa-uikit/lib/icon/Refresh';
 import Close2 from 'coding-oa-uikit/lib/icon/Close2';
 import Link from 'coding-oa-uikit/lib/icon/Link';
@@ -51,10 +51,16 @@ const OAuthTable = (props: IProps) => {
       width: 200,
       render: (oauth_status: boolean, oauth_info:any) => (
         oauth_status === true ? <>
-        <Button type="text" icon={<Refresh/>} onClick={()=>onUpdate(oauth_info)}/>
-        <Button type="text" icon={<Close2 />} onClick={()=>onDel(oauth_info)}/>
+        <Tooltip title="更新授权">
+          <Button type="text" icon={<Refresh/>} onClick={()=>onUpdate(oauth_info)}/>
+        </Tooltip>
+        <Tooltip title="取消授权">
+          <Button type="text" icon={<Close2 />} onClick={()=>onDel(oauth_info)}/>
+        </Tooltip>
         </> : <>
-        <Button type="text" icon={<Link />} onClick={()=>onOAuth(oauth_info)}/>
+        <Tooltip title="去授权">
+          <Button type="text" icon={<Link />} onClick={()=>onOAuth(oauth_info)}/>
+        </Tooltip>
         </>
       ),
     },

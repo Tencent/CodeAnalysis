@@ -173,4 +173,4 @@ export const getOAuthCallBack = (scm_platform_name: string, param: any = {}) => 
  /**
  * 查询所有OAuth授权状况
  */
-  export const getALLOAuthInfos = () => get(`${MAIN_SERVER_API}/authen/scmauthinfos/`);
+  export const getOAuthInfo = () => get(`${MAIN_SERVER_API}/authen/scmauthinfos/`);

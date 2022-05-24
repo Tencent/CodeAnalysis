@@ -11,7 +11,7 @@ import RefreshIcon from 'coding-oa-uikit/lib/icon/Refresh';
 import { get } from 'lodash';
 
 import { getToolsRouter } from '@src/utils/getRoutePath';
-import { gScmAccounts, getSSHInfo, getALLOAuthInfos } from '@src/services/user';
+import { gScmAccounts, getSSHInfo, getOAuthInfo } from '@src/services/user';
 import { createTool } from '@src/services/tools';
 import { AUTH_TYPE, AUTH_TYPE_TXT, REPO_TYPE_OPTIONS, REPO_TYPE, SCM_PLATFORM } from './constants';
 
@@ -50,7 +50,7 @@ const CreateToolModal = (props: CreateToolModalProps) => {
     Promise.all([
       getSSHInfo().then(r => r.results || []),
       gScmAccounts().then(r => r.results || []),
-      getALLOAuthInfos().then(r => r.results || []),
+      getOAuthInfo().then(r => r.results || []),
     ])
       .then((result) => {
         // HTTP 和 SSH ID可能重复

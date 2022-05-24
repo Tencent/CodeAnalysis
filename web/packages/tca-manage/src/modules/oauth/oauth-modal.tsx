@@ -60,7 +60,11 @@ const OAuthModal = ({ scminfo, visible, onCancel, onOk }: IProps) => {
       onCancel={onCancel}
       afterClose={form.resetFields}
     >
-      <Form layout={'vertical'} form={form} initialValues={appInfo || {}}>
+      <Form 
+        layout={'vertical'} 
+        form={form} 
+        initialValues={appInfo || {}}
+      >
         <Form.Item name="scm_platform" label="平台类型">
           <Select options={SCM_PLATFORM_OPTIONS} disabled/>
         </Form.Item>
@@ -84,7 +88,7 @@ const OAuthModal = ({ scminfo, visible, onCancel, onOk }: IProps) => {
             <>
             {t('回调地址')}
             <Tooltip
-              title="请填入部署机IP"
+              title={<p>请填入当前TCA平台配置的域名或IP地址<br/>（如当前页面非80端口，需要显式指定端口号）</p>}
               placement="top"
               getPopupContainer={() => document.body	}
             >

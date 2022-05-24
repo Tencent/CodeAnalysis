@@ -5,7 +5,7 @@
 // ==============================================================================
 
 import React from 'react';
-import { Table, Button } from 'coding-oa-uikit';
+import { Table, Button, Tooltip } from 'coding-oa-uikit';
 import Edit from 'coding-oa-uikit/lib/icon/Edit';
 import Trash from 'coding-oa-uikit/lib/icon/Trash';
 import { get } from 'lodash';
@@ -54,12 +54,16 @@ const AuthTable = (props: IProps) => {
       width: 200,
       render: (_: string, authinfo: any) => (
         <>
-          <Button
-            type="text"
-            icon={<Edit />}
-            onClick={() => onEdit?.(authinfo)}
-          />
-          <Button type="text" icon={<Trash />} onClick={() => onDel?.(authinfo)} />
+          <Tooltip title="编辑凭证">
+            <Button
+              type="text"
+              icon={<Edit />}
+              onClick={() => onEdit?.(authinfo)}
+            />
+          </Tooltip>
+          <Tooltip title="删除凭证">
+            <Button type="text" icon={<Trash />} onClick={() => onDel?.(authinfo)} />
+          </Tooltip>
         </>
       ),
     },
