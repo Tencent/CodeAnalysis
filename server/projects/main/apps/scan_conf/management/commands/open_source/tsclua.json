@@ -1,0 +1,1094 @@
+[
+    {
+        "name": "tscan_lua",
+        "display_name": "Tscan-lua",
+        "description": "腾讯开源静态检查工具tscan，原项目开源地址https://github.com/Tencent/TscanCode.git",
+        "license": "GPL",
+        "libscheme_set": [],
+        "task_processes": [
+            "analyze",
+            "datahandle"
+        ],
+        "scan_app": "codelint",
+        "scm_url": "",
+        "run_cmd": "",
+        "envs": null,
+        "build_flag": false,
+        "checkrule_set": [
+            {
+              "real_name": "lua_AssignOrTrue",
+              "display_name": "lua_AssignOrTrue",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": null,
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "lua"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "local a = b or true;不管b是true还是false,a总是为true",
+              "disable": false
+            },
+            {
+              "real_name": "lua_RenameLocalVariable",
+              "display_name": "lua_RenameLocalVariable",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": null,
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "lua"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "重复定义了某个local var;这是不推荐的写法，可能出现了笔误",
+              "disable": false
+            },
+            {
+              "real_name": "lua_RenameUnusedLocalVariable",
+              "display_name": "lua_RenameUnusedLocalVariable",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": null,
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "lua"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "一个变量还没有使用过，就被重新定义了，有一行可能是无用的或者出现笔误",
+              "disable": false
+            },
+            {
+              "real_name": "lua_SingleFileGlobal",
+              "display_name": "lua_SingleFileGlobal",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": null,
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "lua"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "这条规则不建议使用",
+              "disable": false
+            },
+            {
+              "real_name": "lua_SingleScopeGlobal",
+              "display_name": "lua_SingleScopeGlobal",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": null,
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "lua"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "只在一个作用域使用的变量，建议使用local",
+              "disable": false
+            },
+            {
+              "real_name": "lua_VarAssginByDifferentTypes",
+              "display_name": "lua_VarAssginByDifferentTypes",
+              "severity": "info",
+              "category": "usability",
+              "rule_title": null,
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "lua"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "变量同时被赋值多种类型，这是不推荐的写法",
+              "disable": false
+            },
+            {
+              "real_name": "lua_RenameGlobalVariable",
+              "display_name": "lua_RenameGlobalVariable",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": null,
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "lua"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "这条规则已经废弃，不能使用",
+              "disable": false
+            },
+            {
+              "real_name": "lua_VarTypeMixUsage",
+              "display_name": "lua_VarTypeMixUsage",
+              "severity": "error",
+              "category": "usability",
+              "rule_title": null,
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "lua"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "一个变量被当做不同类型的变量使用，这里很可能出现了错误",
+              "disable": false
+            },
+            {
+              "real_name": "lua_UnusedFunctionParam",
+              "display_name": "lua_UnusedFunctionParam",
+              "severity": "info",
+              "category": "usability",
+              "rule_title": null,
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "lua"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "函数的参数定义了却没有使用，有可能出现笔误",
+              "disable": false
+            },
+            {
+              "real_name": "lua_UnusedForVariable",
+              "display_name": "lua_UnusedForVariable",
+              "severity": "info",
+              "category": "usability",
+              "rule_title": null,
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "lua"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "for循环变量定义了却没有使用，有可能出现笔误",
+              "disable": false
+            },
+            {
+              "real_name": "lua_UnusedLocalVar",
+              "display_name": "lua_UnusedLocalVar",
+              "severity": "info",
+              "category": "usability",
+              "rule_title": null,
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "lua"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "局部变量定义了却没有使用，有可能出现笔误",
+              "disable": false
+            },
+            {
+              "real_name": "lua_UseVarIfNil",
+              "display_name": "lua_UseVarIfNil",
+              "severity": "fatal",
+              "category": "usability",
+              "rule_title": null,
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "lua"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "检测一个变量值为nil仍然使用，会导致程序异常中断",
+              "disable": false
+            },
+            {
+              "real_name": "lua_UseVarAfterCheck",
+              "display_name": "lua_UseVarAfterCheck",
+              "severity": "fatal",
+              "category": "usability",
+              "rule_title": null,
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "lua"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "前面代码判定变量是否为nil，后续代码没有检查直接使用",
+              "disable": false
+            },
+            {
+              "real_name": "lua_UseVarBeforeCheck",
+              "display_name": "lua_UseVarBeforeCheck",
+              "severity": "fatal",
+              "category": "usability",
+              "rule_title": null,
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "lua"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "后面的代码判定是否为nil，前面存在代码没有检查",
+              "disable": false
+            },
+            {
+              "real_name": "lua_RecursiveFunc",
+              "display_name": "lua_RecursiveFunc",
+              "severity": "fatal",
+              "category": "usability",
+              "rule_title": null,
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "lua"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "出现了简单的递归调用。lua没有函数重载的概念，使用c++、c#转换的代码可能出现这种情况",
+              "disable": false
+            },
+            {
+              "real_name": "lua_ArgumentMismatch",
+              "display_name": "lua_ArgumentMismatch",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": null,
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "lua"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "调用函数时，传递的参数比函数要求的少",
+              "disable": false
+            },
+            {
+              "real_name": "lua_ColonDotMix",
+              "display_name": "lua_ColonDotMix",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": null,
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "lua"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "函数定义时使用冒号/点,但是调用时使用的是点/冒号, 这可能导致函数参数错位",
+              "disable": false
+            },
+            {
+              "real_name": "lua_VarSpellWrongError",
+              "display_name": "lua_VarSpellWrongError",
+              "severity": "fatal",
+              "category": "usability",
+              "rule_title": null,
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "lua"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "lua变量可能的手误错误，这类错误后果严重并且不易排查",
+              "disable": false
+            },
+            {
+              "real_name": "lua_KeywordSpellWrongError",
+              "display_name": "lua_KeywordSpellWrongError",
+              "severity": "fatal",
+              "category": "usability",
+              "rule_title": null,
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "lua"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "lua关键字可能的手误错误，这类错误后果严重并且不易排查",
+              "disable": false
+            },
+            {
+              "real_name": "lua_VarDeclaredInSubScope",
+              "display_name": "lua_VarDeclaredInSubScope",
+              "severity": "fatal",
+              "category": "usability",
+              "rule_title": null,
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "lua"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "lua变量在作用域外使用，可能导致不可预期的错误",
+              "disable": false
+            },
+            {
+              "real_name": "lua_PreciseComparison",
+              "display_name": "lua_PreciseComparison",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": null,
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "lua"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "因为浮点数的精度问题，浮点数用作==,!=运算可能得到预期之外的结果",
+              "disable": false
+            },
+            {
+              "real_name": "lua_moduloAlwaysTrueFalse",
+              "display_name": "lua_moduloAlwaysTrueFalse",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": null,
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "lua"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "比如if(a % 10 == 10)这种场景，a对10取模的最大值只能是9",
+              "disable": false
+            },
+            {
+              "real_name": "lua_selfAssignment",
+              "display_name": "lua_selfAssignment",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": null,
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "lua"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "变量给自身赋值是无意义的",
+              "disable": false
+            },
+            {
+              "real_name": "lua_conditionAlwaysTrueFalse",
+              "display_name": "lua_conditionAlwaysTrueFalse",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": null,
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "lua"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "错误的逻辑运算导致结果总是真或者假",
+              "disable": false
+            },
+            {
+              "real_name": "lua_redundantCondition",
+              "display_name": "lua_redundantCondition",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": null,
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "lua"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "条件表达式重复，要么条件是无用的，要么出现了代码错误",
+              "disable": false
+            },
+            {
+              "real_name": "lua_duplicateIf",
+              "display_name": "lua_duplicateIf",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": null,
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "lua"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "if判断中使用了相同的条件, 要么条件是冗余的，要么出现了代码错误",
+              "disable": false
+            },
+            {
+              "real_name": "lua_VarNilDefect",
+              "display_name": "lua_VarNilDefect",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": null,
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "lua"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "if表达式判空缺陷,通常是or和and写反了,或者逻辑存在隐患",
+              "disable": false
+            },
+            {
+              "real_name": "lua_ZeroDivision",
+              "display_name": "lua_ZeroDivision",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": null,
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "lua"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "使用除0结果的变量进行算术运算没有意义，可能存在风险",
+              "disable": false
+            },
+            {
+              "real_name": "lua_ZeroCfgDivision",
+              "display_name": "lua_ZeroCfgDivision",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": null,
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "lua"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "使用除0变量来自于外部配置，需要添加对应非0保护，可能存在风险",
+              "disable": false
+            },
+            {
+              "real_name": "lua_FormatArgMismatch",
+              "display_name": "lua_FormatArgMismatch",
+              "severity": "fatal",
+              "category": "usability",
+              "rule_title": null,
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "lua"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "string.format函数参数不匹配",
+              "disable": false
+            },
+            {
+              "real_name": "lua_DeadCode",
+              "display_name": "lua_DeadCode",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": null,
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "lua"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "不可执行的代码段",
+              "disable": false
+            },
+            {
+              "real_name": "lua_RedundantArgument",
+              "display_name": "lua_RedundantArgument",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": null,
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "lua"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "调用函数参数时传递了更多额外参数，可能是参数传错了",
+              "disable": false
+            },
+            {
+              "real_name": "lua_RedundantFormatArg",
+              "display_name": "lua_RedundantFormatArg",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": null,
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "lua"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "格式化字符串函数，传递了多余的参数",
+              "disable": false
+            },
+            {
+              "real_name": "lua_ModifyConstVar",
+              "display_name": "lua_ModifyConstVar",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": null,
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "lua"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "修改const变量",
+              "disable": false
+            },
+            {
+              "real_name": "lua_CmpGCObjectAddress",
+              "display_name": "lua_CmpGCObjectAddress",
+              "severity": "error",
+              "category": "usability",
+              "rule_title": null,
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "lua"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "比较GC对象的地址，比较总是不成立。if var == {} 总是不成立。",
+              "disable": false
+            },
+            {
+              "real_name": "lua_LuaFuncMiss",
+              "display_name": "lua_LuaFuncMiss",
+              "severity": "fatal",
+              "category": "usability",
+              "rule_title": null,
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "lua"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "c#使用了未定义的lua函数",
+              "disable": false
+            },
+            {
+              "real_name": "lua_LuaFuncRetNil",
+              "display_name": "lua_LuaFuncRetNil",
+              "severity": "fatal",
+              "category": "usability",
+              "rule_title": null,
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "lua"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "c#使用了可能返回nil的lua函数的返回值",
+              "disable": false
+            },
+            {
+              "real_name": "lua_UseObsolete",
+              "display_name": "lua_UseObsolete",
+              "severity": "info",
+              "category": "usability",
+              "rule_title": null,
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "lua"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "lua使用了Unity或者c#中标记为[Obsolete]的类或者方法",
+              "disable": false
+            },
+            {
+              "real_name": "lua_UninitVar",
+              "display_name": "lua_UninitVar",
+              "severity": "fatal",
+              "category": "usability",
+              "rule_title": null,
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "lua"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "使用了未初始化变量",
+              "disable": false
+            },
+            {
+              "real_name": "lua_UndeclaredVar",
+              "display_name": "lua_UndeclaredVar",
+              "severity": "fatal",
+              "category": "usability",
+              "rule_title": null,
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "lua"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "使用了未声明的变量。出现这种情况很可能出现了拼写错误",
+              "disable": false
+            },
+            {
+              "real_name": "lua_UndeclaredArgument",
+              "display_name": "lua_UndeclaredArgument",
+              "severity": "fatal",
+              "category": "usability",
+              "rule_title": null,
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "lua"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "未声明的变量用作函数参数",
+              "disable": false
+            },
+            {
+              "real_name": "lua_UndeclaredTableValue",
+              "display_name": "lua_UndeclaredTableValue",
+              "severity": "fatal",
+              "category": "usability",
+              "rule_title": null,
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "lua"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "未声明的变量用作table的键值",
+              "disable": false
+            },
+            {
+              "real_name": "lua_UndelaredVarAssign",
+              "display_name": "lua_UndelaredVarAssign",
+              "severity": "fatal",
+              "category": "usability",
+              "rule_title": null,
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "lua"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "未声明的变量用作等号右值",
+              "disable": false
+            },
+            {
+              "real_name": "lua_PossibleUndeclaredVar",
+              "display_name": "lua_PossibleUndeclaredVar",
+              "severity": "info",
+              "category": "usability",
+              "rule_title": null,
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "lua"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "可疑的未声明变量",
+              "disable": false
+            },
+            {
+              "real_name": "lua_PossibleVarUseBeforeDeclare",
+              "display_name": "lua_PossibleVarUseBeforeDeclare",
+              "severity": "info",
+              "category": "usability",
+              "rule_title": null,
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "lua"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "变量先使用后声明。不建议开启",
+              "disable": false
+            },
+            {
+              "real_name": "lua_PossibleAssignUninitVar",
+              "display_name": "lua_PossibleAssignUninitVar",
+              "severity": "info",
+              "category": "usability",
+              "rule_title": null,
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "lua"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "可以的未初始化化变量赋值",
+              "disable": false
+            },
+            {
+              "real_name": "lua_FuncRetNil",
+              "display_name": "lua_FuncRetNil",
+              "severity": "info",
+              "category": "usability",
+              "rule_title": null,
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "lua"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "直接使用可能返回nil函数的返回值",
+              "disable": false
+            },
+            {
+              "real_name": "lua_UninitMacroLikeVar",
+              "display_name": "lua_UninitMacroLikeVar",
+              "severity": "info",
+              "category": "usability",
+              "rule_title": null,
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "lua"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "未初始化的变量。这个变量很可能是c++中的宏",
+              "disable": false
+            },
+            {
+              "real_name": "lua_PossibleUninitVarAsTableKey",
+              "display_name": "lua_PossibleUninitVarAsTableKey",
+              "severity": "info",
+              "category": "usability",
+              "rule_title": null,
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "lua"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "可疑的未声明变量",
+              "disable": false
+            },
+            {
+              "real_name": "lua_UndeclaredSubField",
+              "display_name": "lua_UndeclaredSubField",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": null,
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "lua"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "table的成员并没有在定义时声明,该规则只检查特定的问题",
+              "disable": false
+            },
+            {
+              "real_name": "lua_SpellDicCheckError",
+              "display_name": "lua_SpellDicCheckError",
+              "severity": "fatal",
+              "category": "usability",
+              "rule_title": null,
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "lua"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "未定义的变量存在明显的手误，请确认该变量是否有部分单词拼写错误",
+              "disable": false
+            },
+            {
+              "real_name": "lua_ManglingCheckError",
+              "display_name": "lua_ManglingCheckError",
+              "severity": "fatal",
+              "category": "usability",
+              "rule_title": null,
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "lua"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "未定义的变量和作用域内定义的另一个变量相似，但是使用不同的命名法，可能笔误请确认",
+              "disable": false
+            },
+            {
+              "real_name": "lua_SyntaxError",
+              "display_name": "lua_SyntaxError",
+              "severity": "fatal",
+              "category": "usability",
+              "rule_title": null,
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "lua"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "语法错误。只检测有限的语法错误",
+              "disable": false
+            },
+            {
+              "real_name": "lua_AvoidGlobalVar",
+              "display_name": "lua_AvoidGlobalVar",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": null,
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "lua"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "lua中使用全局变量可能导致不必要的冲突，也会影响性能，建议使用局部变量",
+              "disable": false
+            },
+            {
+              "real_name": "lua_UnusedForIndex",
+              "display_name": "lua_UnusedForIndex",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": null,
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "lua"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "for循环变量在循环体中没有被使用",
+              "disable": false
+            },
+            {
+              "real_name": "lua_5_3Abandoned5_0API",
+              "display_name": "lua_5_3Abandoned5_0API",
+              "severity": "fatal",
+              "category": "usability",
+              "rule_title": null,
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "lua"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "使用lua5.0中存在但是lua5.3中废弃的方法",
+              "disable": false
+            },
+            {
+              "real_name": "lua_MultipleMagicStrInFuncion",
+              "display_name": "lua_MultipleMagicStrInFuncion",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": null,
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "lua"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "同一个函数内，出现多次相同或者不同的magic string",
+              "disable": false
+            },
+            {
+              "real_name": "lua_MagicStrInMultipleFuncion",
+              "display_name": "lua_MagicStrInMultipleFuncion",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": null,
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "lua"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "同一个magic string在不同函数内多次出现",
+              "disable": false
+            },
+            {
+              "real_name": "lua_MultipleMagicNumInFuncion",
+              "display_name": "lua_MultipleMagicNumInFuncion",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": null,
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "lua"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "同一个函数内，出现多次相同或者不同的magic number",
+              "disable": false
+            },
+            {
+              "real_name": "lua_MagicNumInMultipleFuncion",
+              "display_name": "lua_MagicNumInMultipleFuncion",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": null,
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "lua"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "同一个magic number在不同函数内多次出现",
+              "disable": false
+            },
+            {
+              "real_name": "lua_MultiAccessToSameMember",
+              "display_name": "lua_MultiAccessToSameMember",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": null,
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "lua"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "重复访问同一个table成员，建议定义local变量，以减少访问成员变量的次数，从而提高性能",
+              "disable": false
+            },
+            {
+              "real_name": "lua_SpaceNearBinaryOperator",
+              "display_name": "lua_SpaceNearBinaryOperator",
+              "severity": "info",
+              "category": "usability",
+              "rule_title": null,
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "lua"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "二元运算符前后应该有空格，包括赋值运算符，点运算符除外",
+              "disable": false
+            },
+            {
+              "real_name": "lua_SpaceAfterComma",
+              "display_name": "lua_SpaceAfterComma",
+              "severity": "info",
+              "category": "usability",
+              "rule_title": null,
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "lua"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "逗号后面应该有空格，换行tab认为是空格",
+              "disable": false
+            }
+          ],
+        "open_user": true,
+        "virtual_name": "",
+        "show_display_name": true
+    }
+]
