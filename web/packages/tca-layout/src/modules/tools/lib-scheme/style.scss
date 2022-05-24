@@ -6,14 +6,14 @@
     justify-content: space-between;
 
     .lib-tag {
-      color: $cyan-6;
-      border: 1px solid $cyan-6;
+      color: $blue-5;
+      border: 1px solid $blue-5;
       background-color: #fff;
       border-radius: 2px;
 
       &.privite {
-        color: $grey-7;
-        border: 1px solid $grey-7;
+        color: $cyan-6;
+        border: 1px solid $cyan-6;
       }
     }
   }
