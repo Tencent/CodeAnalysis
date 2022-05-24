@@ -125,11 +125,8 @@ class CodePuppy(object):
             '''输出帮助文档'''
             CmdArgParser.print_help()
 
-        # elif args.show_help:
-        #     CmdArgParser.print_help()
-
         else:
-            print('输入命令有误,请输入 -h 命令查看帮助文档!')
+            CmdArgParser.print_help()
 
 
 if __name__ == "__main__":

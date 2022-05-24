@@ -29,7 +29,7 @@ class CmdArgParser(object):
         argparser = argparse.ArgumentParser(add_help=True)
         argparser.add_argument('-v', '--version', action='version',
                                version=f"CodeAnalysis Version {settings.VERSION}({settings.EDITION.name} Beta)",
-                               help="显示当前版本号")
+                               help="显示版本号")
         argparser.add_argument("-l", "--log-file", dest='log_file', help="指定log文件路径")
         subparsers = argparser.add_subparsers(dest='command', help="Commands")
 
@@ -84,24 +84,4 @@ class CmdArgParser(object):
         输出帮助文档
         :return:
         """
-        cnt = 50
-        print("")
-        print("-" * cnt)
-        print("欢迎使用 Tencent Cloud Code Analysis - 腾讯云代码分析")
-        print("-" * cnt)
-        print("")
-
-        print("执行代码分析命令: localscan")
-        print("-" * cnt)
-        print("1. 使用配置文件启动")
-        print("(1) 填写默认配置文件codedog.ini(必填字段：token、source_dir)")
-        print("(2) python3 codepuppy.py localscan")
-        print("2. 纯命令行启动")
-        print("python3 codepuppy.py localscan -t <个人token> -s <本地代码目录>")
-        print("")
-
-        print("查看帮助信息")
-        print("-"*cnt)
-        print("help                  显示当前帮助信息")
-        print("<command> -h,--help   显示子命令帮助信息")
-        print("")
+        print("请输入-h/--help参数，查看帮助文档。")
