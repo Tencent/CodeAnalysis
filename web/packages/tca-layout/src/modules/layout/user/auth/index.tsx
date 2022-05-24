@@ -61,6 +61,16 @@ const Auth = () => {
   }, [reload]);
 
   /**
+     * 监听OAuth事件
+     */
+  useEffect(() => {
+    window.addEventListener("message", receiveOAuthStatus, false);
+    return () => {
+      window.removeEventListener('message',receiveOAuthStatus);
+    };
+  }, []);
+
+  /**
      * 创建/更新凭证信息
      * @param authinfo 凭证信息
      */
@@ -84,19 +94,24 @@ const Auth = () => {
     });
   };
 
-  const receiveMessage = (event: any) => {
+  /**
+     * 接收OAuth授权结果
+     */
+  const receiveOAuthStatus = (event: any) => {
     const curLocation = window.location;
     if (event.origin === curLocation.origin) {
-      if(event.data === 'success') {
+      if(event.data === 'oauth succeeded') {
         message.success('授权成功');
         setReload(!reload);
-      } else {
+      } else if (event.data === 'oauth failed') {
         message.error('授权失败');
       }
-      window.removeEventListener('message',receiveMessage);
     }
   }
 
+  /**
+     * 计算OAuth窗口居中弹出位置
+     */
   const getWindowSize = () => {
     const width = 800;
     const height = 800;
@@ -112,7 +127,6 @@ const Auth = () => {
   const onOAuthStart = (oauthInfo: any) => {
     var winRef = window.open('',"oauthWindow",getWindowSize());
     getOAuthStatus({scm_platform_name: oauthInfo?.scm_platform_name}).then((res)=>{
-      window.addEventListener("message", receiveMessage, false);
       winRef.location = res?.git_auth_url;
     }).catch(()=>{
       winRef.close();
@@ -127,7 +141,6 @@ const Auth = () => {
   const onOAuthUpdate = (oauthInfo: any) => {
     var winRef = window.open('',"oauthWindow",getWindowSize());
     getOAuthStatus({scm_platform_name: oauthInfo?.scm_platform_name}).then((res)=>{
-      window.addEventListener("message", receiveMessage, false);
       winRef.location = res?.git_auth_url;
     }).catch(()=>{
       winRef.close();

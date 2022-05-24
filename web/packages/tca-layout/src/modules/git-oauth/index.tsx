@@ -29,10 +29,10 @@ const GitOAuth = () => {
     const opener = window.opener;
     getOAuthCallBack(scm_platform_name,query).then(()=>{
       message.success('授权成功');
-      opener.postMessage('success',opener.location.origin);
+      opener.postMessage('oauth succeeded',opener.location.origin);
     }).catch(()=>{
       message.error('授权失败');
-      opener.postMessage('failed',opener.location.origin);
+      opener.postMessage('oauth failed',opener.location.origin);
     }).finally(()=>{
       window.close();
     });
