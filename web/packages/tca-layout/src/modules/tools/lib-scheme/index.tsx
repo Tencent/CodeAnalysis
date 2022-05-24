@@ -19,10 +19,11 @@ const { Panel } = Collapse;
 interface LibSchemeProps {
   orgSid: string;
   toolId: number;
+  editable: boolean;
 }
 
 const LibScheme = (props: LibSchemeProps) => {
-  const { orgSid, toolId } = props;
+  const { orgSid, toolId, editable } = props;
   const [activeKeys, setActiveKeys] = useState<Array<number>>([]);
   const [toolSchemes, setToolSchemes] = useState([]);
   const [modalData, setModalData] = useState({
@@ -31,7 +32,6 @@ const LibScheme = (props: LibSchemeProps) => {
   });
 
   useEffect(() => getLibSchemes(), [toolId])
-
 
   const getLibSchemes = () => {
     getToolSchemes(orgSid, toolId).then((res) => {
@@ -66,31 +66,49 @@ const LibScheme = (props: LibSchemeProps) => {
             <Panel
               key={item.id}
               className={style.panel}
-              header={`适用于 ${item.os?.join('、')} 系统`}
-              extra={
+              header={(
                 <>
-                  <Tooltip title='编辑'>
-                    <EditIcon
-                      key='del'
-                      onClick={(e: MouseEvent) => {
-                        e.stopPropagation();
-                        setModalData({
-                          visible: true,
-                          initData: item
-                        })
-                      }}
-                    />
-                  </Tooltip>
-                  <Tooltip title='删除'>
-                    <TrashIcon
-                      className={style.delIcon}
-                      onClick={(e: MouseEvent) => {
-                        e.stopPropagation();
-                        onDelLibScheme(item.id);
-                      }}
-                    />
-                  </Tooltip>
+                  <span>适用于 {item.os?.join('、')} 系统</span>
+                  {
+                    item.default_flag && (
+                      <Tooltip title='所有条件均不满足时使用该方案'>
+                        <Tag className={style.defaultTag}>默认方案</Tag>
+                      </Tooltip>
+                    )
+                  }
                 </>
+              )}
+              extra={
+                editable && (
+                  <>
+                    <Tooltip title='编辑'>
+                      <EditIcon
+                        key='del'
+                        onClick={(e: MouseEvent) => {
+                          e.stopPropagation();
+                          setModalData({
+                            visible: true,
+                            initData: item
+                          })
+                        }}
+                      />
+                    </Tooltip>
+                    {
+                      // 默认依赖不能删除，当默认依赖为最后一个依赖时可以删除
+                      (!item.default_flag || toolSchemes.length === 1) && (
+                        <Tooltip title='删除'>
+                          <TrashIcon
+                            className={style.delIcon}
+                            onClick={(e: MouseEvent) => {
+                              e.stopPropagation();
+                              onDelLibScheme(item.id);
+                            }}
+                          />
+                        </Tooltip>
+                      )
+                    }
+                  </>
+                )
               }
             >
               {
@@ -139,20 +157,25 @@ const LibScheme = (props: LibSchemeProps) => {
           ))
         }
       </Collapse>
-      <Button
-        type="primary"
-        onClick={() => setModalData({
-          visible: true,
-          initData: null
-        })}
-      >
-        添加依赖配置
-      </Button>
+      {
+        editable && (
+          <Button
+            type="primary"
+            onClick={() => setModalData({
+              visible: true,
+              initData: null
+            })}
+          >
+            添加依赖配置
+          </Button>
+        )
+      }
       <UpdateLibSchemeModal
         orgSid={orgSid}
         toolId={toolId}
         visible={modalData.visible}
         initData={modalData.initData}
+        toolSchemes={toolSchemes}
         onClose={() => setModalData({
           visible: false,
           initData: null

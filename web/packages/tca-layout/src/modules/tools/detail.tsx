@@ -31,6 +31,7 @@ const ToolDetail = () => {
   const isAdmin = !!find(admins, { username: userinfo.username });  // 当前用户是否是管理员
   const isCustom = orgSid === detail?.org_detail?.org_sid;   // 当前工具为自定义工具
   const isSuperuser = userinfo.is_superuser;  // 是否为超级管理员
+  const editable = (isCustom && isAdmin) || isSuperuser;  // 编辑权限
 
   useEffect(() => {
     getTeamMember(orgSid).then((res) => {
@@ -93,13 +94,14 @@ const ToolDetail = () => {
         </TabPane>
         <TabPane tab='依赖配置' key='tool-libs'>
           <LibScheme
+            editable={editable}
             orgSid={orgSid}
             toolId={toolId}
           />
         </TabPane>
         <TabPane tab="规则列表" key="rules">
           <Rules
-            editable={(isCustom && isAdmin) || isSuperuser}
+            editable={editable}
             toolDetail={detail}
             orgSid={orgSid}
             toolId={toolId}

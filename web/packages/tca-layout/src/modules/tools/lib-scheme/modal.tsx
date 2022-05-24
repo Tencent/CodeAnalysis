@@ -1,10 +1,10 @@
 /**
  * 新增/编辑弹框
  */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import cn from 'classnames';
 import { isEmpty, compact } from 'lodash';
-import { Modal, Form, Select, Input, Tag, Tooltip, message } from 'coding-oa-uikit';
+import { Modal, Form, Select, Input, Tag, Tooltip, message, Checkbox } from 'coding-oa-uikit';
 import PlusIcon from 'coding-oa-uikit/lib/icon/Plus';
 import TrashIcon from 'coding-oa-uikit/lib/icon/Trash';
 
@@ -29,18 +29,23 @@ interface UpdateLibSchemeModalProps {
   toolId: number;
   visible: boolean;
   initData: any;
+  toolSchemes: any;
   onClose: () => void;
   callback: () => void;
 }
 
 const UpdateLibSchemeModal = (props: UpdateLibSchemeModalProps) => {
-  const { orgSid, toolId, visible, initData, onClose, callback } = props;
+  const { orgSid, toolId, visible, initData, toolSchemes, onClose, callback } = props;
   const [form] = Form.useForm();
   const [toolLibs, setToolLibs] = useState<Array<any>>([]);
   const [fields, setFields] = useState<Array<any>>(defaultFields);
   const [maxFieldKey, setMaxFieldKey] = useState<number>(0);  // tool_libs max key
-
   const isEdit = initData && !isEmpty(initData);
+
+  const isOnlyDefault = useMemo(() => {  // 仅有一个默认方案时，不允许取消操作
+    const defaultScheme = toolSchemes.filter((item: any) => item.default_flag);
+    return defaultScheme.length === 1 && defaultScheme?.[0]?.id === initData?.id;
+  }, [toolSchemes, initData])
 
   useEffect(() => {
 
@@ -249,6 +254,19 @@ const UpdateLibSchemeModal = (props: UpdateLibSchemeModalProps) => {
             })
           }
         </Form.Item>
+        <Form.Item
+          label=""
+          {...layout}
+          name="default_flag"
+          valuePropName="checked"
+        >
+          <Checkbox disabled={isOnlyDefault}>默认方案</Checkbox>
+        </Form.Item>
+        {
+          isOnlyDefault && (
+            <div className={style.defaultDesc}>必须有一个默认方案，可设置其他方案为默认方案来切换默认方案</div>
+          )
+        }
       </Form>
     </Modal>
   )

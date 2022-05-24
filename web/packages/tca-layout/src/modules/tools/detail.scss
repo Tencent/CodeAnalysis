@@ -175,6 +175,13 @@
         width: 100%;
       }
 
+      .default-tag {
+        color: #fff;
+        border-radius: 4px;
+        margin-left: 10px;
+        background-color: $blue-5;
+      }
+
       .operation {
         position: relative;
         display: flex;
