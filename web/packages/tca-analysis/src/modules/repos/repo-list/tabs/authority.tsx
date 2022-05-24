@@ -114,17 +114,17 @@ const Authority = ({ curRepo, orgSid, teamName, repoId }: IProps) => {
         if (selectedAuth.auth_type === AUTH_TYPE.HTTP) {
           scmAuth.scm_account = selectedAuth.id;
           scmAuth.scm_ssh = null;
-          scmAuth.scm_authinfo = null;
+          scmAuth.scm_oauth = null;
         }
 
         if (selectedAuth.auth_type === AUTH_TYPE.SSH) {
           scmAuth.scm_ssh = selectedAuth.id;
           scmAuth.scm_account = null;
-          scmAuth.scm_authinfo = null;
+          scmAuth.scm_oauth = null;
         }
 
         if (selectedAuth.auth_type === AUTH_TYPE.OAUTH) {
-          scmAuth.scm_authinfo = selectedAuth.id;
+          scmAuth.scm_oauth = selectedAuth.id;
           scmAuth.scm_account = null;
           scmAuth.scm_ssh = null;
         }

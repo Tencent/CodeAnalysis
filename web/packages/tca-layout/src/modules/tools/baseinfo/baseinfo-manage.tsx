@@ -126,7 +126,7 @@ const BaseInfo = ({ orgSid, data, getDetail }: BaseInfoProps) => {
           formData.scm_auth.scm_ssh = id;
           break;
         case AUTH_TYPE.OAUTH:
-          formData.scm_auth.scm_authinfo = id;
+          formData.scm_auth.scm_oauth = id;
           break;
       }
     }
