@@ -45,14 +45,15 @@ const UpdateLibSchemeModal = (props: UpdateLibSchemeModalProps) => {
   useEffect(() => {
 
     if (visible) {
+      initFields();
       if (isEdit) {  // 编辑
-        initFields();
         form.setFieldsValue({
           ...initData,
           scheme_os: initData?.scheme_os?.split(';'),
           tool_libs: initData?.toollib_maps?.map((item: any) => item.toollib.id) ?? []
         })
       } else {  // 新增
+        setToolLibs([]);
         form.resetFields();
       }
     }
@@ -155,7 +156,7 @@ const UpdateLibSchemeModal = (props: UpdateLibSchemeModalProps) => {
   return (
     <Modal
       title={`${isEdit ? '编辑' : '添加'}依赖配置`}
-      width={604}
+      width={610}
       visible={visible}
       className={style.updateSchemeModal}
       afterClose={form.resetFields}
@@ -167,15 +168,21 @@ const UpdateLibSchemeModal = (props: UpdateLibSchemeModalProps) => {
           label="判断条件"
           name="condition"
         >
-          <TextArea rows={3} placeholder='仅支持=条件' />
+          <TextArea
+            rows={4}
+            placeholder='当环境变量满足该条件时使用当前依赖，如果不需要区分，可以不填。
+            示例：设置判断条件PYTHON_VERSION=3时，使用python3依赖。' />
         </Form.Item>
         <Form.Item
           label="适用系统"
           name="scheme_os"
         >
-          <Select mode='multiple' onChange={(values: Array<string>) => {
-            getLibs({ os: values?.join(',') });
-          }}>
+          <Select
+            mode='multiple'
+            placeholder='选择当前方案适用的操作系统'
+            onChange={(values: Array<string>) => {
+              getLibs({ os: values?.join(',') });
+            }}>
             {
               Object.entries(LIB_ENV).map(([key, text]) => (
                 <Option key={key} value={key}>{text}</Option>
@@ -202,6 +209,7 @@ const UpdateLibSchemeModal = (props: UpdateLibSchemeModalProps) => {
                       optionFilterProp="label"
                       style={{ width: '400px' }}
                       optionLabelProp="label"
+                      placeholder='选择当前方案需要加载的工具依赖'
                       onChange={(value: string, item: any) => form.setFieldsValue({ name: item.label })}
                     >
                       {toolLibs.map(item => (

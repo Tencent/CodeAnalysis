@@ -81,7 +81,6 @@ const LibScheme = (props: LibSchemeProps) => {
                       }}
                     />
                   </Tooltip>
-
                   <Tooltip title='删除'>
                     <TrashIcon
                       className={style.delIcon}
@@ -91,7 +90,6 @@ const LibScheme = (props: LibSchemeProps) => {
                       }}
                     />
                   </Tooltip>
-
                 </>
               }
             >
@@ -128,6 +126,11 @@ const LibScheme = (props: LibSchemeProps) => {
                           </Row>
                         )))
                       }
+                      <div className={style.envDesc}>
+                        Tips：
+                        <p>1. 每个依赖加载后提供的环境变量。</p>
+                        <p>2. $ROOT_DIR 表示依赖仓库拉取到本地后的目录路径，会替换成每个依赖目录的实际路径。</p>
+                      </div>
                     </div>
                   </div>
                 )

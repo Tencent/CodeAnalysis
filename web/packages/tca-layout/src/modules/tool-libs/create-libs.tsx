@@ -7,12 +7,15 @@ import { Modal, Form, Input, Select, Tooltip, Button, message, Space } from 'cod
 import PlusIcon from 'coding-oa-uikit/lib/icon/Plus';
 import RefreshIcon from 'coding-oa-uikit/lib/icon/Refresh';
 import TrashIcon from 'coding-oa-uikit/lib/icon/Trash';
+import QuestionCircle from 'coding-oa-uikit/lib/icon/QuestionCircle';
 
 
 import { gScmAccounts, getSSHInfo } from '@src/services/user';
 import { addToolLib, getLibDetail, updateToolLib } from '@src/services/tools';
 import { AUTH_TYPE, AUTH_TYPE_TXT, REPO_TYPE_OPTIONS, REPO_TYPE } from '@src/modules/tools/constants';
 import { LIB_ENV, LIB_TYPE } from './constants';
+
+import style from './style.scss';
 
 const { TextArea } = Input;
 const { Option, OptGroup } = Select;
@@ -125,6 +128,7 @@ const CreateToollibs = (props: CreateToollibsProps) => {
       visible={visible}
       afterClose={form.resetFields}
       onCancel={onClose}
+      className={style.createModal}
       onOk={() => form.validateFields().then(onFinish)}
     >
       <Form
@@ -140,23 +144,44 @@ const CreateToollibs = (props: CreateToollibsProps) => {
         }}
       >
         <Form.Item
-          label="依赖名称"
+          label={(
+            <span>
+              依赖名称
+              <Tooltip
+                getPopupContainer={() => document.body}
+                title='建议包含版本号和支持的操作系统，如果各端兼容，可以不包含操作系统'
+              ><QuestionCircle className={style.questionIcon} /></Tooltip>
+            </span>
+          )}
           name="name"
           rules={[{ required: true, message: '请输入依赖名称' }]}
         >
-          <Input />
+          <Input placeholder='使用英文名，示例：LINUX_JDK_8' />
         </Form.Item>
         <Form.Item
           label="依赖描述"
           name="description"
         >
-          <TextArea placeholder="长度限制256个字符。" rows={3} />
+          <TextArea placeholder="请简要说明依赖提供的功能，长度限制256个字符。" rows={3} />
         </Form.Item>
         {/* 默认都是私有依赖，只有超级管理员有权限更改类型 */}
         {
           isSuperuser && (
             <Form.Item
-              label="依赖类型"
+              label={(
+                <span>
+                  依赖类型
+                  <Tooltip
+                    getPopupContainer={() => document.body}
+                    title={
+                      <>
+                        <p>私有依赖：只在当前团队中使用。</p>
+                        <p>公共依赖：公开给所有团队使用。</p>
+                      </>
+                    }
+                  ><QuestionCircle className={style.questionIcon} /></Tooltip>
+                </span>
+              )}
               name="lib_type"
               rules={[{ required: true, message: '请选择依赖类型' }]}
             >
@@ -208,9 +233,17 @@ const CreateToollibs = (props: CreateToollibsProps) => {
             </Form.Item>
           </Input.Group>
         </Form.Item>
-        <Form.Item label="凭证">
+        <Form.Item label={(
+            <span>
+              凭证
+              <Tooltip
+                getPopupContainer={() => document.body}
+                title='拉取依赖仓库所需的凭证，如果是github公开仓库，可以不提供凭证。'
+              ><QuestionCircle className={style.questionIcon} /></Tooltip>
+            </span>
+          )}>
           <Form.Item noStyle name="scm_auth_id">
-            <Select style={{ width: 360 }}>
+            <Select style={{ width: 360 }} placeholder='github公开仓库可不提供凭证'>
               {!isEmpty(sshAuthList) && (
                 <OptGroup label={AUTH_TYPE_TXT.SSH}>
                   {sshAuthList.map((auth: any) => (
@@ -258,8 +291,16 @@ const CreateToollibs = (props: CreateToollibsProps) => {
         </Form.Item>
 
         <Form.Item
-          label="环境变量"
           name="envs"
+          label={(
+            <span>
+              环境变量
+              <Tooltip
+                getPopupContainer={() => document.body}
+                title='依赖仓库拉取下来后，需要配置的环境变量。如果环境变量中用到仓库拉取后的本地目录，请使用$ROOT_DIR代替。比如需要添加到PATH中，可以设置PATH环境变量为$ROOT_DIR（执行时会添加到PATH环境变量最前面）。'
+              ><QuestionCircle className={style.questionIcon} /></Tooltip>
+            </span>
+          )}
         >
           <Form.List name="envs">
             {(fields, { add, remove }) => (

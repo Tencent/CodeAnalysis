@@ -32,3 +32,16 @@
     margin-bottom: 2px;
   }
 }
+
+.create-modal {
+  .question-icon {
+    color: $grey-6;
+    margin: 0 4px;
+    transition: all 0.3s;
+    cursor: pointer;
+
+    &:hover {
+      color: $grey-7;
+    }
+  }
+}
