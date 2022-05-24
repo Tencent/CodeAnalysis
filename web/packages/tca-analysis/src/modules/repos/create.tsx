@@ -112,7 +112,7 @@ const Create = () => {
         data.scm_auth.scm_ssh = id;
         break;
       case AUTH_TYPE.OAUTH:
-        data.scm_auth.scm_authinfo = id;
+        data.scm_auth.scm_oauth = id;
         break;
     }
 

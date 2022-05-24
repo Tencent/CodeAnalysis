@@ -87,7 +87,7 @@ const CreateToolModal = (props: CreateToolModalProps) => {
         newFormData.scm_auth.scm_ssh = id;
         break;
       case AUTH_TYPE.OAUTH:
-        newFormData.scm_auth.scm_authinfo = id;
+        newFormData.scm_auth.scm_oauth = id;
         break;
     }
 
