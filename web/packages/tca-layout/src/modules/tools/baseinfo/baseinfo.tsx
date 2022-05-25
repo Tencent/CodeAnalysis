@@ -298,7 +298,7 @@ const BaseInfo = ({ orgSid, data, editable, getDetail }: BaseInfoProps) => {
         }
         {
           data.scm_auth && (
-            <Form.Item label="凭证" required={isEdit}>
+            <Form.Item label="凭证">
               {
                 getComponent(
                   <>

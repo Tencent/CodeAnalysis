@@ -42,6 +42,7 @@ export const ToolLibs = () => {
   const searchParams: any = omit(query, ['offset', 'limit']);
   const isAdmin = !!find(admins, { username: userinfo.username });  // 当前用户是否是管理员
   const isSuperuser = userinfo.is_superuser;  // 是否为超级管理员
+  const editable = isAdmin || isSuperuser;  // 编辑权限
 
   useEffect(() => {
     getTeamMember(orgSid).then((res) => {
@@ -84,7 +85,7 @@ export const ToolLibs = () => {
       <Search
         orgSid={orgSid}
         loading={loading}
-        editable={isAdmin}
+        editable={editable}
         searchParams={cloneDeep(searchParams)}
         onAdd={() => setModalData({
           visible: true,
@@ -151,7 +152,7 @@ export const ToolLibs = () => {
           dataIndex={['creator', 'nickname']}
         />
         {
-          isAdmin && (
+          editable && (
             <Column
               title='操作'
               dataIndex='id'
@@ -170,7 +171,7 @@ export const ToolLibs = () => {
         }
       </Table>
       {
-        (isAdmin || isSuperuser) && (
+        editable && (
           <CreateToollibs
             orgSid={orgSid}
             isSuperuser={isSuperuser}

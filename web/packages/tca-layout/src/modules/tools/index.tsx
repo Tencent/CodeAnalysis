@@ -38,6 +38,8 @@ const Tools = () => {
   const [pager, setPager] = useState(DEFAULT_PAGER);
   const { count, pageStart } = pager;
   const isAdmin = !!find(admins, { username: userinfo.username });  // 当前用户是否是管理员
+  const isSuperuser = userinfo.is_superuser;  // 是否为超级管理员
+  const editable = isAdmin || isSuperuser;  // 编辑权限
 
   useEffect(() => {
     getData(DEFAULT_PAGER.pageStart, query);
@@ -83,7 +85,7 @@ const Tools = () => {
         orgSid={orgSid}
         loading={loading}
         searchParams={cloneDeep(query)}
-        editable={isAdmin}
+        editable={editable}
         onAdd={() => setVisible(true)}
         callback={(params: any) => {
           getData(DEFAULT_PAGER.pageStart, params);

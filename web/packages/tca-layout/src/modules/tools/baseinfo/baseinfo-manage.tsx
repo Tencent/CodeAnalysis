@@ -100,8 +100,8 @@ const BaseInfo = ({ orgSid, data, getDetail }: BaseInfoProps) => {
           ...item,
           authId: `${AUTH_TYPE.HTTP}#${item.id}`,
         })));
-        setOauthAuthList(result[2].map((item:any)=>({ 
-          ...item, 
+        setOauthAuthList(result[2].map((item: any) => ({
+          ...item,
           authId: `${AUTH_TYPE.OAUTH}#${item.id}`,
         })));
       })
@@ -198,7 +198,7 @@ const BaseInfo = ({ orgSid, data, getDetail }: BaseInfoProps) => {
         initialValues={{
           ...data,
           status: STATUSENUM.NORMAL,
-          scm_auth_id: `${data.scm_auth?.auth_type}#${get(data,['scm_auth',AUTH_ID_PATH[data.scm_auth?.auth_type],'id'])}`,
+          scm_auth_id: `${data.scm_auth?.auth_type}#${get(data, ['scm_auth', AUTH_ID_PATH[data.scm_auth?.auth_type], 'id'])}`,
         }}
       >
         <Form.Item label="运营状态">
@@ -253,7 +253,7 @@ const BaseInfo = ({ orgSid, data, getDetail }: BaseInfoProps) => {
         <Form.Item
           label='工具描述'
           name="description"
-          rules={isEdit ? [{ required: true, message: '请输入工具描述!' }] : undefined}
+          rules={isEdit ? [{ required: true, message: '请输入工具描述' }] : undefined}
         >
           {
             getComponent(
@@ -266,6 +266,7 @@ const BaseInfo = ({ orgSid, data, getDetail }: BaseInfoProps) => {
           (data.scm_url || isEdit) && (
             <Form.Item
               label="工具仓库地址"
+              rules={isEdit ? [{ required: true, message: '请输入工具仓库地址' }] : undefined}
             >
               {
                 getComponent(
