@@ -128,7 +128,7 @@ const LibScheme = (props: LibSchemeProps) => {
                 }
               </div>
               {
-                item.toollib_maps?.some((lib: any) => lib.toollib.envs) && (
+                item?.toollib_maps?.some((lib: any) => lib.toollib.envs) && (
                   <div className={style.envsWrapper}>
                     <span>环境变量：</span>
                     <div className={style.envsList}>
@@ -137,7 +137,7 @@ const LibScheme = (props: LibSchemeProps) => {
                         <Col span={12}>变量值</Col>
                       </Row>
                       {
-                        item.toollib_maps?.map((lib: any) => Object.keys(lib.toollib.envs).map((key) => (
+                        item?.toollib_maps?.map((lib: any) => lib?.toollib?.envs && Object.keys(lib.toollib.envs).map((key) => (
                           <Row key={key} className={style.row}>
                             <Col span={12}>{key}</Col>
                             <Col span={12}>{lib.toollib.envs[key]}</Col>

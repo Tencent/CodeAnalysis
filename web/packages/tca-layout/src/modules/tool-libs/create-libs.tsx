@@ -198,6 +198,7 @@ const CreateToollibs = (props: CreateToollibsProps) => {
         <Form.Item
           label="适用系统"
           name="lib_os"
+          rules={[{ required: true, message: '请选择适用系统' }]}
         >
           <Select mode='multiple'>
             {
