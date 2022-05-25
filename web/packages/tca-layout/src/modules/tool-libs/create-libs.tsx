@@ -154,7 +154,13 @@ const CreateToollibs = (props: CreateToollibsProps) => {
             </span>
           )}
           name="name"
-          rules={[{ required: true, message: '请输入依赖名称' }]}
+          rules={[{
+            required: true,
+            message: '请输入依赖名称'
+          }, {
+            pattern: /^[A-Za-z0-9_-]+$/,
+            message: '仅支持英文、数字、中划线或下划线',
+          }]}
         >
           <Input placeholder='使用英文名，示例：LINUX_JDK_8' />
         </Form.Item>
@@ -235,14 +241,14 @@ const CreateToollibs = (props: CreateToollibsProps) => {
           </Input.Group>
         </Form.Item>
         <Form.Item label={(
-            <span>
-              凭证
-              <Tooltip
-                getPopupContainer={() => document.body}
-                title='拉取依赖仓库所需的凭证，如果是github公开仓库，可以不提供凭证。'
-              ><QuestionCircle className={style.questionIcon} /></Tooltip>
-            </span>
-          )}>
+          <span>
+            凭证
+            <Tooltip
+              getPopupContainer={() => document.body}
+              title='拉取依赖仓库所需的凭证，如果是github公开仓库，可以不提供凭证。'
+            ><QuestionCircle className={style.questionIcon} /></Tooltip>
+          </span>
+        )}>
           <Form.Item noStyle name="scm_auth_id">
             <Select style={{ width: 360 }} placeholder='github公开仓库可不提供凭证'>
               {!isEmpty(sshAuthList) && (

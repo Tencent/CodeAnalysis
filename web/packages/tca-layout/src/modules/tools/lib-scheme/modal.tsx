@@ -215,6 +215,7 @@ const UpdateLibSchemeModal = (props: UpdateLibSchemeModalProps) => {
                       style={{ width: '400px' }}
                       optionLabelProp="label"
                       placeholder='选择当前方案需要加载的工具依赖'
+                      notFoundContent={isEmpty(form.getFieldValue('scheme_os')) ? '请先选择适用系统' : '暂无数据'}
                       onChange={(value: string, item: any) => form.setFieldsValue({ name: item.label })}
                     >
                       {toolLibs.map(item => (
