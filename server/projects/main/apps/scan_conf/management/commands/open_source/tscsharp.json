@@ -1,0 +1,856 @@
+[
+    {
+        "name": "tscan_csharp",
+        "display_name": "Tscan-csharp",
+        "description": "腾讯开源静态检查工具tscan，原项目开源地址https://github.com/Tencent/TscanCode.git",
+        "license": "GPL",
+        "libscheme_set": [],
+        "task_processes": [
+            "analyze",
+            "datahandle"
+        ],
+        "scan_app": "codelint",
+        "scm_url": "",
+        "run_cmd": "",
+        "envs": null,
+        "build_flag": false,
+        "checkrule_set": [
+            {
+              "real_name": "CS_checkNullDefect",
+              "display_name": "TSC-CS_checkNullDefect",
+              "severity": "fatal",
+              "category": "usability",
+              "rule_title": "if判空逻辑缺陷",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cs"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "判空条件存在逻辑缺陷，比如：if(p!=null || p.a != null)",
+              "disable": false
+            },
+            {
+              "real_name": "CS_explicitNullDereference",
+              "display_name": "TSC-CS_explicitNullDereference",
+              "severity": "fatal",
+              "category": "usability",
+              "rule_title": "存在路径直接对空对象进行解引用",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cs"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "存在可能的代码执行路径，使得变量为null时解引用",
+              "disable": false
+            },
+            {
+              "real_name": "CS_dereferenceIfNull",
+              "display_name": "TSC-CS_dereferenceIfNull",
+              "severity": "fatal",
+              "category": "usability",
+              "rule_title": "C#判空对象为null时解引用",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cs"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "判空对象为null时解引用",
+              "disable": false
+            },
+            {
+              "real_name": "CS_dereferenceAfterNullCheck",
+              "display_name": "TSC-CS_dereferenceAfterNullCheck",
+              "severity": "error",
+              "category": "usability",
+              "rule_title": "C#对象先判空，再解引用，但此时判空已经失效",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cs"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "对象先判空，再解引用，但此时判空已经失效",
+              "disable": false
+            },
+            {
+              "real_name": "CS_dereferenceBeforeNullCheck",
+              "display_name": "TSC-CS_dereferenceBeforeNullCheck",
+              "severity": "error",
+              "category": "usability",
+              "rule_title": "C#对象先解引用，再进行判空",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cs"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "对象先解引用，再进行判空",
+              "disable": false
+            },
+            {
+              "real_name": "CS_FuncRetNull",
+              "display_name": "TSC-CS_FuncRetNull",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": "C#函数返回空引用",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cs"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "函数可能返回空引用，未判空直接解引用",
+              "disable": false
+            },
+            {
+              "real_name": "CS_funcDereferenceIfNull",
+              "display_name": "TSC-CS_funcDereferenceIfNull",
+              "severity": "fatal",
+              "category": "usability",
+              "rule_title": "C#函数返回值为null时解引用",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cs"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "当函数返回值为null的时候解引用，一般为误写==造成",
+              "disable": false
+            },
+            {
+              "real_name": "CS_arrayDereferenceIfNull",
+              "display_name": "TSC-CS_arrayDereferenceIfNull",
+              "severity": "fatal",
+              "category": "usability",
+              "rule_title": "c#数组为null时解引用",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cs"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "数组为null的时候，解引用。一般为误写 ==",
+              "disable": false
+            },
+            {
+              "real_name": "CS_funcDereferenceAfterNullCheck",
+              "display_name": "TSC-CS_funcDereferenceAfterNullCheck",
+              "severity": "error",
+              "category": "usability",
+              "rule_title": "函数返回的引用先判空再解引用，判空范围已失效",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cs"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "函数返回的引用先判空，再解引用，但此时判空已经失效",
+              "disable": false
+            },
+            {
+              "real_name": "CS_arrayDereferenceAfterNullCheck",
+              "display_name": "TSC-CS_arrayDereferenceAfterNullCheck",
+              "severity": "error",
+              "category": "usability",
+              "rule_title": "数组先判空再解引用，判空范围已失效",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cs"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "数组先判空，再解引用，但是判空范围已失效",
+              "disable": false
+            },
+            {
+              "real_name": "CS_possibleDereferenceAfterNullCheck",
+              "display_name": "TSC-CS_possibleDereferenceAfterNullCheck",
+              "severity": "error",
+              "category": "usability",
+              "rule_title": "可能存在先判空后解引用，但是解引用已不在判空范围内",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cs"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "可能存在数组先判空，再解引用，但是判空范围已失效",
+              "disable": false
+            },
+            {
+              "real_name": "CS_funcDereferenceBeforeNullCheck",
+              "display_name": "TSC-CS_funcDereferenceBeforeNullCheck",
+              "severity": "error",
+              "category": "usability",
+              "rule_title": "C#函数返回的引用先解引用，再进行判空",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cs"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "函数返回的引用先解引用，再判空。",
+              "disable": false
+            },
+            {
+              "real_name": "CS_arrayDereferenceBeforeNullCheck",
+              "display_name": "TSC-CS_arrayDereferenceBeforeNullCheck",
+              "severity": "error",
+              "category": "usability",
+              "rule_title": "数组先解引用，再判空",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cs"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "C#中数组先解引用，再判空。",
+              "disable": false
+            },
+            {
+              "real_name": "CS_FuncPossibleRetNull",
+              "display_name": "TSC-CS_FuncPossibleRetNull",
+              "severity": "info",
+              "category": "usability",
+              "rule_title": "C#函数可能返回空引用",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cs"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "函数返回空引用",
+              "disable": false
+            },
+            {
+              "real_name": "CS_funcFuncRetNull",
+              "display_name": "TSC-CS_funcFuncRetNull",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": "函数返回值赋值另一函数的引用返回值， 该引用未判空情况下解引用",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cs"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "函数存在返回NULL的分支，所以返回值可能为空，若将返回值赋给返回引用的函数，存在风险，应该先判空再使用。",
+              "disable": false
+            },
+            {
+              "real_name": "CS_arrayFuncRetNull",
+              "display_name": "TSC-CS_arrayFuncRetNull",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": "函数返回值赋值数组， 该数组未判空情况下解引用",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cs"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "函数存在返回NULL的分支，所以返回值可能为空，若将返回值赋给返回数组，存在风险，应该先判空再使用。",
+              "disable": false
+            },
+            {
+              "real_name": "CS_possibleNullReference",
+              "display_name": "TSC-CS_possibleNullReference",
+              "severity": "info",
+              "category": "usability",
+              "rule_title": "可能的空引用",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cs"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "判空对象为null时解引用",
+              "disable": false
+            },
+            {
+              "real_name": "CS_nullPointerArray",
+              "display_name": "TSC-CS_nullPointerArray",
+              "severity": "info",
+              "category": "usability",
+              "rule_title": "使用了可能是null的数组元素",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cs"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "数组的元素可能是null，并且被使用",
+              "disable": false
+            },
+            {
+              "real_name": "CS_nullPointerArg",
+              "display_name": "TSC-CS_nullPointerArg",
+              "severity": "info",
+              "category": "usability",
+              "rule_title": "函数的参数没有判断是否为null",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cs"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "c#的函数参数没有进行是否null的判断",
+              "disable": false
+            },
+            {
+              "real_name": "CS_nullPointerClass",
+              "display_name": "TSC-CS_nullPointerClass",
+              "severity": "info",
+              "category": "usability",
+              "rule_title": "类成员变量没有判断空null",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cs"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "C#类成员变量没有判断是否为null的情况下解引用",
+              "disable": false
+            },
+            {
+              "real_name": "CS_StringFormat",
+              "display_name": "TSC-CS_StringFormat",
+              "severity": "error",
+              "category": "usability",
+              "rule_title": "C#StringFormat参数不匹配",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cs"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "使用String.Format(),需要参数{}和传入参数个数不匹配",
+              "disable": false
+            },
+            {
+              "real_name": "CS_XPath",
+              "display_name": "TSC-CS_XPath",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": "C#使用的XPath表达式不合法",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cs"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "使用的XPath表达式不合法",
+              "disable": false
+            },
+            {
+              "real_name": "CS_DoubleNaN",
+              "display_name": "TSC-CS_DoubleNaN",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": "C#使用NAN和Double直接比较",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cs"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "使用NAN和Double类型直接进行==比较,无法准确判断相等",
+              "disable": false
+            },
+            {
+              "real_name": "CS_DoubleAssignment",
+              "display_name": "TSC-CS_DoubleAssignment",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": "C#重复赋值",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cs"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "对相同的表达式进行重复赋值，如a.b=a.b",
+              "disable": false
+            },
+            {
+              "real_name": "CS_SuspicousSemicolon",
+              "display_name": "TSC-CS_SuspicousSemicolon",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": "C#可疑的分号使用",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cs"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "可疑的分号使用,如if(); {}",
+              "disable": false
+            },
+            {
+              "real_name": "CS_UselessArithmetic",
+              "display_name": "TSC-CS_UselessArithmetic",
+              "severity": "info",
+              "category": "usability",
+              "rule_title": "C#无效的算术运算",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cs"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "无效的逻辑运算：如a=a*1;",
+              "disable": false
+            },
+            {
+              "real_name": "CS_StringIndexOfError",
+              "display_name": "TSC-CS_StringIndexOfError",
+              "severity": "error",
+              "category": "usability",
+              "rule_title": "C#StringIndexOf错误使用",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cs"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "判断IndexOf/LastIndexOf()等结果应该用大于等于0,而非大于0",
+              "disable": false
+            },
+            {
+              "real_name": "CS_DuplicateExpression",
+              "display_name": "TSC-CS_DuplicateExpression",
+              "severity": "info",
+              "category": "usability",
+              "rule_title": "C#重复表达式",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cs"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "在表达两边使用了相同的表达式",
+              "disable": false
+            },
+            {
+              "real_name": "CS_WrongVarInFor",
+              "display_name": "TSC-CS_WrongVarInFor",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": "C#循环控制变量使用错误",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cs"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "循环体控制变量,没有变化,可能手误",
+              "disable": false
+            },
+            {
+              "real_name": "CS_ConditionAlwaysTrue",
+              "display_name": "TSC-CS_ConditionAlwaysTrue",
+              "severity": "error",
+              "category": "usability",
+              "rule_title": "C#表示总为True或者False",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cs"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "逻辑表达式总为True或者False",
+              "disable": false
+            },
+            {
+              "real_name": "CS_VirtualCallInConstructor",
+              "display_name": "TSC-CS_VirtualCallInConstructor",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": "C#构造函数中使用虚函数",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cs"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "警告:在类构造函数中使用虚函数,可能达不到虚函数效果.造成逻辑错误",
+              "disable": false
+            },
+            {
+              "real_name": "CS_ThrowExceptionInConstructor",
+              "display_name": "TSC-CS_ThrowExceptionInConstructor",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": "C#在构造或析构函数抛异常",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cs"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "警告:不要在构造/析构函数中抛出异常",
+              "disable": false
+            },
+            {
+              "real_name": "CS_DerivedClassNewKeyWord",
+              "display_name": "TSC-CS_DerivedClassNewKeyWord",
+              "severity": "info",
+              "category": "usability",
+              "rule_title": "C#中,不正确使用或者缺少应有的New修饰符",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cs"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "警告:如果在子类中隐藏基类的同名成员.需要使用new关键字申明,如果不是同名成员,不应该使用new申明",
+              "disable": false
+            },
+            {
+              "real_name": "CS_BadRecursive",
+              "display_name": "TSC-CS_BadRecursive",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": "",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cs"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "可能存在死循环的递归调用",
+              "disable": false
+            },
+            {
+              "real_name": "CS_UnreleasedLock",
+              "display_name": "TSC-CS_UnreleasedLock",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": "C#存在没有释放的mutex对象",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cs"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "存在没有释放的mutex对象",
+              "disable": false
+            },
+            {
+              "real_name": "CS_WrongInitSeq",
+              "display_name": "TSC-CS_WrongInitSeq",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": "C#成员变量初始化顺序可能有错误",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cs"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "成员变量初始化顺序可能有错误",
+              "disable": false
+            },
+            {
+              "real_name": "CS_ModifyCollection",
+              "display_name": "TSC-CS_ModifyCollection",
+              "severity": "error",
+              "category": "usability",
+              "rule_title": "遍历过程中不应修改容器",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cs"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "在枚举过程中改变枚举对象的内容会导致枚举类型失效",
+              "disable": false
+            },
+            {
+              "real_name": "CS_CheckDuplicateBranchContent",
+              "display_name": "TSC-CS_CheckDuplicateBranchContent",
+              "severity": "info",
+              "category": "usability",
+              "rule_title": "C#重复的分支内容",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cs"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "if 和else中分支内容完全相同",
+              "disable": false
+            },
+            {
+              "real_name": "CS_ResourceLeak",
+              "display_name": "TSC-CS_ResourceLeak",
+              "severity": "error",
+              "category": "usability",
+              "rule_title": "",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cs"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "警告：资源泄露风险",
+              "disable": false
+            },
+            {
+              "real_name": "CS_ArrayIndexOutOfBound",
+              "display_name": "TSC-CS_ArrayIndexOutOfBound",
+              "severity": "error",
+              "category": "usability",
+              "rule_title": "CS数组越界",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cs"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "数组存在越界风险",
+              "disable": false
+            },
+            {
+              "real_name": "CS_DividByZero",
+              "display_name": "TSC-CS_DividByZero",
+              "severity": "fatal",
+              "category": "usability",
+              "rule_title": "C#运算中明确的除以0",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cs"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "确定的除0运算",
+              "disable": false
+            },
+            {
+              "real_name": "CS_UnintentionalOverflow",
+              "display_name": "TSC-CS_UnintentionalOverflow",
+              "severity": "error",
+              "category": "usability",
+              "rule_title": "表达式可能溢出，建议先做类型转换",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cs"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "表达式可能溢出",
+              "disable": false
+            },
+            {
+              "real_name": "CS_SuspiciousDividByZero",
+              "display_name": "TSC-CS_SuspiciousDividByZero",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": "C#元算中可能除以0",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cs"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "可疑的除0运算,非平台扫描默认应该为关闭",
+              "disable": false
+            },
+            {
+              "real_name": "CS_DivideBy10000",
+              "display_name": "TSC-CS_DivideBy10000",
+              "severity": "info",
+              "category": "usability",
+              "rule_title": "可能的除以10000错误",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cs"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "除数为10000的场景，部分项目可能会关注",
+              "disable": false
+            },
+            {
+              "real_name": "CS_UnsafeConstructor",
+              "display_name": "TSC-CS_UnsafeConstructor",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": "C#Mono子类不应该自己实现构造函数",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cs"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "继承于MonoBehaviour的类不应该自己实现构造函数，特别是里面如果使用了find接口可能导致crash",
+              "disable": false
+            },
+            {
+              "real_name": "CS_ArithmeticOverflow",
+              "display_name": "TSC-CS_ArithmeticOverflow",
+              "severity": "info",
+              "category": "usability",
+              "rule_title": "C#数值溢出",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cs"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "将两个较小类型的数相乘得到较大类型的数，可能存在数值溢出",
+              "disable": false
+            },
+            {
+              "real_name": "CS_InvalidMemberName",
+              "display_name": "TSC-CS_InvalidMemberName",
+              "severity": "info",
+              "category": "usability",
+              "rule_title": "unity项目使用了非法命名的成员变量",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cs"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "unity项目中MonoBehaviour子类的成员变量不能命名为m_Name，否则会导致运行错误",
+              "disable": false
+            },
+            {
+              "real_name": "CS_StructCheckNull",
+              "display_name": "TSC-CS_StructCheckNull",
+              "severity": "info",
+              "category": "usability",
+              "rule_title": "对值类型变量进行冗余判空",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cs"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "值类型变量不会为null,对值类型进行判空是冗余的",
+              "disable": false
+            },
+            {
+              "real_name": "CS_UnityMessageSpellWrong",
+              "display_name": "TSC-CS_UnityMessageSpellWrong",
+              "severity": "fatal",
+              "category": "usability",
+              "rule_title": "Unity消息函数拼写错误",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cs"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "Unity项目中继承自MonoBehavior的对象通过反射来调用Message函数，一旦这些函数因为手误写错了，将导致不可预期的逻辑错误",
+              "disable": false
+            }
+          ],
+        "open_user": true,
+        "virtual_name": "",
+        "show_display_name": true
+    }
+]
