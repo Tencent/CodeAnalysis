@@ -37,14 +37,14 @@ django-prometheus==2.0.0
 
 # for login
 djangorestframework-simplejwt==4.4.0
-PyJWT==1.7.1
+PyJWT==2.4.0
 
 # for password
 pyaes==1.6.1
 rsa==4.7.2
 pycryptodome==3.9.8
 cryptography==3.3.2
-PyJWT==1.7.1
+PyJWT==2.4.0
 
 # for storage sdk
 cos-python-sdk-v5==1.7.4
