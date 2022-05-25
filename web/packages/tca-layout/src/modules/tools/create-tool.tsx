@@ -124,20 +124,21 @@ const CreateToolModal = (props: CreateToolModalProps) => {
         <Form.Item
           label="工具展示名称"
           name="display_name"
-          rules={[{ required: true, message: '请输入前端展示名称!' }]}
+          rules={[{ required: true, message: '请输入前端展示名称' }]}
         >
           <Input placeholder="请使用大驼峰命名，如PyLint。" />
         </Form.Item>
         <Form.Item
           label="工具描述"
           name="description"
-          rules={[{ required: true, message: '请输入工具描述!' }]}
+          rules={[{ required: true, message: '请输入工具描述' }]}
         >
           <TextArea placeholder="长度限制256个字符。" rows={3} />
         </Form.Item>
         <Form.Item
           label="工具仓库地址"
           name="scm_url"
+          rules={[{ required: true, message: '请输入工具仓库地址' }]}
         >
           <Input.Group compact>
             <Form.Item name='scm_type' noStyle>
