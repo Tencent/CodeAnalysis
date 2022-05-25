@@ -13,7 +13,7 @@ djangorestframework==3.11.2
 
 # for login
 djangorestframework-simplejwt==4.4.0
-PyJWT==1.7.1
+PyJWT==2.4.0
 
 # for password
 pyaes==1.6.1
