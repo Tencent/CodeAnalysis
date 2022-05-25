@@ -52,7 +52,7 @@ class SvnRemoteClient(IScmClient):
                 'username': username,
                 'password': password
             }
-        self._svn_proxy = CustomServerProxy(settings.SCMPROXY, timeout=20)
+        self._svn_proxy = CustomServerProxy(settings.SCMPROXY, timeout=int(settings.SCMPROXY_TIMEOUT))
 
     @property
     def latest_revision(self):

@@ -80,6 +80,7 @@ ANALYSE_SERVER_URL = os.environ.get("ANALYSE_SERVER_URL")
 
 # Scmproxy服务地址
 SCMPROXY = os.environ.get("SCMPROXY_URL")
+SCMPROXY_TIMEOUT = os.environ.get("SCMPROXY_TIMEOUT", 20)
 
 
 REDIS_HOST = os.environ.get("REDIS_HOST")
