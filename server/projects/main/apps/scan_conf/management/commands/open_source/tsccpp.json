@@ -1,0 +1,1927 @@
+[
+    {
+        "name": "tscan_cpp",
+        "display_name": "Tscan-cpp",
+        "description": "腾讯开源静态检查工具tscan，原项目开源地址https://github.com/Tencent/TscanCode.git",
+        "license": "GPL",
+        "libscheme_set": [],
+        "task_processes": [
+            "analyze",
+            "datahandle"
+        ],
+        "scan_app": "codelint",
+        "scm_url": "",
+        "run_cmd": "",
+        "envs": null,
+        "build_flag": false,
+        "checkrule_set": [
+            {
+              "real_name": "dereferenceAfterCheck",
+              "display_name": "TSC-dereferenceAfterCheck",
+              "severity": "error",
+              "category": "usability",
+              "rule_title": "先判空后解引用",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "指针先判空，然后在判空作用域外解引用，因为指针判空暗示当前上下文该指针可能为空，因此建议对没有在判空作用域的指针添加判空保护。",
+              "disable": false
+            },
+            {
+              "real_name": "funcRetNull",
+              "display_name": "TSC-funcRetNull",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": "函数返回值未判空解引用",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "函数存在返回NULL的分支，所以返回值可能为空，应该先判空再使用",
+              "disable": false
+            },
+            {
+              "real_name": "funcRetNullStatistic",
+              "display_name": "TSC-funcRetNullStatistic",
+              "severity": "error",
+              "category": "usability",
+              "rule_title": "基于统计推断函数返回值未判空",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "通过分析代码调用模式，如果调用func函数，有10处对返回值进行了判空，而只有1处没有判空，那么很有可能是漏掉了判空。",
+              "disable": false
+            },
+            {
+              "real_name": "dereferenceBeforeCheck",
+              "display_name": "TSC-dereferenceBeforeCheck",
+              "severity": "error",
+              "category": "usability",
+              "rule_title": "先解引用后判空",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "指针先解引用然后才判空，因为指针判空暗示当前上下文该指针可能为空，因此建议对没有在判空作用域的指针添加判空保护",
+              "disable": false
+            },
+            {
+              "real_name": "dereferenceIfNull",
+              "display_name": "TSC-dereferenceIfNull",
+              "severity": "fatal",
+              "category": "usability",
+              "rule_title": "指针为空解应用",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "if条件判断指针等于NULL成立时对指针解引用，通常是判空条件写反了导致的",
+              "disable": false
+            },
+            {
+              "real_name": "explicitNullDereference",
+              "display_name": "TSC-explicitNullDereference",
+              "severity": "fatal",
+              "category": "usability",
+              "rule_title": "显式空指针解应用",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "存在一条代码执行路径，使得空指针直接解引用",
+              "disable": false
+            },
+            {
+              "real_name": "checkNullDefect",
+              "display_name": "TSC-checkNullDefect",
+              "severity": "fatal",
+              "category": "usability",
+              "rule_title": "判空条件缺陷",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "if表达式判空缺陷，通常是||和&&写反了",
+              "disable": false
+            },
+            {
+              "real_name": "invalidDereferenceIterator",
+              "display_name": "TSC-invalidDereferenceIterator",
+              "severity": "error",
+              "category": "usability",
+              "rule_title": "无效枚举器解引用",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "枚举器可能指向容器的end()位置，此时解引用会导致程序错误",
+              "disable": false
+            },
+            {
+              "real_name": "funcDereferenceAfterCheck",
+              "display_name": "TSC-funcDereferenceAfterCheck",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": "函数先判空再解引用",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "函数返回值指针先判空，然后在判空作用域外解引用，因为指针判空暗示当前上下文该指针可能为空，因此建议对没有在判空作用域的指针添加判空保护。",
+              "disable": false
+            },
+            {
+              "real_name": "arrayDereferenceAfterCheck",
+              "display_name": "TSC-arrayDereferenceAfterCheck",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": "数组取值先判空再解引用",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "数组取值先判空，然后在判空作用域外解引用，因为判空暗示当前上下文该指针可能为空，因此建议添加判空保护。",
+              "disable": false
+            },
+            {
+              "real_name": "possibleDereferenceAfterCheck",
+              "display_name": "TSC-possibleDereferenceAfterCheck",
+              "severity": "info",
+              "category": "usability",
+              "rule_title": "可能存在先判空后解引用，但是解引用已不在判空范围内",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "可能存在数组先判空，再解引用，但是判空范围已失效",
+              "disable": false
+            },
+            {
+              "real_name": "funcFuncRetNull",
+              "display_name": "TSC-funcFuncRetNull",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": "函数返回值赋值另一函数的引用返回值， 该引用未判空情况下解引用",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "函数存在返回NULL的分支，所以返回值可能为空，若将返回值赋给返回引用的函数，存在风险，应该先判空再使用。",
+              "disable": false
+            },
+            {
+              "real_name": "arrayFuncRetNull",
+              "display_name": "TSC-arrayFuncRetNull",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": "函数返回值赋值数组， 该数组未判空情况下解引用",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "函数存在返回NULL的分支，所以返回值可能为空，若将返回值赋给返回数组，存在风险，应该先判空再使用。",
+              "disable": false
+            },
+            {
+              "real_name": "funcDereferenceBeforeCheck",
+              "display_name": "TSC-funcDereferenceBeforeCheck",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": "函数的引用返回值被先解引用后判空",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "函数的引用返回值要先解引用然后才判空，因为判空暗示当前上下文该指针可能为空，因此建议添加判空保护",
+              "disable": false
+            },
+            {
+              "real_name": "arrayDereferenceBeforeCheck",
+              "display_name": "TSC-arrayDereferenceBeforeCheck",
+              "severity": "error",
+              "category": "usability",
+              "rule_title": "数组被先解引用后判空",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "数组元素先判空，然后在判空作用域外解引用，因为判空暗示当前上下文该该数组元素的地址可能为空，因此建议添加判空保护。",
+              "disable": false
+            },
+            {
+              "real_name": "funcDereferenceIfNull",
+              "display_name": "TSC-funcDereferenceIfNull",
+              "severity": "fatal",
+              "category": "usability",
+              "rule_title": "函数引用返回值为空解应用",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "if条件判断函数的引用返回值等于NULL成立时解引用，通常是判空条件写反了导致的",
+              "disable": false
+            },
+            {
+              "real_name": "arrayDereferenceIfNull",
+              "display_name": "TSC-arrayDereferenceIfNull",
+              "severity": "fatal",
+              "category": "usability",
+              "rule_title": "数组为空解引用",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "if条件判断数组等于NULL成立时解引用，通常是判空条件写反了导致的",
+              "disable": false
+            },
+            {
+              "real_name": "possibleNullDereferenced",
+              "display_name": "TSC-possibleNullDereferenced",
+              "severity": "info",
+              "category": "usability",
+              "rule_title": "可能的空指针解引用",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "检查工具无法确定是否是空指针，但存在这个可能需要人工确定，如：char *p = GetSomePointer();工具未能找到GetSomePointer()函数的实现或无法确定该函数是否不可能返回空，所以对指针p解引用就会报该错误",
+              "disable": false
+            },
+            {
+              "real_name": "nullPointerArray",
+              "display_name": "TSC-nullPointerArray",
+              "severity": "info",
+              "category": "usability",
+              "rule_title": "数组元素空指针",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "数组元素空指针未进行判空保护进行解引用操作",
+              "disable": false
+            },
+            {
+              "real_name": "nullPointerArg",
+              "display_name": "TSC-nullPointerArg",
+              "severity": "info",
+              "category": "usability",
+              "rule_title": "函数的参数没有判断空指针",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "函数的参数没有判空，可能会因为空指针带来宕机等严重问题",
+              "disable": false
+            },
+            {
+              "real_name": "nullPointerClass",
+              "display_name": "TSC-nullPointerClass",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": "类成员变量没有判断空指针",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "类成员变量没有判空，可能会因为空指针带来宕机等严重问题",
+              "disable": false
+            },
+            {
+              "real_name": "directFuncPossibleRetNull",
+              "display_name": "TSC-directFuncPossibleRetNull",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": "函数返回值直接解引用",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "函数返回值直接解引用，如，GetInstance()->SetID(nID);//GetIntance函数有可能返回空，没有做检查就直接解引用",
+              "disable": false
+            },
+            {
+              "real_name": "missingDerefOperator",
+              "display_name": "TSC-missingDerefOperator",
+              "severity": "error",
+              "category": "usability",
+              "rule_title": "可能缺少*号操作符",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "变量判空可能缺少*号操作符，比如：*p = xxx; if(p == NULL) { XXX; }应该对*p判空。",
+              "disable": false
+            },
+            {
+              "real_name": "arrayIndexOutOfBounds",
+              "display_name": "TSC-arrayIndexOutOfBounds",
+              "severity": "fatal",
+              "category": "usability",
+              "rule_title": "数组下标越界",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "数组下标可能产生越界访问，请检查数组下标的最大取值是否超过了数组长度",
+              "disable": false
+            },
+            {
+              "real_name": "negativeIndex",
+              "display_name": "TSC-negativeIndex",
+              "severity": "error",
+              "category": "usability",
+              "rule_title": "负数下标",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "负数下标作为数组下标，通常是不合理的",
+              "disable": false
+            },
+            {
+              "real_name": "arrayIndexThenCheck",
+              "display_name": "TSC-arrayIndexThenCheck",
+              "severity": "fatal",
+              "category": "usability",
+              "rule_title": "先访问数组后校验下标范围",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "比如 array[i] && i < length这种场景， 应该先检查下标再使用",
+              "disable": false
+            },
+            {
+              "real_name": "arrayIndexCheckDefect",
+              "display_name": "TSC-arrayIndexCheckDefect",
+              "severity": "fatal",
+              "category": "usability",
+              "rule_title": "数组下标校验缺陷",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "对数组下标的保护存在缺陷，通常是漏掉了数组长度的边界值",
+              "disable": false
+            },
+            {
+              "real_name": "bufferAccessOutOfBounds",
+              "display_name": "TSC-bufferAccessOutOfBounds",
+              "severity": "error",
+              "category": "usability",
+              "rule_title": "数据缓冲区越界",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "访问缓冲区越界，读写缓冲区的长度超过了缓冲区本身的大小",
+              "disable": false
+            },
+            {
+              "real_name": "funcRetLengthAsIndex",
+              "display_name": "TSC-funcRetLengthAsIndex",
+              "severity": "error",
+              "category": "usability",
+              "rule_title": "read函数返回值作为数组下标",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "read函数的返回值最大可能为缓冲区大小，如果直接把返回值作为数组下标使用，可能造成越界",
+              "disable": false
+            },
+            {
+              "real_name": "stlOutOfBounds",
+              "display_name": "TSC-stlOutOfBounds",
+              "severity": "error",
+              "category": "usability",
+              "rule_title": "stl库函数越界",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "stl库函数导致的越界",
+              "disable": false
+            },
+            {
+              "real_name": "OutOfBoundsStatistic",
+              "display_name": "TSC-OutOfBoundsStatistic",
+              "severity": "error",
+              "category": "usability",
+              "rule_title": "基于统计推断数据下标可能越界",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "通过分析代码下标访问特征推断可能数组下标访问越界",
+              "disable": false
+            },
+            {
+              "real_name": "IndexSelfIncrementError",
+              "display_name": "TSC-IndexSelfIncrementError",
+              "severity": "info",
+              "category": "usability",
+              "rule_title": "数组下标在使用前自增",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "在通过下标来使用数组的过程中，下标在使用前就自增，可能造成使用时的数据越界",
+              "disable": false
+            },
+            {
+              "real_name": "formatbufoverrun",
+              "display_name": "TSC-formatbufoverrun",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": "sprintf_s中越界错误",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "格式化字符串函数缓冲区错误，例如  char szStrTime[5], char snprintf(szStrTime, 4+1, \"%s\", szBuff);//szStrTime可能溢出",
+              "disable": false
+            },
+            {
+              "real_name": "pointerOutOfBounds",
+              "display_name": "TSC-pointerOutOfBounds",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": "指针访问越界",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "指针访问越界",
+              "disable": false
+            },
+            {
+              "real_name": "memleak",
+              "display_name": "TSC-memleak",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": "内存泄漏",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "申请的内存没有释放或者存在代码执行路径导致没有释放",
+              "disable": false
+            },
+            {
+              "real_name": "memleakOnRealloc",
+              "display_name": "TSC-memleakOnRealloc",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": "realloc内存泄漏",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "realloc函数可能会分配一块新的内存空间，如果此时有其他的指针指向旧的内存空间就会导致问题",
+              "disable": false
+            },
+            {
+              "real_name": "resourceLeak",
+              "display_name": "TSC-resourceLeak",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": "资源泄漏",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "文件、管道等资源的泄漏",
+              "disable": false
+            },
+            {
+              "real_name": "deallocDealloc",
+              "display_name": "TSC-deallocDealloc",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": "重复dealloc",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "重复dealloc会导致程序错误",
+              "disable": false
+            },
+            {
+              "real_name": "deallocuse",
+              "display_name": "TSC-deallocuse",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": "dealloc后解引用",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "dealloc指针后再解引用",
+              "disable": false
+            },
+            {
+              "real_name": "mismatchAllocDealloc",
+              "display_name": "TSC-mismatchAllocDealloc",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": "内存申请和释放不匹配",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "内存申请和释放的方式不匹配，比如new的内存，用free去释放",
+              "disable": false
+            },
+            {
+              "real_name": "mismatchSize",
+              "display_name": "TSC-mismatchSize",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": "内存分配大小错误",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "alloc的大小和类型的大小不匹配",
+              "disable": false
+            },
+            {
+              "real_name": "virtualDestructor",
+              "display_name": "TSC-virtualDestructor",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": "虚析构函数使用错误",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "析构函数没有设置为virtual，如果漏调用可能产生资源泄漏",
+              "disable": false
+            },
+            {
+              "real_name": "leakNoVarFunctionCall",
+              "display_name": "TSC-leakNoVarFunctionCall",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": "传递参数过程中分配内存",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "一部分函数不具有释放内存的功能，如果在这调用这部分函数时，若在传递参数过程中分配内存，可能造成内存泄漏",
+              "disable": false
+            },
+            {
+              "real_name": "leakReturnValNotUsed",
+              "display_name": "TSC-leakReturnValNotUsed",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": "内存分配函数的返回结果未使用",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "一些内存分配的函数(比如：malloc)的返回值并未被使用，造成内存泄漏",
+              "disable": false
+            },
+            {
+              "real_name": "incrementboolean",
+              "display_name": "TSC-incrementboolean",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": "bool变量自增",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "对bool变量使用自增，不符合代码规范，而且可能造成不可预期的错误",
+              "disable": false
+            },
+            {
+              "real_name": "moduloAlwaysTrueFalse",
+              "display_name": "TSC-moduloAlwaysTrueFalse",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": "取模运算结果错误判断",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "比如if(a % 10 == 10)这种场景，a对10取模的最大值只能是9",
+              "disable": false
+            },
+            {
+              "real_name": "SizeofForNumericParameter",
+              "display_name": "TSC-SizeofForNumericParameter",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": "数字常量使用sizeof",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "对一个数字常量使用sizeof，比如sizeof(10)，不推荐这种写法",
+              "disable": false
+            },
+            {
+              "real_name": "SizeofForArrayParameter",
+              "display_name": "TSC-SizeofForArrayParameter",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": "数组参数使用sizeof",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "数组作为函数参数时避免对数组用sizeof计算，因为数组参数本质上是指针，可能得到预期之外的结果",
+              "disable": false
+            },
+            {
+              "real_name": "SizeofForPointerSize",
+              "display_name": "TSC-SizeofForPointerSize",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": "指针变量使用sizeof",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "在指针类型上调用sizeof，可能是不符预期的，请确认sizeof的是指针还是指针指向的缓存",
+              "disable": false
+            },
+            {
+              "real_name": "sizeofsizeof",
+              "display_name": "TSC-sizeofsizeof",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": "嵌套sizeof",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "sizeof一个sizeof的结果，这种写法意义不大",
+              "disable": false
+            },
+            {
+              "real_name": "PreciseComparison",
+              "display_name": "TSC-PreciseComparison",
+              "severity": "info",
+              "category": "usability",
+              "rule_title": "浮点数判等",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "因为浮点数的精度问题，浮点数用作==,!=运算可能得到预期之外的结果",
+              "disable": false
+            },
+            {
+              "real_name": "Unsignedlessthanzero",
+              "display_name": "TSC-Unsignedlessthanzero",
+              "severity": "info",
+              "category": "usability",
+              "rule_title": "无符号数判断小于0",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "无符号数在判断的时候，判断其值小于0，判定结果恒为false",
+              "disable": false
+            },
+            {
+              "real_name": "UnsignedDivision",
+              "display_name": "TSC-UnsignedDivision",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": "有符号数和无符号数进行除法运算",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "有符号数和无符号数相除，结果可能不符合预期",
+              "disable": false
+            },
+            {
+              "real_name": "NegativeBitwiseShift",
+              "display_name": "TSC-NegativeBitwiseShift",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": "位操作数为负",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "对负数进行位移运算，不符合编码规范",
+              "disable": false
+            },
+            {
+              "real_name": "ZeroDivision",
+              "display_name": "TSC-ZeroDivision",
+              "severity": "error",
+              "category": "usability",
+              "rule_title": "除零错误",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "可能的除零错误，除零会导致程序crash",
+              "disable": false
+            },
+            {
+              "real_name": "assignmentInAssert",
+              "display_name": "TSC-assignmentInAssert",
+              "severity": "info",
+              "category": "usability",
+              "rule_title": "断言中变量赋值",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "在断言中对变量进行赋值，比如assert(a=5)，在release模式下，assert里面的语言不会被执行",
+              "disable": false
+            },
+            {
+              "real_name": "autovar",
+              "display_name": "TSC-autovar",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": "返回局部变量地址",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "返回一个局部变量的地址，在函数返回后，栈上的地址可能会失效",
+              "disable": false
+            },
+            {
+              "real_name": "suspiciousSemicolon",
+              "display_name": "TSC-suspiciousSemicolon",
+              "severity": "info",
+              "category": "usability",
+              "rule_title": "可疑的分号使用",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "可疑的分号使用，比如if(xxx);{}，这种情况分号很有可能是多余的",
+              "disable": false
+            },
+            {
+              "real_name": "memsetZeroBytes",
+              "display_name": "TSC-memsetZeroBytes",
+              "severity": "error",
+              "category": "usability",
+              "rule_title": "memset参数使用错误",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "memset函数第二、三个参数写反了，比如memset(buffer,100,0);",
+              "disable": false
+            },
+            {
+              "real_name": "Danglingpointer",
+              "display_name": "TSC-Danglingpointer",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": "野指针",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "delete之后没有将指针赋值为NULL，成为野指针，容易出问题",
+              "disable": false
+            },
+            {
+              "real_name": "NestedLoop",
+              "display_name": "TSC-NestedLoop",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": "嵌套循环",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "多重循环中，使用相同的变量名称来控制循环",
+              "disable": false
+            },
+            {
+              "real_name": "suspiciousArrayIndex",
+              "display_name": "TSC-suspiciousArrayIndex",
+              "severity": "error",
+              "category": "usability",
+              "rule_title": "数组下标使用错误",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "使用了数组长度作为数组下标来访问数组",
+              "disable": false
+            },
+            {
+              "real_name": "unConditionalBreakinLoop",
+              "display_name": "TSC-unConditionalBreakinLoop",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": "无条件break",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "看循环中没有任何条件的break，导致循环只执行一次",
+              "disable": false
+            },
+            {
+              "real_name": "SuspiciousPriority",
+              "display_name": "TSC-SuspiciousPriority",
+              "severity": "info",
+              "category": "usability",
+              "rule_title": "可疑优先级",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "可疑的优先级，&&的优先级高于||(+优先级高于<<)",
+              "disable": false
+            },
+            {
+              "real_name": "suspiciousfor",
+              "display_name": "TSC-suspiciousfor",
+              "severity": "error",
+              "category": "usability",
+              "rule_title": "可疑的for循环",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "可能存在错误的for循环, 比如for(int i;i<count;i--)",
+              "disable": false
+            },
+            {
+              "real_name": "wrongvarinfor",
+              "display_name": "TSC-wrongvarinfor",
+              "severity": "error",
+              "category": "usability",
+              "rule_title": "for循环变量错误",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "在for循环中变量使用错误，比如判定的是i<count，自增的是j++",
+              "disable": false
+            },
+            {
+              "real_name": "FuncReturn",
+              "display_name": "TSC-FuncReturn",
+              "severity": "info",
+              "category": "usability",
+              "rule_title": "函数返回值未处理",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "函数定义存在返回值，但没有使用函数返回值",
+              "disable": false
+            },
+            {
+              "real_name": "BoolFuncReturn",
+              "display_name": "TSC-BoolFuncReturn",
+              "severity": "info",
+              "category": "usability",
+              "rule_title": "未返回bool变量",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "bool返回类型的函数返回的是非bool类型的值",
+              "disable": false
+            },
+            {
+              "real_name": "IfCondition",
+              "display_name": "TSC-IfCondition",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": "if条件赋值",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "将赋值语句放在if条件中，本意可能是判等==",
+              "disable": false
+            },
+            {
+              "real_name": "invalidIterator",
+              "display_name": "TSC-invalidIterator",
+              "severity": "error",
+              "category": "usability",
+              "rule_title": "迭代器使用错误",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "用list1的迭代器去操作list2容器",
+              "disable": false
+            },
+            {
+              "real_name": "strPlusChar",
+              "display_name": "TSC-strPlusChar",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": "字符串加字符变量",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "字符串加字符，字符被默认被转成整形，然后进行的是字符串偏移的操作，而不是字符串拼接",
+              "disable": false
+            },
+            {
+              "real_name": "RenameLocalVariable",
+              "display_name": "TSC-RenameLocalVariable",
+              "severity": "info",
+              "category": "usability",
+              "rule_title": "变量定义重名",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "在同一个函数体内，定义了两个名称相同的变量",
+              "disable": false
+            },
+            {
+              "real_name": "tooManyNestedScopes",
+              "display_name": "TSC-tooManyNestedScopes",
+              "severity": "info",
+              "category": "usability",
+              "rule_title": "函数内嵌套层次太多",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "函数内部for循环、条件等嵌套层次太多，影响代码可读性",
+              "disable": false
+            },
+            {
+              "real_name": "bitwiseOnBoolean",
+              "display_name": "TSC-bitwiseOnBoolean",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": "bool进行位运算",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "将布尔的结果用在了位运算中, 某些环境下，bool值可能不是0或1，运算结果将不可控",
+              "disable": false
+            },
+            {
+              "real_name": "ComparisonOfBoolWithInt",
+              "display_name": "TSC-ComparisonOfBoolWithInt",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": "bool和int比较",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "使用布尔类型与int类型的值进行比较,很可能出现了异常代码",
+              "disable": false
+            },
+            {
+              "real_name": "ComparisonOfBoolWithBool",
+              "display_name": "TSC-ComparisonOfBoolWithBool",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": "bool和bool比较运算",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "避免在bool类型变量间的使用大于小于比较符",
+              "disable": false
+            },
+            {
+              "real_name": "ComparisonWithBool",
+              "display_name": "TSC-ComparisonWithBool",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": "bool变量比较运算",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "bool表达式进行比较运算，应该避免这种非常规的运算",
+              "disable": false
+            },
+            {
+              "real_name": "assignIf",
+              "display_name": "TSC-assignIf",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": "无效的if表达式",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "不恰当的运算导致if条件总是为真或假",
+              "disable": false
+            },
+            {
+              "real_name": "oppositeInnerCondition",
+              "display_name": "TSC-oppositeInnerCondition",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": "相反或相同的if条件",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "检查if条件中含有相反或相同的内部条件",
+              "disable": false
+            },
+            {
+              "real_name": "incorrectLogicOperator",
+              "display_name": "TSC-incorrectLogicOperator",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": "错误的逻辑运算操作",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "错误的逻辑运算导致结果总是真或者假",
+              "disable": false
+            },
+            {
+              "real_name": "clarifyCondition",
+              "display_name": "TSC-clarifyCondition",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": "运算符优先级错误",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "位运算与比较符号可能带来优先级错误，建议添加括号",
+              "disable": false
+            },
+            {
+              "real_name": "StlMissingComparison",
+              "display_name": "TSC-StlMissingComparison",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": "迭代器无结束判断",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "迭代器发生了自增，偏移运算时，应该先检查是否超出范围",
+              "disable": false
+            },
+            {
+              "real_name": "stlSortCheck",
+              "display_name": "TSC-stlSortCheck",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": "自定义比较函数缺陷",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "自定义比较函数应该在参数相等时返回false",
+              "disable": false
+            },
+            {
+              "real_name": "InvalidVarArgs",
+              "display_name": "TSC-InvalidVarArgs",
+              "severity": "fatal",
+              "category": "usability",
+              "rule_title": "格式化字符串参数不匹配",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "可变参数函数调用时，检查参数是否匹配",
+              "disable": false
+            },
+            {
+              "real_name": "SwitchNoBreakUP",
+              "display_name": "TSC-SwitchNoBreakUP",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": "break缺失",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "每个带有实际处理的case语句应该对应一个break, 可以通过注释//pass等来标注例外情况",
+              "disable": false
+            },
+            {
+              "real_name": "SwitchNoDefault",
+              "display_name": "TSC-SwitchNoDefault",
+              "severity": "info",
+              "category": "usability",
+              "rule_title": "default分支缺失",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "每个switch语句至少需要一个default分支",
+              "disable": false
+            },
+            {
+              "real_name": "NoFirstCase",
+              "display_name": "TSC-NoFirstCase",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": "case缺失",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "switch中的代码都应该位于某个case条件中",
+              "disable": false
+            },
+            {
+              "real_name": "RecursiveFunc",
+              "display_name": "TSC-RecursiveFunc",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": "函数递归调用",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "函数递归, 可能造成栈溢出，或者影响程序性能",
+              "disable": false
+            },
+            {
+              "real_name": "CompareDefectInFor",
+              "display_name": "TSC-CompareDefectInFor",
+              "severity": "error",
+              "category": "usability",
+              "rule_title": "for循环比较运算类型错误",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "For循环比较表达式类型不匹配",
+              "disable": false
+            },
+            {
+              "real_name": "UnintentionalOverflow",
+              "display_name": "TSC-UnintentionalOverflow",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": "可能的表达式溢出",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "运算结果可能超出该类型的最大值，建议先做类型提升，在进行运算",
+              "disable": false
+            },
+            {
+              "real_name": "duplicateBranch",
+              "display_name": "TSC-duplicateBranch",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": "分支内容重复",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "检查条件的分支内容重复，可能出现笔误，否则应该将分支条件合并",
+              "disable": false
+            },
+            {
+              "real_name": "DuplicateExpression",
+              "display_name": "TSC-DuplicateExpression",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": "判断条件重复",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "判断条件中表达式重复，可能出现笔误",
+              "disable": false
+            },
+            {
+              "real_name": "selfAssignment",
+              "display_name": "TSC-selfAssignment",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": "变量自赋值",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "变量给自身赋值是无意义的，很可能是变量写错了",
+              "disable": false
+            },
+            {
+              "real_name": "duplicateIf",
+              "display_name": "TSC-duplicateIf",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": "if条件重复",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "if判断中使用了相同的条件, 要么条件是冗余的，要么出现了代码错误",
+              "disable": false
+            },
+            {
+              "real_name": "STLFindError",
+              "display_name": "TSC-STLFindError",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": "std::find函数返回值判定错误",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "std::find函数返回值需要使用std::string::npos来检查",
+              "disable": false
+            },
+            {
+              "real_name": "SignedUnsignedMixed",
+              "display_name": "TSC-SignedUnsignedMixed",
+              "severity": "info",
+              "category": "usability",
+              "rule_title": "有符号无符号变量之间赋值错误",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "有符号数和无符号数进行赋值，可能产生数值错误",
+              "disable": false
+            },
+            {
+              "real_name": "redundantCondition",
+              "display_name": "TSC-redundantCondition",
+              "severity": "info",
+              "category": "usability",
+              "rule_title": "重复的条件表达式",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "条件表达式重复，要么条件是无用的，要么出现了代码错误",
+              "disable": false
+            },
+            {
+              "real_name": "stlIfFind",
+              "display_name": "TSC-stlIfFind",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": "低效使用std::find",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "在字符串查找(或比较)的场景下，如果string::find的查找结果与0比较的话，使用效率会低于string::compare，因为string::find会查找完整个字符串",
+              "disable": false
+            },
+            {
+              "real_name": "redundantAssignment",
+              "display_name": "TSC-redundantAssignment",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": "多余的赋值操作",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "变量被赋值，但是没有被使用。",
+              "disable": false
+            },
+            {
+              "real_name": "integerMultiplyOverflow",
+              "display_name": "TSC-integerMultiplyOverflow",
+              "severity": "info",
+              "category": "usability",
+              "rule_title": "整数乘法运算溢出风险",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "整数之间进行乘法运算存在溢出风险",
+              "disable": false
+            },
+            {
+              "real_name": "unsignedMinusError",
+              "display_name": "TSC-unsignedMinusError",
+              "severity": "info",
+              "category": "usability",
+              "rule_title": "无符号整数减法运算溢出风险",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "对于无符号整型变量，如果减一个比自己大的数会导致溢出。",
+              "disable": false
+            },
+            {
+              "real_name": "unsafeFunctionUsage",
+              "display_name": "TSC-unsafeFunctionUsage",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": "高危函数",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "使用高危函数可能造成缓冲区溢出等漏洞，影响程序安全",
+              "disable": false
+            },
+            {
+              "real_name": "uninitstring",
+              "display_name": "TSC-uninitstring",
+              "severity": "error",
+              "category": "usability",
+              "rule_title": "字符串初始化错误",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "变量未初始化，可能存在分支没有初始化变量",
+              "disable": false
+            },
+            {
+              "real_name": "uninitvar",
+              "display_name": "TSC-uninitvar",
+              "severity": "error",
+              "category": "usability",
+              "rule_title": "变量未初始化",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "变量未初始化，或者不是所有的分支都初始化",
+              "disable": false
+            },
+            {
+              "real_name": "possibleUninitvar",
+              "display_name": "TSC-possibleUninitvar",
+              "severity": "error",
+              "category": "usability",
+              "rule_title": "可能的变量未初始化",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "未初始化变量用作等号右值或者函数参数",
+              "disable": false
+            },
+            {
+              "real_name": "uninitPtr",
+              "display_name": "TSC-uninitPtr",
+              "severity": "error",
+              "category": "usability",
+              "rule_title": "指针变量未初始化",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "未初始化的指针",
+              "disable": false
+            },
+            {
+              "real_name": "possibleUninitPtr",
+              "display_name": "TSC-possibleUninitPtr",
+              "severity": "error",
+              "category": "usability",
+              "rule_title": "可能的指针变量未初始化",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "未初始化的指针变量用作等号右值或者函数参数",
+              "disable": false
+            },
+            {
+              "real_name": "uninitMemberInCtor",
+              "display_name": "TSC-uninitMemberInCtor",
+              "severity": "error",
+              "category": "usability",
+              "rule_title": "构造函数使用未初始化成员变量",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "构造函数使用未初始化成员变量",
+              "disable": false
+            },
+            {
+              "real_name": "possibleUninitStruct",
+              "display_name": "TSC-possibleUninitStruct",
+              "severity": "error",
+              "category": "usability",
+              "rule_title": "可能的未初始化结构体变量",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "未初始化的结构体变量用作等号右值或者函数参数",
+              "disable": false
+            },
+            {
+              "real_name": "UninitStruct",
+              "display_name": "TSC-UninitStruct",
+              "severity": "error",
+              "category": "usability",
+              "rule_title": "未初始化结构体变量",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "结构体变量没有初始化，或者部分成员变量未初始化",
+              "disable": false
+            },
+            {
+              "real_name": "possibleUninitMemberInCtor",
+              "display_name": "TSC-possibleUninitMemberInCtor",
+              "severity": "error",
+              "category": "usability",
+              "rule_title": "构造函数中成员变量可能未初始化",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "构造函数中未初始化成员变量用作等号右值或函数参数",
+              "disable": false
+            },
+            {
+              "real_name": "uninitMemberVar",
+              "display_name": "TSC-uninitMemberVar",
+              "severity": "warning",
+              "category": "usability",
+              "rule_title": "构造函数中成员变量未初始化",
+              "rule_params": "",
+              "custom": false,
+              "languages": [
+                "cpp"
+              ],
+              "solution": "",
+              "owner": "",
+              "labels": [],
+              "description": "构造函数中部分成员变量未初始化",
+              "disable": false
+            }
+        ],
+        "open_user": true,
+        "virtual_name": "",
+        "show_display_name": true
+    }
+]

@@ -102,7 +102,7 @@ class DupResultHandler(object):
             if not item.get("code_blocks"):
                 continue
             if item.get("last_modifier"):
-                item["last_modifier"] = encode_with_ignore(item["last_modifier"])
+                item["last_modifier"] = encode_with_ignore(item["last_modifier"][:127])
             issue_path = "%s%s" % (self._project.id, item["path"])
             issue_hash = gen_path_key(issue_path)
             if issue_hash not in exist_issues:
@@ -209,14 +209,14 @@ class DupResultHandler(object):
                 continue
             # 处理字段编码异常，采用ignore方式进行处理
             if item.get("last_modifier"):
-                item["last_modifier"] = encode_with_ignore(item["last_modifier"])
+                item["last_modifier"] = encode_with_ignore(item["last_modifier"])[:127]
             if item.get("related_modifiers"):
-                item["related_modifiers"] = encode_with_ignore(item["related_modifiers"])
+                item["related_modifiers"] = encode_with_ignore(item["related_modifiers"])[:510]
             duplicate_file = duplicate_files.filter(file_path=item["path"]).first()
             for code_block in item["code_blocks"]:
-                code_block["last_modifier"] = encode_with_ignore(code_block["last_modifier"])
+                code_block["last_modifier"] = encode_with_ignore(code_block["last_modifier"])[:127]
                 if code_block.get("related_modifiers"):
-                    code_block["related_modifiers"] = encode_with_ignore(code_block["related_modifiers"])
+                    code_block["related_modifiers"] = encode_with_ignore(code_block["related_modifiers"])[:510]
                 dup_block_set.append(models.DuplicateBlock(project_id=self._project.id,
                                                            scan_id=self._dup_scan.id,
                                                            duplicate_file_id=duplicate_file.id,
