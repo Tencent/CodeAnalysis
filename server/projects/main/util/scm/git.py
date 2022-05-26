@@ -50,7 +50,7 @@ class GitRemoteClient(IScmClient):
                 "username": username,
                 "password": password
             }
-        self._git_proxy = CustomServerProxy(settings.SCMPROXY, timeout=20)
+        self._git_proxy = CustomServerProxy(settings.SCMPROXY, timeout=int(settings.SCMPROXY_TIMEOUT))
         self._repository = None
         self._branch = None
 

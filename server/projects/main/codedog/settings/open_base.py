@@ -247,6 +247,7 @@ LOCAL_DOMAIN = ""
 
 # scmproxy服务地址
 SCMPROXY = ""
+SCMPROXY_TIMEOUT = 20
 
 # Analyse Server Ticket
 API_TICKET_SALT = ""

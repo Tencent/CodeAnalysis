@@ -63,11 +63,11 @@
 ## 让server知道哪些客户端可以执行`tca_ql_php_beta`工具
 1. 进入节点管理页面
 
-![节点管理](../media/node_mange.png)
+![节点管理](https://tencent.github.io/CodeAnalysis/media/Nodemanagement.png)
 
 2. 选择其中一台机器 工具进程配置，勾选其工具进程
 
-![工具进程](../media/tool.png)
+![工具进程](https://tencent.github.io/CodeAnalysis/doc/images/node_mange2.png)
 
 ## client下载/找到工具所在目录及需要的环境
 1. 找到puppy-tool-config若没有额外配置则为默认代码库https://github.com/TCATools/puppy-tools-config.git
