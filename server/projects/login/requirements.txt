@@ -12,7 +12,7 @@ pymysql==1.0.2
 djangorestframework==3.11.2
 
 # for login
-djangorestframework-simplejwt==4.4.0
+djangorestframework-simplejwt==5.1.0
 PyJWT==2.4.0
 
 # for password

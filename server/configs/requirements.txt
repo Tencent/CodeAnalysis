@@ -36,7 +36,7 @@ celery-redbeat==2.0.0
 django-prometheus==2.0.0
 
 # for login
-djangorestframework-simplejwt==4.4.0
+djangorestframework-simplejwt==5.1.0
 PyJWT==2.4.0
 
 # for password
