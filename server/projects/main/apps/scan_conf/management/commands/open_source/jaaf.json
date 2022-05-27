@@ -1,0 +1,59 @@
+[
+    {
+        "name": "jaaf",
+        "display_name": "JAAF",
+        "description": "复杂场景下的JavaAPI检查",
+        "license": "自研",
+        "libscheme_set": [],
+        "task_processes": [
+            "analyze",
+            "datahandle",
+            "compile"
+        ],
+        "scan_app": "codelint",
+        "scm_url": null,
+        "run_cmd": null,
+        "envs": null,
+        "build_flag": true,
+        "checkrule_set": [
+            {
+                "real_name": "IQCP_H",
+                "display_name": "DeriveCheckIQConfigProcessorHandler",
+                "severity": "warning",
+                "category": "usability",
+                "rule_title": "派生类接口调用检查 - IQConfigProcessor - Handler",
+                "rule_params": "msg=禁止使用此类型API\ninterface_class=IQConfigProcessor\ninterface_method=onParsed\nclass=android.os.Handler\nmethod=post;postAtTime;postDelayed;postAtFrontOfQueue",
+                "custom": true,
+                "languages": [
+                    "java"
+                ],
+                "solution": "根据业务需求评估禁用该API。",
+                "owner": null,
+                "labels": [],
+                "description": "禁止在实现IQConfigProcessor - onParsed接口的代码中，调用如参数所述的handler-post等api。",
+                "disable": false
+            },
+            {
+                "real_name": "IQCP_Thread",
+                "display_name": "DeriveCheckIQConfigProcessorThread",
+                "severity": "warning",
+                "category": "usability",
+                "rule_title": "派生类接口调用检查 - IQConfigProcessor - Thread",
+                "rule_params": "msg=禁止使用此类型API\ninterface_class=IQConfigProcessor\ninterface_method=onParsed\nclass=java.lang.Thread\nmethod=run",
+                "custom": true,
+                "languages": [
+                    "java"
+                ],
+                "solution": "根据业务需求评估禁用该API。",
+                "owner": null,
+                "labels": [],
+                "description": "禁止在实现IQConfigProcessor - onParsed接口的代码中，调用如参数所述的handler-post等api。",
+                "disable": false
+            }
+        ],
+        "open_user": true,
+        "open_saas": false,
+        "virtual_name": "102",
+        "show_display_name": true
+    }
+]
