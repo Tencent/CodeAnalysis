@@ -3,7 +3,7 @@
         "name": "collie",
         "display_name": "Collie",
         "description": "多语言非编译型静态代码分析工具。",
-        "license": null,
+        "license": "自研",
         "libscheme_set": [],
         "task_processes": [
             "analyze",
@@ -138,6 +138,6 @@
         "open_user": true,
         "open_saas": false,
         "virtual_name": "193",
-        "show_display_name": false
+        "show_display_name": true
     }
 ]
