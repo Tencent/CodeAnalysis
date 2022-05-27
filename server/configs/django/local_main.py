@@ -91,6 +91,7 @@ ANALYSE_SERVER_URL = os.environ.get("ANALYSE_SERVER_URL", "http://127.0.0.1:8002
 LOGIN_SERVER_URL = os.environ.get("LOGIN_SERVER_URL", "http://127.0.0.1:8003")
 # Scmproxy服务地址
 SCMPROXY = os.environ.get("SCMPROXY", "http://127.0.0.1:8009")
+SCMPROXY_TIMEOUT = os.environ.get("SCMPROXY_TIMEOUT", 300)
 
 # 文件服务器
 FILE_SERVER = {

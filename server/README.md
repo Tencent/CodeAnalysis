@@ -35,6 +35,7 @@ Main服务Redis配置：
 - API_TICKET_TOKEN：服务访问Token
 - FILE_SERVER_TOKEN：文件服务器访问Token
 - CODEDOG_TOKEN：CodeDog默认访问的Token
+- SCMPROXY_TIMEOUT：Scm服务请求超时时间
 
 
 #### Analysis服务
