@@ -193,12 +193,12 @@ const Auth = () => {
           {t('录入后，仓库登记、分支项目等模块可直接选择凭证，无需重复填写。')}
         </p>
       </div>
-      <OAuthTable
+      {oauthData.length > 0 && <OAuthTable
         dataSource={oauthData}
         onOAuth={onOAuthStart}
         onUpdate={onOAuthUpdate}
         onDel={onOAuthDelStart}
-      />
+      />}
       <AuthTable
         dataSource={dataSource}
         onEdit={onCreateOrEditHandle}
