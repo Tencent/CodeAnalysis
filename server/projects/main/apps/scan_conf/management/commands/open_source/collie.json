@@ -135,7 +135,7 @@
                 "disable": false
             }
         ],
-        "open_user": false,
+        "open_user": true,
         "open_saas": false,
         "virtual_name": "193",
         "show_display_name": false
