@@ -17,7 +17,7 @@
         "build_flag": true,
         "checkrule_set": [
             {
-                "real_name": "IQCP_H",
+                "real_name": "DeriveCheckIQConfigProcessorHandler",
                 "display_name": "DeriveCheckIQConfigProcessorHandler",
                 "severity": "warning",
                 "category": "usability",
@@ -34,7 +34,7 @@
                 "disable": false
             },
             {
-                "real_name": "IQCP_Thread",
+                "real_name": "DeriveCheckIQConfigProcessorThread",
                 "display_name": "DeriveCheckIQConfigProcessorThread",
                 "severity": "warning",
                 "category": "usability",
