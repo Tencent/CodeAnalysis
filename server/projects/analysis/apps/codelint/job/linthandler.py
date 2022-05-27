@@ -572,16 +572,29 @@ class LintResultHandler(object):
         logger.info("%s 查询到的全局误报问题数: %d" % (self._log_prefix, invalid_issue_hash_list.count()))
         if invalid_issue_hash_list.count() == 0:
             return
-        CRIssue = models.CRIssueFactory.shard(self._scan.create_time)
-        invalid_cr_issue_num = CRIssue.objects.filter(
-            scan_open_id=self._scan.id, project_id=self._project.id,
-            g_issue_hash__in=invalid_issue_hash_list, state=models.Issue.StateEnum.ACTIVE
-        ).update(
-            scan_fix_id=self._scan.id, fixed_time=self._current_time,
+        issue_infos = list(models.Issue.objects.filter(
+            project_id=self._project.id,
+            g_issue_hash__in=invalid_issue_hash_list,
+            state=models.Issue.StateEnum.ACTIVE
+        ).values("id", "issue_hash"))
+        logger.info("%s 将%d个问题设置为误报并添加相关评论" % (self._log_prefix, len(issue_infos)))
+        current_time = timezone.make_aware(datetime.now(), timezone.get_current_timezone())
+        issue_ids = [item["id"] for item in issue_infos]
+        models.Issue.objects.filter(id__in=issue_ids).update(
+            scan_fix_id=self._scan.id, fixed_time=current_time,
             state=models.Issue.StateEnum.RESOLVED,
-            resolution=models.Issue.ResolutionEnum.INVALID
-        )
-        logger.info("%s 日常扫描问题存在误报问题: %d" % (self._log_prefix, invalid_cr_issue_num))
+            resolution=models.Issue.ResolutionEnum.INVALID)
+        issue_comments = []
+        for issue_info in issue_infos:
+            issue_comments.append(
+                models.IssueComment(
+                    issue_id=issue_info["id"],
+                    issue_hash=issue_info["issue_hash"],
+                    project_id=self._project.id,
+                    action="全局无效标记",
+                    message="当前问题属于代码库标记的全局无效问题，在[Scan: %d]扫描时自动设置处理方式" % self._scan.id,
+                    creator="CodeDog"))
+        models.IssueComment.objects.bulk_create(issue_comments, batch_size=1000)
 
     def _batch_update_issue_with_wontfix_resolution(self, global_issue_hash_list):
         """批量将问题处理方式标记为忽略
@@ -591,21 +604,31 @@ class LintResultHandler(object):
             g_issue_hash__in=global_issue_hash_list,
             scope=models.InvalidIssue.ScopeEnum.REPO,
             project__repo_id=self._scan.project.repo_id).values_list("g_issue_hash", flat=True)
-        logger.info("%s 查询到的全局误报问题数: %d" % (
-            self._log_prefix, wontfix_issue_hash_list.count()))
+        logger.info("%s 查询到的全局无需处理问题数: %d" % (self._log_prefix, wontfix_issue_hash_list.count()))
         if wontfix_issue_hash_list.count() == 0:
             return
-        CRIssue = models.CRIssueFactory.shard(self._scan.create_time)
-        wontfix_daily_issue_num = CRIssue.objects.filter(
-            scan_open_id=self._scan.id, project_id=self._project.id,
-            g_issue_hash__in=wontfix_issue_hash_list, state=models.Issue.StateEnum.ACTIVE
-        ).update(
-            scan_fix_id=self._scan.id, fixed_time=self._current_time,
+        issue_infos = list(models.Issue.objects.filter(
+            project_id=self._project.id, g_issue_hash__in=wontfix_issue_hash_list,
+            state=models.Issue.StateEnum.ACTIVE
+        ).values("id", "issue_hash"))
+        logger.info("%s 将%d个问题设置为无需修复并添加相关评论" % (self._log_prefix, len(issue_infos)))
+        current_time = timezone.make_aware(datetime.now(), timezone.get_current_timezone())
+        issue_ids = [item["id"] for item in issue_infos]
+        models.Issue.objects.filter(id__in=issue_ids).update(
+            scan_fix_id=self._scan.id, fixed_time=current_time,
             state=models.Issue.StateEnum.RESOLVED,
-            resolution=models.Issue.ResolutionEnum.INVALID
-        )
-        logger.info("%s 日常扫描问题存在无需修复的问题: %d" % (
-            self._log_prefix, wontfix_daily_issue_num))
+            resolution=models.Issue.ResolutionEnum.WONTFIX)
+        issue_comments = []
+        for issue_info in issue_infos:
+            issue_comments.append(
+                models.IssueComment(
+                    issue_id=issue_info["id"],
+                    issue_hash=issue_info["issue_hash"],
+                    project_id=self._project.id,
+                    action="全局无需修复标记",
+                    message="当前问题属于代码库标记的全局无需修复问题，在[Scan: %d]扫描时自动设置处理方式" % self._scan.id,
+                    creator="CodeDog"))
+        models.IssueComment.objects.bulk_create(issue_comments, batch_size=1000)
 
     def reopen_issues_with_no_change_files(self, file_hash_list):
         """根据文件哈希值列表重开问题
