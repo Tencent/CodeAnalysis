@@ -1,5 +1,5 @@
 /**
- * 创建工具依赖
+ * 创建/编辑工具依赖
  */
 import React, { useState, useEffect } from 'react';
 import { isEmpty, fromPairs, toPairs } from 'lodash';
@@ -8,7 +8,6 @@ import PlusIcon from 'coding-oa-uikit/lib/icon/Plus';
 import RefreshIcon from 'coding-oa-uikit/lib/icon/Refresh';
 import TrashIcon from 'coding-oa-uikit/lib/icon/Trash';
 import QuestionCircle from 'coding-oa-uikit/lib/icon/QuestionCircle';
-
 
 import { gScmAccounts, getSSHInfo } from '@src/services/user';
 import { addToolLib, getLibDetail, updateToolLib } from '@src/services/tools';
@@ -99,12 +98,8 @@ const CreateToollibs = (props: CreateToollibsProps) => {
       }
     }
 
-
     data.lib_os = formData.lib_os?.join(';');
-
-    if (!isEmpty(formData.envs)) {
-      data.envs = fromPairs(formData.envs?.map((item: { key: string, value: string }) => [item.key, item.value]))
-    }
+    data.envs = !isEmpty(formData.envs) ? fromPairs(formData.envs?.map((item: { key: string, value: string }) => [item.key, item.value])) : {}
 
     if (isEdit) {
       updateToolLib(orgSid, libId, data).then(() => {
