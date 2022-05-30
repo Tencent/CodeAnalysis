@@ -73,6 +73,10 @@ class CmdArgParser(object):
         start_parser = subparsers.add_parser('start', help="启动节点")
         start_parser.add_argument("-t", "--token", dest='token', type=str, help="个人token,在代码分析网站获取", required=True)
 
+        # task命令
+        task_parser = subparsers.add_parser('task', help="执行单个任务，本地调试用")
+        task_parser.add_argument(dest='request_file', type=str, help="任务参数json文件")
+
         # help
         subparsers.add_parser('help', help="显示帮助文档")
 

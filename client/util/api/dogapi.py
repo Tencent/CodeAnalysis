@@ -8,6 +8,7 @@
 """ 与codedog server通信的resful api接口实现
 """
 
+import json
 import logging
 import sys
 
@@ -35,10 +36,16 @@ class CodeDogApiServer(object):
         }
         self._server_url = server_url
 
-    def get_data_from_result(self, result):
+    def get_data_from_result(self, response):
         """
         Analysis返回格式调整，不具备通用性，需要特殊适配
         """
+        return_data = response.read()
+        return_str = return_data.decode("utf8")
+        # 可能为空字符串，直接返回，不需要转换json
+        if not return_str:
+            return return_str
+        result = json.loads(return_str)
         if isinstance(result, dict):
             if result.get("data") is not None and result.get("code") is not None \
                     and result.get("status_code") is not None:
@@ -261,7 +268,9 @@ class CodeDogApiServer(object):
         判断代码仓库是否存在（即代码库是否在平台上已关联）
         :return:
         """
-        rel_url = f"api/orgs/{org_sid}/teams/{team_name}/repos/?scm_url={quote(repo_url)}"
+        rel_url = f"api/orgs/{quote(org_sid)}/teams/{quote(team_name)}/repos/?scm_url={quote(repo_url)}"
+        # logger.info(f"---> org_sid: {org_sid}, team_name: {team_name}")
+        # logger.info(f"---> org_sid: {quote(org_sid)}, team_name: {quote(team_name)}")
         rsp = CodeDogHttpClient(self._server_url, rel_url, headers=self._headers).get()
         # logger.info(f">>>> {type(rsp)} rsp: {rsp}")
         data = self.get_data_from_result(rsp)

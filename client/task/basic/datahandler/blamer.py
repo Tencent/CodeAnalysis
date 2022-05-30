@@ -114,6 +114,7 @@ class Blamer(HandlerBase):
                     else:
                         # blame成功，使用blame获取的信息
                         try:
+                            issue['line'] = int(issue['line'])
                             if "end_line" in issue:
                                 blame_infos = blames[issue["line"] - 1 : issue["end_line"]]
                                 blame_info = max(blame_infos, key=lambda x: x.timestamp)
