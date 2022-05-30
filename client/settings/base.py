@@ -11,7 +11,7 @@
 
 import os
 from datetime import timedelta
-from os.path import join
+from os.path import join, dirname
 from settings.edition import *
 
 
@@ -57,7 +57,7 @@ CACHE_FILE = join(DATA_DIR, "cache.json")
 # PUPPY所需的第三方工具目录
 LIB_BASE_DIR = join(BASE_DIR, 'lib')
 # TCA平台根目录
-TCA_BASE_DIR = join(BASE_DIR, "..")
+TCA_BASE_DIR = dirname(BASE_DIR)
 
 
 # ========================

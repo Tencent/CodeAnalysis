@@ -41,14 +41,7 @@ class HttpRequest(object):
             request = Request(url=url, data=body, headers=headers)
             request.get_method = lambda: method.upper()
             response = urlopen(request)
-            # status = response.getcode()
-            return_data = response.read()
-            return_str = return_data.decode("utf8")
-            # 可能为空字符串，直接返回，不需要转换json
-            if not return_str:
-                return return_str
-            return_dict = json.loads(return_str)
-            return return_dict
+            return response
         except HTTPError as err:
             error_msg = err.read().decode('utf-8')
             logger.error(f"api request error: {error_msg}\nurl: {url}")
@@ -78,16 +71,16 @@ class HttpClient(object):
         self.proxies = proxies
 
     def get(self, params=None):
-        result = HttpRequest.request(url=self.url, headers=self.headers, param=params, body=self.data, method="GET")
-        return result
+        response = HttpRequest.request(url=self.url, headers=self.headers, param=params, body=self.data, method="GET")
+        return response
 
     def post(self):
-        result = HttpRequest.request(url=self.url, headers=self.headers, body=self.data, method="POST")
-        return result
+        response = HttpRequest.request(url=self.url, headers=self.headers, body=self.data, method="POST")
+        return response
 
     def put(self):
-        result = HttpRequest.request(url=self.url, headers=self.headers, body=self.data, method="PUT")
-        return result
+        response = HttpRequest.request(url=self.url, headers=self.headers, body=self.data, method="PUT")
+        return response
 
 
 class RetryHttpClient(object):

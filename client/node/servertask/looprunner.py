@@ -19,6 +19,7 @@ from node.servertask.nodemgr import NodeMgr, HeartBeat, NodeStatusMonitor
 from node.common.task import Task
 from node.common.taskdirmgr import TaskDirCtl
 from node.common.taskrunner import TaskRunner
+from node.common.uploadresult import ResultUploader
 from util.crypto import Crypto
 from util.api.dogserver import RetryDogServer
 from util.reporter import Reporter, InfoType
@@ -109,7 +110,7 @@ class LoopRunner(TaskRunner):
 
         try:
             # 上传issues和log到文件服务器
-            data_url, log_url = TaskRunner.upload_result_detail(project_id, task.task_id, task_dir, data, task.task_log)
+            data_url, log_url = ResultUploader().upload_result_detail(project_id, task.task_id, task_dir, data, task.task_log)
         except FileServerError as err:
             code = err.code
             msg = f"Fail to send result to file server! Error: {err.msg}"
