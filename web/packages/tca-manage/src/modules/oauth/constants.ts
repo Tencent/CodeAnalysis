@@ -55,6 +55,6 @@ export const DEFAULT_SCM_PLATFORM = [
   {
     scm_platform : 6,
     scm_platform_name : "gitlab",
-    scm_platform_desc : "由GitLab Inc.开发，一款基于Git的完全集成的软件开发平台",
+    scm_platform_desc : "由GitLab Inc.开发的基于Git的完全集成的软件开发平台",
   },
 ];
