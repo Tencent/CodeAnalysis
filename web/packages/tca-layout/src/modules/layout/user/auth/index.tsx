@@ -26,12 +26,12 @@ const Auth = () => {
   const [oauthData, setOAuthData] = useState<any>([]);
   const [curOAuthData, setCurOAuthData] = useState<any>({});
   const [dataSource, setDataSource] = useState<any>([]);
-  const [visible, setVisible] = useState(false);
-  const [visibleDel, setVisibleDel] = useState(false);
-  const [visibleCancel, setVisibleCancel] = useState(false);
+  const [visible, setVisible] = useState<boolean>(false);
+  const [visibleDel, setVisibleDel] = useState<boolean>(false);
+  const [visibleCancel, setVisibleCancel] = useState<boolean>(false);
   const [curAuthInfo, setCurAuthInfo] = useState<any>({});
-  const [authinfo, setAuthinfo] = useState(null);
-  const [reload, setReload] = useState(false);
+  const [authinfo, setAuthinfo] = useState<any>(null);
+  const [reload, setReload] = useState<boolean>(false);
 
   /**
      * 获取全部凭证
@@ -71,6 +71,27 @@ const Auth = () => {
   }, []);
 
   /**
+     * 获取OAuth凭证
+     */
+  const updateOAuthList = () => {
+    Promise.all([
+      getPlatformStatus().then(r => r || []),
+      getOAuthStatus().then(r => r || []),
+    ]).then((result) => {
+      setOAuthData(
+        filter(
+          DEFAULT_SCM_PLATFORM.map((item:any)=>({ 
+            ...item, 
+            oauth_status: get(result[1], item.scm_platform_name, [false]),
+            platform_status: get(result[0], item.scm_platform_name, [false]),
+          })),
+          'platform_status'
+        )
+      );
+    });
+  };
+
+  /**
      * 创建/更新凭证信息
      * @param authinfo 凭证信息
      */
@@ -102,7 +123,7 @@ const Auth = () => {
     if (event.origin === curLocation.origin) {
       if(event.data === 'oauth succeeded') {
         message.success('授权成功');
-        setReload(!reload);
+        updateOAuthList();
       } else if (event.data === 'oauth failed') {
         message.error('授权失败');
       }
@@ -164,7 +185,7 @@ const Auth = () => {
   const onOAuthDel = (oauthInfo: any) => {
     delOAuthStatus({scm_platform_name: oauthInfo?.scm_platform_name}).then(()=>{
       message.success(t('已解除授权'));
-      setReload(!reload);
+      updateOAuthList();
     }).catch(()=>{
       message.error(t('无法解除授权'));
     }).finally(()=>{
