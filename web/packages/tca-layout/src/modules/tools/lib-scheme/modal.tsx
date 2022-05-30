@@ -52,6 +52,7 @@ const UpdateLibSchemeModal = (props: UpdateLibSchemeModalProps) => {
     if (visible) {
       initFields();
       if (isEdit) {  // 编辑
+        getLibs({ os: initData?.scheme_os });
         form.setFieldsValue({
           ...initData,
           scheme_os: initData?.scheme_os?.split(';'),
@@ -62,7 +63,6 @@ const UpdateLibSchemeModal = (props: UpdateLibSchemeModalProps) => {
         form.resetFields();
       }
     }
-
   }, [visible])
 
   useEffect(() => getLibs(), [orgSid]);
