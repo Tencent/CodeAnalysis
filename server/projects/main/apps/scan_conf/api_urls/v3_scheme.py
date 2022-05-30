@@ -14,7 +14,8 @@ from django.urls import path, include
 # 项目内
 from apps.scan_conf.apis import v3 as apis
 
-# 前缀/api/v3/orgs/<str:org_sid>/teams/<str:team_name>/repos/<int:repo_id>/schemes/<int:scheme_id>/checkprofile/checkpackages/
+# 前缀/api/v3/orgs/<str:org_sid>/teams/<str:team_name>/repos/<int:repo_id>/schemes/<int:scheme_id>
+#  + /checkprofile/checkpackages/
 # 官方规则包的相关接口
 checkpackage_urlpatterns = [
     path("",

@@ -9,22 +9,29 @@
 scan_conf - base filter
 """
 # 第三方
-from django.db.models import Q
+from django.db.models import Q, Value
+from django.db.models.functions import Concat
 from django_filters import rest_framework as filters
 
 # 项目内
 from apps.scan_conf import models
-from apps.base.filters import NumberInFilter
+from apps.base.filters import NumberInFilter, CharInFilter
 
 
 class ToolLibFilter(filters.FilterSet):
     """工具依赖列表筛选
     """
     name = filters.CharFilter(lookup_expr="icontains", help_text="依赖名称")
+    os = CharInFilter(help_text="依赖系统", method="os_filter")
+
+    def os_filter(self, queryset, name, value):
+        # 利用正则来处理lib_os筛选
+        os = ';%s;' % (';|;'.join(value))
+        return queryset.annotate(cos=Concat(Value(';'), 'lib_os', Value(';'))).filter(cos__iregex=r"%s" % os)
 
     class Meta:
         model = models.ToolLib
-        fields = ["name", "lib_type"]
+        fields = ["name", "lib_type", "os"]
 
 
 class CheckToolFilter(filters.FilterSet):
@@ -37,8 +44,8 @@ class CheckToolFilter(filters.FilterSet):
 
     def checktool_name_filter(self, queryset, name, value):
         """工具名称筛选，支持工具name和display_name、virtual_name筛选"""
-        return queryset.filter(Q(name__icontains=value) | 
-                               Q(display_name__icontains=value) | 
+        return queryset.filter(Q(name__icontains=value) |
+                               Q(display_name__icontains=value) |
                                Q(virtual_name__icontains=value))
 
     def scope_filter(self, queryset, name, value):
@@ -52,7 +59,7 @@ class CheckToolFilter(filters.FilterSet):
 
     class Meta:
         model = models.CheckTool
-        fields = ["name", "display_name", "virtual_name", "fuzzy_name",  "scope", "status"]
+        fields = ["name", "display_name", "virtual_name", "fuzzy_name", "scope", "status"]
 
 
 class PackageMapFilter(filters.FilterSet):
@@ -69,7 +76,7 @@ class PackageMapFilter(filters.FilterSet):
     state = NumberInFilter(help_text="状态，1为生效中，2为已屏蔽")
     checkrule_disable = filters.BooleanFilter(field_name="checkrule__disable", help_text="规则状态")
     checkrule_language = filters.CharFilter(field_name="checkrule__languages__name")
-    
+
     def checkrule_name_filter(self, queryset, name, value):
         """规则筛选，支持规则real_name和display_name"""
         return queryset.filter(Q(checkrule__real_name__icontains=value) |
@@ -93,7 +100,7 @@ class CheckRuleFilter(filters.FilterSet):
     language_name = filters.CharFilter(field_name="languages__name", help_text="规则适用语言")
     label_name = filters.CharFilter(field_name="labels__name", help_text="规则标签")
     disable = filters.BooleanFilter(field_name="disable", help_text="规则状态")
-    
+
     def checkrule_name_filter(self, queryset, name, value):
         """规则筛选，支持规则real_name和display_name"""
         return queryset.filter(Q(real_name__icontains=value) | Q(display_name__icontains=value))

@@ -1,0 +1,12 @@
+{
+  "name": "WINDOWS_NODE",
+  "scm_url": "https://git.code.tencent.com/TCA/tca-tools/win-node-v12.16.3.git",
+  "scm_type": "git",
+  "envs": {
+    "NODE_HOME": "$ROOT_DIR",
+    "NODE_PATH": "$ROOT_DIR/node_modules",
+    "PATH": "$ROOT_DIR/bin;$ROOT_DIR"
+  },
+  "lib_os": "windows",
+  "lib_type": "public"
+}

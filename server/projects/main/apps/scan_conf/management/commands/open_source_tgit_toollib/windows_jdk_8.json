@@ -1,0 +1,12 @@
+{
+  "name": "WINDOWS_JDK_8",
+  "scm_url": "https://git.code.tencent.com/TCA/tca-tools/win-jdk1.8.0_91.git",
+  "scm_type": "git",
+  "envs": {
+    "JAVA_HOME": "$ROOT_DIR",
+    "JDK_8_HOME": "$ROOT_DIR",
+    "PATH": "$ROOT_DIR/bin;$ROOT_DIR"
+  },
+  "lib_os": "windows",
+  "lib_type": "public"
+}

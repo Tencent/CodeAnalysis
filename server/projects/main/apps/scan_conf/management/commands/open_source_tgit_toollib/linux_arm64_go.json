@@ -1,0 +1,13 @@
+{
+  "name": "LINUX_ARM64_GO",
+  "scm_url": "https://git.code.tencent.com/TCA/tca-tools/linux-arm64-go-1.12.6.git",
+  "scm_type": "git",
+  "envs": {
+    "GOROOT": "$ROOT_DIR",
+    "GOPATH": "$ROOT_DIR/go",
+    "GO_HOME": "$ROOT_DIR",
+    "PATH": "$ROOT_DIR/bin;$ROOT_DIR"
+  },
+  "lib_os": "linux_arm64",
+  "lib_type": "public"
+}

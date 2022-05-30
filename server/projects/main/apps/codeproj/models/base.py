@@ -292,7 +292,7 @@ class BaseScanScheme(CDBaseModel):
     created_from = models.CharField(max_length=32, help_text="创建渠道", default=CreatedFromEnum.WEB)
     issue_global_ignore = models.BooleanField(default=True, verbose_name="是否开启问题全局忽略，默认为True（开启）")
     status = models.IntegerField(choices=STATUS_CHOICES, default=StatusEnum.ACTIVE, help_text="扫描方案状态")
-    scheme_key = models.CharField(max_length=64, verbose_name="扫描方案key值", null=True, blank=True)
+    scheme_key = models.CharField(max_length=64, verbose_name="扫描方案key值", null=True, blank=True, db_index=True)
     scheme_type = models.IntegerField(help_text="方案类型", default=SchemeTypeEnum.CUSTOM, null=True, blank=True)
 
     class Meta:
@@ -346,15 +346,16 @@ class BaseProject(CDBaseModel):
     """
 
     class StatusEnum(object):
-        APPLYING = 0
         ACTIVE = 1
         DISACTIVE = 2
-        CLOSED = 3
+        ARCHIVING = 3
+        ARCHIVED = 4
 
     STATUS_CHOICES = (
         (StatusEnum.ACTIVE, "活跃"),
         (StatusEnum.DISACTIVE, "失活"),
-        (StatusEnum.CLOSED, "关闭"),
+        (StatusEnum.ARCHIVING, "归档中"),
+        (StatusEnum.ARCHIVED, "已归档")
     )
 
     class CreatedFromEnum(object):

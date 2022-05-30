@@ -1,0 +1,10 @@
+{
+  "name": "LINUX_ARM64_GOMETALINTER",
+  "scm_url": "https://github.com/TCATools/linux-arm64-gometalinter-v2.0.12.git",
+  "scm_type": "git",
+  "envs": {
+    "PATH": "$ROOT_DIR/bin;$ROOT_DIR"
+  },
+  "lib_os": "linux_arm64",
+  "lib_type": "public"
+}

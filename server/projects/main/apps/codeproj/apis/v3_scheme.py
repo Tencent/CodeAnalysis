@@ -33,7 +33,7 @@ logger = logging.getLogger(__name__)
 class ScanSchemeListApiView(CustomSerilizerMixin, generics.ListCreateAPIView, V3GetModelMixinAPIView):
     """分析方案模板列表接口
 
-    ### get
+    ### GET
     应用场景：获取分析方案列表
     筛选项：
     ```python
@@ -41,7 +41,7 @@ class ScanSchemeListApiView(CustomSerilizerMixin, generics.ListCreateAPIView, V3
     scope: str, 过滤范围，all全部，system系统模板，not_system非系统模板，editable有权限编辑模板
     ```
 
-    ### post
+    ### POST
     创建新的扫描方案
     """
     permission_classes = [OrganizationOperationPermission]
@@ -58,10 +58,10 @@ class ScanSchemeListApiView(CustomSerilizerMixin, generics.ListCreateAPIView, V3
 class ScanSchemeDetailApiView(generics.RetrieveUpdateAPIView, V3GetModelMixinAPIView):
     """分析方案模板详情接口
 
-    ### get
+    ### GET
     应用场景：获取分析方案模板详情
 
-    ### put
+    ### PUT
     应用场景：更新分析方案模板详情
     """
     permission_classes = [GlobalSchemeDefaultPermission]
@@ -74,10 +74,10 @@ class ScanSchemeDetailApiView(generics.RetrieveUpdateAPIView, V3GetModelMixinAPI
 class ScanSchemePermConfApiView(generics.RetrieveUpdateAPIView, V3GetModelMixinAPIView):
     """扫描方案权限配置
 
-    ### get
+    ### GET
     应用场景：获取指定扫描方案的权限信息
 
-    ### put
+    ### PUT
     应用场景：更新指定扫描方案的权限信息
     """
     permission_classes = [GlobalSchemeDefaultPermission]
@@ -92,7 +92,7 @@ class ScanSchemePermConfApiView(generics.RetrieveUpdateAPIView, V3GetModelMixinA
 class ScanSchemeChildrenListApiView(generics.ListAPIView, V3GetModelMixinAPIView):
     """模板子扫描方案列表
 
-    ### get
+    ### GET
     应用场景：获取指定模板的子扫描方案列表
     """
     permission_classes = [GlobalSchemeDefaultPermission]

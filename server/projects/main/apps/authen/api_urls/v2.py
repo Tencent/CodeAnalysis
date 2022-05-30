@@ -17,6 +17,13 @@ from apps.authen.apis import v2
 
 # 前缀/api/v2/authen/
 urlpatterns = [
-    path("allusers/", v2.UserListApiView.as_view(), name="apiv2_all_users"),
-    path("allusers/<str:username>/", v2.UserDetailApiView.as_view(), name="apiv2_all_user_detail"),
+    path("allusers/", v2.UserListApiView.as_view(),
+         name="apiv2_all_users"),
+    path("allusers/<str:username>/", v2.UserDetailApiView.as_view(),
+         name="apiv2_all_user_detail"),
+
+    path("oauthsettings/<str:scm_platform_name>/", v2.ScmOauthSettingDetailAPIView.as_view(),
+         name="apiv2_oauthsetting_detail"),
+    path("oauthsettings/", v2.ScmOauthSettingAPIView.as_view(),
+         name="apiv2_oauthsettings"),
 ]

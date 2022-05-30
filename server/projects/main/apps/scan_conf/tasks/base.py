@@ -30,7 +30,7 @@ def _get_checkpackage_dict(packagemaps):
     checkpackage_dict = dict()
     for v in packagemaps:
         checkpackage = v.checkpackage
-        if not checkpackage in checkpackage_dict:
+        if checkpackage not in checkpackage_dict:
             checkpackage_dict[checkpackage] = [v]
         else:
             checkpackage_dict[checkpackage].append(v)
@@ -66,7 +66,7 @@ def _rm_checkpackage_packagemaps(checktool, checkpackage, packagemaps, op_type, 
 @celery_app.task
 def checktool_to_private(checktool_id, username):
     """私有化工具操作
-    :param checktool_id: int, 工具ID 
+    :param checktool_id: int, 工具ID
     :param username: str, 操作人/团队
     """
     checktool = models.CheckTool.objects.filter(id=checktool_id).first()
@@ -82,7 +82,8 @@ def checktool_to_private(checktool_id, username):
                 org = CheckProfileManager.get_org(checkprofile)
                 tool_key = CheckToolManager.get_tool_key(org=org) if org else None
                 # 校验是否具备使用该工具规则的权限，具备则不删除，否则移除
-                if CheckPackageManager.check_add_tool_rules_perm(checktool, checkpackage=checkpackage, tool_key=tool_key):
+                if CheckPackageManager.check_add_tool_rules_perm(checktool, checkpackage=checkpackage,
+                                                                 tool_key=tool_key):
                     continue
             except models.CheckProfile.DoesNotExist:
                 # 不存在checkprofile则为官方规则包
@@ -95,7 +96,7 @@ def checktool_to_private(checktool_id, username):
 @celery_app.task
 def checktool_to_disable(checktool_id, username):
     """工具下架，下架工具需要移除规则包，规则配置中对应规则
-    :param checktool_id: int, 工具ID 
+    :param checktool_id: int, 工具ID
     :param username: str, 操作人/团队
     """
     checktool = models.CheckTool.objects.filter(id=checktool_id).first()
@@ -104,7 +105,8 @@ def checktool_to_disable(checktool_id, username):
         packagemaps = models.PackageMap.objects.filter(checkrule__in=checkrules)
         checkpackage_dict = _get_checkpackage_dict(packagemaps)
         for (checkpackage, packagemaps) in checkpackage_dict.items():
-            _rm_checkpackage_packagemaps(checktool, checkpackage, packagemaps, models.CheckTool.OpEnum.DISABLETOOL, username)
+            _rm_checkpackage_packagemaps(checktool, checkpackage, packagemaps,
+                                         models.CheckTool.OpEnum.DISABLETOOL, username)
 
 
 @celery_app.task
@@ -120,8 +122,9 @@ def checktool_to_delrule(checktool_id, checkrule_ids, username):
         packagemaps = models.PackageMap.objects.filter(checkrule__in=checkrules)
         checkpackage_dict = _get_checkpackage_dict(packagemaps)
         for (checkpackage, packagemaps) in checkpackage_dict.items():
-            _rm_checkpackage_packagemaps(checktool, checkpackage, packagemaps, models.CheckTool.OpEnum.DELRULE, username)
-        
+            _rm_checkpackage_packagemaps(checktool, checkpackage, packagemaps,
+                                         models.CheckTool.OpEnum.DELRULE, username)
+
         checkrule_names = []
         for checkrule in checkrules:
             checkrule_names.append('%s(%s)' % (checkrule.display_name, checkrule.real_name))

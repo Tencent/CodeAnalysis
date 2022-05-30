@@ -1,0 +1,11 @@
+{
+  "name": "WINDOWS_MONO",
+  "scm_url": "https://github.com/TCATools/win-Mono-6.8.0.git",
+  "scm_type": "git",
+  "envs": {
+    "MONO_HOME": "$ROOT_DIR",
+    "PATH": "$ROOT_DIR/bin;$ROOT_DIR"
+  },
+  "lib_os": "windows",
+  "lib_type": "public"
+}

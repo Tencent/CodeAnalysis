@@ -1,0 +1,11 @@
+{
+  "name": "LINUX_DART_SDK",
+  "scm_url": "https://git.code.tencent.com/TCA/tca-tools/linux-dart-sdk-v2.7.2.git",
+  "scm_type": "git",
+  "envs": {
+    "DART_HOME": "$ROOT_DIR",
+    "PATH": "$ROOT_DIR/bin;$ROOT_DIR"
+  },
+  "lib_os": "linux",
+  "lib_type": "public"
+}

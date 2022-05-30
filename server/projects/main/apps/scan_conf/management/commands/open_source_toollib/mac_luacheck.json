@@ -1,0 +1,11 @@
+{
+  "name": "MAC_LUACHECK",
+  "scm_url": "https://github.com/TCATools/mac-luacheck-0.21.2.git",
+  "scm_type": "git",
+  "envs": {
+    "LUACHECK_HOME": "$ROOT_DIR",
+    "PATH": "$ROOT_DIR/bin;$ROOT_DIR"
+  },
+  "lib_os": "mac",
+  "lib_type": "public"
+}

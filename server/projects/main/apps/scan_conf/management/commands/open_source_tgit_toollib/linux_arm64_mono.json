@@ -1,0 +1,11 @@
+{
+  "name": "LINUX_ARM64_MONO",
+  "scm_url": "https://git.code.tencent.com/TCA/tca-tools/arm64-mono-6.10.0.104.git",
+  "scm_type": "git",
+  "envs": {
+    "MONO_HOME": "$ROOT_DIR",
+    "PATH": "$ROOT_DIR/bin;$ROOT_DIR"
+  },
+  "lib_os": "linux_arm64",
+  "lib_type": "public"
+}

@@ -35,15 +35,6 @@ def get_and_check_view_org(self):
     return org
 
 
-class ToolLibEditSerializer(base.ToolLibEditSerializer):
-    """工具依赖编辑序列化，用于创建、更新工具依赖序列化
-    """
-
-    def validate(self, attrs):
-        attrs["org"] = get_and_check_view_org(self)
-        return super().validate(attrs)
-
-
 class CheckToolWhiteKeySerializer(base.CheckToolWhiteKeySerializer):
     """工具白名单序列化，可用于工具白名单添加
     """
@@ -79,7 +70,7 @@ class CheckToolEditSeriaizer(CheckToolSerializer):
                                        choices=models.CheckTool.SCM_TYPE_CHOICES,
                                        default=models.CheckTool.ScmTypeEnum.GIT)
     scm_auth = ScmAuthCreateSerializer(write_only=True, help_text="关联授权信息", allow_null=True, required=False)
-    
+
     def get_user(self):
         request = self.context.get("request")
         user = request.user if request else None
@@ -88,20 +79,41 @@ class CheckToolEditSeriaizer(CheckToolSerializer):
             user = self.context.get("user")
         return user
 
-    def validate_scm_url(self, scm_url):
-        user = self.get_user()
-        if scm_url or (user and user.is_superuser):
-            return scm_url
-        raise serializers.ValidationError("工具代码库地址必填")
-
-    def validate_run_cmd(self, run_cmd):
-        user = self.get_user()
-        if run_cmd or (user and user.is_superuser):
-            return run_cmd
-        raise serializers.ValidationError("工具执行命令必填")
-    
     def validate(self, attrs):
         attrs["org"] = get_and_check_view_org(self)
+        user = self.get_user()
+        scm_auth = attrs.get("scm_auth")
+        scm_url = attrs.get('scm_url')
+        run_cmd = attrs.get('run_cmd')
+        # 非超管，scm_url和run_cmd必填
+        if not (user and user.is_superuser):
+            if not scm_url:
+                raise serializers.ValidationError({"scm_url": "工具代码库地址必填"})
+            if not run_cmd:
+                raise serializers.ValidationError({"run_cmd": "工具执行命令必填"})
+        # 存在时则进行凭证校验
+        if scm_url and scm_auth:
+            scm_type = attrs.get("scm_type")
+            auth_type = scm_auth.get("auth_type")
+            if auth_type == models.ScmAuth.ScmAuthTypeEnum.OAUTH:
+                scm_oauth = scm_auth.get("scm_oauth")
+                if not scm_oauth or scm_oauth.user != user:
+                    raise serializers.ValidationError({"scm_auth": "请选择有效OAuth凭证"})
+                credential_info = scm_oauth.credential_info
+            elif auth_type == models.ScmAuth.ScmAuthTypeEnum.PASSWORD:
+                scm_account = scm_auth.get("scm_account")
+                if not scm_account or scm_account.user != user:
+                    raise serializers.ValidationError({"scm_auth": "请选择有效HTTP凭证"})
+                credential_info = scm_account.credential_info
+            elif auth_type == models.ScmAuth.ScmAuthTypeEnum.SSHTOKEN:
+                scm_ssh = scm_auth.get("scm_ssh")
+                if not scm_ssh or scm_ssh.user != user:
+                    raise serializers.ValidationError({"scm_auth": "请选择有效SSH凭证"})
+                credential_info = scm_ssh.credential_info
+            else:
+                raise serializers.ValidationError({"auth_type": ["不支持%s鉴权方式" % auth_type]})
+            # 校验
+            ScmAuthManager.check_scm_url_credential(scm_type, scm_url, credential_info)
         return super().validate(attrs)
 
     def _create_or_update(self, validated_data, instance=None):
@@ -114,10 +126,11 @@ class CheckToolEditSeriaizer(CheckToolSerializer):
             ScmAuthManager.create_checktool_auth(
                 checktool, user, scm_auth_type=scm_auth.get("auth_type"),
                 scm_account=scm_auth.get("scm_account"),
-                scm_ssh_info=scm_auth.get("scm_ssh")
+                scm_ssh_info=scm_auth.get("scm_ssh"),
+                scm_oauth=scm_auth.get("scm_oauth"),
             )
         return checktool
-    
+
     def create(self, validated_data):
         return self._create_or_update(validated_data)
 
@@ -151,7 +164,7 @@ class CheckToolRuleSerializer(base.CheckToolRuleSerializer):
 class CheckToolCustomRuleSerializer(CheckToolRuleSerializer):
     """工具自定义规则序列化，支持工具自定义规则创建/更新
     """
-    
+
     def _create_or_update(self, validated_data, instance=None):
         validated_data["org"] = get_and_check_view_org(self)
         return super()._create_or_update(validated_data, instance=instance)

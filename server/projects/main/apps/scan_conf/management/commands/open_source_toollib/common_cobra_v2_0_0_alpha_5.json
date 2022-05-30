@@ -1,0 +1,11 @@
+{
+  "name": "COMMON_COBRA_V2_0_0_ALPHA_5",
+  "scm_url": "https://github.com/TCATools/common-cobra-v2.0.0-alpha.5.git",
+  "scm_type": "git",
+  "envs": {
+    "COBRA_HOME": "$ROOT_DIR",
+    "PATH": "$ROOT_DIR/bin;$ROOT_DIR"
+  },
+  "lib_os": "linux;mac;windows;linux_arm64",
+  "lib_type": "public"
+}
