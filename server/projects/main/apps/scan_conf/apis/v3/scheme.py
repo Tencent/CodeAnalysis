@@ -181,7 +181,7 @@ class ScanSchemeCheckProfileRuleBatch(generics.GenericAPIView, V3GetModelMixinAP
     """
     permission_classes = [SchemeDefaultPermission]
     serializer_class = None
-    
+
     def get_and_check_batch_data(self, request):
         """校验并获取批量数据
         :return: serializer, checkpackage, tool_key
@@ -216,7 +216,7 @@ class ScanSchemeCheckProfileRuleCreateAPIView(ScanSchemeCheckProfileRuleBatch):
             "detail": message,
             "err_message": err_message
         })
-        
+
 
 class ScanSchemeCheckProfileRuleBatchUpdateAPIView(ScanSchemeCheckProfileRuleBatch):
     """分析方案-规则配置-自定义规则包-批量修改规则信息接口
@@ -327,7 +327,7 @@ class ScanSchemeCheckProfileRuleBatchDeleteAPIView(ScanSchemeCheckProfileRuleBat
 
 class CheckPackageListAPIView(generics.ListAPIView):
     """分析方案-规则配置-全部官方规则包列表接口
-    
+
     ### get
     应用场景：获取全部有效的官方规则包列表，按修改时间排序
 
@@ -368,7 +368,7 @@ class CheckRuleListAPIView(generics.ListAPIView, V3GetModelMixinAPIView):
         checkprofile = self.get_checkprofile()
         custom_rule_ids = models.PackageMap.objects.filter(checkpackage=checkprofile.custom_checkpackage) \
                                                    .values_list("checkrule_id", flat=True).distinct()
-        new_data = []  
+        new_data = []
         for rule in data:
             rule["select_state"] = models.CheckRule.SelectStateTypeEnum.UNSELECT
             if rule.get("id") in custom_rule_ids:

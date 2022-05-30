@@ -20,12 +20,13 @@ logger = logging.getLogger(__name__)
 class LanguageListAPIView(generics.ListAPIView):
     """平台语言列表接口
 
-    ### get
+    ### GET
     应用场景：获取支持代码扫描的语言列表
     """
 
     serializer_class = serializers.LanguageSerializer
     queryset = models.Language.objects.all()
+
 
 
 class LabelListAPIView(generics.ListAPIView):

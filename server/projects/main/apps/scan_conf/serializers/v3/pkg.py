@@ -94,4 +94,3 @@ class ScanSchemePackageMapSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.PackageMap
         exclude = ["checktool"]
-

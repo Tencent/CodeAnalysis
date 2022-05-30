@@ -1,0 +1,11 @@
+{
+  "name": "MAC_PYTHON27",
+  "scm_url": "https://github.com/TCATools/mac-Python-v2.7.10.git",
+  "scm_type": "git",
+  "envs": {
+    "PYTHON27_HOME": "$ROOT_DIR",
+    "PATH": "$ROOT_DIR/bin;$ROOT_DIR"
+  },
+  "lib_os": "mac",
+  "lib_type": "public"
+}

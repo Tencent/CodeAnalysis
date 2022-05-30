@@ -13,12 +13,12 @@ import logging
 
 from django.conf import settings
 
+from apps.authen.models import ScmAccount, ScmAuth, ScmAuthInfo, ScmSshInfo
 from apps.base.models import Origin
-from apps.authen.models import ScmAuth, ScmSshInfo, ScmAccount
-
-from util.scm import ScmClient, ScmNotFoundError, ScmAccessDeniedError, ScmClientError
-from util.exceptions import ScmInfoError
 from util.cdcrypto import encrypt
+from util.exceptions import ScmInfoError
+from util.scm import SCM_PLATFORM_NAME_AS_KEY, ScmAccessDeniedError, ScmClient, ScmClientError, ScmNotFoundError, \
+    ScmPlatformEnum
 
 logger = logging.getLogger(__name__)
 
@@ -40,7 +40,8 @@ class ScmClientManager(object):
         return ScmClient(repo.scm_type, target_url,
                          auth_type=auth_info.get("auth_type", ScmAuth.ScmAuthTypeEnum.PASSWORD),
                          username=auth_info.get("scm_username"), password=auth_info.get("scm_password"),
-                         ssh_key=auth_info.get("scm_ssh_key"), ssh_password=auth_info.get("scm_ssh_password"))
+                         ssh_key=auth_info.get("scm_ssh_key"), ssh_password=auth_info.get("scm_ssh_password"),
+                         scm_platform=auth_info.get("scm_platform"))
 
     @classmethod
     def get_scm_client_with_project(cls, project, scm_url=None):
@@ -57,7 +58,26 @@ class ScmClientManager(object):
         return ScmClient(project.scm_type, target_url,
                          auth_type=auth_info.get("auth_type", ScmAuth.ScmAuthTypeEnum.PASSWORD),
                          username=auth_info.get("scm_username"), password=auth_info.get("scm_password"),
-                         ssh_key=auth_info.get("scm_ssh_key"), ssh_password=auth_info.get("scm_ssh_password"))
+                         ssh_key=auth_info.get("scm_ssh_key"), ssh_password=auth_info.get("scm_ssh_password"),
+                         scm_platform=auth_info.get("scm_platform"))
+
+    @classmethod
+    def get_scm_client_with_toollib(cls, toollib, scm_url=None):
+        """指定工具依赖初始化ScmClient客户端
+        :param toollib: ToolLib
+        :param scm_url: str
+        :return: ScmClient
+        """
+        auth_info = toollib.auth_info
+        if scm_url:
+            target_url = scm_url
+        else:
+            target_url = toollib.get_scm_url_with_auth()
+        return ScmClient(toollib.scm_type, target_url,
+                         auth_type=auth_info.get("auth_type", ScmAuth.ScmAuthTypeEnum.PASSWORD),
+                         username=auth_info.get("scm_username"), password=auth_info.get("scm_password"),
+                         ssh_key=auth_info.get("scm_ssh_key"), ssh_password=auth_info.get("scm_ssh_password"),
+                         scm_platform=auth_info.get("scm_platform"))
 
     @classmethod
     def get_scm_client(cls, scm_type, scm_url, auth_type=None, username=None,
@@ -86,7 +106,12 @@ class ScmClientManager(object):
         :return: scm_client
         """
         auth_type = credential_info.get("auth_type")
-        if auth_type == ScmAuth.ScmAuthTypeEnum.PASSWORD:
+        if auth_type == ScmAuth.ScmAuthTypeEnum.OAUTH:
+            access_token = credential_info.get("access_token")
+            if is_encrypt:
+                access_token = encrypt(access_token, settings.PASSWORD_KEY)
+            scm_client = cls.get_scm_client(scm_type, scm_url, auth_type, password=access_token)
+        elif auth_type == ScmAuth.ScmAuthTypeEnum.PASSWORD:
             username = credential_info.get("username")
             password = credential_info.get("password")
             if is_encrypt:
@@ -108,11 +133,12 @@ class ScmClientManager(object):
 class ScmAuthManager(object):
 
     @classmethod
-    def create_or_update_auth(cls, auth_key, auth_type, scm_account=None, scm_ssh=None):
+    def create_or_update_auth(cls, auth_key, auth_type, scm_account=None, scm_oauth=None, scm_ssh=None):
         """创建或更新授权信息
         :param auth_key: str, 代码库或项目类型的授权信息Key值
         :param auth_type: str, 授权类型
         :param scm_account: ScmAccount 代码库账号信息
+        :param scm_oauth: ScmAuthInfo 代码库OAuth授权信息
         :param scm_ssh: ScmSSHInfo 代码库SSH授权信息
         :return: ScmAuth
         """
@@ -121,6 +147,7 @@ class ScmAuthManager(object):
             defaults={
                 "auth_type": auth_type,
                 "scm_account": scm_account,
+                "scm_oauth": scm_oauth,
                 "scm_ssh": scm_ssh,
             }
         )
@@ -128,11 +155,12 @@ class ScmAuthManager(object):
             scm_auth.auth_type = auth_type
             scm_auth.scm_account = scm_account
             scm_auth.scm_ssh = scm_ssh
+            scm_auth.scm_oauth = scm_oauth
             scm_auth.save()
         return scm_auth
 
     @classmethod
-    def create_repository_auth(cls, repository, user, scm_auth_type=None, scm_ssh_info=None,
+    def create_repository_auth(cls, repository, user, scm_oauth=None, scm_auth_type=None, scm_ssh_info=None,
                                scm_account=None):
         """
         创建代码库授权
@@ -140,6 +168,7 @@ class ScmAuthManager(object):
         :param repository: Repository, 代码库
         :param user: User，用户
         :param scm_auth_type: str，授权类型
+        :prama scm_oauth: ScmAuthInfo 代码库OAuth授权信息
         :param scm_ssh_info: ScmSSHInfo 代码库SSH授权信息
         :param scm_account: ScmAccount 代码库账号信息
         :return:
@@ -148,6 +177,7 @@ class ScmAuthManager(object):
         logger.debug("create repo scm auth: %s" % auth_key)
         scm_auth = cls.create_or_update_auth(
             auth_key=auth_key, auth_type=scm_auth_type,
+            scm_oauth=scm_oauth,
             scm_account=scm_account,
             scm_ssh=scm_ssh_info)
         repository.scm_auth = scm_auth
@@ -174,7 +204,7 @@ class ScmAuthManager(object):
 
     @classmethod
     def create_checktool_auth(cls, checktool, user, scm_auth_type=None,
-                              scm_ssh_info=None, scm_account=None):
+                              scm_ssh_info=None, scm_account=None, scm_oauth=None):
         """
         创建工具授权
 
@@ -183,18 +213,21 @@ class ScmAuthManager(object):
         :param scm_auth_type: str，授权类型
         :param scm_ssh_info: ScmSSHInfo 代码库SSH授权信息
         :param scm_account: ScmAccount 代码库账号信息
+        :param scm_oauth: ScmAuthInfo Oauth授权信息
         """
         auth_key = "%s_%s" % (ScmAuth.KeyEnum.TOOL, checktool.id)
         logger.debug("create checktool scm auth: %s" % auth_key)
         scm_auth = cls.create_or_update_auth(
             auth_key=auth_key, auth_type=scm_auth_type,
-            scm_account=scm_account,  scm_ssh=scm_ssh_info)
+            scm_account=scm_account, scm_ssh=scm_ssh_info,
+            scm_oauth=scm_oauth
+        )
         checktool.scm_auth = scm_auth
         checktool.save(user=user)
 
     @classmethod
     def create_toollib_auth(cls, toollib, user, scm_auth_type=None,
-                            scm_ssh_info=None, scm_account=None):
+                            scm_ssh_info=None, scm_account=None, scm_oauth=None):
         """
         创建工具依赖授权
 
@@ -208,7 +241,8 @@ class ScmAuthManager(object):
         logger.debug("create toollib scm auth: %s" % auth_key)
         scm_auth = cls.create_or_update_auth(
             auth_key=auth_key, auth_type=scm_auth_type,
-            scm_account=scm_account,  scm_ssh=scm_ssh_info)
+            scm_account=scm_account, scm_ssh=scm_ssh_info,
+            scm_oauth=scm_oauth)
         toollib.scm_auth = scm_auth
         toollib.save(user=user)
 
@@ -292,6 +326,56 @@ class ScmAuthManager(object):
         return scm_ssh_info
 
     @classmethod
+    def create_or_update_scm_auth(cls, user, access_token, refresh_token, auth_origin="Codedog", **kwargs):
+        """创建OAuth授权信息
+        :param user: User，授权用户
+        :param access_token: str，OAuth授权token
+        :param refresh_token: str，OAuth更新Token
+        :param auth_origin: str，授权来源，默认为Codedog
+        :return: ScmAuthInfo
+        """
+        auth_origin = cls.get_origin_with_name(name=auth_origin)
+        # 获取Token过期时间(仅针对部分scm平台)
+        expires_in, created_at = kwargs.get("expires_in", None), kwargs.get("created_at", None)
+        expires_at = expires_in + created_at if expires_in and created_at else None
+        scm_auth_info, created = ScmAuthInfo.objects.get_or_create(
+            user=user,
+            auth_origin=auth_origin,
+            scm_platform=kwargs.get("scm_platform", ScmPlatformEnum.GIT_OA),
+            defaults={
+                "gitoa_access_token": encrypt(access_token, settings.PASSWORD_KEY),
+                "gitoa_refresh_token": encrypt(refresh_token, settings.PASSWORD_KEY),
+                "scm_platform_desc": kwargs.get("scm_platform_desc"),
+                "expires_at": expires_at
+            }
+        )
+        logger.info("%s user:%s oauth info with %s" % ("create" if created else "update", user, auth_origin))
+        if not created:
+            scm_auth_info.gitoa_access_token = encrypt(access_token, settings.PASSWORD_KEY)
+            scm_auth_info.gitoa_refresh_token = encrypt(refresh_token, settings.PASSWORD_KEY)
+            if expires_at:
+                scm_auth_info.expires_at = expires_at
+            scm_auth_info.save()
+        return scm_auth_info
+
+    @classmethod
+    def get_scm_auth(cls, user, scm_platform=None, auth_origin="Codedog"):
+        """获取指定渠道的授权信息
+        :param user: User，授权用户
+        :param scm_platform: str, scm授权平台
+        :param auth_origin: str，授权来源，默认为Codedog
+        :return: ScmAuthInfo
+        """
+        if isinstance(scm_platform, str):
+            scm_platform = SCM_PLATFORM_NAME_AS_KEY.get(scm_platform, ScmPlatformEnum.GIT_OA)
+        if not scm_platform:
+            scm_platform = ScmPlatformEnum.GIT_OA
+        auth_origin = cls.get_origin_with_name(name=auth_origin)
+        scm_auth_info = ScmAuthInfo.objects.filter(
+            user=user, auth_origin=auth_origin, scm_platform=scm_platform).first()
+        return scm_auth_info
+
+    @classmethod
     def get_scm_sshs(cls, user):
         """获取指定用户的授权信息
         :param user: User，授权用户
@@ -307,6 +391,23 @@ class ScmAuthManager(object):
         :return: ScmSshInfo
         """
         return cls.get_scm_sshs(user=user).filter(id=sshinfo_id).first()
+
+    @classmethod
+    def get_scm_authinfos(cls, user):
+        """获取指定用户的Oauth授权信息
+        :param user: User，授权用户
+        :return: QuerySet ScmAuthInfo
+        """
+        return ScmAuthInfo.objects.filter(user=user)
+
+    @classmethod
+    def get_scm_authinfo_with_id(cls, user, authinfo_id):
+        """获取指定用户指定编号的授权信息
+        :param user: User，授权用户
+        :param authinfo_id: int，凭证编号
+        :return: ScmAuthInfo
+        """
+        return cls.get_scm_authinfos(user=user).filter(id=authinfo_id).first()
 
     @classmethod
     def check_scm_url_credential(cls, scm_type, scm_url, credential_info, branch=None, is_encrypt=False):

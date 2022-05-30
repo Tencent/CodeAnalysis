@@ -28,7 +28,7 @@ logger = logging.getLogger(__name__)
 
 class CheckToolDisplayNameListAPIView(generics.ListAPIView):
     """工具展示名称列表接口，仅IsAdminUser可调用
-    
+
     ### get
     应用场景：获取工具展示名称列表
     """

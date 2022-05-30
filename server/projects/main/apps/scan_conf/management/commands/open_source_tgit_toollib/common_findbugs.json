@@ -1,0 +1,11 @@
+{
+  "name": "COMMON_FINDBUGS",
+  "scm_url": "https://git.code.tencent.com/TCA/tca-tools/findbugs.git",
+  "scm_type": "git",
+  "envs": {
+    "FINDBUGS_HOME": "$ROOT_DIR",
+    "PATH": "$ROOT_DIR/bin;$ROOT_DIR"
+  },
+  "lib_os": "linux;mac;windows;linux_arm64",
+  "lib_type": "public"
+}

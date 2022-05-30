@@ -99,7 +99,7 @@ class BaseToolManager(object):
         if not checktool:
             kwargs.update({"tool_key": tool_key})
         # 创建或更新工具
-        checktool, created = ModelManager.create_or_update(models.CheckTool, instance=checktool, 
+        checktool, created = ModelManager.create_or_update(models.CheckTool, instance=checktool,
                                                            user=user, name=name,
                                                            update_data={"name": name, **kwargs})
         # 特殊字段单独配置
@@ -138,7 +138,7 @@ class BaseToolManager(object):
         :param checkrule: CheckRule, 规则，None创建、存在则更新
         :param is_script: bool, 是否脚本执行，脚本执行忽略每次更新工具语言和规则的日志记录
         :params kwargs: kwargs 其他规则参数
-        :return checkrule 
+        :return: checkrule
         """
         # 创建工具规则时需校验该规则名是否存在
         if not checkrule and models.CheckRule.objects.filter(checktool=checktool, real_name=real_name).exists():
@@ -150,7 +150,7 @@ class BaseToolManager(object):
         if not checkrule:
             kwargs.update({"tool_key": tool_key})
         # 创建或更新工具规则
-        checkrule, created = ModelManager.create_or_update(models.CheckRule, instance=checkrule, user=user, 
+        checkrule, created = ModelManager.create_or_update(models.CheckRule, instance=checkrule, user=user,
                                                            checktool=checktool, real_name=real_name, update_data={
                 "real_name": real_name,
                 **kwargs
@@ -241,7 +241,7 @@ class BaseToolManager(object):
         # 执行工具依赖创建
         cls.create_libscheme_by_script(checktool, libscheme_set, user)
 
-        # 日志记录        
+        # 日志记录
         OperationRecordHandler.add_checktool_operation_record(checktool, action, username=user, message=message)
         return checktool
 
@@ -282,7 +282,7 @@ class BaseToolManager(object):
 
 
 class CheckToolManager(BaseToolManager):
-    
+
     @classmethod
     def get_tool_key(cls, **kwargs):
         """获取工具key
@@ -361,7 +361,7 @@ class CheckToolManager(BaseToolManager):
         :param checkrule: CheckRule, 规则，None创建、存在则更新
         :param is_script: bool, 是否脚本执行，脚本执行忽略每次更新工具语言和规则的日志记录
         :params kwargs: kwargs 其他规则参数
-        :return checkrule 
+        :return checkrule
         """
         # 如果传递了org，那么相当于是团队自定义工具规则
         org = kwargs.pop("org", None)
@@ -384,7 +384,7 @@ class CheckToolManager(BaseToolManager):
         注：协同工具且当前用户为团队管理员可操作自定义规则。该权限仅控制自定义规则
         """
         return checktool.open_maintain and user.has_perm(Organization.PermissionNameEnum.CHANGE_ORG_PERM, org)
-  
+
     @classmethod
     def check_edit_perm(cls, org, checktool, user):
         """校验用户是否具有工具的编辑权限
@@ -427,11 +427,11 @@ class CheckToolManager(BaseToolManager):
         tool_key = cls.get_tool_key(org=org)
         if models.CheckToolWhiteKey.objects.filter(tool_key=tool_key, tool_id=checktool.id).exists():
             return user.has_perm(Organization.PermissionNameEnum.VIEW_ORG_PERM, org)
-        return False 
+        return False
 
     @classmethod
     def check_use_toollib_perm(cls, checktool, toollib):
         """校验工具使用依赖权限
         """
         return super().check_use_toollib_perm(checktool, toollib) or \
-               checktool and cls.get_org(checktool.tool_key) == ToolLibManager.get_org(toollib.lib_key) 
+               checktool and cls.get_org(checktool.tool_key) == ToolLibManager.get_org(toollib.lib_key)
