@@ -33,7 +33,7 @@ $ cd /usr/local/src/nginx-1.20.2
 $ ./configure \
 --sbin-path=/usr/local/nginx/nginx \
 --conf-path=/usr/local/nginx/nginx.conf \
---pid-path=/usr/local/nginx/nginx.pid \
+--pid-path=/run/nginx.pid \
 --with-stream \
 --with-http_ssl_module --with-http_v2_module --with-http_auth_request_module
 
@@ -60,6 +60,7 @@ http {
     # ...
     # 
     include conf.d/*.conf;
+    include /etc/nginx/conf.d/*.conf;
     
     server {
         # ...
@@ -68,7 +69,7 @@ http {
 
 ```
 
-后续可以将nginx配置文件放置到``/usr/local/nginx/conf.d/``目录下
+后续可以将nginx配置文件放置到``/usr/local/nginx/conf.d/``目录或者``/etc/nginx/conf.d/``目录下
 
 ## 配置开机自动启动
 
@@ -106,7 +107,7 @@ WantedBy=multi-user.target
 启动nginx：
 
 ```bash
-nginx
+systemctl start nginx
 ```
 
 开机自动启动nginx：
