@@ -40,6 +40,20 @@ class BaseScmUrlMgr(object):
             return "svn"
         return None
 
+    @staticmethod
+    def get_last_dir_name_from_url(scm_url):
+        """从url中提取最后部分的地址名称"""
+        dirname = scm_url.strip()
+        dirname = dirname.rstrip('/')
+        dirname = dirname.split('/')[-1]
+        if dirname.endswith(".git"):
+            dirname = dirname.replace(".git", "")
+        if dirname.endswith(".zip"):
+            dirname = dirname.replace(".zip", "")
+        if dirname.endswith(".7z"):
+            dirname = dirname.replace(".7z", "")
+        return dirname
+
 
 class GitUrlMgr(object):
     @staticmethod

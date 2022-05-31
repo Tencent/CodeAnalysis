@@ -36,7 +36,7 @@ class CodeLineReporter(threading.Thread):
                 :return:
                 """
         # 本地项目无需上报,直接返回
-        if self._task_scene and self._task_scene == TaskScene.LOCAL:
+        if self._task_scene and self._task_scene in [TaskScene.LOCAL, TaskScene.TEST]:
             return
         try:
             # 从param中获取server_url

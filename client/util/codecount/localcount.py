@@ -54,7 +54,7 @@ class CountLineThread(threading.Thread):
             InitParams.prepare_params_about_path_filters(self._task_params)
 
             # 加载codecount工具环境变量,即加载cloc命令需要的环境变量(cloc是通用工具,已经在之前拉取过,不需要重复拉取)
-            ToolLoader(tool_names=["codecount"]).set_tool_env()
+            ToolLoader(tool_names=["codecount"], include_common=True).set_tool_env()
 
             code_line_data = CodeLineCount(self._task_params, self._work_dir).run()
 
@@ -111,11 +111,8 @@ class LocalCountLine(object):
             with open(self._result_filepath, 'r') as fp:
                 stat_result = json.load(fp)
                 if stat_result:
-                    LogPrinter.info("=" * 50)
-                    LogPrinter.info("本次扫描的代码量:")
-                    for key, value in stat_result.items():
-                        LogPrinter.info("%s : %s" % (key, value))
-                    LogPrinter.info("=" * 50)
+                    LogPrinter.info(f"本次分析代码行数: {stat_result.get('filtered_total_line_num')}")
+                    LogPrinter.info(f"全量代码行数: {stat_result.get('total_line_num')}")
         else:
             LogPrinter.warning("%s结果文件不存在,未获取到代码行统计数据." % self._result_filepath)
 

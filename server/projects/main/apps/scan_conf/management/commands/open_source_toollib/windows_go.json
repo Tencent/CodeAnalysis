@@ -1,0 +1,13 @@
+{
+  "name": "WINDOWS_GO",
+  "scm_url": "https://github.com/TCATools/win-go-1.12.6.git",
+  "scm_type": "git",
+  "envs": {
+    "GOROOT": "$ROOT_DIR",
+    "GOPATH": "$ROOT_DIR/go",
+    "GO_HOME": "$ROOT_DIR",
+    "PATH": "$ROOT_DIR/bin;$ROOT_DIR"
+  },
+  "lib_os": "windows",
+  "lib_type": "public"
+}

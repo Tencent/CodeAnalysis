@@ -1,0 +1,11 @@
+{
+  "name": "LINUX_ARM64_LUA_5_3_4",
+  "scm_url": "https://git.code.tencent.com/TCA/tca-tools/arm64-lua-5.3.4.git",
+  "scm_type": "git",
+  "envs": {
+    "LUA_HOME": "$ROOT_DIR",
+    "PATH": "$ROOT_DIR/bin;$ROOT_DIR"
+  },
+  "lib_os": "linux_arm64",
+  "lib_type": "public"
+}

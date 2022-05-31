@@ -1,0 +1,12 @@
+{
+  "name": "LINUX_ARM64_NODE",
+  "scm_url": "https://github.com/TCATools/linux-arm64-node-v12.16.3.git",
+  "scm_type": "git",
+  "envs": {
+    "NODE_HOME": "$ROOT_DIR",
+    "NODE_PATH": "$ROOT_DIR/lib/node_modules",
+    "PATH": "$ROOT_DIR/bin;$ROOT_DIR"
+  },
+  "lib_os": "linux_arm64",
+  "lib_type": "public"
+}

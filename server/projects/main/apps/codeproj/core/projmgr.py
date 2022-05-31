@@ -289,8 +289,8 @@ class ScanSchemeManager(object):
         :return schemes: 方案模板
         """
         org_scheme_key = "%s_%s" % (models.ScanScheme.SchemeKey.ORG_KEY, org_sid)
-        scheme_ids = models.ScanSchemePerm.objects.filter(
-            Q(edit_managers__in=[user]) | Q(execute_managers__in=[user])).values_list("scan_scheme_id", flat=True)
+        scheme_ids = list(models.ScanSchemePerm.objects.filter(scan_scheme__repo__isnull=True).filter(
+            Q(edit_managers__in=[user]) | Q(execute_managers__in=[user])).values_list("scan_scheme_id", flat=True))
         # 系统模板、团队内公开模板、团队内有权限模板
         global_scheme_templates = models.ScanScheme.objects.filter(repo__isnull=True).filter(
             Q(scheme_key=models.ScanScheme.SchemeKey.PUBLIC) |

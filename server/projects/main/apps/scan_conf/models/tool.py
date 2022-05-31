@@ -188,11 +188,13 @@ class ToolLib(CDBaseModel):
         LINUX = 'linux'
         MAC = 'mac'
         WINDOWS = 'windows'
+        LINUX_ARM64 = 'linux_arm64'
 
     LIB_ENV_CHOICES = (
         (LibEnvEnum.LINUX, "linux"),
         (LibEnvEnum.MAC, "mac"),
         (LibEnvEnum.WINDOWS, "windows"),
+        (LibEnvEnum.LINUX_ARM64, "linux_arm64"),
     )
 
     name = models.SlugField(max_length=64, help_text="依赖名称")
@@ -256,7 +258,7 @@ class ToolLibScheme(CDBaseModel):
     """工具依赖方案表
     """
     checktool = models.ForeignKey(CheckTool, related_name="libscheme", on_delete=models.CASCADE, help_text="工具")
-    condition = models.CharField(max_length=128, null=True, help_text="条件")
+    condition = models.CharField(max_length=128, null=True, blank=True, help_text="条件")
     tool_libs = models.ManyToManyField(ToolLib, through="ToolLibMap", related_name="libscheme",
                                        blank=True, help_text="工具依赖")
     scheme_os = models.CharField(max_length=128, null=True, blank=True, help_text="适用系统")

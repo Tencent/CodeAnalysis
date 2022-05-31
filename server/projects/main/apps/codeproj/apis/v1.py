@@ -327,7 +327,7 @@ class ProjectScanSchemeDefaultScanPathListApiView(generics.ListAPIView):
 class RepoBranchListApiView(generics.ListAPIView, ProjectBaseAPIView):
     """指定代码库已接入的分支列表接口
 
-    ### get
+    ### GET
     应用场景：获取指定代码库分支列表
     """
 
@@ -359,7 +359,7 @@ class RepoBranchListApiView(generics.ListAPIView, ProjectBaseAPIView):
 class RepositorySchemesInfoApiView(generics.GenericAPIView):
     """查询指定代码指定扫描方案是否存在
 
-    ### get
+    ### GET
     应用场景：查询指定代码指定扫描方案是否存在
     > * 查询参数：
     >     - scm_url: 代码库地址

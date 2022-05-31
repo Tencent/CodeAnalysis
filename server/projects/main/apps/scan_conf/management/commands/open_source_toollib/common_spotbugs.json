@@ -1,0 +1,11 @@
+{
+  "name": "COMMON_SPOTBUGS",
+  "scm_url": "https://github.com/TCATools/spotbugs.git",
+  "scm_type": "git",
+  "envs": {
+    "SPOTBUGS_HOME": "$ROOT_DIR",
+    "PATH": "$ROOT_DIR/bin;$ROOT_DIR"
+  },
+  "lib_os": "linux;mac;windows;linux_arm64",
+  "lib_type": "public"
+}

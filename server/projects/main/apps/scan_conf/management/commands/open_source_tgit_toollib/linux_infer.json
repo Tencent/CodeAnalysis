@@ -1,0 +1,11 @@
+{
+  "name": "LINUX_INFER",
+  "scm_url": "https://git.code.tencent.com/TCA/tca-tools/linux-infer-v0.15.0.git",
+  "scm_type": "git",
+  "envs": {
+    "INFER_HOME": "$ROOT_DIR",
+    "PATH": "$ROOT_DIR/bin;$ROOT_DIR"
+  },
+  "lib_os": "linux",
+  "lib_type": "public"
+}

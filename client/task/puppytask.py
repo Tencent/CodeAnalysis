@@ -47,7 +47,8 @@ class TaskMain(object):
                 level = logging.DEBUG
             else:
                 level = logging.INFO
-            logging.basicConfig(level=level, format='-%(asctime)s-%(levelname)s-%(name)s: %(message)s')
+            format_pattern = '%(asctime)s-%(levelname)s: %(message)s'
+            logging.basicConfig(level=level, format=format_pattern)
 
             # set locale for all categories to the user’s default setting (in the LANG env variable)
             try:

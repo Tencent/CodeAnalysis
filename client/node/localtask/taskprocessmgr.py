@@ -12,7 +12,7 @@ import os
 import sys
 import logging
 
-from node.toolloader.loadtool import ToolLoader
+from node.toolloader.loadtool import ConfigUtil, ToolLoader
 from task.taskmgr import TaskMgr
 from util.envset import EnvSet
 
@@ -44,7 +44,7 @@ class TaskProcessMgr(object):
         return execute_procs
 
     @staticmethod
-    def get_supported_processes(origin_os_env, task_name, task_params):
+    def get_supported_processes(origin_os_env, task_name, task_params, custom_tools):
         """
         判断工具进程能否在本地执行,返回本地支持的工具进程
         :param task_name: 任务名称
@@ -55,7 +55,17 @@ class TaskProcessMgr(object):
         os.environ.update(origin_os_env)
 
         # 加载工具执行需要的环境变量
-        ToolLoader(tool_names=[task_name]).set_tool_env()
+        task_params["tool_name"] = task_name
+        task_list = ConfigUtil.generate_task_list(task_params)
+        if ConfigUtil.use_new_tool_lib_config(task_params):  # 使用依赖库配置
+            tool_names = [task_name]
+        else:  # 使用ini配置
+            if task_name in custom_tools:
+                tool_names = ["customtool"]
+            else:
+                tool_names = [task_name]
+        ToolLoader(tool_names=tool_names, task_list=task_list, custom_tools=custom_tools,
+                   include_common=True).set_tool_env()
 
         # 加载任务环境变量
         EnvSet().set_task_env(task_params)

@@ -1,5 +1,6 @@
 # Python
 .__pycache__
+__pycache__
 
 
 # MacOS
@@ -26,4 +27,5 @@
 # Other
 .docker_data
 client/data/taskdirs/*
-*/*.log
+**/*.log
+data/

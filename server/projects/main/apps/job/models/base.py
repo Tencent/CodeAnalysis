@@ -501,6 +501,7 @@ class TaskProcessRelation(BaseTaskProcessRelation):
 class TaskProcessNodeQueue(models.Model):
     """任务预先分配队列
     """
+    id = models.BigAutoField(primary_key=True)
     task = models.ForeignKey(Task, on_delete=models.CASCADE)
     task_process = models.ForeignKey(TaskProcessRelation, null=True, blank=True, on_delete=models.CASCADE)
     node = models.ForeignKey(Node, on_delete=models.CASCADE)

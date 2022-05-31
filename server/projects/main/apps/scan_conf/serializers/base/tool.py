@@ -32,20 +32,20 @@ class CheckToolWhiteKeySerializer(serializers.ModelSerializer):
     organization = serializers.SerializerMethodField()
     org_sid = serializers.SlugRelatedField(slug_field="org_sid", queryset=Organization.objects.all(),
                                            write_only=True, help_text="团队唯一标识")
-    
+
     def get_organization(self, instance):
         org = CheckToolManager.get_org(instance.tool_key)
         if org:
             return OrganizationSimpleSerializer(instance=org).data
         return None
-    
+
     def validate_org_sid(self, org):
         request = self.context.get("request")
         user = request.user if request else None
         if user and (user.is_superuser or user.has_perm(org.PermissionNameEnum.CHANGE_ORG_PERM, org)):
             return org
         raise serializers.ValidationError("没有该团队管理员权限，添加工具白名单失败")
-    
+
     def create(self, validated_data):
         view = self.context.get("view")
         checktool_id = view.kwargs.get("checktool_id")
@@ -68,7 +68,7 @@ class CheckToolWhiteKeyAddSerializer(serializers.Serializer):
     """
     organizations = serializers.SlugRelatedField(slug_field="org_sid", queryset=Organization.objects.all(),
                                                  many=True, help_text="团队唯一标识列表")
-    
+
     def validate_organizations(self, orgs):
         request = self.context.get("request")
         user = request.user if request else None
@@ -88,7 +88,7 @@ class CheckToolWhiteKeyDeleteSerializer(serializers.Serializer):
     whitelist = serializers.PrimaryKeyRelatedField(queryset=models.CheckToolWhiteKey.objects.all(), many=True,
                                                    help_text="工具白名单列表")
 
-   
+
 class CheckToolSerializer(CDBaseModelSerializer):
     """工具简单序列化
     """
@@ -182,7 +182,8 @@ class ToolLibEditSerializer(CDBaseModelSerializer):
     """
 
     scm_auth = ScmAuthCreateSerializer(write_only=True, help_text="关联授权信息", allow_null=True, required=False)
-    envs = serializers.JSONField()
+    envs = serializers.JSONField(help_text="环境变量", required=False)
+    lib_os = serializers.CharField(help_text="依赖适用系统")
 
     def get_user(self):
         request = self.context.get("request")
@@ -191,7 +192,7 @@ class ToolLibEditSerializer(CDBaseModelSerializer):
         if self.context.get("is_local_script", False) and self.context.get("user"):
             user = self.context.get("user")
         return user
-    
+
     def validate_lib_type(self, lib_type):
         """非超管仅能创建私有依赖，超管可选择
         """
@@ -209,10 +210,18 @@ class ToolLibEditSerializer(CDBaseModelSerializer):
         # 对scm_url执行凭证鉴权处理
         user = self.get_user()
         scm_auth = attrs.get("scm_auth")
+        # TODO: 后续实现scm_url连通性测试
+        # 默认允许不传递凭证，传递凭证则对凭证进行校验
         if not scm_auth:
-            raise serializers.ValidationError({"scm_auth": "凭证为必填项"})
+            # raise serializers.ValidationError({"scm_auth": "凭证为必填项"})
+            return super().validate(attrs)
         auth_type = scm_auth.get("auth_type")
-        if auth_type == models.ScmAuth.ScmAuthTypeEnum.PASSWORD:
+        if auth_type == models.ScmAuth.ScmAuthTypeEnum.OAUTH:
+            scm_oauth = scm_auth.get("scm_oauth")
+            if not scm_oauth or scm_oauth.user != user:
+                raise serializers.ValidationError({"scm_auth": "请选择有效OAuth凭证"})
+            credential_info = scm_oauth.credential_info
+        elif auth_type == models.ScmAuth.ScmAuthTypeEnum.PASSWORD:
             scm_account = scm_auth.get("scm_account")
             if not scm_account or scm_account.user != user:
                 raise serializers.ValidationError({"scm_auth": "请选择有效HTTP凭证"})
@@ -223,7 +232,7 @@ class ToolLibEditSerializer(CDBaseModelSerializer):
                 raise serializers.ValidationError({"scm_auth": "请选择有效SSH凭证"})
             credential_info = scm_ssh.credential_info
         else:
-            raise serializers.ValidationError({"auth_type": ["不支持%s鉴权方式" % auth_type]})  
+            raise serializers.ValidationError({"auth_type": ["不支持%s鉴权方式" % auth_type]})
         # 校验
         ScmAuthManager.check_scm_url_credential(scm_type, scm_url, credential_info)
         return super().validate(attrs)
@@ -238,7 +247,8 @@ class ToolLibEditSerializer(CDBaseModelSerializer):
             ScmAuthManager.create_toollib_auth(
                 instance, user, scm_auth_type=scm_auth.get("auth_type"),
                 scm_account=scm_auth.get("scm_account"),
-                scm_ssh_info=scm_auth.get("scm_ssh")
+                scm_ssh_info=scm_auth.get("scm_ssh"),
+                scm_oauth=scm_auth.get("scm_oauth"),
             )
         return instance
 
@@ -275,7 +285,7 @@ class ToolLibMapSerializer(serializers.ModelSerializer):
         if not CheckToolManager.check_use_toollib_perm(libscheme.checktool, toollib):
             raise serializers.ValidationError("没有依赖%s权限" % toollib.name)
         return super().validate(attrs)
-    
+
     def create(self, validated_data):
         request = self.context.get("request")
         user = request.user if request else None
@@ -338,7 +348,7 @@ class ToolLibSchemeSerializer(CDBaseModelSerializer):
             if exist_error:
                 raise serializers.ValidationError({"tool_libs": error_msg})
         return super().validate(attrs)
-    
+
     def _create_or_update(self, validated_data, instance=None):
         request = self.context.get("request")
         user = request.user if request else None
@@ -350,7 +360,7 @@ class ToolLibSchemeSerializer(CDBaseModelSerializer):
 
     def create(self, validated_data):
         return self._create_or_update(validated_data)
-    
+
     def update(self, instance, validated_data):
         return self._create_or_update(validated_data, instance)
 

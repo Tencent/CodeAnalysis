@@ -15,3 +15,5 @@ class TaskScene(object):
     LOCAL = "localtask"
     # 通过server启动的任务
     NORMAL = "servertask"
+    # 本地测试任务
+    TEST = "testtask"

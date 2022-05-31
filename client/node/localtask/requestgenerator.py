@@ -24,6 +24,7 @@ from node.localtask.scmauthcheck import ScmAuthCheck
 from node.localtask.requestmodify import RequestModify
 from util.tooldisplay import ToolDisplay
 from node.localtask.scmrevision import ScmRevisionCheck
+from util.logutil import LogPrinter
 
 logger = logging.getLogger(__name__)
 
@@ -116,7 +117,7 @@ class TaskRequestGenerator(object):
         remote_tasks_str = os.environ.get("CODEDOG_REMOTE_TASKS", None)
         if remote_tasks_str:
             logger.info("设置了环境变量CODEDOG_REMOTE_TASKS=%s" % remote_tasks_str)
-            self._remote_task_names = StringMgr().str_to_list(remote_tasks_str)
+            self._remote_task_names = StringMgr.str_to_list(remote_tasks_str)
             # 过滤掉不在扫描方案中的工具
             self._remote_task_names = [task_name for task_name in self._remote_task_names if
                                        task_name in task_name_list]
@@ -134,27 +135,31 @@ class TaskRequestGenerator(object):
 
         local_task_names = list(set(task_name_list) - set(self._remote_task_names))
         # 如果不是所有任务都设置了发送给云端执行,即还有本地执行的任务,才需要本地拉取工具,且只拉取需要本地执行的工具
+        custom_tools = []
         if local_task_names:
             # 判断如果有自定义工具，需要拉取 customscan 任务所需的工具库
             for tool_name in local_task_names:
                 try:
                     __import__("tool." + tool_name)
                 except ModuleNotFoundError:
-                    if "customscan" not in local_task_names:
-                        local_task_names.append("customscan")
+                    # 记录自定义工具列表
+                    custom_tools.append(tool_name)
                 except:
                     # logger.exception("encounter error.")
                     pass
-            # 从git拉取工具配置库
+            # 从git拉取工具配置库,同时拉取公共工具
             ToolConfigLoader().load_tool_config()
+            LogPrinter.info(f"Initing other tools ...")
+            # 上面已经拉取了commone工具，此处不需要重复拉取，设置include_common=False
             # git拉取不输出日志，因为print输出会覆盖到logging日志
-            ToolLoader(tool_names=local_task_names, task_list=task_list).git_load_tools(print_enable=False)
+            ToolLoader(tool_names=local_task_names, task_list=task_list, custom_tools=custom_tools,
+                       include_common=False).git_load_tools(print_enable=False)
 
-        execute_request_list, self._skip_processes = self._get_execute_request_list(job_context, task_list, self._remote_task_names)
+        execute_request_list, self._skip_processes = self._get_execute_request_list(job_context, task_list, self._remote_task_names, custom_tools)
 
         return execute_request_list, self._skip_processes, job_id, job_heartbeat, task_name_id_maps, self._remote_task_names
 
-    def _get_execute_request_list(self, job_context, task_list, remote_task_names):
+    def _get_execute_request_list(self, job_context, task_list, remote_task_names, custom_tools):
         """获取本地执行的任务参数列表"""
         execute_request_list = []
 
@@ -177,7 +182,7 @@ class TaskRequestGenerator(object):
                 self._skip_processes[task_display_name] = task_request["processes"]
             else:
                 supported_processes = TaskProcessMgr.get_supported_processes(self._origin_os_env,
-                                                                             task_name, task_params)
+                                                                             task_name, task_params, custom_tools)
                 remote_procs = list(set(task_request["processes"]) - set(supported_processes))
                 if remote_procs:
                     # raise NodeError(code=errcode.E_NODE_TASK_CONFIG, msg=f"当前环境不支持{task_name}工具步骤:{remote_procs}.")

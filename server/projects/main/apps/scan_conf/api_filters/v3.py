@@ -65,7 +65,7 @@ class CheckRuleFilter(base.CheckRuleFilter):
     """
     language = filters.CharFilter(field_name="languages__name", help_text="规则适用语言")
     checkpackage = base.NumberInFilter(label="checkpackage", help_text="规则包筛选", method="checkpackage_filter")
-    
+
     def checkpackage_filter(self, queryset, name, value):
         return queryset.filter(checkpackage__in=value).order_by("display_name")
 

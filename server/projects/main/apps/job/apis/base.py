@@ -118,9 +118,10 @@ class JobCancelApiView(generics.GenericAPIView):
         else:
             core.JobCloseHandler.close_scan(job.id, force=True)
 
-    def post(self, request, job_id):
+    def post(self, request, **kwargs):
         slz = self.get_serializer(data=request.data)
         if slz.is_valid(raise_exception=True):
+            job_id = kwargs["job_id"]
             job = get_object_or_404(models.Job, id=job_id)
             logger.info("User( %s ) cancel job %s" % (request.user.username, job_id))
             try:

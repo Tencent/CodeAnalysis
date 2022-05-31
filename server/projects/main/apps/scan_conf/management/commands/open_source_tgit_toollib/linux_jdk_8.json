@@ -1,0 +1,12 @@
+{
+  "name": "LINUX_JDK_8",
+  "scm_url": "https://git.code.tencent.com/TCA/tca-tools/linux-jdk1.8.0_65.git",
+  "scm_type": "git",
+  "envs": {
+    "JAVA_HOME": "$ROOT_DIR",
+    "JDK_8_HOME": "$ROOT_DIR",
+    "PATH": "$ROOT_DIR/bin;$ROOT_DIR"
+  },
+  "lib_os": "linux",
+  "lib_type": "public"
+}
