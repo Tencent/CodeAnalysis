@@ -15,7 +15,7 @@ from rest_framework import serializers
 
 # 项目内
 from apps.scan_conf import models
-from apps.base.serializers import CDBaseModelSerializer, OnlySuperAdminReadField, ChoicesField
+from apps.base.serializers import CDBaseModelSerializer, OnlySuperAdminReadField
 
 logger = logging.getLogger(__name__)
 

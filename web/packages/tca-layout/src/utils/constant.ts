@@ -70,3 +70,22 @@ export const APPLY_RESULT_TYPE = {
 };
 
 export const MATOMO_URL = 'MATOMO_URL';
+
+export const DEFAULT_SCM_PLATFORM = [
+  {
+    scm_platform: 2,
+    scm_platform_name: 'tgitsaas',
+  },
+  {
+    scm_platform: 4,
+    scm_platform_name: 'github',
+  },
+  {
+    scm_platform: 5,
+    scm_platform_name: 'gitee',
+  },
+  {
+    scm_platform: 6,
+    scm_platform_name: 'gitlab',
+  },
+];

@@ -137,7 +137,7 @@ class EnvSet(object):
         :return:
         """
         # 读取全部工具配置信息
-        all_tool_config = ConfigLoader().read_tool_config()
+        all_tool_config = ConfigLoader().read_tool_config_from_ini_file(config_all_tools=True)
         # 只需要公共编译工具的环境变量
         compile_tool_config = {"compile_config": all_tool_config["compile_config"]}
         # 加载环境变量

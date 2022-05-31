@@ -8,6 +8,7 @@
 """
 本地任务执行器,只执行本地配置好的项目的扫描
 """
+import json
 import logging
 import os
 import sys
@@ -352,6 +353,8 @@ class LocalRunner(TaskRunner):
 
             # 获取任务执行参数
             proj_conf = self._get_proj_config(self._repo_id, self._proj_id, self._org_sid, self._team_name)
+            # with open("proj_conf.json", "w") as wf:
+            #     json.dump(proj_conf, wf, indent=2)
 
             # 获取实际使用的扫描方案名称
             self._scan_plan = proj_conf["job_context"]["scheme_name"]

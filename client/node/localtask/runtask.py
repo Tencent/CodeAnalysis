@@ -16,6 +16,7 @@ import logging
 import collections
 
 from node.common.taskrunner import TaskRunner
+from node.common.uploadresult import ResultUploader
 from node.common.task import Task
 from task.toolmodel import IToolModel
 from util.exceptions import FileServerError
@@ -94,7 +95,8 @@ class ResultCheck(object):
 
         # 上传issues和log到文件服务器
         try:
-            data_url, log_url = TaskRunner.upload_result_detail(proj_id, task.task_id, task_dir, data, task.task_log)
+            data_url, log_url = ResultUploader().upload_result_detail(proj_id, task.task_id, task_dir, data,
+                                                                      task.task_log)
         except FileServerError as err:
             code = err.code
             msg = f"Fail to send result to file server! Error: {str(err)}"

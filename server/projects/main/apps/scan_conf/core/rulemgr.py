@@ -55,7 +55,7 @@ class BaseRuleManager(object):
 class CheckRuleManager(BaseRuleManager):
     """规则manager
     """
-    
+
     @classmethod
     def all(cls, **kwargs):
         """获取全部工具规则
@@ -101,8 +101,8 @@ class CheckRuleManager(BaseRuleManager):
         tool_keys = kwargs.get("tool_keys", [])
         tool_ids = []
         if tool_keys:
-            tool_ids = CheckToolWhiteKey.objects.filter(tool_key__in=tool_keys).values_list("tool_id", flat=True)
-        tool_status = [CheckTool.StatusEnum.RUNNING, CheckTool.StatusEnum.TRIAL]
+            tool_ids = list(CheckToolWhiteKey.objects.filter(tool_key__in=tool_keys).values_list("tool_id", flat=True))
+        tool_status = [CheckTool.StatusEnum.RUNNING, CheckTool.StatusEnum.TRIAL]  
         # 获取所有公开工具(正常运营、体验运营)、白名单工具且未失效的规则
         rules = CheckRule.objects.filter(
                     tool_key=cls.ToolKeyEnum.DEFAULT, disable=False,

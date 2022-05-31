@@ -12,6 +12,7 @@ import logging
 
 # 第三方
 from django.db.models import Q
+from rest_framework.exceptions import ParseError
 
 # 项目内
 from apps.scan_conf import models
@@ -81,7 +82,7 @@ class ToolLibManager(BaseLibManager):
         if not org:
             raise Exception("未获取到团队 ，无法获取工具依赖key值")
         return "org_%s" % org.id
-    
+
     @classmethod
     def get_org(cls, lib_key):
         """根据工具依赖key值获取团队，可为None
@@ -138,7 +139,7 @@ class ToolLibManager(BaseLibManager):
             return True
         lib_key = cls.get_lib_key(org=org)
         return toollib.lib_key == lib_key and user.has_perm(Organization.PermissionNameEnum.VIEW_ORG_PERM, org)
-    
+
     @classmethod
     def check_edit_perm(cls, org, toollib, user):
         """校验用户是否具备该工具依赖的编辑权限
@@ -269,6 +270,9 @@ class ToolLibSchemeManager(object):
         """
         created = False
         if not instance:
+            # 当工具没有依赖方案时，初次创建依赖方案设置
+            if not models.ToolLibScheme.objects.filter(checktool=checktool).exists():
+                kwargs.update({"default_flag": True})
             instance = models.ToolLibScheme.objects.create(checktool=checktool, user=user)
             created = True
         # 更新字段
@@ -309,6 +313,11 @@ class ToolLibSchemeManager(object):
         :param instance: ToolLibScheme, 工具依赖方案
         :param user: User, 用户
         """
+        # 如果该方案是默认依赖方案，则需进行额外处理
+        if instance.default_flag:
+            # 且存在多个依赖方案
+            if models.ToolLibScheme.objects.filter(checktool=instance.checktool).count() > 1:
+                raise ParseError("无法删除默认依赖方案")
         message = "移除依赖方案：%s" % instance
         OperationRecordHandler.add_checktool_operation_record(instance.checktool, "移除依赖方案", user, message)
         # 真删除

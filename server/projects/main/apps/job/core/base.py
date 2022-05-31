@@ -433,11 +433,10 @@ class JobCloseHandler(object):
                              result_msg=result_msg,
                              result_url=result_data,  # 此处result_data是result url
                              log_url=log_url)
-            logger.info("[Task: %s] 进程[%s]关闭结果: %s" % (task_id, processes, nrow))
+            logger.info("[Task: %s] 进程[%s]关闭数量: %s" % (task_id, processes, nrow))
             if nrow == 0:
                 return
-            tp_relations = models.TaskProcessRelation.objects.filter(
-                task_id=task_id)
+            tp_relations = models.TaskProcessRelation.objects.filter(task_id=task_id)
             if tp_relations.filter(state=models.TaskProcessRelation.StateEnum.RUNNING):
                 task_state = models.Task.StateEnum.RUNNING
             elif tp_relations.exclude(state=models.TaskProcessRelation.StateEnum.CLOSED):
@@ -458,12 +457,12 @@ class JobCloseHandler(object):
                 execute_version=task_version
             )
             task = models.Task.objects.get(id=task_id)
-            logger.info("[Task: %d] task刷新结果: %s，task当前状态：%s" %
-                        (task_id, nrow, task.state))
+            logger.info("[Task: %d] task刷新结果: %s，task预期状态：%s, 实际状态：%s" % (
+                task_id, nrow, task_state, task.state))
             if nrow == 1:
                 job_id = task.job.id
                 if task_state == models.Task.StateEnum.CLOSED:
-                    models.Job.objects.filter(id=job_id).update(
+                    nrow = models.Job.objects.filter(id=job_id).update(
                         task_done=F("task_done") + 1)
                     models.TaskProgress.objects.create(
                         task=task,
@@ -471,6 +470,7 @@ class JobCloseHandler(object):
                         progress_rate=100,
                         node=task.node
                     )
+                    logger.info("[Job: %s][Task: %s] 关闭Task: %s" % (job_id, task_id, nrow))
                 if task.node:  # 私有进程执行，可能不会记录node节点
                     Node.objects.filter(id=task.node.id, state=Node.StateEnum.BUSY).update(
                         state=Node.StateEnum.FREE)

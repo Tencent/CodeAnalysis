@@ -8,11 +8,12 @@ import { isEmpty } from 'lodash';
 import { Modal, Form, Input, Checkbox, Select, Tooltip, Button, message } from 'coding-oa-uikit';
 import PlusIcon from 'coding-oa-uikit/lib/icon/Plus';
 import RefreshIcon from 'coding-oa-uikit/lib/icon/Refresh';
+import { get } from 'lodash';
 
 import { getToolsRouter } from '@src/utils/getRoutePath';
-import { gScmAccounts, getSSHInfo } from '@src/services/user';
+import { gScmAccounts, getSSHInfo, getOAuthInfo } from '@src/services/user';
 import { createTool } from '@src/services/tools';
-import { AUTH_TYPE, AUTH_TYPE_TXT, REPO_TYPE_OPTIONS, REPO_TYPE } from './constants';
+import { AUTH_TYPE, AUTH_TYPE_TXT, REPO_TYPE_OPTIONS, REPO_TYPE, SCM_PLATFORM } from './constants';
 
 
 const { TextArea } = Input;
@@ -35,6 +36,7 @@ const CreateToolModal = (props: CreateToolModalProps) => {
   const { orgId, visible, onClose } = props;
   const [sshAuthList, setSshAuthList] = useState<any>([]);
   const [httpAuthList, setHttpAuthList] = useState<any>([]);
+  const [oauthAuthList, setOauthAuthList] = useState<any>([]);
   const [authLoading, setAuthLoading] = useState(false);
 
   useEffect(() => {
@@ -48,6 +50,7 @@ const CreateToolModal = (props: CreateToolModalProps) => {
     Promise.all([
       getSSHInfo().then(r => r.results || []),
       gScmAccounts().then(r => r.results || []),
+      getOAuthInfo().then(r => r.results || []),
     ])
       .then((result) => {
         // HTTP 和 SSH ID可能重复
@@ -58,6 +61,10 @@ const CreateToolModal = (props: CreateToolModalProps) => {
         setHttpAuthList(result[1].map((item: any) => ({
           ...item,
           authId: `${AUTH_TYPE.HTTP}#${item.id}`,
+        })));
+        setOauthAuthList(result[2].map((item:any)=>({ 
+          ...item, 
+          authId: `${AUTH_TYPE.OAUTH}#${item.id}`,
         })));
       })
       .finally(() => {
@@ -72,15 +79,21 @@ const CreateToolModal = (props: CreateToolModalProps) => {
 
     newFormData.scm_auth = { auth_type: authType };
 
-    if (newFormData.scm_auth.auth_type === AUTH_TYPE.HTTP) {
-      newFormData.scm_auth.scm_account = id;
-    } else {
-      newFormData.scm_auth.scm_ssh = id;
+    switch (newFormData.scm_auth.auth_type) {
+      case AUTH_TYPE.HTTP:
+        newFormData.scm_auth.scm_account = id;
+        break;
+      case AUTH_TYPE.SSH:
+        newFormData.scm_auth.scm_ssh = id;
+        break;
+      case AUTH_TYPE.OAUTH:
+        newFormData.scm_auth.scm_oauth = id;
+        break;
     }
 
     createTool(orgId, newFormData).then((res) => {
       message.success('创建成功');
-      history.push(`${getToolsRouter(orgId)}/${res.id}/rules`);
+      history.push(`${getToolsRouter(orgId)}/${res.id}/tool-libs`);
     });
   };
 
@@ -111,21 +124,21 @@ const CreateToolModal = (props: CreateToolModalProps) => {
         <Form.Item
           label="工具展示名称"
           name="display_name"
-          rules={[{ required: true, message: '请输入前端展示名称!' }]}
+          rules={[{ required: true, message: '请输入前端展示名称' }]}
         >
           <Input placeholder="请使用大驼峰命名，如PyLint。" />
         </Form.Item>
         <Form.Item
           label="工具描述"
           name="description"
-          rules={[{ required: true, message: '请输入工具描述!' }]}
+          rules={[{ required: true, message: '请输入工具描述' }]}
         >
           <TextArea placeholder="长度限制256个字符。" rows={3} />
         </Form.Item>
         <Form.Item
           label="工具仓库地址"
           name="scm_url"
-          required
+          rules={[{ required: true, message: '请输入工具仓库地址' }]}
         >
           <Input.Group compact>
             <Form.Item name='scm_type' noStyle>
@@ -140,17 +153,27 @@ const CreateToolModal = (props: CreateToolModalProps) => {
             <Form.Item
               name='scm_url'
               noStyle
-              rules={[
-                { required: true, message: '请输入工具仓库地址' },
-              ]}
             >
               <Input style={{ width: 357 }} />
             </Form.Item>
           </Input.Group>
         </Form.Item>
-        <Form.Item label="凭证" required>
-          <Form.Item noStyle name="scm_auth_id" rules={[{ required: true, message: '请选择仓库凭证' }]}>
+        <Form.Item label="凭证">
+          <Form.Item noStyle name="scm_auth_id">
             <Select style={{ width: 360 }}>
+              {!isEmpty(oauthAuthList) && (
+                <OptGroup label={AUTH_TYPE_TXT.OAUTH}>
+                  {oauthAuthList.map((auth: any) => (
+                    <Option
+                      key={auth.authId}
+                      value={auth.authId}
+                      auth_type={AUTH_TYPE.OAUTH}
+                    >
+                      {get(SCM_PLATFORM, auth.scm_platform, '其他')}
+                    </Option>
+                  ))}
+                </OptGroup>
+              )}
               {!isEmpty(sshAuthList) && (
                 <OptGroup label={AUTH_TYPE_TXT.SSH}>
                   {sshAuthList.map((auth: any) => (

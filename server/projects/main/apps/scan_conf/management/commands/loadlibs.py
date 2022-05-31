@@ -34,6 +34,7 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         parser.add_argument("lib_name_list", type=str, nargs="+", help="需要load的工具依赖列表")
+        parser.add_argument("-ignore-auth", "--ignore-auth", action="store_true", help="忽略凭证")
         parser.add_argument("-a", "--account", type=str, help="账户")
         parser.add_argument("-p", "--password", type=str, help="密码")
         parser.add_argument("-dirname", "--dirname", type=str, help="load dirname path toollib, default: toollib_json")
@@ -55,6 +56,7 @@ class Command(BaseCommand):
         return scm_account, created
 
     def handle(self, *args, **options):
+        ignore_auth = options.get("ignore_auth")
         account = options.get("account")
         password = options.get("password")
         # 获取工具依赖目录名称，默认为toollib_json
@@ -85,19 +87,20 @@ class Command(BaseCommand):
                 # 如果是json数组则只取第一项
                 if isinstance(toollib_json, list) and len(toollib_json) > 0:
                     toollib_json = toollib_json[0]
-                # 存在非link类型的依赖，则需要凭证
-                if toollib_json.get("scm_type") != ToolLib.ScmTypeEnum.LINK and not scm_account:
-                    if account and password:
-                        scm_account, _ = self.get_or_create_account(account, password, codedog)
-                    else:
-                        raise Exception("account 或 password 为必传参数")
-                if scm_account:
-                    toollib_json.update({
-                      "scm_auth": {
-                          "scm_account": scm_account.id,
-                          "auth_type": "password"
-                      }
-                    })
+                if ignore_auth is not True:
+                    # 存在非link类型的依赖，则需要凭证
+                    if toollib_json.get("scm_type") != ToolLib.ScmTypeEnum.LINK and not scm_account:
+                        if account and password:
+                            scm_account, _ = self.get_or_create_account(account, password, codedog)
+                        else:
+                            raise Exception("account 或 password 为必传参数")
+                    if scm_account:
+                        toollib_json.update({
+                          "scm_auth": {
+                              "scm_account": scm_account.id,
+                              "auth_type": "password"
+                          }
+                        })
                 lib_kv[toollib_json["name"]] = lib_name
                 toollib_json_list.append(toollib_json)
             except Exception as e:

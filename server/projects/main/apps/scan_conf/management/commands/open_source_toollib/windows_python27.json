@@ -1,0 +1,11 @@
+{
+  "name": "WINDOWS_PYTHON27",
+  "scm_url": "https://github.com/TCATools/win-Python-v2.7.13.git",
+  "scm_type": "git",
+  "envs": {
+    "PYTHON27_HOME": "$ROOT_DIR",
+    "PATH": "$ROOT_DIR/bin;$ROOT_DIR"
+  },
+  "lib_os": "windows",
+  "lib_type": "public"
+}

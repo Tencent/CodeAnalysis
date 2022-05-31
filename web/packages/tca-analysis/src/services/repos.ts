@@ -23,6 +23,11 @@ export const getScmAccounts = () => get(`${MAIN_SERVER_API}/authen/scmaccounts/`
  */
 export const getSSHInfo = () => get(`${MAIN_SERVER_API}/authen/scmsshinfos/`, { limit: 200 });
 
+ /**
+ * 查询所有OAuth授权状况
+ */
+  export const getOAuthInfo = () => get(`${MAIN_SERVER_API}/authen/scmauthinfos/`);
+
 /**
  * 登记代码库
  * @param data: { name: 代码库名称, scm_type: 代码库来源 git/svn, scm_url: 代码库地址 }

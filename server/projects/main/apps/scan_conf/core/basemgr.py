@@ -184,7 +184,7 @@ class FilterManger(object):
             for field in base_filters.CheckRuleFilter.Meta.fields
         }
         return cls._get_filter(queryset, field_maps, models.CheckRule, user=user)
-    
+
     @classmethod
     def get_checkpackage_rules_filter(cls, queryset, filter_class=base_filters.PackageMapFilter, user=None):
         """获取规则包规则的filter map

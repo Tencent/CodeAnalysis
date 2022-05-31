@@ -1,0 +1,11 @@
+{
+  "name": "COMMON_DETEKT_1_7_1",
+  "scm_url": "https://git.code.tencent.com/TCA/tca-tools/common-detekt-cli-1.7.1-all.git",
+  "scm_type": "git",
+  "envs": {
+    "DETEKT_171_HOME": "$ROOT_DIR",
+    "PATH": "$ROOT_DIR/bin;$ROOT_DIR"
+  },
+  "lib_os": "linux;mac;windows;linux_arm64",
+  "lib_type": "public"
+}

@@ -31,4 +31,11 @@ urlpatterns = [
          name="apiv3_scm_sshinfo_list"),
     path("scmsshinfos/<int:sshinfo_id>/", v3.ScmSSHInfoDetailApiView.as_view(),
          name="apiv3_scm_sshinfo_detail"),
+    path("oauthsettings/", v3.OauthSettingsStatusAPIView.as_view(), name="apiv3_oauthsettings_status"),
+    path("scmauthinfo/", v3.ScmAuthInfoCheckApiView.as_view(),
+         name="apiv3_scmauthinfocheck"),
+    path("scmauthinfos/", v3.ScmAuthInfoListApiView.as_view(), name="apiv3_scmauthinfos_list"),
+
+    path("gitcallback/<str:scm_platform_name>/", v3.GitCallbackPlatformByScmProxy.as_view(),
+         name="apiv3_gitcallback_platform"),
 ]

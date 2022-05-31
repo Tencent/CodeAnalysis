@@ -3,8 +3,10 @@
  */
 import React, { useEffect } from 'react';
 import { cloneDeep, isArray, isEmpty } from 'lodash';
-import { Button, Form, Input } from 'coding-oa-uikit';
+import { Button, Form, Input, Select } from 'coding-oa-uikit';
+
 import Filter from '@src/components/filter';
+import { LIB_ENV } from './constants';
 
 import style from './style.scss';
 
@@ -46,7 +48,7 @@ const Search = (props: SearchProps) => {
         form={form}
         initialValues={{
           ...initialValues,
-          scope: initialValues.scope === '3',
+          os: initialValues.os?.split(',') ?? []
         }}
       >
         <Filter.Item name='name' >
@@ -56,6 +58,15 @@ const Search = (props: SearchProps) => {
             placeholder='依赖名称'
             onSearch={(value: string) => onChange('name', value)}
           />
+        </Filter.Item>
+        <Filter.Item label='适用系统' name='os' >
+          <Select
+            style={{ minWidth: 150 }}
+            allowClear
+            mode='multiple'
+            placeholder='全部' size='middle'
+            options={Object.keys(LIB_ENV).map((key: string) => ({ value: key, label: (LIB_ENV as any )[key] }))}
+            onChange={(values: Array<string>) => onChange('os', values.join(','))} />
         </Filter.Item>
         {
           Object.keys(searchParams)

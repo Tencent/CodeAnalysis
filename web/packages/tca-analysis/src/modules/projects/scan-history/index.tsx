@@ -45,6 +45,7 @@ const ScanHistory = (props: ScanHistoryProps) => {
   const query = getQuery();
   const history = useHistory();
   const timer = useRef<any>();
+  const isUnmounted = useRef(false)
 
   const [count, setCount] = useState(DEFAULT_PAGER.count);
   const [list, setList] = useState([]);
@@ -63,6 +64,9 @@ const ScanHistory = (props: ScanHistoryProps) => {
 
   useEffect(() => {
     getListData();
+    return () => {
+      isUnmounted.current = true
+    }
   }, [projectId]);
 
   useEffect(() => {
@@ -74,21 +78,24 @@ const ScanHistory = (props: ScanHistoryProps) => {
       limit,
       offset,
     };
+    isUnmounted.current = false
     getScans(orgSid, teamName, repoId, projectId, params).then((response) => {
-      const results = response.results || [];
-      setList(results);
-      setCount(response.count);
+      if (!isUnmounted.current) {
+        const results = response.results || [];
+        setList(results);
+        setCount(response.count);
 
-      if (results?.[0]?.result_code === null) {
-        if (!timer.current) {
-          timer.current = setInterval(() => {
-            getListData();
-          }, 1000);
+        if (results?.[0]?.result_code === null) {
+          if (!timer.current) {
+            timer.current = setInterval(() => {
+              getListData();
+            }, 1000);
+          }
+        } else {
+          clearTimer();
         }
-      } else {
-        clearTimer();
+        history.push(`${location.pathname}?${qs.stringify(params)}`);
       }
-      history.push(`${location.pathname}?${qs.stringify(params)}`);
     });
   };
 

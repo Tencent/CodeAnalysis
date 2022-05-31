@@ -1,4 +1,4 @@
-enum LibTypeEnum {
+export enum LibTypeEnum {
   PRIVATE = 'private',
   PUBLIC = 'public'
 }
@@ -11,11 +11,13 @@ export const LIB_TYPE: any = {
 enum LibEnvEnum {
   LINUX = 'linux',
   MAC = 'mac',
-  WINDOWS = 'windows'
+  WINDOWS = 'windows',
+  ARM64_LINUX = 'linux_arm64'
 }
 
 export const LIB_ENV = {
-  [LibEnvEnum.LINUX]: 'linux',
-  [LibEnvEnum.MAC]: 'mac',
-  [LibEnvEnum.WINDOWS]: 'windows',
+  [LibEnvEnum.LINUX]: 'Linux',
+  [LibEnvEnum.MAC]: 'Mac',
+  [LibEnvEnum.WINDOWS]: 'Windows',
+  [LibEnvEnum.ARM64_LINUX]: 'Linux ARM64'
 }
