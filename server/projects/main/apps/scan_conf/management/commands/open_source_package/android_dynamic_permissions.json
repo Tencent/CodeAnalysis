@@ -1,0 +1,158 @@
+[
+    {
+        "name": "【Android】动态权限调用扫描",
+        "description": "扫描Android动态权限调用。",
+        "revision": null,
+        "package_type": "official",
+        "languages": [
+            "java"
+        ],
+        "labels": [
+            "安全"
+        ],
+        "checkrule_set": [
+            {
+                "checktool": "jafc_beta",
+                "checkrule": "DynamicAPIGetExternalStorageDirectory",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jaff_beta",
+                "checkrule": "DynamicAPIGetExternalStorageDirectory",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jaff_beta",
+                "checkrule": "DynamicPermissionsCalendarContract",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jaff_beta",
+                "checkrule": "DynamicPermissionsImageCapture",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jaff_beta",
+                "checkrule": "DynamicPermissionsActionImageCapture",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "regexscan",
+                "checkrule": "Dynamic_permissions",
+                "severity": "warning",
+                "rule_params": "regex = (CalendarContract.*)|(IMAGE_CAPTURE)|(ACTION_IMAGE_CAPTURE)\r\nmsg = 该API会触发动态权限申请，请检查代码逻辑是否在拒绝权限后正常运行\"%s\"\r\nignore_comment = True",
+                "state": "enabled"
+            },
+            {
+                "checktool": "jaff_beta",
+                "checkrule": "DynamicAPITelephonyManager",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jafc_beta",
+                "checkrule": "DynamicAPITelephonyManager",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jaff_beta",
+                "checkrule": "DynamicAPILocationManager",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jafc_beta",
+                "checkrule": "DynamicAPILocationManager",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jafc_beta",
+                "checkrule": "DynamicAPIWallpaperManager",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jaff_beta",
+                "checkrule": "DynamicAPIWallpaperManager",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jaff_beta",
+                "checkrule": "DynamicAPICameraManager",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jafc_beta",
+                "checkrule": "DynamicAPICameraManager",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jafc_beta",
+                "checkrule": "DynamicAPIWifiRttManager",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jaff_beta",
+                "checkrule": "DynamicAPIWifiRttManager",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jaff_beta",
+                "checkrule": "DynamicAPISubscriptionManager",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jafc_beta",
+                "checkrule": "DynamicAPISubscriptionManager",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jafc_beta",
+                "checkrule": "DynamicAPITwilightManager",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jaff_beta",
+                "checkrule": "DynamicAPITwilightManager",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            }
+        ],
+        "open_saas": false,
+        "envs": null
+    }
+]

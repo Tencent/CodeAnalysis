@@ -45,6 +45,34 @@
                 "severity": "error",
                 "rule_params": null,
                 "state": "enabled"
+            },
+            {
+                "checktool": "jafc_beta",
+                "checkrule": "FindLog4j",
+                "severity": "error",
+                "rule_params": null,
+                "state": "disabled"
+            },
+            {
+                "checktool": "jaff_beta",
+                "checkrule": "FindLog4j",
+                "severity": "error",
+                "rule_params": null,
+                "state": "disabled"
+            },
+            {
+                "checktool": "jafc_beta",
+                "checkrule": "Log4jLogManager",
+                "severity": "error",
+                "rule_params": null,
+                "state": "disabled"
+            },
+            {
+                "checktool": "jaff_beta",
+                "checkrule": "Log4jLogManager",
+                "severity": "error",
+                "rule_params": null,
+                "state": "disabled"
             }
         ],
         "open_saas": false,
