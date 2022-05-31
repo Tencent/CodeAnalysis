@@ -1,10 +1,10 @@
 [{
   "name": "tca-layout",
   "description": "tca layout微前端",
-  "commitId": "f4a20c87b0ba1b1150e216163b3fa3188982ad6c",
+  "commitId": "a09c9d85965e98e0aa3bd849b2fb8f091fb48ba9",
   "match": "/",
-  "js": ["/static/tca-layout/runtime~tca-layout-7ee8a3c6.js", "/static/tca-layout/vendors~tca-layout-d9286f59.js", "/static/tca-layout/tca-layout-5304d8ba.js"],
-  "css": ["/static/tca-layout/vendors~tca-layout-9b6df0cb.css", "/static/tca-layout/tca-layout-2b2b5f51.css"],
+  "js": ["/static/tca-layout/runtime~tca-layout-7ee8a3c6.js", "/static/tca-layout/vendors~tca-layout-d2bb73ce.js", "/static/tca-layout/tca-layout-21921a8b.js"],
+  "css": ["/static/tca-layout/vendors~tca-layout-9b6df0cb.css", "/static/tca-layout/tca-layout-f88f8f50.css"],
   "prefix": ["/static/tca-layout/"]
 }, {
   "name": "login",
@@ -17,17 +17,17 @@
 }, {
   "name": "tca-analysis",
   "description": "TCA Analysis 微前端",
-  "commitId": "0bf6acf1b73eb83eed722737c867d6f57c6ea324",
+  "commitId": "b949d0f432cb616231f531a44bce6b457b454d51",
   "match": "^/t/[^/]+/p/[^/]+/(code-analysis|repos|template|profile|group)",
-  "js": ["/static/tca-analysis/runtime~tca-analysis-ee70aba9.js", "/static/tca-analysis/vendors~tca-analysis-4d35a288.js", "/static/tca-analysis/tca-analysis-004eda25.js"],
+  "js": ["/static/tca-analysis/runtime~tca-analysis-ee70aba9.js", "/static/tca-analysis/vendors~tca-analysis-4d35a288.js", "/static/tca-analysis/tca-analysis-5ccbca7e.js"],
   "css": ["/static/tca-analysis/vendors~tca-analysis-9b6df0cb.css", "/static/tca-analysis/tca-analysis-fbc8addf.css"],
   "prefix": ["/static/tca-analysis/"]
 }, {
   "name": "tca-manage",
   "description": "TCA 后台管理微前端",
-  "commitId": "256fb8e168b5199df92b0470449d91426559ffcc",
+  "commitId": "a09c9d85965e98e0aa3bd849b2fb8f091fb48ba9",
   "match": "^/manage",
-  "js": ["/static/tca-manage/runtime~tca-manage-60d68429.js", "/static/tca-manage/vendors~tca-manage-6121a672.js", "/static/tca-manage/tca-manage-99d3fa97.js"],
-  "css": ["/static/tca-manage/vendors~tca-manage-9b6df0cb.css", "/static/tca-manage/tca-manage-c5ccadad.css"],
+  "js": ["/static/tca-manage/runtime~tca-manage-0ae45884.js", "/static/tca-manage/vendors~tca-manage-c704461d.js", "/static/tca-manage/tca-manage-625c4e91.js"],
+  "css": ["/static/tca-manage/vendors~tca-manage-9b6df0cb.css", "/static/tca-manage/tca-manage-3bff30ee.css"],
   "prefix": ["/static/tca-manage/"]
 }]

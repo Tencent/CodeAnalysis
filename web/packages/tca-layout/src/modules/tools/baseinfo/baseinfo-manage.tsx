@@ -11,10 +11,9 @@ import EditIcon from 'coding-oa-uikit/lib/icon/Edit';
 
 import { formatDateTime } from '@src/utils';
 import { updateTool, updateToolStatus } from '@src/services/tools';
-import { gScmAccounts, getSSHInfo } from '@src/services/user';
-import { AUTH_TYPE, AUTH_TYPE_TXT, AUTH_DICT, REPO_TYPE_OPTIONS, TOOL_STATUS, STATUSENUM } from '../constants';
+import { gScmAccounts, getSSHInfo, getOAuthInfo } from '@src/services/user';
+import { AUTH_TYPE, AUTH_TYPE_TXT, AUTH_DICT, REPO_TYPE_OPTIONS, TOOL_STATUS, STATUSENUM, SCM_PLATFORM, AUTH_ID_PATH } from '../constants';
 
-import LibScheme from './lib-scheme';
 import style from '../detail.scss';
 
 const { TextArea } = Input;
@@ -32,11 +31,12 @@ interface BaseInfoProps {
   getDetail: () => void;
 }
 
-const BaseInfo = ({ orgSid, toolId, data, getDetail }: BaseInfoProps) => {
+const BaseInfo = ({ orgSid, data, getDetail }: BaseInfoProps) => {
   const [form] = Form.useForm();
   const [isEdit, setIsEdit] = useState(false);
   const [sshAuthList, setSshAuthList] = useState<any>([]);
   const [httpAuthList, setHttpAuthList] = useState<any>([]);
+  const [oauthAuthList, setOauthAuthList] = useState<any>([]);
   const [authLoading, setAuthLoading] = useState(false);
   const statusRef = useRef();
 
@@ -65,6 +65,16 @@ const BaseInfo = ({ orgSid, toolId, data, getDetail }: BaseInfoProps) => {
           authId: `${curAuth.auth_type}#${curAuth.scm_account?.id}`,
         }, ...httpAuthList]);
       }
+      if (
+        curAuth.scm_account?.id
+        && curAuth.auth_type === AUTH_TYPE.OAUTH
+        && !find(oauthAuthList, { id: curAuth.scm_account?.id })
+      ) {
+        setOauthAuthList([{
+          ...curAuth.scm_oauth,
+          authId: `${curAuth.auth_type}#${curAuth.scm_oauth?.id}`,
+        }, ...oauthAuthList]);
+      }
     }
   }, [authLoading, data.id]);
 
@@ -78,6 +88,7 @@ const BaseInfo = ({ orgSid, toolId, data, getDetail }: BaseInfoProps) => {
     Promise.all([
       getSSHInfo().then(r => r.results || []),
       gScmAccounts().then(r => r.results || []),
+      getOAuthInfo().then(r => r.results || []),
     ])
       .then((result) => {
         // HTTP 和 SSH ID可能重复
@@ -88,6 +99,10 @@ const BaseInfo = ({ orgSid, toolId, data, getDetail }: BaseInfoProps) => {
         setHttpAuthList(result[1].map((item: any) => ({
           ...item,
           authId: `${AUTH_TYPE.HTTP}#${item.id}`,
+        })));
+        setOauthAuthList(result[2].map((item: any) => ({
+          ...item,
+          authId: `${AUTH_TYPE.OAUTH}#${item.id}`,
         })));
       })
       .finally(() => {
@@ -103,10 +118,16 @@ const BaseInfo = ({ orgSid, toolId, data, getDetail }: BaseInfoProps) => {
 
     if (authType && id) {
       formData.scm_auth = { auth_type: authType };
-      if (formData.scm_auth.auth_type === AUTH_TYPE.HTTP) {
-        formData.scm_auth.scm_account = id;
-      } else {
-        formData.scm_auth.scm_ssh = id;
+      switch (formData.scm_auth.auth_type) {
+        case AUTH_TYPE.HTTP:
+          formData.scm_auth.scm_account = id;
+          break;
+        case AUTH_TYPE.SSH:
+          formData.scm_auth.scm_ssh = id;
+          break;
+        case AUTH_TYPE.OAUTH:
+          formData.scm_auth.scm_oauth = id;
+          break;
       }
     }
 
@@ -159,6 +180,10 @@ const BaseInfo = ({ orgSid, toolId, data, getDetail }: BaseInfoProps) => {
       return `${auth?.scm_ssh?.name}（${AUTH_DICT[data?.scm_auth?.auth_type]}）`;
     }
 
+    if (auth.auth_type === AUTH_TYPE.OAUTH) {
+      return `${get(SCM_PLATFORM, auth?.scm_oauth?.scm_platform, '其他')}（${AUTH_DICT[data?.scm_auth?.auth_type]}）`;
+    }
+
     return '';
   };
 
@@ -173,7 +198,7 @@ const BaseInfo = ({ orgSid, toolId, data, getDetail }: BaseInfoProps) => {
         initialValues={{
           ...data,
           status: STATUSENUM.NORMAL,
-          scm_auth_id: data.scm_auth ? `${data.scm_auth?.auth_type}#${data.scm_auth?.auth_type === AUTH_TYPE.HTTP ? data.scm_auth?.scm_account?.id : data.scm_auth?.scm_ssh?.id}` : '',
+          scm_auth_id: `${data.scm_auth?.auth_type}#${get(data, ['scm_auth', AUTH_ID_PATH[data.scm_auth?.auth_type], 'id'])}`,
         }}
       >
         <Form.Item label="运营状态">
@@ -228,7 +253,7 @@ const BaseInfo = ({ orgSid, toolId, data, getDetail }: BaseInfoProps) => {
         <Form.Item
           label='工具描述'
           name="description"
-          rules={isEdit ? [{ required: true, message: '请输入工具描述!' }] : undefined}
+          rules={isEdit ? [{ required: true, message: '请输入工具描述' }] : undefined}
         >
           {
             getComponent(
@@ -241,6 +266,7 @@ const BaseInfo = ({ orgSid, toolId, data, getDetail }: BaseInfoProps) => {
           (data.scm_url || isEdit) && (
             <Form.Item
               label="工具仓库地址"
+              rules={isEdit ? [{ required: true, message: '请输入工具仓库地址' }] : undefined}
             >
               {
                 getComponent(
@@ -274,7 +300,20 @@ const BaseInfo = ({ orgSid, toolId, data, getDetail }: BaseInfoProps) => {
                 getComponent(
                   <>
                     <Form.Item noStyle name="scm_auth_id">
-                      <Select style={{ width: 480 }}>
+                      <Select style={{ width: 380 }}>
+                        {!isEmpty(oauthAuthList) && (
+                          <OptGroup label={AUTH_TYPE_TXT.OAUTH}>
+                            {oauthAuthList.map((auth: any) => (
+                              <Option
+                                key={auth.authId}
+                                value={auth.authId}
+                                auth_type={AUTH_TYPE.OAUTH}
+                              >
+                                {get(SCM_PLATFORM, auth.scm_platform, '其他')}
+                              </Option>
+                            ))}
+                          </OptGroup>
+                        )}
                         {!isEmpty(sshAuthList) && (
                           <OptGroup label={AUTH_TYPE_TXT.SSH}>
                             {sshAuthList.map((auth: any) => (
@@ -364,13 +403,6 @@ const BaseInfo = ({ orgSid, toolId, data, getDetail }: BaseInfoProps) => {
             )
           }
         </Form.Item>
-        <LibScheme
-          layout={layout}
-          orgSid={orgSid}
-          toolId={toolId}
-          isEdit={isEdit}
-          getComponent={getComponent}
-        />
         <Form.Item label='语言' >
           {data.languages?.join(' | ')}
         </Form.Item>

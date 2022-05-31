@@ -4,9 +4,10 @@
 
 import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
+import cn from 'classnames';
 import qs from 'qs';
 import { omitBy, toNumber, omit, isString, cloneDeep, find } from 'lodash';
-import { Table, Button } from 'coding-oa-uikit';
+import { Table, Button, Tag } from 'coding-oa-uikit';
 import EditIcon from 'coding-oa-uikit/lib/icon/Edit';
 
 import { getQuery, formatDateTime } from '../../utils';
@@ -15,7 +16,7 @@ import { getTeamMember } from '@src/services/team';
 import { DEFAULT_PAGER } from '@src/common/constants';
 import { useStateStore } from '@src/context/store';
 
-import { LIB_TYPE } from './constants';
+import { LIB_TYPE, LibTypeEnum, LIB_ENV } from './constants';
 import CreateToollibs from './create-libs';
 import Search from './search';
 import style from './style.scss';
@@ -40,6 +41,8 @@ export const ToolLibs = () => {
   const pageStart = toNumber(query.offset) || DEFAULT_PAGER.pageStart;
   const searchParams: any = omit(query, ['offset', 'limit']);
   const isAdmin = !!find(admins, { username: userinfo.username });  // 当前用户是否是管理员
+  const isSuperuser = userinfo.is_superuser;  // 是否为超级管理员
+  const editable = isAdmin || isSuperuser;  // 编辑权限
 
   useEffect(() => {
     getTeamMember(orgSid).then((res) => {
@@ -82,7 +85,7 @@ export const ToolLibs = () => {
       <Search
         orgSid={orgSid}
         loading={loading}
-        editable={isAdmin}
+        editable={editable}
         searchParams={cloneDeep(searchParams)}
         onAdd={() => setModalData({
           visible: true,
@@ -111,21 +114,33 @@ export const ToolLibs = () => {
         <Column
           title='环境变量'
           dataIndex='envs'
-        // render={(envs: any) => envs && (
-        //   // todo: 没有按顺序遍历出环境变量，环境变量是否有顺序依赖关系？
-        //   Object.entries(envs).map(([key, value]) => (
-        //     <p className={style.envs} key={key}>&quot;{key}&ldquo;:&quot;{value}&ldquo;</p>
-        //   ))
-        // )}
+          render={(envs: any) => envs && (
+            // todo: 没有按顺序遍历出环境变量，环境变量是否有顺序依赖关系？
+            <code>
+              {
+                Object.entries(envs).map(([key, value]) => (
+                  <p className={style.envs} key={key}>{key} = {value}</p>
+                ))
+              }
+            </code>
+          )}
         />
         <Column
           title='依赖系统'
           dataIndex='lib_os'
+          render={(os: string) => os.split(';').map((item: string) => (
+            <Tag key={item}>{LIB_ENV[item] || item}</Tag>
+          ))}
         />
         <Column
           title='类型'
           dataIndex='lib_type'
-          render={(lib_type: string) => LIB_TYPE[lib_type] || lib_type}
+          render={(lib_type: string) => (
+            <div className={style.lib}>
+              <Tag className={cn(style.libTag, { [style.privite]: lib_type === LibTypeEnum.PRIVATE })}
+              >{LIB_TYPE[lib_type] || lib_type}</Tag>
+            </div>
+          )}
         />
         <Column
           title='创建时间'
@@ -137,7 +152,7 @@ export const ToolLibs = () => {
           dataIndex={['creator', 'nickname']}
         />
         {
-          isAdmin && (
+          editable && (
             <Column
               title='操作'
               dataIndex='id'
@@ -156,9 +171,10 @@ export const ToolLibs = () => {
         }
       </Table>
       {
-        isAdmin && (
+        editable && (
           <CreateToollibs
             orgSid={orgSid}
+            isSuperuser={isSuperuser}
             visible={modalData.visible}
             libId={modalData.libId}
             onClose={() => setModalData({
