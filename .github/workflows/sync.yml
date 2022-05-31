@@ -1,6 +1,5 @@
-name: GitHub To Tencent 
+name: Sync-To-TGIT 
 
-# Controls when the workflow will run
 on:
   push:
     branches:
@@ -21,16 +20,15 @@ jobs:
         env:
           GITHUB_REPOSITORY: Tencent/CodeAnalysis
 
-      - name: Push to Tencent
+      - name: Push to TGIT
         run: |
-          remote_repo="https://${TENCENT_USERNAME}:${TENCENT_PASSWORD}@git.code.tencent.com/${TENCENT_REPOSITORY}.git"
+          remote_repo="https://${TGIT_USERNAME}:${TGIT_PASSWORD}@git.code.tencent.com/${TGIT_REPOSITORY}.git"
           git remote add tencent "${remote_repo}"
-          git show-ref # debug
+          git show-ref
           git branch --verbose
-          # publish all
           git push --all --force tencent
           git push --tags --force tencent
         env:
-          TENCENT_REPOSITORY: Tencent_Open_Source/CodeAnalysis
-          TENCENT_USERNAME: ${{ secrets.USERNAME }}
-          TENCENT_PASSWORD: ${{ secrets.PASSWORD }}
+          TGIT_REPOSITORY: Tencent_Open_Source/CodeAnalysis
+          TGIT_USERNAME: ${{ secrets.USERNAME }}
+          TGIT_PASSWORD: ${{ secrets.PASSWORD }}
