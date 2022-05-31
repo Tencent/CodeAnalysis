@@ -3015,6 +3015,36 @@
         "disable": false
     },
     {
+        "real_name": "CalendarAndroid",
+        "display_name": "CalendarAndroid",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "日历使用扫描",
+        "rule_params": "regex=com\\.android\\.calendar\r\nmsg=发现危险权限日历的使用\r\nignore_comment=True",
+        "custom": true,
+        "languages": [],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "危险权限的使用，需要动态申请权限。",
+        "disable": false
+    },
+    {
+        "real_name": "SensorBodyAndroid",
+        "display_name": "SensorBodyAndroid",
+        "severity": "warning",
+        "category": "correctness",
+        "rule_title": "Sensor body使用扫描",
+        "rule_params": "regex=TYPE_HEART_RATE\r\nmsg=发现危险权限心率的使用%s\r\nignore_comment=True",
+        "custom": true,
+        "languages": [],
+        "solution": null,
+        "owner": null,
+        "labels": [],
+        "description": "危险权限的使用，需要动态申请权限。",
+        "disable": false
+    },
+    {
         "real_name": "PythonSoftwareFoundationLicenseCheck",
         "display_name": "PythonSoftwareFoundationLicenseCheck",
         "severity": "info",

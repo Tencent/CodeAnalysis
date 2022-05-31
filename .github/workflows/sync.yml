@@ -1,0 +1,34 @@
+name: Sync-To-TGIT 
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  push-to-mirror:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone
+        run: |
+          git init
+          git remote add origin https://github.com/${GITHUB_REPOSITORY}.git
+          git fetch --all
+          for branch in `git branch -a | grep remotes | grep -v HEAD`; do
+            git branch --track ${branch##*/} $branch
+          done
+        env:
+          GITHUB_REPOSITORY: Tencent/CodeAnalysis
+
+      - name: Push to TGIT
+        run: |
+          remote_repo="https://${TGIT_USERNAME}:${TGIT_PASSWORD}@git.code.tencent.com/${TGIT_REPOSITORY}.git"
+          git remote add tencent "${remote_repo}"
+          git show-ref
+          git branch --verbose
+          git push --all --force tencent
+          git push --tags --force tencent
+        env:
+          TGIT_REPOSITORY: Tencent_Open_Source/CodeAnalysis
+          TGIT_USERNAME: ${{ secrets.USERNAME }}
+          TGIT_PASSWORD: ${{ secrets.PASSWORD }}
