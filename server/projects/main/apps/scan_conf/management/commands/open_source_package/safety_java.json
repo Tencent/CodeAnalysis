@@ -1,0 +1,270 @@
+[
+    {
+        "name": "【Java】基础安全",
+        "description": "Java基础安全扫描规则包，针对SQL注入、XEE、XSS、远程命令执行、CSRF、代码注入、目录穿越、反序列化等安全问题。\n部分规则检查缓存溢出、资源泄露、空指针解引用等安全问题，但所属编译型工具，故默认关闭，可自行开启。",
+        "revision": null,
+        "package_type": "official",
+        "languages": [
+            "java"
+        ],
+        "labels": [
+            "安全"
+        ],
+        "checkrule_set": [
+            {
+                "checktool": "semgrep",
+                "checkrule": "xssrequestwrapper-is-insecure",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "semgrep",
+                "checkrule": "servletresponse-writer-xss",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "semgrep",
+                "checkrule": "no-direct-response-writer",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "semgrep",
+                "checkrule": "cookie-issecure-false",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "semgrep",
+                "checkrule": "hibernate-sqli",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "semgrep",
+                "checkrule": "jdbc-sqli",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "semgrep",
+                "checkrule": "jdo-sqli",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "semgrep",
+                "checkrule": "jpa-sqli",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "semgrep",
+                "checkrule": "turbine-sqli",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "semgrep",
+                "checkrule": "vertx-sqli",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "semgrep",
+                "checkrule": "spring-csrf-disabled",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "semgrep",
+                "checkrule": "unrestricted-request-mapping",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "semgrep",
+                "checkrule": "cookie-missing-samesite",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "semgrep",
+                "checkrule": "insecure-resteasy-deserialization",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "semgrep",
+                "checkrule": "default-resteasy-provider-abuse",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "semgrep",
+                "checkrule": "insecure-jms-deserialization",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "semgrep",
+                "checkrule": "object-deserialization",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "semgrep",
+                "checkrule": "server-dangerous-class-deserialization",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "semgrep",
+                "checkrule": "server-dangerous-object-deserialization",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "semgrep",
+                "checkrule": "ldap-entry-poisoning",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "semgrep",
+                "checkrule": "dangerous-groovy-shell",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "semgrep",
+                "checkrule": "el-injection",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "semgrep",
+                "checkrule": "ognl-injection",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "semgrep",
+                "checkrule": "script-engine-injection",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "semgrep",
+                "checkrule": "spel-injection",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "semgrep",
+                "checkrule": "unvalidated-redirect",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "semgrep",
+                "checkrule": "spring-unvalidated-redirect",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "semgrep",
+                "checkrule": "jax-rs-path-traversal",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "semgrep",
+                "checkrule": "httpservlet-path-traversal",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "semgrep",
+                "checkrule": "xmlinputfactory-external-entities-enabled",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "semgrep",
+                "checkrule": "xmlinputfactory-possible-xxe",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "semgrep",
+                "checkrule": "xml-decoder",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "infer_java",
+                "checkrule": "BUFFER_OVERRUN_L1",
+                "severity": "error",
+                "rule_params": null,
+                "state": "disabled"
+            },
+            {
+                "checktool": "infer_java",
+                "checkrule": "RESOURCE_LEAK",
+                "severity": "error",
+                "rule_params": null,
+                "state": "disabled"
+            },
+            {
+                "checktool": "infer_java",
+                "checkrule": "THREAD_SAFETY_VIOLATION",
+                "severity": "error",
+                "rule_params": null,
+                "state": "disabled"
+            },
+            {
+                "checktool": "infer_java",
+                "checkrule": "NULL_DEREFERENCE",
+                "severity": "error",
+                "rule_params": null,
+                "state": "disabled"
+            }
+        ],
+        "open_saas": false,
+        "envs": null
+    }
+]
