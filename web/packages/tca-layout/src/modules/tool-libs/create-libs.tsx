@@ -4,20 +4,19 @@
 import React, { useState, useEffect } from 'react';
 import { isEmpty, fromPairs, toPairs } from 'lodash';
 import { Modal, Form, Input, Select, Tooltip, Button, message, Space } from 'coding-oa-uikit';
-import PlusIcon from 'coding-oa-uikit/lib/icon/Plus';
-import RefreshIcon from 'coding-oa-uikit/lib/icon/Refresh';
 import TrashIcon from 'coding-oa-uikit/lib/icon/Trash';
 import QuestionCircle from 'coding-oa-uikit/lib/icon/QuestionCircle';
 
-import { gScmAccounts, getSSHInfo } from '@src/services/user';
 import { addToolLib, getLibDetail, updateToolLib } from '@src/services/tools';
-import { AUTH_TYPE, AUTH_TYPE_TXT, REPO_TYPE_OPTIONS, REPO_TYPE } from '@src/modules/tools/constants';
+import { REPO_TYPE_OPTIONS, REPO_TYPE } from '@src/modules/tools/constants';
+import { SCM_MAP } from '@src/common/constants/authority';
 import { LIB_ENV, LIB_TYPE } from './constants';
 
+import Authority from '@src/components/authority';
 import style from './style.scss';
 
 const { TextArea } = Input;
-const { Option, OptGroup } = Select;
+const { Option } = Select;
 
 const layout = {
   labelCol: { span: 5 },
@@ -36,18 +35,10 @@ interface CreateToollibsProps {
 const CreateToollibs = (props: CreateToollibsProps) => {
   const { orgSid, visible, libId, isSuperuser, onClose, callback } = props;
   const [form] = Form.useForm();
-
-  const [sshAuthList, setSshAuthList] = useState<any>([]);
-  const [httpAuthList, setHttpAuthList] = useState<any>([]);
-  const [authLoading, setAuthLoading] = useState(false);
   const [detail, setDetail] = useState<any>({});
-
   const isEdit = !!libId;
 
   useEffect(() => {
-    if (visible && isEmpty(sshAuthList) && isEmpty(httpAuthList)) {
-      getAuth();
-    }
 
     if (visible && libId) {
       getLibDetail(orgSid, libId).then((res) => {
@@ -61,40 +52,15 @@ const CreateToollibs = (props: CreateToollibsProps) => {
     }
   }, [visible]);
 
-  const getAuth = () => {
-    setAuthLoading(true);
-    Promise.all([
-      getSSHInfo().then(r => r.results || []),
-      gScmAccounts().then(r => r.results || []),
-    ])
-      .then((result) => {
-        // HTTP 和 SSH ID可能重复
-        setSshAuthList(result[0]?.map((item: any) => ({
-          ...item,
-          authId: `${AUTH_TYPE.SSH}#${item.id}`,
-        })));
-        setHttpAuthList(result[1].map((item: any) => ({
-          ...item,
-          authId: `${AUTH_TYPE.HTTP}#${item.id}`,
-        })));
-      })
-      .finally(() => {
-        setAuthLoading(false);
-      });
-  };
-
   const onFinish = (formData: any) => {
     const data = formData;
 
-    if (formData.scm_auth_id) {
-      const [authType, id] = formData?.scm_auth_id?.split('#') ?? [];
-      delete data.scm_auth_id;
+    if (formData.scm) {
+      const [authType, id] = formData?.scm?.split('#') ?? [];
+      delete data.scm;
       data.scm_auth = { auth_type: authType };
-
-      if (data.scm_auth.auth_type === AUTH_TYPE.HTTP) {
-        data.scm_auth.scm_account = id;
-      } else {
-        data.scm_auth.scm_ssh = id;
+      if (SCM_MAP[authType]) {
+        data.scm_auth[SCM_MAP[authType]] = id;
       }
     }
 
@@ -133,7 +99,6 @@ const CreateToollibs = (props: CreateToollibsProps) => {
           ...detail,
           lib_os: detail?.lib_os?.split(';'),
           envs: detail.envs ? toPairs(detail?.envs)?.map((item) => ({ key: item[0], value: item[1] })) : [],
-          scm_auth_id: detail.scm_auth ? `${detail.scm_auth?.auth_type}#${detail.scm_auth?.auth_type === AUTH_TYPE.HTTP ? detail.scm_auth?.scm_account?.id : detail.scm_auth?.scm_ssh?.id}` : '',
         } : {
           scm_type: REPO_TYPE.GIT
         }}
@@ -235,63 +200,22 @@ const CreateToollibs = (props: CreateToollibsProps) => {
             </Form.Item>
           </Input.Group>
         </Form.Item>
-        <Form.Item label={(
-          <span>
-            凭证
-            <Tooltip
-              getPopupContainer={() => document.body}
-              title='拉取依赖仓库所需的凭证，如果是github公开仓库，可以不提供凭证。'
-            ><QuestionCircle className={style.questionIcon} /></Tooltip>
-          </span>
-        )}>
-          <Form.Item noStyle name="scm_auth_id">
-            <Select style={{ width: 360 }} placeholder='github公开仓库可不提供凭证'>
-              {!isEmpty(sshAuthList) && (
-                <OptGroup label={AUTH_TYPE_TXT.SSH}>
-                  {sshAuthList.map((auth: any) => (
-                    <Option
-                      key={auth.authId}
-                      value={auth.authId}
-                      auth_type={AUTH_TYPE.SSH}
-                    >
-                      {auth.name}
-                    </Option>
-                  ))}
-                </OptGroup>
-              )}
-              {!isEmpty(httpAuthList) && (
-                <OptGroup label={AUTH_TYPE_TXT.HTTP}>
-                  {httpAuthList.map((auth: any) => (
-                    <Option
-                      key={auth.authId}
-                      value={auth.authId}
-                      auth_type={AUTH_TYPE.HTTP}
-                    >
-                      {auth.scm_username}
-                    </Option>
-                  ))}
-                </OptGroup>
-              )}
-            </Select>
-          </Form.Item>
-          <div style={{
-            position: 'absolute',
-            top: 5,
-            right: 10,
-          }}>
-            <Tooltip title='新增凭证' placement='top' getPopupContainer={() => document.body}>
-              <Button type='link' className="mr-12" href='/user/auth' target='_blank'><PlusIcon /></Button>
-            </Tooltip>
-            <Tooltip title='刷新凭证' placement='top' getPopupContainer={() => document.body}>
-              <Button
-                type='link'
-                disabled={authLoading}
-                onClick={getAuth}
-              ><RefreshIcon /></Button>
-            </Tooltip>
-          </div>
-        </Form.Item>
-
+        <Authority
+          form={form}
+          name='scm'
+          label={(
+            <span>
+              凭证
+              <Tooltip
+                getPopupContainer={() => document.body}
+                title='拉取依赖仓库所需的凭证，如果是github公开仓库，可以不提供凭证。'
+              ><QuestionCircle className={style.questionIcon} /></Tooltip>
+            </span>
+          )}
+          initAuth={detail.scm_auth}
+          selectStyle={{ width: 360 }}
+          placeholder='github公开仓库可不提供凭证'
+        />
         <Form.Item
           name="envs"
           label={(
@@ -333,7 +257,6 @@ const CreateToollibs = (props: CreateToollibsProps) => {
                   </Space>
                 ))}
                 <Form.Item>
-
                   <Button type="dashed" onClick={() => add()} block >
                     添加环境变量
                   </Button>
@@ -341,7 +264,6 @@ const CreateToollibs = (props: CreateToollibsProps) => {
               </>
             )}
           </Form.List>
-          {/* <TextArea rows={3} /> */}
         </Form.Item>
       </Form>
     </Modal>
