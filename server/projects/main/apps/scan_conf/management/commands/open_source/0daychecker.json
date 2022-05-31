@@ -53,6 +53,6 @@
         "open_user": true,
         "open_saas": false,
         "virtual_name": "0DayChecker",
-        "show_display_name": false
+        "show_display_name": true
     }
 ]

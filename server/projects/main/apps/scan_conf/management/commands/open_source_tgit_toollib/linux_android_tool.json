@@ -1,0 +1,11 @@
+{
+  "name": "LINUX_ANDROID_TOOL",
+  "scm_url": "https://git.code.tencent.com/TCA/tca-tools/linux-android-sdk-tools.git",
+  "scm_type": "git",
+  "envs": {
+    "ANDROID_SDK_TOOL": "$ROOT_DIR",
+    "PATH": "$ROOT_DIR/bin;$ROOT_DIR"
+  },
+  "lib_os": "linux",
+  "lib_type": "public"
+}

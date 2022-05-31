@@ -105,7 +105,7 @@ class Clang(CodeLintModel):
         if sp.returncode != 0:
             LogPrinter.info("Analyze Failed!")
 
-        plist_paths = PlistParser.collect_plist_paths(build_log)
+        plist_paths = PlistParser().collect_plist_paths(build_log)
 
         # 格式化结果
         LogPrinter.info('format issues...')

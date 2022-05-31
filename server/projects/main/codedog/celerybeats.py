@@ -45,6 +45,12 @@ CELERY_BEAT_TASKS = {
         "schedule": timedelta(minutes=10),
     },
 
+    # 启动OAuth过期刷新监控，每隔30分支执行一次
+    "refresh-oauth-token": {
+        "task": "apps.authen.tasks.authstat.refresh_oauth_token",
+        "schedule": timedelta(minutes=30),
+    },
+
     # 启动任务初始化超时监控，每隔5分钟执行一次
     "monitor-initing-job": {
         "task": "apps.job.tasks.jobcheck.monitor_initing_job",

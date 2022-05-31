@@ -9,8 +9,8 @@
 Git源码库的操作功能
 """
 
-import re
 import logging
+import re
 from datetime import datetime
 
 from django.conf import settings
@@ -18,14 +18,14 @@ from django.conf import settings
 from util.rpcproxy import CustomServerProxy
 from util.scm.base import IScmClient, ScmUrlFormatter
 
-
 logger = logging.getLogger(__name__)
 
 
 class GitRemoteClient(IScmClient):
     """Git 远程客户端 - 通过 GitProxy 获取项目信息"""
 
-    def __init__(self, scm_url, username=None, password=None, ssh_key=None, ssh_password=None):
+    def __init__(self, scm_url, username=None, password=None, ssh_key=None, ssh_password=None, scm_platform_name=None,
+                 **kwargs):
         """
         初始化函数
 
@@ -42,6 +42,14 @@ class GitRemoteClient(IScmClient):
                 "scm_url": self.get_ssh_url(),
                 "ssh_key": ssh_key,
                 "ssh_password": ssh_password
+            }
+        elif username == "oauth2":
+            self._scm_info = {
+                'scm_type': 'git-oauth',
+                'scm_platform': scm_platform_name,
+                'scm_url': self.get_http_url(),
+                'username': username,
+                'password': password,
             }
         else:
             self._scm_info = {
@@ -174,6 +182,18 @@ class GitRemoteClient(IScmClient):
         """
         revision_timestamp = self._git_proxy.get_revision_time(self._scm_info, revision)
         if revision_timestamp:
-
             return datetime.fromtimestamp(revision_timestamp)
         return None
+
+    def get_oauth(self, auth_info):
+        """Git OAuth授权
+        """
+        return self._git_proxy.git_oauth(self._scm_info, auth_info)
+
+    def get_token_through_refresh_token(self, auth_info):
+        """刷新OAuth token
+
+        :param: dict, 包含refresh_token等信息
+        :return: boolean, True表示token刷新成功，False表示刷新异常
+        """
+        return self._git_proxy.get_token_through_refresh_token(self._scm_info, auth_info)

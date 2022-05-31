@@ -21,6 +21,7 @@ from rest_framework import serializers
 # 项目内 import
 from apps.authen import models
 from util.cdcrypto import encrypt
+from util.scm import SCM_PLATFORM_CHOICES, SCM_PLATFORM_NUM_AS_KEY, ScmPlatformEnum
 
 logger = logging.getLogger(__name__)
 
@@ -258,6 +259,21 @@ class ScmSshInfoSerializer(serializers.ModelSerializer):
         return instance
 
 
+class ScmAuthInfoSerializer(serializers.ModelSerializer):
+    """代码库OAuth授权序列化 - 展示代码库授权简要信息
+    """
+    user = UserSimpleSerializer(read_only=True)
+    auth_origin = serializers.StringRelatedField()
+    scm_platform_name = serializers.SerializerMethodField()
+
+    def get_scm_platform_name(self, instance):
+        return SCM_PLATFORM_NUM_AS_KEY.get(instance.scm_platform)
+
+    class Meta:
+        model = models.ScmAuthInfo
+        exclude = ["gitoa_access_token", "gitoa_refresh_token"]
+
+
 class ScmSshInfoUpdateSerializer(ScmSshInfoSerializer):
     """代码库SSH授权更新序列化 - 展示代码库SSH简要信息
     """
@@ -272,6 +288,7 @@ class ScmAuthSerializer(serializers.ModelSerializer):
     """代码授权序列化 - 展示代码授权信息详情
     """
     scm_account = ScmAccountSerializer(read_only=True)
+    scm_oauth = ScmAuthInfoSerializer(read_only=True)
     scm_ssh = ScmSshInfoSerializer(read_only=True)
 
     class Meta:
@@ -286,6 +303,11 @@ class ScmAuthCreateSerializer(serializers.ModelSerializer):
                                                      required=False, allow_null=True, allow_empty=True)
     scm_ssh = serializers.PrimaryKeyRelatedField(queryset=models.ScmSshInfo.objects.all(), help_text="账号密码",
                                                  required=False, allow_null=True, allow_empty=True)
+    scm_oauth = serializers.PrimaryKeyRelatedField(queryset=models.ScmAuthInfo.objects.all(), help_text="oauth授权",
+                                                   required=False, allow_null=True, allow_empty=True)
+    scm_platform = serializers.ChoiceField(choices=SCM_PLATFORM_CHOICES, help_text="代码库管理平台",
+                                           required=False, allow_null=True,
+                                           default=ScmPlatformEnum.GIT_OA, write_only=True)
 
     class Meta:
         model = models.ScmAuth

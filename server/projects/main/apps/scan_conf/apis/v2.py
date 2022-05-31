@@ -27,7 +27,7 @@ logger = logging.getLogger(__name__)
 class CheckToolListAPIView(generics.ListAPIView):
     """工具列表
 
-    ### get
+    ### GET
     应用场景：获取平台内全部工具列表，仅superuser
     """
     permission_classes = [IsAdminUser]

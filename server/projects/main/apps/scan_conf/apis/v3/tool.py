@@ -6,7 +6,7 @@
 # ==============================================================================
 
 """
-scan_conf - v3 checktool, toollib apis 
+scan_conf - v3 checktool, toollib apis
 """
 import logging
 
@@ -80,8 +80,11 @@ class CheckToolDetailAPIView(CustomSerilizerMixin, generics.RetrieveUpdateAPIVie
     lookup_url_kwarg = "checktool_id"
 
     def get_queryset(self):
+        # 暂时加上is_superuser判断
+        if self.request.user.is_superuser:
+            return models.CheckTool.objects.all().order_by('-modified_time')
         return CheckToolManager.filter_usable(org=self.get_org())
-    
+
     def get_serializer_class(self):
         if self.request.method == 'GET':
             org = self.get_org()
@@ -94,17 +97,17 @@ class CheckToolDetailAPIView(CustomSerilizerMixin, generics.RetrieveUpdateAPIVie
 
 class CheckToolWhiteListAPIView(generics.ListCreateAPIView, V3GetModelMixinAPIView):
     """工具白名单列表接口
-    
+
     ### get
     应用场景：获取工具白名单团队列表
-    
+
     ### post
     应用场景：添加工具白名单团队
     """
     permission_classes = [CheckToolAdminPermission]
     serializer_class = serializers.CheckToolWhiteKeySerializer
     pagination_class = None
-    
+
     def get_queryset(self):
         checktool = self.get_checktool()
         return models.CheckToolWhiteKey.objects.filter(tool_id=checktool.id)
@@ -112,12 +115,12 @@ class CheckToolWhiteListAPIView(generics.ListCreateAPIView, V3GetModelMixinAPIVi
 
 class CheckToolWhiteDetailAPIView(generics.DestroyAPIView, V3GetModelMixinAPIView):
     """工具白名单详情接口
-    
+
     ### del
     应用场景：删除工具白名单团队
     """
     permission_classes = [CheckToolAdminPermission]
-    
+
     def get_object(self):
         whitelist_id = self.kwargs["whitelist_id"]
         checktool = self.get_checktool()
@@ -126,13 +129,13 @@ class CheckToolWhiteDetailAPIView(generics.DestroyAPIView, V3GetModelMixinAPIVie
 
 class CheckToolWhiteBatchCreateAPIView(generics.GenericAPIView, V3GetModelMixinAPIView):
     """批量创建工具白名单接口
-    
+
     ### post
     应用场景：批量创建工具白名单接口
     """
     permission_classes = [CheckToolAdminPermission]
     serializer_class = serializers.CheckToolWhiteKeyAddSerializer
-    
+
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -227,7 +230,7 @@ class CheckToolRuleDetailAPIView(CustomSerilizerMixin, generics.RetrieveUpdateDe
 
     ### put
     应用场景：更新工具规则
-    
+
     ### delete
     应用场景：移除工具规则
     """
@@ -282,7 +285,7 @@ class CheckToolRuleCustomListAPIView(CheckToolRuleListAPIView):
         checktool = self.get_checktool()
         tool_key = CheckToolManager.get_tool_key(org=org)
         return models.CheckRule.objects.filter(checktool=checktool, tool_key=tool_key).order_by("-id")
-      
+
 
 class CheckToolRuleCustomDetailAPIView(CheckToolRuleDetailAPIView):
     """工具自定义规则详情接口
@@ -337,7 +340,7 @@ class ToolLibListAPIView(CustomSerilizerMixin, generics.ListCreateAPIView, V3Get
 
 
 class ToolLibDetailAPIView(CustomSerilizerMixin, generics.RetrieveUpdateAPIView, V3GetModelMixinAPIView):
-    """工具依赖详情接口 
+    """工具依赖详情接口
 
     ### get
     应用场景：获取工具依赖详情，工具依赖负责团队的管理员能够看到工具依赖详细信息
@@ -376,7 +379,7 @@ class CheckToolSchemeListAPIView(generics.ListCreateAPIView, V3GetModelMixinAPIV
     permission_classes = [CheckToolDefaultPermission]
     serializer_class = serializers.ToolLibSchemeSerializer
     pagination_class = None
-    
+
     def get_queryset(self):
         checktool = self.get_checktool()
         return models.ToolLibScheme.objects.filter(checktool=checktool)
@@ -397,7 +400,7 @@ class CheckToolSchemeDetailAPIView(generics.RetrieveUpdateDestroyAPIView, V3GetM
     permission_classes = [CheckToolDefaultPermission]
     serializer_class = serializers.ToolLibSchemeSerializer
     lookup_url_kwarg = "libscheme_id"
-    
+
     def get_queryset(self):
         checktool = self.get_checktool()
         return models.ToolLibScheme.objects.filter(checktool=checktool)
@@ -419,7 +422,7 @@ class CheckToolSchemeLibListAPIView(CustomSerilizerMixin, generics.ListCreateAPI
     serializer_class = serializers.ToolLibMapDetailSerializer
     post_serializer_class = serializers.ToolLibMapSerializer
     pagination_class = None
-    
+
     def get_queryset(self):
         libscheme = self.get_libscheme()
         return models.ToolLibMap.objects.filter(libscheme=libscheme)
@@ -437,11 +440,11 @@ class CheckToolSchemeLibDetailAPIView(generics.RetrieveDestroyAPIView, V3GetMode
     permission_classes = [CheckToolDefaultPermission]
     serializer_class = serializers.ToolLibMapDetailSerializer
     lookup_url_kwarg = "libmap_id"
-    
+
     def get_queryset(self):
         libscheme = self.get_libscheme()
         return models.ToolLibMap.objects.filter(libscheme=libscheme)
-    
+
     def perform_destroy(self, instance):
         ToolLibMapManager.delete(instance, self.request.user)
 
@@ -455,7 +458,7 @@ class CheckToolSchemeLibDragSortAPIView(APIView, V3GetModelMixinAPIView):
     drag_type: 拖拽类型，before、after
     """
     permission_classes = [CheckToolDefaultPermission]
-    
+
     def post(self, request, *args, **kwargs):
         libmap_id = kwargs['libmap_id']
         target_libmap_id = kwargs['target_libmap_id']
