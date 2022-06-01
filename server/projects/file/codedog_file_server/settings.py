@@ -166,7 +166,7 @@ LOGGING = {
             "level": "ERROR",
             "class": "logging.handlers.RotatingFileHandler",
             "formatter": "default",
-            "filename": os.path.join(PROJECT_PATH, "log", "codedog_error_ftp.log"),
+            "filename": os.path.join(PROJECT_PATH, "log", "codedog_error_file.log"),
             "maxBytes": 1 << 28,
             "backupCount": 5
         },
