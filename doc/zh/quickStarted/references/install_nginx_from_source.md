@@ -13,6 +13,7 @@
 ```bash
 yum -y install gcc zlib-devel pcre-devel bzip2-devel openssl-devel readline-devel
 ```
+> Ubuntu: ``apt install gcc libssl-dev zlib1g-dev libpcre3-dev libbz2-dev libreadline-dev``
 
 ## 下载源码
 
@@ -32,7 +33,7 @@ $ cd /usr/local/src/nginx-1.20.2
 # 配置
 $ ./configure \
 --sbin-path=/usr/local/nginx/nginx \
---conf-path=/usr/local/nginx/nginx.conf \
+--conf-path=/etc/nginx/nginx.conf \
 --pid-path=/run/nginx.pid \
 --with-stream \
 --with-http_ssl_module --with-http_v2_module --with-http_auth_request_module
@@ -49,27 +50,40 @@ $ ln -s /usr/local/nginx/nginx /usr/local/bin/nginx
 ## 添加nginx配置文件
 
 ```bash
-mkdir /usr/local/nginx/conf.d/
-vi /usr/local/nginx/nginx.conf
+mkdir /etc/nginx/conf.d/
+vi /etc/nginx/nginx.conf
 ```
 
-检查``nginx.conf``配置文件，检查是否缺失这一行``include conf.d/*.conf;``，如果缺失则加上，加上位置如下所示：
+检查``nginx.conf``配置文件：
+
+1. 检查``pid /run/nginx.pid``，如果缺失或被注释则加上，加上位置如下所示：
+2. 检查是否缺失这一行``include conf.d/*.conf;``，如果缺失则加上，加上位置如下所示：
 
 ```bash
+# ...省略内容
+#pid        logs/nginx.pid;  # 默认有的
+pid         /run/nginx.pid;
+
+events {
+    # ...省略内容
+}
+
+# ...省略内容
+
 http {
-    # ...
+    # ...省略内容
     # 
-    include conf.d/*.conf;
-    include /etc/nginx/conf.d/*.conf;
-    
+    include conf.d/*.conf;    
     server {
-        # ...
+        # ...省略内容
     }
 }
 
 ```
 
-后续可以将nginx配置文件放置到``/usr/local/nginx/conf.d/``目录或者``/etc/nginx/conf.d/``目录下
+后续可以将nginx配置文件放置到``/etc/nginx/conf.d/``目录下
+
+
 
 ## 配置开机自动启动
 
@@ -91,10 +105,11 @@ PIDFile=/run/nginx.pid
 # Nginx will fail to start if /run/nginx.pid already exists but has the wrong
 # SELinux context. This might happen when running `nginx -t` from the cmdline.
 # https://bugzilla.redhat.com/show_bug.cgi?id=1268621
-ExecStartPre=/usr/bin/rm -f /run/nginx.pid
+ExecStartPre=/bin/rm -f /run/nginx.pid
 ExecStartPre=/usr/local/bin/nginx -t
 ExecStart=/usr/local/bin/nginx
 ExecReload=/usr/local/bin/nginx -s reload
+ExecStop=/usr/local/bin/nginx -s stop
 KillSignal=SIGQUIT
 TimeoutStopSec=5
 KillMode=process
