@@ -52,7 +52,7 @@ const UpdateLibSchemeModal = (props: UpdateLibSchemeModalProps) => {
     if (visible) {
       initFields();
       if (isEdit) {  // 编辑
-        getLibs({ os: initData?.scheme_os });
+        getLibs({ os: initData?.os?.join(',') });
         form.setFieldsValue({
           ...initData,
           scheme_os: initData?.scheme_os?.split(';'),

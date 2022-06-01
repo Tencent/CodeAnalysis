@@ -1,9 +1,9 @@
 [{
   "name": "tca-layout",
   "description": "tca layout微前端",
-  "commitId": "a09c9d85965e98e0aa3bd849b2fb8f091fb48ba9",
+  "commitId": "9ecf7d4d4999f91c09dcd46015d39f2528abbcf8",
   "match": "/",
-  "js": ["/static/tca-layout/runtime~tca-layout-7ee8a3c6.js", "/static/tca-layout/vendors~tca-layout-d2bb73ce.js", "/static/tca-layout/tca-layout-21921a8b.js"],
+  "js": ["/static/tca-layout/runtime~tca-layout-7ee8a3c6.js", "/static/tca-layout/vendors~tca-layout-d2bb73ce.js", "/static/tca-layout/tca-layout-962558d8.js"],
   "css": ["/static/tca-layout/vendors~tca-layout-9b6df0cb.css", "/static/tca-layout/tca-layout-f88f8f50.css"],
   "prefix": ["/static/tca-layout/"]
 }, {
