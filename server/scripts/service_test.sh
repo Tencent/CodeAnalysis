@@ -103,10 +103,11 @@ function file_server_detect() {
 function celery_status_detect() {
     if [[ $MAIN_CELERY_STATUS == 1 ]] && [[ $ANALYSIS_CELERY_STATUS == 1 ]]; then
         return
+    fi
     echo "Start to detect celery status, this process may take 10 seconds, please wait patiently...\n"
     b=""
     i=0
-    while [$i -le 100]
+    while [[ $i -le 100 ]]
     do
       printf "[%-50s] %d%% \r" "$b" "$i";
       sleep 0.2
@@ -122,7 +123,7 @@ function celery_status_detect() {
     done
 
     echo ""
-    echo -e "\e[31m❌ celery启动异常，为确保TCA能够正常进行扫描，请查阅CodeAnalysis/server/projects/main/log/main_celery.log、 CodeAnalysis/server/projects/analysis/log/analysis_celery.log等日志文件定位问题并处理e[0m"
+    echo -e "\e[31m❌ celery启动异常，为确保TCA能够正常进行扫描，请查阅server/projects/main/log/main_celery.log、server/projects/analysis/log/analysis_celery.log等日志文件定位问题并处理e[0m"
     echo -e "\e[31m❌ 若无法解决，请前往github提出issue并附带日志截图\e[0m"
 }
 
