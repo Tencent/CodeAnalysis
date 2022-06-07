@@ -11,9 +11,9 @@
 import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { useHistory } from 'react-router-dom';
-import { get, isEmpty } from 'lodash';
+import { get, isEmpty, concat } from 'lodash';
 
-import { Tabs, Input, Button, Pagination, Avatar, Badge, Tooltip } from 'coding-oa-uikit';
+import { Tabs, Input, Button, Avatar, Badge, Tooltip, Divider, Spin } from 'coding-oa-uikit';
 import { t } from '@src/i18n/i18next';
 import { formatDateTime } from '@src/utils';
 
@@ -33,8 +33,9 @@ import style from './style.scss';
 const { Search } = Input;
 const DEFAULT_PAGER = {
   count: 0,
-  pageSize: 10,
+  pageSize: 12,
   pageStart: 0,
+  allLoaded: true,
 };
 
 const Team = () => {
@@ -44,12 +45,13 @@ const Team = () => {
   const [pager, setPager] = useState(DEFAULT_PAGER);
   const [visible, setVisible] = useState(false);
   const [data, setData] = useState();
-  const { count, pageSize, pageStart } = pager;
+  const [scrollLoading, setScrollLoading] = useState(true);
+  const { count, pageStart, allLoaded } = pager;
 
   const containerNode = document.getElementById('container');
 
   useEffect(() => {
-    getTeamList(DEFAULT_PAGER.pageStart, DEFAULT_PAGER.pageSize, {}, (list: any) => {
+    getTeamList(false, DEFAULT_PAGER.pageStart, 50, {}, (list: any) => {
       // 用户进入团队页面，如果不存在团队，则默认弹出创建团队弹框
       if (isEmpty(list)) {
         setVisible(true);
@@ -58,29 +60,41 @@ const Team = () => {
   }, []);
 
   const getTeamList = async (
-    offset = DEFAULT_PAGER.pageStart,
+    scroll = false,
+    offset = pageStart,
     limit = DEFAULT_PAGER.pageSize,
     searchParams = {},
     callback?: Function,
   ) => {
     const res = (await getTeams({ offset, limit, ...searchParams })) || {};
+    setScrollLoading(false);
     setPager({
       pageSize: limit,
-      pageStart: offset,
+      pageStart: offset + limit,
       count: res.count,
+      allLoaded: offset + limit >= res.count,
     });
-    setList(res.results || []);
+    if (scroll) {
+      setList(concat(list, res.results || []));
+    } else {
+      setList(res.results || []);
+    }
     callback?.(res.results);
   };
 
   const onSearch = (value: string) => {
-    getTeamList(DEFAULT_PAGER.pageStart, pageSize, {
+    getTeamList(false, DEFAULT_PAGER.pageStart, count, {
       name: value,
     });
   };
 
-  const onChangePageSize = (page: number, pageSize: number) => {
-    getTeamList((page - 1) * pageSize, pageSize);
+  // 滚动加载更多团队
+  const loadMoreTeam = () => {
+    const teamWrapper = document.getElementById('team-wrapper');
+    if (teamWrapper.scrollTop + teamWrapper.clientHeight > teamWrapper.scrollHeight*0.8 && !allLoaded && !scrollLoading) {
+      setScrollLoading(true);
+      getTeamList(true);
+    }
   };
 
   const onClickTeam = (data: any) => {
@@ -140,25 +154,23 @@ const Team = () => {
             }
           >
             <Tabs.TabPane tab={t('所有团队')} key="all">
-              <div className={style.teamWrapper}>
-                {list.map((item: any) => (
-                  <div
-                    key={item.id}
-                    className={style.team}
-                    onClick={() => onClickTeam(item)}
-                  >
-                    <TeamItem data={item} />
-                  </div>
-                ))}
+              <div 
+                className={style.teamWrapper} 
+                id='team-wrapper'
+                onScroll={loadMoreTeam}
+              >
+                  {list.map((item: any) => (
+                    <div
+                      key={item.id}
+                      className={style.team}
+                      onClick={() => onClickTeam(item)}
+                    >
+                      <TeamItem data={item} />
+                    </div>
+                  ))}
+                  <div style={{textAlign:'center'}}><Spin spinning={scrollLoading} /></div>
               </div>
-              <Pagination
-                hideOnSinglePage
-                total={count}
-                current={Math.floor(pageStart / pageSize) + 1}
-                onChange={onChangePageSize}
-                showTotal={(total, range) => `${range[0]} - ${range[1]} 条，共 ${total} 条`
-                }
-              />
+              {!allLoaded && <Divider plain>滚动加载更多团队</Divider>}
             </Tabs.TabPane>
           </Tabs>
           <CreateTeam
