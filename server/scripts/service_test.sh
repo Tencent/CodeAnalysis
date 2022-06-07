@@ -3,6 +3,9 @@
 
 echo "[TCAServerHealthCheck] *start detect status of every service*"
 
+MAIN_CELERY_STATUS=0
+ANALYSIS_CELERY_STATUS=0
+
 function delete_txt_file() {
     rm -rf $1/healthcheck_*.txt
 }
@@ -30,13 +33,11 @@ function main_server_detect() {
     do
         sleep 1
         if [ -f $file_path ]; then
+            MAIN_CELERY_STATUS=1
             echo "[TCAServerHealthCheck] *service main celery check pass*"
             return
         fi
     done
-
-    echo -e "\e[31m❌ service main failed, reason might be celery has not started\e[0m"
-    exit -1
 }
 
 function analysis_server_detect() {
@@ -62,13 +63,11 @@ function analysis_server_detect() {
     do
         sleep 1
         if [ -f $file_path ]; then
+            ANALYSIS_CELERY_STATUS=1
             echo "[TCAServerHealthCheck] *service analysis celery check pass*"
             return
         fi
     done
-
-    echo -e "\e[31m❌ service analysis failed, reason might be celery has not started\e[0m"
-    exit -1
 }
 
 function login_server_detect() {
@@ -99,6 +98,32 @@ function file_server_detect() {
         echo -e "\e[31m❌ service file failed, please view logs to locate the issue\e[0m"
         exit -1
     fi
+}
+
+function celery_status_detect() {
+    if [[ $MAIN_CELERY_STATUS == 1 ]] && [[ $ANALYSIS_CELERY_STATUS == 1 ]]; then
+        return
+    echo "Start to detect celery status, this process may take 10 seconds, please wait patiently...\n"
+    b=""
+    i=0
+    while [$i -le 100]
+    do
+      printf "[%-50s] %d%% \r" "$b" "$i";
+      sleep 0.2
+      ((i=i+2))
+      b+="#"
+      main_ret=$(ps -aux |grep -c main_celery_worker)
+      analysis_ret=$(ps -aux |grep -c analysis_celery_worker)
+      if [[ $main_ret -gt 1 ]] && [[ $main_ret -gt 1 ]]; then
+        echo ""
+        echo "[TCAServerHealthCheck] *celery has started*"
+        return
+      fi
+    done
+
+    echo ""
+    echo -e "\e[31m❌ celery启动异常，为确保TCA能够正常进行扫描，请查阅CodeAnalysis/server/projects/main/log/main_celery.log、 CodeAnalysis/server/projects/analysis/log/analysis_celery.log等日志文件定位问题并处理e[0m"
+    echo -e "\e[31m❌ 若无法解决，请前往github提出issue并附带日志截图\e[0m"
 }
 
 

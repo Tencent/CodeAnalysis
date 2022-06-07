@@ -8,9 +8,9 @@ SERVER_CONFIG_PATH=$CURRENT_PATH/scripts/config.sh
 
 echo "start detect every dependcy for tca server..."
 
-# 校验python命令是否存
+# 校验python命令是否存在
 function python_command_detect() {
-    echo "[TCAServerDependcyCheck] *make sure command python exist*"
+    echo "[TCAServerDependencyCheck] *make sure command python exist*"
     if ! command -v python &> /dev/null
     then
         echo -e "\e[31m❌ command python not found, please install python first then start TCA\e[0m"
@@ -18,9 +18,9 @@ function python_command_detect() {
     fi
 }
 
-# 校验python版本是否为3.7.x及
+# 校验python版本是否为3.7.x
 function python_version_detect() {
-    echo "[TCAServerDependcyCheck] *make sure python has right version*"
+    echo "[TCAServerDependencyCheck] *make sure python has right version*"
     result=$(python --version |grep "^Python 3.7.")
     if [[ $result == "" ]];
     then
@@ -31,7 +31,7 @@ function python_version_detect() {
 
 # 检验依赖是否完整
 function dependcy_detect() {
-    echo "[TCAServerDependcyCheck] *make sure every package is installed in right version*"
+    echo "[TCAServerDependencyCheck] *make sure every package is installed in right version*"
     while read line
     do
         # 过滤掉不含==的行
@@ -51,9 +51,9 @@ function dependcy_detect() {
     done < $SERVER_REQUIREMENTS_PATH
 }
 
-# 校验celery命令是否存
+# 校验celery命令是否存在
 function celery_command_detect() {
-    echo "[TCAServerDependcyCheck] *make sure command celery exist*"
+    echo "[TCAServerDependencyCheck] *make sure command celery exist*"
     if ! command -v celery &> /dev/null
     then
         echo -e "\e[31m❌ command celery not found, please install celery then soft link to /usr/local/bin/celery\e[0m"
@@ -61,9 +61,9 @@ function celery_command_detect() {
     fi
 }
 
-# 校验gunicorn命令是否存
+# 校验gunicorn命令是否存在
 function gunicorn_command_detect() {
-    echo "[TCAServerDependcyCheck] *make sure command gunicorn exist*"
+    echo "[TCAServerDependencyCheck] *make sure command gunicorn exist*"
     if ! command -v celery &> /dev/null
     then
         echo -e "\e[31m❌ command gunicorn not found, please install gunicorn then soft link to /usr/local/bin/gunicorn\e[0m"
@@ -73,7 +73,7 @@ function gunicorn_command_detect() {
 
 # 检验配置信息是否完整
 function config_detect() {
-    echo "[TCAServerDependcyCheck] *make sure enter neccessary configuration*"
+    echo "[TCAServerDependencyCheck] *make sure enter neccessary configuration*"
     while read line
     do
         # 仅监测必填配置项
@@ -93,7 +93,7 @@ function config_detect() {
 
 # 检验根据配置信息能否正常访问mysql
 function mysql_login_detect() {
-    echo "[TCAServerDependcyCheck] *make sure mysql configuration is correct*"
+    echo "[TCAServerDependencyCheck] *make sure mysql configuration is correct*"
     if [[ $MYSQL_PORT == "" ]]; then
         MYSQL_PORT="3306"
     fi
@@ -106,7 +106,7 @@ function mysql_login_detect() {
 
 # 检验根据配置信息能否正常访问redis
 function redis_login_detect() {
-    echo "[TCAServerDependcyCheck] *make sure redis configuration is correct*"
+    echo "[TCAServerDependencyCheck] *make sure redis configuration is correct*"
     ret=$(redis-cli -h $REDIS_HOST -p $REDIS_PORT -a $REDIS_PASSWD exists key)
     if [[ $ret == "NOAUTH Authentication required." ]]; then
         echo -e "\e[31m❌ your password configered for redis is wrong, please check REDIS_PASSWD in config.sh file\e[0m"
@@ -117,9 +117,9 @@ function redis_login_detect() {
     fi
 }
 
-# 检验磁盘空间
+# 检验可用磁盘空间
 function diskspace_detect() {
-    echo "[TCAServerDependcyCheck] *make sure have enough disk space*"
+    echo "[TCAServerDependencyCheck] *make sure enough avaliable disk space*"
     ret=$(df -hl |grep /$)
     split_result=(${ret// / })
     disk_space="${split_result[3]}"
@@ -134,9 +134,9 @@ function diskspace_detect() {
     fi
 }
 
-# 检验内存
+# 检验可用内存
 function memory_detect() {
-    echo "[TCAServerDependcyCheck] *make sure have enough memory*"
+    echo "[TCAServerDependencyCheck] *make sure enough avaliable memory*"
     result=$(free)
     split_result=(${result// / })
     memory_avaliable=${split_result[12]}  # 可用内存在切分后的数组中的第13处
@@ -147,9 +147,9 @@ function memory_detect() {
     fi
 }
 
-# 检验下载源网络通畅，包括镜像源及pip下载源
+# 检验下载源网络通畅，包括pip下载源
 function network_detect() {
-    echo "[TCAServerDependcyCheck] *make sure have pip download source is avaliable*"
+    echo "[TCAServerDependencyCheck] *make sure pip download source is avaliable*"
     timeout_time=60
     # 监测pip下载源网络状态
     starttime=`date +'%Y-%m-%d %H:%M:%S'`
