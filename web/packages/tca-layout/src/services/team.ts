@@ -20,6 +20,12 @@ export const getTeams = (params: any = null) => get(`${MAIN_SERVER_API}/orgs/`, 
  */
 export const createTeam = (params: any) => post(`${MAIN_SERVER_API}/orgs/`, params);
 
+/**
+ * 禁用团队
+ * @param orgSid 团队唯一标识
+ * @param params 参数
+ */
+ export const disableTeam = (orgSid: string, params: any) => put(`${MAIN_SERVER_API}/orgs/${orgSid}/status/`, params);
 
 /**
  * 获取团队详情
