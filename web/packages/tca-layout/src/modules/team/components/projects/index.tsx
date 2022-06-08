@@ -7,6 +7,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { Tabs, Button, Input } from 'coding-oa-uikit';
+import { filter } from 'lodash';
 
 import { getProjects } from '@src/services/team';
 import List from './list';
@@ -18,12 +19,12 @@ const { TabPane } = Tabs;
 const Projects = () => {
   const { orgSid }: any = useParams();
   const history: any = useHistory();
-  const [loading, setLoading] = useState(false);
-  const [data, setData] = useState();
-  const [manageData, setManageData] = useState();
-  const [tab, setTab] = useState('all');
-  const [projectName, setProjectName] = useState('');
-  const [visible, setVisible] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [data, setData] = useState<any>([]);
+  const [manageData, setManageData] = useState<any>([]);
+  const [tab, setTab] = useState<string>('all');
+  const [projectName, setProjectName] = useState<string>('');
+  const [visible, setVisible] = useState<boolean>(false);
 
   useEffect(() => {
     getListData();
@@ -43,7 +44,9 @@ const Projects = () => {
 
     setLoading(true);
     getProjects(orgSid, { ...params }).then((res) => {
-      tab === 'manage' ? setManageData(res) : setData(res);
+      // 只显示未禁用的项目
+      const activeProjects = filter(res, {status: 1});
+      tab === 'manage' ? setManageData(activeProjects) : setData(activeProjects);
     })
       .finally(() => {
         setLoading(false);
