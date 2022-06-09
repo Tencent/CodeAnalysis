@@ -12,21 +12,25 @@
 
 import React, { useEffect, useState } from 'react';
 import { Link, useHistory, useParams } from 'react-router-dom';
-import { Table, Tooltip, Button, Input } from 'coding-oa-uikit';
-import { pickBy, isNumber, get, toNumber } from 'lodash';
+import { Table, Tooltip, Button, Input, Menu, Dropdown, message } from 'coding-oa-uikit';
+import { pickBy, isNumber, get, toNumber, find } from 'lodash';
 import qs from 'qs';
+import { useSelector } from 'react-redux';
 
 import SelectDropdown from '../../../components/select-dropdown';
 import QuestionCircle from 'coding-oa-uikit/lib/icon/QuestionCircle';
+import EllipsisH from 'coding-oa-uikit/lib/icon/EllipsisH';
 
 import { useStateStore } from '@src/context/store';
 import { DEFAULT_PAGER } from '@src/common/constants';
 import { useQuery } from '@src/utils/hooks';
 import { getProjectRouter, getSchemeRouter } from '@src/utils/getRoutePath';
-import { getProjects } from '@src/services/projects';
+import { getProjects, delProject } from '@src/services/projects';
+import { getMembers } from '@src/services/common';
 
 import ScanModal from './scan-modal';
 import NewProjectModal from './new-project-modal';
+import DeleteModal from '@src/components/delete-modal';
 
 import style from '../style.scss';
 
@@ -51,6 +55,17 @@ const ProjectList = (props: ProjectListProps) => {
   const [visible, setVisible] = useState(false);
   const [projectId, setProjectId] = useState() as any;
   const [createProjectVsb, setCreateProjectVsb] = useState(false);
+  const [curProjId, setCurProjId] = useState<number>(null);
+  const [reload, setReload] = useState<boolean>(false);
+
+    // 判断是否有权限删除分支项目
+    const APP = useSelector((state: any) => state.APP);
+    const isSuperuser = get(APP, 'user.is_superuser', false); // 当前用户是否是超级管理员
+    const userName = get(APP, 'user.username', null);
+    const [admins, setAdmins] = useState<any>([]);
+    const isAdmin = !!find(admins, { username: userName });  // 当前用户是否是代码库管理员
+    const deletable = isAdmin || isSuperuser;  // 删除权限
+    const [deleteVisible, setDeleteVisible] = useState<boolean>(false);
 
   const [searchParams, setSearchParams] = useState({
     scan_scheme: query.get('scan_scheme') || '',
@@ -67,7 +82,17 @@ const ProjectList = (props: ProjectListProps) => {
     pager.pageStart,
     searchParams.scan_scheme,
     searchParams.branch_or_scheme,
+    reload,
   ]);
+
+  useEffect(() => {
+    // 获取代码库成员
+    if (repoId) {
+      getMembers(orgSid, teamName, repoId).then((response) => {
+        setAdmins(response.admins);
+      });
+    }
+  }, [repoId]);
 
   const getListData = (limit: number = pageSize, offset: number = pageStart) => {
     const params = {
@@ -104,6 +129,21 @@ const ProjectList = (props: ProjectListProps) => {
     setPager(DEFAULT_PAGER);
   };
 
+  const onDeleteProject = (id: number) => {
+    setCurProjId(id);
+    setDeleteVisible(true);
+  };
+  
+  const handleDeleteProject = () => {
+    delProject(orgSid, teamName, repoId, curProjId).then(() => {
+      message.success('已删除分支项目');
+      setReload(!reload);
+    }).finally(() => {
+      setDeleteVisible(false);
+      setCurProjId(null);
+    });
+  };
+
   return (
     <div className={style.projectList}>
       <div className={style.projectSearch}>
@@ -137,9 +177,8 @@ const ProjectList = (props: ProjectListProps) => {
           onClick={() => setCreateProjectVsb(true)}
         >
           添加分支项目
-                </Button>
+        </Button>
       </div>
-
       <Table
         size="small"
         dataSource={list}
@@ -185,33 +224,51 @@ const ProjectList = (props: ProjectListProps) => {
           title="操作"
           dataIndex="id"
           width={240}
-          render={id => (
-            <>
-              <a
-                className={style.link}
-                style={{ marginRight: 20 }}
-                onClick={() => {
-                  setProjectId(id);
-                  setVisible(true);
-                }}
-              >
-                启动分析
-                            </a>
-              <Link
-                className={style.link}
-                style={{ marginRight: 20 }}
-                to={`${getProjectRouter(orgSid, teamName, repoId, id)}/overview`}
-              >
-                分支概览
-                            </Link>
-              <Link
-                className={style.link}
-                to={`${getProjectRouter(orgSid, teamName, repoId, id)}/scan-history`}
-              >
-                分析历史
-                            </Link>
-            </>
-          )}
+          render={ id => {
+            const menu = (
+              <Menu>
+                <Menu.Item>
+                  <a
+                    onClick={() => {
+                      setProjectId(id);
+                      setVisible(true);
+                    }}
+                  >
+                    启动分析
+                  </a>
+                </Menu.Item>
+                <Menu.Item>
+                  <Link
+                  to={`${getProjectRouter(orgSid, teamName, repoId, id)}/overview`}
+                  >
+                    分支概览
+                  </Link>
+                </Menu.Item>
+                <Menu.Item>
+                  <Link
+                    to={`${getProjectRouter(orgSid, teamName, repoId, id)}/scan-history`}
+                  >
+                    分析历史
+                  </Link>
+                </Menu.Item>
+                {deletable && <Menu.Item>
+                  <a
+                    onClick={() => onDeleteProject(id)}
+                  >
+                    删除分支
+                  </a>
+                </Menu.Item>}
+              </Menu>
+            );
+            return (
+              <Dropdown overlay={menu} trigger={['click']}>
+                <span className={style.linkName}>
+                  <EllipsisH />
+                </span>
+              </Dropdown>
+            );
+          }
+          }
         />
       </Table>
       <ScanModal
@@ -234,6 +291,13 @@ const ProjectList = (props: ProjectListProps) => {
           getListData(DEFAULT_PAGER.pageStart);
           // getSchemes(branch);
         }}
+      />
+      <DeleteModal
+        deleteType={'分支项目'}
+        confirmName={`${curProjId}`}
+        visible={deleteVisible}
+        onCancel={() => setDeleteVisible(false)}
+        onOk={handleDeleteProject}
       />
     </div>
   );
