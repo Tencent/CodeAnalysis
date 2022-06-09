@@ -20,16 +20,16 @@ import Project from 'coding-oa-uikit/lib/icon/Project';
 
 const MENUS: MenuItem[] = [
   {
-    icon: <Panel />,
-    title: t('团队管理'),
-    link: '/manage/orgs',
-    key: 'orgs',
-  },
-  {
     icon: <Group />,
     title: t('用户管理'),
     link: '/manage/users',
     key: 'users',
+  },
+  {
+    icon: <Panel />,
+    title: t('团队管理'),
+    link: '/manage/orgs',
+    key: 'orgs',
   },
   {
     icon: <Project />,
