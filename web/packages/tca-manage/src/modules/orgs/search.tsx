@@ -3,6 +3,7 @@ import { toNumber, isString, isEmpty, isArray, cloneDeep } from 'lodash';
 import { Form, Button, Input, Select } from 'coding-oa-uikit';
 
 // 项目内
+import { t } from '@src/i18n/i18next';
 import Filter from '@src/components/filter';
 
 // 模块内
@@ -55,17 +56,17 @@ const Search = ({ searchParams, loading, callback }: SearchProps) => {
 
   return (
     <Filter form={form} style={{ margin: '8px 0' }} initialValues={initialValues}>
-      <Filter.Item label="状态" name="status">
+      <Filter.Item label={t("状态")} name="status">
         <Select
           style={{ width: 120 }}
-          placeholder='全部' size='middle'
+          placeholder={t("全部")} size='middle'
           options={ORG_STATUS_OPTIONS}
           onChange={value => onChange('status', value)} />
       </Filter.Item>
       <Filter.Item label="" name="name">
         <Input.Search
           size="middle"
-          placeholder="团队名称"
+          placeholder={t("团队名称")}
           onSearch={value => onChange('name', value)}
         />
       </Filter.Item>
@@ -73,7 +74,7 @@ const Search = ({ searchParams, loading, callback }: SearchProps) => {
         isArray(searchParams[key]) ? !isEmpty(searchParams[key]) : searchParams[key]))
         && (
           <Button type="link" onClick={onClear} style={{ height: '36px' }}>
-            清空过滤
+            {t("清空过滤")}
           </Button>
         )}
     </Filter>

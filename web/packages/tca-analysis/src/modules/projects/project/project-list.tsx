@@ -239,7 +239,7 @@ const ProjectList = (props: ProjectListProps) => {
                 </Menu.Item>
                 <Menu.Item>
                   <Link
-                  to={`${getProjectRouter(orgSid, teamName, repoId, id)}/overview`}
+                    to={`${getProjectRouter(orgSid, teamName, repoId, id)}/overview`}
                   >
                     分支概览
                   </Link>
@@ -253,9 +253,10 @@ const ProjectList = (props: ProjectListProps) => {
                 </Menu.Item>
                 {deletable && <Menu.Item>
                   <a
+                    style={{color: 'red'}}
                     onClick={() => onDeleteProject(id)}
                   >
-                    删除分支
+                    删除项目
                   </a>
                 </Menu.Item>}
               </Menu>

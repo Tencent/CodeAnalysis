@@ -81,7 +81,7 @@ const DeleteModal = ({ deleteType, confirmName, visible, onCancel, onOk }: Delet
       <p className={s.warningMessage}>
             {t('您正在删除')}{deleteType} <span className={s.confirmText}>{confirmName}</span>{' '}
       </p>
-      <p className={s.confirmMessage}>{t('请输入您要删除的')}{deleteType}{t('的名称')}</p>
+      <p className={s.confirmMessage}>{t('为确认删除操作，请输入您要删除的')}{deleteType}</p>
       <Form
         layout="vertical"
         form={form}

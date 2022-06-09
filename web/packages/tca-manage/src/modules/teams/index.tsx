@@ -9,7 +9,7 @@ import { getPaginationParams, getFilterURLPath } from '@src/utils';
 import { DEFAULT_PAGER } from '@src/common/constants';
 import { useURLParams, useDeepEffect } from '@src/utils/hooks';
 import { getTeams, putTeamStatus } from '@src/services/teams';
-import DeleteModal from '../components/delete-modal';
+import DeleteModal from '@src/components/delete-modal';
 
 // 模块内
 import s from './style.scss';
@@ -79,7 +79,7 @@ const Teams = () => {
 
   const handleDeleteTeam = () => {
     putTeamStatus(get(curTeam,['organization', 'org_sid']), get(curTeam, 'name'), {status: TEAM_STATUS_ENUM.INACTIVE}).then(() => {
-      message.success('已删除项目');
+      message.success(t('已删除项目'));
       setReload(!reload);
       setDeleteVisible(false);
       setCurTeam(null);
@@ -89,11 +89,11 @@ const Teams = () => {
   // 恢复团队
   const onRecoverTeam = (team: any) => {
     confirm({
-      title: '恢复团队',
-      content: '确定要恢复团队吗？',
+      title: t('恢复项目'),
+      content: t('确定要恢复已删除的项目吗？'),
       onOk() {
         putTeamStatus(get(team,['organization', 'org_sid']), get(team, 'name'), {status: TEAM_STATUS_ENUM.ACTIVE}).then(() => {
-          message.success('已恢复项目');
+          message.success(t('已恢复项目'));
           setReload(!reload);
         });
       },
