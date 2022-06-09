@@ -202,6 +202,28 @@ function report(){
 	echo -e "\t\tHostname: 127.0.0.1"
 	echo -e "\t\tPassword: $REDIS_PASS"
 	echo -e ""
+	
+	info '下一步，部署服务提示......'
+	echo -e '\t部署 Server:'
+	echo -e '\t_______________________________________________________________'
+	echo -e "\t\t1. 初始化DB、安装依赖和运行初始化脚本: [ bash ./scripts/deploy.sh init ]"
+	echo -e "\t\t2. 启动服务 [ bash ./scripts/deploy.sh start ]"
+	echo -e "\t\t   停止服务 [ bash ./scripts/deploy.sh stop ]"
+	echo -e ""
+	
+	
+	echo -e '\t部署 Web:'
+	echo -e '\t_______________________________________________________________'
+	echo -e "\t\t1. 进入 Web 服务工作目录: [ ~/CodeAnalysis/web/tca-deploy-source ]"
+	echo -e "\t\t2. 自定义 SERVER_NAME 设置(可选)： [ export LOCAL_IP=xxx.xxx.xxx .xxx  ]"
+	echo -e "\t\t3. 启动 Web 服务：[ bash ./scripts/deploy.sh init -d ]"
+	echo -e ""
+	
+	echo -e '\t完成以上部署步骤后，可能存在一些问题，可进行以下尝试：'
+	echo -e '\t_______________________________________________________________'
+	echo -e "\t\t1. [ bash ./scripts/deploy.sh start ] && [ nginx -c /etc/nginx/nginx.conf ]"
+	echo -e "\t\t2. 或者重启后执行第一步"
+	echo -e ""
 }
 
 
