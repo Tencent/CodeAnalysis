@@ -9,7 +9,7 @@
  * author           luochunlan@coding.net
  * create at        2020-10-23
  */
-import { get, post, put, getFile, postFile } from './index';
+import { get, post, put, del, getFile, postFile } from './index';
 import { MAIN_SERVER, MAIN_SERVER_API, ANALYSIS_SERVER_API, getMainBaseURL, getAnalysisBaseURL } from './common';
 
 const getProjectBaseURL = (org_sid: string, team_name: string, repoId: string | number, projectId: number) => `${getMainBaseURL(org_sid, team_name)}/repos/${repoId}/projects/${projectId}`;
@@ -44,6 +44,13 @@ export const createJob = (org_sid: string, team_name: string, repoId: string | n
  * @param projectId - 项目ID
  */
 export const getProjectDetail = (org_sid: string, team_name: string, repoId: string | number, projectId: string | number) => get(`${getMainBaseURL(org_sid, team_name)}/repos/${repoId}/projects/${projectId}/`);
+
+/**
+ * 获取分支项目信息
+ * @param repoId - 代码库ID
+ * @param projectId - 项目ID
+ */
+ export const delProject = (org_sid: string, team_name: string, repoId: string | number, projectId: string | number) => del(`${getMainBaseURL(org_sid, team_name)}/repos/${repoId}/projects/${projectId}/`);
 
 /**
  * 获取指定代码库下与 CodeDog 关联的分支

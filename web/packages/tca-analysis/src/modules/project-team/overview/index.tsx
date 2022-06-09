@@ -5,14 +5,17 @@
 // ==============================================================================
 
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import { Form, Button, Input, message } from 'coding-oa-uikit';
-import { pick } from 'lodash';
+import { pick, get, find } from 'lodash';
+import { useSelector } from 'react-redux';
 
 // 项目内
+import { getProjectListRouter } from '@src/utils/getRoutePath';
 import { t } from '@src/i18n/i18next';
 import { formatDateTime, getUserName } from '@src/utils';
-import { getProjectTeam, putProjectTeam } from '@src/services/common';
+import { getProjectTeam, putProjectTeam, disableProject} from '@src/services/common';
+import DeleteModal from '@src/components/delete-modal';
 
 const layout = {
   labelCol: { span: 6 },
@@ -23,6 +26,14 @@ const Overview = () => {
   const [team, setTeam] = useState<any>({});
   const [edit, setEdit] = useState(false);
   const { org_sid: orgSid, team_name: teamName }: any = useParams();
+  // 判断是否有权限删除团队项目
+  const history = useHistory();
+  const APP = useSelector((state: any) => state.APP);
+  const isSuperuser = get(APP, 'user.is_superuser', false); // 当前用户是否是超级管理员
+  const userName = get(APP, 'user.username', null);
+  const isAdmin = !!find(team?.admins, { username: userName });  // 当前用户是否是项目管理员
+  const deletable = isAdmin || isSuperuser;  // 删除权限
+  const [deleteVisible, setDeleteVisible] = useState<boolean>(false);
 
   // 重置
   const onReset = () => {
@@ -55,8 +66,26 @@ const Overview = () => {
     }
   }, [orgSid, teamName]);
 
+  const handleDeleteTeam = () => {
+    disableProject(orgSid, teamName, {status: 2}).then(() => {
+      message.success('项目已删除');
+      history.push(getProjectListRouter(orgSid));
+    }).finally(() => setDeleteVisible(false));
+  };
+
+  const onDelete = () => {
+    setDeleteVisible(true);
+  };
+
   return (
     <div className="pa-lg">
+      <DeleteModal
+        deleteType={t('项目')}
+        confirmName={teamName}
+        visible={deleteVisible}
+        onCancel={() => setDeleteVisible(false)}
+        onOk={handleDeleteTeam}
+      />
       <h3 className="mb-md">{t('项目概览')}</h3>
       <Form
         {...layout}
@@ -105,6 +134,9 @@ const Overview = () => {
               {t('编辑')}
             </Button>
           )}
+          {deletable && <Button className="ml-12" htmlType="button" onClick={onDelete} danger type='primary'>
+            {t('删除项目')}
+          </Button>}
         </div>
       </Form>
     </div>

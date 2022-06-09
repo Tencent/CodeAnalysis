@@ -5,15 +5,18 @@
 // ==============================================================================
 
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-
+import { useParams, useHistory } from 'react-router-dom';
+import { find } from 'lodash';
 import { Input, Form, Button, Row, Col, Statistic, Card, message } from 'coding-oa-uikit';
 import Group from 'coding-oa-uikit/lib/icon/Group';
 import Project from 'coding-oa-uikit/lib/icon/Project';
 import Package from 'coding-oa-uikit/lib/icon/Package';
+
+import { useStateStore } from '@src/context/store';
 import { t } from '@src/i18n/i18next';
-import { getTeamInfo, updateTeamInfo } from '@src/services/team';
+import { getTeamInfo, updateTeamInfo, disableTeam } from '@src/services/team';
 import { formatDateTime } from '@src/utils/index';
+import DeleteModal from '@src/components/delete-modal';
 
 import style from './style.scss';
 
@@ -24,8 +27,15 @@ const layout = {
 const Profile = () => {
   const [form] = Form.useForm();
   const { orgSid }: any = useParams();
-  const [data, setData] = useState({}) as any;
-  const [isEdit, setIsEdit] = useState(false);
+  const [data, setData] = useState<any>({});
+  const [isEdit, setIsEdit] = useState<boolean>(false);
+  const history = useHistory();
+  // 判断用户是否有权限删除团队，仅超级管理员和团队管理员可以删除
+  const { userinfo } = useStateStore();
+  const isAdmin = !!find(data?.admins, { username: userinfo.username });  // 当前用户是否是管理员
+  const [deleteVisible, setDeleteVisible] = useState<boolean>(false);
+  const isSuperuser = userinfo.is_superuser;  // 是否为超级管理员
+  const deletable = isAdmin || isSuperuser;  // 删除权限
 
   useEffect(() => {
     if (orgSid) {
@@ -48,8 +58,30 @@ const Profile = () => {
     form.resetFields();
   };
 
+  const onDelete = () => {
+    setDeleteVisible(true);
+  }
+
+  const handleDeleteTeam = () => {
+    disableTeam(orgSid, {
+      status: 99
+    }).then(() => {
+      message.success('团队已删除！');
+      history.push('/teams');
+    }).catch((e: any) => {
+      console.error(e);
+    }).finally(() => setDeleteVisible(false));
+  };
+
   return (
     <div className={style.profile}>
+      <DeleteModal
+        deleteType={t('团队')}
+        confirmName={data.name}
+        visible={deleteVisible}
+        onCancel={() => setDeleteVisible(false)}
+        onOk={handleDeleteTeam}
+      />
       <h2 className="mb-lg">{data.name}</h2>
       <div className={style.block}>
         <h3 className="mb-md">{t('团队概览')}</h3>
@@ -160,6 +192,9 @@ const Profile = () => {
                 {t('编辑')}
               </Button>
             )}
+            {deletable && <Button className=" ml-12" htmlType="button" onClick={onDelete} danger type='primary'>
+              {t('删除团队')}
+            </Button>}
           </div>
         </Form>
       </div>
