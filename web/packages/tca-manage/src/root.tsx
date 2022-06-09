@@ -6,6 +6,8 @@ import { get } from 'lodash';
 
 // 项目内
 import Users from '@src/modules/users';
+import Orgs from '@src/modules/orgs';
+import Teams from '@src/modules/teams';
 import Jobs from '@src/modules/jobs';
 import Nodes from '@src/modules/nodes';
 import NodeProcess from '@src/modules/nodes/process';
@@ -26,6 +28,8 @@ const Root = () => {
       <Suspense fallback={null}>
         <Switch>
           <Route path="/manage/users" component={Users} />
+          <Route path="/manage/orgs" component={Orgs} />
+          <Route path="/manage/teams" component={Teams} />
           <Route path="/manage/jobs" component={Jobs} />
           <Route path="/manage/nodes/:nodeId/process" component={NodeProcess} />
           <Route path="/manage/nodes" component={Nodes} />
