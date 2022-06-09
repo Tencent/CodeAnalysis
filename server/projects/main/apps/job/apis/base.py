@@ -65,7 +65,7 @@ class RepoJobDetailApiView(generics.RetrieveAPIView, ProjectBaseAPIView):
         return get_object_or_404(models.Job, id=job_id, project__repo_id=repo.id)
 
 
-class JobsApiView(generics.ListAPIView):
+class JobListApiView(generics.ListAPIView):
     """任务列表接口
 
     ### GET
@@ -76,6 +76,20 @@ class JobsApiView(generics.ListAPIView):
     queryset = models.Job.objects.all().order_by("-id")
     filter_backends = (DjangoFilterBackend,)
     filterset_class = filters.JobFilterSet
+    permission_classes = [IsAdminUser]
+
+
+class TaskListApiView(generics.ListAPIView):
+    """子任务列表接口
+
+    ### GET
+    应用场景：获取子任务列表
+    """
+    schema = None
+    serializer_class = serializers.TaskSerializer
+    queryset = models.Task.objects.all().order_by("-id")
+    filter_backends = (DjangoFilterBackend,)
+    filterset_class = filters.TaskFilterSet
     permission_classes = [IsAdminUser]
 
 

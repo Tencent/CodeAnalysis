@@ -16,5 +16,6 @@ from apps.job.apis import base as apis
 
 # 前缀 /api/v2/jobs/
 urlpatterns = [
-    path("", apis.JobsApiView.as_view(), name="apiv2_job_list"),
+    path("", apis.JobListApiView.as_view(), name="apiv2_job_list"),
+    path("tasks/", apis.TaskListApiView.as_view(), name="apiv2_task_list"),
 ]
