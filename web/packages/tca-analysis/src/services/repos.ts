@@ -29,6 +29,12 @@ export const getSSHInfo = () => get(`${MAIN_SERVER_API}/authen/scmsshinfos/`, { 
   export const getOAuthInfo = () => get(`${MAIN_SERVER_API}/authen/scmauthinfos/`);
 
 /**
+ * 查询OAuth授权配置状况
+ * @param scm_platform_name 平台名
+ */
+export const getPlatformStatus = (param: any = null) => get(`${MAIN_SERVER_API}/authen/oauthsettings/`, param);
+
+/**
  * 登记代码库
  * @param data: { name: 代码库名称, scm_type: 代码库来源 git/svn, scm_url: 代码库地址 }
  */

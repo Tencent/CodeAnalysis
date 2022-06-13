@@ -48,10 +48,11 @@ const Team = () => {
   const [scrollLoading, setScrollLoading] = useState(true);
   const { count, pageStart, allLoaded } = pager;
 
+  const INIT_LOAD_SIZE = 50;
   const containerNode = document.getElementById('container');
 
   useEffect(() => {
-    getTeamList(false, DEFAULT_PAGER.pageStart, 50, {}, (list: any) => {
+    getTeamList(false, DEFAULT_PAGER.pageStart, INIT_LOAD_SIZE, {}, (list: any) => {
       // 用户进入团队页面，如果不存在团队，则默认弹出创建团队弹框
       if (isEmpty(list)) {
         setVisible(true);
@@ -120,6 +121,11 @@ const Team = () => {
     }
   };
 
+  const onCreateFinish = () => {
+    setPager(DEFAULT_PAGER);
+    getTeamList(false, DEFAULT_PAGER.pageStart, INIT_LOAD_SIZE, {});
+  }
+
   return (
     <>
       <Header />
@@ -177,7 +183,7 @@ const Team = () => {
             visible={visible}
             data={data}
             onHide={() => setVisible(false)}
-            callback={() => getTeamList()}
+            callback={onCreateFinish}
           />
         </div>, containerNode
       )}

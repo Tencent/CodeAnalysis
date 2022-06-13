@@ -8,7 +8,7 @@ import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { Form, Select, Input, Button, message } from 'coding-oa-uikit';
 // Radio
-import { get, isEmpty } from 'lodash';
+import { get, isEmpty, filter } from 'lodash';
 import PlusIcon from 'coding-oa-uikit/lib/icon/Plus';
 import RefreshIcon from 'coding-oa-uikit/lib/icon/Refresh';
 
@@ -16,7 +16,7 @@ import RefreshIcon from 'coding-oa-uikit/lib/icon/Refresh';
 import { useStateStore, useDispatchStore } from '@src/context/store';
 import { SCM_PLATFORM } from '@src/common/constants';
 import { SET_CUR_REPO, SET_REPOS } from '@src/context/constant';
-import { getScmAccounts, postRepo, getSSHInfo, getOAuthInfo } from '@src/services/repos';
+import { getScmAccounts, postRepo, getSSHInfo, getOAuthInfo, getPlatformStatus } from '@src/services/repos';
 import { t } from '@src/i18n/i18next';
 import { getPCAuthRouter, getRepoRouter } from '@src/modules/repos/routes';
 import { AUTH_TYPE, AUTH_TYPE_TXT, REPO_TYPE, REPO_TYPE_OPTIONS } from './constants';
@@ -70,8 +70,16 @@ const Create = () => {
       getSSHInfo().then(r => r.results || []),
       getScmAccounts().then(r => r.results || []),
       getOAuthInfo().then(r => r.results || []),
+      getPlatformStatus().then(r => r || []),
     ])
       .then((result) => {
+        const activeOauth = filter(
+          result[2].map((item:any)=>({ 
+            ...item, 
+            platform_status: get(result[3], item.scm_platform_name, [false]),
+          })),
+          'platform_status'
+        );
         // HTTP 和 SSH ID可能重复
         setSshAuthList(result[0]?.map((item: any) => ({
           ...item,
@@ -81,7 +89,7 @@ const Create = () => {
           ...item,
           authId: `${AUTH_TYPE.HTTP}#${item.id}`,
         })));
-        setOauthAuthList(result[2].map((item:any)=>({ 
+        setOauthAuthList(activeOauth.map((item:any)=>({ 
             ...item, 
             authId: `${AUTH_TYPE.OAUTH}#${item.id}`,
         })));

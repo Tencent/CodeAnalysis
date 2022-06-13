@@ -2,13 +2,13 @@
  * 选择认证
  */
 import React, { useState, useEffect } from 'react';
-import { find, isEmpty, get } from 'lodash';
+import { find, isEmpty, get, filter } from 'lodash';
 import { Button, Form, Select, Tooltip } from 'coding-oa-uikit';
 import PlusIcon from 'coding-oa-uikit/lib/icon/Plus';
 import RefreshIcon from 'coding-oa-uikit/lib/icon/Refresh';
 
 import { SCM_PLATFORM, AUTH_TYPE, AUTH_TYPE_TXT, SCM_MAP } from '@src/common/constants/authority';
-import { getSSHInfo, gScmAccounts as getScmAccounts, getOAuthInfo } from '@src/services/user';
+import { getSSHInfo, gScmAccounts as getScmAccounts, getOAuthInfo, getPlatformStatus } from '@src/services/user';
 import { FormInstance } from 'rc-field-form';
 
 const { Option, OptGroup } = Select;
@@ -65,10 +65,18 @@ const Authority = (props: AuthorityProps) => {
       getSSHInfo().then(r => r.results || []),
       getScmAccounts().then(r => r.results || []),
       getOAuthInfo().then(r => r.results || []),
+      getPlatformStatus().then(r => r || []),
     ]).then((result) => {
+      const activeOauth = filter(
+        result[2].map((item:any)=>({ 
+          ...item, 
+          platform_status: get(result[3], item.scm_platform_name, [false]),
+        })),
+        'platform_status'
+      );
       setSshAuthList(result[0]);
       setHttpAuthList(result[1]);
-      setOauthAuthList(result[2]);
+      setOauthAuthList(activeOauth);
       setAuthLoading(false);
     });
   };

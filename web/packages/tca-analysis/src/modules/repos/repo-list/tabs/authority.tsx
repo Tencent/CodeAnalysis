@@ -8,7 +8,7 @@
  * 仓库登记入口文件
  */
 import React, { useState, useEffect } from 'react';
-import { find, isEmpty, get } from 'lodash';
+import { find, isEmpty, get, filter } from 'lodash';
 import { Button, Form, Select, message } from 'coding-oa-uikit';
 import PlusIcon from 'coding-oa-uikit/lib/icon/Plus';
 import RefreshIcon from 'coding-oa-uikit/lib/icon/Refresh';
@@ -18,7 +18,7 @@ import { t } from '@src/i18n/i18next';
 import { SCM_PLATFORM } from '@src/common/constants';
 import { AUTH_TYPE, AUTH_TYPE_TXT } from '@src/modules/repos/constants';
 import { getPCAuthRouter } from '@src/modules/repos/routes';
-import { getSSHInfo, getScmAccounts, putRepoAuth, getOAuthInfo } from '@src/services/repos';
+import { getSSHInfo, getScmAccounts, putRepoAuth, getOAuthInfo, getPlatformStatus } from '@src/services/repos';
 
 const { Option, OptGroup } = Select;
 
@@ -92,10 +92,18 @@ const Authority = ({ curRepo, orgSid, teamName, repoId }: IProps) => {
       getSSHInfo().then(r => r.results || []),
       getScmAccounts().then(r => r.results || []),
       getOAuthInfo().then(r => r.results || []),
+      getPlatformStatus().then(r => r || []),
     ]).then((result) => {
+      const activeOauth = filter(
+        result[2].map((item:any)=>({ 
+          ...item, 
+          platform_status: get(result[3], item.scm_platform_name, [false]),
+        })),
+        'platform_status'
+      );
       setSshAuthList(result[0]);
       setHttpAuthList(result[1]);
-      setOauthAuthList(result[2]);
+      setOauthAuthList(activeOauth);
       setCurAuth(result[0], result[1], result[2]);
       setAuthLoading(false);
     });
