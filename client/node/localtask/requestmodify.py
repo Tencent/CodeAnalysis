@@ -21,7 +21,7 @@ logger = logging.getLogger(__name__)
 
 class RequestModify(object):
     @staticmethod
-    def add_params(task_request, job_context, scm_info, pre_cmd, build_cmd, project_path_filters):
+    def add_params(task_request, job_context, scm_info, pre_cmd, build_cmd, project_path_filters, compare_branch):
         task_params = task_request.get("task_params")
         task_params["scm_initial_last_revision"] = job_context.get("scm_initial_last_revision")
         task_params["path_filters"] = project_path_filters
@@ -37,6 +37,10 @@ class RequestModify(object):
             task_params["pre_cmd"] = pre_cmd
         if build_cmd:
             task_params["build_cmd"] = build_cmd
+        # MR参数
+        if compare_branch:
+            task_params['ignore_branch_issue'] = compare_branch
+            task_params['ignore_merged_issue'] = True
 
     @staticmethod
     def modify_task_request(task_request, token, server_url, source_dir, scm_info, scm_auth_info):

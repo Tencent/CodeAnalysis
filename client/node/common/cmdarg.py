@@ -49,6 +49,8 @@ class CmdArgParser(object):
         localscan_parser.add_argument("--branch", dest="branch", type=str, help="指定本地扫描的git代码库分支名称")
         localscan_parser.add_argument("--exclude", dest="exclude_paths", type=str,
                                       help="需要过滤的目录或文件(相对路径),多个路径用英文逗号(,)分隔,路径格式遵循python fnmatch语法")
+        localscan_parser.add_argument("--compare-branch", dest="compare_branch", type=str,
+                                      help="对比分支,过滤掉从对比分支引入的历史代码问题，用于MR场景，一般设置为MR目标分支")
         localscan_parser.add_argument("--include", dest="include_paths", type=str,
                                       help="指定只扫描的目录或文件(相对路径),多个路径用英文逗号(,)分隔,路径格式遵循python fnmatch语法")
         localscan_parser.add_argument("--pre-cmd", dest="pre_cmd", type=str, help="前置命令(需要前置操作时使用)")
@@ -72,6 +74,21 @@ class CmdArgParser(object):
         # start命令
         start_parser = subparsers.add_parser('start', help="启动节点")
         start_parser.add_argument("-t", "--token", dest='token', type=str, help="个人token,在代码分析网站获取", required=True)
+
+        # quickscan命令
+        quickscan_parser = subparsers.add_parser('quickscan', help="执行快速分析")
+        quickscan_parser.add_argument("-s", "--source-dir", dest="source_dir", type=str, help="本地代码目录")
+        quickscan_parser.add_argument("--file", dest="file", type=str,
+                                      help="指定文件扫描，格式为基于source_dir的相对路径，多个文件用英文逗号(,)分隔")
+        quickscan_parser.add_argument("-l", "--label", dest="label", type=str,
+                                      help="规则标签，可以指定多个标签,用英文逗号(,)分隔")
+        quickscan_parser.add_argument("--language", dest="language", type=str, help="代码语言类型,可以指定多门语言,用英文逗号(,)分隔")
+
+        # quickinit命令
+        quickinit_parser = subparsers.add_parser('quickinit', help="初始化快速分析")
+        quickinit_parser.add_argument("-l", "--label", dest="label", type=str,
+                                      help="规则标签，可以指定多个标签,用英文逗号(,)分隔")
+        quickinit_parser.add_argument("--language", dest="language", type=str, help="代码语言类型,可以指定多门语言,用英文逗号(,)分隔")
 
         # task命令
         task_parser = subparsers.add_parser('task', help="执行单个任务，本地调试用")

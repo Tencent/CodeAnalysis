@@ -109,6 +109,15 @@ class CodePuppy(object):
             else:
                 LogPrinter.error("缺少token参数,请通过-t <token>启动start命令.")
 
+        elif args.command == 'quickinit':
+            '''快速分析初始化工具'''
+            from node.quicktask.toolloader import QuickScanToolLoader
+            QuickScanToolLoader.load_tools(args)
+
+        elif args.command == 'quickscan':
+            from node.quicktask.quickrunner import QuickRunner
+            QuickRunner(args).run()
+
         elif args.command == 'task':
             '''执行单个工具任务'''
             from node.testrunner import TestRunner

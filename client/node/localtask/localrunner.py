@@ -80,6 +80,7 @@ class LocalRunner(TaskRunner):
         self._config_file = None
         self._admins = []
 
+        self._compare_branch = None  # 对比分支
         self._scheme_templates = []  # 官方分析方案模板
         self._scheme_template_ids = []  # 官方分析方案模板id
         self._server_url = None  # 连接的 server url
@@ -139,6 +140,7 @@ class LocalRunner(TaskRunner):
         total_scan_value = self._get_value_from_config_file(config_dict, "total_scan")
         if total_scan_value:
             self._total_scan = True if total_scan_value in ["True", "true"] else False
+        self._compare_branch = self._get_value_from_config_file(config_dict, "compare_branch")
         exclude_value = self._get_value_from_config_file(config_dict, "exclude")
         if exclude_value:
             self._exclude_paths = StringMgr.str_to_list(exclude_value)
@@ -177,6 +179,8 @@ class LocalRunner(TaskRunner):
             self._scm_auth_info.scm_password = args.password
         if args.branch:
             self._branch = args.branch
+        if args.compare_branch:
+            self._compare_branch = args.compare_branch
         if args.exclude_paths:
             self._exclude_paths = StringMgr.str_to_list(args.exclude_paths)
         if args.include_paths:
@@ -374,7 +378,8 @@ class LocalRunner(TaskRunner):
                 self._job_web_url, self._exclude_paths, self._include_paths,
                 self._pre_cmd, self._build_cmd,
                 self._origin_os_env, self._repo_id, self._proj_id,
-                self._org_sid, self._team_name, self._create_from
+                self._org_sid, self._team_name, self._create_from,
+                self._compare_branch
             )
 
             cur_execute_request_list, self._skip_processes, self._job_id, self._job_heartbeat, self._task_name_id_maps, remote_task_names = \
