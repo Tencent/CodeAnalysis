@@ -9,6 +9,7 @@
 RunTaskMgr
 """
 
+import os
 import copy
 import json
 import logging
@@ -17,7 +18,7 @@ import time
 from node.app import settings
 from node.localtask.requestmodify import RequestModify
 from node.localtask.localreport import LocalReport
-from node.localtask.runtask import InOrderTasksRunner
+from node.localtask.runtask import InOrderTasksRunner, ConcurrentTasksRuner
 from node.localtask.serverquery import ServerQuery
 from node.localtask.resultsender import ResultSender
 from util import errcode
@@ -68,6 +69,7 @@ class RunTaskMgr(object):
         :return:
         """
         codecount_handler = None
+        proj_scan_result = []
 
         # 如果任务列表不为空,且没有任务需要发送到常驻节点执行,才需要统计代码行
         if execute_request_list and not self._remote_task_names:
@@ -94,11 +96,24 @@ class RunTaskMgr(object):
                                                     self._server_url, self._source_dir, self._scm_info,
                                                     self._scm_auth_info)
 
-        proj_scan_succ, proj_scan_result, self._local_task_dirs, error_code, error_msg = InOrderTasksRunner(
-            execute_request_list,
-            self._origin_os_env,
-            self._job_web_url,
-            self._proj_id).run()
+        # 通过环境变量获取并发执行开关
+        concurrent_task_env = os.getenv("TCA_CONCURRENT_SCAN")
+        if concurrent_task_env == "False":
+            proj_scan_succ, proj_scan_result, self._local_task_dirs, error_code, error_msg = InOrderTasksRunner(
+                execute_request_list,
+                self._origin_os_env,
+                self._job_web_url,
+                self._proj_id).run()
+        else:
+            # 默认启用工具并行执行
+            proj_scan_succ, finished_task_results, error_code, error_msg = ConcurrentTasksRuner(execute_request_list,
+                                                                                                self._origin_os_env,
+                                                                                                self._job_web_url,
+                                                                                                self._proj_id).run()
+            proj_scan_result.extend(finished_task_results)
+            for task_result in finished_task_results:
+                task_dir = os.path.dirname(task_result.request_file)
+                self._local_task_dirs.append(task_dir)
 
         if proj_scan_succ:
             # 判断扫描前后scm revision是否匹配,如果扫描过程中代码版本有更新,则任务失败

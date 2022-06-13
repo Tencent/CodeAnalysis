@@ -116,7 +116,7 @@ class ConfigLoader(object):
                     ini_config_tools.append(tool_name)
 
         # 从ini文件中读取工具配置
-        config_dict = self.read_tool_config_from_ini_file(ini_config_tools, custom_tools, config_all_tools=config_all_tools, include_common=include_common)
+        config_dict = self.read_tool_config_from_ini_file(ini_config_tools, custom_tools, task_list, config_all_tools=config_all_tools, include_common=include_common)
 
         # aaaa = "_".join(ini_config_tools)
         # with open(f"tool_{aaaa}_from_ini.json", "w") as wf:
@@ -133,7 +133,35 @@ class ConfigLoader(object):
 
         return config_dict
 
-    def read_tool_config_from_ini_file(self, tool_names=None, custom_tools=None, config_all_tools=False, include_common=True):
+    def __update_tool_names(self, tool_names, task_list):
+        """
+        如果tool_names中包含customscan工具，只有部分特殊规则按需加载依赖和配置
+        其他规则无额外依赖，不需要加载依赖和配置
+        """
+        # LogPrinter.info(f"task_list: {json.dumps(task_list, indent=2)}")
+        c_name = "customscan"
+        special_rule_list = ["FunctionTooLong"]
+
+        if c_name not in tool_names:
+            return tool_names
+
+        if not task_list:
+            return tool_names
+
+        for task_config in task_list:
+            task_name = task_config.get("task_name")
+            if task_name == c_name:
+                task_params = task_config.get("task_params", {})
+                rule_names = task_params.get("rules", [])
+                for special_rule in special_rule_list:
+                    if special_rule in rule_names:
+                        tool_names.append(special_rule)
+
+        # 从工具列表中剔除customscan,不做统一加载配置
+        tool_names.remove(c_name)
+        return tool_names
+
+    def read_tool_config_from_ini_file(self, tool_names=None, custom_tools=None, task_list=None, config_all_tools=False, include_common=True):
         """
         从ini文件中读取工具配置
         """
@@ -183,6 +211,11 @@ class ConfigLoader(object):
                     if tool_name in custom_tools:  # 如果工具名不在ini中，且是自定义工具，需要加载customtool配置
                         if "customtool" not in wanted_tools:
                             wanted_tools.append("customtool")
+
+            # customscan特殊处理
+            # LogPrinter.info(f">> 1. tool_names: {wanted_tools}")
+            wanted_tools = self.__update_tool_names(wanted_tools, task_list)
+            # LogPrinter.info(f">> 2. tool_names: {wanted_tools}")
 
             # 读取工具配置
             for tool_name in wanted_tools:
