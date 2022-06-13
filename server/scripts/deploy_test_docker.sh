@@ -2,11 +2,11 @@
 # TCA Server部署监测脚本（docker-compose启动方式）
 # 检测步骤为：可用磁盘/内存检测 -> 镜像下载源检测 -> docker/docker-compose命令检测 -> docker-compose版本检测
 
-echo "start detect every dependcy for tca server..."
+echo "start detect every dependency for tca server..."
 
-# 检验磁盘空间
+# 检验可用磁盘空间
 function diskspace_detect() {
-    echo "[TCAServerDependcyCheck] *make sure have enough disk space*"
+    echo "[TCAServerDependencyCheck] *make sure have enough disk space*"
     ret=$(df -hl |grep /$)
     split_result=(${ret// / })
     disk_space="${split_result[3]}"
@@ -21,9 +21,9 @@ function diskspace_detect() {
     fi
 }
 
-# 检验内存
+# 检验可用内存
 function memory_detect() {
-    echo "[TCAServerDependcyCheck] *make sure have enough memory*"
+    echo "[TCAServerDependencyCheck] *make sure have enough memory*"
     result=$(free)
     split_result=(${result// / })
     memory_avaliable=${split_result[12]}  # 可用内存在切分后的数组中的第13处
@@ -36,7 +36,7 @@ function memory_detect() {
 
 # 检验docker是否安装
 function docker_command_detect() {
-    echo "[TCAServerDependcyCheck] *make sure command docker exist*"
+    echo "[TCAServerDependencyCheck] *make sure command docker exist*"
     if ! command -v docker &> /dev/null
     then
         echo -e "\e[31m❌ command docker not found, please install docker first then start TCA\e[0m"
@@ -46,7 +46,7 @@ function docker_command_detect() {
 
 # 检验docker-compose是否安装
 function dockercompose_command_detect() {
-    echo "[TCAServerDependcyCheck] *make sure command docker-compose exist*"
+    echo "[TCAServerDependencyCheck] *make sure command docker-compose exist*"
     if ! command -v docker-compose &> /dev/null
     then
         echo -e "\e[31m❌ command docker-compose not found, please install docker-compose first then start TCA\e[0m"
@@ -56,7 +56,7 @@ function dockercompose_command_detect() {
 
 # 检验docker-compose版本
 # function dockercompose_version_detect() {
-#     echo "[TCAServerDependcyCheck] *make sure docker-compose have right version*"
+#     echo "[TCAServerDependencyCheck] *make sure docker-compose have right version*"
 #     result=$(docker-compose version)
 #     split_result=(${result//v/ })
 #     version="${split_result[3]}"

@@ -1,13 +1,5 @@
 #!/bin/bash
-
-PYVERSION=`python -c 'import sys; print(sys.version_info.major, sys.version_info.minor)'`
-if [ "$PYVERSION" != "3 7" ]; then
-    echo "wrong python version";
-    exit -1
-fi
-
 echo "Start to init server config..."
-
 
 CURRENT_PATH=$(dirname $(cd "$(dirname "$0")";pwd))
 MAIN_PROJECT_PATH=$CURRENT_PATH/projects/main
@@ -19,6 +11,26 @@ PROJECT_LOG_PATH=$CURRENT_PATH/logs
 CONFIG_PATH=$CURRENT_PATH/configs
 
 source $CURRENT_PATH/scripts/config.sh
+
+echo "Check python version"
+PYVERSION=`python -c 'import sys; print(sys.version_info.major, sys.version_info.minor)'`
+if [ "$PYVERSION" != "3 7" ]; then
+    echo "wrong python version";
+    exit -1
+fi
+
+echo "Check nginx path"
+NGINX_PATH=${NGINX_PATH-"/etc/nginx/"}
+NGINX_CONFIG_PATH=${NGINX_CONFIG_PATH-"/etc/nginx/conf.d/"}
+if [ ! -d $NGINX_PATH ]; then
+    echo "Nginx path [${NGINX_PATH}] not exist";
+    exit -1
+fi
+
+if [ ! -d $NGINX_CONFIG_PATH ]; then
+    echo "Nginx config path [${NGINX_CONFIG_PATH}] not exist";
+    exit -1
+fi
 
 if [ -z "$MYSQL_HOST" ]; then
     echo "Wrong msyql config"
@@ -51,10 +63,10 @@ ln -s $CURRENT_PATH/configs/django/local_file.py $FILE_PROJECT_PATH/codedog_file
 rm $LOGIN_PROJECT_PATH/apps/settings/local.py
 ln -s $CURRENT_PATH/configs/django/local_login.py $LOGIN_PROJECT_PATH/apps/settings/local.py
 
-rm /etc/nginx/conf.d/tca_8000.conf /etc/nginx/conf.d/tca_file_local.conf
-ln -s $CURRENT_PATH/configs/nginx/tca_8000.conf /etc/nginx/conf.d/tca_8000.conf
-ln -s $CURRENT_PATH/configs/nginx/tca_file_local.conf /etc/nginx/conf.d/tca_file_local.conf
-# ln -s $CURRENT_PATH/configs/nginx/tca_file_minio.conf /etc/nginx/conf.d/tca_file_local.conf
+rm $NGINX_CONFIG_PATH/tca_8000.conf $NGINX_CONFIG_PATH/tca_file_local.conf
+cp $CURRENT_PATH/configs/nginx/tca_8000.conf $NGINX_CONFIG_PATH/tca_8000.conf
+cp $CURRENT_PATH/configs/nginx/tca_file_local.conf $NGINX_CONFIG_PATH/tca_file_local.conf
+# cp $CURRENT_PATH/configs/nginx/tca_file_minio.conf $NGINX_CONFIG_PATH/tca_file_local.conf
 
 function init_db() {
     echo "Start to init db, create database..."
