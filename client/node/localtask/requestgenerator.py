@@ -33,7 +33,7 @@ class TaskRequestGenerator(object):
     def __init__(self, dog_server, source_dir, total_scan, scm_info, scm_auth_info,
                  scm_client, report_file, server_url, scan_history_url, job_web_url,
                  exclude_paths, include_paths, pre_cmd, build_cmd, origin_os_env,
-                 repo_id, proj_id, org_sid, team_name, create_from):
+                 repo_id, proj_id, org_sid, team_name, create_from, compare_branch):
         self._total_scan = total_scan
         self._source_dir = source_dir
         self._scm_info = scm_info
@@ -62,6 +62,7 @@ class TaskRequestGenerator(object):
         self._pre_cmd = pre_cmd
         self._build_cmd = build_cmd
         self._remote_task_names = []
+        self._compare_branch = compare_branch
 
     def generate_request(self, proj_conf):
         """
@@ -111,7 +112,6 @@ class TaskRequestGenerator(object):
         job_id, job_heartbeat, task_name_id_maps = JobInit.init_job(self._org_sid, self._team_name, self._dog_server,
                                                                     self._total_scan, self._repo_id, self._proj_id,
                                                                     task_name_list, self._create_from)
-        # org_sid, team_name, dog_server, total_scan, repo_id, proj_id, task_name_list, create_from
 
         # 根据环境变量判断是否发送给节点执行
         remote_tasks_str = os.environ.get("CODEDOG_REMOTE_TASKS", None)
@@ -174,7 +174,7 @@ class TaskRequestGenerator(object):
         for task_request in task_list:
             task_name = task_request["task_name"]
             RequestModify.add_params(task_request, job_context, self._scm_info, self._pre_cmd,
-                                     self._build_cmd, project_path_filters)
+                                     self._build_cmd, project_path_filters, self._compare_branch)
             task_params = task_request.get("task_params")
             task_display_name = ToolDisplay.get_tool_display_name(task_request)
 

@@ -23,6 +23,8 @@ from util.pathfilter import FilterPathUtil
 from task.basic.datahandler.handlerbase import HandlerBase
 from task.basic.datahandler.issueignore import COMMENTIGNORE
 from util.scanlang.callback_queue import CallbackQueue
+from util.mergelib import MergeUtil
+from util.scmurlmgr import GitUrlMgr
 
 
 logger = logging.getLogger(__name__)
@@ -44,6 +46,7 @@ class RevisionFilterType(object):
 
     NoFilter = 0  # 不需要过滤
     TooOld = 1  # 在起始版本号之前, 过滤
+    InCompareBranch = 2  # 在对比分支中已存在, 过滤
 
 
 class Filter(HandlerBase):
@@ -270,9 +273,9 @@ class PostFilter(HandlerBase):
         :param params:
         :return:
         """
-        logger.info("start: filter issues according to revision and log message.")
+        logger.info("start: filter issues according to revision.")
         params["result"] = self._common_revision_filter(params, params["result"])
-        logger.info("finished: filter issues according to revision and log message.")
+        logger.info("finished: filter issues according to revision.")
         # logger.info(params['result'])
         return params
 
@@ -330,6 +333,10 @@ class PostFilter(HandlerBase):
             for issue in issues:
                 if revision_status_map[issue["revision"]] == RevisionFilterType.TooOld:
                     logger.info(f"Issue revision is not newer than base_revision，should be filtered: {issue}")
+                    remove_issues.append(issue)
+                elif revision_status_map[issue["revision"]] == RevisionFilterType.InCompareBranch:
+                    logger.info(f"MR重复单，过滤: {issue}")
+                    issue["resolution"] = 4
                     remove_issues.append(issue)
                 else:
                     continue
@@ -423,16 +430,58 @@ class PostFilter(HandlerBase):
             issues = fileissue.get("issues", [])
             remove_issues = []
             for issue in issues:
+                if not issue.get("revision"):  # 先判空，避免revision字段不存在的情况
+                    logger.warning(f"no revison, skip. issue: {issue}")
+                    continue
                 if revision_status_map[issue["revision"]] == RevisionFilterType.TooOld:
                     if os.environ.get("NO_MR_FILTER", None) in {"True", "true"}:
                         continue
                     logger.info(f"issue的revision在start_revision之前，过滤: {issue}")
                     remove_issues.append(issue)
+                elif revision_status_map[issue["revision"]] == RevisionFilterType.InCompareBranch:
+                    if os.environ.get("NO_MR_FILTER", None) in {"True", "true"}:
+                        continue
+                    logger.info(f"MR重复单,过滤: {issue}")
+                    issue["resolution"] = 4
             # 删除revision在起始版本前的issue
             for issue in remove_issues:
                 fileissue["issues"].remove(issue)
         logger.info("_common_revision_filter done...")
         return fileissues
+
+    def __get_mr_branch_first_revision(self, params):
+        """获取MR源分支的起始版本号"""
+        source_dir = params.get("source_dir")
+        # 获取是否过滤合并版本的标记
+        ignore_merged_issue = params.get("ignore_merged_issue")
+        # 获取合流对比分支
+        compare_branch = params.get("ignore_branch_issue")
+        if source_dir and ignore_merged_issue and compare_branch:
+            # 获取git分支名
+            repo_url, branch = GitUrlMgr.split_url(params["scm_url"])
+            branch_start_revision, _ = MergeUtil().get_start_revision(source_dir, branch, compare_branch)
+            if branch_start_revision:
+                # 计算分支起始版本号的前一个提交，打印出来，方便对比查问题
+                last_revison_before_branch = MergeUtil().get_git_last_revision(source_dir, branch_start_revision)
+                if last_revison_before_branch:
+                    logger.info(f"the last revison before branch_start_revision: {last_revison_before_branch}")
+                return branch_start_revision
+        return None
+
+    def __get_compare_branch_revisions(self, params, scm_client):
+        """获取MR对比分支上的所有提交版本号"""
+        # 获取是否过滤合并版本的标记
+        ignore_merged_issue = params.get("ignore_merged_issue", False)
+        # 获取合流对比分支
+        compare_branch = params.get("ignore_branch_issue")
+        compare_branch_revisions = []
+        if params["scm_type"] == "git":
+            # 获取git分支名
+            repo_url, branch = GitUrlMgr.split_url(params["scm_url"])
+            # 如果是合流场景，获取目标分支的所有版本号，供后续过滤用
+            if ignore_merged_issue and compare_branch and branch != compare_branch:
+                compare_branch_revisions = scm_client.list_revisions("origin/{}".format(compare_branch))
+        return compare_branch_revisions
 
     def __get_revision_status_map(self, params, fileissues, scm_client):
         """收集issues中出现的所有revision,并判断这些revision是否需要过滤
@@ -442,12 +491,13 @@ class PostFilter(HandlerBase):
         :param scm_client: 代码库的scm实例
         :return: 版本号是否需要过滤的字典 {revision: status}
         """
-        source_dir = params["source_dir"]
-        # 获取起始版本号
-        scm_initial_last_revision = params.get("scm_initial_last_revision", False)
-
         # 获取issues中出现的所有版本号,存到set集合中
         issue_revisions = self.__get_issues_revisions(fileissues)
+
+        # 获取MR源分支的起始版本号
+        mr_branch_first_revision = self.__get_mr_branch_first_revision(params)
+        # 获取MR对比分支上的所有提交版本号
+        compare_branch_revisions = self.__get_compare_branch_revisions(params, scm_client)
 
         # 标记revision是否需要过滤的字典{revision: status}
         # status取值详见RevisionFilterType
@@ -456,10 +506,18 @@ class PostFilter(HandlerBase):
         # 判断 revision 是否需要过滤,并记录到 revision_status_map 字典中
         for revision in issue_revisions:
             try:
-                # 如果issue的 revision 在 scm_initial_last_revision 之前，过滤
-                if scm_initial_last_revision and not scm_client.revision_lt(scm_initial_last_revision, revision):
+                # 1. 如果issue版本号小于mr分支起始版本号，过滤掉
+                if mr_branch_first_revision and scm_client.revision_lt(revision, mr_branch_first_revision):
                     revision_status_map[revision] = RevisionFilterType.TooOld
                     continue
+
+                # 2. 过滤掉已经在MR目标分支上的版本号
+                if compare_branch_revisions:
+                    logger.info("check revision: %s" % revision)
+                    if revision in compare_branch_revisions:
+                        logger.info("match MR revision, filter: %s" % revision)
+                        revision_status_map[revision] = RevisionFilterType.InCompareBranch
+                        continue
             except Exception as err:
                 logger.exception("版本号(%s)判断出现异常,跳过,不过滤.原因可能是该版本号已被删除,可能会导致问题过滤失败." % revision)
 
