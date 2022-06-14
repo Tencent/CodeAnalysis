@@ -40,8 +40,8 @@ const Overview = ({ curRepo, orgSid, teamName, repoId, deletable, onDelete }: IP
     form.resetFields();
   };
 
-  const onFinish = (name: string) => {
-    putRepo(orgSid, teamName, repoId, merge(curRepo, { name })).then((response) => {
+  const onFinish = (values: any) => {
+    putRepo(orgSid, teamName, repoId, merge(curRepo, values)).then((response) => {
       message.success('仓库信息已更新');
       onReset();
       dispatch({
@@ -57,10 +57,13 @@ const Overview = ({ curRepo, orgSid, teamName, repoId, deletable, onDelete }: IP
       initialValues={curRepo || {}}
       form={form}
       style={{ width: '530px', marginTop: '30px' }}
-      onFinish={values => onFinish(values.name)}
+      onFinish={values => onFinish(values)}
     >
       <Form.Item label={t('仓库地址')} name="scm_url">
         <span style={{ wordBreak: 'break-all' }}>{curRepo.scm_url}</span>
+      </Form.Item>
+      <Form.Item label={t('ssh地址')} name="ssh_url">
+        {edit ? <Input width={400} /> : <span style={{ wordBreak: 'break-all' }}>{curRepo.ssh_url}</span>}
       </Form.Item>
       <Form.Item
         label={t('仓库别名')}

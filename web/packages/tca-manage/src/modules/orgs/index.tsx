@@ -78,7 +78,7 @@ const Orgs = () => {
 
   const handleDeleteOrg = () => {
     putOrgStatus(curOrg.org_sid, {status: ORG_STATUS_ENUM.INACTIVE}).then(() => {
-      message.success(t('已删除团队'));
+      message.success(t('已禁用团队'));
       setReload(!reload);
       setDeleteVisible(false);
       setCurOrg(null);
@@ -89,7 +89,7 @@ const Orgs = () => {
   const onRecoverOrg = (org: any) => {
     confirm({
       title: t('恢复团队'),
-      content: t('确定要恢复已删除的团队吗？'),
+      content: t('确定要恢复已禁用的团队吗？'),
       onOk() {
         putOrgStatus(org.org_sid, {status: ORG_STATUS_ENUM.ACTIVE}).then(() => {
           message.success(t('已恢复团队'));

@@ -18,11 +18,12 @@ interface DeleteModalProps {
   deleteType: string;
   confirmName: string;
   visible: boolean;
+  addtionInfo?: string;
   onCancel: () => void;
   onOk: () => void;
 }
 
-const DeleteModal = ({ deleteType, confirmName, visible, onCancel, onOk }: DeleteModalProps) => {
+const DeleteModal = ({ deleteType, confirmName, addtionInfo='', visible, onCancel, onOk }: DeleteModalProps) => {
   const [form] = Form.useForm();
   const [confirmed, setConfirmed] = useState<boolean>(true);
 
@@ -55,7 +56,7 @@ const DeleteModal = ({ deleteType, confirmName, visible, onCancel, onOk }: Delet
 
   return (
     <Modal
-      title={t(`删除${deleteType}`)}
+      title={t(`禁用${deleteType}`)}
       visible={visible}
       onCancel={onCancel}
       className={s.deleteModal}
@@ -67,7 +68,7 @@ const DeleteModal = ({ deleteType, confirmName, visible, onCancel, onOk }: Delet
           danger
           onClick={onSubmitHandle}
         >
-          {t('确认删除')}
+          {t('确认禁用')}
         </Button>,
         <Button
           key="back"
@@ -79,9 +80,10 @@ const DeleteModal = ({ deleteType, confirmName, visible, onCancel, onOk }: Delet
       ]}
     >
       <p className={s.warningMessage}>
-            {t('您正在删除')}{deleteType} <span className={s.confirmText}>{confirmName}</span>{' '}
+            {t('您正在禁用')}{deleteType} <span className={s.confirmText}>{confirmName}</span>{' '}<br/>
       </p>
-      <p className={s.confirmMessage}>{t('为确认删除操作，请输入您要删除的')}{deleteType}</p>
+      {addtionInfo && <p className={s.warningMessage}>{addtionInfo}</p>}
+      <p className={s.confirmMessage}>{t('为确认禁用操作，请输入您要禁用的')}{deleteType}</p>
       <Form
         layout="vertical"
         form={form}
