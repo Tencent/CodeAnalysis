@@ -79,7 +79,7 @@ const Teams = () => {
 
   const handleDeleteTeam = () => {
     putTeamStatus(get(curTeam,['organization', 'org_sid']), get(curTeam, 'name'), {status: TEAM_STATUS_ENUM.INACTIVE}).then(() => {
-      message.success(t('已删除项目'));
+      message.success(t('已禁用项目'));
       setReload(!reload);
       setDeleteVisible(false);
       setCurTeam(null);
@@ -90,11 +90,17 @@ const Teams = () => {
   const onRecoverTeam = (team: any) => {
     confirm({
       title: t('恢复项目'),
-      content: t('确定要恢复已删除的项目吗？'),
+      content: t('恢复项目时，为了避免标识冲突恢复失败，需要在项目概览页手动调整唯一标识'),
       onOk() {
         putTeamStatus(get(team,['organization', 'org_sid']), get(team, 'name'), {status: TEAM_STATUS_ENUM.ACTIVE}).then(() => {
           message.success(t('已恢复项目'));
-          setReload(!reload);
+          history.push({
+            pathname: `/t/${get(team,['organization', 'org_sid'])}/p/${get(team, 'name')}/profile`,
+            state: {
+              // 用户进入项目界面后默认开启编辑模式
+              edit: true,
+            },
+          });
         });
       },
       onCancel() {},
@@ -128,6 +134,7 @@ const Teams = () => {
       </div>
       <DeleteModal
         deleteType={t('项目')}
+        addtionInfo={t('禁用项目时为方便项目唯一标识进行复用，会在当前项目的标识后增加时间戳，后续恢复时可以手动调整标识')}
         confirmName={curTeam?.name}
         visible={deleteVisible}
         onCancel={() => setDeleteVisible(false)}

@@ -11,6 +11,13 @@
  */
  export const getProjectListRouter = (org_sid: string) => `/t/${org_sid}/projects`;
 
+ /**
+ * 获取项目概览路由地址
+ * @param org_sid
+ * @param name
+ */
+  export const getProjectOverviewRouter = (org_sid: string, name: string) => `/t/${org_sid}/p/${name}/profile`;
+
 /**
  * 获取基础路由前缀
  * @param org_sid

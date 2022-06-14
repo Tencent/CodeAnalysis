@@ -11,7 +11,7 @@ import { pick, get, find } from 'lodash';
 import { useSelector } from 'react-redux';
 
 // 项目内
-import { getProjectListRouter } from '@src/utils/getRoutePath';
+import { getProjectListRouter, getProjectOverviewRouter } from '@src/utils/getRoutePath';
 import { t } from '@src/i18n/i18next';
 import { formatDateTime, getUserName } from '@src/utils';
 import { getProjectTeam, putProjectTeam, disableProject} from '@src/services/common';
@@ -27,7 +27,7 @@ const Overview = () => {
   const [edit, setEdit] = useState(false);
   const { org_sid: orgSid, team_name: teamName }: any = useParams();
   // 判断是否有权限删除团队项目
-  const history = useHistory();
+  const history: any = useHistory();
   const APP = useSelector((state: any) => state.APP);
   const isSuperuser = get(APP, 'user.is_superuser', false); // 当前用户是否是超级管理员
   const userName = get(APP, 'user.username', null);
@@ -36,8 +36,8 @@ const Overview = () => {
   const [deleteVisible, setDeleteVisible] = useState<boolean>(false);
 
   // 重置
-  const onReset = () => {
-    setEdit(false);
+  const onReset = (edit = false) => {
+    setEdit(edit);
     form.resetFields();
   };
 
@@ -50,19 +50,22 @@ const Overview = () => {
       message.success(t('项目信息更新成功'));
       setTeam(response);
       onReset();
+      if (values.name !== teamName) {
+        history.replace(getProjectOverviewRouter(orgSid, values.name));
+      }
     });
   };
 
-  const init = () => {
+  const init = (edit = false) => {
     getProjectTeam(orgSid, teamName).then((res) => {
       setTeam(res);
-      onReset();
+      onReset(edit);
     });
   };
 
   useEffect(() => {
     if (teamName) {
-      init();
+      init(history.location.state?.edit);
     }
   }, [orgSid, teamName]);
 
@@ -94,8 +97,12 @@ const Overview = () => {
         initialValues={team}
         onFinish={values => onFinish(values)}
       >
-        <Form.Item label={t('项目唯一标识')} name="name">
-          <span>{team.name}</span>
+        <Form.Item
+          label={t('项目唯一标识')}
+          name="name"
+          rules={edit ? [{ required: true, message: t('项目唯一标识为必填项') }] : undefined}
+        >
+          {edit ? <Input width={400} /> : <>{team.name}</>}
         </Form.Item>
         <Form.Item
           label={t('项目名称')}
@@ -120,7 +127,7 @@ const Overview = () => {
               <Button type="primary" htmlType="submit" key="submit">
                 {t('确定')}
               </Button>
-              <Button className=" ml-12" htmlType="button" onClick={onReset}>
+              <Button className=" ml-12" htmlType="button" onClick={() => onReset()}>
                 {t('取消')}
               </Button>
             </>
