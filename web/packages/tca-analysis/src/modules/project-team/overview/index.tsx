@@ -36,8 +36,8 @@ const Overview = () => {
   const [deleteVisible, setDeleteVisible] = useState<boolean>(false);
 
   // 重置
-  const onReset = (edit = false) => {
-    setEdit(edit);
+  const onReset = () => {
+    setEdit(false);
     form.resetFields();
   };
 
@@ -56,22 +56,22 @@ const Overview = () => {
     });
   };
 
-  const init = (edit = false) => {
+  const init = () => {
     getProjectTeam(orgSid, teamName).then((res) => {
       setTeam(res);
-      onReset(edit);
+      onReset();
     });
   };
 
   useEffect(() => {
     if (teamName) {
-      init(history.location.state?.edit);
+      init();
     }
   }, [orgSid, teamName]);
 
   const handleDeleteTeam = () => {
     disableProject(orgSid, teamName, {status: 2}).then(() => {
-      message.success('项目已删除');
+      message.success('项目已禁用');
       history.push(getProjectListRouter(orgSid));
     }).finally(() => setDeleteVisible(false));
   };
@@ -83,7 +83,9 @@ const Overview = () => {
   return (
     <div className="pa-lg">
       <DeleteModal
-        deleteType={t('项目')}
+        actionType={t('禁用')}
+        objectType={t('项目')}
+        addtionInfo={t('后续如需恢复项目，请联系平台管理员在管理后台恢复')}
         confirmName={teamName}
         visible={deleteVisible}
         onCancel={() => setDeleteVisible(false)}
@@ -100,9 +102,8 @@ const Overview = () => {
         <Form.Item
           label={t('项目唯一标识')}
           name="name"
-          rules={edit ? [{ required: true, message: t('项目唯一标识为必填项') }] : undefined}
         >
-          {edit ? <Input width={400} /> : <>{team.name}</>}
+          <span>{team.name}</span>
         </Form.Item>
         <Form.Item
           label={t('项目名称')}
@@ -127,7 +128,7 @@ const Overview = () => {
               <Button type="primary" htmlType="submit" key="submit">
                 {t('确定')}
               </Button>
-              <Button className=" ml-12" htmlType="button" onClick={() => onReset()}>
+              <Button className=" ml-12" htmlType="button" onClick={onReset}>
                 {t('取消')}
               </Button>
             </>
@@ -142,7 +143,7 @@ const Overview = () => {
             </Button>
           )}
           {deletable && <Button className="ml-12" htmlType="button" onClick={onDelete} danger type='primary'>
-            {t('删除项目')}
+            {t('禁用项目')}
           </Button>}
         </div>
       </Form>

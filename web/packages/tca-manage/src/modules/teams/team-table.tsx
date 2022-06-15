@@ -82,7 +82,7 @@ const TeamTable = ({ dataSource, pagination, onDelete, onRecover }: IProps) => {
           dataIndex="status"
           render={(status: number, team: any) => (
             <>
-              {status === TEAM_STATUS_ENUM.ACTIVE && <Tooltip title={t('禁用团队')}>
+              {status === TEAM_STATUS_ENUM.ACTIVE && <Tooltip title={t('禁用项目')}>
                 <Button
                   className="mr-sm"
                   shape="circle"
@@ -91,7 +91,7 @@ const TeamTable = ({ dataSource, pagination, onDelete, onRecover }: IProps) => {
                   onClick={() => onDelete(team)}
                 />
               </Tooltip>}
-              {status === TEAM_STATUS_ENUM.INACTIVE && <Tooltip title={t('恢复团队')}>
+              {status === TEAM_STATUS_ENUM.INACTIVE && <Tooltip title={t('恢复项目')}>
                 <Button
                   className="mr-sm"
                   shape="circle"

@@ -294,7 +294,8 @@ const ProjectList = (props: ProjectListProps) => {
         }}
       />
       <DeleteModal
-        deleteType={'分支项目'}
+        actionType='删除'
+        objectType='分支项目'
         confirmName={`${curProjId}`}
         visible={deleteVisible}
         onCancel={() => setDeleteVisible(false)}

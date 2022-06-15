@@ -47,7 +47,7 @@ const Profile = () => {
 
   const onFinish = (formData: any) => {
     updateTeamInfo(orgSid, formData).then((res) => {
-      message.success('团队信息更新成功');
+      message.success(t('团队信息更新成功'));
       reset();
       setData(res);
     });
@@ -66,7 +66,7 @@ const Profile = () => {
     disableTeam(orgSid, {
       status: 99
     }).then(() => {
-      message.success('团队已删除！');
+      message.success(t('团队已禁用！'));
       history.push('/teams');
     }).catch((e: any) => {
       console.error(e);
@@ -76,7 +76,9 @@ const Profile = () => {
   return (
     <div className={style.profile}>
       <DeleteModal
-        deleteType={t('团队')}
+        actionType={t('禁用')}
+        objectType={t('团队')}
+        addtionInfo={t('后续如需恢复团队，请联系平台管理员在管理后台恢复')}
         confirmName={data.name}
         visible={deleteVisible}
         onCancel={() => setDeleteVisible(false)}
@@ -193,7 +195,7 @@ const Profile = () => {
               </Button>
             )}
             {deletable && <Button className=" ml-12" htmlType="button" onClick={onDelete} danger type='primary'>
-              {t('删除团队')}
+              {t('禁用团队')}
             </Button>}
           </div>
         </Form>

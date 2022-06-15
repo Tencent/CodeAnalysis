@@ -15,14 +15,16 @@ import { t } from '@src/i18n/i18next';
 import s from './style.scss';
 
 interface DeleteModalProps {
-  deleteType: string;
+  actionType: string;
+  objectType: string;
   confirmName: string;
   visible: boolean;
+  addtionInfo?: string;
   onCancel: () => void;
   onOk: () => void;
 }
 
-const DeleteModal = ({ deleteType, confirmName, visible, onCancel, onOk }: DeleteModalProps) => {
+const DeleteModal = ({ actionType, objectType, confirmName, addtionInfo='', visible, onCancel, onOk }: DeleteModalProps) => {
   const [form] = Form.useForm();
   const [confirmed, setConfirmed] = useState<boolean>(true);
 
@@ -55,7 +57,7 @@ const DeleteModal = ({ deleteType, confirmName, visible, onCancel, onOk }: Delet
 
   return (
     <Modal
-      title={t(`删除${deleteType}`)}
+      title={`${actionType}${objectType}`}
       visible={visible}
       onCancel={onCancel}
       className={s.deleteModal}
@@ -67,7 +69,7 @@ const DeleteModal = ({ deleteType, confirmName, visible, onCancel, onOk }: Delet
           danger
           onClick={onSubmitHandle}
         >
-          {t('确认删除')}
+          {t('确认')}{actionType}
         </Button>,
         <Button
           key="back"
@@ -79,9 +81,10 @@ const DeleteModal = ({ deleteType, confirmName, visible, onCancel, onOk }: Delet
       ]}
     >
       <p className={s.warningMessage}>
-            {t('您正在删除')}{deleteType} <span className={s.confirmText}>{confirmName}</span>{' '}
+            {t('您正在')}{actionType}{objectType} <span className={s.confirmText}>{confirmName}</span>{' '}<br/>
       </p>
-      <p className={s.confirmMessage}>{t('为确认删除操作，请输入您要删除的')}{deleteType}</p>
+      {addtionInfo && <p className={s.warningMessage}>{addtionInfo}</p>}
+      <p className={s.confirmMessage}>{t(`为确认${actionType}操作，请输入您要${actionType}的`)}{objectType}</p>
       <Form
         layout="vertical"
         form={form}

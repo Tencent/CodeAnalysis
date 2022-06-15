@@ -99,7 +99,8 @@ const RepoList = ({ repos }: IProps) => {
   return (
     <Row className=" full-height">
       <DeleteModal
-        deleteType={t('代码库')}
+        actionType={t('删除')}
+        objectType={t('代码库')}
         confirmName={curRepo?.name}
         visible={deleteVisible}
         onCancel={() => setDeleteVisible(false)}
