@@ -157,6 +157,8 @@
 - 首次启动会构建相关镜像，耗时会比较久
 
 - ``compose_init.sh`` 脚本会包含各个服务的初始化操作
+
+- 需要注意：如果是ARM平台，请将`docker-compose.yml`里面的数据库服务从`MySQL`切换到`MariaDB`，源代码里面有注释，注释掉现有`mysql`字段，取消`mariadb`字段注释即可，不然会出现使用`docker-compose up`命令无法启动项目状况。
 :::
 
 #### 启动/停止服务
