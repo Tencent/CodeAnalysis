@@ -126,7 +126,8 @@ const Orgs = () => {
         />
       </div>
       <DeleteModal
-        deleteType={t('团队')}
+        actionType={t('禁用')}
+        objectType={t('团队')}
         confirmName={curOrg?.name}
         visible={deleteVisible}
         onCancel={() => setDeleteVisible(false)}

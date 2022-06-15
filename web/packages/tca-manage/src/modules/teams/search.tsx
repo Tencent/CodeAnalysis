@@ -65,13 +65,6 @@ const Search = ({ searchParams, loading, callback }: SearchProps) => {
           options={TEAM_STATUS_OPTIONS}
           onChange={value => onChange('status', value)} />
       </Filter.Item>
-      <Filter.Item label="" name="organization_name">
-        <Input.Search
-          size="middle"
-          placeholder={t("团队名称")}
-          onSearch={value => onChange('organization_name', value)}
-        />
-      </Filter.Item>
       <Filter.Item label="" name="display_name">
         <Input.Search
           size="middle"
@@ -79,6 +72,28 @@ const Search = ({ searchParams, loading, callback }: SearchProps) => {
           onSearch={value => onChange('display_name', value)}
         />
       </Filter.Item>
+      <Filter.Item label="" name="organization_name">
+        <Input.Search
+          size="middle"
+          placeholder={t("团队名称")}
+          onSearch={value => onChange('organization_name', value)}
+        />
+      </Filter.Item>
+      <Form.Item
+        noStyle
+        shouldUpdate={
+          (prevValues: any, curValues: any) => prevValues.organization_sid !== curValues.organization_sid
+        }
+      >
+        {({ getFieldValue }: { getFieldValue: any }) => getFieldValue('organization_sid') && (
+          <Filter.Item label="团队ID" name="organization_sid">
+            <Input
+              size="middle"
+              disabled
+            />
+          </Filter.Item>
+        )}
+      </Form.Item>
       {Object.keys(searchParams).some((key: string) => (
         isArray(searchParams[key]) ? !isEmpty(searchParams[key]) : searchParams[key]))
         && (
