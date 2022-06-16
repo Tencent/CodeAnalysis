@@ -11,6 +11,9 @@
 - 如果您在部署或使用腾讯云代码分析的过程中遇到了问题，可以参考[常见问题](FAQ.md)。
 :::
 
+## 使用TCA Action快速体验
+使用TCA Action，只需要在代码仓库中添加`.github/workflows/tca.yml`文件，就可以直接在GitHub工作流中快速体验代码分析。请参考：[TCA-action指引](https://github.com/TCATools/TCA-action/blob/main/README.md)
+
 ## 部署 Server 和 Web
 
 拉取 [代码库](https://github.com/Tencent/CodeAnalysis) 后，您可以通过以下两种方式部署腾讯云代码分析的 Server 和 Web 服务：
