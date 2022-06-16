@@ -15,5 +15,5 @@ jobs:
       - name: Tencent Cloud Code Analysis
         uses: TCATools/TCA-action@main
         with:
-          block: true
-          label: open_source_check
+          block: false
+          label: safety
