@@ -60,7 +60,8 @@ class ResultCheck(object):
             # 有一个任务失败，退出该项目的扫描，整个扫描失败
             task_display_name = ToolDisplay.get_tool_display_name(task_request)
             error_msg = f"任务({task_display_name})扫描失败: {error_msg}\n请查看本地日志文件({task.task_log})"
-            error_msg += ",\n或前往 %s (点击异常子任务->下载进程日志)" % job_web_url
+            if not QuickScan.is_quick_scan():
+                error_msg += ",\n或前往 %s (点击异常子任务->下载进程日志)" % job_web_url
             error_msg += "查看失败原因."
             logger.warning(error_msg)
             task_result = TaskResult(task_request['id'], task_request['task_name'], task.request_file,

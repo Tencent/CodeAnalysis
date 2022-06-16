@@ -193,13 +193,6 @@ class QuickRunner(TaskRunner):
                 if file_language:
                     language_types.add(file_language)
             self._languages = list(language_types)
-            labels = input_params.get("labels", [])
-            if not self._languages:
-                if "security" in labels:  # 未识别到语言，只扫描代码安全，将代码规范剔除
-                    if "standard" in labels:
-                        input_params["labels"].remove("standard")
-                else:  # 未识别到语言，只扫描代码规范时，跳过
-                    self._check_no_language_exit()
             LogPrinter.info(f"languages: {self._languages}")
 
     def _generate_request(self, proj_conf, path_filters):
