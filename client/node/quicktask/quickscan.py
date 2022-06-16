@@ -40,13 +40,27 @@ class QuickScan(object):
             return False
 
     @staticmethod
-    def get_task_config(scan_type, task_name):
-        config_file = os.path.join(settings.TOOL_BASE_DIR, f"quickscan/tasks/{scan_type}/{task_name}.json")
-        if not os.path.exists(config_file):
-            raise NodeError(code=E_NODE_TASK_CONFIG, msg=f"config file({config_file}) not exist, please init tca.")
-        with open(config_file, "r") as rf:
-            task_params = json.load(rf)
-            return task_params
+    def get_task_json_files(config_dir, languages):
+        """
+        从对应标签的配置目录中读取需要的任务参数json文件
+        目录结构：
+            |- label_name
+               |- tool_name.json    适用于所有语言的任务
+               |- language_name     语言类型名
+                  |- tool_name.json 适用于指定语言的任务
+        """
+        task_json_paths = []
+        for f_name in os.listdir(config_dir):
+            f_path = os.path.join(config_dir, f_name)
+            if os.path.isdir(f_path):  # 如果是个目录，则目录名为语言类型，如果在需要扫描的语言列表中，则添加到list
+                if not languages or (languages and f_name in languages):
+                    for json_name in os.listdir(f_path):
+                        json_path = os.path.join(f_path, json_name)
+                        task_json_paths.append(json_path)
+            else:  # 如果是文件，表示适用于所有语言，直接添加到list
+                task_json_paths.append(f_path)
+        # logger.info(f">> task_json_paths: {task_json_paths}")
+        return task_json_paths
 
     @staticmethod
     def get_scan_tasks(languages, labels, input_params):
@@ -61,13 +75,16 @@ class QuickScan(object):
                 if not os.path.exists(config_dir):
                     raise NodeError(code=E_NODE_TASK_CONFIG,
                                     msg=f"config dir({config_dir}) not exist, please init tca.")
-                task_files = PathMgr().get_dir_files(config_dir, '.json')
+                new_task_json_files = QuickScan.get_task_json_files(config_dir, languages)
+
                 new_tasks = []
-                for file_path in task_files:
-                    file_name = os.path.basename(file_path)
-                    task_name = os.path.splitext(file_name)[0]
-                    task_config = QuickScan.get_task_config(label, task_name)
+                for file_path in new_task_json_files:
+                    if not file_path.endswith(".json"):
+                        continue
+                    with open(file_path, "r") as rf:
+                        task_config = json.load(rf)
                     new_tasks.append(task_config)
+                # 不同的标签可能会包含同样的工具，这里通过merge合并相同工具
                 tasks = QuickScan.merge_tasks(tasks, new_tasks)
         else:
             raise NodeError(code=E_NODE_TASK_CONFIG, msg=f"no label param, please specify lable by --label.")
@@ -139,7 +156,7 @@ class QuickScan(object):
         }
         filtered_paths = FilterPathUtil(task_params).get_include_files(file_paths, relpos)
         rel_paths = [path[relpos:] for path in filtered_paths]
-        logger.info(f"{len(rel_paths)} files in {sub_dir} to scan: {rel_paths}")
+        # logger.info(f"{len(rel_paths)} files in {sub_dir} to scan: {rel_paths}")
         return rel_paths
 
     @staticmethod
