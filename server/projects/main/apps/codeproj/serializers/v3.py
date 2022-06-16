@@ -96,6 +96,7 @@ class RepositoryListSerializer(CDBaseModelSerializer):
         user = request.user if request else None
         # 更新字段
         instance.name = validated_data.get("name", instance.name)
+        instance.ssh_url = validated_data.get("ssh_url", instance.ssh_url)
         instance.save(user=user)
 
         if user:
@@ -105,7 +106,8 @@ class RepositoryListSerializer(CDBaseModelSerializer):
     class Meta:
         model = models.Repository
         fields = ["id", "name", "scm_url", "scm_type", "branch_count", "scheme_count", "job_count",
-                  "created_time", "recent_active", "created_from", "creator", "scm_auth", "project_team"]
+                  "created_time", "recent_active", "created_from", "creator", "scm_auth", "project_team",
+                  "ssh_url"]
         read_only_fields = ["scm_url", "scm_type", "created_from"]
 
 
@@ -129,6 +131,7 @@ class RepositoryCreateSerializer(CDBaseModelSerializer):
     def validate(self, attrs):
         scm_type = attrs["scm_type"]
         scm_url = attrs["scm_url"]
+        ssh_url = attrs.get("ssh_url") or scm_url
         scm_auth = attrs.get("scm_auth")
         request = self.context.get("request")
         user = request.user
@@ -150,7 +153,7 @@ class RepositoryCreateSerializer(CDBaseModelSerializer):
             scm_ssh_info = core.ScmAuthManager.get_scm_sshinfo_with_id(user, scm_ssh_id)
             if not scm_ssh_info:
                 raise serializers.ValidationError({"cd_error": "SSH凭证不存在"})
-            scm_client = scm.ScmClient(scm_type, scm_url, auth_type,
+            scm_client = scm.ScmClient(scm_type, ssh_url, auth_type,
                                        ssh_key=scm_ssh_info.ssh_private_key, ssh_password=scm_ssh_info.password)
         elif auth_type == models.ScmAuth.ScmAuthTypeEnum.OAUTH:
             scm_oauth = scm_auth.get("scm_oauth")
@@ -230,7 +233,7 @@ class RepositoryCreateSerializer(CDBaseModelSerializer):
 
     class Meta:
         model = models.Repository
-        fields = ["id", "name", "scm_url", "scm_type", "created_from", "scm_auth", "labels"]
+        fields = ["id", "name", "scm_url", "ssh_url", "scm_type", "created_from", "scm_auth", "labels"]
 
 
 class RepositoryAuthSerializer(CDBaseModelSerializer):
