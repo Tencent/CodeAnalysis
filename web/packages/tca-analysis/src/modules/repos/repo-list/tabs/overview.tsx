@@ -4,7 +4,7 @@
 // See LICENSE for details
 // ==============================================================================
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Form, Input, Button, message, Avatar } from 'coding-oa-uikit';
 import UserIcon from 'coding-oa-uikit/lib/icon/User';
 import { merge } from 'lodash';
@@ -43,13 +43,16 @@ const Overview = ({ curRepo, orgSid, teamName, repoId, deletable, onDelete }: IP
   const onFinish = (values: any) => {
     putRepo(orgSid, teamName, repoId, merge(curRepo, values)).then((response) => {
       message.success('仓库信息已更新');
-      onReset();
       dispatch({
         type: SET_CUR_REPO,
         payload: response,
       });
     });
   };
+
+  useEffect(() => {
+    onReset();
+  }, [curRepo]);
 
   return (
     <Form
