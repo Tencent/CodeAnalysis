@@ -1,0 +1,25 @@
+name: Tencent Cloud Code Analysis
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  CodeAnalysis:
+    runs-on: ubuntu-latest
+    name: Tencent Cloud Code Analysis
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
+      - name: get git diff files
+        run: git diff-tree --no-commit-id --name-only -r ${{ github.sha }} > changed.txt
+      - name: Tencent Cloud Code Analysis
+        uses: TCATools/TCA-action@main
+        with:
+          block: false
+          label: safety
+          from_file: changed.txt
+          ignore_paths: .git/.*,.github/workflows/.*
