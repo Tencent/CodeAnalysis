@@ -10,6 +10,7 @@ import { useParams, Link } from 'react-router-dom';
 import { Tabs, Table } from 'coding-oa-uikit';
 import AlignLeft from 'coding-oa-uikit/lib/icon/AlignLeft';
 import Clock from 'coding-oa-uikit/lib/icon/Clock';
+import { filter } from 'lodash';
 
 import { DEFAULT_PAGER } from '@src/common/constants';
 import { formatDateTime } from '@src/utils/index';
@@ -41,8 +42,8 @@ const Workspace = () => {
           pageStart: offset,
           count: response.count,
         });
-
-        setList(response.results || []);
+        const activeTeamRepos = filter(response?.results, ['project_team.status',1]);
+        setList(activeTeamRepos || []);
       })
       .finally(() => {
         setLoading(false);
@@ -94,6 +95,21 @@ const Workspace = () => {
                   {name}
                 </Link>
                 <p className={style.repoUrl}>{record.scm_url}</p>
+              </>
+            )}
+          />
+          <Column
+            title="所属项目"
+            dataIndex="project_team"
+            key="project_team"
+            render={(project: any) => (
+              <>
+                <Link
+                  className='link-name'
+                  to={`/t/${project?.org_sid}/p/${project?.name}/repos`}
+                >
+                  {project?.display_name}
+                </Link>
               </>
             )}
           />

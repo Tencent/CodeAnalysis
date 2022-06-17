@@ -203,16 +203,15 @@ const Create = () => {
                 ))}
               </Select>
             </Form.Item>
-
             <Form.Item
               name={['address', 'scm_url']}
               noStyle
               rules={[
                 { required: true, message: t('请输入代码库地址') },
-                // {
-                //     pattern: /(https?):\/\/[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]/,
-                //     message: t('请输入合法的代码库地址'),
-                // },
+                {
+                    pattern: /(https?):\/\/[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]/,
+                    message: t('请输入合法的http代码库地址'),
+                },
               ]}
             >
               <Input style={{ width: 430 }} />
@@ -221,6 +220,27 @@ const Create = () => {
               由于境外代码托管平台可能存在网络问题，建议使用境内托管平台的代码库
             </p>
           </Input.Group>
+        </Form.Item>
+        <Form.Item
+          noStyle
+          shouldUpdate={(prevValues, curValues) => prevValues.scm_auth_id !== curValues.scm_auth_id}
+        >
+          {({ getFieldValue }) => {
+              const scmAuth = getFieldValue('scm_auth_id');
+              return scmAuth?.startsWith('ssh_token') && (
+                <>
+                  <Form.Item
+                    name={['address', 'ssh_url']}
+                    label={t('ssh地址')}
+                    rules={[
+                      { required: true, message: t('请输入代码库的ssh地址') },
+                    ]}
+                  >
+                    <Input style={{ width: 500 }} />
+                  </Form.Item>
+                </>
+              );
+          }}
         </Form.Item>
         <Form.Item
           name="name"
