@@ -130,14 +130,29 @@ class OrganizationDetailApiView(generics.RetrieveUpdateAPIView):
     """
     permission_classes = [OrganizationDetailUpdatePermission]
     serializer_class = base_org.OrganizationSerializer
-    queryset = models.Organization.objects.all()
-    lookup_field = 'org_sid'
+    queryset = models.Organization.objects.exclude(status=models.Organization.StatusEnum.FORBIDEN)
+    lookup_field = "org_sid"
+
+
+class OrganizationStatusApiView(generics.RetrieveUpdateAPIView):
+    """团队状态变更接口
+
+    ### GET
+    应用场景：获取团队简要信息
+
+    ### PUT
+    应用场景：更新团队状态
+    """
+    permission_classes = [OrganizationDefaultPermission]
+    serializer_class = base_org.OrganizationSimpleSerializer
+    queryset = models.Organization.active_orgs.all()
+    lookup_field = "org_sid"
 
 
 class OrganizationMemberDeleteApiView(APIView):
     """删除团队成员
 
-    ### delete
+    ### DELETE
     应用场景：删除团队成员
     """
     permission_classes = [OrganizationDefaultPermission]
@@ -264,7 +279,7 @@ class ScmAccountDetailApiView(generics.RetrieveUpdateDestroyAPIView):
     ### PUT
     应用场景：更新用户指定的账号
 
-    ### delete
+    ### DELETE
     应用场景：删除用户指定的账号
     """
     permission_classes = [CodeDogUserPermission]
@@ -305,7 +320,7 @@ class ScmSSHInfoDetailApiView(generics.RetrieveUpdateDestroyAPIView):
     ### PUT
     更新用户指定的SSH授权
 
-    ### delete
+    ### DELETE
     创建用户SSH授权列表
     """
     permission_classes = [CodeDogUserPermission]
