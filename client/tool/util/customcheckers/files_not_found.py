@@ -22,7 +22,7 @@ class FilesNotFound(object):
     比如：检查开源项目下必备文件readme.md
     """
 
-    required_files = ["readme.md", "contributing.md", "license.txt"]
+    required_files = ["readme.md", "contributing.md", "license.txt", "license"]
 
     def get_dir_files(self, root_dir):
         """
@@ -43,7 +43,7 @@ class FilesNotFound(object):
     def run(self, params, scan_files, rule_name):
         """
         :param params: 任务参数
-        :param scan_files: 需要扫描的文件列表
+        :param scan_files: 需要分析的文件列表
         :param rule_name: 规则名,通过外部传递
         :return: [
                    {'path':...,
@@ -76,6 +76,8 @@ class FilesNotFound(object):
 
         # 获取项目根目录的文件
         files = self.get_dir_files(source_dir)
+        # 不区分大小写，统一匹配小写
+        files = [f.lower() for f in files]
         issues = []
         for file in required_files:
             if file in files:
