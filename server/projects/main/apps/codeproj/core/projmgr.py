@@ -244,7 +244,7 @@ class RepositoryManager(object):
             raise ServerOperationError("代码库[%s]不存在" % repo_id)
         old_scm_url = repo.scm_url
         deleted_time = now()
-        repo.scm_url = "%s [deleted by %s(%s)]" % (repo.scm_url, user.username, deleted_time)
+        repo.scm_url = ("%s [deleted by %s(%s)]" % (repo.scm_url, user.username, deleted_time))[:198]
         repo.save()
         logger.info("[User: %s] 在 %s 删除了代码库 %s-%s" % (user.username, deleted_time, repo_id, old_scm_url))
         repo.delete(user=user)
@@ -1045,7 +1045,7 @@ class ProjectManager(object):
         old_branch = project.branch
         deleted_time = now()
         logger.info("[User: %s] 在 %s 删除了 %s 分支项目" % (user.username, deleted_time, project))
-        project.branch = "deleted by %s(%s)" % (user.username, deleted_time)
+        project.branch = ("deleted by %s(%s)" % (user.username, deleted_time))[:198]
         project.remark = json.dumps({"branch": old_branch})
         project.save()
         project.delete(user=user)

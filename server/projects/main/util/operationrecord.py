@@ -48,6 +48,13 @@ class OperationRecordHandler(object):
         add_operation_record("organization_%d" % organization.id, action, username, message)
 
     @classmethod
+    def add_projectteam_operation_record(cls, project_team, action, username, message=None):
+        """
+        统一处理项目组操作相关的记录，默认scenario_key为 "projectteam_%d"% project_team.id
+        """
+        add_operation_record("projectteam_%d" % project_team.id, action, username, message)
+
+    @classmethod
     def add_project_operation_record(cls, project, action, username, message=None):
         """
         统一处理项目操作相关的记录，默认scenario_key为 "project_%d"%project.id

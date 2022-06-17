@@ -41,7 +41,7 @@ class ProjectTeamDefaultPermission(CodeDogUserPermission):
         team_name = view.kwargs.get("team_name")
         if not org_sid or not team_name:
             return False
-        project_team = get_object_or_404(ProjectTeam, name=team_name, organization__org_sid=org_sid)
+        project_team = get_object_or_404(ProjectTeam.active_pts, name=team_name, organization__org_sid=org_sid)
         if not project_team.organization.validate_org_checked():
             return False
         return self.is_check_adminuser(request.user) \
@@ -70,12 +70,13 @@ class ProjectTeamOperationPermission(CodeDogUserPermission):
         team_name = view.kwargs.get("team_name")
         if not org_sid or not team_name:
             return False
-        project_team = get_object_or_404(ProjectTeam, name=team_name, organization__org_sid=org_sid)
+        project_team = get_object_or_404(ProjectTeam.active_pts, name=team_name, organization__org_sid=org_sid)
         if not project_team.organization.validate_org_checked():
             return False
         return self.is_check_adminuser(request.user) \
                or request.user.has_perm(ProjectTeam.PermissionNameEnum.VIEW_TEAM_PERM, project_team) \
                or request.user.has_perm(Organization.PermissionNameEnum.CHANGE_ORG_PERM, project_team.organization)
+
 
 class RepositoryDefaultPermission(CodeDogUserPermission):
     """代码库默认权限判断
@@ -94,7 +95,7 @@ class RepositoryDefaultPermission(CodeDogUserPermission):
         repo_id = view.kwargs.get("repo_id")
         if not org_sid or not team_name or not repo_id:
             return False
-        project_team = get_object_or_404(ProjectTeam, name=team_name, organization__org_sid=org_sid)
+        project_team = get_object_or_404(ProjectTeam.active_pts, name=team_name, organization__org_sid=org_sid)
         if not project_team.organization.validate_org_checked():
             return False
         repo = get_object_or_404(Repository, id=repo_id, project_team=project_team)
@@ -120,7 +121,7 @@ class RepositorySchemeDefaultPermission(CodeDogUserPermission):
         """
         if not org_sid or not team_name or not repo_id or not scheme_id:
             return False
-        project_team = get_object_or_404(ProjectTeam, name=team_name, organization__org_sid=org_sid)
+        project_team = get_object_or_404(ProjectTeam.active_pts, name=team_name, organization__org_sid=org_sid)
         if not project_team.organization.validate_org_checked():
             return False
         scheme = get_object_or_404(ScanScheme, id=scheme_id, repo_id=repo_id, repo__project_team=project_team)
@@ -163,7 +164,7 @@ class RepositoryProjectDefaultPermission(CodeDogUserPermission):
         logger.info(project_id)
         if not org_sid or not team_name or not repo_id or not project_id:
             return False
-        project_team = get_object_or_404(ProjectTeam, name=team_name, organization__org_sid=org_sid)
+        project_team = get_object_or_404(ProjectTeam.active_pts, name=team_name, organization__org_sid=org_sid)
         if not project_team.organization.validate_org_checked():
             return False
         project = get_object_or_404(Project, id=project_id, repo_id=repo_id, repo__project_team=project_team)
@@ -215,6 +216,25 @@ class SchemeDefaultPermission(RepositorySchemeDefaultPermission):
 
     > 分析方案模板：需团队验证通过，如果当前用户是方案模板管理员可操作，否则团队内成员可查看
     """
+    def has_repo_scheme_permission(self, request, org_sid, team_name, repo_id, scheme_id):
+        """代码库扫描方案默认权限判断
+
+        适用于更新、配置扫描方案操作
+
+        > 需团队验证通过，当前用户如果是团队管理员、项目管理员、代码库创建者或管理员、扫描方案创建者可操作，项目普通成员可查看
+        """
+        project_team = get_object_or_404(ProjectTeam.active_pts, name=team_name, organization__org_sid=org_sid)
+        if not project_team.organization.validate_org_checked():
+            return False
+        scheme = get_object_or_404(ScanScheme, id=scheme_id, repo_id=repo_id, repo__project_team=project_team)
+        return self.is_check_adminuser(request.user) \
+               or (request.method in permissions.SAFE_METHODS
+                   and request.user.has_perm("view_projectteam", project_team)) \
+               or request.user == scheme.creator \
+               or request.user == scheme.repo.creator or request.user.has_perm("change_repository", scheme.repo) \
+               or request.user.has_perm("change_projectteam", project_team) \
+               or request.user.has_perm('change_organization', project_team.organization)
+
     def has_global_scheme_permission(self, request, org_sid, scheme_id):
         """分析方案模板默认权限判断
 

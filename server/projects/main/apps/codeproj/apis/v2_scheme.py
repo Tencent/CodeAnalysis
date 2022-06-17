@@ -198,7 +198,7 @@ class ScanSchemeDirDetailApiView(generics.RetrieveUpdateDestroyAPIView):
     ### PUT
     应用场景：更新指定扫描方案的指定扫描目录
 
-    ### delete
+    ### DELETE
     应用场景：删除指定扫描方案的指定扫描目录
     """
     permission_classes = [ScanSchemePermission]
@@ -330,7 +330,7 @@ class ScanSchemeDefaultScanPathDetailApiView(generics.RetrieveDestroyAPIView):
     ### GET
     获取指定扫描方案指定屏蔽的过滤路径
 
-    ### delete
+    ### DELETE
     在指定扫描方案取消屏蔽指定过滤路径
     """
     permission_classes = [ScanSchemePermission]

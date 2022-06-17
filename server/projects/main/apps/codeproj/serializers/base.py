@@ -50,9 +50,20 @@ class ProjectTeamSimpleSerializer(CDBaseModelSerializer):
 
     org_sid = serializers.StringRelatedField(source="organization.org_sid")
 
+    def update(self, instance, validated_data):
+        """更新项目组状态
+        """
+        status = validated_data.get("status")
+        if status is None or status == instance.status:
+            return instance
+        user = self.context["request"].user
+        instance = ProjectTeamManager.set_project_team_status(instance, user, status)
+        return instance
+
     class Meta:
         model = models.ProjectTeam
         fields = ["name", "display_name", "status", "org_sid"]
+        read_only_fields = ["name", "display_name", "org_sid"]
 
 
 class ProjectTeamSerializer(CDBaseModelSerializer):
