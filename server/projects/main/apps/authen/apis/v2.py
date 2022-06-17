@@ -16,11 +16,15 @@ from django.shortcuts import get_object_or_404
 from rest_framework import generics
 from rest_framework.permissions import IsAdminUser
 from rest_framework.response import Response
+from django_filters.rest_framework.backends import DjangoFilterBackend
 
 # 项目内 import
 from apps.authen import models
+from apps.authen.core import OrganizationManager
+from apps.authen.api_filters import base as base_filters
 from apps.authen.serializers import base as base_serializer
 from apps.authen.serializers.v3 import ScmOauthSettingsSerializer
+from apps.authen.serializers import base_org as base_org_serializer
 from apps.base.apimixins import CustomSerilizerMixin
 from util.scm import SCM_PLATFORM_NAME_AS_KEY
 from util.webclients import LoginProxyClient
@@ -51,7 +55,7 @@ class ScmAccountDetailApiView(generics.RetrieveUpdateDestroyAPIView):
     ### PUT
     更新用户指定的账号
 
-    ### delete
+    ### DELETE
     删除用户指定的账号
     """
     serializer_class = base_serializer.ScmAccountSerializer
@@ -89,7 +93,7 @@ class ScmSSHInfoDetailApiView(generics.RetrieveUpdateDestroyAPIView):
     ### PUT
     更新用户指定的SSH授权
 
-    ### delete
+    ### DELETE
     创建用户SSH授权列表
     """
 
@@ -272,3 +276,49 @@ class UserDetailApiView(generics.RetrieveUpdateAPIView):
             logger.error("Login Proxy Client update user task failed: %s" % (err))
             pass
         return Response({"username": instance.username, "nickname": nickname})
+
+
+class OrganizationListApiView(generics.ListAPIView):
+    """团队列表
+
+    ### GET
+    应用场景：获取团队列表
+    """
+    permission_classes = [IsAdminUser]
+    serializer_class = base_org_serializer.OrganizationSerializer
+    queryset = models.Organization.objects.all().order_by('-id')
+    filter_backends = (DjangoFilterBackend,)
+    filterset_class = base_filters.OrganizationFilter
+
+
+class OrganizationDetailApiView(generics.RetrieveUpdateAPIView):
+    """团队详情
+
+    ### GET
+    应用场景：获取指定团队
+    """
+    permission_classes = [IsAdminUser]
+    serializer_class = base_org_serializer.OrganizationSerializer
+
+    def get_object(self):
+        org_sid = self.kwargs["org_sid"]
+        return  get_object_or_404(models.Organization.objects, org_sid=org_sid)
+
+
+class OrganizationStatusApiView(generics.GenericAPIView):
+    """团队状态变更
+
+    ### POST
+    应用场景：变更团队级别
+    仅平台管理员可操作
+    """
+    permission_classes = [IsAdminUser]
+    serializer_class = base_org_serializer.OrganizationStatusSerializer
+
+    def put(self, request, org_sid):
+        org = get_object_or_404(models.Organization.objects, org_sid=org_sid)
+        slz = self.get_serializer(data=request.data)
+        slz.is_valid(raise_exception=True)
+        status = slz.validated_data["status"]
+        OrganizationManager.update_org_status(org, request.user, status)
+        return Response(slz.data)

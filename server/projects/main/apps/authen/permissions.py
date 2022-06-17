@@ -75,9 +75,9 @@ class OrganizationDetailUpdatePermission(CodeDogUserPermission):
             return False
         org = get_object_or_404(Organization, org_sid=org_sid)
         return self.is_check_adminuser(request.user) \
-               or (request.method in permissions.SAFE_METHODS
-                   and request.user.has_perm(org.PermissionNameEnum.VIEW_ORG_PERM, org)) \
-               or request.user.has_perm(org.PermissionNameEnum.CHANGE_ORG_PERM, org)
+            or (request.method in permissions.SAFE_METHODS
+                and request.user.has_perm(org.PermissionNameEnum.VIEW_ORG_PERM, org)) \
+            or request.user.has_perm(org.PermissionNameEnum.CHANGE_ORG_PERM, org)
 
 
 class OrganizationDefaultPermission(CodeDogUserPermission):
@@ -101,9 +101,9 @@ class OrganizationDefaultPermission(CodeDogUserPermission):
         if not org.validate_org_checked():
             return False
         return self.is_check_adminuser(request.user) \
-               or (request.method in permissions.SAFE_METHODS and
-                   request.user.has_perm(org.PermissionNameEnum.VIEW_ORG_PERM, org)) \
-               or request.user.has_perm(org.PermissionNameEnum.CHANGE_ORG_PERM, org)
+            or (request.method in permissions.SAFE_METHODS and
+                request.user.has_perm(org.PermissionNameEnum.VIEW_ORG_PERM, org)) \
+            or request.user.has_perm(org.PermissionNameEnum.CHANGE_ORG_PERM, org)
 
 
 class OrganizationAdminPermission(CodeDogUserPermission):
@@ -127,7 +127,7 @@ class OrganizationAdminPermission(CodeDogUserPermission):
         if not org.validate_org_checked():
             return False
         return self.is_check_adminuser(request.user) or \
-               request.user.has_perm(org.PermissionNameEnum.CHANGE_ORG_PERM, org)
+            request.user.has_perm(org.PermissionNameEnum.CHANGE_ORG_PERM, org)
 
 
 class OrganizationOperationPermission(CodeDogUserPermission):
@@ -151,7 +151,7 @@ class OrganizationOperationPermission(CodeDogUserPermission):
         if not org.validate_org_checked():
             return False
         return self.is_check_adminuser(request.user) or \
-               request.user.has_perm(org.PermissionNameEnum.VIEW_ORG_PERM, org)
+            request.user.has_perm(org.PermissionNameEnum.VIEW_ORG_PERM, org)
 
 
 class OrganizationPermApplyPermission(CodeDogUserPermission):
@@ -166,4 +166,4 @@ class OrganizationPermApplyPermission(CodeDogUserPermission):
         if not result:
             return False
         return (request.method in permissions.SAFE_METHODS or request.user.username in settings.ORG_PERM_ADMINS) \
-               and bool(request.user and request.user.is_staff)
+            and bool(request.user and request.user.is_staff)

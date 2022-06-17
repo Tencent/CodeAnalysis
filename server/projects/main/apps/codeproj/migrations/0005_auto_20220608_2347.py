@@ -6,19 +6,21 @@
 #  ==============================================================================
 
 
-from django.db import migrations, models
+from django.db import migrations
+import django.db.models.manager
 
 
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('codeproj', '0003_auto_20220518_1019'),
+        ('codeproj', '0004_auto_20220608_2344'),
     ]
 
     operations = [
-        migrations.AlterField(
-            model_name='baseproject',
-            name='status',
-            field=models.IntegerField(choices=[(1, '活跃'), (2, '失活'), (3, '归档中'), (4, '已归档')], default=1, verbose_name='项目状态'),
+        migrations.AlterModelManagers(
+            name='projectteam',
+            managers=[
+                ('active_pts', django.db.models.manager.Manager()),
+            ],
         ),
     ]
