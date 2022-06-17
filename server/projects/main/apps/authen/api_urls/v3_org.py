@@ -22,6 +22,8 @@ urlpatterns = [
          name="apiv3_org_invited_code"),
     path("orgs/<str:org_sid>/", v3.OrganizationDetailApiView.as_view(),
          name="apiv3_org_detail"),
+    path("orgs/<str:org_sid>/status/", v3.OrganizationStatusApiView.as_view(),
+         name="apiv3_org_status"),
     path("orgs/<str:org_sid>/memberconf/", v3.OrganizationMemberInviteApiView.as_view(),
          name="apiv3_org_member_conf"),
     path("orgs/<str:org_sid>/memberconf/<int:role>/<str:username>/",

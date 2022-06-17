@@ -12,13 +12,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('codeproj', '0003_auto_20220518_1019'),
+        ('codeproj', '0005_auto_20220608_2347'),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='baseproject',
+            model_name='projectteam',
             name='status',
-            field=models.IntegerField(choices=[(1, '活跃'), (2, '失活'), (3, '归档中'), (4, '已归档')], default=1, verbose_name='项目状态'),
+            field=models.IntegerField(choices=[(1, '活跃'), (2, '禁用')], default=1, help_text='项目团队状态'),
         ),
     ]

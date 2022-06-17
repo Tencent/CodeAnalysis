@@ -225,13 +225,13 @@ class CheckToolRuleListAPIView(CustomSerilizerMixin, generics.ListCreateAPIView,
 class CheckToolRuleDetailAPIView(CustomSerilizerMixin, generics.RetrieveUpdateDestroyAPIView, V3GetModelMixinAPIView):
     """工具规则详情接口
 
-    ### get
+    ### GET
     应用场景：获取工具规则详情
 
-    ### put
+    ### PUT
     应用场景：更新工具规则
 
-    ### delete
+    ### DELETE
     应用场景：移除工具规则
     """
     permission_classes = [CheckToolRuleDetaultPermission]
@@ -290,13 +290,13 @@ class CheckToolRuleCustomListAPIView(CheckToolRuleListAPIView):
 class CheckToolRuleCustomDetailAPIView(CheckToolRuleDetailAPIView):
     """工具自定义规则详情接口
 
-    ### get
+    ### GET
     应用场景：获取自定义规则详情
 
-    ### put
+    ### PUT
     应用场景：更新自定义规则
 
-    ### delete
+    ### DELETE
     应用场景：删除自定义规则
     """
     permission_classes = [CheckToolMaintainPermission]

@@ -74,7 +74,7 @@ class FileServer(object):
         :type to_file_url_or_path: string
         :params type: 仅在to_file_url_or_path为路径时有效
         :type type: FileServer.TypeEnum
-        :return: file_url：文件服务器指定的路径 
+        :return: file_url：文件服务器指定的路径
         """
         if type not in self.TypeEnum.values():
             raise ValueError("type参数错误。支持的类型：%s" % self.TypeEnum.values())
@@ -91,7 +91,8 @@ class FileServer(object):
         if rsp.status == self.OK_STATUS:
             return file_url
         else:
-            logger.error('return code %d when put file to %s, content: %s' % (rsp.status, file_url, rsp.data.decode("utf-8")))
+            logger.error('return code %d when put file to %s, content: %s' % (
+                rsp.status, file_url, rsp.data.decode("utf-8")))
             raise ServerError(errcode.E_SERVER, 'return code %d when put file to %s' % (rsp.status, file_url))
 
     @RetryDecor(interval=3)

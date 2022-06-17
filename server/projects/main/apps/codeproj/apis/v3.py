@@ -34,7 +34,7 @@ from apps.authen.serializers.base import UserSimpleSerializer
 from apps.base.apimixins import CustomSerilizerMixin, V3GetModelMixinAPIView
 from apps.codeproj import models
 from apps.codeproj.api_filters import base as base_filters, v3 as v3_filters
-from apps.codeproj.core import LabelManager, ProjectTeamManager, ScmClientManager
+from apps.codeproj.core import LabelManager, ProjectManager, ProjectTeamManager, ScmClientManager
 from apps.codeproj.core import RepositoryManager, ScanSchemeManager, ScanSchemePermManager
 from apps.codeproj.core import create_server_scan
 from apps.codeproj.permissions import ProjectTeamDefaultPermission, ProjectTeamOperationPermission, \
@@ -103,6 +103,22 @@ class ProjectTeamDetailApiView(generics.RetrieveUpdateAPIView, V3GetModelMixinAP
         return self.get_project_team()
 
 
+class ProjectTeamStatusApiView(generics.RetrieveUpdateAPIView, V3GetModelMixinAPIView):
+    """项目组状态更新
+
+    ### GET
+    应用场景：获取项目详情
+
+    ### PUT
+    应用场景：更新项目状态
+    """
+    permission_classes = [ProjectTeamDefaultPermission]
+    serializer_class = base_serializers.ProjectTeamSimpleSerializer
+
+    def get_object(self):
+        return self.get_project_team()
+
+
 class ProjectTeamMemberConfApiView(generics.GenericAPIView, V3GetModelMixinAPIView):
     """项目成员权限管理
 
@@ -138,7 +154,7 @@ class ProjectTeamMemberConfApiView(generics.GenericAPIView, V3GetModelMixinAPIVi
 class ProjectTeamMemberConfDeleteApiView(APIView, V3GetModelMixinAPIView):
     """删除项目成员
 
-    ### delete
+    ### DELETE
     应用场景：删除项目成员
     """
     permission_classes = [ProjectTeamDefaultPermission]
@@ -199,7 +215,7 @@ class ProjectTeamLabelDetailApiView(generics.RetrieveUpdateDestroyAPIView):
     ### PUT
     应用场景：更新项目组标签
 
-    ### delete
+    ### DELETE
     应用场景： 移除项目组标签
     """
     permission_classes = [ProjectTeamDefaultPermission]
@@ -259,7 +275,7 @@ class RepositoryListApiView(CustomSerilizerMixin, generics.ListCreateAPIView, V3
         return models.Repository.objects.filter(project_team=project_team)
 
 
-class RepositoryDetailApiView(generics.RetrieveUpdateAPIView, V3GetModelMixinAPIView):
+class RepositoryDetailApiView(generics.RetrieveUpdateDestroyAPIView, V3GetModelMixinAPIView):
     """代码库详情接口
 
     ### GET
@@ -273,6 +289,10 @@ class RepositoryDetailApiView(generics.RetrieveUpdateAPIView, V3GetModelMixinAPI
 
     def get_object(self):
         return self.get_repo()
+
+    def perform_destroy(self, instance):
+        user = self.request.user
+        RepositoryManager.delete_repo(instance.id, user)
 
 
 class RepositoryAuthDetailApiView(generics.RetrieveUpdateAPIView, V3GetModelMixinAPIView):
@@ -347,7 +367,7 @@ class RepositoryMemberConfApiView(generics.GenericAPIView, V3GetModelMixinAPIVie
 class RepositoryMemberConfDeleteApiView(APIView, V3GetModelMixinAPIView):
     """删除代码库成员
 
-    ### delete
+    ### DELETE
     应用场景：删除代码库成员
     """
     permission_classes = [RepositoryDefaultPermission]
@@ -373,7 +393,7 @@ class RepositorySubscribedApiView(APIView, V3GetModelMixinAPIView):
     ### POST
     应用场景：关注指定代码库
 
-    ### delete
+    ### DELETE
     应用场景：取消关注代码库
     """
     permission_classes = [ProjectTeamOperationPermission]
@@ -542,7 +562,7 @@ class ScanSchemeDirDetailApiView(generics.RetrieveUpdateDestroyAPIView, V3GetMod
     ### PUT
     应用场景：更新指定扫描方案的指定扫描目录
 
-    ### delete
+    ### DELETE
     应用场景：删除指定扫描方案的指定扫描目录
     """
     permission_classes = [SchemeDefaultPermission]
@@ -600,7 +620,7 @@ class ScanSchemeDirBulkCreateApiView(generics.GenericAPIView, V3GetModelMixinAPI
 class ScanSchemeDirClearApiView(APIView, V3GetModelMixinAPIView):
     """移除所有过滤路径配置
 
-    ### delete
+    ### DELETE
     应用场景：批量移除扫描方案过滤路径
     """
     permission_classes = [SchemeDefaultPermission]
@@ -703,7 +723,7 @@ class ScanSchemeDefaultScanPathDetailApiView(generics.RetrieveDestroyAPIView, V3
     ### GET
     获取指定扫描方案指定屏蔽的过滤路径
 
-    ### delete
+    ### DELETE
     在指定扫描方案取消屏蔽指定过滤路径
     """
     permission_classes = [RepositorySchemeDefaultPermission]
@@ -748,7 +768,7 @@ class ProjectListApiView(CustomSerilizerMixin, generics.ListCreateAPIView, V3Get
         return models.Project.objects.filter(repo_id=repo.id)
 
 
-class ProjectDetailApiView(CustomSerilizerMixin, generics.RetrieveUpdateAPIView, V3GetModelMixinAPIView):
+class ProjectDetailApiView(CustomSerilizerMixin, generics.RetrieveUpdateDestroyAPIView, V3GetModelMixinAPIView):
     """项目详情
 
     ### GET
@@ -763,6 +783,10 @@ class ProjectDetailApiView(CustomSerilizerMixin, generics.RetrieveUpdateAPIView,
 
     def get_object(self):
         return self.get_project()
+
+    def perform_destroy(self, instance):
+        user = self.request.user
+        ProjectManager.delete_project(instance.repo_id, instance.id, user)
 
 
 class ProjectJobDetailApiView(generics.RetrieveAPIView, V3GetModelMixinAPIView):
@@ -848,7 +872,7 @@ class ScanBranchProjectListApiView(APIView, V3GetModelMixinAPIView):
         scheme_status = request.query_params.get("scheme_status", 1)
         params = {"repo_id": repo.id, "scan_scheme__status": scheme_status, "branch": branch}
         project_list = models.Project.objects.select_related("scan_scheme") \
-                                             .filter(**params).values("id", "branch", "scan_scheme__name")
+            .filter(**params).values("id", "branch", "scan_scheme__name")
         return Response(project_list)
 
 
