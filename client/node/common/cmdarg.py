@@ -77,7 +77,7 @@ class CmdArgParser(object):
 
         # quickscan命令
         quickscan_parser = subparsers.add_parser('quickscan', help="执行快速分析")
-        quickscan_parser.add_argument("-s", "--source-dir", dest="source_dir", type=str, help="本地代码目录")
+        quickscan_parser.add_argument("-s", "--source-dir", dest="source_dir", type=str, help="本地代码目录", required=True)
         quickscan_parser.add_argument("--file", dest="file", type=str,
                                       help="指定文件扫描，格式为基于source_dir的相对路径，多个文件用英文逗号(,)分隔")
         quickscan_parser.add_argument("-l", "--label", dest="label", type=str,

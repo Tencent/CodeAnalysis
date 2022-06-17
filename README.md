@@ -44,6 +44,7 @@ Using TCA can help team find normative, structural, security vulnerabilities and
 ## Getting Started
 
 - [How to get start](https://tencent.github.io/CodeAnalysis/)
+- [How to use TCA Action](https://github.com/TCATools/TCA-action/blob/main/README.md)
 - [How to deploy server and web](https://tencent.github.io/CodeAnalysis/zh/quickStarted/deploySever.html#通过源代码)
 - [How to deploy server and web with docker-compose](https://tencent.github.io/CodeAnalysis/zh/quickStarted/deploySever.html#通过docker-compose)
 - [How to use client](https://tencent.github.io/CodeAnalysis/zh/quickStarted/deployClient.html)
