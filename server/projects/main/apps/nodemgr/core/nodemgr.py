@@ -53,7 +53,7 @@ class NodeManager(object):
             if node.enabled == models.Node.EnabledEnum.OFFLINE:
                 models.Node.objects.filter(id=node.id).update(enabled=models.Node.EnabledEnum.ACTIVE)
         except Exception as err:
-            logger.exception("[Node: %s] refresh node heartbeat exception: %s" % err)
+            logger.exception("[Node: %s] refresh node heartbeat exception: %s" % (node, err))
         return {"id": node.id}
 
     @classmethod

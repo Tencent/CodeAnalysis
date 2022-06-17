@@ -11,16 +11,23 @@
 import logging
 
 # 第三方 import
+from django.contrib.auth.models import Group, User
 from django.db import models
-from django.dispatch import receiver
 from django.db.models.signals import post_save
-from django.contrib.auth.models import User, Group
+from django.dispatch import receiver
 from guardian.shortcuts import assign_perm
 
 # 项目内 import
 from apps.base.basemodel import BasePerm, CDBaseModel
 
 logger = logging.getLogger(__name__)
+
+
+class ActiveOrganizationManager(models.Manager):
+    """活跃团队筛选器
+    """
+    def get_queryset(self):
+        return super().get_queryset().filter(status=Organization.StatusEnum.ACTIVE)
 
 
 class Organization(CDBaseModel, BasePerm):
@@ -44,6 +51,8 @@ class Organization(CDBaseModel, BasePerm):
         (StatusEnum.FORBIDEN, "禁止")
     )
 
+    STATUSENUM_DICT = dict(STATUSENUM_CHOICES)
+
     class LevelEnum:
         NORMAL = 1
         VIP = 2
@@ -54,6 +63,8 @@ class Organization(CDBaseModel, BasePerm):
         (LevelEnum.VIP, "VIP团队"),
         (LevelEnum.SUPER_VIP, "超级VIP团队"),
     )
+
+    LEVELENUM_DICT = dict(LEVELENUM_CHOICES)
 
     LEVEL_PROJECT_TEAM_COUNT_CHOICES = (
         (LevelEnum.NORMAL, 2),
@@ -78,6 +89,8 @@ class Organization(CDBaseModel, BasePerm):
     status = models.IntegerField(help_text="组织状态", default=StatusEnum.DISACTIVE, choices=STATUSENUM_CHOICES)
     level = models.IntegerField(help_text="组织级别", default=LevelEnum.NORMAL, choices=LEVELENUM_CHOICES)
     db_key = models.CharField(max_length=32, help_text="关联数据库", default="default")
+
+    active_orgs = ActiveOrganizationManager()
 
     def validate_org_checked(self):
         """判断当前团队是否已经审核通过
