@@ -232,6 +232,9 @@ const Create = () => {
                   <Form.Item
                     name={['address', 'ssh_url']}
                     label={t('ssh地址')}
+                    rules={[
+                      { required: true, message: t('请输入代码库的ssh地址') },
+                    ]}
                   >
                     <Input style={{ width: 500 }} />
                   </Form.Item>

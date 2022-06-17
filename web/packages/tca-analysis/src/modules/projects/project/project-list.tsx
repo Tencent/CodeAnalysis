@@ -19,7 +19,6 @@ import { useSelector } from 'react-redux';
 
 import SelectDropdown from '../../../components/select-dropdown';
 import QuestionCircle from 'coding-oa-uikit/lib/icon/QuestionCircle';
-import EllipsisH from 'coding-oa-uikit/lib/icon/EllipsisH';
 
 import { useStateStore } from '@src/context/store';
 import { DEFAULT_PAGER } from '@src/common/constants';
@@ -228,16 +227,6 @@ const ProjectList = (props: ProjectListProps) => {
             const menu = (
               <Menu>
                 <Menu.Item>
-                  <a
-                    onClick={() => {
-                      setProjectId(id);
-                      setVisible(true);
-                    }}
-                  >
-                    启动分析
-                  </a>
-                </Menu.Item>
-                <Menu.Item>
                   <Link
                     to={`${getProjectRouter(orgSid, teamName, repoId, id)}/overview`}
                   >
@@ -262,11 +251,23 @@ const ProjectList = (props: ProjectListProps) => {
               </Menu>
             );
             return (
-              <Dropdown overlay={menu} trigger={['click']}>
-                <span className={style.linkName}>
-                  <EllipsisH />
+              <>
+              <a
+                className={style.link}
+                style={{ marginRight: 20 }}
+                onClick={() => {
+                  setProjectId(id);
+                  setVisible(true);
+                }}
+              >
+                启动分析
+              </a>
+              <Dropdown overlay={menu}>
+                <span className={style.link}>
+                  更多操作
                 </span>
               </Dropdown>
+              </>
             );
           }
           }
