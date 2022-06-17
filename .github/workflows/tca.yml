@@ -20,5 +20,6 @@ jobs:
         uses: TCATools/TCA-action@main
         with:
           block: true
-          label: open_source_check
+          label: safety
           from_file: changed.txt
+          ignore_paths: .github/workflows/.*
