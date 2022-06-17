@@ -80,7 +80,7 @@ class ScanSchemePackageDetailAPIView(generics.RetrieveDestroyAPIView, V3GetModel
     ### get
     应用场景：获取规则包详情，官方规则包或该规则配置的自定义规则包详情
 
-    ### delete
+    ### DELETE
     应用场景：移除指定规则包，仅能移除官方规则包
     """
     permission_classes = [SchemeDefaultPermission]
