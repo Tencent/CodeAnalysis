@@ -8,6 +8,10 @@
 
 [![license](https://img.shields.io/badge/License-MIT-brightgreen.svg?style=flat)](LICENSE) [![docs](https://img.shields.io/badge/docs-read-brightgreen.svg?style=flat)](https://tencent.github.io/CodeAnalysis/)
 
+## TCA Github Pages
+
+[https://tencent.github.io/CodeAnalysis/](https://tencent.github.io/CodeAnalysis/)
+
 ## 工蜂代码库镜像
 
 [https://git.code.tencent.com/Tencent_Open_Source/CodeAnalysis.git](https://git.code.tencent.com/Tencent_Open_Source/CodeAnalysis.git)
@@ -23,10 +27,6 @@
 ![组件图](https://tencent.github.io/CodeAnalysis/media/Components.png)
 
 ![流程图](https://tencent.github.io/CodeAnalysis/media/Flow.png)
-
-## TCA Github Pages
-
-[https://tencent.github.io/CodeAnalysis/](https://tencent.github.io/CodeAnalysis/)
 
 ## 体验
 
