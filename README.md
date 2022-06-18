@@ -10,6 +10,10 @@
 
 English | [简体中文](README_ZH.md)
 
+## TCA Github Pages
+
+[https://tencent.github.io/CodeAnalysis/](https://tencent.github.io/CodeAnalysis/)
+
 ## Repo Mirror
 
 [https://git.code.tencent.com/Tencent_Open_Source/CodeAnalysis.git](https://git.code.tencent.com/Tencent_Open_Source/CodeAnalysis.git)
@@ -25,10 +29,6 @@ Using TCA can help team find normative, structural, security vulnerabilities and
 ![组件图](https://tencent.github.io/CodeAnalysis/media/Components.png)
 
 ![流程图](https://tencent.github.io/CodeAnalysis/media/Flow.png)
-
-## TCA Github Pages
-
-[https://tencent.github.io/CodeAnalysis/](https://tencent.github.io/CodeAnalysis/)
 
 ## Experience
 
