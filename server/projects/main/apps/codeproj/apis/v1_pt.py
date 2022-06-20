@@ -63,7 +63,7 @@ class PTRepoDetailAPIView(v3.RepositoryDetailApiView):
 class PTRepositorySchemeInfoAPIView(v1.RepositorySchemesInfoApiView):
     """查询指定代码指定扫描方案是否存在
 
-    ### get
+    ### GET
     应用场景：查询指定代码指定扫描方案是否存在
     > * 查询参数：
     >     - scm_url: 代码库地址

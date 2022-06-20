@@ -45,22 +45,14 @@ class FlieHash(object):
 
 
 class FileServer(object):
-    def __init__(self, http_file_proxy=None):
+    def __init__(self):
         """
         构造函数
-        :param http_file_proxy: 代理服务器地址及端口号
         :return:
         """
         self._server_url = settings.FILE_SERVER['URL']
         self._headers = {'Authorization': 'Token %s' % settings.FILE_SERVER['TOKEN']}
-
-        # 如果用户填写的是默认的文件服务器devnet代理变量,使用默认代理
-        # 如果用户填写的是自己的代理,使用该代理
-        # 如果用户没有填写代理,不使用代理
-        if http_file_proxy:
-            self._proxies = {"http": http_file_proxy}
-        else:
-            self._proxies = None
+        self._proxies = None
 
     def modify_save_time(self, rel_dir, days):
         """
@@ -109,7 +101,7 @@ class FileServer(object):
         :return:
         """
         rsp = HttpClient(self._server_url, rel_url, headers=self._headers, proxies=self._proxies).get()
-        return rsp.content
+        return rsp.read()
 
     def download_file(self, rel_url, filepath):
         """
@@ -125,15 +117,13 @@ class FileServer(object):
 
 
 class RetryFileServer(object):
-    def __init__(self, retry_times=-1, http_file_proxy=None):
+    def __init__(self, retry_times=-1):
         """
         构造函数
         :param retry_times: 重试次数,默认-1,即一直重试直到成功
-        :param http_file_proxy: 代理服务器地址及端口号
         :return:
         """
         self._retry_times = retry_times
-        self._http_file_proxy = http_file_proxy
 
     def retry_on_error(self, error, method_name):
         """
@@ -149,5 +139,5 @@ class RetryFileServer(object):
         获取一个server实例
         :return:
         """
-        file_server = FileServer(http_file_proxy=self._http_file_proxy)
+        file_server = FileServer()
         return wrapper.Retry(server=file_server, on_error=self.retry_on_error, total=self._retry_times)

@@ -1,0 +1,11 @@
+{
+  "name": "MAC_SWIFTLINT",
+  "scm_url": "https://github.com/TCATools/mac-swiftlint.git",
+  "scm_type": "git",
+  "envs": {
+    "SWIFTLINT_HOME": "$ROOT_DIR",
+    "PATH": "$ROOT_DIR/bin;$ROOT_DIR"
+  },
+  "lib_os": "mac",
+  "lib_type": "public"
+}

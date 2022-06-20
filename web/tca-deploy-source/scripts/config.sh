@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
 
 # 获取本机IP
-LOCAL_IP=${LOCAL_IP:-"$(ip addr | awk '/^[0-9]+: / {}; /inet.*global/ {print gensub(/(.*)\/(.*)/, "\\1", "g", $2)}')"}
+# LOCAL_IP=${LOCAL_IP:-"$(ip addr | awk '/^[0-9]+: / {}; /inet.*global/ {print gensub(/(.*)\/(.*)/, "\\1", "g", $2)}')"}
 # 存在多IP时取第一个
-array=(${LOCAL_IP//\ / })
-LOCAL_IP=${array[0]}
+# array=(${LOCAL_IP//\ / })
+# LOCAL_IP=${array[0]}
+LOCAL_IP=${LOCAL_IP:-"$(curl ifconfig.me)"}
 
 # 校验本机IP
 if [ ! -n "${LOCAL_IP}" ]; then

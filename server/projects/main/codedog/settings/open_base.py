@@ -18,6 +18,7 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 """
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+import os
 from datetime import timedelta
 from os.path import dirname, join, abspath
 
@@ -230,12 +231,15 @@ REST_FRAMEWORK = {
 # CodeDog开关配置
 LOGIN_USER_TYPE = "codedog_user"
 CODEDOG_USER_CHECK = False
+# HTTPS克隆开关
+HTTPS_CLONE_FLAG = False
 
 # 时间配置
 CLOSING_JOB_TIMEOUT = timedelta(hours=12)          # 入库超时时间
 CLEAN_JOB_TIMEOUT = timedelta(days=1)              # 任务超时时间
 CLEAN_PRIVATE_JOB_TIMEOUT = timedelta(minutes=5)   # 私有任务超时时间
 INIT_JOB_TIMEOUT = timedelta(minutes=20)           # 任务初始化超时时间
+CLEAN_DIR_TIMEOUT = timedelta(days=10)             # jobdata目录下超时时间
 NODE_ACTIVE_TIMEOUT = timedelta(minutes=5)         # 节点端没有心跳则标记为offline时间
 PROJECT_DISACTIVE_TIMEOUT = timedelta(days=180)    # 项目失活时间
 JOB_RUNTIME_LIMIT = 600                            # 任务超时时间，单位分钟
@@ -245,6 +249,7 @@ LOCAL_DOMAIN = ""
 
 # scmproxy服务地址
 SCMPROXY = ""
+SCMPROXY_TIMEOUT = os.environ.get("SCMPROXY_TIMEOUT", 20)
 
 # Analyse Server Ticket
 API_TICKET_SALT = ""
@@ -287,6 +292,12 @@ SWAGGER_SETTINGS = {
     }
 }
 
+# OauthToken相关配置
+GIT_OA_OAUTH_URL = os.getenv("GIT_OA_OAUTH_URL", "")
+GIT_TENCENT_OAUTH_URL = os.getenv("GIT_TENCENT", "http://git.code.tencent.com/oauth/authorize")
+GITHUB_OAUTH_URL = os.getenv("GITHUB_OAUTH_URL", "https://github.com/login/oauth/authorize")
+GITLAB_OAUTH_URL = os.getenv("GITLAB_OAUTH_URL", "https://gitlab.com/oauth/authorize")
+GITEE_OAUTH_URL = os.getenv("GITEE_OAUTH_URL", "https://gitee.com/oauth/authorize")
 
 # -*-*-*-*-*-*-*-*-*-*-*-*-*-*-
 # CodeDog运行环境配置

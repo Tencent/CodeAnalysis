@@ -1,0 +1,11 @@
+{
+  "name": "WINDOWS_LUACHECK",
+  "scm_url": "https://git.code.tencent.com/TCA/tca-tools/win-luacheck-0.21.2.git",
+  "scm_type": "git",
+  "envs": {
+    "LUACHECK_HOME": "$ROOT_DIR",
+    "PATH": "$ROOT_DIR/bin;$ROOT_DIR"
+  },
+  "lib_os": "windows",
+  "lib_type": "public"
+}

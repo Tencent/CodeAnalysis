@@ -1,0 +1,61 @@
+@import "@src/common/style/color.scss";
+
+.toollibs {
+  .header {
+    display: flex;
+    align-items: center;
+    height: 48px;
+    padding: 0 24px;
+
+    .title {
+      font-size: 18px;
+      font-weight: 500;
+    }
+  }
+
+  .lib-tag {
+    color: $blue-5;
+    border: 1px solid $blue-5;
+    background-color: #fff;
+    border-radius: 2px;
+
+    &.privite {
+      color: $green-6;
+      border: 1px solid $green-6;
+    }
+  }
+
+
+}
+
+.filter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 48px;
+  padding: 0 24px;
+  background-color: hsla(0, 0%, 98.8%, 0.98);
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.1), 0 0.5px 0 0 rgba(0, 0, 0, 0.08);
+}
+
+.libs-table {
+  padding: 0 20px;
+
+  .envs {
+    font-size: 12px;
+    margin-bottom: 2px;
+  }
+}
+
+.create-modal {
+  .question-icon {
+    color: $grey-6;
+    margin: 0 4px;
+    transition: all 0.3s;
+    cursor: pointer;
+
+    &:hover {
+      color: $grey-7;
+    }
+  }
+}

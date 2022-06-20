@@ -1,0 +1,73 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Doc to Github Page
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push events but only for the main branch
+  push:
+    branches:
+      - "main"
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+
+      - name: Setup Node 14
+        uses: actions/setup-node@v3
+        with:
+          # 选择要使用的 node 版本
+          node-version: "14"
+          cache: "yarn"
+          cache-dependency-path: "doc/yarn.lock"
+
+      # 缓存 node_modules
+      - name: Cache node modules
+        id: yarn-cache
+        uses: actions/cache@v3
+        with:
+          path: doc/node_modules
+          key: ${{ runner.os }}-yarn-${{ hashFiles('doc/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      # 如果缓存没有命中，安装依赖
+      - if: ${{ steps.yarn-cache.outputs.cache-hit == false }}
+        name: Install dependencies
+        run: |
+          cd doc
+          pwd
+          yarn --frozen-lockfile
+
+      # 打包文档
+      - name: Build document
+        run: |
+          cd doc
+          pwd
+          rm -rf old
+          yarn build
+          cp -af ../media dist
+
+      # 查看 workflow 的文档来获取更多信息
+      # @see https://github.com/crazy-max/ghaction-github-pages
+      - name: Deploy to GitHub Pages
+        uses: crazy-max/ghaction-github-pages@v2
+        with:
+          # 部署到 gh-pages 分支
+          target_branch: gh-pages
+          # 部署目录为 VuePress 的默认输出目录
+          build_dir: doc/dist
+        env:
+          # @see https://docs.github.com/cn/actions/reference/authentication-in-a-workflow#about-the-github_token-secret
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

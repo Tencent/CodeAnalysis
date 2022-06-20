@@ -15,7 +15,7 @@ from django.conf import settings
 from django.shortcuts import get_object_or_404
 from rest_framework import permissions
 
-from apps.authen.core import usermgr
+from apps.authen.core import CodeDogUserManager
 from apps.authen.models import CodeDogUser, Organization
 
 logger = logging.getLogger(__name__)
@@ -31,7 +31,7 @@ class CodeDogUserPermission(permissions.BasePermission):
         authenticated = bool(request.user and request.user.is_authenticated)
         if not authenticated:
             return authenticated
-        codedog_user = usermgr.CodeDogUserManager.get_codedog_user(request.user)
+        codedog_user = CodeDogUserManager.get_codedog_user(request.user)
         if not codedog_user.validate_codedog_user_checked():
             logger.error("[User: %s] 没有权限访问CodeDog，当前用户状态：%s" % (
                 request.user, codedog_user.get_status_display()))
@@ -40,11 +40,9 @@ class CodeDogUserPermission(permissions.BasePermission):
             return True
 
     def is_check_adminuser(self, user):
-        """校验是否
+        """校验是否是超管
         """
-        if hasattr(settings, "CODEDOG_V2_API_ENABLE") and settings.CODEDOG_V2_API_ENABLE:
-            return bool(user and user.is_staff and user.is_superuser)
-        return False
+        return bool(user and user.is_staff and user.is_superuser)
 
 
 class CodeDogSuperVipUserLevelPermission(CodeDogUserPermission):
@@ -77,9 +75,9 @@ class OrganizationDetailUpdatePermission(CodeDogUserPermission):
             return False
         org = get_object_or_404(Organization, org_sid=org_sid)
         return self.is_check_adminuser(request.user) \
-               or (request.method in permissions.SAFE_METHODS
-                   and request.user.has_perm(org.PermissionNameEnum.VIEW_ORG_PERM, org)) \
-               or request.user.has_perm(org.PermissionNameEnum.CHANGE_ORG_PERM, org)
+            or (request.method in permissions.SAFE_METHODS
+                and request.user.has_perm(org.PermissionNameEnum.VIEW_ORG_PERM, org)) \
+            or request.user.has_perm(org.PermissionNameEnum.CHANGE_ORG_PERM, org)
 
 
 class OrganizationDefaultPermission(CodeDogUserPermission):
@@ -103,9 +101,9 @@ class OrganizationDefaultPermission(CodeDogUserPermission):
         if not org.validate_org_checked():
             return False
         return self.is_check_adminuser(request.user) \
-               or (request.method in permissions.SAFE_METHODS and
-                   request.user.has_perm(org.PermissionNameEnum.VIEW_ORG_PERM, org)) \
-               or request.user.has_perm(org.PermissionNameEnum.CHANGE_ORG_PERM, org)
+            or (request.method in permissions.SAFE_METHODS and
+                request.user.has_perm(org.PermissionNameEnum.VIEW_ORG_PERM, org)) \
+            or request.user.has_perm(org.PermissionNameEnum.CHANGE_ORG_PERM, org)
 
 
 class OrganizationAdminPermission(CodeDogUserPermission):
@@ -129,7 +127,7 @@ class OrganizationAdminPermission(CodeDogUserPermission):
         if not org.validate_org_checked():
             return False
         return self.is_check_adminuser(request.user) or \
-               request.user.has_perm(org.PermissionNameEnum.CHANGE_ORG_PERM, org)
+            request.user.has_perm(org.PermissionNameEnum.CHANGE_ORG_PERM, org)
 
 
 class OrganizationOperationPermission(CodeDogUserPermission):
@@ -153,7 +151,7 @@ class OrganizationOperationPermission(CodeDogUserPermission):
         if not org.validate_org_checked():
             return False
         return self.is_check_adminuser(request.user) or \
-               request.user.has_perm(org.PermissionNameEnum.VIEW_ORG_PERM, org)
+            request.user.has_perm(org.PermissionNameEnum.VIEW_ORG_PERM, org)
 
 
 class OrganizationPermApplyPermission(CodeDogUserPermission):
@@ -168,4 +166,4 @@ class OrganizationPermApplyPermission(CodeDogUserPermission):
         if not result:
             return False
         return (request.method in permissions.SAFE_METHODS or request.user.username in settings.ORG_PERM_ADMINS) \
-               and bool(request.user and request.user.is_staff)
+            and bool(request.user and request.user.is_staff)

@@ -114,7 +114,7 @@ const UserModal = ({ userinfo, visible, onOk, onCancel }: IProps) => {
         )}
         {userinfo && (
           <Form.Item name="password" label={t('更新密码')}>
-            <Input />
+            <Input.Password />
           </Form.Item>
         )}
         <Form.Item

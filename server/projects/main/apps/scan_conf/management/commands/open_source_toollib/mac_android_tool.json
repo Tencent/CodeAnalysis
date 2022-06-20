@@ -1,0 +1,11 @@
+{
+  "name": "MAC_ANDROID_TOOL",
+  "scm_url": "https://github.com/TCATools/mac-android-sdk-tools.git",
+  "scm_type": "git",
+  "envs": {
+    "ANDROID_SDK_TOOL": "$ROOT_DIR",
+    "PATH": "$ROOT_DIR/bin;$ROOT_DIR"
+  },
+  "lib_os": "mac",
+  "lib_type": "public"
+}

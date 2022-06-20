@@ -17,7 +17,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.http import HttpResponse
 from rest_framework import status
-from django.contrib.auth.models import User
+from django.contrib.auth.models import Group
 
 logger = logging.getLogger(__name__)
 
@@ -44,7 +44,7 @@ class HealthCheckAPIVIew(APIView):
     def get(self, request):
         logger.info("[FileServerHealthCheck] check db connection and orm operation")
         try:
-            User.objects.all()
+            Group.objects.all()
         except Exception as e:
             logger.info("[FileServerHealthCheck] check db failed, err msg: %s" % e)
             return HttpResponse("DB connection or orm raise exception", status=status.HTTP_503_SERVICE_UNAVAILABLE)

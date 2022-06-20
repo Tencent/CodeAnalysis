@@ -10,6 +10,7 @@ scan_conf - v1 apis
 """
 import re
 import logging
+from collections import defaultdict
 
 # 第三方
 from django.shortcuts import get_object_or_404
@@ -19,34 +20,15 @@ from rest_framework.permissions import IsAdminUser
 
 # 项目内
 from apps.scan_conf import models
-from apps.scan_conf.serializers.base import CheckProfileDetailSerializer
 from apps.scan_conf.serializers import v1 as serializers
-from apps.codeproj import models as proj_models
 
-from util.permissions import RepositoryProjectPermission
 
 logger = logging.getLogger(__name__)
 
 
-class ProjectCheckProfileAPIView(generics.GenericAPIView):
-    """指定项目的扫描方案规则配置接口
-
-    ### get
-    应用场景：获取规则配置信息
-    """
-    permission_classes = [RepositoryProjectPermission]
-    serializer_class = CheckProfileDetailSerializer
-
-    def get(self, request, project_id):
-        project = get_object_or_404(proj_models.Project, id=project_id)
-        checkprofile = project.scan_scheme.lintbasesetting.checkprofile
-        slz = self.get_serializer(instance=checkprofile)
-        return Response(slz.data)
-
-
 class CheckToolDisplayNameListAPIView(generics.ListAPIView):
     """工具展示名称列表接口，仅IsAdminUser可调用
-    
+
     ### get
     应用场景：获取工具展示名称列表
     """
@@ -77,3 +59,19 @@ class CheckPackageRuleIDListAPIView(generics.GenericAPIView):
         rule_ids = list(models.PackageMap.objects.filter(
             checkpackage=checkpackage).values_list("checkrule_id", flat=True))
         return Response(data=rule_ids)
+
+
+class CheckRuleTypeMapAPIView(generics.GenericAPIView):
+    """规则包-规则编号列表
+
+    ### get
+    应用场景：获取规则类型映射信息
+    """
+    pagination_class = None
+
+    def get(self, request, **kwargs):
+        checkrule_types = models.CheckRule.objects.values("id", "category")
+        ruletype_dict = defaultdict(list)
+        for rule_type in checkrule_types:
+            ruletype_dict[rule_type["category"]].append(rule_type["id"])
+        return Response(data=ruletype_dict)

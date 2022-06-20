@@ -1,4 +1,4 @@
-# -*-  coding: utf-8  -*-
+# -*- coding: utf-8 -*-
 # Copyright (c) 2021-2022 THL A29 Limited
 #
 # This source code file is made available under MIT License
@@ -37,7 +37,7 @@ def ScmClient(scm_type, scm_url, source_dir, scm_username=None, scm_password=Non
     _parmes = ICmdScm.ScmParmes(scm_url, source_dir, scm_username, scm_password)
     if str(scm_type).upper() == ICmdScm.SVN:
         scm_client = CmdSvn(_parmes, **kwargs)
-    elif str(scm_type).upper() in [ICmdScm.GIT, ICmdScm.TGIT]:
+    elif str(scm_type).upper() in [ICmdScm.GIT, ICmdScm.TGIT, ICmdScm.GIT_OAUTH]:
         scm_client = CmdGit(_parmes, **kwargs)
     else:
         raise NotImplementedError("%s not supported" % scm_type)

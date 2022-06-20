@@ -52,7 +52,7 @@ class SvnRemoteClient(IScmClient):
                 'username': username,
                 'password': password
             }
-        self._svn_proxy = CustomServerProxy(settings.SCMPROXY, timeout=20)
+        self._svn_proxy = CustomServerProxy(settings.SCMPROXY, timeout=int(settings.SCMPROXY_TIMEOUT))
 
     @property
     def latest_revision(self):
@@ -136,7 +136,7 @@ class SvnRemoteClient(IScmClient):
         :param revision: 文件版本
         :return: datetime对象
         """
-        revision_timestamp = self._svn_proxy.get_revision_datetime(self._scm_info, revision)
+        revision_timestamp = self._svn_proxy.get_revision_time(self._scm_info, revision)
         if revision_timestamp:
             return datetime.fromtimestamp(revision_timestamp)
         return None

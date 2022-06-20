@@ -11,15 +11,16 @@ codeproj - projectteam core
 # 原生
 import logging
 
-# 第三方
+# 第三方 import
 from django.db import IntegrityError
 
-# 项目内
-from apps.codeproj import models
+# 项目内 import
 from apps.authen.models import Organization
-from util.exceptions import ProjectTeamCreateError, ProjectTeamUpdateError, \
-    ProjectTeamLabelCreateError, ProjectTeamLabelUpdateError, \
-    errcode
+from apps.codeproj import models
+from util import errcode
+from util.exceptions import ProjectTeamCreateError, ProjectTeamLabelCreateError, ProjectTeamLabelUpdateError, \
+    ProjectTeamUpdateError
+from util.operationrecord import OperationRecordHandler
 
 logger = logging.getLogger(__name__)
 
@@ -70,11 +71,32 @@ class ProjectTeamManager(object):
         if name != pt.name and models.ProjectTeam.objects.filter(
                 organization=pt.organization, name=name).exclude(id=pt.id).exists():
             raise ProjectTeamUpdateError(errcode.E_SERVER_PROJECT_TEAM_EXIST, "项目组名称重复，请调整后重试")
+        if pt.name != name:
+            kwargs["name"] = name
         pt.name = name
         pt.display_name = kwargs.get("display_name", pt.display_name)
         pt.description = kwargs.get("description", pt.description)
         pt.status = kwargs.get("status", pt.status)
         pt.save(user=user)
+        OperationRecordHandler.add_projectteam_operation_record(pt, "更新项目组", user, "更新参数为: %s" % kwargs)
+        return pt
+
+    @classmethod
+    def set_project_team_status(cls, pt, user, status):
+        """将项目团队标记为禁用
+        :param pt: ProjectTeam, 项目
+        :param user: User, 操作人
+        :param status: int, 项目组状态
+        :return: project_team
+        """
+        if status == models.ProjectTeam.StatusEnum.DISACTIVE:
+            action = "禁用项目组"
+        else:
+            action = "恢复项目组"
+        pt.status = status
+        pt.save(user=user)
+        OperationRecordHandler.add_projectteam_operation_record(
+            pt, action, user, "标记项目组状态为%s" % status)
         return pt
 
     @classmethod

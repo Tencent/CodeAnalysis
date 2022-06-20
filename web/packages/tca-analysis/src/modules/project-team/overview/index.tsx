@@ -5,14 +5,17 @@
 // ==============================================================================
 
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import { Form, Button, Input, message } from 'coding-oa-uikit';
-import { pick } from 'lodash';
+import { pick, get, find } from 'lodash';
+import { useSelector } from 'react-redux';
 
 // 项目内
+import { getProjectListRouter, getProjectOverviewRouter } from '@src/utils/getRoutePath';
 import { t } from '@src/i18n/i18next';
 import { formatDateTime, getUserName } from '@src/utils';
-import { getProjectTeam, putProjectTeam } from '@src/services/common';
+import { getProjectTeam, putProjectTeam, disableProject} from '@src/services/common';
+import DeleteModal from '@src/components/delete-modal';
 
 const layout = {
   labelCol: { span: 6 },
@@ -23,6 +26,14 @@ const Overview = () => {
   const [team, setTeam] = useState<any>({});
   const [edit, setEdit] = useState(false);
   const { org_sid: orgSid, team_name: teamName }: any = useParams();
+  // 判断是否有权限删除团队项目
+  const history: any = useHistory();
+  const APP = useSelector((state: any) => state.APP);
+  const isSuperuser = get(APP, 'user.is_superuser', false); // 当前用户是否是超级管理员
+  const userName = get(APP, 'user.username', null);
+  const isAdmin = !!find(team?.admins, { username: userName });  // 当前用户是否是项目管理员
+  const deletable = isAdmin || isSuperuser;  // 删除权限
+  const [deleteVisible, setDeleteVisible] = useState<boolean>(false);
 
   // 重置
   const onReset = () => {
@@ -39,6 +50,9 @@ const Overview = () => {
       message.success(t('项目信息更新成功'));
       setTeam(response);
       onReset();
+      if (values.name !== teamName) {
+        history.replace(getProjectOverviewRouter(orgSid, values.name));
+      }
     });
   };
 
@@ -55,8 +69,28 @@ const Overview = () => {
     }
   }, [orgSid, teamName]);
 
+  const handleDeleteTeam = () => {
+    disableProject(orgSid, teamName, {status: 2}).then(() => {
+      message.success('项目已禁用');
+      history.push(getProjectListRouter(orgSid));
+    }).finally(() => setDeleteVisible(false));
+  };
+
+  const onDelete = () => {
+    setDeleteVisible(true);
+  };
+
   return (
     <div className="pa-lg">
+      <DeleteModal
+        actionType={t('禁用')}
+        objectType={t('项目')}
+        addtionInfo={t('后续如需恢复项目，请联系平台管理员在管理后台恢复')}
+        confirmName={teamName}
+        visible={deleteVisible}
+        onCancel={() => setDeleteVisible(false)}
+        onOk={handleDeleteTeam}
+      />
       <h3 className="mb-md">{t('项目概览')}</h3>
       <Form
         {...layout}
@@ -65,7 +99,10 @@ const Overview = () => {
         initialValues={team}
         onFinish={values => onFinish(values)}
       >
-        <Form.Item label={t('项目唯一标识')} name="name">
+        <Form.Item
+          label={t('项目唯一标识')}
+          name="name"
+        >
           <span>{team.name}</span>
         </Form.Item>
         <Form.Item
@@ -105,6 +142,9 @@ const Overview = () => {
               {t('编辑')}
             </Button>
           )}
+          {deletable && <Button className="ml-12" htmlType="button" onClick={onDelete} danger type='primary'>
+            {t('禁用项目')}
+          </Button>}
         </div>
       </Form>
     </div>

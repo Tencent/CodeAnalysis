@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # -*-*-*- 需要关注的配置内容 -*-*-*-
 # 数据库配置，默认MySQL端口号为3306
 export MYSQL_HOST=

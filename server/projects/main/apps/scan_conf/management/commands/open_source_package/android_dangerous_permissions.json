@@ -1,0 +1,165 @@
+[
+    {
+        "name": "【Android】危险权限扫描",
+        "description": "扫描Android危险权限使用。",
+        "revision": null,
+        "package_type": "official",
+        "languages": [
+            "java"
+        ],
+        "labels": [
+            "安全"
+        ],
+        "checkrule_set": [
+            {
+                "checktool": "jaff_beta",
+                "checkrule": "camera1API",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "regexscan",
+                "checkrule": "camera1API",
+                "severity": "warning",
+                "rule_params": "regex=Camera\\.open\\(\r\nmsg=发现风险函数调用%s\r\nignore_comment=True",
+                "state": "enabled"
+            },
+            {
+                "checktool": "jaff_beta",
+                "checkrule": "FindMediaRecorder",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jaff_beta",
+                "checkrule": "FindAudioRecord",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "regexscan",
+                "checkrule": "RecordAPI",
+                "severity": "warning",
+                "rule_params": "regex=(MediaRecorder\\.prepare\\()|(MediaRecorder\\.start\\()|(AudioRecord\\.startRecording\\()\r\nmsg=发现风险函数调用%s\r\nignore_comment=True",
+                "state": "enabled"
+            },
+            {
+                "checktool": "jaff_beta",
+                "checkrule": "LocationAPI",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "regexscan",
+                "checkrule": "LocationAPI",
+                "severity": "warning",
+                "rule_params": "regex=LocationManager\\.requestLocationUpdates\r\nmsg=发现风险函数调用%s\r\nignore_comment=True",
+                "state": "enabled"
+            },
+            {
+                "checktool": "jaff_beta",
+                "checkrule": "FindSmsManager",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jaff_beta",
+                "checkrule": "FindSmsMessage",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "regexscan",
+                "checkrule": "MessageAPI",
+                "severity": "warning",
+                "rule_params": "regex=(SmsManager\\.sendTextMessage)|(SmsMessage\\.createFromPdu)\r\nmsg=发现风险函数调用%s\r\nignore_comment=True",
+                "state": "enabled"
+            },
+            {
+                "checktool": "jaff_beta",
+                "checkrule": "ContactsAPI",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "regexscan",
+                "checkrule": "ContactsAPI",
+                "severity": "warning",
+                "rule_params": "regex=(ContactsContract\\.Contacts)|(ContactsContract\\.RawContacts)|(ContactsContract\\.Data)\r\nmsg=发现风险函数调用%s\r\nignore_comment=True",
+                "state": "enabled"
+            },
+            {
+                "checktool": "regexscan",
+                "checkrule": "CalendarAndroid",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "regexscan",
+                "checkrule": "SensorBodyAndroid",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "regexscan",
+                "checkrule": "FileRWMode",
+                "severity": "info",
+                "rule_params": "regex=(MODE_WORLD_READABLE)|(MODE_WORLD_WRITEABLE)\r\nmsg=发现废弃参数使用%s\r\nignore_comment=True",
+                "state": "enabled"
+            },
+            {
+                "checktool": "jaff_beta",
+                "checkrule": "FileRWModeReadable",
+                "severity": "info",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jaff_beta",
+                "checkrule": "FileRWModeWriteable",
+                "severity": "info",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jaff_beta",
+                "checkrule": "FileShareMediaStore",
+                "severity": "info",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jaff_beta",
+                "checkrule": "FileSharePackageArchive",
+                "severity": "info",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "regexscan",
+                "checkrule": "FileShare",
+                "severity": "info",
+                "rule_params": "regex=(MediaStore\\.ACTION_IMAGE_CAPTUR)|(vnd\\.android\\.package-archive)\r\nmsg=发现风险函数调用%s\r\nignore_comment=True",
+                "state": "enabled"
+            },
+            {
+                "checktool": "regexscan",
+                "checkrule": "targetsdk_specialpermission",
+                "severity": "error",
+                "rule_params": "regex=(Settings\\.System\\.(putConfiguration|putFloat|putInt|putLong|putString))|(Settings\\.Global\\.(putFloat|putInt|putLong|putString))|(Settings\\.Secure\\.(putFloat|putInt|putLong|putString))|TYPE_SYSTEM_ALERT|TYPE_APPLICATION_OVERLAY|TYPE_PRIORITY_PHONE|TYPE_SYSTEM_ERROR|LayoutParams.TYPE_PHONE\r\nmsg = 发现特别权限使用，使用前，请先确认权限：context.checkSelfPermission(WRITE_SETTINGS)；context.checkSelfPermission(android.Manifest.permission.SYSTEM_ALERT_WINDOW)；没有权限，引导用户到设置修改权限。\r\nignore_comment = True",
+                "state": "enabled"
+            }
+        ],
+        "open_saas": false,
+        "envs": null
+    }
+]

@@ -7,6 +7,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useHistory, Switch, Route, Redirect } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import { message } from 'coding-oa-uikit';
 import LoadingIcon from 'coding-oa-uikit/lib/icon/Loading';
 import { t } from '@src/i18n/i18next';
 
@@ -16,8 +17,10 @@ import Profile from '@src/modules/team/components/profile';
 import Projects from '@src/modules/team/components/projects';
 import Workspace from '@src/modules/team/components/workspace';
 import Analysis from '@src/modules/layout/project/index';
+import Tools from '@src/modules/tools';
+import ToolDetail from '@src/modules/tools/detail';
+import Toollibs from '@src/modules/tool-libs';
 
-import { message } from 'coding-oa-uikit';
 
 // 项目内
 import { getTeamInfo } from '@src/services/team';
@@ -91,6 +94,9 @@ const TeamLayout = () => {
         <Route path={'/t/:orgSid/projects'} render={() => getComponent(Projects)} />
         <Route path={'/t/:orgSid/profile'} render={() => getComponent(Profile)} />
         <Route path={'/t/:orgSid/members'} render={() => getComponent(Members)} />
+        <Route key='detail' exact path="/t/:orgSid/tools/:toolId/:tab?" render={() => getComponent(ToolDetail)} />,
+        <Route key='tools' exact path="/t/:orgSid/tools" render={() => getComponent(Tools)} />,
+        <Route key='toollibs' exact path="/t/:orgSid/toollibs" render={() => getComponent(Toollibs)} />,
         <Route path="/t/:orgSid/p/:name/" render={() => <Analysis />} />
         <Redirect to="/" />
       </Switch>

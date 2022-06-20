@@ -13,6 +13,7 @@ import logging
 # 第三方
 from django.db.models import Count, ForeignKey
 from django.db import IntegrityError
+from django.core.exceptions import FieldDoesNotExist
 from rest_framework.utils import model_meta
 from rest_framework.exceptions import ParseError
 
@@ -128,13 +129,17 @@ class FilterManger(object):
     def _get_filter(cls, queryset, field_maps, model, user=None):
         filter_map = {}
         for field, field_name in field_maps.items():
-            # 获取字段model
-            model_field = model
-            for f in field_name.split("__"):
-                if hasattr(model_field, '_meta'):
-                    model_field = model_field._meta.get_field(f)
-                else:
-                    model_field = model_field.related_model._meta.get_field(f)
+            try:
+                # 获取字段field_name实际的model
+                model_field = model
+                for f in field_name.split("__"):
+                    if hasattr(model_field, '_meta'):
+                        model_field = model_field._meta.get_field(f)
+                    else:
+                        model_field = model_field.related_model._meta.get_field(f)
+            except FieldDoesNotExist:
+                # filterclass中的fields可能在model中不存在
+                continue
             choices = []
             # model_field.choices 可能为None
             field_choices = model_field.choices or []
@@ -152,6 +157,9 @@ class FilterManger(object):
                     choices.append({"display_name": display_name,
                                     "value": choice[field_name],
                                     "count": choice["count"]})
+            else:
+                # 仅处理存在choices和ForeignKey的字段，其余字段忽略
+                continue
             # 去重
             temp = dict()
             for choice in choices:
@@ -176,7 +184,7 @@ class FilterManger(object):
             for field in base_filters.CheckRuleFilter.Meta.fields
         }
         return cls._get_filter(queryset, field_maps, models.CheckRule, user=user)
-    
+
     @classmethod
     def get_checkpackage_rules_filter(cls, queryset, filter_class=base_filters.PackageMapFilter, user=None):
         """获取规则包规则的filter map

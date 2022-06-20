@@ -22,7 +22,7 @@ from apps.codeproj.core.scmmgr import ScmClientManager
 from apps.job.core import JobCloseHandler, JobDispatchHandler
 from apps.job.models import Job, ScanTypeEnum, Task, TaskProcessRelation
 from apps.nodemgr.models import ExecTag
-from apps.scan_conf.core.pkgmgr import CheckPackageManager
+from apps.scan_conf.core import CheckPackageManager
 from apps.scan_conf.models import CheckTool, Label, Language, PackageMap, ScanApp, ToolProcessRelation
 from util import errcode
 from util.exceptions import CDErrorBase, CDScmError, ClientError

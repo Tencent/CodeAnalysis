@@ -129,7 +129,7 @@ const IssueModal = (props: IssueModalProps) => {
               <div className={style.ruleWrapper}>
                 <div>
                   <InfoCircle />&nbsp;
-                  {detail.checkrule_rule_title}
+                  【{detail.checkrule_real_name}】规则描述：{detail.checkrule_rule_title}
                   {
                     false && (
                       <Button

@@ -407,12 +407,12 @@ class Task(BaseTask):
     """
     任务子任务数据库定义，即node节点实际取得并执行的任务
     """
-    job = models.ForeignKey(Job, verbose_name="所属任务", on_delete=models.CASCADE)  # 关联的父任务
-    exec_tags = models.ManyToManyField(ExecTag, verbose_name="执行标签")  # 执行标签列表
+    job = models.ForeignKey(Job, verbose_name="所属任务", on_delete=models.CASCADE)
+    exec_tags = models.ManyToManyField(ExecTag, verbose_name="执行标签")
     tag = models.ForeignKey(ExecTag, on_delete=models.SET_NULL, verbose_name="唯一执行标签", null=True, blank=True,
-                            related_name="tasks")  # 执行标签
+                            related_name="tasks")
     node = models.ForeignKey(Node, verbose_name="执行节点", on_delete=models.SET_NULL, null=True,
-                             blank=True)  # 被执行的节点，删除节点不删除task
+                             blank=True)
     processes = models.ManyToManyField(Process, verbose_name="子进程", through="TaskProcessRelation")
 
     def get_job_id(self):
@@ -501,6 +501,7 @@ class TaskProcessRelation(BaseTaskProcessRelation):
 class TaskProcessNodeQueue(models.Model):
     """任务预先分配队列
     """
+    id = models.BigAutoField(primary_key=True)
     task = models.ForeignKey(Task, on_delete=models.CASCADE)
     task_process = models.ForeignKey(TaskProcessRelation, null=True, blank=True, on_delete=models.CASCADE)
     node = models.ForeignKey(Node, on_delete=models.CASCADE)

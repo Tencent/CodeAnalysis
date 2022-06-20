@@ -14,21 +14,20 @@ import logging
 
 # 第三方 import
 from django.conf import settings
-from django.db import transaction, IntegrityError
-from rest_framework import serializers, exceptions
 from django.contrib.auth.models import User
+from django.db import IntegrityError, transaction
+from rest_framework import exceptions, serializers
 
 # 项目内 import
-from apps.codeproj import core, models
-from apps.codeproj.core.projteammgr import ProjectTeamManager, LabelManager
-from apps.base.serializers import CDBaseModelSerializer
-from apps.job import models as job_models
-from apps.nodemgr.models import ExecTag, Node
-from apps.authen.serializers.base import ScmAuthSerializer, ScmAuthCreateSerializer, CodedogUserInfoSerializer
+from apps.authen.serializers.base import CodedogUserInfoSerializer, ScmAuthCreateSerializer, ScmAuthSerializer
 from apps.authen.serializers.base import UserSimpleSerializer
 from apps.authen.serializers.base_org import OrganizationSimpleSerializer
-from apps.scan_conf.models import Label, CheckRule, PackageMap, CheckTool
-
+from apps.base.serializers import CDBaseModelSerializer
+from apps.codeproj import core, models
+from apps.codeproj.core import LabelManager, ProjectTeamManager
+from apps.job import models as job_models
+from apps.nodemgr.models import ExecTag, Node
+from apps.scan_conf.models import CheckRule, CheckTool, Label, PackageMap
 from util import scm
 from util.cdcrypto import encrypt
 from util.operationrecord import OperationRecordHandler
@@ -51,9 +50,20 @@ class ProjectTeamSimpleSerializer(CDBaseModelSerializer):
 
     org_sid = serializers.StringRelatedField(source="organization.org_sid")
 
+    def update(self, instance, validated_data):
+        """更新项目组状态
+        """
+        status = validated_data.get("status")
+        if status is None or status == instance.status:
+            return instance
+        user = self.context["request"].user
+        instance = ProjectTeamManager.set_project_team_status(instance, user, status)
+        return instance
+
     class Meta:
         model = models.ProjectTeam
         fields = ["name", "display_name", "status", "org_sid"]
+        read_only_fields = ["name", "display_name", "org_sid"]
 
 
 class ProjectTeamSerializer(CDBaseModelSerializer):
@@ -206,7 +216,7 @@ class ProjectCheckProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.CheckProfile
-        fields = ["id", "name", "profile_type", "custom_checkpackage", "checkpackages"]
+        fields = ["id", "name", "custom_checkpackage", "checkpackages"]
 
 
 class ScanSchemeCheckprofileCustomSerialiazer(serializers.Serializer):
@@ -617,7 +627,17 @@ class RepositoryCreateSerializer(CDBaseModelSerializer):
 
         auth_type = scm_auth.get("auth_type")
         scm_platform = scm_auth.get("scm_platform", scm.ScmPlatformEnum.GIT_OA)
-        if auth_type == models.ScmAuth.ScmAuthTypeEnum.PASSWORD:
+        if auth_type == models.ScmAuth.ScmAuthTypeEnum.OAUTH:
+            scm_auth_info = core.ScmAuthManager.get_scm_auth(user, scm_platform)
+            # 注意判空
+            scm_password = scm_auth_info.gitoa_access_token if scm_auth_info and scm_auth_info.gitoa_access_token \
+                else None
+            if not scm_password:
+                raise serializers.ValidationError({"scm_auth": "请授权给CodeDog"})
+            scm_client = scm.ScmClient(
+                scm_type, scm_url, auth_type, username=user.username, password=scm_password,
+                scm_platform=scm_platform)
+        elif auth_type == models.ScmAuth.ScmAuthTypeEnum.PASSWORD:
             scm_account = scm_auth.get("scm_account")
             scm_account_id = scm_account.id if scm_account else None
             scm_account = core.ScmAuthManager.get_scm_account_with_id(user, scm_account_id)
@@ -667,7 +687,11 @@ class RepositoryCreateSerializer(CDBaseModelSerializer):
         admins = validated_data.get("admins", [])
         users = validated_data.get("users", [])
         logger.info("create repo, scm_url: %s, ssh_url: %s" % (scm_url, ssh_url))
-
+        if scm_auth.get("auth_type") == models.ScmAuth.ScmAuthTypeEnum.OAUTH:
+            scm_auth_info = core.ScmAuthManager.get_scm_auth(
+                user, scm_platform=scm_platform)
+        else:
+            scm_auth_info = None
         with transaction.atomic():
             # 创建代码库
             repo = core.RepositoryManager.create_repository_with_url(
@@ -685,6 +709,7 @@ class RepositoryCreateSerializer(CDBaseModelSerializer):
                     repo, user, scm_auth_type=scm_auth.get("auth_type"),
                     scm_account=scm_auth.get("scm_account"),
                     scm_ssh_info=scm_auth.get("scm_ssh"),
+                    scm_auth_info=scm_auth_info
                 )
         return repo
 
@@ -725,6 +750,7 @@ class RepositoryAuthUpdateSerializer(serializers.Serializer):
         scm_auth = attrs.get("scm_auth")
         scm_account = scm_auth.get("scm_account")
         scm_ssh = scm_auth.get("scm_ssh")
+        scm_platform = scm_auth.get("scm_platform")
         auth_type = scm_auth.get("auth_type")
         scm_type = self.instance.scm_type
         scm_url = self.instance.scm_url
@@ -736,6 +762,15 @@ class RepositoryAuthUpdateSerializer(serializers.Serializer):
                 raise serializers.ValidationError({"scm_account": "您名下没有指定的用户名密码授权信息: %s" % scm_account})
             scm_client = scm.ScmClient(scm_type, scm_url, auth_type,
                                        username=scm_account.scm_username, password=scm_account.scm_password)
+        elif auth_type == models.ScmAuth.ScmAuthTypeEnum.OAUTH:
+            scm_auth_info = models.ScmAuthInfo.objects.filter(
+                user=user, auth_origin__name="CodeDog", scm_platform=scm_platform).first()
+            scm_password = scm_auth_info.gitoa_access_token if scm_auth_info and scm_auth_info.gitoa_access_token \
+                else None
+            if not scm_password:
+                raise serializers.ValidationError({"scm_auth_info": u"未授权给Codedog平台"})
+            scm_client = scm.ScmClient(scm_type, scm_url, auth_type,
+                                       username=user.username, password=scm_password)
         elif auth_type == models.ScmAuth.ScmAuthTypeEnum.SSHTOKEN:
             scm_ssh_info = core.ScmAuthManager.get_scm_sshinfo_with_id(
                 user, sshinfo_id=scm_ssh.id) if scm_ssh else None
@@ -1841,4 +1876,3 @@ class ServerScanCreateSerializer(serializers.Serializer):
     incr_scan = serializers.BooleanField(help_text="是否增量", required=False)
     force_create = serializers.BooleanField(help_text="是否忽略已有任务强制启动", default=False, write_only=True)
     created_from = serializers.CharField(help_text="扫描渠道", required=False, default="tca_web")
-

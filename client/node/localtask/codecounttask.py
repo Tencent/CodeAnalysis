@@ -49,9 +49,6 @@ class CodeCountTask(object):
             code_line_count = response_data["code_line"]
             scm_info.scm_time = response_data["scm_info"]["scm_time"]
             if code_line_count:
-                logger.info("=" * 50)
-                logger.info("本次扫描的代码量:")
-                for key, value in code_line_count.items():
-                    logger.info("%s : %s" % (key, value))
-                logger.info("=" * 50)
+                logger.info(f"本次分析代码行数: {code_line_count.get('filtered_total_line_num')}")
+                logger.info(f"全量代码行数: {code_line_count.get('total_line_num')}")
         return code_line_count

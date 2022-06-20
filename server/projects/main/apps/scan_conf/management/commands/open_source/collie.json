@@ -1,0 +1,143 @@
+[
+    {
+        "name": "collie",
+        "display_name": "Collie",
+        "description": "多语言非编译型静态代码分析工具。",
+        "license": "自研",
+        "libscheme_set": [],
+        "task_processes": [
+            "analyze",
+            "datahandle"
+        ],
+        "scan_app": "codelint",
+        "scm_url": null,
+        "run_cmd": null,
+        "envs": null,
+        "build_flag": false,
+        "checkrule_set": [
+            {
+                "real_name": "ObjectiveC/Copyright",
+                "display_name": "Copyright",
+                "severity": "warning",
+                "category": "security",
+                "rule_title": "检查代码文件的copyright信息",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "oc"
+                ],
+                "solution": "检查代码文件的copyright信息，请在告警文件的文件头部添加上对应的copyright信息。",
+                "owner": null,
+                "labels": [],
+                "description": "检查代码文件的copyright信息",
+                "disable": false
+            },
+            {
+                "real_name": "ObjectiveC/Indent",
+                "display_name": "Indent",
+                "severity": "info",
+                "category": "convention",
+                "rule_title": "检查代码文件的缩进",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "oc"
+                ],
+                "solution": "检查代码文件的缩进，请修复对应的异常缩进。",
+                "owner": null,
+                "labels": [],
+                "description": "检查代码文件的缩进",
+                "disable": false
+            },
+            {
+                "real_name": "ObjectiveC/MaxLinesPerFunction",
+                "display_name": "MaxLinesPerFunction",
+                "severity": "warning",
+                "category": "convention",
+                "rule_title": "检查超出行数长度阈值的函数",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "oc"
+                ],
+                "solution": "检查超出行数长度阈值的函数。",
+                "owner": null,
+                "labels": [],
+                "description": "检查超出行数长度阈值的函数。默认阈值是100",
+                "disable": false
+            },
+            {
+                "real_name": "ObjectiveC/MissingDocInterface",
+                "display_name": "MissingDocInterface",
+                "severity": "info",
+                "category": "convention",
+                "rule_title": "检查接口需要注释信息",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "oc"
+                ],
+                "solution": "检查接口需要注释信息。",
+                "owner": null,
+                "labels": [],
+                "description": "检查接口需要注释信息",
+                "disable": false
+            },
+            {
+                "real_name": "ObjectiveC/MissingDocProperty",
+                "display_name": "MissingDocProperty",
+                "severity": "info",
+                "category": "convention",
+                "rule_title": "检查属性是否有注释",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "oc"
+                ],
+                "solution": "检查属性是否有注释。",
+                "owner": null,
+                "labels": [],
+                "description": "检查属性是否有注释",
+                "disable": false
+            },
+            {
+                "real_name": "ObjectiveC/MissingDocProtocol",
+                "display_name": "MissingDocProtocol",
+                "severity": "info",
+                "category": "convention",
+                "rule_title": "检查protocol是否有注释",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "oc"
+                ],
+                "solution": "检查protocol是否有注释。",
+                "owner": null,
+                "labels": [],
+                "description": "检查protocol是否有注释",
+                "disable": false
+            },
+            {
+                "real_name": "ObjectiveC/ParameterCount",
+                "display_name": "ParameterCount",
+                "severity": "info",
+                "category": "convention",
+                "rule_title": "检查方法的参数个数",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "oc"
+                ],
+                "solution": "检查方法的参数个数。",
+                "owner": null,
+                "labels": [],
+                "description": "检查方法的参数个数。默认阈值是6.",
+                "disable": false
+            }
+        ],
+        "open_user": true,
+        "open_saas": false,
+        "virtual_name": "193",
+        "show_display_name": true
+    }
+]

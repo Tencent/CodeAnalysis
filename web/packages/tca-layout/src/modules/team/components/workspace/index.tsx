@@ -10,6 +10,7 @@ import { useParams, Link } from 'react-router-dom';
 import { Tabs, Table } from 'coding-oa-uikit';
 import AlignLeft from 'coding-oa-uikit/lib/icon/AlignLeft';
 import Clock from 'coding-oa-uikit/lib/icon/Clock';
+import { filter } from 'lodash';
 
 import { DEFAULT_PAGER } from '@src/common/constants';
 import { formatDateTime } from '@src/utils/index';
@@ -41,8 +42,8 @@ const Workspace = () => {
           pageStart: offset,
           count: response.count,
         });
-
-        setList(response.results || []);
+        const activeTeamRepos = filter(response?.results, ['project_team.status',1]);
+        setList(activeTeamRepos || []);
       })
       .finally(() => {
         setLoading(false);
@@ -97,6 +98,21 @@ const Workspace = () => {
               </>
             )}
           />
+          <Column
+            title="所属项目"
+            dataIndex="project_team"
+            key="project_team"
+            render={(project: any) => (
+              <>
+                <Link
+                  className='link-name'
+                  to={`/t/${project?.org_sid}/p/${project?.name}/repos`}
+                >
+                  {project?.display_name}
+                </Link>
+              </>
+            )}
+          />
           <Column title="分支数量" dataIndex="branch_count" key="branch_count" />
           <Column title="分析次数" dataIndex="job_count" key="job_count" />
           <Column
@@ -116,7 +132,7 @@ const Workspace = () => {
                     <div>
                       <Link
                         to={getRepoProjectRouter(
-                          record.project_team?.orgSid,
+                          record.project_team?.org_sid,
                           record.project_team?.name,
                           record.id,
                           id,

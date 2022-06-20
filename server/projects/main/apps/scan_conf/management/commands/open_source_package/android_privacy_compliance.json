@@ -12,8 +12,148 @@
         ],
         "checkrule_set": [
             {
+                "checktool": "jaff_beta",
+                "checkrule": "DynamicPermissionsCalendarContract",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jaff_beta",
+                "checkrule": "DynamicPermissionsImageCapture",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jaff_beta",
+                "checkrule": "DynamicPermissionsActionImageCapture",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
                 "checktool": "regexscan",
                 "checkrule": "Dynamic_permissions",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jaff_beta",
+                "checkrule": "DynamicAPICameraManager",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jafc_beta",
+                "checkrule": "DynamicAPICameraManager",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jafc_beta",
+                "checkrule": "DynamicAPIGetExternalStorageDirectory",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jaff_beta",
+                "checkrule": "DynamicAPIGetExternalStorageDirectory",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jaff_beta",
+                "checkrule": "DynamicAPILocationManager",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jafc_beta",
+                "checkrule": "DynamicAPILocationManager",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jaff_beta",
+                "checkrule": "DynamicAPISubscriptionManager",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jafc_beta",
+                "checkrule": "DynamicAPISubscriptionManager",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jaff_beta",
+                "checkrule": "DynamicAPITelephonyManager",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jafc_beta",
+                "checkrule": "DynamicAPITelephonyManager",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jafc_beta",
+                "checkrule": "DynamicAPITwilightManager",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jaff_beta",
+                "checkrule": "DynamicAPITwilightManager",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jafc_beta",
+                "checkrule": "DynamicAPIWallpaperManager",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jaff_beta",
+                "checkrule": "DynamicAPIWallpaperManager",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jafc_beta",
+                "checkrule": "DynamicAPIWifiRttManager",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jaff_beta",
+                "checkrule": "DynamicAPIWifiRttManager",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jaff_beta",
+                "checkrule": "camera1API",
                 "severity": "warning",
                 "rule_params": null,
                 "state": "enabled"
@@ -27,7 +167,35 @@
             },
             {
                 "checktool": "regexscan",
+                "checkrule": "SensorBodyAndroid",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jaff_beta",
                 "checkrule": "LocationAPI",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "regexscan",
+                "checkrule": "LocationAPI",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jaff_beta",
+                "checkrule": "FindMediaRecorder",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jaff_beta",
+                "checkrule": "FindAudioRecord",
                 "severity": "warning",
                 "rule_params": null,
                 "state": "enabled"
@@ -36,6 +204,20 @@
                 "checktool": "regexscan",
                 "checkrule": "RecordAPI",
                 "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jaff_beta",
+                "checkrule": "FileShareMediaStore",
+                "severity": "info",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jaff_beta",
+                "checkrule": "FileSharePackageArchive",
+                "severity": "info",
                 "rule_params": null,
                 "state": "enabled"
             },
@@ -54,6 +236,27 @@
                 "state": "enabled"
             },
             {
+                "checktool": "jaff_beta",
+                "checkrule": "FileRWModeReadable",
+                "severity": "info",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jaff_beta",
+                "checkrule": "FileRWModeWriteable",
+                "severity": "info",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "regexscan",
+                "checkrule": "CalendarAndroid",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
                 "checktool": "regexscan",
                 "checkrule": "targetsdk_specialpermission",
                 "severity": "error",
@@ -61,8 +264,29 @@
                 "state": "enabled"
             },
             {
+                "checktool": "jaff_beta",
+                "checkrule": "FindSmsManager",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jaff_beta",
+                "checkrule": "FindSmsMessage",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
                 "checktool": "regexscan",
                 "checkrule": "MessageAPI",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jaff_beta",
+                "checkrule": "ContactsAPI",
                 "severity": "warning",
                 "rule_params": null,
                 "state": "enabled"

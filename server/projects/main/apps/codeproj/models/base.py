@@ -13,17 +13,16 @@ codeproj - base models
 import logging
 
 # 第三方 import
-from django.db import models, IntegrityError
-from django.contrib.auth.models import User, Group
+from django.conf import settings
+from django.contrib.auth.models import Group, User
+from django.db import IntegrityError, models
 from guardian.shortcuts import assign_perm
 
 # 项目内 import
-from apps.authen.models import ScmAuth, Organization
-from apps.authen.core import usermgr
-from apps.base.basemodel import CDBaseModel, BasePerm
+from apps.authen.models import Organization, ScmAuth
+from apps.base.basemodel import BasePerm, CDBaseModel
 from apps.nodemgr.models import ExecTag
 from apps.scan_conf.models import Language
-
 from util.webclients import AnalyseClient
 
 logger = logging.getLogger(__name__)
@@ -32,6 +31,13 @@ logger = logging.getLogger(__name__)
 # ****************************
 # * 项目基础信息配置
 # ****************************
+
+class ActiveProjectTeamManager(models.Manager):
+    """活跃项目筛选器
+    """
+
+    def get_queryset(self):
+        return super().get_queryset().filter(status=ProjectTeam.StatusEnum.ACTIVE)
 
 
 class ProjectTeam(CDBaseModel, BasePerm):
@@ -53,7 +59,7 @@ class ProjectTeam(CDBaseModel, BasePerm):
 
     STATUS_CHOICES = (
         (StatusEnum.ACTIVE, "活跃"),
-        (StatusEnum.DISACTIVE, "失活"),
+        (StatusEnum.DISACTIVE, "禁用"),
     )
 
     # SlugField会校验，r"^[-a-zA-Z0-9_]+\Z"，只能包含字母，数字，下划线或者中划线
@@ -62,6 +68,8 @@ class ProjectTeam(CDBaseModel, BasePerm):
     description = models.TextField(help_text="项目描述信息", null=True, blank=True)
     organization = models.ForeignKey(Organization, on_delete=models.SET_NULL, help_text="所属组织", null=True, blank=True)
     status = models.IntegerField(help_text="项目团队状态", default=StatusEnum.ACTIVE, choices=STATUS_CHOICES)
+
+    active_pts = ActiveProjectTeamManager()
 
     def _get_group(self, perm):
         permission_choices = dict(self.PERMISSION_CHOICES)
@@ -166,7 +174,7 @@ class BaseRepository(CDBaseModel):
         if git_suffix:
             if not scm_url.endswith(".git") and self.scm_type == self.ScmTypeEnum.GIT:
                 scm_url = "%s.git" % scm_url
-        if https_prefix:
+        if https_prefix or (hasattr(settings, "HTTPS_CLONE_FLAG") and settings.HTTPS_CLONE_FLAG is True):
             scm_url = scm_url.replace("http://", "https://")
         return scm_url
 
@@ -292,7 +300,7 @@ class BaseScanScheme(CDBaseModel):
     created_from = models.CharField(max_length=32, help_text="创建渠道", default=CreatedFromEnum.WEB)
     issue_global_ignore = models.BooleanField(default=True, verbose_name="是否开启问题全局忽略，默认为True（开启）")
     status = models.IntegerField(choices=STATUS_CHOICES, default=StatusEnum.ACTIVE, help_text="扫描方案状态")
-    scheme_key = models.CharField(max_length=64, verbose_name="扫描方案key值", null=True, blank=True)
+    scheme_key = models.CharField(max_length=64, verbose_name="扫描方案key值", null=True, blank=True, db_index=True)
     scheme_type = models.IntegerField(help_text="方案类型", default=SchemeTypeEnum.CUSTOM, null=True, blank=True)
 
     class Meta:
@@ -346,15 +354,16 @@ class BaseProject(CDBaseModel):
     """
 
     class StatusEnum(object):
-        APPLYING = 0
         ACTIVE = 1
         DISACTIVE = 2
-        CLOSED = 3
+        ARCHIVING = 3
+        ARCHIVED = 4
 
     STATUS_CHOICES = (
         (StatusEnum.ACTIVE, "活跃"),
         (StatusEnum.DISACTIVE, "失活"),
-        (StatusEnum.CLOSED, "关闭"),
+        (StatusEnum.ARCHIVING, "归档中"),
+        (StatusEnum.ARCHIVED, "已归档")
     )
 
     class CreatedFromEnum(object):

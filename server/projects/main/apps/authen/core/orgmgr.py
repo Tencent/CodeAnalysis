@@ -27,7 +27,7 @@ from util.shortuuid import ShortIDGenerator
 logger = logging.getLogger(__file__)
 
 
-class OrganizationManager(object):
+class BaseOrganizationManager(object):
     """组织管理
     """
 
@@ -87,7 +87,21 @@ class OrganizationManager(object):
             if org_id not in related_orgs:
                 if not perm or permission_choices[perm] == perm_name:
                     related_orgs.append(org_id)
-        return Organization.objects.filter(id__in=related_orgs)
+        return Organization.objects.filter(id__in=related_orgs).exclude(status=Organization.StatusEnum.FORBIDEN)
+
+    @classmethod
+    def check_user_org_perm(cls, user, org=None, org_sid=None, perm=None):
+        """检查用户是否有指定团队的权限
+        """
+        if not org and not org_sid:
+            return False
+        if not org:
+            org = Organization.objects.filter(org_sid=org_sid).first()
+        if not org:
+            return False
+        if not perm:
+            perm = Organization.PermissionNameEnum.VIEW_ORG_PERM
+        return user.has_perm(perm, org)
 
     @classmethod
     def update_org_status(cls, org, user, status):
@@ -99,7 +113,8 @@ class OrganizationManager(object):
         if user.is_superuser:
             org.status = status
             org.save()
-            OperationRecordHandler.add_organization_operation_record(org, "团队审核", user, "审核结果: %s" % status)
+            OperationRecordHandler.add_organization_operation_record(
+                org, "团队审核", user, "审核结果: %s-%s" % (status, Organization.STATUSENUM_DICT[status]))
 
     @classmethod
     def update_org_level(cls, org, user, level):
@@ -113,7 +128,8 @@ class OrganizationManager(object):
             org.level = level
             org.save()
             OperationRecordHandler.add_organization_operation_record(
-                org, "团队级别变更", user, "变更情况: %s -> %s" % (old_level, level))
+                org, "团队级别变更", user, "变更情况: %s-%s -> %s-%s" % (
+                    old_level, Organization.LEVELENUM_DICT[old_level], level, Organization.LEVELENUM_DICT[level]))
 
     @classmethod
     def get_invite_code(cls, org, perm, user):
@@ -220,7 +236,11 @@ class OrganizationManager(object):
         return org_id, perm, username
 
 
-class OrganizationPermApplyManager(object):
+class OrganizationManager(BaseOrganizationManager):
+    pass
+
+
+class BaseOrganizationPermApplyManager(object):
     """团队申请单管理
     """
 
@@ -286,3 +306,7 @@ class OrganizationPermApplyManager(object):
                 check_remark=check_remark, check_time=timezone.now(), status=org_perm_apply.ApplyStatusEnum.CHECKED)
         org_perm_apply.refresh_from_db()
         return org_perm_apply
+
+
+class OrganizationPermApplyManager(BaseOrganizationPermApplyManager):
+    pass

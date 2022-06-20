@@ -28,7 +28,7 @@ def get_source_dir(scm_url):
 
 
 class ScmError(object):
-    """
+    """SCM错误类
     """
 
     @classmethod
@@ -37,7 +37,7 @@ class ScmError(object):
         :param err_msg: str，错误信息
         :return: str，格式化后的错误信息
         """
-        if scm_type in ["git", "tgit", "ssh+git", "coding-git"]:
+        if scm_type in ["git", "tgit", "ssh+git", "coding-git", "git-oauth"]:
             return cls.__git_error_handler(err_msg)
         elif scm_type in ["svn", "ssh+svn"]:
             return cls.__svn_error_handler(err_msg)
@@ -46,8 +46,6 @@ class ScmError(object):
 
     @classmethod
     def __git_error_handler(cls, err_msg):
-        # 错误信息处理，禁止直接返回异常信息
-
         logger.info("handle git err msg: %s" % err_msg)
 
         err_msg_dict = {
@@ -78,9 +76,8 @@ class ScmError(object):
 
     @classmethod
     def __svn_error_handler(cls, err_msg):
+        """SVN错误日志处理
         """
-        """
-        # 错误信息处理，禁止直接返回异常信息
         logger.info("handle svn git err msg: %s" % err_msg)
         err_msg_dict = {
             r"'.*' path not found": "File doesn't exist.",
@@ -94,7 +91,7 @@ class ScmError(object):
             r"Unable to connect to a repository at URL '.*'\nsvn: E\d+: Name or service not known$":
                 "Project doesn't exist.",
             r"Unable to connect to a repository at URL '.*'\nsvn: E\d+: "
-            r"Unexpected HTTP status 504 'Gateway Time-out' on '.*'":  "SVN server error",
+            r"Unexpected HTTP status 504 'Gateway Time-out' on '.*'": "SVN server error",
         }
 
         for pattern, msg in err_msg_dict.items():

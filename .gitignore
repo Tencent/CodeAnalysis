@@ -1,8 +1,31 @@
-.idea
-.DS_Store
+# Python
 .__pycache__
+__pycache__
+
+
+# MacOS
+.DS_Store
+
+
+# PyCharm IDEA
+.idea
+
+
+# VSCode
+.vscode
+
+
+# SVN
+.svn
+
+
+# Cython
+*.pyx
+*.c
+
+
+# Other
 .docker_data
 client/data/taskdirs/*
-*/*.log
-
-__pycache__
+**/*.log
+data/

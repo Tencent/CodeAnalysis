@@ -159,11 +159,22 @@ class Task(object):
                 task_request = json.load(rf)
                 task_display_name = ToolDisplay.get_tool_display_name(task_request)
 
-            python_cmd = "python3"  # python3命令
-            if not PythonTool.is_local_python_command_available(python_cmd, python_version="3"):
-                raise ConfigError("python3 command is not available, please install Python3.")
+            if getattr(sys, 'frozen', False) and hasattr(sys, '_MEIPASS'):
+                # LogPrinter.info('running in a PyInstaller bundle')
+                puppy_task_name = "scantask"
+                if settings.PLATFORMS[sys.platform] == 'windows':
+                    puppy_task_name = '%s.exe' % puppy_task_name
 
-            cmd_args = [python_cmd, 'task/puppytask.py', self.request_file, self.response_file]
+                puppy_task_path = os.path.join(settings.BASE_DIR, puppy_task_name)
+                # 以可执行程序的方式调用
+                cmd_args = [puppy_task_path, self.request_file, self.response_file]
+            else:
+                python_cmd = "python3"  # python3命令
+                # LogPrinter.info('running in python code')
+                if not PythonTool.is_local_python_command_available(python_cmd, python_version="3"):
+                    raise ConfigError("python3 command is not available, please install Python3.")
+
+                cmd_args = [python_cmd, 'task/puppytask.py', self.request_file, self.response_file]
 
             LogPrinter.info(f'Task_{task_request["id"]} ({task_display_name}) starts ...')
 
@@ -183,6 +194,3 @@ class Task(object):
             self.msg = u"%s: %s" % (type(err).__name__, err)
             self.data = traceback.format_exc()
             self._done = True
-
-
-

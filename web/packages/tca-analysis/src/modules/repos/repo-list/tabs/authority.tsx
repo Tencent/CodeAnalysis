@@ -8,7 +8,7 @@
  * 仓库登记入口文件
  */
 import React, { useState, useEffect } from 'react';
-import { find, isEmpty, get } from 'lodash';
+import { find, isEmpty, get, filter } from 'lodash';
 import { Button, Form, Select, message } from 'coding-oa-uikit';
 import PlusIcon from 'coding-oa-uikit/lib/icon/Plus';
 import RefreshIcon from 'coding-oa-uikit/lib/icon/Refresh';
@@ -18,7 +18,7 @@ import { t } from '@src/i18n/i18next';
 import { SCM_PLATFORM } from '@src/common/constants';
 import { AUTH_TYPE, AUTH_TYPE_TXT } from '@src/modules/repos/constants';
 import { getPCAuthRouter } from '@src/modules/repos/routes';
-import { getSSHInfo, getScmAccounts, putRepoAuth } from '@src/services/repos';
+import { getSSHInfo, getScmAccounts, putRepoAuth, getOAuthInfo, getPlatformStatus } from '@src/services/repos';
 
 const { Option, OptGroup } = Select;
 
@@ -40,16 +40,28 @@ const Authority = ({ curRepo, orgSid, teamName, repoId }: IProps) => {
   const [selectedAuth, setSelectedAuth] = useState<any>({});
   const [sshAuthList, setSshAuthList] = useState<any>([]);
   const [httpAuthList, setHttpAuthList] = useState<any>([]);
+  const [oauthAuthList, setOauthAuthList] = useState<any>([]);
   // const [allAuthList, setAllAuthList] = useState<Array<any>>([]);
   const [authLoading, setAuthLoading] = useState(false);
 
   const scmAuth: any = curRepo?.scm_auth ?? {};
-  const curAuth: any = (scmAuth.auth_type === AUTH_TYPE.HTTP ? scmAuth.scm_account : scmAuth.scm_ssh) || {};
+  let curAuth: any = {};
   if (scmAuth.auth_type) {
+    switch (scmAuth?.auth_type) {
+      case AUTH_TYPE.HTTP:
+        curAuth = scmAuth.scm_account;
+        break;
+      case AUTH_TYPE.SSH:
+        curAuth = scmAuth.scm_ssh;
+        break;
+      case AUTH_TYPE.OAUTH:
+        curAuth = scmAuth.scm_oauth;
+        break;
+    }
     curAuth.auth_type = curRepo.scm_auth.auth_type;
   }
 
-  const setCurAuth = (sshList = sshAuthList, httpList = httpAuthList) => {
+  const setCurAuth = (sshList = sshAuthList, httpList = httpAuthList, oauthList = oauthAuthList) => {
     // 确保当前凭证在select数据内
     if (
       curAuth.id
@@ -65,6 +77,13 @@ const Authority = ({ curRepo, orgSid, teamName, repoId }: IProps) => {
     ) {
       setHttpAuthList([curAuth, ...httpList]);
     }
+    if (
+      curAuth.id
+      && curAuth.auth_type === AUTH_TYPE.OAUTH
+      && !find(oauthList, { id: curAuth.id })
+    ) {
+      setOauthAuthList([curAuth, ...oauthList]);
+    }
   };
 
   const getAuth = () => {
@@ -72,11 +91,20 @@ const Authority = ({ curRepo, orgSid, teamName, repoId }: IProps) => {
     Promise.all([
       getSSHInfo().then(r => r.results || []),
       getScmAccounts().then(r => r.results || []),
+      getOAuthInfo().then(r => r.results || []),
+      getPlatformStatus().then(r => r || []),
     ]).then((result) => {
+      const activeOauth = filter(
+        result[2].map((item:any)=>({ 
+          ...item, 
+          platform_status: get(result[3], item.scm_platform_name, [false]),
+        })),
+        'platform_status'
+      );
       setSshAuthList(result[0]);
       setHttpAuthList(result[1]);
-
-      setCurAuth(result[0], result[1]);
+      setOauthAuthList(activeOauth);
+      setCurAuth(result[0], result[1], result[2]);
       setAuthLoading(false);
     });
   };
@@ -94,11 +122,19 @@ const Authority = ({ curRepo, orgSid, teamName, repoId }: IProps) => {
         if (selectedAuth.auth_type === AUTH_TYPE.HTTP) {
           scmAuth.scm_account = selectedAuth.id;
           scmAuth.scm_ssh = null;
+          scmAuth.scm_oauth = null;
         }
 
         if (selectedAuth.auth_type === AUTH_TYPE.SSH) {
           scmAuth.scm_ssh = selectedAuth.id;
           scmAuth.scm_account = null;
+          scmAuth.scm_oauth = null;
+        }
+
+        if (selectedAuth.auth_type === AUTH_TYPE.OAUTH) {
+          scmAuth.scm_oauth = selectedAuth.id;
+          scmAuth.scm_account = null;
+          scmAuth.scm_ssh = null;
         }
 
         putRepoAuth(orgSid, teamName, repoId, { scm_auth: scmAuth }).then(() => {
@@ -157,6 +193,18 @@ const Authority = ({ curRepo, orgSid, teamName, repoId }: IProps) => {
             }}
             getPopupContainer={() => document.body}
           >
+            {!isEmpty(oauthAuthList) && (
+              <OptGroup label={AUTH_TYPE_TXT.OAUTH}>
+                {oauthAuthList.map((auth: any) => (
+                  <Option
+                    key={`${AUTH_TYPE.OAUTH}#${auth.id}`}
+                    value={`${AUTH_TYPE.OAUTH}#${auth.id}`}
+                  >
+                    {get(SCM_PLATFORM, auth.scm_platform, '其他')}
+                  </Option>
+                ))}
+              </OptGroup>
+            )}
             {!isEmpty(sshAuthList) && (
               <OptGroup label={AUTH_TYPE_TXT.SSH}>
                 {sshAuthList.map((auth: any) => (

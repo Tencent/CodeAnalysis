@@ -18,9 +18,7 @@ from django.utils.timezone import now
 
 from apps.authen.models import Organization, ScmAuth, ScmAccount
 from apps.codeproj import models
-from apps.scan_conf.core import add_checkrules_to_checkpackage
-from apps.scan_conf.core.profilemgr import CheckProfileManager
-from apps.scan_conf.core.rulemgr import CheckRuleManager
+from apps.scan_conf.core import add_checkrules_to_checkpackage, CheckProfileManager, CheckRuleManager
 from apps.scan_conf.models import CheckProfile, PackageMap
 from util.exceptions import ServerConfigError, ServerOperationError, RepositoryCreateError, errcode, ProjectCreateError
 from util.operationrecord import OperationRecordHandler
@@ -246,7 +244,7 @@ class RepositoryManager(object):
             raise ServerOperationError("代码库[%s]不存在" % repo_id)
         old_scm_url = repo.scm_url
         deleted_time = now()
-        repo.scm_url = "%s [deleted by %s(%s)]" % (repo.scm_url, user.username, deleted_time)
+        repo.scm_url = ("%s [deleted by %s(%s)]" % (repo.scm_url, user.username, deleted_time))[:198]
         repo.save()
         logger.info("[User: %s] 在 %s 删除了代码库 %s-%s" % (user.username, deleted_time, repo_id, old_scm_url))
         repo.delete(user=user)
@@ -291,8 +289,8 @@ class ScanSchemeManager(object):
         :return schemes: 方案模板
         """
         org_scheme_key = "%s_%s" % (models.ScanScheme.SchemeKey.ORG_KEY, org_sid)
-        scheme_ids = models.ScanSchemePerm.objects.filter(
-            Q(edit_managers__in=[user]) | Q(execute_managers__in=[user])).values_list("scan_scheme_id", flat=True)
+        scheme_ids = list(models.ScanSchemePerm.objects.filter(scan_scheme__repo__isnull=True).filter(
+            Q(edit_managers__in=[user]) | Q(execute_managers__in=[user])).values_list("scan_scheme_id", flat=True))
         # 系统模板、团队内公开模板、团队内有权限模板
         global_scheme_templates = models.ScanScheme.objects.filter(repo__isnull=True).filter(
             Q(scheme_key=models.ScanScheme.SchemeKey.PUBLIC) |
@@ -835,6 +833,8 @@ class ScanSchemeTemplateManager(object):
         name = scheme_template_data.get("name")
         display_name = scheme_template_data.get("display_name")
         public = scheme_template_data.get("public")
+        recommend = scheme_template_data.get("recommend")
+        need_compile = scheme_template_data.get("need_compile")
         basic_conf_data = scheme_template_data["basic_conf"] if scheme_template_data.get("basic_conf") else {}
         lint_conf_data = scheme_template_data["lint_conf"] if scheme_template_data.get("lint_conf") else {}
         metric_conf_data = scheme_template_data["metric_conf"] if scheme_template_data.get("metric_conf") else {}
@@ -849,6 +849,8 @@ class ScanSchemeTemplateManager(object):
             name=name,
             display_name=display_name,
             public=public,
+            recommend=recommend,
+            need_compile=need_compile,
             short_desc=scheme_template_data.get("short_desc"),
             description=scheme_template_data.get("description"),
             tag=scheme_template_data.get("tag"),
@@ -1043,7 +1045,7 @@ class ProjectManager(object):
         old_branch = project.branch
         deleted_time = now()
         logger.info("[User: %s] 在 %s 删除了 %s 分支项目" % (user.username, deleted_time, project))
-        project.branch = "deleted by %s(%s)" % (user.username, deleted_time)
+        project.branch = ("deleted by %s(%s)" % (user.username, deleted_time))[:198]
         project.remark = json.dumps({"branch": old_branch})
         project.save()
         project.delete(user=user)

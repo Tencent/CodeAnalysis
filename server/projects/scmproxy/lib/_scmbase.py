@@ -169,6 +169,7 @@ class ICmdScm(object):
     SVN = "SVN"
     GIT = "GIT"
     TGIT = "TGIT"
+    GIT_OAUTH = "GIT-OAUTH"
     ScmParmes = collections.namedtuple("ScmParmes", ["url", "dst", "username", "password"])
 
     def __init__(self, parmes):
@@ -636,6 +637,16 @@ class ICmdScm(object):
         """获取指定版本号的提交时间
         :param revision: <str> 版本号
         :return: <float> 提交的时间
+        """
+        raise NotImplementedError()
+
+    def get_merge_revision(self, parent_branch, source_branch, interval):
+        """【Git专用】获取指定分支最近合并父分支的版本号
+
+        :param parent_branch: <str> 父分支
+        :param source_branch: <str> 源分支
+        :param interval: <int> 进程卡住超出该值（秒），则视为超时
+        :return: <str> 最近一次合并版本号
         """
         raise NotImplementedError()
 

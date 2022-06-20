@@ -51,3 +51,18 @@ class ServerInternalTicket(object):
         ticket_data = "%s$#$%s" % (ticket_timestamp, ticket_signature)
         ticket = encrypt(ticket_data, settings.API_TICKET_SALT)
         return ticket
+
+
+class TempTokenTicket(object):
+    """AnalysisTicket For MainServer
+    """
+    @classmethod
+    def generate_ticket(cls, user_token):
+        """ticket生成算法
+        :return: str
+        """
+        ticket_timestamp = int(time())
+        # 使用 $#$ 分隔符
+        ticket_data = "%s$#$%s$#$%s" % (ticket_timestamp, user_token, ticket_timestamp)
+        ticket = encrypt(ticket_data, settings.API_TICKET_SALT)
+        return ticket

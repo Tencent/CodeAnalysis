@@ -52,7 +52,7 @@ schema_view = get_schema_view(
     ),
     url=settings.SWAGGER_SETTINGS["API_URL"],
     patterns=[
-        path("api/orgs/<str:org_sid>/teams/", include("apps.codeproj.api_urls.v1_pt")),
+        path("api/orgs/<str:org_sid>/teams/", include("apps.codeproj.api_urls.v1_org")),
         path("api/conf/", include("apps.scan_conf.api_urls.v1")),
 
     ],
@@ -79,12 +79,16 @@ urlpatterns += [
     path("api/conf/", include("apps.scan_conf.api_urls.v1")),
     path("api/jobs/", include("apps.job.api_urls.v1_job")),
     path("api/nodes/", include("apps.nodemgr.api_urls.v1")),
-    path("api/orgs/<str:org_sid>/teams/", include("apps.codeproj.api_urls.v1_pt")),
+    path("api/orgs/<str:org_sid>/teams/", include("apps.codeproj.api_urls.v1_org")),
 
     # V2 APIs
     path("api/v2/authen/", include("apps.authen.api_urls.v2")),
+    path('api/v2/orgs/', include('apps.authen.api_urls.v2_org')),
+    path("api/v2/orgs/<str:org_sid>/teams/", include("apps.codeproj.api_urls.v2_org")),
+    path('api/v2/teams/', include('apps.codeproj.api_urls.v2_pt')),
     path("api/v2/jobs/", include("apps.job.api_urls.v2_job")),
-    path("api/v2/", include('apps.nodemgr.api_urls.v2')),
+    path("api/v2/checktools/", include("apps.scan_conf.api_urls.v2_checktool")),
+    path("api/v2/", include("apps.nodemgr.api_urls.v2")),
 
     # V3 APIs
     path("api/v3/", include("apps.base.api_urls.v3")),

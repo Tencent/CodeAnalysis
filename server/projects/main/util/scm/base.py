@@ -41,6 +41,7 @@ SCM_PLATFORM_CHOICES = (
 
 SCM_PLATFORM_NUM_AS_KEY = dict(SCM_PLATFORM_CHOICES)
 SCM_PLATFORM_NAME_AS_KEY = dict((v, k) for k, v in SCM_PLATFORM_NUM_AS_KEY.items())
+NEED_REFRESH_SCM_PLATFORMS = [ScmPlatformEnum.GITEE, ScmPlatformEnum.GITLAB]
 
 
 class ScmUrlFormatter(object):

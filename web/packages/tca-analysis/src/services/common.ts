@@ -21,7 +21,6 @@ export const getMainBaseURL = (org_sid: string, team_name: string) => `${MAIN_SE
 
 export const getAnalysisBaseURL = (org_sid: string, team_name: string) => `${ANALYSIS_SERVER_API}${getBaseURL(org_sid, team_name)}`;
 
-
 /**
  * 获取代码库列表
  * @param query
@@ -85,3 +84,11 @@ export const delProjectTeamMember = (orgSid: string, teamName: string, role: num
  * @param orgSid
  */
 export const getOrgMembers = (orgSid: string) => get(`${MAIN_SERVER_API}/orgs/${orgSid}/memberconf/`);
+
+/**
+ * 禁用团队项目
+ * @param orgSid
+ * @param teamName
+ * @param params
+ */
+ export const disableProject = (orgSid: string, teamName: string, params: any) => put(`${getMainBaseURL(orgSid, teamName)}/status/`, params);
