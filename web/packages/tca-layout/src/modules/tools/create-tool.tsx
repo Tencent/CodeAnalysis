@@ -31,19 +31,20 @@ const CreateToolModal = (props: CreateToolModalProps) => {
   const [form] = Form.useForm();
   const history = useHistory();
   const { orgId, visible, onClose } = props;
-  
-  const onFinish = (data: any) => {
-    const newFormData = data;
-    if (newFormData.scm) {
-      const [authType, id] = newFormData?.scm?.split('#') ?? [];
-      delete data.scm;
-      data.scm_auth = { auth_type: authType };
-      if (SCM_MAP[authType]) {
-        data.scm_auth[SCM_MAP[authType]] = id;
-      }
-    }
 
-    createTool(orgId, newFormData).then((res) => {
+  const onFinish = (formData: any) => {
+    if (formData.scm) {
+      const [authType, id] = formData?.scm?.split('#') ?? [];
+      formData.scm_auth = { auth_type: authType };
+      if (SCM_MAP[authType]) {
+        formData.scm_auth[SCM_MAP[authType]] = id;
+      }
+    } else {
+      formData.scm_auth = null
+    }
+    delete formData.scm
+
+    createTool(orgId, formData).then((res) => {
       message.success('创建成功');
       history.push(`${getToolsRouter(orgId)}/${res.id}/tool-libs`);
     });

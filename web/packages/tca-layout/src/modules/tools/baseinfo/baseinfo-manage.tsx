@@ -44,13 +44,15 @@ const BaseInfo = ({ orgSid, data, getDetail }: BaseInfoProps) => {
     const formData = form.getFieldsValue();
     if (formData.scm) {
       const [authType, id] = formData?.scm?.split('#') ?? [];
-      delete formData.scm;
       formData.scm_auth = { auth_type: authType };
       if (SCM_MAP[authType]) {
         formData.scm_auth[SCM_MAP[authType]] = id;
       }
+    } else {
+      formData.scm_auth = null
     }
-   
+    delete formData.scm;
+
     updateTool(orgSid, data.id, {
       ...data,
       ...formData,
