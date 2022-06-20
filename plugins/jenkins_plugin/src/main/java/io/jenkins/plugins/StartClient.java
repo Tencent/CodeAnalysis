@@ -25,10 +25,18 @@ public class StartClient {
                                    EnvVars env) {
         try {
             String PythonPath = env.get("PYTHONPATH");
+            if(PythonPath == null){
+                listener.getLogger().println("PYTHONPATH环境变量获取失败,请在全局变量中添加");
+                System.exit(0);
+            }
             if(!PythonPath.endsWith("/")){
                 PythonPath = PythonPath + "/";
             }
             String GitPath = env.get("GITPATH");
+            if(GitPath == null){
+                listener.getLogger().println("GitPath环境变量获取失败，请在全局变量中添加");
+                System.exit(0);
+            }
             env.override("PATH", PythonPath + ":" + GitPath + ":" + "$PATH");
 
             String startCommand = PythonPath

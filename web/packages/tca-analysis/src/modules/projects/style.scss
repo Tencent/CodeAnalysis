@@ -9,12 +9,12 @@
 
     :global(.ant-table-tbody) {
         &>tr {
-            td>a.link-name {
+            td>.link-name {
                 color: $grey-8;
             }
 
             &:hover {
-                td>a.link-name {
+                td>.link-name {
                     color: $blue-5 !important;
                 }
             }

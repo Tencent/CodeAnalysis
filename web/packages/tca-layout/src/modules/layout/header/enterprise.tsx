@@ -9,6 +9,7 @@ import { Link, useHistory } from 'react-router-dom';
 import classnames from 'classnames';
 import { Breadcrumb, Select } from 'coding-oa-uikit';
 import AngleRight from 'coding-oa-uikit/lib/icon/AngleRight';
+import { filter } from 'lodash';
 
 // 项目内
 import { getHomeRouter, getTeamRouter, getTeamsRouter, getProjectRouter } from '@src/utils/getRoutePath';
@@ -35,7 +36,9 @@ const Enterprise = ({ org, orgSid, teamName }: IProps) => {
     // 团队变更时重新获取项目列表
     if (org.org_sid && teamName) {
       getProjects(org.org_sid, null).then((response) => {
-        setProjectOptions(response.map((item: any) => ({
+        // 只显示未禁用的项目
+        const activeProjects = filter(response, {status: 1});
+        setProjectOptions(activeProjects.map((item: any) => ({
           ...item,
           label: item.display_name,
           value: item.name,
