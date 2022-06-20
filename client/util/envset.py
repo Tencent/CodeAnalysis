@@ -131,20 +131,6 @@ class EnvSet(object):
 
         return tool_envs
 
-    def set_compile_tools_env(self):
-        """
-        加载公共编译工具的环境变量
-        :return:
-        """
-        # 读取全部工具配置信息
-        all_tool_config = ConfigLoader().read_tool_config_from_ini_file(config_all_tools=True)
-        # 只需要公共编译工具的环境变量
-        compile_tool_config = {"compile_config": all_tool_config["compile_config"]}
-        # 加载环境变量
-        EnvSet().set_tool_env(compile_tool_config)
-
-        # logger.info(">>> PATH: \n%s" % '\n'.join(os.environ["PATH"].split(os.pathsep)))
-
     def set_task_env(self, task_params):
         """
         设置任务环境变量,将 task params 中的环境变量配置添加到当前进程环境变量中
