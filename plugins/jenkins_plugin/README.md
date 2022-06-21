@@ -4,4 +4,4 @@
 
 
 # Jenkins Plugin Installation Package
-[https://github.com/Tencent/CodeAnalysis/releases/download/20220616.1/jenkins_plugin.hpi]
+https://github.com/Tencent/CodeAnalysis/releases/download/20220616.1/jenkins_plugin.hpi
