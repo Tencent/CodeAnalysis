@@ -246,7 +246,12 @@ class OrgRepositoryListApiView(generics.ListAPIView, V3GetModelMixinAPIView):
 
     def get_queryset(self):
         org = self.get_org()
-        return models.Repository.objects.filter(organization=org)
+        # 用户是团队管理员则直接获取当前团队全部代码库
+        if self.request.user.has_perm(org.PermissionNameEnum.CHANGE_ORG_PERM, org):
+            return models.Repository.objects.filter(organization=org)
+        # 否则获取当前团队该用户有权限的项目组的代码库
+        pt_ids = list(ProjectTeamManager.get_user_teams(org, self.request.user).values_list('id', flat=True))
+        return models.Repository.objects.filter(organization=org, project_team_id__in=pt_ids)
 
 
 class RepositoryListApiView(CustomSerilizerMixin, generics.ListCreateAPIView, V3GetModelMixinAPIView):
