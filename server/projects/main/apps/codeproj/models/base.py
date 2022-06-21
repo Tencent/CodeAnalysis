@@ -302,6 +302,12 @@ class BaseScanScheme(CDBaseModel):
     status = models.IntegerField(choices=STATUS_CHOICES, default=StatusEnum.ACTIVE, help_text="扫描方案状态")
     scheme_key = models.CharField(max_length=64, verbose_name="扫描方案key值", null=True, blank=True, db_index=True)
     scheme_type = models.IntegerField(help_text="方案类型", default=SchemeTypeEnum.CUSTOM, null=True, blank=True)
+    ignore_merged_issue = models.BooleanField(default=False, verbose_name="过滤其他分支合入的问题")
+    ignore_branch_issue = models.CharField(max_length=128, help_text="过滤参考分支引入的问题", null=True, blank=True)
+    ignore_submodule_clone = models.BooleanField(default=False, verbose_name="是否忽略子模块clone，默认为False（不忽略）")
+    ignore_submodule_issue = models.BooleanField(default=True, verbose_name="是否忽略子模块问题，默认为True（忽略）")
+    lfs_flag = models.BooleanField(verbose_name="是否开启拉取代码时默认拉取lfs文件，默认为True（开启）", default=True,
+                                   null=True, blank=True)
 
     class Meta:
         unique_together = ("repo", "name")
@@ -313,6 +319,21 @@ class BaseScanScheme(CDBaseModel):
         """获取规则集
         """
         return self.lintbasesetting.checkprofile
+
+    def get_envs(self):
+        """获取配置的环境变量
+        """
+        return self.lintbasesetting.envs.strip() if self.lintbasesetting.envs else ""
+
+    def get_tag_name(self):
+        """获取配置的标签名称
+        """
+        return self.tag.name if self.tag else None
+
+    def get_lang_names(self):
+        """获取语言名称列表
+        """
+        return [lang.name for lang in self.languages.all()]
 
     def get_projects(self):
         return self.baseproject_set.all()
