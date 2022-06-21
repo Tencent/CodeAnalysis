@@ -187,6 +187,11 @@ class JobManager(object):
             "scheme_id": scan_scheme.id,
             "scheme_name": scan_scheme.name,
             "issue_global_ignore": scan_scheme.issue_global_ignore,
+            "ignore_merged_issue": scan_scheme.ignore_merged_issue,
+            "ignore_branch_issue": scan_scheme.ignore_branch_issue,
+            "ignore_submodule_clone": scan_scheme.ignore_submodule_clone,
+            "ignore_submodule_issue": scan_scheme.ignore_submodule_issue,
+            "lfs_flag": scan_scheme.lfs_flag,
             "scm_type": self._project.scm_type,
             "scm_url": self._project.get_scm_url_with_auth(),
             "path_filters": {
@@ -365,7 +370,12 @@ class JobManager(object):
             "envs": lint_setting.envs.strip() if lint_setting.envs else "",
             "scm_last_revision": scm_last_revision,
             "incr_scan": job_context.get("incr_scan", True) if scm_last_revision else False,
-            "tag": tag
+            "ignore_merged_issue": scan_scheme.ignore_merged_issue,
+            "ignore_branch_issue": scan_scheme.ignore_branch_issue,
+            "ignore_submodule_clone": scan_scheme.ignore_submodule_clone,
+            "ignore_submodule_issue": scan_scheme.ignore_submodule_issue,
+            "lfs_flag": scan_scheme.lfs_flag,
+            "tag": tag,
         }
 
         if kwargs.get("labels") and kwargs.get("languages"):
@@ -402,6 +412,14 @@ class JobManager(object):
         else:
             scan_scheme_languages = [l.name for l in scan_scheme.languages.all()]
 
+        basic_params = {
+            "envs": lint_setting.envs.strip() if lint_setting.envs else "",
+            "ignore_merged_issue": scan_scheme.ignore_merged_issue,
+            "ignore_branch_issue": scan_scheme.ignore_branch_issue,
+            "ignore_submodule_clone": scan_scheme.ignore_submodule_clone,
+            "ignore_submodule_issue": scan_scheme.ignore_submodule_issue,
+            "lfs_flag": scan_scheme.lfs_flag,
+        }
         tag = self.get_execute_tag(job_context)
         tasks = []
         # 增加cpd task 重复代码扫描
@@ -422,7 +440,7 @@ class JobManager(object):
                 "dup_min_dup_times": metric_setting.dup_min_dup_times,
                 "dup_max_dup_times": metric_setting.dup_max_dup_times,
                 "scm_last_revision": scm_last_revision,
-                "envs": lint_setting.envs.strip() if lint_setting.envs else ""
+                **basic_params,
             }
             tasks.append({
                 "task_name": 'cpd',
@@ -444,7 +462,6 @@ class JobManager(object):
                 "scan_languages": scan_scheme_languages,
                 "scm_last_revision": scm_last_revision,
                 "min_ccn": metric_setting.min_ccn,
-                "envs": lint_setting.envs.strip() if lint_setting.envs else ""
             }
             tasks.append({
                 "task_name": 'lizard',
@@ -467,7 +484,7 @@ class JobManager(object):
                 "use_lang": metric_setting.use_lang,
                 "incr_scan": True,
                 "business_infos": [],
-                "envs": lint_setting.envs.strip() if lint_setting.envs else ""
+                **basic_params
             }
             tasks.append({
                 "task_name": 'codecount',
