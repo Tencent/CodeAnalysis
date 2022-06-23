@@ -2,12 +2,12 @@
   {
     "name": "tca-layout",
     "description": "tca layout微前端",
-    "commitId": "707f4fa8507d86d5fb0c18b9ce78ec1dab40e5c3",
+    "commitId": "aa3edf7c7a4270197a250ab2920cb3f872e21d2d",
     "match": "/",
     "js": [
       "/static/tca-layout/runtime~tca-layout-7ee8a3c6.js",
       "/static/tca-layout/vendors~tca-layout-d2bb73ce.js",
-      "/static/tca-layout/tca-layout-b357edd2.js"
+      "/static/tca-layout/tca-layout-0e2de0db.js"
     ],
     "css": [
       "/static/tca-layout/vendors~tca-layout-9b6df0cb.css",
@@ -38,16 +38,16 @@
   {
     "name": "tca-analysis",
     "description": "TCA Analysis 微前端",
-    "commitId": "f7cd531afb070241f8393058abc278e763c7042a",
+    "commitId": "7c794f83fd257f09033286cd287f92aa4116021b",
     "match": "^/t/[^/]+/p/[^/]+/(code-analysis|repos|template|profile|group)",
     "js": [
       "/static/tca-analysis/runtime~tca-analysis-ee70aba9.js",
       "/static/tca-analysis/vendors~tca-analysis-4d35a288.js",
-      "/static/tca-analysis/tca-analysis-e7cf0336.js"
+      "/static/tca-analysis/tca-analysis-2b484c44.js"
     ],
     "css": [
       "/static/tca-analysis/vendors~tca-analysis-9b6df0cb.css",
-      "/static/tca-analysis/tca-analysis-3c510ffb.css"
+      "/static/tca-analysis/tca-analysis-9a8c7f3a.css"
     ],
     "prefix": [
       "/static/tca-analysis/"

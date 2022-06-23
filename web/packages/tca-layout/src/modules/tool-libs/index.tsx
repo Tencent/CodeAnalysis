@@ -96,6 +96,7 @@ export const ToolLibs = () => {
         }}
       />
       <Table
+        rowKey={(item: any) => item.id}
         loading={loading}
         dataSource={list}
         className={style.libsTable}

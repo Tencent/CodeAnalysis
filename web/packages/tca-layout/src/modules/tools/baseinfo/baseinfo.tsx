@@ -34,7 +34,7 @@ interface BaseInfoProps {
 const BaseInfo = ({ orgSid, data, editable, getDetail }: BaseInfoProps) => {
   const [form] = Form.useForm();
   const [isEdit, setIsEdit] = useState(false);
- 
+
   const statusRef = useRef();
 
   useEffect(() => {
@@ -46,12 +46,14 @@ const BaseInfo = ({ orgSid, data, editable, getDetail }: BaseInfoProps) => {
     const newFormData = formData;
     if (newFormData.scm) {
       const [authType, id] = newFormData?.scm?.split('#') ?? [];
-      delete newFormData.scm;
       newFormData.scm_auth = { auth_type: authType };
       if (SCM_MAP[authType]) {
         newFormData.scm_auth[SCM_MAP[authType]] = id;
       }
+    } else {
+      newFormData.scm_auth = null
     }
+    delete newFormData.scm;
 
     updateTool(orgSid, data.id, {
       ...data,
@@ -220,19 +222,19 @@ const BaseInfo = ({ orgSid, data, editable, getDetail }: BaseInfoProps) => {
           )
         }
         {
-          data.scm_auth && (
+          (data.scm_auth || isEdit) && (
             <Form.Item label="凭证">
               {
                 getComponent(
                   <Authority
                     form={form}
                     name='scm'
-                    label='凭证'
+                    label=''
                     initAuth={data.scm_auth}
                     selectStyle={{ width: 360 }}
                     placeholder='拉取代码库所需的凭证'
                   />,
-                  getAuthDisplay(data.scm_auth),
+                  getAuthDisplay(data.scm_auth || {}),
                 )
               }
             </Form.Item>

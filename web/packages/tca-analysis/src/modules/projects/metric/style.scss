@@ -13,7 +13,7 @@
         padding-right: 14px;
         margin-right: 14px;
         border-right: 1px solid $grey-3;
-    
+
         .title {
             font-weight: bold;
             padding-right: 6px;
@@ -34,24 +34,61 @@
     border: 1px solid $grey-3;
     padding: 10px;
     overflow: auto;
+
+    :global(.ant-tree-node-content-wrapper) {
+        white-space: nowrap;
+    }
+
+    :global(.ant-tree-treenode:hover .ant-tree-node-content-wrapper) {
+        background-color: $grey-1  !important;
+    }
+
+    :global(.ant-tree-treenode-selected) {
+        &::before {
+            background-color: $blue-1  !important;
+        }
+    }
+
+    :global(.ant-tree-treenode-selected .ant-tree-switcher),
+    :global(.ant-tree-treenode-selected .ant-tree-node-content-wrapper.ant-tree-node-selected) {
+        background-color: $blue-1  !important;
+        color: $grey-8  !important;
+    }
+}
+
+.cloc-tag-blue {
+    border: 1px solid $blue-3
+}
+
+.cloc-tag-green {
+    border: 1px solid $green-3
+}
+
+.cloc-tag-red {
+    border: 1px solid $red-3
 }
 
 .clocs-right-container {
     border: 1px solid $grey-3;
+
     .header {
         padding: 10px;
+
         .tit {
             font-size: 18px;
             font-weight: 500;
         }
+
         .desc {
             margin-top: 8px;
             color: $grey-6;
         }
     }
+
     .body {
         padding: 10px;
         border-top: 1px solid $grey-3;
+
         .tit {
             margin-bottom: 10px;
             font-weight: 500;
