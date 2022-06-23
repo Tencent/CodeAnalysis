@@ -569,7 +569,12 @@ class ScanSchemeManager(object):
                     pass
         if sync_all or kwargs.get("sync_filter_other_conf"):
             # 同步过滤其他配置
+            scan_scheme.ignore_merged_issue = ref_scheme.ignore_merged_issue
+            scan_scheme.ignore_branch_issue = ref_scheme.ignore_branch_issue
+            scan_scheme.ignore_submodule_clone = ref_scheme.ignore_submodule_clone
+            scan_scheme.ignore_submodule_issue = ref_scheme.ignore_submodule_issue
             scan_scheme.issue_global_ignore = ref_scheme.issue_global_ignore
+            scan_scheme.lfs_flag = ref_scheme.lfs_flag
         scan_scheme.save()
 
         # 创建权限，不做copy
@@ -637,6 +642,11 @@ class ScanSchemeManager(object):
         scan_scheme.refer_template_ids = kwargs.get("refer_template_ids", scan_scheme.refer_template_ids)
         scan_scheme.created_from = kwargs.get("created_from", scan_scheme.created_from)
         scan_scheme.issue_global_ignore = kwargs.get("issue_global_ignore", scan_scheme.issue_global_ignore)
+        scan_scheme.ignore_merged_issue = kwargs.get("ignore_merged_issue", scan_scheme.ignore_merged_issue)
+        scan_scheme.ignore_branch_issue = kwargs.get("ignore_branch_issue", scan_scheme.ignore_branch_issue)
+        scan_scheme.ignore_submodule_clone = kwargs.get("ignore_submodule_clone", scan_scheme.ignore_submodule_clone)
+        scan_scheme.ignore_submodule_issue = kwargs.get("ignore_submodule_issue", scan_scheme.ignore_submodule_issue)
+        scan_scheme.lfs_flag = kwargs.get("lfs_flag", scan_scheme.lfs_flag)
         scan_scheme.save(user=user)
         return scan_scheme
 

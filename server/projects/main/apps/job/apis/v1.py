@@ -145,7 +145,7 @@ class ProjectJobFinishApiView(generics.GenericAPIView, ProjectBaseAPIView):
         project = self.get_project()
         job = get_object_or_404(models.Job, id=kwargs["job_id"], project_id=kwargs["project_id"])
         if not request.user.is_superuser:
-            schemeperm = ScanSchemePerm.objects.filter(scan_scheme=project.scan_scheme).first()
+            schemeperm = ScanSchemePerm.everything.filter(scan_scheme=project.scan_scheme).first()
             if schemeperm and schemeperm.execute_scope == ScanSchemePerm.ScopeEnum.PRIVATE \
                     and not schemeperm.check_user_execute_manager_perm(request.user):
                 logger.error("本地扫描/CI流水线，代码库内创建分支项目/启动分支项目扫描无权限：%s" % request.user)
