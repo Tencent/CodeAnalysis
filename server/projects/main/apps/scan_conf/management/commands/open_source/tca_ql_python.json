@@ -338,7 +338,7 @@
                 "solution": "",
                 "owner": "",
                 "labels": [],
-                "description": "如果程序根据用户输入的参数动态生成系统命令并执行，黑客可通过传入恶意参数值注入自己定义的命令，从而控制服务器\nhttps://blog.csdn.net/sdb5858874/article/details/80788934\nhttps://www.cnblogs.com/Fluorescence-tjy/p/5889251.html\n修复建议：\n1. 尽量少用执行命令的函数.\n2. 净化用户可控数据, 过滤或者转义.",
+                "description": "如果程序根据用户输入的参数动态生成系统命令并执行，黑客可通过传入恶意参数值注入自己定义的命令，从而控制服务器\n修复建议：\n1. 尽量少用执行命令的函数.\n2. 净化用户可控数据, 过滤或者转义.",
                 "disable": false
             }
         ],
