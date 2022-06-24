@@ -68,8 +68,8 @@ const Authority = (props: AuthorityProps) => {
       getPlatformStatus().then(r => r || []),
     ]).then((result) => {
       const activeOauth = filter(
-        result[2].map((item:any)=>({ 
-          ...item, 
+        result[2].map((item: any) => ({
+          ...item,
           platform_status: get(result[3], item.scm_platform_name, [false]),
         })),
         'platform_status'
@@ -94,7 +94,7 @@ const Authority = (props: AuthorityProps) => {
   return (
     <Form.Item label={label}>
       <Form.Item name={name} noStyle>
-        <Select
+        <Select allowClear
           style={selectStyle}
           placeholder={placeholder}
           getPopupContainer={() => document.body}
