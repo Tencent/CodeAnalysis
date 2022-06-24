@@ -1,0 +1,350 @@
+[
+    {
+        "name": "tca_ql_python",
+        "display_name": "Hades_Python",
+        "description": "基于QL的代码静态分析工具，目前处于试用中，支持Python规则",
+        "license": "自研",
+        "libscheme_set": [],
+        "task_processes": [
+            "analyze",
+            "datahandle",
+            "compile"
+        ],
+        "scan_app": "codelint",
+        "scm_url": "",
+        "run_cmd": "",
+        "envs": null,
+        "build_flag": false,
+        "checkrule_set": [
+            {
+                "real_name": "cmd",
+                "display_name": "命令行注入",
+                "severity": "fatal",
+                "category": "security",
+                "rule_title": "远程命令注入",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "python"
+                ],
+                "solution": "",
+                "owner": "",
+                "labels": [],
+                "description": "远程命令注入",
+                "disable": false
+            },
+            {
+                "real_name": "code",
+                "display_name": "代码注入",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "远程代码注入",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "python"
+                ],
+                "solution": "1",
+                "owner": "",
+                "labels": [],
+                "description": "1",
+                "disable": false
+            },
+            {
+                "real_name": "cyclic_import",
+                "display_name": "CycImport",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "文件相互导入",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "python"
+                ],
+                "solution": "不要做循环import，出现这种情况多半是软件层次设计没做好，在Go,Cpp可能会编译失败，其他语言全局导入时也会出错，即使不报错对后续阅读和维护也不是很友好。需要重新设计。",
+                "owner": "",
+                "labels": [],
+                "description": "两个文件相互导入\n以python为例\n```\n# a.py\nimport b\n\nclass Model(object):\n    def do_something(self):\n        b.do_somthing()\n\n# b.py\nimport a\n\ndef do_somthing():\n    print(\"Hello CodeDog\")\n\n```",
+                "disable": false
+            },
+            {
+                "real_name": "dead_code",
+                "display_name": "DeadCode死代码检查",
+                "severity": "warning",
+                "category": "performance",
+                "rule_title": "死代码检查",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "python"
+                ],
+                "solution": "删除用不到的代码回收资源",
+                "owner": "",
+                "labels": [],
+                "description": "检查代码中永远不会被执行到的代码\n移除这类的代码有两种优点，不但可以减少程序的大小，还可以避免程序在执行中进行不相关的运算行为，减少它执行的时间\n\n下列的示例，以C语言写成：\n```\n int foo(void)\n {\n   int a = 24;\n   int b = 25; \n   int c;\n   c = a << 2;\n   return c;\n   b = 24;\n   return 0;\n }\n```\n分析上述程序对于数值的使用，将会发现b的数值在第一次被赋值之后，就不再使用，而且b是在foo函数内宣告，无法在函数外面使用，所以变量b是无用的，优化的过程可以回收他所使用的空间，并删除他的初始化。",
+                "disable": false
+            },
+            {
+                "real_name": "deser",
+                "display_name": "反序列化漏洞",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "反序列化漏洞",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "python"
+                ],
+                "solution": "反序列化漏洞",
+                "owner": "",
+                "labels": [],
+                "description": "反序列化漏洞",
+                "disable": false
+            },
+            {
+                "real_name": "file_inclusion",
+                "display_name": "文件包含漏洞",
+                "severity": "warning",
+                "category": "security",
+                "rule_title": "文件路径参数没有过滤就执行会读取本地敏感信息或执行恶意文件",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "python"
+                ],
+                "solution": "过滤输入",
+                "owner": "",
+                "labels": [],
+                "description": "在使用文件包含的时候，为了更灵活的包含文件，将文件包含的名字处设置为变量，而这个变量是通过GET方式来获取的值，这样既可通过前端所输入的文件名进行包含对应的文件。若恶意用户构造文件名为本地的敏感信息，而后端并没有对敏感信息限制读取权限限制，则可能造成文件包含漏洞，导致任意文件读取。",
+                "disable": false
+            },
+            {
+                "real_name": "http",
+                "display_name": "Http 响应头截断",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "http响应头截断漏洞",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "python"
+                ],
+                "solution": "防御手段\n\n要避免http响应截断，需要注意以下几点：\n\n1. 对用户的数据进行合法性校验，对特殊的字符进行编码，如<、>、’、”、CR、LF等。\n\n2. 创建安全字符白名单，只接受白名单中的字符出现在HTTP响应头文件中。\n\n3. 在将数据传送到http响应头之前，删除所有的换行符。",
+                "owner": "",
+                "labels": [],
+                "description": "http响应截断，或称http响应拆分，又做http response splitting，被收录在CWE通用缺陷列表中，与之相关的对应缺陷编号为CWE-113。\n\nCWE对该缺陷描述如下：“在HTTP响应头中包含未经验证的数据，允许攻击者指定浏览器呈现整个HTTP响应。当HTTP请求包含意外的CR（回车，由％0d或rn给出）和LF（换行，由％0a或n给出）字符时，服务器可能会响应一个被解释执行为两个不同的输出HTTP响应（而不是一个）。攻击者可以控制第二个响应并加载攻击，例如实现跨站点脚本和缓存投毒攻击。”",
+                "disable": true
+            },
+            {
+                "real_name": "ldap_injection",
+                "display_name": "LDAP注入",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "LDAP注入",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "python"
+                ],
+                "solution": "LDAP注入的防御和SQL注入的防御类似，主要是对用户的输入进行合法性验证,只要守好数据的入口和出口，就能有效的防御攻击。",
+                "owner": "",
+                "labels": [],
+                "description": "LDAP注入和SQL注入比较类似，没有对用户输入的合法性进行验证，而是直接将数据发送给服务器进行查询，因此攻击者可以注入任意恶意代码。",
+                "disable": true
+            },
+            {
+                "real_name": "magic_number",
+                "display_name": "MagicNumber",
+                "severity": "info",
+                "category": "convention",
+                "rule_title": "魔法数字",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "python"
+                ],
+                "solution": "采用有意义的常量代替",
+                "owner": "",
+                "labels": [],
+                "description": "魔法数值使代码的可读性大大下降。而且，如果同样的数值多次出现时，到底这些数值是不是带有同样的含义呢，谁也说不清楚。另一方面，如果本来应该使用相同数值的地方，一旦用错了，也很难发现。\n例子：\n```\nint priceTable[] = new int[16]； //ERROR：这个16究竟有何含义呢？\n\n\nstatic final int PRICE_TABLE_MAX = 16； //OK：带名字\n\nint price Table[] = new int [PRICE_TABLE_MAX]； //OK：名字的含义是很清楚的\n\n\n```\n规则会检查同文件如果有超过三次使用同一个数字（0，1，-1除外）则视为魔法数字\n用于判断 true, false的0, 1，-1会被排除在外",
+                "disable": false
+            },
+            {
+                "real_name": "nest",
+                "display_name": "Nest",
+                "severity": "info",
+                "category": "convention",
+                "rule_title": "检查函数嵌套过深",
+                "rule_params": "max=5",
+                "custom": false,
+                "languages": [
+                    "python"
+                ],
+                "solution": "拆分函数",
+                "owner": "",
+                "labels": [],
+                "description": "函数嵌套尽量不要超过5层，\n多的话建议拆分出其他函数\n以Go代码为例\n```\n// AddArea 添加成功或出错\nfunc (s *BookingService) AddArea(areas ...string) error {\n    s.Lock()\n    defer s.Unlock()\n    \n    for _, area := range areas {\n        for _, has := range s.areas {\n            if area == has {\n                return srverr.ErrAreaConflict\n            }\n        }\n        s.areas = append(s.areas, area)\n        s.areaOrders[area] = new(order.AreaOrder)\n    }\n    return nil\n}\n// 建议调整为这样：\n\n// AddArea 添加成功或出错\nfunc (s *BookingService) AddArea(areas ...string) error {\n    s.Lock()\n    defer s.Unlock()\n    \n    for _, area := range areas {\n        if s.HasArea(area) {\n            return srverr.ErrAreaConflict\n        }\n        s.areas = append(s.areas, area)\n        s.areaOrders[area] = new(order.AreaOrder)\n    }\n    return nil\n}\n\n// HasArea ...\nfunc (s *BookingService) HasArea(area string) bool {\n    for _, has := range s.areas {\n        if area == has {\n            return true\n        }\n    }\n    return false\n}\n```",
+                "disable": false
+            },
+            {
+                "real_name": "reflectioni",
+                "display_name": "反射型注入",
+                "severity": "warning",
+                "category": "security",
+                "rule_title": "反射型注入",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "python"
+                ],
+                "solution": "",
+                "owner": "",
+                "labels": [],
+                "description": "反射型注入",
+                "disable": true
+            },
+            {
+                "real_name": "sql",
+                "display_name": "sql注入",
+                "severity": "fatal",
+                "category": "security",
+                "rule_title": "sql注入",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "python"
+                ],
+                "solution": "1",
+                "owner": "",
+                "labels": [],
+                "description": "sql注入",
+                "disable": false
+            },
+            {
+                "real_name": "ssrf",
+                "display_name": "SSRF",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "服务端请求伪造",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "python"
+                ],
+                "solution": "过滤返回的信息\n统一错误信息\n限制请求的端口\n禁止不常用的协议\n对DNS Rebinding，考虑使用DNS缓存或者Host白名单",
+                "owner": "",
+                "labels": [
+                    "安全"
+                ],
+                "description": "服务端请求伪造（Server Side Request Forgery, SSRF）指的是攻击者在未能取得服务器所有权限时，利用服务器漏洞以服务器的身份发送一条构造好的请求给服务器所在内网。SSRF攻击通常针对外部网络无法直接访问的内部系统。\n\nSSRF可以对外网、服务器所在内网、本地进行端口扫描，攻击运行在内网或本地的应用，或者利用File协议读取本地文件。\n\n内网服务防御相对外网服务来说一般会较弱，甚至部分内网服务为了运维方便并没有对内网的访问设置权限验证，所以存在SSRF时，通常会造成较大的危害。",
+                "disable": false
+            },
+            {
+                "real_name": "url",
+                "display_name": "URL跳转",
+                "severity": "warning",
+                "category": "security",
+                "rule_title": "任意URL跳转",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "python"
+                ],
+                "solution": "任意URL跳转",
+                "owner": "",
+                "labels": [],
+                "description": "任意URL跳转",
+                "disable": false
+            },
+            {
+                "real_name": "use_without_def",
+                "display_name": "UseWithoutDefine",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "变量使用前未定义",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "python"
+                ],
+                "solution": "使用前保证变量已经定义过",
+                "owner": "",
+                "labels": [],
+                "description": "变量在使用前未定义\nexample1:\n```\n# python3\na = 1\n\nc = a + b   # b使用前未经定义\n```\n\nexample2:\n```\n# python3\nimport random\n\na = random.randint(0,9)\nif a > 2:\n   c = 4\nelse:\n   b = 2\n   c = 3\nd = a + c  # a, c均已定义\ne = a + b  # 若a <= 2; b 可能未定义\n```",
+                "disable": false
+            },
+            {
+                "real_name": "xml",
+                "display_name": "xml注入",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "xml注入",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "python"
+                ],
+                "solution": "xml注入",
+                "owner": "",
+                "labels": [],
+                "description": "xml注入",
+                "disable": false
+            },
+            {
+                "real_name": "xss",
+                "display_name": "XSS跨站脚本攻击",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "跨站脚本攻击",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "python"
+                ],
+                "solution": "",
+                "owner": "",
+                "labels": [],
+                "description": "跨站脚本攻击（Cross-site scripting，XSS）是一种安全漏洞，攻击者可以利用这种漏洞在网站上注入恶意的客户端代码。当被攻击者登陆网站时就会自动运行这些恶意代码，从而，攻击者可以突破网站的访问权限，冒充受害者。",
+                "disable": false
+            },
+            {
+                "real_name": "django_xss",
+                "display_name": "Django_XSS",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "跨站脚本攻击",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "python"
+                ],
+                "solution": "",
+                "owner": "",
+                "labels": [],
+                "description": "跨站脚本攻击（Cross-site scripting，XSS）是一种安全漏洞，攻击者可以利用这种漏洞在网站上注入恶意的客户端代码。当被攻击者登陆网站时就会自动运行这些恶意代码，从而，攻击者可以突破网站的访问权限，冒充受害者。",
+                "disable": false
+            },
+            {
+                "real_name": "django_rce",
+                "display_name": "Django_RCE",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "远程命令注入",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "python"
+                ],
+                "solution": "",
+                "owner": "",
+                "labels": [],
+                "description": "如果程序根据用户输入的参数动态生成系统命令并执行，黑客可通过传入恶意参数值注入自己定义的命令，从而控制服务器\nhttps://blog.csdn.net/sdb5858874/article/details/80788934\nhttps://www.cnblogs.com/Fluorescence-tjy/p/5889251.html\n修复建议：\n1. 尽量少用执行命令的函数.\n2. 净化用户可控数据, 过滤或者转义.",
+                "disable": false
+            }
+        ],
+        "open_user": true,
+        "open_saas": false,
+        "virtual_name": "136",
+        "show_display_name": false
+    }
+]
