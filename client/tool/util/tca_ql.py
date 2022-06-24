@@ -45,7 +45,7 @@ lang_map = {
     "python": [".py"],
     "php": [".php"],
     "go": [".go"],
-    "cpp": ["cpp", "c", "C", "cc", "cxx", "h", "hxx", "hpp"],
+    "cpp": [".cpp", ".c", ".C", ".cc", ".cxx", ".h", ".hxx", ".hpp"],
 }
 
 
