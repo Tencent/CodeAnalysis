@@ -1,7 +1,7 @@
 [
     {
         "name": "tca_ql_php",
-        "display_name": "Hades_PHP",
+        "display_name": "TCA_QL_PHP",
         "description": "基于QL的代码静态分析工具，目前处于试用中，支持php规则",
         "license": "自研",
         "libscheme_set": [],

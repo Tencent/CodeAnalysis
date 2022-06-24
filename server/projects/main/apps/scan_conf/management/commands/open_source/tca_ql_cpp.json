@@ -1,8 +1,8 @@
 [
     {
         "name": "tca_ql_cpp",
-        "display_name": "Hades_CPP",
-        "description": "自研cpp数据流分析工具不依赖编译，开放体验使用。正在建设中······",
+        "display_name": "TCA_QL_CPP",
+        "description": "基于QL的代码静态分析工具，目前处于试用中, 非完整版",
         "license": "自研",
         "libscheme_set": [],
         "task_processes": [
