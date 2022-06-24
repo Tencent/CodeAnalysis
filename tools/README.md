@@ -14,8 +14,14 @@ Java/Kotlin API和函数调用链分析工具。
 ## [TCA-Loong_Beta龙(测试版)](https://github.com/TCATools/loong_beta)
 Java/Kotlin API和函数调用链分析工具，无需申请License。
 
+## [TCA-Zeus(测试版)](https://github.com/TCATools/TCA-Zeus-linux)
+一款静态代码分析的解析端，开源测试版仅开放在linux上运行。
+
 ## [TCA-Zeus_Beta(测试版)](https://github.com/TCATools/Zeus_Beta)
 一款静态代码分析的解析端，开源测试版仅支持PHP语言，开源测试版仅开放在linux上运行，无需申请License。
+
+## [TCA-Hades(测试版)](https://github.com/TCATools/TCA-Hades-linux)
+一款静态代码分析的分析端，开源测试版仅开放在linux上运行。
 
 ## [TCA-Hades_Beta(测试版)](https://github.com/TCATools/Hades_Beta)
 一款静态代码分析的分析端，目前主要支持安全分析，开源测试版仅开放在linux上运行，无需申请License。
