@@ -23,32 +23,17 @@ file :
 2. 不同目录的yaml文件，子目录下的yaml文件高于父目录下的yaml文件
 """
 
-import os
 import re
 import json
 import logging
 
 from util.yamlib import YamlReader
+from util.codeyaml.common import CodeYaml
 
 logger = logging.getLogger(__name__)
 
 
 class FileOwner(object):
-    def __get_yml_files(self, source_dir):
-        """
-        在代码目录下遍历获取.code.yml文件
-        :param source_dir:
-        :return: .code.yml文件路径与所在目录的映射关系列表，[{"yaml_path": xxx, "dir_path": xxx}, ...]
-        """
-        yaml_files = []
-        for dirpath, dirs, filenames in os.walk(source_dir):
-            for f in filenames:
-                if f.lower() == ".code.yml":
-                    yaml_path = os.path.join(dirpath, f)
-                    yaml_files.append({"yaml_path": yaml_path, "dir_path": dirpath.replace(os.sep, "/")})
-        # logger.info(".code.yml files: %s" % json.dumps(yaml_files, indent=2))
-        return yaml_files
-
     def __get_file_owners(self, yaml_files, source_dir):
         """
         逐个解析.code.yml文件，获取代码目录/文件对应的负责人信息
@@ -122,7 +107,7 @@ class FileOwner(object):
         :return:
         """
         source_dir = params["source_dir"]
-        yaml_files = self.__get_yml_files(source_dir)
+        yaml_files = CodeYaml.get_yaml_files(source_dir)
         if yaml_files:
             logger.info("根据.code.yml文件,添加文件负责人信息。代码库下有以下.code.yml文件:")
             for info in yaml_files:
