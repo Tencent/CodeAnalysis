@@ -13,7 +13,7 @@ import logging
 
 from task.basic.datahandler.handlerbase import HandlerBase
 from util.checklanguage import LanguageChecker
-from task.basic.datahandler.fileowner import FileOwner
+from util.codeyaml.fileowner import FileOwner
 
 logger = logging.getLogger(__name__)
 
