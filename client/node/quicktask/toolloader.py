@@ -37,7 +37,7 @@ class QuickScanToolLoader(object):
         # LogPrinter.info(f"---> labels: {labels}")
         tool_tasks = QuickScan.get_scan_tasks(languages, labels, {})
         tool_names = [task['task_name'] for task in tool_tasks]
-        LogPrinter.info(f"Initing other tools: {tool_names}")
+        LogPrinter.info("Initing other tools ...")
         ToolLoader(tool_names=tool_names, task_list=tool_tasks, include_common=False).git_load_tools(print_enable=False)
 
 
