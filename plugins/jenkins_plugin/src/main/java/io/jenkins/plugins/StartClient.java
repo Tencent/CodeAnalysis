@@ -21,6 +21,8 @@ public class StartClient {
                                    String branchName,
                                    String languageType,
                                    String isTotal,
+                                   String constant_refSchemeID,
+                                   String constant_scanPlan,
                                    TaskListener listener,
                                    EnvVars env) {
         try {
@@ -47,6 +49,8 @@ public class StartClient {
                     + " -s " + localCodePath
                     + " --branch " + branchName
                     + " --language " + languageType
+                    + constant_refSchemeID
+                    + constant_scanPlan
                     + isTotal;
 
 
