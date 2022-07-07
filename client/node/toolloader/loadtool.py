@@ -191,12 +191,17 @@ class ToolLoader(object):
 
         # LogPrinter.info("开始更新工具...")
         load_tool_list = []
+        tool_dirname_list = []
         for git_url, tool_info in tool_url_info.items():
             tool_dirname = BaseScmUrlMgr.get_last_dir_name_from_url(git_url)
+            # 工具目录名重复，说明是同一工具，去重，避免重复拉取造成线程冲突
+            if tool_dirname in tool_dirname_list:
+                continue
+            else:
+                tool_dirname_list.append(tool_dirname)
             tool_dirpath = os.path.join(settings.TOOL_BASE_DIR, tool_dirname)
 
             load_type, dirpath_copy_from = ToolCommonLoader.load_tool_type(tool_dirpath, tool_dirname, git_url)
-            # 如果设置了不自动拉工具，且工具目录存在，跳过
 
             load_tool_list.append({
                 "load_type": load_type,
