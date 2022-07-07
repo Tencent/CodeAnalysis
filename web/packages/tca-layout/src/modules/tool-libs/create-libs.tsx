@@ -57,12 +57,14 @@ const CreateToollibs = (props: CreateToollibsProps) => {
 
     if (formData.scm) {
       const [authType, id] = formData?.scm?.split('#') ?? [];
-      delete data.scm;
       data.scm_auth = { auth_type: authType };
       if (SCM_MAP[authType]) {
         data.scm_auth[SCM_MAP[authType]] = id;
       }
+    } else {
+      data.scm_auth = null
     }
+    delete data.scm;
 
     data.lib_os = formData.lib_os?.join(';');
     data.envs = !isEmpty(formData.envs) ? fromPairs(formData.envs?.map((item: { key: string, value: string }) => [item.key, item.value])) : {}

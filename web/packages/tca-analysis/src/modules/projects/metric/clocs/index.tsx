@@ -67,23 +67,23 @@ const formatData = (data: any) => {
           switch (info.change_type) {
             case CHANGE_TYPE.ADD:
               title = (
-                                <>
-                                    <Tag color="blue">{t('新增')}</Tag> {title}
-                                </>
+                <>
+                  <Tag className={s.clocTagBlue} color="blue">{t('新增')}</Tag> {title}
+                </>
               );
               break;
             case CHANGE_TYPE.MOD:
               title = (
-                                <>
-                                    <Tag color="green">{t('修改')}</Tag> {title}
-                                </>
+                <>
+                  <Tag className={s.clocTagGreen} color="green">{t('修改')}</Tag> {title}
+                </>
               );
               break;
             case CHANGE_TYPE.DEL:
               title = (
-                                <>
-                                    <Tag color="red">{t('修改')}</Tag> {title}
-                                </>
+                <>
+                  <Tag className={s.clocTagRed} color="red">{t('修改')}</Tag> {title}
+                </>
               );
               break;
             default:
@@ -183,146 +183,146 @@ const Clocs = ({ orgSid, teamName, repoId, projectId }: IProps) => {
 
   if (treeData.length === 0) {
     return (
-            <div className=" text-center" style={{ margin: '150px' }}>
-                <img src={NoDataSVG} alt="no-data" />
-                <p className=" text-grey-6 fs-12 mt-sm">
-                    {t('暂无代码统计信息，请确认是否开启该功能')}
-                </p>
-            </div>
+      <div className=" text-center" style={{ margin: '150px' }}>
+        <img src={NoDataSVG} alt="no-data" />
+        <p className=" text-grey-6 fs-12 mt-sm">
+          {t('暂无代码统计信息，请确认是否开启该功能')}
+        </p>
+      </div>
     );
   }
 
   return (
-        <Row gutter={20}>
-            <Col flex="320px">
-                <div className={s.clocsLeftContainer}>
-                    <DirectoryTree
-                        loadData={onLoadData}
-                        multiple
-                        onSelect={onSelect}
-                        treeData={treeData}
+    <Row gutter={20}>
+      <Col flex="320px">
+        <div className={s.clocsLeftContainer}>
+          <DirectoryTree
+            loadData={onLoadData}
+            multiple
+            onSelect={onSelect}
+            treeData={treeData}
+          />
+        </div>
+      </Col>
+      <Col flex="auto">
+        <div className={s.clocsRightContainer}>
+          <div className={s.header}>
+            <p className={s.tit}>
+              {selectNodeInfo.label ? (
+                <>
+                  <Tooltip title={t('回到根目录详情')}>
+                    <Button
+                      className={s.backIcon}
+                      icon={<ArrowLeftIcon />}
+                      type="text"
+                      shape="circle"
+                      onClick={() => setSelectNodeInfo(rootNodeInfo)}
                     />
-                </div>
-            </Col>
-            <Col flex="auto">
-                <div className={s.clocsRightContainer}>
-                    <div className={s.header}>
-                        <p className={s.tit}>
-                            {selectNodeInfo.label ? (
-                                <>
-                                    <Tooltip title={t('回到根目录详情')}>
-                                        <Button
-                                            className={s.backIcon}
-                                            icon={<ArrowLeftIcon />}
-                                            type="text"
-                                            shape="circle"
-                                            onClick={() => setSelectNodeInfo(rootNodeInfo)}
-                                        />
-                                    </Tooltip>
+                  </Tooltip>
 
-                                    <span className="inline-block vertical-middle">
-                                        {selectNodeInfo.label}
-                                    </span>
-                                </>
-                            ) : (
-                              t('根目录')
-                            )}
-                        </p>
-                        <p className={s.desc}>
-                            {selectNodeInfo.file_num && (
-                                <span className="mr-20">
-                                    {t('子文件：')}
-                                    {selectNodeInfo.file_num}
-                                </span>
-                            )}
-                            <span className="mr-20">
-                                {t('代码行：')}
-                                {selectNodeInfo.code_line_num}
-                            </span>
-                            <span className="mr-20">
-                                {t('注释行：')}
-                                {selectNodeInfo.comment_line_num}
-                            </span>
-                            <span className="mr-20">
-                                {t('空白行：')}
-                                {selectNodeInfo.blank_line_num}
-                            </span>
-                            <span className="mr-20">
-                                {t('总行数：')}
-                                {selectNodeInfo.total_line_num}
-                            </span>
-                        </p>
-                    </div>
-                    <div className={s.body}>
-                        <p className={s.tit}>
-                            {t('差异化')}{' '}
-                            <Tooltip
-                                placement="right"
-                                title={t('最近一次分析相对上次分析结果的比较。当前数据仅包含一级子文件的统计结果，不包含孙子文件的结果')}
-                            >
-                                <QuestionCircleIcon className="ml-xs" />
-                            </Tooltip>
-                        </p>
-                        <Descriptions bordered layout="vertical" size="small">
-                            <Descriptions.Item label={t('新增')}>
-                                <div>
-                                    {t('代码行：')}
-                                    {selectNodeInfo.add_code_line_num}
-                                </div>
-                                <div>
-                                    {t('注释行：')}
-                                    {selectNodeInfo.add_comment_line_num}
-                                </div>
-                                <div>
-                                    {t('空白行：')}
-                                    {selectNodeInfo.add_blank_line_num}
-                                </div>
-                                <div>
-                                    {t('总行数：')}
-                                    {selectNodeInfo.add_total_line_num}
-                                </div>
-                            </Descriptions.Item>
-                            <Descriptions.Item label={t('修改')}>
-                                <div>
-                                    {t('代码行：')}
-                                    {selectNodeInfo.mod_code_line_num}
-                                </div>
-                                <div>
-                                    {t('注释行：')}
-                                    {selectNodeInfo.mod_comment_line_num}
-                                </div>
-                                <div>
-                                    {t('空白行：')}
-                                    {selectNodeInfo.mod_blank_line_num}
-                                </div>
-                                <div>
-                                    {t('总行数：')}
-                                    {selectNodeInfo.mod_total_line_num}
-                                </div>
-                            </Descriptions.Item>
-                            <Descriptions.Item label={t('删除')}>
-                                <div>
-                                    {t('代码行：')}
-                                    {selectNodeInfo.del_code_line_num}
-                                </div>
-                                <div>
-                                    {t('注释行：')}
-                                    {selectNodeInfo.del_comment_line_num}
-                                </div>
-                                <div>
-                                    {t('空白行：')}
-                                    {selectNodeInfo.del_blank_line_num}
-                                </div>
-                                <div>
-                                    {t('总行数：')}
-                                    {selectNodeInfo.del_total_line_num}
-                                </div>
-                            </Descriptions.Item>
-                        </Descriptions>
-                    </div>
+                  <span className="inline-block vertical-middle">
+                    {selectNodeInfo.label}
+                  </span>
+                </>
+              ) : (
+                t('根目录')
+              )}
+            </p>
+            <p className={s.desc}>
+              {selectNodeInfo.file_num && (
+                <span className="mr-20">
+                  {t('子文件：')}
+                  {selectNodeInfo.file_num}
+                </span>
+              )}
+              <span className="mr-20">
+                {t('代码行：')}
+                {selectNodeInfo.code_line_num}
+              </span>
+              <span className="mr-20">
+                {t('注释行：')}
+                {selectNodeInfo.comment_line_num}
+              </span>
+              <span className="mr-20">
+                {t('空白行：')}
+                {selectNodeInfo.blank_line_num}
+              </span>
+              <span className="mr-20">
+                {t('总行数：')}
+                {selectNodeInfo.total_line_num}
+              </span>
+            </p>
+          </div>
+          <div className={s.body}>
+            <p className={s.tit}>
+              {t('差异化')}{' '}
+              <Tooltip
+                placement="right"
+                title={t('最近一次分析相对上次分析结果的比较。当前数据仅包含一级子文件的统计结果，不包含孙子文件的结果')}
+              >
+                <QuestionCircleIcon className="ml-xs" />
+              </Tooltip>
+            </p>
+            <Descriptions bordered layout="vertical" size="small">
+              <Descriptions.Item label={t('新增')}>
+                <div>
+                  {t('代码行：')}
+                  {selectNodeInfo.add_code_line_num}
                 </div>
-            </Col>
-        </Row>
+                <div>
+                  {t('注释行：')}
+                  {selectNodeInfo.add_comment_line_num}
+                </div>
+                <div>
+                  {t('空白行：')}
+                  {selectNodeInfo.add_blank_line_num}
+                </div>
+                <div>
+                  {t('总行数：')}
+                  {selectNodeInfo.add_total_line_num}
+                </div>
+              </Descriptions.Item>
+              <Descriptions.Item label={t('修改')}>
+                <div>
+                  {t('代码行：')}
+                  {selectNodeInfo.mod_code_line_num}
+                </div>
+                <div>
+                  {t('注释行：')}
+                  {selectNodeInfo.mod_comment_line_num}
+                </div>
+                <div>
+                  {t('空白行：')}
+                  {selectNodeInfo.mod_blank_line_num}
+                </div>
+                <div>
+                  {t('总行数：')}
+                  {selectNodeInfo.mod_total_line_num}
+                </div>
+              </Descriptions.Item>
+              <Descriptions.Item label={t('删除')}>
+                <div>
+                  {t('代码行：')}
+                  {selectNodeInfo.del_code_line_num}
+                </div>
+                <div>
+                  {t('注释行：')}
+                  {selectNodeInfo.del_comment_line_num}
+                </div>
+                <div>
+                  {t('空白行：')}
+                  {selectNodeInfo.del_blank_line_num}
+                </div>
+                <div>
+                  {t('总行数：')}
+                  {selectNodeInfo.del_total_line_num}
+                </div>
+              </Descriptions.Item>
+            </Descriptions>
+          </div>
+        </div>
+      </Col>
+    </Row>
   );
 };
 export default Clocs;

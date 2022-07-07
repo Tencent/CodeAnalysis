@@ -1,0 +1,178 @@
+[
+    {
+        "name": "tca_ql_cpp",
+        "display_name": "TCA_QL_CPP",
+        "description": "基于QL的代码静态分析工具，目前处于试用中, 非完整版",
+        "license": "自研",
+        "libscheme_set": [],
+        "task_processes": [
+            "analyze",
+            "datahandle",
+            "compile"
+        ],
+        "scan_app": "codelint",
+        "scm_url": null,
+        "run_cmd": null,
+        "envs": null,
+        "build_flag": false,
+        "checkrule_set": [
+            {
+                "real_name": "array_overflow",
+                "display_name": "ArrayOverFlow",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "数组越界",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "",
+                "owner": "",
+                "labels": [],
+                "description": "数组长度只有10却访问第11个值",
+                "disable": false
+            },
+            {
+                "real_name": "buff_overflow",
+                "display_name": "BuffOverFlow",
+                "severity": "error",
+                "category": "correctness",
+                "rule_title": "缓冲区溢出",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "",
+                "owner": "",
+                "labels": [],
+                "description": "检查函数gets scanf strcpy不当调用引发的溢出漏洞",
+                "disable": false
+            },
+            {
+                "real_name": "cyclic_import",
+                "display_name": "CycImport",
+                "severity": "warning",
+                "category": "usability",
+                "rule_title": "文件相互导入",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "不要做循环import，出现这种情况多半是软件层次设计没做好，在Go,Cpp可能会编译失败，其他语言全局导入时也会出错，即使不报错对后续阅读和维护也不是很友好。需要重新设计。",
+                "owner": "",
+                "labels": [],
+                "description": "两个文件相互导入\n以python为例\n```\n# a.py\nimport b\n\nclass Model(object):\n    def do_something(self):\n        b.do_somthing()\n\n# b.py\nimport a\n\ndef do_somthing():\n    print(\"Hello CodeDog\")\n\n```",
+                "disable": false
+            },
+            {
+                "real_name": "dead_code",
+                "display_name": "DeadCode死代码检查",
+                "severity": "warning",
+                "category": "performance",
+                "rule_title": "死代码检查",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "删除用不到的代码回收资源",
+                "owner": "",
+                "labels": [],
+                "description": "检查代码中永远不会被执行到的代码\n移除这类的代码有两种优点，不但可以减少程序的大小，还可以避免程序在执行中进行不相关的运算行为，减少它执行的时间\n\n下列的示例，以C语言写成：\n```\n int foo(void)\n {\n   int a = 24;\n   int b = 25; \n   int c;\n   c = a << 2;\n   return c;\n   b = 24;\n   return 0;\n }\n```\n分析上述程序对于数值的使用，将会发现b的数值在第一次被赋值之后，就不再使用，而且b是在foo函数内宣告，无法在函数外面使用，所以变量b是无用的，优化的过程可以回收他所使用的空间，并删除他的初始化。",
+                "disable": false
+            },
+            {
+                "real_name": "magic_number",
+                "display_name": "MagicNumber",
+                "severity": "info",
+                "category": "convention",
+                "rule_title": "魔法数字",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "采用有意义的常量代替",
+                "owner": "",
+                "labels": [],
+                "description": "魔法数值使代码的可读性大大下降。而且，如果同样的数值多次出现时，到底这些数值是不是带有同样的含义呢，谁也说不清楚。另一方面，如果本来应该使用相同数值的地方，一旦用错了，也很难发现。\n例子：\n```\nint priceTable[] = new int[16]； //ERROR：这个16究竟有何含义呢？\n\n\nstatic final int PRICE_TABLE_MAX = 16； //OK：带名字\n\nint price Table[] = new int [PRICE_TABLE_MAX]； //OK：名字的含义是很清楚的\n\n\n```\n规则会检查同文件如果有超过三次使用同一个数字（0，1，-1除外）则视为魔法数字\n用于判断 true, false的0, 1，-1会被排除在外",
+                "disable": false
+            },
+            {
+                "real_name": "memoryleak",
+                "display_name": "MemoryLeak",
+                "severity": "warning",
+                "category": "security",
+                "rule_title": "内存泄漏",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "请使用相应语句或函数如free, delete释放该内存",
+                "owner": "",
+                "labels": [],
+                "description": "内存经malloc new calloc等初始化后在函数结束时没有释放",
+                "disable": true
+            },
+            {
+                "real_name": "nest",
+                "display_name": "Nest",
+                "severity": "info",
+                "category": "convention",
+                "rule_title": "检查函数嵌套过深",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "拆分函数",
+                "owner": "",
+                "labels": [],
+                "description": "函数嵌套尽量不要超过5层，\n多的话建议拆分出其他函数\n以Go代码为例\n```\n// AddArea 添加成功或出错\nfunc (s *BookingService) AddArea(areas ...string) error {\n    s.Lock()\n    defer s.Unlock()\n    \n    for _, area := range areas {\n        for _, has := range s.areas {\n            if area == has {\n                return srverr.ErrAreaConflict\n            }\n        }\n        s.areas = append(s.areas, area)\n        s.areaOrders[area] = new(order.AreaOrder)\n    }\n    return nil\n}\n// 建议调整为这样：\n\n// AddArea 添加成功或出错\nfunc (s *BookingService) AddArea(areas ...string) error {\n    s.Lock()\n    defer s.Unlock()\n    \n    for _, area := range areas {\n        if s.HasArea(area) {\n            return srverr.ErrAreaConflict\n        }\n        s.areas = append(s.areas, area)\n        s.areaOrders[area] = new(order.AreaOrder)\n    }\n    return nil\n}\n\n// HasArea ...\nfunc (s *BookingService) HasArea(area string) bool {\n    for _, has := range s.areas {\n        if area == has {\n            return true\n        }\n    }\n    return false\n}\n```",
+                "disable": false
+            },
+            {
+                "real_name": "static_cast_checker",
+                "display_name": "StaticCast",
+                "severity": "warning",
+                "category": "usability",
+                "rule_title": "检查静态类型转换",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "减少高精度到低精度的类型转换",
+                "owner": "",
+                "labels": [],
+                "description": "不同类型的数值精准的不同从一个类型转换到另一个类型会发生数据丢失\n```\n[\n    \"int\", \"unsigned int\", \"long\", \"unsigned long\", \"long long\", \"unsigned long long\", \"float\", \"double\", \"long double\",\n]\n```\n从右到左的转换都有可能发生错误",
+                "disable": false
+            },
+            {
+                "real_name": "use_after_release",
+                "display_name": "UAR",
+                "severity": "error",
+                "category": "correctness",
+                "rule_title": "指针释放后再次使用",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "释放后需要使用必须重新分配内存",
+                "owner": "",
+                "labels": [],
+                "description": "指针释放后再次使用会出现空指针问题",
+                "disable": true
+            }
+        ],
+        "open_user": true,
+        "open_saas": false,
+        "virtual_name": "185",
+        "show_display_name": true
+    }
+]

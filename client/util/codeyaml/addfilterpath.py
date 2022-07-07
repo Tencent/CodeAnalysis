@@ -9,11 +9,9 @@
 读取项目根目录下的.code.yml文件,获取过滤路径，添加到项目过滤路径中
 """
 
-
-import os
-
 from util.yamlib import YamlReader
 from util.logutil import LogPrinter
+from util.codeyaml.common import CodeYaml
 
 
 class AddFilterPath(object):
@@ -74,10 +72,10 @@ class AddFilterPath(object):
             "third_party_source": []  # 第三方代码
         }
 
-        yaml_file = os.path.join(source_dir, '.code.yml')
+        yaml_file = CodeYaml.get_yaml_filepath(source_dir)
 
         try:
-            if os.path.exists(yaml_file):
+            if yaml_file:
                 LogPrinter.info("Filter paths according to .code.yml ...")
                 exclude_src = YamlReader().read_section(yaml_file, "source")
                 if exclude_src:
