@@ -24,7 +24,7 @@
     "coding-oa-uikit": "^4.3.9",
     "i18next": "^21.2.4",
     "lodash": "^4.17.21",
-    "moment": "^2.29.3",
+    "moment": "2.29.4",
     "qs": "^6.10.1",
     "react": "^17.0.2",
     "react-copy-to-clipboard": "^5.0.4",
