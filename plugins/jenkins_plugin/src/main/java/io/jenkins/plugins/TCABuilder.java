@@ -200,7 +200,7 @@ public class TCABuilder extends Builder implements SimpleBuildStep {
 
         public FormValidation doCheckLanguageType(@QueryParameter String value) throws IOException, ServletException {
             if (StringUtils.isBlank(value)){
-                return FormValidation.error("选填，指定扫描的语言");
+                return FormValidation.warning("选填，指定扫描的语言");
             }
             return FormValidation.ok();
         }
