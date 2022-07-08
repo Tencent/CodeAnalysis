@@ -200,7 +200,21 @@ public class TCABuilder extends Builder implements SimpleBuildStep {
 
         public FormValidation doCheckLanguageType(@QueryParameter String value) throws IOException, ServletException {
             if (StringUtils.isBlank(value)){
-                return FormValidation.error("必填，指定扫描的语言");
+                return FormValidation.warning("选填，指定扫描的语言");
+            }
+            return FormValidation.ok();
+        }
+
+        public FormValidation doCheckRefSchemeID(@QueryParameter String value) throws IOException, ServletException {
+            if (StringUtils.isBlank(value)){
+                return FormValidation.warning("选填，分析方案模版ID");
+            }
+            return FormValidation.ok();
+        }
+
+        public FormValidation doCheckScanPlan(@QueryParameter String value) throws IOException, ServletException {
+            if (StringUtils.isBlank(value)){
+                return FormValidation.warning("选填，扫描方案名称");
             }
             return FormValidation.ok();
         }
