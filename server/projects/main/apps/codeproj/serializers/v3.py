@@ -261,7 +261,7 @@ class RepositoryAuthUpdateSerializer(serializers.Serializer):
         request = self.context.get("request")
         user = request.user
         scm_type = self.instance.scm_type
-        scm_url = self.instance.scm_url
+        scm_url = self.instance.get_format_url()
         ssh_url = self.instance.ssh_url or scm_url
 
         # 与RepositoryCreateSerializer校验鉴权相同
