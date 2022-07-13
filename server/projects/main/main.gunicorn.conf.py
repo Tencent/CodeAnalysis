@@ -7,21 +7,19 @@
 
 """gunicorn配置文件
 """
-import logging
-import logging.handlers
-from logging.handlers import WatchedFileHandler
 import os
-import multiprocessing
 
 project_path = os.path.dirname(os.path.abspath(__file__))
-bind = "0.0.0.0:8001"
+host = os.environ.get("MAIN_SERVER_HOST", "0.0.0.0")
+port = os.environ.get("MAIN_SERVER_PORT", 8001)
+bind = "%s:%s" % (host, port)
 backlog = 2048
 chdir = project_path
 pidfile = os.path.join(project_path, "main-master.pid")
 daemon = os.environ.get("DAEMON", "true") == "true"
 proc_name = "main"
 
-workers = 8
+workers = os.environ.get("MAIN_SERVER_PROCESS_NUM", 8)
 threads = 2
 max_requests = 5000
 loglevel = "info"
