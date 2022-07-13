@@ -22,6 +22,7 @@ from util.genkey import gen_path_key
 from util.retrylib import RetryDecor
 from util.httpclient import HttpClient
 from util.exceptions import ServerError
+from util.authticket import MainServerTicket
 
 logger = logging.getLogger(__name__)
 
@@ -47,9 +48,11 @@ class FileServer(object):
     def __init__(self, server_conf):
         self._http_client = HttpClient()
         self._server_url = server_conf["URL"]
-        self._server_token = server_conf["TOKEN"]
         self._type_prefix = server_conf["TYPE_PREFIX"]
-        self._headers = {'Authorization': 'Token %s' % self._server_token}
+        if server_conf.get("TOKEN"):
+            self._headers = {"Authorization": "Token %s" % server_conf.get("TOKEN")}
+        else:
+            self._headers = {"SERVER-TICKET": MainServerTicket.generate_ticket()}
 
     @classmethod
     def get_data_md5(cls, data):

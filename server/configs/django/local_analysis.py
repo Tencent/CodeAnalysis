@@ -80,6 +80,6 @@ MAIN_SERVER_URL = os.environ.get("MAIN_SERVER_URL", "http://127.0.0.1:8001")
 # 文件服务器
 FILE_SERVER = {
     "URL": os.environ.get("FILE_SERVER_URL", "http://127.0.0.1:8000/files/"),
-    "TOKEN": os.environ.get("FILE_SERVER_TOKEN"),
+    # "TOKEN": os.environ.get("FILE_SERVER_TOKEN"),
     "TYPE_PREFIX": os.environ.get("FILE_SERVER_TYPE", "public")
 }
