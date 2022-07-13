@@ -35,6 +35,8 @@ public class TCABuilder extends Builder implements SimpleBuildStep {
     private boolean total;
     public String isTotal;
     private String osName;
+    private final String refSchemeID;
+    private final String scanPlan;
 
     @DataBoundConstructor
     public TCABuilder(String codeAnalysisPath,
@@ -42,13 +44,17 @@ public class TCABuilder extends Builder implements SimpleBuildStep {
                       String branchName,
                       String languageType,
                       String teamId,
-                      String projectName) {
+                      String projectName,
+                      String refSchemeID,
+                      String scanPlan) {
         this.codeAnalysisPath = codeAnalysisPath;
         this.token = token;
         this.branchName = branchName;
         this.languageType = languageType;
         this.teamId = teamId;
         this.projectName = projectName;
+        this.refSchemeID = refSchemeID;
+        this.scanPlan = scanPlan;
     }
     public String getCodeAnalysisPath() {
         return codeAnalysisPath;
@@ -76,6 +82,14 @@ public class TCABuilder extends Builder implements SimpleBuildStep {
 
     public boolean isTotal() {
         return total;
+    }
+
+    public String getRefSchemeID(){
+        return refSchemeID;
+    }
+
+    public String getScanPlan(){
+        return scanPlan;
     }
 
     @DataBoundSetter
@@ -113,6 +127,21 @@ public class TCABuilder extends Builder implements SimpleBuildStep {
         }else{
             isTotal = "";
         }
+
+        String constant_refSchemeID = " --ref-scheme-id ";
+        if(refSchemeID != null && refSchemeID.length() != 0){
+            constant_refSchemeID = constant_refSchemeID + refSchemeID;
+        }else{
+            constant_refSchemeID = "";
+        }
+
+        String constant_scanPlan = " --scan-plan ";
+        if(scanPlan != null && scanPlan.length() != 0){
+            constant_scanPlan = constant_scanPlan + scanPlan;
+        }else{
+            constant_scanPlan = "";
+        }
+
         String clientPath = codeAnalysisPath + "client";
         StartClient.startClient(osName,
                                 clientPath,
@@ -123,6 +152,8 @@ public class TCABuilder extends Builder implements SimpleBuildStep {
                                 branchName,
                                 languageType,
                                 isTotal,
+                constant_refSchemeID,
+                constant_scanPlan,
                                 listener,
                                 env);
         String fileName = clientPath + "/scan_status.json";
@@ -169,7 +200,21 @@ public class TCABuilder extends Builder implements SimpleBuildStep {
 
         public FormValidation doCheckLanguageType(@QueryParameter String value) throws IOException, ServletException {
             if (StringUtils.isBlank(value)){
-                return FormValidation.error("必填，指定扫描的语言");
+                return FormValidation.warning("选填，指定扫描的语言");
+            }
+            return FormValidation.ok();
+        }
+
+        public FormValidation doCheckRefSchemeID(@QueryParameter String value) throws IOException, ServletException {
+            if (StringUtils.isBlank(value)){
+                return FormValidation.warning("选填，分析方案模版ID");
+            }
+            return FormValidation.ok();
+        }
+
+        public FormValidation doCheckScanPlan(@QueryParameter String value) throws IOException, ServletException {
+            if (StringUtils.isBlank(value)){
+                return FormValidation.warning("选填，扫描方案名称");
             }
             return FormValidation.ok();
         }

@@ -25,6 +25,14 @@
         <f:textbox />
     </f:entry>
 
+    <f:entry title="分析方案模版ID" field="refSchemeID">
+                <f:textbox />
+    </f:entry>
+
+    <f:entry title="分析方案名称" field="scanPlan">
+                <f:textbox />
+    </f:entry>
+
     <f:entry title="全量扫描" field="total">
         <f:checkbox />
     </f:entry>
