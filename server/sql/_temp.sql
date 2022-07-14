@@ -1,0 +1,1 @@
+ALTER USER 'root'@'localhost' IDENTIFIED BY 'TCA_MYSQL_PASSWORD';
