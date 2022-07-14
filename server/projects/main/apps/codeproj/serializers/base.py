@@ -1703,17 +1703,32 @@ class APIProjectsSerializer(CDBaseModelSerializer):
         scm_password = validated_data.get("scm_password")
         scm_account = models.ScmAccount.objects.filter(user=user, scm_username=scm_username,
                                                        auth_origin_id="Codedog").first()
-        if not scm_account:
-            scm_account = models.ScmAccount.objects.create(
-                user=user,
-                scm_username=scm_username,
-                scm_password=scm_password,
-                auth_origin_id="Codedog"
-            )
-            logger.info("[Repo: %s][User: %s] create scm auth: %s" % (repo.id, user, scm_username))
+        scm_oauth = None
+        scm_account = None
+        if scm_username == "oauth2":
+            raise serializers.ValidationError({"cd_error": "用户名不支持OAuth2类型"})
+        if scm_auth_type == models.ScmAuth.ScmAuthTypeEnum.OAUTH:
+            if user.is_superuser is False:
+                raise serializers.ValidationError({"cd_error": "该接口不支持配置OAuth授权"})
+            scm_user, _ = models.User.objects.get_or_create(username=scm_username)
+            scm_oauth = core.ScmAuthManager.create_or_update_scm_auth(
+                user=scm_user, access_token=scm_password, refresh_token="")
+            logger.info("[Repo: %s][User: %s] create scm oauth auth: %s" % (repo.id, user, scm_username))
+        else:
+            # Note: 指定账号密码后会将账号密码关联到当前请求的用户
+            scm_account = models.ScmAccount.objects.filter(user=user, scm_username=scm_username,
+                                                           auth_origin_id="Codedog").first()
+            if not scm_account:
+                scm_account = models.ScmAccount.objects.create(
+                    user=user,
+                    scm_username=scm_username,
+                    scm_password=scm_password,
+                    auth_origin_id="Codedog"
+                )
+                logger.info("[Repo: %s][User: %s] create scm auth: %s" % (repo.id, user, scm_username))
         core.ScmAuthManager.create_repository_auth(repository=repo, user=user,
                                                    scm_auth_type=scm_auth_type,
-                                                   scm_account=scm_account)
+                                                   scm_account=scm_account, scm_oauth=scm_oauth)
         OperationRecordHandler.add_repo_operation_record(repo, "更新代码库鉴权", user,
                                                          {"scm_username": scm_username, "scm_auth_type": scm_auth_type})
 
