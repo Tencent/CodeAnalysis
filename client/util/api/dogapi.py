@@ -453,3 +453,22 @@ class CodeDogApiServer(object):
         rel_url = f"api/orgs/{org_sid}/teams/{team_name}/repos/{repo_id}/projects/{proj_id}/confs/"
         rsp = CodeDogHttpClient(self._server_url, rel_url, headers=self._headers).get()
         return self.get_data_from_result(rsp)
+
+    def get_scheme_by_id(self, scheme_id, org_sid):
+        """根据分析方案模板id，获取方案模板的名称"""
+        rel_url = f"api/orgs/{org_sid}/schemes/{scheme_id}/"
+        rsp = CodeDogHttpClient(self._server_url, rel_url, headers=self._headers).get()
+        data = self.get_data_from_result(rsp)
+        return data
+
+    def get_jobconfs_by_scheme_template(self, scheme_id, org_sid):
+        """
+        获取分析方案模板的任务执行参数
+        :param scheme_id:分析方案模板id
+        :param org_sid: 团队编号
+        :return:
+        """
+        rel_url = f"api/orgs/{org_sid}/schemes/{scheme_id}/jobconfs/"
+        rsp = CodeDogHttpClient(self._server_url, rel_url, headers=self._headers).get()
+        data = self.get_data_from_result(rsp)
+        return data
