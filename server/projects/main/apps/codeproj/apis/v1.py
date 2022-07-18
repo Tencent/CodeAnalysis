@@ -241,6 +241,25 @@ class ProjectScanJobConfApiView(generics.GenericAPIView):
                 return Response(e.data, status=status.HTTP_400_BAD_REQUEST)
 
 
+class ScanSchemeScanJobConfApiView(generics.GenericAPIView):
+    """获取指定扫描方案模板扫描配置
+    使用对象：节点
+
+    ### GET
+    应用场景：获取指定扫描方案模板扫描配置信息，供节点端离线扫描使用
+    """
+    schema = None
+    authentication_classes = [TCANodeTokenBackend]
+
+    def get(self, request, *args, **kwargs):
+        scan_scheme = get_object_or_404(models.ScanScheme, id=kwargs["scheme_id"], repo=None)
+        job_manager = core.JobManager(project=None)
+        try:
+            return Response(job_manager.get_job_confs(scan_scheme=scan_scheme))
+        except CDErrorBase as e:
+            return ParseError({"errcode": e.code, "errmsg": e.msg})
+
+
 class ProjectScanDetailApiView(generics.GenericAPIView, ProjectBaseAPIView):
     """项目指定扫描详情接口
     使用对象：节点
