@@ -189,8 +189,6 @@ class JobManager(object):
             "ignore_submodule_clone": scan_scheme.ignore_submodule_clone,
             "ignore_submodule_issue": scan_scheme.ignore_submodule_issue,
             "lfs_flag": scan_scheme.lfs_flag,
-            "scm_type": self._project.scm_type,
-            "scm_url": self._project.get_scm_url_with_auth(),
             "path_filters": {
                 "inclusion": ScanSchemeManager.get_path_list_with_scheme(
                     scan_scheme=scan_scheme, scan_type=models.ScanDir.ScanTypeEnum.INCLUDE,
