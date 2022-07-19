@@ -112,7 +112,8 @@ function os_digits_check() {
 }
 
 ### 校验系统及版本 ###
-### 仅校验centos版本校验或ubuntu版本校验。centos版本需为7及以上，ubuntu需为18.04及以上 ###
+### centos版本需为7及以上，ubuntu需为18.04及以上 ###
+### 若其他系统版本不可用，可至https://github.com/Tencent/CodeAnalysis发出issue ###
 function os_version_check() {
     if [ -s "/etc/redhat-release" ]; then
         centos_version_check=$(cat /etc/redhat-release | grep -iE ' 1.|2.|3.|4.|5.|6.' | grep -iE 'centos|Red Hat')
@@ -134,30 +135,34 @@ function os_version_check() {
 function http_proxy_check() {
     http_proxy=$(export |grep HTTP_PROXY)
     https_proxy=$(export |grep HTTPS_PROXY)
+    no_proxy=$(export |grep no_proxy)
     if [ $http_proxy ] || [ $https_proxy ]; then
-        LOG_INFO "TCA script will unset HTTP_PROXY/HTTPS_PROXY or set NO_PROXY，otherwise TCA will be unavaliable."
-        LOG_INFO "1. unset HTTP_PROXY/HTTPS_PROXY. <please note after unset, your node may lose access to Extranet> "
-        LOG_INFO "2. set NO_PROXY=127.0.0.1, cause TCA server is deployed on http:/127.0.0.1:8000/"
-        LOG_INFO "3. do nothing"
-        read -p "please enter: [1/2/3]" result
-        case $result in
-            [1])
-                if [ $http_proxy ]; then
-                    unset HTTP_PROXY
-                fi
-                if [ $https_proxy ]; then
-                    unset HTTPS_PROXY
-                fi
-                ;;
-            [2])
-                export NO_PROXY="127.0.0.1"
-                ;;
-            [3])
-                LOG_INFO "do nothing about PROXY setting"
-                return 1
-            *)
-                LOG_ERROR "Invalid input. Stop."
-                exit 1
-                ;;
-        esac
+        if [[ $no_proxy == *"127.0.0.1"* ]]; then
+            LOG_INFO "TCA script will unset HTTP_PROXY/HTTPS_PROXY or set NO_PROXY，otherwise TCA will be unavaliable."
+            LOG_INFO "1. unset HTTP_PROXY/HTTPS_PROXY. <please note after unset, your node may lose access to Extranet> "
+            LOG_INFO "2. set NO_PROXY=127.0.0.1, cause TCA server is deployed on http:/127.0.0.1:8000/"
+            LOG_INFO "3. do nothing"
+            read -p "please enter: [1/2/3]" result
+            case $result in
+                [1])
+                    if [ $http_proxy ]; then
+                        unset HTTP_PROXY
+                    fi
+                    if [ $https_proxy ]; then
+                        unset HTTPS_PROXY
+                    fi
+                    ;;
+                [2])
+                    export no_proxy="$no_proxy,127.0.0.1"
+                    ;;
+                [3])
+                    LOG_INFO "do nothing about PROXY setting"
+                    return 1
+                *)
+                    LOG_ERROR "Invalid input. Stop."
+                    exit 1
+                    ;;
+            esac
+        fi
+    fi
 }

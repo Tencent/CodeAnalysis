@@ -4,7 +4,7 @@ CURRENT_SCRIPT_PATH=$(cd "$(dirname "${BASH_SOURCE[0]}")";pwd)
 TCA_SCRIPT_ROOT=${TCA_SCRIPT_ROOT:-"$(cd $(dirname $CURRENT_SCRIPT_PATH); pwd)"}
 TCA_PROJECT_PATH=${TCA_PROJECT_PATH:-"$(cd "$(dirname $TCA_SCRIPT_ROOT)"; pwd)"}
 
-MAIN_CELRY_STATUS=0
+MAIN_CELERY_STATUS=0
 ANALYSIS_CELERY_STATUS=0
 
 source $TCA_SCRIPT_ROOT/utils.sh
@@ -171,7 +171,7 @@ function check_tca_local_status() {
 function get_tca_local_log() {
     LOG_INFO "====================================================================================================="
     LOG_INFO "| what shows below is paths of TCA services' log files"
-    LOG_INFO "| please excute command `tail -n 100 <log path>` to show content"
+    LOG_INFO "| please execute command `tail -n 100 <log path>` to show content"
     LOG_INFO "| if necessary, please screenshot and open a issue on GitHub: https://github.com/Tencent/CodeAnalysis/issues"
     LOG_INFO "====================================================================================================="
 
@@ -191,11 +191,8 @@ function get_tca_local_log() {
 
 ### 通过健康探测接口探测各服务是否可访问、可访问db、可执行异步任务 ###
 function check_server_healthcheck_api() {
-    rm -rf $CURRENT_SCRIPT_PATH/healthcheck_*.txt
-
     check_main_by_healthcheck_api
     check_analysis_by_healthcheck_api
-    check_login_by_healthcheck_api
     check_login_by_healthcheck_api
     check_file_by_healthcheck_api
     celery_status_detect
@@ -204,42 +201,44 @@ function check_server_healthcheck_api() {
 ### 请求main服务健康探测接口 ###
 function check_main_by_healthcheck_api() {
     file_path="$TCA_PROJECT_PATH/server/projects/main"
+    rm -rf $file_path/healthcheck_*.txt
     current_timestamp=`date '+%s'`
     file_path="$file_path/healthcheck_$current_timestamp.txt"
     target="http://0.0.0.0:8000/main/healthcheck/?file_name=$current_timestamp"
-    check_healcheck_api_res "main" $target
-    check_healcheck_api_sync_task_res "main" $file_path
+    check_healthcheck_api_res "main" $target
+    check_healthcheck_api_sync_task_res "main" $file_path
 }
 
 ### 请求analysis服务健康探测接口 ###
 function check_analysis_by_healthcheck_api() {
     file_path="$TCA_PROJECT_PATH/server/projects/analysis"
+    rm -rf $file_path/healthcheck_*.txt
     current_timestamp=`date '+%s'`
     file_path="$file_path/healthcheck_$current_timestamp.txt"
     target="http://127.0.0.1:8002/healthcheck/?file_name=$current_timestamp"
-    check_healcheck_api_res "analysis" $target
-    check_healcheck_api_sync_task_res "analysis" $file_path
+    check_healthcheck_api_res "analysis" $target
+    check_healthcheck_api_sync_task_res "analysis" $file_path
 }
 
 ### 请求登陆服务login健康探测接口 ###
 function check_login_by_healthcheck_api() {
     target="http://127.0.0.1:8003/healthcheck/"
-    check_healcheck_api_res "login" $target
+    check_healthcheck_api_res "login" $target
 }
 
 ### 请求文件服务file健康探测接口 ###
 function check_file_by_healthcheck_api() {
     target="http://127.0.0.1:8804/healthcheck/"
-    check_healcheck_api_res "file" $target
+    check_healthcheck_api_res "file" $target
 }
 
 ### 校验健康探测接口请求状态码 ###
-function check_healcheck_api_res() {
+function check_healthcheck_api_res() {
     service=$1
     target_url=$2
     ret_code=$(curl -I -s --connect-timeout 1 ${target} -w %{http_code} | tail -n1)
     if [[ "x$ret_code" == "x200" ]]; then
-        LOG_INFO "[HealthCheckAPI] service $service db check pass"
+        LOG_INFO "[HealthCheckAPI] service $service check pass"
     elif [[ "x$ret_code" == "x503" ]]; then
         error_exit "[HealthCheckAPI]service $service failed, reason might be db connection fail or database/table initialization fail"
     else
@@ -252,16 +251,16 @@ function check_healcheck_api_res() {
 }
 
 ### 校验健康探测接口异步任务执行结果 ###
-function check_healcheck_api_sync_task_res() {
+function check_healthcheck_api_sync_task_res() {
     service=$1
-    file_path=$1
+    file_path=$2
     
     for ((i=0; i<3; i++));
     do
         sleep 1
         if [ -f $file_path ]; then
             if [ $service == "main" ]; then
-                MAIN_CELRY_STATUS=1
+                MAIN_CELERY_STATUS=1
             else
                 ANALYSIS_CELERY_STATUS=1
             fi
@@ -275,7 +274,7 @@ function celery_status_detect() {
     if [[ $MAIN_CELERY_STATUS == 1 ]] && [[ $ANALYSIS_CELERY_STATUS == 1 ]]; then
         return
     fi
-    LOG_INFO "[HealthCheckAPI] Start to detect celery status, this process may take 10 seconds, please wait patiently...\n"
+    LOG_INFO "[HealthCheckAPI] Start to detect celery status, this process may take 10 seconds, please wait patiently..."
     b=""
     i=0
     while [[ $i -le 100 ]]
@@ -292,6 +291,12 @@ function celery_status_detect() {
       fi
     done
 
-    LOG_ERROR "[HealthCheckAPI] celery启动异常，为确保TCA能够正常进行扫描，请查阅server/projects/main/log/main_celery.log、server/projects/analysis/log/analysis_celery.log等日志文件定位问题并处理"
+    if [[ $main_ret -gt 1 ]]; then
+      LOG_ERROR "[HealthCheckAPI] celery启动异常，为确保TCA能够正常进行扫描，请查阅server/projects/main/log/main_celery.log日志文件定位问题并处理"
+    fi
+    if [[ $analysis_ret -gt 1 ]]; then
+      LOG_ERROR "[HealthCheckAPI] celery启动异常，为确保TCA能够正常进行扫描，请查阅server/projects/analysis/log/analysis_celery.log日志文件定位问题并处理"
+    fi
+
     error_exit "[HealthCheckAPI] 若无法解决，请前往github提出issue并附带日志截图"
 }
