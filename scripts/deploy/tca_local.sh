@@ -102,6 +102,7 @@ function tca_local_help() {
 }
 
 function tca_local_main() {
+    pre_check
     command=$1
     service=$2
     # command: install start stop check log help
@@ -135,3 +136,4 @@ function tca_local_main() {
         ;;
     esac
 }
+
