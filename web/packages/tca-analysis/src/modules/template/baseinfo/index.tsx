@@ -14,15 +14,13 @@ import cn from 'classnames';
 import {
   Form,
   Input,
-  Radio,
-  Row,
-  Col,
   Select,
   Button,
   message,
 } from 'coding-oa-uikit';
 
 import { updateTmpl, syncScheme, getTmplLint, updateTmplLint } from '@src/services/template';
+import NodeTag from '@src/components/node-tag';
 
 import SyncModal from '../sync-modal';
 import style from './style.scss';
@@ -32,7 +30,6 @@ const { Option } = Select;
 const layout = {
   labelCol: { span: 6 },
   wrapperCol: { span: 18 },
-  colon: false,
 };
 
 interface BaseConfigProps {
@@ -133,30 +130,15 @@ const BaseConfig = (props: BaseConfigProps) => {
             ))}
           </Select>
         </Form.Item>
-
-        <Form.Item
+        <NodeTag
           {...layout}
           name="tag"
           label="运行环境"
           rules={[{ required: true, message: '请选择运行环境' }]}
-        >
-          <Radio.Group disabled={isSysTmpl}>
-            <Row>
-              {tags.map(item => item.public && (
-                <Col
-                  title={item.name}
-                  span={8}
-                  key={item.name}
-                >
-                  <Radio value={item.name} className={style.radio}>
-                    {item.name}
-                  </Radio>
-                </Col>
-              ))}
-
-            </Row>
-          </Radio.Group>
-        </Form.Item>
+          orgSid={orgSid}
+          tags={tags}
+          disabled={isSysTmpl}
+        />
         <Form.Item {...layout} name="envs" label="环境变量">
           <Input.TextArea rows={3} placeholder="请输入环境变量" />
         </Form.Item>

@@ -23,7 +23,6 @@ import style from './style.scss';
 const layout = {
   labelCol: { span: 6 },
   wrapperCol: { span: 18 },
-  colon: false,
 };
 
 interface PermissionProps {

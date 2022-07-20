@@ -30,7 +30,6 @@ const defaultValues = {
 const layout = {
   labelCol: { span: 5 },
   wrapperCol: { span: 19 },
-  colon: false,
 };
 
 interface CodeMetricsProps {
