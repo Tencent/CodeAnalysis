@@ -43,13 +43,20 @@ class SchemeManager(object):
         return False, {}
 
     @staticmethod
-    def check_and_create_scheme(repo_id, repo_schemes, scan_plan, scheme_template_ids, scheme_templates, languages,
+    def check_and_create_scheme(repo_id, repo_schemes, scan_plan, ref_scheme_id, scheme_template_ids, scheme_templates, languages,
                                 url_mgr, dog_server, org_sid, team_name, source_dir, include_paths, exclude_paths,
                                 proj_id):
         """
         检查并创建分析方案
         :return: <bool>方案是否已存在或被创建，<dict>方案参数（如果返回False, 方案参数只包含方案名name）
         """
+        # 指定了分析方案模板id，没有指定方案名称，会使用模板名称作为方案名称
+        if not scan_plan and ref_scheme_id:
+            ref_scheme = dog_server.get_scheme_by_id(ref_scheme_id, org_sid)
+            if ref_scheme:
+                scan_plan = ref_scheme.get("name")
+                LogPrinter.info(f"use the name of refer scheme(id:{ref_scheme_id}) as scheme name: {scan_plan}")
+
         # 有传分析方案名称，先通过名称判断，如果存在，直接复用
         if scan_plan:
             is_existed, scheme_params = SchemeManager.check_scheme_by_name(repo_schemes, scan_plan)
