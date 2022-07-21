@@ -14,7 +14,7 @@ export const STATUS_CHOICES = {
 
 export const STATE_ENUM = {
   FREE: 0,
-  BUSY: 1
+  BUSY: 1,
 }
 
 export const STATE_CHOICES = {
@@ -34,11 +34,30 @@ export const STATUS_OPTIONS = [{
 }];
 
 export const TAG_TYPE_ENUM = {
-  PROJECT: 0,
-  NODE: 1,
+  PUBLIC: 1,
+  PRIVATE: 2,
+  DISABLED: 99,
 };
 
 export const TAG_TYPE_CHOICES = {
-  [TAG_TYPE_ENUM.PROJECT]: t('项目&节点'),
-  [TAG_TYPE_ENUM.NODE]: t('节点'),
+  [TAG_TYPE_ENUM.PUBLIC]: t('公共'),
+  [TAG_TYPE_ENUM.PRIVATE]: t('团队'),
+  [TAG_TYPE_ENUM.DISABLED]: t('停用'),
+};
+
+export const TAG_TYPE_OPTIONS = [{
+  text: TAG_TYPE_CHOICES[TAG_TYPE_ENUM.PUBLIC],
+  value: TAG_TYPE_ENUM.PUBLIC,
+}, {
+  text: TAG_TYPE_CHOICES[TAG_TYPE_ENUM.PRIVATE],
+  value: TAG_TYPE_ENUM.PRIVATE,
+}, {
+  text: TAG_TYPE_CHOICES[TAG_TYPE_ENUM.DISABLED],
+  value: TAG_TYPE_ENUM.DISABLED,
+}];
+
+export const TAG_TYPE_COLOR = {
+  [TAG_TYPE_ENUM.PUBLIC]: 'blue',
+  [TAG_TYPE_ENUM.PRIVATE]: 'cyan',
+  [TAG_TYPE_ENUM.DISABLED]: 'default',
 };

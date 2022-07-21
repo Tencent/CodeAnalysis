@@ -5,9 +5,6 @@ import { Modal, Form, Input, message, Select } from 'coding-oa-uikit';
 import { t } from '@src/i18n/i18next';
 import { putNode } from '@src/services/nodes';
 
-// 模块内
-import { STATUS_OPTIONS } from './constants';
-
 const { Option } = Select;
 
 interface IProps {
@@ -16,9 +13,10 @@ interface IProps {
   onCancel: () => void;
   nodeinfo: any;
   tagOptions: Array<any>;
+  members: Array<any>;
 }
 
-const NodeModal = ({ nodeinfo, visible, onOk, onCancel, tagOptions }: IProps) => {
+const NodeModal = ({ nodeinfo, visible, onOk, onCancel, tagOptions, members }: IProps) => {
   const [form] = Form.useForm();
 
   useEffect(() => {
@@ -74,24 +72,29 @@ const NodeModal = ({ nodeinfo, visible, onOk, onCancel, tagOptions }: IProps) =>
           </Select>
         </Form.Item>
         <Form.Item
-          name="enabled"
-          label="状态"
-          rules={[{ required: true, message: t('节点状态为必选项') }]}
+          name="related_managers"
+          label="关注人"
         >
-          <Select>
-            {STATUS_OPTIONS.map((item: any) => (
-              <Option key={item.value} value={item.value}>
-                {item.text}
+          <Select mode="multiple">
+            {members.map((item: any) => (
+              <Option key={item.username} value={item.username}>
+                {item.nickname}
               </Option>
             ))}
           </Select>
         </Form.Item>
         <Form.Item
           name="manager"
-          label="负责人"
-          rules={[{ required: true, message: t('负责人为必填项') }]}
+          label="管理员"
+          rules={[{ required: true, message: t('管理员为必选项') }]}
         >
-          <Input />
+          <Select>
+            {members.map((item: any) => (
+              <Option key={item.username} value={item.username}>
+                {item.nickname}
+              </Option>
+            ))}
+          </Select>
         </Form.Item>
       </Form>
     </Modal>
