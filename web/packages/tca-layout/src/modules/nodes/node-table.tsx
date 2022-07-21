@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { isEmpty } from 'lodash';
-import { useHistory } from 'react-router-dom';
-import { Table, Tag, Button, Space, message } from 'coding-oa-uikit';
+import { useHistory, useParams } from 'react-router-dom';
+import { Table, Tag, Button, Space } from 'coding-oa-uikit';
+import { isEmpty, union } from 'lodash';
 
 import Loading from 'coding-oa-uikit/lib/icon/Loading'
 import Stop from 'coding-oa-uikit/lib/icon/Stop'
@@ -10,18 +10,16 @@ import DotCircle from 'coding-oa-uikit/lib/icon/DotCircle'
 
 // 项目内
 import { t } from '@src/i18n/i18next';
+import EllipsisTemplate from '@src/components/ellipsis';
 import { formatDateTime, getPaginationParams, getFilterURLPath } from '@src/utils';
 import { DEFAULT_PAGER } from '@src/common/constants';
 import { useDeepEffect, useURLParams } from '@src/utils/hooks';
 import { getNodes, getTags } from '@src/services/nodes';
-import { getUsers } from '@src/services/users';
-import EllipsisTemplate from '@src/components/ellipsis';
+import { getTeamMember } from '@src/services/team';
 
 // 模块内
 import { STATUS_ENUM, STATE_ENUM, TAG_TYPE_COLOR, TAG_TYPE_ENUM } from './constants';
 import NodeModal from './node-modal';
-import MultiNodeModal from './multi-node-modal';
-import MultiProcessModal from './multi-process-modal';
 import NodeTaskModal from './node-tasks-modal';
 
 import s from './style.scss';
@@ -44,23 +42,20 @@ const NodeTable = () => {
   const [count, setCount] = useState(DEFAULT_PAGER.count);
   const [loading, setLoading] = useState(false);
   const [tagOptions, setTagOptions] = useState<Array<any>>([]);
+  const [nodeTaskVisible, setNodeTaskVisible] = useState(false);
   const [members, setMembers] = useState<Array<any>>([]);
   const [visible, setVisible] = useState(false);
-  const [multiNodeVisible, setMultiNodeVisible] = useState(false);
-  const [multiProcessVisible, setMultiProcessVisible] = useState(false);
-  const [nodeTaskVisible, setNodeTaskVisible] = useState(false);
   const [selectNode, setSelectNode] = useState(null);
-  const [selectedRowKeys, setSelectedRowKeys] = useState<any>([]);
   const { filter, currentPage, searchParams } = useURLParams(FILTER_FIELDS);
   const history = useHistory();
-  const hasSelectedNodes = !isEmpty(selectedRowKeys);
+  const { orgSid }: any = useParams();
 
   /**
    * 根据路由参数获取团队列表
    */
   const getListData = () => {
     setLoading(true);
-    getNodes(filter).then((response) => {
+    getNodes(orgSid, filter).then((response) => {
       setCount(response.count);
       setListData(response.results || []);
     }).finally(() => {
@@ -69,14 +64,14 @@ const NodeTable = () => {
   };
 
   useEffect(() => {
-    getTags().then((response) => {
+    getTags(orgSid).then((response) => {
       setTagOptions(response.results.map((item: any) => ({
         text: item.display_name || item.name,
         value: item.name,
       })));
     });
-    getUsers({limit: 1000, offset: 0}).then((response) => {
-      setMembers(response.results);
+    getTeamMember(orgSid).then((response) => {
+      setMembers(union(response?.admins, response?.users));
     });
   }, []);
 
@@ -99,31 +94,15 @@ const NodeTable = () => {
     }));
   };
 
-  // 翻页
-  const onChangePageSize = (page: number, pageSize: number) => {
-    const params = getPaginationParams(page, pageSize);
-    history.push(customFilterURLPath(params));
-  };
-
   const onShowTasks = (node: any) => {
     setSelectNode(node);
     setNodeTaskVisible(true);
   };
 
-  const onMultiEditNode = () => {
-    if (hasSelectedNodes) {
-      setMultiNodeVisible(true);
-    } else {
-      message.warning(t('未选中任何节点'));
-    }
-  };
-
-  const onMultiEditProcess = () => {
-    if (hasSelectedNodes) {
-      setMultiProcessVisible(true);
-    } else {
-      message.warning(t('未选中任何节点'));
-    }
+  // 翻页
+  const onChangePageSize = (page: number, pageSize: number) => {
+    const params = getPaginationParams(page, pageSize);
+    history.push(customFilterURLPath(params));
   };
 
   return (
@@ -135,74 +114,28 @@ const NodeTable = () => {
         onOk={() => {
           getListData();
           setVisible(false);
-          setSelectedRowKeys([]);
         }}
         tagOptions={tagOptions}
         members={members}
-      />
-      <MultiNodeModal
-        visible={multiNodeVisible}
-        onCancel={() => setMultiNodeVisible(false)}
-        selectedNodes={selectedRowKeys}
-        tagOptions={tagOptions}
-        onOk={() => {
-          getListData();
-          setMultiNodeVisible(false);
-          setSelectedRowKeys([]);
-        }}
-        members={members}
-      />
-      <MultiProcessModal
-        visible={multiProcessVisible}
-        onCancel={() => setMultiProcessVisible(false)}
-        onOk={() => {
-          setMultiProcessVisible(false);
-        }}
-        selectedNodes={selectedRowKeys}
       />
       <NodeTaskModal
         visible={nodeTaskVisible}
         onCancel={() => setNodeTaskVisible(false)}
         nodeId={selectNode?.id}
       />
-      <div className={s.batchOperation}>
-        <Space>
-          <Button type='primary' onClick={onMultiEditNode}>
-            {t('批量编辑节点')}
-          </Button>
-          <Button type='primary' onClick={onMultiEditProcess}>
-            {t('批量配置工具')}
-          </Button>
-          {hasSelectedNodes && <span>{`已选择 ${selectedRowKeys.length} 项`}</span>}
-        </Space>
-      </div>
-      <div className={s.filterContent}>
+      <div className={s.filter}>
         <Search loading={loading} searchParams={searchParams} tagOptions={tagOptions} callback={onSearch} />
       </div>
-      <Table
-        pagination={{
-          current: currentPage,
-          total: count,
-          showTotal: (total: any, range: any) => `${range[0]} - ${range[1]} 条数据，共 ${total} 条`,
-          onChange: onChangePageSize,
-        }}
-        rowKey={(item: any) => item.id}
-        dataSource={listData}
-        rowSelection={{
-          selectedRowKeys,
-          onChange: setSelectedRowKeys,
-        }}
-        scroll={{ x: true }}
-      >
+      <Table pagination={{
+        current: currentPage,
+        total: count,
+        showTotal: (total: any, range: any) => `${range[0]} - ${range[1]} 条数据，共 ${total} 条`,
+        onChange: onChangePageSize,
+      }} rowKey={(item: any) => item.id} dataSource={listData}>
         <Column
           title={t('节点名称')}
           dataIndex="name"
-          render={(name: any) => <EllipsisTemplate maxWidth={200}>{name}</EllipsisTemplate>}
-        />
-        <Column
-          title={t('所属团队')}
-          dataIndex="org_info"
-          render={(org_info: any) => org_info?.name ? <EllipsisTemplate>{org_info?.name}</EllipsisTemplate> : '- -'}
+          render={(name: any) => <EllipsisTemplate>{name}</EllipsisTemplate>}
         />
         <Column title={t('管理员')} dataIndex="manager" key="manager" />
         <Column
@@ -210,7 +143,7 @@ const NodeTable = () => {
           dataIndex="related_managers"
           key="related_managers"
           width={80}
-          render={(related_managers: any) => isEmpty(related_managers) ? '- -' : related_managers.join(', ')}
+          render={(related_managers: any) => isEmpty(related_managers) ? '无' : related_managers.join(', ')}
         />
         <Column title={t('IP 地址')} dataIndex="addr" key="addr" />
         <Column
@@ -261,7 +194,7 @@ const NodeTable = () => {
               </Button>
               <Button
                 type="secondary"
-                onClick={() => history.push(`/manage/nodes/${node.id}/process`)}
+                onClick={() => history.push(`/t/${orgSid}/nodes/${node.id}/process`)}
               >
                 {t('工具进程')}
               </Button>
