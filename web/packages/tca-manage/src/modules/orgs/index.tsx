@@ -14,7 +14,7 @@ import DeleteModal from '@src/components/delete-modal';
 import s from './style.scss';
 import Search from './search';
 import OrgTable from './org-table';
-import { ORG_STATUS_ENUM } from './constants';
+import { ORG_STATE_ENUM } from './constants';
 
 const { TabPane } = Tabs;
 const { confirm } = Modal;
@@ -77,7 +77,7 @@ const Orgs = () => {
   };
 
   const handleDeleteOrg = () => {
-    putOrgStatus(curOrg.org_sid, {status: ORG_STATUS_ENUM.INACTIVE}).then(() => {
+    putOrgStatus(curOrg.org_sid, {status: ORG_STATE_ENUM.INACTIVE}).then(() => {
       message.success(t('已禁用团队'));
       setReload(!reload);
       setDeleteVisible(false);
@@ -91,7 +91,7 @@ const Orgs = () => {
       title: t('恢复团队'),
       content: t('确定要恢复已禁用的团队吗？'),
       onOk() {
-        putOrgStatus(org.org_sid, {status: ORG_STATUS_ENUM.ACTIVE}).then(() => {
+        putOrgStatus(org.org_sid, {status: ORG_STATE_ENUM.ACTIVE}).then(() => {
           message.success(t('已恢复团队'));
           setReload(!reload);
         });
