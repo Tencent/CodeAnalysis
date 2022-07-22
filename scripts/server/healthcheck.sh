@@ -205,8 +205,8 @@ function check_main_by_healthcheck_api() {
     current_timestamp=`date '+%s'`
     file_path="$file_path/healthcheck_$current_timestamp.txt"
     target="http://0.0.0.0:8000/main/healthcheck/?file_name=$current_timestamp"
-    check_healthcheck_api_res "main" $target
-    check_healthcheck_api_sync_task_res "main" $file_path
+    check_healthcheck_api_res "tca_main_server" $target
+    check_healthcheck_api_sync_task_res "tca_main_server" $file_path
 }
 
 ### 请求analysis服务健康探测接口 ###
@@ -217,19 +217,19 @@ function check_analysis_by_healthcheck_api() {
     file_path="$file_path/healthcheck_$current_timestamp.txt"
     target="http://127.0.0.1:8002/healthcheck/?file_name=$current_timestamp"
     check_healthcheck_api_res "analysis" $target
-    check_healthcheck_api_sync_task_res "analysis" $file_path
+    check_healthcheck_api_sync_task_res "tca_analysis_server" $file_path
 }
 
 ### 请求登陆服务login健康探测接口 ###
 function check_login_by_healthcheck_api() {
-    target="http://127.0.0.1:8003/healthcheck/"
-    check_healthcheck_api_res "login" $target
+    target="http://127.0.0.1:8003/api/v1/login/healthcheck/"
+    check_healthcheck_api_res "tca_login_server" $target
 }
 
 ### 请求文件服务file健康探测接口 ###
 function check_file_by_healthcheck_api() {
     target="http://127.0.0.1:8804/healthcheck/"
-    check_healthcheck_api_res "file" $target
+    check_healthcheck_api_res "tca_file_server" $target
 }
 
 ### 校验健康探测接口请求状态码 ###
@@ -238,14 +238,14 @@ function check_healthcheck_api_res() {
     target_url=$2
     ret_code=$(curl -I -s --connect-timeout 1 ${target} -w %{http_code} | tail -n1)
     if [[ "x$ret_code" == "x200" ]]; then
-        LOG_INFO "[HealthCheckAPI] service $service check pass"
+        LOG_INFO "[HealthCheck] $service check pass"
     elif [[ "x$ret_code" == "x503" ]]; then
-        error_exit "[HealthCheckAPI]service $service failed, reason might be db connection fail or database/table initialization fail"
+        error_exit "[HealthCheck] $service failed, reason might be db connection fail or database/table initialization fail"
     else
-        if [ $service == "main" ]; then
-            error_exit "[HealthCheckAPI] nginx or service main failed, please reload nginx or view logs to locate the issue"
+        if [ $service == "tca_main_server" ]; then
+            error_exit "[HealthCheck] nginx or service main failed, please reload nginx or view logs to locate the issue"
         else
-            error_exit "[HealthCheckAPI] service $service failed, please view logs to locate the issue"
+            error_exit "[HealthCheck] $service failed, please view logs to locate the issue"
         fi
     fi
 }
@@ -274,7 +274,7 @@ function celery_status_detect() {
     if [[ $MAIN_CELERY_STATUS == 1 ]] && [[ $ANALYSIS_CELERY_STATUS == 1 ]]; then
         return
     fi
-    LOG_INFO "[HealthCheckAPI] Start to detect celery status, this process may take 10 seconds, please wait patiently..."
+    LOG_INFO "[HealthCheck] Start to detect celery status, this process may take 10 seconds, please wait patiently..."
     b=""
     i=0
     while [[ $i -le 100 ]]
@@ -286,17 +286,17 @@ function celery_status_detect() {
       main_ret=$(ps -aux |grep -c main_celery_worker)
       analysis_ret=$(ps -aux |grep -c analysis_celery_worker)
       if [[ $main_ret -gt 1 ]] && [[ $analysis_ret -gt 1 ]]; then
-        LOG_INFO "[HealthCheckAPI] celery has started"
+        LOG_INFO "[HealthCheck] celery has started"
         return
       fi
     done
 
     if [[ $main_ret -gt 1 ]]; then
-      LOG_ERROR "[HealthCheckAPI] celery启动异常，为确保TCA能够正常进行扫描，请查阅server/projects/main/log/main_celery.log日志文件定位问题并处理"
+      LOG_ERROR "[HealthCheck] celery启动异常，为确保TCA能够正常进行扫描，请查阅server/projects/main/log/main_celery.log日志文件定位问题并处理"
     fi
     if [[ $analysis_ret -gt 1 ]]; then
-      LOG_ERROR "[HealthCheckAPI] celery启动异常，为确保TCA能够正常进行扫描，请查阅server/projects/analysis/log/analysis_celery.log日志文件定位问题并处理"
+      LOG_ERROR "[HealthCheck] celery启动异常，为确保TCA能够正常进行扫描，请查阅server/projects/analysis/log/analysis_celery.log日志文件定位问题并处理"
     fi
 
-    error_exit "[HealthCheckAPI] 若无法解决，请前往github提出issue并附带日志截图"
+    error_exit "[HealthCheck] 若无法解决，请前往github提出issue并附带日志截图"
 }

@@ -101,6 +101,10 @@ function quiet_install_python() {
 }
 
 function interactive_install_python() {
+    ret=$( check_python )
+    if [ "$ret" == "true" ]; then
+        return 0
+    fi
     LOG_INFO "Do you want to install python3.7 by this script?"
     read -p "Please enter:[Y/N]" result
     case $result in

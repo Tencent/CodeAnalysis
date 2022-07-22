@@ -48,6 +48,10 @@ quiet_install_nginx() {
 }
 
 interactive_install_nginx() {
+    ret=$( check_nginx )
+    if [ "$ret" == "true" ]; then
+        return 0
+    fi
     LOG_INFO "Do you want to install nginx by this script?"
     read -p "Please enter:[Y/N]" result
     case $result in

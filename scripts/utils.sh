@@ -37,7 +37,7 @@ function install_base() {
 	LINUX_OS=$( get_linux_os )
 
 	case "$LINUX_OS" in
-        centos|rhel|sles|tlinux)
+        centos|rhel|sles|tlinux|tencentos)
             yum install -y wget curl unzip
         ;;
         ubuntu|debian|raspbian)
@@ -98,7 +98,7 @@ function pre_check() {
 
 ### 校验是否为root权限 ### 
 function root_check() {
-    if [ $(whoami) != "root"]; then
+    if [ "$(whoami)" != "root" ]; then
         error_exit "Please use TCA init script under root privilege."
     fi
 }

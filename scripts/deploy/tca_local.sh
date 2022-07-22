@@ -131,7 +131,7 @@ function tca_local_main() {
             tca_local_help
         ;;
         *)
-            LOG_ERROR "Command:'$command' not supported. [Support command: install/start/stop/check/log/help]"
+            LOG_ERROR "Command:'$command' not supported. [Support command: deploy/install/start/stop/check/log/help]"
             exit 1
         ;;
     esac

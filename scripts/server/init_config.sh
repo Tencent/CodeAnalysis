@@ -76,13 +76,13 @@ function install_server_requirments() {
 
 function create_tool_link() {
     LOG_INFO "create link with gunicorn、celery"
-    if [ ! -h $PYTHON_PATH/gunicorn ]; then
+    if [ ! -h "/usr/local/bin/gunicorn" ]; then
         LOG_INFO "$PYTHON_PATH/gunicorn exist"
         return 0
     else
         ln -s $PYTHON_PATH/gunicorn /usr/local/bin/gunicorn
     fi
-    if [ ! -h $PYTHON_PATH/celery ]; then
+    if [ ! -h "/usr/local/bin/celery" ]; then
         LOG_INFO "$PYTHON_PATH/celery exist"
         return 0
     else

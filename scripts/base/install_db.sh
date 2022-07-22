@@ -195,7 +195,12 @@ function quiet_install_mariadb() {
 
 
 function interactive_install_redis() {
-    LOG_INFO "Do you want to install redis by this script?"
+    ret=$( check_redis )
+    if [ "$ret" == "true" ]; then
+        start_redis
+        return 0
+    fi
+    LOG_INFO "Do you want to install [Redis] by this script?"
     read -p "Please enter:[Y/N]" result
     case $result in
             [yY])
@@ -214,7 +219,12 @@ function interactive_install_redis() {
 
 
 function interactive_install_mariadb() {
-    LOG_INFO "Do you want to install mariadb by this script?"
+    ret=$( check_mysql )
+    if [ "$ret" == "true" ]; then
+        start_mariadb
+        return 0
+    fi
+    LOG_INFO "Do you want to install [Mariadb] by this script?"
     read -p "Please enter:[Y/N]" result
     case $result in
         [yY])
