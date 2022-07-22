@@ -3,6 +3,7 @@
 CURRENT_SCRIPT_PATH=$(cd "$(dirname "${BASH_SOURCE[0]}")";pwd)
 TCA_SCRIPT_ROOT=${TCA_SCRIPT_ROOT:-"$(cd $(dirname $CURRENT_SCRIPT_PATH); pwd)"}
 
+source $TCA_SCRIPT_ROOT/utils.sh
 source $TCA_SCRIPT_ROOT/config.sh
 source $TCA_SCRIPT_ROOT/server/_base.sh
 
@@ -76,14 +77,14 @@ function install_server_requirments() {
 
 function create_tool_link() {
     LOG_INFO "create link with gunicorn、celery"
-    if [ ! -h "/usr/local/bin/gunicorn" ]; then
-        LOG_INFO "$PYTHON_PATH/gunicorn exist"
+    if [ -L "/usr/local/bin/gunicorn" ]; then
+        LOG_INFO "/usr/local/bin/gunicorn exist"
         return 0
     else
         ln -s $PYTHON_PATH/gunicorn /usr/local/bin/gunicorn
     fi
-    if [ ! -h "/usr/local/bin/celery" ]; then
-        LOG_INFO "$PYTHON_PATH/celery exist"
+    if [ -L "/usr/local/bin/celery" ]; then
+        LOG_INFO "/usr/local/bin/celery exist"
         return 0
     else
         ln -s $PYTHON_PATH/celery /usr/local/bin/celery

@@ -69,7 +69,7 @@ function start_redis() {
         systemctl enable redis
     else
         LOG_WARN "using nohup start redis-server"
-        nohup /usr/bin/redis-server --requriepass $REDIS_PASSWD 2>redis_start.error &
+        nohup /usr/bin/redis-server --requirepass $REDIS_PASSWD 2>redis_start.error &
     fi
 }
 
@@ -134,8 +134,8 @@ function start_mariadb() {
 }
 
 function config_mariadb() {
-    mysql -uroot -e "DELETE FROM mysql.user WHERE USER='root' AND HOST='%';FLUSH PRIVILEGES;"
-    mysql -uroot -e "CREATE USER 'root'@'%' IDENTIFIED BY \"$MYSQL_PASSWORD\";ALTER USER 'root'@'localhost' IDENTIFIED BY \"$MYSQL_PASSWORD\";GRANT ALL ON *.* TO 'root'@'%' WITH GRANT OPTION;FLUSH PRIVILEGES;"
+    mysql -uroot -hlocalhost -e "DELETE FROM mysql.user WHERE USER='root' AND HOST='%';FLUSH PRIVILEGES;"
+    mysql -uroot -hlocalhost -e "CREATE USER 'root'@'%' IDENTIFIED BY \"$MYSQL_PASSWORD\";ALTER USER 'root'@'localhost' IDENTIFIED BY \"$MYSQL_PASSWORD\";GRANT ALL ON *.* TO 'root'@'%' WITH GRANT OPTION;FLUSH PRIVILEGES;"
 }
 
 function start_mariadb_with_docker() {

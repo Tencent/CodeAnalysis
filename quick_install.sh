@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 CURRENT_SCRIPT_PATH=$(cd "$(dirname "${BASH_SOURCE[0]}")";pwd)
 TCA_PROJECT_PATH=${TCA_PROJECT_PATH:-"$CURRENT_SCRIPT_PATH"}

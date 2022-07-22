@@ -38,10 +38,10 @@ function install_base() {
 
 	case "$LINUX_OS" in
         centos|rhel|sles|tlinux|tencentos)
-            yum install -y wget curl unzip
+            yum install -y wget curl unzip git subversion
         ;;
         ubuntu|debian|raspbian)
-            apt install -y wget curl unzip
+            apt install -y wget curl unzip git subversion
         ;;
         *)
             LOG_ERROR "$LINUX_OS not supported."
@@ -117,13 +117,13 @@ function os_digits_check() {
 function os_version_check() {
     if [ -s "/etc/redhat-release" ]; then
         centos_version_check=$(cat /etc/redhat-release | grep -iE ' 1.|2.|3.|4.|5.|6.' | grep -iE 'centos|Red Hat')
-        if [ "$(centos_version_check)" ]; then
+        if [ "$centos_version_check" ]; then
             error_exit "version of centos must be 7. or above, otherwise TCA CAN'T be used."
         fi
     elif [ -s "/etc/issue" ]; then
         ubuntu_version=$(cat /etc/issue|grep Ubuntu|awk '{print $2}'|cut -f 1 -d '.')
         min_version="18.03"
-        if [ "$(ubuntu_version)" ]; then
+        if [ "$ubuntu_version" ]; then
             if [[ $ubuntu_version > $min_version ]]; then
                 error_exit "version of ubuntu must be 18.04 or above, otherwise TCA CAN'T be used."
             fi
@@ -133,9 +133,9 @@ function os_version_check() {
 
 ### 监测是否设置网络代理 ###
 function http_proxy_check() {
-    http_proxy=$(export |grep HTTP_PROXY)
-    https_proxy=$(export |grep HTTPS_PROXY)
-    no_proxy=$(export |grep no_proxy)
+    http_proxy=$HTTP_PROXY
+    https_proxy=$HTTPS_PROXY
+    no_proxy=$no_proxy
     if [ $http_proxy ] || [ $https_proxy ]; then
         if [[ $no_proxy == *"127.0.0.1"* ]]; then
             LOG_INFO "TCA script will unset HTTP_PROXY/HTTPS_PROXY or set NO_PROXY，otherwise TCA will be unavaliable."
@@ -158,6 +158,7 @@ function http_proxy_check() {
                 [3])
                     LOG_INFO "do nothing about PROXY setting"
                     return 1
+                    ;;
                 *)
                     LOG_ERROR "Invalid input. Stop."
                     exit 1

@@ -14,10 +14,10 @@ function check_result() {
     name=$1
     ret=$2
     if [ "$ret" = "true" ]; then
-        LOG_INFO "$name: OK."
+        LOG_INFO "$name start: OK."
         return 0
     else
-        LOG_ERROR "$name run failed."
+        LOG_ERROR "$name start: Failed."
         return 1
     fi
 }
@@ -124,7 +124,7 @@ function check_scmproxy_server() {
     fi
 }
 
-function check_nginx() {
+function check_nginx_proc() {
     nginx_result=$( check_target_process_exist "nginx")
     if [ "$nginx_result" = "true" ]; then
         return 0
@@ -143,7 +143,7 @@ function check_tca_local_status() {
     file_server_result=""
     scmproxy_result=""
     nginx_result=""
-
+    LOG_INFO "Check service start status..."
     # 1.监测server各微服务是否启动
     check_main_server
     check_result "tca_main_server" "$main_server_result"
@@ -161,10 +161,11 @@ function check_tca_local_status() {
     check_result "tca_main_beat" "$main_beat_result" || get_main_beat_error_log
     check_analysis_worker
     check_result "tca_analysis_worker" "$analysis_worker_result" || get_analysis_worker_error_log
-    check_nginx
+    check_nginx_proc
     check_result "tca_nginx" "$nginx_result"
 
     # 3.请求各服务健康状态探测接口，监测服务是否可用、异步任务是否可用等
+    LOG_INFO "Check service run status..."
     check_server_healthcheck_api
 }
 
@@ -216,7 +217,7 @@ function check_analysis_by_healthcheck_api() {
     current_timestamp=`date '+%s'`
     file_path="$file_path/healthcheck_$current_timestamp.txt"
     target="http://127.0.0.1:8002/healthcheck/?file_name=$current_timestamp"
-    check_healthcheck_api_res "analysis" $target
+    check_healthcheck_api_res "tca_analysis_server" $target
     check_healthcheck_api_sync_task_res "tca_analysis_server" $file_path
 }
 
@@ -238,14 +239,14 @@ function check_healthcheck_api_res() {
     target_url=$2
     ret_code=$(curl -I -s --connect-timeout 1 ${target} -w %{http_code} | tail -n1)
     if [[ "x$ret_code" == "x200" ]]; then
-        LOG_INFO "[HealthCheck] $service check pass"
+        LOG_INFO "[HealthCheck] $service check: OK."
     elif [[ "x$ret_code" == "x503" ]]; then
-        error_exit "[HealthCheck] $service failed, reason might be db connection fail or database/table initialization fail"
+        error_exit "[HealthCheck] $service check: Failed, reason might be db connection fail or database/table initialization fail"
     else
         if [ $service == "tca_main_server" ]; then
-            error_exit "[HealthCheck] nginx or service main failed, please reload nginx or view logs to locate the issue"
+            error_exit "[HealthCheck] nginx or service main check: Failed, please reload nginx or view logs to locate the issue"
         else
-            error_exit "[HealthCheck] $service failed, please view logs to locate the issue"
+            error_exit "[HealthCheck] $service check: Failed, please view logs to locate the issue"
         fi
     fi
 }
@@ -274,7 +275,7 @@ function celery_status_detect() {
     if [[ $MAIN_CELERY_STATUS == 1 ]] && [[ $ANALYSIS_CELERY_STATUS == 1 ]]; then
         return
     fi
-    LOG_INFO "[HealthCheck] Start to detect celery status, this process may take 10 seconds, please wait patiently..."
+    # LOG_INFO "[HealthCheck] Start to detect celery status, this process may take 10 seconds, please wait patiently..."
     b=""
     i=0
     while [[ $i -le 100 ]]
@@ -286,7 +287,7 @@ function celery_status_detect() {
       main_ret=$(ps -aux |grep -c main_celery_worker)
       analysis_ret=$(ps -aux |grep -c analysis_celery_worker)
       if [[ $main_ret -gt 1 ]] && [[ $analysis_ret -gt 1 ]]; then
-        LOG_INFO "[HealthCheck] celery has started"
+        LOG_INFO "[HealthCheck] worker(main_worker&analysis_worker) check: OK."
         return
       fi
     done

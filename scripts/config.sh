@@ -27,6 +27,10 @@ export TCA_WEB_PORT=${TCA_WEB_PORT:-"80"}
 # TCA Server后端地址
 export TCA_SERVER_ADDR=${TCA_SERVER_ADDR:-"127.0.0.1:8000"}
 
+# Client配置
+export CODEDOG_SERVER=${CODEDOG_SERVER:-"http://$TCA_WEB_HOST/server/main/"}
+export FILE_SERVER_URL=${FILE_SERVER_URL:-"http://$TCA_WEB_HOST/server/files/"}
+
 # Main工程配置
 ## 框架配置
 export MAIN_DEBUG_MODE=true

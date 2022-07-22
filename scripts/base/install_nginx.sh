@@ -2,6 +2,7 @@
 
 CURRENT_SCRIPT_PATH=$(cd "$(dirname "${BASH_SOURCE[0]}")";pwd)
 TCA_SCRIPT_ROOT=${TCA_SCRIPT_ROOT:-"$(dirname $CURRENT_SCRIPT_PATH; pwd)"}
+
 source $TCA_SCRIPT_ROOT/utils.sh
 
 check_nginx() {
