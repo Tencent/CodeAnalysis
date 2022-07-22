@@ -72,7 +72,7 @@ function install_server_requirments() {
     LOG_INFO "Install server dependency packages..."
     LOG_WARN "如果访问官方pypi源（files.pythonhosted.org）超时或访问失败，可以配置为腾讯云pypi源进行下载，配置方式可以执行以下命令："
     LOG_WARN "mkdir ~/.pip/ && echo \"[global]\nindex-url = https://mirrors.cloud.tencent.com/pypi/simple\" >> ~/.pip/pip.conf"
-    pip install -r $TCA_SERVER_CONFIG_PATH/requirements.txt
+    pip3 install -r $TCA_SERVER_CONFIG_PATH/requirements.txt
 }
 
 function create_tool_link() {

@@ -63,7 +63,7 @@ function start_redis() {
     fi
 
 	LOG_INFO "start redis service"
-    if command_exists redis; then
+    if command_exists systemctl; then
         systemctl start redis
         LOG_INFO "set redis auto start during machine start"
         systemctl enable redis

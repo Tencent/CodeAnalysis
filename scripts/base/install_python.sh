@@ -3,6 +3,7 @@ CURRENT_SCRIPT_PATH=$(cd "$(dirname "${BASH_SOURCE[0]}")";pwd)
 TCA_SCRIPT_ROOT=${TCA_SCRIPT_ROOT:-"$(dirname $CURRENT_SCRIPT_PATH; pwd)"}
 PYTHON_SRC_URL=${PYTHON_SRC_URL:-"https://www.python.org/ftp/python/3.7.12/Python-3.7.12.tgz"}
 PYTHON_SRC_PKG_PATH=${PYTHON_SRC_PKG_PATH:-"/tmp/Python-3.7.12.tgz"}
+PYTHON_SRC_PKG_CACHE_PATH=${PYTHON_SRC_PKG_CACHE_PATH}
 PYTHON_SRC_PATH=${PYTHON_SRC_PATH:-"/usr/local/src/Python-3.7.12"}
 PYTHON_SRC_DIR=$(dirname  $PYTHON_SRC_PATH)
 PYTHON_INSTALL_PATH=${PYTHON_INSTALL_PATH:-"/usr/local/python3"}
@@ -27,8 +28,19 @@ function check_python() {
     echo "$ret"
 }
 
+function check_python_pkg_cache() {
+    if [ -n "$PYTHON_SRC_PKG_CACHE_PATH" ]; then
+        PYTHON_SRC_PKG_PATH=$PYTHON_SRC_PKG_CACHE_PATH
+        ret="true"
+    else
+        ret="false"
+    fi
+    echo "$ret"
+}
+
 function download_python_src() {
     LOG_INFO "Download Python src from $PYTHON_SRC_URL, save to $PYTHON_SRC_PKG_PATH"
+    LOG_WARN "注意：如果下载失败或速度较慢，可以手动下载上述链接的Python包，通过环境变量 PYTHON_SRC_PKG_CACHE_PATH 指定Python包的路径"
     wget -O $PYTHON_SRC_PKG_PATH $PYTHON_SRC_URL || error_exit "Download Python src failed"
 }
 
@@ -81,9 +93,9 @@ function set_pypi_mirror() {
     LOG_INFO "set pypi config [ $PYPI_MIRROR_URL ]"
 	mkdir -p ~/.pip/
 	echo "[global]
-	index-url = $PYPI_MIRROR_URL
-	[install]
-	trusted-host=$PYPI_MIRROR_DOMAIN" > ~/.pip/pip.conf
+index-url = $PYPI_MIRROR_URL
+[install]
+trusted-host=$PYPI_MIRROR_DOMAIN" > ~/.pip/pip.conf
 }
 
 function quiet_install_python() {
@@ -95,7 +107,10 @@ function quiet_install_python() {
         return 0
     fi
     pre_install
-    download_python_src  
+    cache=$( check_python_pkg_cache )
+    if [ "$cache" == "false" ]; then
+        download_python_src
+    fi
     install_python
     check_python
     set_pypi_mirror
