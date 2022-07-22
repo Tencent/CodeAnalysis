@@ -95,7 +95,7 @@ functio check_ln_file() {
               rm -f $file
               ;;
           [Nn])
-              LOG_WARN "soft link create fail failed."
+              LOG_WARN "soft link create failed."
               ;;
           *)
               LOG_ERROR "Invalid input. Stop."
@@ -113,12 +113,13 @@ function use_right_pip() {
     then
         pip_py_version=$(pip -V |awk '{print $6}' |cut -f 1 -d ')')
         if [ pip_py_version == $neccessary_pip_py_verson ]; then
-            pip $object
+            pip install $object
         fi
     elif command_exists pip3
+    then
         pip3_py_version=$(pip3 -V |awk '{print $6}' |cut -f 1 -d ')')
         if [ pip3_py_version == $neccessary_pip_py_verson ]; then
-            pip3 $object
+            pip3 install $object
         fi
     else
         error_exit "please make sure pip's python version is 3.7! otherwise TCA CAN'T be used"
