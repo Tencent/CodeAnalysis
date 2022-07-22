@@ -14,10 +14,10 @@ export REDIS_PASSWD=${REDIS_PASSWD:-"tca2022"}
 
 # -*-*-*- 以下配置均提供默认值，可以根据需要进行调整 -*-*-*-
 # Nginx配置
-export NGINX_PATH=/etc/nginx
-export NGINX_CONF_PATH=/etc/nginx/conf.d
-export NGINX_LOG_PATH=/var/log/nginx
-export TCA_WEB_DEPLOY_PATH=/usr/share/nginx/www
+export NGINX_PATH=${NGINX_PATH:-"/etc/nginx"}
+export NGINX_CONF_PATH=${NGINX_CONF_PATH:-"/etc/nginx/conf.d"}
+export NGINX_LOG_PATH=${NGINX_LOG_PATH:-"/var/log/nginx"}
+export TCA_WEB_DEPLOY_PATH=${TCA_WEB_DEPLOY_PATH:-"/usr/share/nginx/www"}
 
 # Web配置
 # TCA Web配置服务地址
