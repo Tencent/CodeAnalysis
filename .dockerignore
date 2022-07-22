@@ -15,6 +15,10 @@ __pycache__
 .vscode
 
 
+# git
+.git
+
+
 # SVN
 .svn
 
@@ -27,8 +31,4 @@ __pycache__
 # Other
 .docker_data
 .docker_temp
-docker-compose.yml.bak
-client/data/taskdirs/*
-**/*.log
-data/
-*.out
+tools/
