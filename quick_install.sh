@@ -17,9 +17,25 @@ function tca_help() {
     LOG_INFO "Arg1. local/docker/docker-compose/help, default:'docker-compose'"
     LOG_INFO "Arg2. deploy/install/start/stop/check/log/help: Only for 'local' mode. You can run ./quick_install local help to view more details"
     LOG_INFO ""
+    LOG_INFO "Run with local: only support linux, will help you install python, mariadb, redis, nginx"
     LOG_INFO "Run with docker: will help you install docker"
     LOG_INFO "Run with docker-compose: will help you install docker and docker-compose"
-    LOG_INFO "Run with local: only support linux, will help you install python, mariadb, redis, nginx"
+    LOG_INFO ""
+    LOG_INFO "example:"
+    LOG_INFO "    1. use current machine to deploy tca server, web and client"
+    LOG_INFO "        install TCA on local:                  ./quick_start.sh local install"
+    LOG_INFO "        install base tools on local:           ./quick_start.sh local install base"
+    LOG_INFO "        start TCA on local:                    ./quick_start.sh local start"
+    LOG_INFO "        start TCA main services on local:      ./quick_start.sh local start main"
+    LOG_INFO "        install and start TCA on local:        ./quick_start.sh local deploy"
+    LOG_INFO "        check TCA status on local:             ./quick_start.sh local check"
+    LOG_INFO "        stop tca on local:                     ./quick_start.sh local stop"
+    LOG_INFO ""
+    LOG_INFO "    2. use docker to deploy tca server, web and client"
+    LOG_INFO "        run all services in a container:       ./quick_start.sh docker" 
+    LOG_INFO ""
+    LOG_INFO "    3. use docker-compose to deploy tca server, web and client"
+    LOG_INFO "        run TCA with docker-compose:           ./quick_install docker-compose"
 }
 
 deploy() {
@@ -38,7 +54,7 @@ deploy() {
     LOG_INFO "==========================================================="
     case "$mode" in
         local)
-            LOG_INFO "Start tca directly.[Only support Linux]"
+            LOG_INFO "Start tca directly. [Only support Linux]"
             tca_local_main "$2" "$3"
         ;;
         docker)
@@ -56,10 +72,8 @@ deploy() {
             tca_help
         ;;
         *)
-            LOG_WARN "Default using 'compose' mode [Support mode: local、docker、docker-compose]"
-            interactive_install_docker
-            interactive_install_docker_compose
-            tca_docker_compose_main
+            LOG_WARN "Mode '$mode' not supported [Support mode: local、docker、docker-compose]"
+            tca_help
         ;;
     esac
 }

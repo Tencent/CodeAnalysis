@@ -12,5 +12,6 @@ source $TCA_SCRIPT_ROOT/client/stop.sh
 function start_client() {
     cd $TCA_CLIENT_PATH
     stop_client
+    LOG_INFO "start tca client"
     nohup python3 codepuppy.py start -t ${CODEDOG_TOKEN} >start.out 2>&1 &
 }

@@ -32,16 +32,20 @@ function command_exists() {
 	command -v "$@" > /dev/null 2>&1
 }
 
+function command_normal() {
+	"$@" > /dev/null 2>&1
+}
+
 # 安装基础软件：wget、curl、unzip
 function install_base() {
 	LINUX_OS=$( get_linux_os )
 
 	case "$LINUX_OS" in
         centos|rhel|sles|tlinux|tencentos)
-            yum install -y wget curl unzip git subversion
+            yum install -q -y wget curl unzip git subversion
         ;;
         ubuntu|debian|raspbian)
-            apt install -y wget curl unzip git subversion
+            apt-get install -qq -y wget curl unzip git subversion
         ;;
         *)
             LOG_ERROR "$LINUX_OS not supported."
@@ -71,7 +75,7 @@ function check_target_process_exist() {
 function kill_by_pid_file() {
     pid_file=$1
     if [ -f "$pid_file" ]; then
-        kill -15 `cat $pid_file` >/dev/null 2>&1 
+        kill -15 `cat $pid_file` &>/dev/null
     fi
 }
 
@@ -81,7 +85,7 @@ function force_kill() {
     if [ ! -n "$pids" ]; then  
         return 0  
     fi
-    kill -9 $pids
+    kill -9 $pids &>/dev/null
 }
 
 #--------------------------------------------
@@ -92,7 +96,7 @@ function force_kill() {
 function pre_check() {
     root_check
     os_digits_check
-    os_version_check
+    # os_version_check
     http_proxy_check
 }
 

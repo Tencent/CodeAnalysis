@@ -16,7 +16,7 @@ check_nginx() {
 }
 
 config_nginx() {
-    LOG_INFO "Comment nginx default listen"
+    LOG_INFO "[NginxInstall] Comment nginx default listen"
     sed -ri 's/^([[:space:]]*)(server_name|listen)/\1#\2/' /etc/nginx/nginx.conf
 }
 
@@ -28,23 +28,23 @@ quiet_install_nginx() {
     fi
 
     LINUX_OS=$( get_linux_os )
-    LOG_INFO "Current OS:"$LINUX_OS
-	LOG_INFO "start to install nginx"
+	LOG_INFO "[NginxInstall] Start to install nginx"
 
     case "$LINUX_OS" in
         centos|rhel|sles|tlinux|tencentos)
-            yum install -y epel-release
-            yum install -y nginx
+            LOG_INFO "yum install epel-release nginx [Please wait for a moment.]"
+            yum install -q -y epel-release nginx || error_exit "yum install nginx failed"
         ;;
         ubuntu|debian|raspbian)
-            apt update
-            apt install -y nginx
+            apt-get update -qq || error_exit "apt-get update failed"
+            apt-get install -qq -y nginx || error_exit "apt-get install nginx failed"
         ;;
         *)
             LOG_ERROR "$LINUX_OS not supported."
             exit 1
         ;;
     esac
+    LOG_INFO "[NginxInstall] Install nginx successfully."
     config_nginx
 }
 
@@ -53,7 +53,7 @@ interactive_install_nginx() {
     if [ "$ret" == "true" ]; then
         return 0
     fi
-    LOG_INFO "Do you want to install nginx by this script?"
+    LOG_INFO "Do you want to install [nginx] by this script?"
     read -p "Please enter:[Y/N]" result
     case $result in
         [yY])

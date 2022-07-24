@@ -24,40 +24,40 @@ function tca_local_install() {
     service=$1
     case $service in
         base)
-            LOG_INFO "install base software: Python, Redis, Mariadb(or MySQL), Nginx"
+            LOG_INFO "Install base software: Python3.7, Redis, Mariadb(or MySQL), Nginx"
             interactive_install_python
             interactive_install_redis
             interactive_install_mariadb
             interactive_install_nginx
         ;;
         server)
-            LOG_INFO "init tca server config"
+            LOG_INFO "Init tca server config"
             init_server_config
             init_server_db_and_data
         ;;
         web)
-            LOG_INFO "init tca web config"
+            LOG_INFO "Init tca web config"
             init_web_config
         ;;
         client)
-            LOG_INFO "init tca client config"
+            LOG_INFO "Init tca client config"
             init_client_config
         ;;
         *)
-            LOG_INFO "1. install base software: Python, Redis, Mariadb(or MySQL), Nginx"
+            LOG_INFO "1. Install base software: Python, Redis, Mariadb(or MySQL), Nginx"
             interactive_install_python
             interactive_install_redis
             interactive_install_mariadb
             interactive_install_nginx
 
-            LOG_INFO "2. init tca server config"
+            LOG_INFO "2. Init tca server config"
             init_server_config
             init_server_db_and_data
 
-            LOG_INFO "3. init tca web config"
+            LOG_INFO "3. Init tca web config"
             init_web_config
 
-            LOG_INFO "4. init tca client config"
+            LOG_INFO "4. Init tca client config"
             init_client_config
         ;;
     esac

@@ -16,7 +16,7 @@ source $TCA_SCRIPT_ROOT/utils.sh
 function check_python() {
     ret=""
     if command_exists python; then
-        result=$(python --version | grep "^Python 3.7.")
+        result=$( python --version | grep "^Python 3.7." )
         if [ "$result" = "" ]; then
             ret="false"
         else
@@ -30,7 +30,6 @@ function check_python() {
 
 function check_python_pkg_cache() {
     if [ -n "$PYTHON_SRC_PKG_CACHE_PATH" ]; then
-        PYTHON_SRC_PKG_PATH=$PYTHON_SRC_PKG_CACHE_PATH
         ret="true"
     else
         ret="false"
@@ -39,31 +38,32 @@ function check_python_pkg_cache() {
 }
 
 function download_python_src() {
-    LOG_INFO "Download Python src from $PYTHON_SRC_URL, save to $PYTHON_SRC_PKG_PATH"
-    LOG_WARN "注意：如果下载失败或速度较慢，可以手动下载上述链接的Python包，通过环境变量 PYTHON_SRC_PKG_CACHE_PATH 指定Python包的路径"
+    LOG_INFO "[PythonInstall] Download Python src from $PYTHON_SRC_URL, save to $PYTHON_SRC_PKG_PATH"
+    LOG_WARN "    * 注意：如果下载失败或速度较慢，可以手动下载上述链接的Python包，通过环境变量 PYTHON_SRC_PKG_CACHE_PATH 指定Python包的路径"
     wget -O $PYTHON_SRC_PKG_PATH $PYTHON_SRC_URL || error_exit "Download Python src failed"
 }
 
 function pre_install() {
     ## 安装编译依赖组件
-    LOG_INFO "Pre install tools"
+    LOG_INFO "[PythonInstall] Pre install tools"
     case "$LINUX_OS" in
         centos|rhel|sles|tlinux|tencentos)
             tools="wget zlib-devel bzip2-devel openssl-devel ncurses-devel sqlite-devel readline-devel tk-devel gcc make libffi-devel xz-devel"
-            LOG_INFO "tools: $tools"
-	        yum -y install $tools
+            LOG_INFO "yum install tools: $tools"
+	        yum -q -y install $tools || error_exit "[PythonInstall] pre install tools failed"
         ;;
         ubuntu|debian|raspbian)
             tools="wget build-essential zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libssl-dev libsqlite3-dev libreadline-dev libffi-dev libbz2-dev tk-dev gcc make"
-            LOG_INFO "tools: $tools"
-            apt update
-            DEBIAN_FRONTEND=noninteractive apt -y install $tools
+            LOG_INFO "Start run: apt-get update and apt-get install $tools"
+            apt-get update -qq >/dev/null || error_exit "[PythonInstall] pre install tools failed"
+            DEBIAN_FRONTEND=noninteractive apt-get -y install -qq $tools || error_exit "[PythonInstall] pre install tools failed"
         ;;
         *)
             LOG_ERROR "$LINUX_OS not supported."
             exit 1
         ;;
     esac
+    LOG_INFO "[PythonInstall] Pre install tools successfully."
 }
 
 function check_python_install_path() {
@@ -71,12 +71,12 @@ function check_python_install_path() {
 }
 
 function install_python() {	
-    LOG_INFO "Extract into $PYTHON_SRC_PATH"
+    LOG_INFO "[PythonInstall] Extract into $PYTHON_SRC_PATH"
     # 解压源码到/usr/local/src目录
-	tar zvxf $PYTHON_SRC_PKG_PATH -C $PYTHON_SRC_DIR && cd $PYTHON_SRC_PATH
-    LOG_INFO "Config and install to $PYTHON_INSTALL_PATH"
+	tar zxf $PYTHON_SRC_PKG_PATH -C $PYTHON_SRC_DIR && cd $PYTHON_SRC_PATH
+    LOG_INFO "[PythonInstall] Config and install to $PYTHON_INSTALL_PATH"
     # 编译配置和安装
-	./configure prefix=$PYTHON_INSTALL_PATH --enable-shared && make -j8 && make install && make clean || error_exit "Install Python src failed"
+	./configure prefix=$PYTHON_INSTALL_PATH --enable-shared >/dev/null && make -j8 >/dev/null && make install >/dev/null && make clean > /dev/null || error_exit "Install Python src failed"
     # 链接构建产出的Python可执行文件到/usr/local/bin目录
 	ln -s $PYTHON_INSTALL_PATH/bin/python3 /usr/local/bin/python
     ln -s $PYTHON_INSTALL_PATH/bin/python3 /usr/local/bin/python3
@@ -90,31 +90,37 @@ function install_python() {
 }
 
 function set_pypi_mirror() {
-    LOG_INFO "set pypi config [ $PYPI_MIRROR_URL ]"
+    LOG_INFO "Set pypi config [ $PYPI_MIRROR_URL ]"
 	mkdir -p ~/.pip/
 	echo "[global]
 index-url = $PYPI_MIRROR_URL
 [install]
 trusted-host=$PYPI_MIRROR_DOMAIN" > ~/.pip/pip.conf
+    pip3 install -q -U pip
 }
 
 function quiet_install_python() {
     LINUX_OS=$( get_linux_os )
-    LOG_INFO "Check Python version"
+    LOG_INFO "[PythonInstall] Check Python version"
     ret=$( check_python )
     if [ "$ret" == "true" ]; then
         LOG_WARN "This machine had installed Python3.7"
         return 0
     fi
+    
     pre_install
+
     cache=$( check_python_pkg_cache )
     if [ "$cache" == "false" ]; then
         download_python_src
+    else
+        LOG_INFO "[PythonInstall] Use Python PKG Cache: "$PYTHON_SRC_PKG_CACHE_PATH
+        PYTHON_SRC_PKG_PATH=$PYTHON_SRC_PKG_CACHE_PATH
     fi
     install_python
     check_python
     set_pypi_mirror
-    LOG_INFO "Install Python3.7.12 successfully."
+    LOG_INFO "[PythonInstall] Install Python3.7.12 successfully."
 }
 
 function interactive_install_python() {

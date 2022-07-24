@@ -287,7 +287,7 @@ function celery_status_detect() {
       main_ret=$(ps -aux |grep -c main_celery_worker)
       analysis_ret=$(ps -aux |grep -c analysis_celery_worker)
       if [[ $main_ret -gt 1 ]] && [[ $analysis_ret -gt 1 ]]; then
-        LOG_INFO "[HealthCheck] worker(main_worker&analysis_worker) check: OK."
+        LOG_INFO "[HealthCheck] worker(main&analysis) check: OK."
         return
       fi
     done

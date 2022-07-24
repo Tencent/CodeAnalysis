@@ -9,6 +9,7 @@ source $TCA_SCRIPT_ROOT/utils.sh
 export REDIS_PASSWD=${REDIS_PASSWD:-tca2022}
 export MYSQL_PASSWORD=${MYSQL_PASSWORD:-"TCA!@#2021"}
 export MARIADB_SETUP_FILE=${MARIADB_SETUP_FILE:-/tmp/mariadb_repo_setup}
+export MARIADB_SETUP_CACHE_FILE=${MARIADB_SETUP_CACHE_FILE}
 
 
 function check_redis() {
@@ -32,17 +33,19 @@ function check_mysql() {
 }
 
 function install_and_conf_redis_on_centos() {
-    yum install -y epel-release
-	yum install -y redis --nogpgcheck
+    LOG_INFO "  yum install epel-release redis. [Please wait for moment.]"
+	yum install -q -y epel-release redis --nogpgcheck || error_exit "yum install redis failed"
 }
 
 function install_and_conf_redis_on_ubuntu() {
-    apt update -y
-    apt install -y redis
+    LOG_INFO "  apt-get install redis. [Please wait for moment.]"
+    apt-get update -qq -y >/dev/null || error_exit "apt-get update"
+    apt-get install -qq -y redis || error_exit "apt-get install redis failed"
     
 }
 
 function config_redis() {
+    LOG_INFO "[RedisInstall] Config redis auth: "$REDIS_PASSWD
     if [ -f /etc/redis.conf ]; then
         LOG_INFO "redis.conf path: /etc/redis.conf"
         cp /etc/redis.conf /etc/redis.conf.bak
@@ -62,13 +65,13 @@ function start_redis() {
         return 0
     fi
 
-	LOG_INFO "start redis service"
-    if command_exists systemctl; then
+	LOG_INFO "[RedisInstall] Start redis service"
+    if command_normal systemctl; then
         systemctl start redis
-        LOG_INFO "set redis auto start during machine start"
+        LOG_INFO "Set redis auto start during machine start"
         systemctl enable redis
     else
-        LOG_WARN "using nohup start redis-server"
+        LOG_WARN "Using nohup start redis-server"
         nohup /usr/bin/redis-server --requirepass $REDIS_PASSWD 2>redis_start.error &
     fi
 }
@@ -81,8 +84,7 @@ function quiet_install_redis() {
     fi
 
     LINUX_OS=$( get_linux_os )
-    LOG_INFO "Current OS:"$LINUX_OS
-	LOG_INFO "start to install redis"
+	LOG_INFO "[RedisInstall] Start to install redis"
 
     case "$LINUX_OS" in
         centos|rhel|sles|tlinux|tencentos)
@@ -96,13 +98,29 @@ function quiet_install_redis() {
             exit 1
         ;;
     esac
+    LOG_INFO "[RedisInstall] Install redis successfully."
     
     config_redis
     start_redis
 }
 
+function check_mariadb_cache_file() {
+    if [ -n "$MARIADB_SETUP_CACHE_FILE" ]; then
+        ret="true"
+    else
+        ret="false"
+    fi
+    echo "$ret"
+}
+
 function download_and_conf_mariadb_setup_file() {
-    wget -O $MARIADB_SETUP_FILE http://downloads.mariadb.com/MariaDB/mariadb_repo_setup || error_exit "download mariadb_repo_setup failed"
+    cache=$( check_mariadb_cache_file )
+    if [ "$cache" == "false" ]; then
+        wget -O $MARIADB_SETUP_FILE http://downloads.mariadb.com/MariaDB/mariadb_repo_setup || error_exit "download mariadb_repo_setup failed"
+    else
+        LOG_INFO "Use Mariadb PKG Cache: "$MARIADB_SETUP_FILE
+        MARIADB_SETUP_FILE=$MARIADB_SETUP_CACHE_FILE
+    fi
     chmod +x $MARIADB_SETUP_FILE
     $MARIADB_SETUP_FILE --mariadb-server-version="mariadb-10.6" || error_exit "config mariadb_repo_setup failed"
 }
@@ -113,14 +131,14 @@ function start_mariadb() {
         return 0
     fi
     
-    LOG_INFO "start mysqld service"
-    if command_exists systemctl; then
-        LOG_INFO "using systemctl start mariadb"
+    LOG_INFO "[MariadbInstall] Start mysqld service"
+    if command_normal systemctl; then
+        LOG_INFO "Using systemctl start mariadb"
         systemctl start mysqld
-        LOG_INFO "set mysqld auto start during machine start"
+        LOG_INFO "Set mysqld auto start during machine start"
         systemctl enable mysqld
     else
-        LOG_WARN "using nohup start mysql"
+        LOG_WARN "Using nohup start mysqld"
         nohup /usr/bin/mysqld_safe &
         # nohup /usr/sbin/mariadbd --basedir=/usr --datadir=/var/lib/mysql --plugin-dir=/usr/lib/mysql/plugin --user=mysql --skip-log-error --pid-file=/run/mysqld/mysqld.pid --socket=/run/mysqld/mysqld.sock 2>mysql_start.error &
     fi
@@ -129,11 +147,12 @@ function start_mariadb() {
     if [ $mariadb_ret == "true" ]; then
         return 0
     else
-        LOG_ERROR "start mysql failed"
+        LOG_ERROR "[MariadbInstall] Start mysql failed"
     fi
 }
 
 function config_mariadb() {
+    LOG_INFO "[MariadbInstall] Config mysql auth, user: 'root', password: '$MYSQL_PASSWORD'"
     mysql -uroot -hlocalhost -e "DELETE FROM mysql.user WHERE USER='root' AND HOST='%';FLUSH PRIVILEGES;"
     mysql -uroot -hlocalhost -e "CREATE USER 'root'@'%' IDENTIFIED BY \"$MYSQL_PASSWORD\";ALTER USER 'root'@'localhost' IDENTIFIED BY \"$MYSQL_PASSWORD\";GRANT ALL ON *.* TO 'root'@'%' WITH GRANT OPTION;FLUSH PRIVILEGES;"
 }
@@ -144,44 +163,45 @@ function start_mariadb_with_docker() {
         return 0
     fi
     
-    LOG_WARN "start mysql in docker..."
+    LOG_WARN "[MariadbInstall] Start mysqld in docker..."
     sed -i "s/TCA_MYSQL_PASSWORD/${MYSQL_PASSWORD}/g" "$TCA_PROJECT_PATH/server/sql/reset_root_password.sql"
     nohup mysqld --user=mysql --datadir=/var/opt/tca/mariadb --log_error=/var/log/tca/mariadb/mariadb.err --init-file="$TCA_PROJECT_PATH/server/sql/reset_root_password.sql" 2>/var/log/tca/mariadb/mysql_error.out &
 
     sleep 10
     mariadb_ret=$( check_target_process_exist "mariadbd\|mysqld" )
     if [ $mariadb_ret == "true" ]; then
-        LOG_INFO "start mysql success"
+        LOG_INFO "[MariadbInstall] Start mysqld success"
     else
-        LOG_ERROR "start mysql failed"
+        LOG_ERROR "[MariadbInstall] Start mysqld failed"
     fi
 }
 
 function quiet_install_mariadb() {
     ret=$( check_mysql )
     if [ "$ret" == "true" ]; then
-        LOG_WARN "This machine had installed mysql-server"
+        LOG_WARN "[MariadbInstall] This machine had installed mysql-server"
         start_mariadb
         return 0
     fi
     
     LINUX_OS=$( get_linux_os )
-    LOG_INFO "Current OS:"$LINUX_OS
     install_base || error_exit "Install base software failed"
-    LOG_INFO "start to install mysql"
+    LOG_INFO "[MariadbInstall] Start to install mysqld"
     
     case "$LINUX_OS" in
         centos|rhel|sles|tlinux)
             download_and_conf_mariadb_setup_file
-            yum install -y MariaDB-server MariaDB-backup
+            LOG_INFO "yum install MariaDB-server MariaDB-backup [Please wait for moment.]"
+            yum install -q -y MariaDB-server MariaDB-backup || error_exit "Install mariadb failed"
         ;;
         ubuntu|debian|raspbian)
             download_and_conf_mariadb_setup_file
-            apt install -y mariadb-server mariadb-backup
+            LOG_INFO "apt install mariadb-server mariadb-backup [Please wait for moment.]"
+            apt-get install -qq -y mariadb-server mariadb-backup >/dev/null || error_exit "Install mariadb failed"
         ;;
         tencentos)
             LOG_WARN "Auto install mysql-server"
-            yum install -y mysql-server
+            yum install -q -y mysql-server
         ;;
         *)
             LOG_ERROR "$LINUX_OS not supported."
