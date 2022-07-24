@@ -130,6 +130,7 @@ function start_mariadb() {
         return 0
     else
         LOG_ERROR "start mysql failed"
+        LOG_ERROR "excute `systemctl status mariadb.service` to show error log"
     fi
 }
 

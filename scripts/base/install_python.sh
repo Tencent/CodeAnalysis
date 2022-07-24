@@ -61,27 +61,30 @@ function check_python_install_path() {
 function install_python() {	
     LOG_INFO "Extract into $PYTHON_SRC_PATH"
     # 解压源码到/usr/local/src目录
-	tar zvxf $PYTHON_SRC_PKG_PATH -C $PYTHON_SRC_DIR && cd $PYTHON_SRC_PATH
+	  tar zvxf $PYTHON_SRC_PKG_PATH -C $PYTHON_SRC_DIR && cd $PYTHON_SRC_PATH
     LOG_INFO "Config and install to $PYTHON_INSTALL_PATH"
     # 编译配置和安装
-	./configure prefix=$PYTHON_INSTALL_PATH --enable-shared && make -j8 && make install && make clean || error_exit "Install Python src failed"
+    ./configure prefix=$PYTHON_INSTALL_PATH --enable-shared && make -j8 && make install && make clean || error_exit "Install Python src failed"
     # 链接构建产出的Python可执行文件到/usr/local/bin目录
-	ln -s $PYTHON_INSTALL_PATH/bin/python3 /usr/local/bin/python
-	# 链接构建产出的pip3可执行文件到/usr/local/bin目录
-	ln -s $PYTHON_INSTALL_PATH/bin/pip3 /usr/local/bin/pip
-	# 链接构建产出的Python动态库
-	ln -s $PYTHON_INSTALL_PATH/lib/libpython3.7m.so.1.0 /usr/lib/libpython3.7m.so.1.0
-	# 配置动态库
-	ldconfig
+    check_ln_file /usr/local/bin/python
+    ln -s $PYTHON_INSTALL_PATH/bin/python3 /usr/local/bin/python
+    # 链接构建产出的pip3可执行文件到/usr/local/bin目录
+    check_ln_file /usr/local/bin/pip
+    ln -s $PYTHON_INSTALL_PATH/bin/pip3 /usr/local/bin/pip
+    # 链接构建产出的Python动态库
+    check_ln_file /usr/lib/libpython3.7m.so.1.0
+    ln -s $PYTHON_INSTALL_PATH/lib/libpython3.7m.so.1.0 /usr/lib/libpython3.7m.so.1.0
+    # 配置动态库
+    ldconfig
 }
 
 function set_pypi_mirror() {
     LOG_INFO "set pypi config [ $PYPI_MIRROR_URL ]"
-	mkdir -p ~/.pip/
-	echo "[global]
-	index-url = $PYPI_MIRROR_URL
-	[install]
-	trusted-host=$PYPI_MIRROR_DOMAIN" > ~/.pip/pip.conf
+    mkdir -p ~/.pip/
+    echo "[global]
+    index-url = $PYPI_MIRROR_URL
+    [install]
+    trusted-host=$PYPI_MIRROR_DOMAIN" > ~/.pip/pip.conf
 }
 
 function quiet_install_python() {
