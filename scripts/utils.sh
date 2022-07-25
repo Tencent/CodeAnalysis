@@ -160,14 +160,14 @@ function os_version_check() {
     if [ -s "/etc/redhat-release" ]; then
         centos_version_check=$(cat /etc/redhat-release | grep -iE 'release 1.|2.|3.|4.|5.|6.' | grep -iE 'centos|Red Hat')
         if [ "$(centos_version_check)" ]; then
-            error_exit "version of centos must be 7. or above, otherwise TCA CAN'T be used."
+            LOG_WARN "current centOS version is $centos_version_check, we recommend you use 7 or above."
         fi
     elif [ -s "/etc/issue" ]; then
-        ubuntu_version=$(cat /etc/issue|grep Ubuntu|awk '{print $2}'|cut -f 1 -d '.')
+        ubuntu_version=$(cat /etc/issue|grep Ubuntu|awk '{print $2}')
         min_version="18.03"
         if [ "$(ubuntu_version)" ]; then
             if [[ $ubuntu_version > $min_version ]]; then
-                error_exit "version of ubuntu must be 18.04 or above, otherwise TCA CAN'T be used."
+                error_exit "current Ubuntu version is $centos_version_check, we recommend you use 18.04 or above."
             fi
         fi
     fi
