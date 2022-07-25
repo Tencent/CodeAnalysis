@@ -90,11 +90,6 @@ function set_pypi_mirror() {
 function quiet_install_python() {
     LINUX_OS=$( get_linux_os )
     LOG_INFO "Check Python version"
-    ret=$( check_python )
-    if [ "$ret" == "true" ]; then
-        LOG_WARN "This machine had installed Python3.7"
-        return 0
-    fi
     pre_install
     download_python_src  
     install_python
@@ -104,6 +99,11 @@ function quiet_install_python() {
 }
 
 function interactive_install_python() {
+    ret=$( check_python )
+    if [ "$ret" == "true" ]; then
+        LOG_WARN "This machine had installed Python3.7"
+        return 0
+    fi
     LOG_INFO "Do you want to install python3.7 by this script?"
     read -p "Please enter:[Y/N]" result
     case $result in
