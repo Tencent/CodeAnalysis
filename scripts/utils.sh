@@ -172,16 +172,16 @@ function os_digits_check() {
 ### 若其他系统版本不可用，可至https://github.com/Tencent/CodeAnalysis发出issue ###
 function os_version_check() {
     if [ -s "/etc/redhat-release" ]; then
-        centos_version_check=$(cat /etc/redhat-release | grep -iE 'release 1.|2.|3.|4.|5.|6.' | grep -iE 'centos|Red Hat')
-        if [ "$(centos_version_check)" ]; then
-            error_exit "version of centos must be 7. or above, otherwise TCA CAN'T be used."
+        centos_version=$(cat /etc/redhat-release | grep -iE 'release 1.|2.|3.|4.|5.|6.' | grep -iE 'centos|Red Hat')
+        if [ $centos_version ]; then
+            LOG_WARN "current centOS version is $centos_version, we recommend you use 7 or above."
         fi
     elif [ -s "/etc/issue" ]; then
-        ubuntu_version=$(cat /etc/issue|grep Ubuntu|awk '{print $2}'|cut -f 1 -d '.')
+        ubuntu_version=$(cat /etc/issue |grep Ubuntu |awk '{print $2}')
         min_version="18.03"
         if [ "$ubuntu_version" ]; then
-            if [[ $ubuntu_version > $min_version ]]; then
-                error_exit "version of ubuntu must be 18.04 or above, otherwise TCA CAN'T be used."
+            if [[ $ubuntu_version < $min_version ]]; then
+                LOG_WARN "current Ubuntu version is $ubuntu_version, we recommend you use 18.04 or above."
             fi
         fi
     fi
