@@ -85,7 +85,7 @@ function force_kill() {
 }
 
 ### 检验软链文件是否存在，存在则询问是否删除 ###
-functio check_ln_file() {
+function check_ln_file() {
     file=$1
     if [ -f $file ]; then
       LOG_INFO "$file need to be removed, TCA will replaced it with new soft link file, otherwise python dependency may not be installed"
@@ -102,6 +102,7 @@ functio check_ln_file() {
               exit 1
               ;;
       esac
+    fi
 }
 
 ### 核验pip版本 ###
@@ -140,7 +141,7 @@ function pre_check() {
 
 ### 校验是否为root权限 ### 
 function root_check() {
-    if [ $(whoami) != "root"]; then
+    if [ $(whoami) != "root" ]; then
         error_exit "Please use TCA init script under root privilege."
     fi
 }
@@ -158,16 +159,16 @@ function os_digits_check() {
 ### 若其他系统版本不可用，可至https://github.com/Tencent/CodeAnalysis发出issue ###
 function os_version_check() {
     if [ -s "/etc/redhat-release" ]; then
-        centos_version_check=$(cat /etc/redhat-release | grep -iE 'release 1.|2.|3.|4.|5.|6.' | grep -iE 'centos|Red Hat')
-        if [ "$(centos_version_check)" ]; then
-            LOG_WARN "current centOS version is $centos_version_check, we recommend you use 7 or above."
+        centos_version=$(cat /etc/redhat-release | grep -iE 'release 1.|2.|3.|4.|5.|6.' | grep -iE 'centos|Red Hat')
+        if [ $centos_version ]; then
+            LOG_WARN "current centOS version is $centos_version, we recommend you use 7 or above."
         fi
     elif [ -s "/etc/issue" ]; then
-        ubuntu_version=$(cat /etc/issue|grep Ubuntu|awk '{print $2}')
+        ubuntu_version=$(cat /etc/issue |grep Ubuntu |awk '{print $2}')
         min_version="18.03"
-        if [ "$(ubuntu_version)" ]; then
-            if [[ $ubuntu_version > $min_version ]]; then
-                error_exit "current Ubuntu version is $centos_version_check, we recommend you use 18.04 or above."
+        if [ $ubuntu_version ]; then
+            if [[ $ubuntu_version < $min_version ]]; then
+                LOG_WARN "current Ubuntu version is $ubuntu_version, we recommend you use 18.04 or above."
             fi
         fi
     fi
@@ -200,6 +201,7 @@ function http_proxy_check() {
                 [3])
                     LOG_INFO "do nothing about PROXY setting"
                     return 1
+                    ;;
                 *)
                     LOG_ERROR "Invalid input. Stop."
                     exit 1
