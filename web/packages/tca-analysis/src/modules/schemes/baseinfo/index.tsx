@@ -145,7 +145,6 @@ const BaseConfig = (props: BaseConfigProps) => {
           name="tag"
           label="运行环境"
           rules={[{ required: true, message: '请选择运行环境' }]}
-          orgSid={orgSid}
           tags={tags}
         />
         <Form.Item {...layout} name="envs" label="环境变量">

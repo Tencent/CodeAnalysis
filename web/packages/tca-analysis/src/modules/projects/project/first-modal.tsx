@@ -50,7 +50,7 @@ const FirstModal = (props: FirstModalProps) => {
 
   useEffect(() => {
     (async () => {
-      setTags(get(await getTags(), 'results', []));
+      setTags(get(await getTags(orgSid), 'results', []));
       setLanguages(get(await getLanguages(), 'results', []));
     })();
   }, []);
@@ -170,7 +170,6 @@ const FirstModal = (props: FirstModalProps) => {
                   name="tag"
                   label="运行环境"
                   rules={[{ required: true, message: '请选择运行环境' }]}
-                  orgSid={orgSid}
                   tags={tags}
                 />
                 <Form.Item

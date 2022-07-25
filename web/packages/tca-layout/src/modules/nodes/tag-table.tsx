@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Table, Button, Tag } from 'coding-oa-uikit';
 
@@ -9,6 +9,7 @@ import { getTags } from '@src/services/nodes';
 // 模块内
 import { TAG_TYPE_ENUM, TAG_TYPE_CHOICES, TAG_TYPE_COLOR } from './constants';
 import TagModal from './tag-modal';
+import { filter } from 'lodash';
 
 const { Column } = Table;
 
@@ -30,6 +31,7 @@ const TagTable = () => {
   const [visible, setVisible] = useState(false);
   const [selectTag, setSelectTag] = useState(null);
   const { orgSid }: any = useParams();
+  const orgTagList = useMemo(() => filter(listData, (tag: any) => (tag.org_sid === orgSid)), [listData]);
 
   /**
    * 获取标签列表
@@ -65,7 +67,7 @@ const TagTable = () => {
         }}
         taginfo={selectTag}
       />
-      <Table rowKey={(item: any) => item.id} dataSource={listData}>
+      <Table rowKey={(item: any) => item.id} dataSource={orgTagList}>
         <Column
           title={t('标签名称')}
           dataIndex="name"
