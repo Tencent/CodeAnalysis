@@ -36,7 +36,7 @@ function command_normal() {
 	"$@" > /dev/null 2>&1
 }
 
-# 安装基础软件：wget、curl、unzip
+# 安装基础软件：wget、curl、unzip git subversion
 function install_base() {
 	LINUX_OS=$( get_linux_os )
 
@@ -88,6 +88,46 @@ function force_kill() {
     kill -9 $pids &>/dev/null
 }
 
+### 检验软链文件是否存在，存在则询问是否删除 ###
+function check_ln_file() {
+    file=$1
+    if [ -f $file ]; then
+      LOG_INFO "$file need to be removed, TCA will replaced it with new soft link file."
+      read -p "please enter: [Y/N]" result
+      case $result in
+          [Yy])
+              rm -f $file
+              ;;
+          [Nn])
+              LOG_WARN "soft link create failed."
+              ;;
+          *)
+              LOG_ERROR "Invalid input. Stop."
+              exit 1
+              ;;
+      esac
+}
+
+### 核验pip版本 ###
+### 保证使用python3.7对应的pip安装依赖 ###
+function use_right_pip() {
+    params=$1
+    neccessary_pip_py_verson="3.7"
+    if command_exists pip; then
+        pip_py_version=$(pip -V |awk '{print $6}' |cut -f 1 -d ')')
+        if [ pip_py_version == $neccessary_pip_py_verson ]; then
+            pip install $params
+        fi
+    elif command_exists pip3; then
+        pip3_py_version=$(pip3 -V |awk '{print $6}' |cut -f 1 -d ')')
+        if [ pip3_py_version == $neccessary_pip_py_verson ]; then
+            pip3 install $params
+        fi
+    else
+        error_exit "Please make sure pip's python version is 3.7! otherwise TCA CAN'T be used"
+    fi
+}
+
 #--------------------------------------------
 # 前置校验通用方法
 #--------------------------------------------
@@ -120,8 +160,8 @@ function os_digits_check() {
 ### 若其他系统版本不可用，可至https://github.com/Tencent/CodeAnalysis发出issue ###
 function os_version_check() {
     if [ -s "/etc/redhat-release" ]; then
-        centos_version_check=$(cat /etc/redhat-release | grep -iE ' 1.|2.|3.|4.|5.|6.' | grep -iE 'centos|Red Hat')
-        if [ "$centos_version_check" ]; then
+        centos_version_check=$(cat /etc/redhat-release | grep -iE 'release 1.|2.|3.|4.|5.|6.' | grep -iE 'centos|Red Hat')
+        if [ "$(centos_version_check)" ]; then
             error_exit "version of centos must be 7. or above, otherwise TCA CAN'T be used."
         fi
     elif [ -s "/etc/issue" ]; then
@@ -141,7 +181,7 @@ function http_proxy_check() {
     https_proxy=$HTTPS_PROXY
     no_proxy=$no_proxy
     if [ $http_proxy ] || [ $https_proxy ]; then
-        if [[ $no_proxy == *"127.0.0.1"* ]]; then
+        if [[ $no_proxy != *"127.0.0.1"* ]]; then
             LOG_INFO "TCA script will unset HTTP_PROXY/HTTPS_PROXY or set NO_PROXY，otherwise TCA will be unavaliable."
             LOG_INFO "1. unset HTTP_PROXY/HTTPS_PROXY. <please note after unset, your node may lose access to Extranet> "
             LOG_INFO "2. set NO_PROXY=127.0.0.1, cause TCA server is deployed on http:/127.0.0.1:8000/"

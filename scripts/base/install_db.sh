@@ -133,13 +133,13 @@ function start_mariadb() {
     
     LOG_INFO "[MariadbInstall] Start mysqld service"
     if command_normal systemctl; then
-        LOG_INFO "Using systemctl start mariadb"
+        LOG_INFO "Using systemctl start mysqld"
         systemctl start mysqld
         LOG_INFO "Set mysqld auto start during machine start"
         systemctl enable mysqld
     else
         LOG_WARN "Using nohup start mysqld"
-        nohup /usr/bin/mysqld_safe &
+        nohup /usr/bin/mysqld_safe 2>$TCA_PROJECT_PATH/mysql_start.error &
         # nohup /usr/sbin/mariadbd --basedir=/usr --datadir=/var/lib/mysql --plugin-dir=/usr/lib/mysql/plugin --user=mysql --skip-log-error --pid-file=/run/mysqld/mysqld.pid --socket=/run/mysqld/mysqld.sock 2>mysql_start.error &
     fi
     sleep 10
@@ -147,7 +147,12 @@ function start_mariadb() {
     if [ $mariadb_ret == "true" ]; then
         return 0
     else
-        LOG_ERROR "[MariadbInstall] Start mysql failed"
+        LOG_ERROR "[MariadbInstall] Start mysqld failed"
+        if command_normal systemctl; then
+            LOG_ERROR "execute 'systemctl status mysqld' to view error log."
+        else
+            LOG_ERROR "execute 'cat $TCA_PROJECT_PATH/mysql_start.error' to view error log."
+        fi
     fi
 }
 
