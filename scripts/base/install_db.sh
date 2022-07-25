@@ -78,7 +78,7 @@ function start_redis() {
 }
 
 function restart_redis() {
-	LOG_INFO "Start redis service"
+	LOG_INFO "[RedisInstall] Start redis service"
     if command_normal systemctl; then
         systemctl restart redis
     else
@@ -113,7 +113,7 @@ function quiet_install_redis() {
     LOG_INFO "[RedisInstall] Install redis successfully."
     
     config_redis
-    start_redis
+    restart_redis
 }
 
 function check_mariadb_cache_file() {
@@ -134,7 +134,7 @@ function download_and_conf_mariadb_setup_file() {
         MARIADB_SETUP_FILE=$MARIADB_SETUP_CACHE_FILE
     fi
     chmod +x $MARIADB_SETUP_FILE
-    $MARIADB_SETUP_FILE --mariadb-server-version="mariadb-10.6" || error_exit "config mariadb_repo_setup failed，请手动执行：$MARIADB_SETUP_FILE --mariadb-server-version='mariadb-10.6'"
+    $MARIADB_SETUP_FILE --mariadb-server-version="mariadb-10.6" >/dev/null || error_exit "config mariadb_repo_setup failed，请手动执行：$MARIADB_SETUP_FILE --mariadb-server-version='mariadb-10.6'"
 }
 
 function start_mariadb() {
@@ -168,11 +168,11 @@ function start_mariadb() {
     fi
 }
 
-
 function restart_mariadb() {
+    LOG_INFO "[MariadbInstall] Start redis service"
     if command_normal systemctl; then
         LOG_INFO "Using systemctl start mysqld"
-        systemctl start mysqld
+        systemctl restart mysqld
     else
         normal_kill "mariadbd\|mysqld"
         LOG_WARN "Using nohup start mysqld"
@@ -238,7 +238,7 @@ function quiet_install_mariadb() {
         ;;
     esac
 
-    start_mariadb
+    restart_mariadb
     config_mariadb
 }
 

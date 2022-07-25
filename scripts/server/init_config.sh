@@ -45,17 +45,17 @@ function create_server_dir() {
 
 function copy_server_config() {
     LOG_INFO "[TCAServer] Copy server config"
-    rm $TCA_SERVER_MAIN_PATH/codedog/settings/local.py
+    rm -f $TCA_SERVER_MAIN_PATH/codedog/settings/local.py
     ln -s $TCA_SERVER_PATH/configs/django/local_main.py $TCA_SERVER_MAIN_PATH/codedog/settings/local.py
 
-    rm $TCA_SERVER_ANALYSIS_PATH/codedog/settings/local.py
+    rm -f $TCA_SERVER_ANALYSIS_PATH/codedog/settings/local.py
     ln -s $TCA_SERVER_PATH/configs/django/local_analysis.py $TCA_SERVER_ANALYSIS_PATH/codedog/settings/local.py
 
     mkdir -p $TCA_SERVER_FILE_PATH/codedog_file_server/env
-    rm $TCA_SERVER_FILE_PATH/codedog_file_server/env/local.py
+    rm -f $TCA_SERVER_FILE_PATH/codedog_file_server/env/local.py
     ln -s $TCA_SERVER_PATH/configs/django/local_file.py $TCA_SERVER_FILE_PATH/codedog_file_server/env/local.py
 
-    rm $TCA_SERVER_LOGIN_PATH/apps/settings/local.py
+    rm -f $TCA_SERVER_LOGIN_PATH/apps/settings/local.py
     ln -s $TCA_SERVER_PATH/configs/django/local_login.py $TCA_SERVER_LOGIN_PATH/apps/settings/local.py
 
     if [ -f $NGINX_CONF_PATH/tca_8000.conf ]; then
@@ -70,8 +70,8 @@ function copy_server_config() {
 }
 
 function install_server_requirments() {
-    LOG_INFO "[TCAServer] Install server dependency packages..."
-    LOG_INFO "    TCA Server requirements detail: $TCA_SERVER_CONFIG_PATH/requirements.txt"
+    LOG_INFO "[TCAServer] Install server dependency packages... [Please wait for a moment.]"
+    LOG_INFO "    * TCA Server requirements detail: $TCA_SERVER_CONFIG_PATH/requirements.txt"
     LOG_WARN "    * TCA已配置腾讯云pypi源（https://mirrors.cloud.tencent.com/pypi/simple）进行下载"
     LOG_WARN "    * 若仍无法正常下载或需更新为其他pypi源，请至/root/.pip/pip.conf文件进行调整, 使用目标镜像源地址进行替换"
     use_right_pip "-q -r $TCA_SERVER_CONFIG_PATH/requirements.txt"
