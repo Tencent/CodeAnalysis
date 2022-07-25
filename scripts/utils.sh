@@ -87,8 +87,9 @@ function force_kill() {
 ### 检验软链文件是否存在，存在则询问是否删除 ###
 function check_ln_file() {
     file=$1
+    new_soft_link=$2
     if [ -f $file ]; then
-      LOG_INFO "$file need to be removed, TCA will replaced it with new soft link file, otherwise python dependency may not be installed"
+      LOG_INFO "$file need to be removed, TCA will replaced it with new soft link file: $new_soft_link, otherwise python dependency may not be installed"
       read -p "please enter: [Y/N]" result
       case $result in
           [Yy])

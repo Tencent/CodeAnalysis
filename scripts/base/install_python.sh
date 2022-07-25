@@ -66,13 +66,13 @@ function install_python() {
     # 编译配置和安装
     ./configure prefix=$PYTHON_INSTALL_PATH --enable-shared && make -j8 && make install && make clean || error_exit "Install Python src failed"
     # 链接构建产出的Python可执行文件到/usr/local/bin目录
-    check_ln_file /usr/local/bin/python
+    check_ln_file /usr/local/bin/python $PYTHON_INSTALL_PATH/bin/python3
     ln -s $PYTHON_INSTALL_PATH/bin/python3 /usr/local/bin/python
     # 链接构建产出的pip3可执行文件到/usr/local/bin目录
-    check_ln_file /usr/local/bin/pip
+    check_ln_file /usr/local/bin/pip $PYTHON_INSTALL_PATH/bin/pip3
     ln -s $PYTHON_INSTALL_PATH/bin/pip3 /usr/local/bin/pip
     # 链接构建产出的Python动态库
-    check_ln_file /usr/lib/libpython3.7m.so.1.0
+    check_ln_file /usr/lib/libpython3.7m.so.1.0 $PYTHON_INSTALL_PATH/lib/libpython3.7m.so.1.0
     ln -s $PYTHON_INSTALL_PATH/lib/libpython3.7m.so.1.0 /usr/lib/libpython3.7m.so.1.0
     # 配置动态库
     ldconfig
