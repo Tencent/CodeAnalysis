@@ -6,7 +6,8 @@ TCA_PROJECT_PATH=${TCA_PROJECT_PATH:-"$( cd "$(dirname $TCA_SCRIPT_ROOT)"; pwd )
 
 source $TCA_SCRIPT_ROOT/utils.sh
 
-export REDIS_PASSWD=${REDIS_PASSWD:-tca2022}
+export REDIS_PASSWD=${REDIS_PASSWD:-"tca2022"}
+export MYSQL_USERNAME=${MYSQL_USERNAME:-"tca"}
 export MYSQL_PASSWORD=${MYSQL_PASSWORD:-"TCA!@#2021"}
 export MARIADB_SETUP_FILE=${MARIADB_SETUP_FILE:-/tmp/mariadb_repo_setup}
 export MARIADB_SETUP_CACHE_FILE=${MARIADB_SETUP_CACHE_FILE}
@@ -133,7 +134,7 @@ function download_and_conf_mariadb_setup_file() {
         MARIADB_SETUP_FILE=$MARIADB_SETUP_CACHE_FILE
     fi
     chmod +x $MARIADB_SETUP_FILE
-    $MARIADB_SETUP_FILE --mariadb-server-version="mariadb-10.6" || error_exit "config mariadb_repo_setup failed"
+    $MARIADB_SETUP_FILE --mariadb-server-version="mariadb-10.6" || error_exit "config mariadb_repo_setup failed，请手动执行：$MARIADB_SETUP_FILE --mariadb-server-version='mariadb-10.6'"
 }
 
 function start_mariadb() {
@@ -180,9 +181,9 @@ function restart_mariadb() {
 }
 
 function config_mariadb() {
-    LOG_INFO "[MariadbInstall] Config mysql auth, user: 'root', password: '$MYSQL_PASSWORD'"
-    mysql -uroot -hlocalhost -e "DELETE FROM mysql.user WHERE USER='root' AND HOST='%';FLUSH PRIVILEGES;"
-    mysql -uroot -hlocalhost -e "CREATE USER 'root'@'%' IDENTIFIED BY \"$MYSQL_PASSWORD\";ALTER USER 'root'@'localhost' IDENTIFIED BY \"$MYSQL_PASSWORD\";GRANT ALL ON *.* TO 'root'@'%' WITH GRANT OPTION;FLUSH PRIVILEGES;"
+    LOG_INFO "[MariadbInstall] Config mysql auth, user: '$MYSQL_USERNAME', password: '$MYSQL_PASSWORD'"
+    mysql -uroot -hlocalhost -e "DELETE FROM mysql.user WHERE USER='$MYSQL_USERNAME' AND HOST='localhost';FLUSH PRIVILEGES;"
+    mysql -uroot -hlocalhost -e "CREATE USER '$MYSQL_USERNAME'@'localhost' IDENTIFIED BY \"$MYSQL_PASSWORD\";GRANT ALL ON *.* TO '$MYSQL_USERNAME'@'localhost' WITH GRANT OPTION;FLUSH PRIVILEGES;"
 }
 
 function start_mariadb_with_docker() {
@@ -192,9 +193,9 @@ function start_mariadb_with_docker() {
     fi
     
     LOG_WARN "[MariadbInstall] Start mysqld in docker..."
-    sed -i "s/TCA_MYSQL_PASSWORD/${MYSQL_PASSWORD}/g" "$TCA_PROJECT_PATH/server/sql/reset_root_password.sql"
+    LOG_WARN "[MariadbInstall] Config mysql auth, user: '$MYSQL_USERNAME', password: '$MYSQL_PASSWORD'"
+    sed -i "s/TCA_MYSQL_PASSWORD/${MYSQL_PASSWORD}/g ; s/TCA_MYSQL_USERNAME/${MYSQL_USERNAME}/g" "$TCA_PROJECT_PATH/server/sql/reset_root_password.sql"
     nohup mysqld --user=mysql --datadir=/var/opt/tca/mariadb --log_error=/var/log/tca/mariadb/mariadb.err --init-file="$TCA_PROJECT_PATH/server/sql/reset_root_password.sql" 2>/var/log/tca/mariadb/mysql_error.out &
-
     sleep 10
     mariadb_ret=$( check_target_process_exist "mariadbd\|mysqld" )
     if [ $mariadb_ret == "true" ]; then

@@ -24,7 +24,9 @@ RUN wget "https://www.python.org/ftp/python/3.7.12/Python-3.7.12.tgz" \
     && ./configure prefix=/usr/local/python3 --enable-shared \
     && make -j8 && make install && make clean \
     && ln -s /usr/local/python3/bin/python3 /usr/local/bin/python \
+    && ln -s /usr/local/python3/bin/python3 /usr/local/bin/python3 \
     && ln -s /usr/local/python3/bin/pip3 /usr/local/bin/pip \
+    && ln -s /usr/local/python3/bin/pip3 /usr/local/bin/pip3 \
     && ln -s /usr/local/python3/lib/libpython3.7m.so.1.0 /usr/lib/libpython3.7m.so.1.0 \
     && ldconfig && mkdir -p ~/.pip/ \
     && echo "[global]\nindex-url = https://mirrors.cloud.tencent.com/pypi/simple\n[install]\ntrusted-host=mirrors.cloud.tencent.com" > ~/.pip/pip.conf \

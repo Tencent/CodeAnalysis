@@ -3,7 +3,7 @@
 # 数据库配置，默认MySQL端口号为3306
 export MYSQL_HOST=${MYSQL_HOST:-127.0.0.1}
 export MYSQL_PORT=${MYSQL_PORT:-3306}
-export MYSQL_USER=${MYSQL_USER:-root}
+export MYSQL_USER=${MYSQL_USER:-tca}
 export MYSQL_PASSWORD=${MYSQL_PASSWORD:-"TCA!@#2021"}
 
 # Redis配置，默认Redis端口号为6379

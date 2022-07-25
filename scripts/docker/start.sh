@@ -23,10 +23,19 @@ function init_directory() {
     mkdir -p /var/opt/tca/mariadb
     mkdir -p /var/opt/tca/redis
     mkdir -p /var/log/tca/redis
+    mkdir -p /var/log/tca/client
     chown -R mysql:mysql /var/log/tca/mariadb /var/opt/tca/mariadb
 
-    if [ ! -h "/var/log/tca/servers" ]; then
+    if [ ! -h "/var/log/tca/servers/logs" ]; then
         ln -s /CodeAnalysis/server/logs /var/log/tca/servers
+    fi
+
+    if [ ! -h "/var/opt/tca/files" ]; then
+        ln -s /CodeAnalysis/server/projects/file/data /var/opt/tca/files
+    fi
+
+    if [ ! -h "/var/opt/tca/tools" ]; then
+        ln -s /CodeAnalysis/tools /var/opt/tca/tools
     fi
 
     if [ ! -f "/etc/tca/config.sh" ]; then

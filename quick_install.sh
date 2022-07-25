@@ -32,7 +32,8 @@ function tca_help() {
     LOG_INFO "        stop tca on local:                     ./quick_start.sh local stop"
     LOG_INFO ""
     LOG_INFO "    2. use docker to deploy tca server, web and client"
-    LOG_INFO "        run all services in a container:       ./quick_start.sh docker" 
+    LOG_INFO "        run all services in a container:       ./quick_start.sh docker deploy" 
+    LOG_INFO "        start a stopped tca container:         ./quick_start.sh docker start" 
     LOG_INFO ""
     LOG_INFO "    3. use docker-compose to deploy tca server, web and client"
     LOG_INFO "        run TCA with docker-compose:           ./quick_install docker-compose"
@@ -60,7 +61,7 @@ deploy() {
         docker)
             LOG_INFO "Start tca using docker"
             interactive_install_docker
-            tca_docker_main
+            tca_docker_main "$2"
         ;;
         docker-compose)
             LOG_INFO "Start tca using docker-compose"

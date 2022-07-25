@@ -13,6 +13,7 @@ function create_server_dir() {
     mkdir -p $TCA_SERVER_ANALYSIS_PATH/log
     mkdir -p $TCA_SERVER_LOGIN_PATH/log
     mkdir -p $TCA_SERVER_FILE_PATH/log
+    mkdir -p $TCA_SERVER_FILE_PATH/data
     mkdir -p $TCA_SERVER_LOG_PATH
     mkdir -p $TCA_SERVER_TMP_PATH
 

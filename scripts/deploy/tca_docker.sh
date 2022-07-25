@@ -38,8 +38,8 @@ function get_image() {
     fi
 }
 
-function start_container() {
-    LOG_INFO "Start tca container command:"
+function deploy_container() {
+    LOG_INFO "Deploy tca container command:"
     set -x
     docker run -it --env TCA_INIT_DATA=$TCA_INIT_DATA \
         --name tca_server --publish 80:80 --publish 8000:8000 --publish 9001:9001 \
@@ -47,15 +47,50 @@ function start_container() {
         -v $TCA_DOCKER_DATA_PATH:/var/opt/tca/ \
         -v $TCA_DOCKER_CONFIG_PATH:/etc/tca/ \
         $TCA_IMAGE_NAME:$TCA_IMAGE_TAG
+    ret=$?
+
+    set +x
+    if [ "$ret" != "0" ]; then
+        LOG_ERROR "deploy tca docker failed"
+    else
+        LOG_INFO "TCA Docker Log Path:     $TCA_DOCKER_LOG_PATH"
+        LOG_INFO "TCA Docker Data Path:    $TCA_DOCKER_DATA_PATH"
+        LOG_INFO "TCA Docker Config Path:  $TCA_DOCKER_CONFIG_PATH"
+    fi
+}
+
+function start_container() {
+    LOG_INFO "Start tca container command:"
+    set -x
+    docker start tca_server
+    ret=$?
     set +x
     
-    LOG_INFO "TCA Docker Log Path:     $TCA_DOCKER_LOG_PATH"
-    LOG_INFO "TCA Docker Data Path:    $TCA_DOCKER_DATA_PATH"
-    LOG_INFO "TCA Docker Config Path:  $TCA_DOCKER_CONFIG_PATH"
+    if [ "$ret" != "0" ]; then
+        LOG_ERROR "start tca docker failed"
+    else
+        LOG_INFO "TCA Docker Log Path:     $TCA_DOCKER_LOG_PATH"
+        LOG_INFO "TCA Docker Data Path:    $TCA_DOCKER_DATA_PATH"
+        LOG_INFO "TCA Docker Config Path:  $TCA_DOCKER_CONFIG_PATH"
+    fi
 }
 
 function tca_docker_main() {
-    get_image
-    start_container
+    command=$1
+    case $command in
+        deploy)
+            LOG_INFO "Deploy tca container"
+            get_image
+            deploy_container
+        ;;
+        start)
+            LOG_INFO "Start tca container"
+            start_container
+        ;;
+        *)
+            LOG_ERROR "'$command' not support."
+            exit 1
+        ;;
+    esac
 }
 

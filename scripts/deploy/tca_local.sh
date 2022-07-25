@@ -43,6 +43,15 @@ function tca_local_install() {
             LOG_INFO "Init tca client config"
             init_client_config
         ;;
+        tca)
+            LOG_INFO "Init tca server config"
+            init_server_config
+            init_server_db_and_data
+            LOG_INFO "Init tca web config"
+            init_web_config
+            LOG_INFO "Init tca client config"
+            init_client_config
+        ;;
         *)
             LOG_INFO "1. Install base software: Python, Redis, Mariadb(or MySQL), Nginx"
             interactive_install_python
@@ -68,6 +77,9 @@ function tca_local_start() {
     service=$1
     case "$service" in
         mysql)
+            restart_mariadb
+        ;;
+        mariadb)
             restart_mariadb
         ;;
         redis)
@@ -145,7 +157,6 @@ function tca_local_help() {
     LOG_INFO "5. check  : check all serivces status."
     LOG_INFO "6. log    : print all serivces log path."
     LOG_INFO "7. help   : print script document."
-
 }
 
 function tca_local_main() {
