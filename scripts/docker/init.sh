@@ -10,15 +10,6 @@ source $TCA_SCRIPT_ROOT/server/init_config.sh
 source $TCA_SCRIPT_ROOT/server/int_db.sh
 source $TCA_SCRIPT_ROOT/client/init.sh
 
-mkdir -p /var/log/tca/supervisord/
-mkdir -p /var/log/tca/mariadb
-mkdir -p /var/opt/tca/mariadb
-mkdir -p /var/opt/tca/redis
-mkdir -p /var/log/tca/redis
-mkdir -p /var/log/tca/servers/
-mkdir -p /etc/tca/
-chown -R mysql:mysql /var/log/tca/mariadb /var/opt/tca/mariadb
-
 # 配置DB初始化密码
 sed "s/TCA_MYSQL_PASSWORD/${MYSQL_PASSWORD}/g" /CodeAnalysis/server/sql/_temp.sql > /CodeAnalysis/server/sql/reset_root_password.sql
 # 调整redis rdb位置

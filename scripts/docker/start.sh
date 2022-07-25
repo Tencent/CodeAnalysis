@@ -8,6 +8,7 @@ TCA_INIT_DATA=${TCA_INIT_DATA:-"false"}
 export DAEMON=False
 export SERVER_ACCESS_LOG="-"
 export SERVER_ERROR_LOG="-"
+export FILE_STORAGE_DIR="/var/opt/tca/files/"
 
 source $TCA_SCRIPT_ROOT/utils.sh
 source $TCA_SCRIPT_ROOT/config.sh
@@ -19,23 +20,27 @@ source $TCA_SCRIPT_ROOT/web/init.sh
 
 function init_directory() {
     mkdir -p /var/log/tca/supervisord
+    mkdir -p /var/log/tca/servers/main
+    mkdir -p /var/log/tca/servers/analysis
+    mkdir -p /var/log/tca/servers/login
+    mkdir -p /var/log/tca/servers/file
+    mkdir -p /var/log/tca/servers/scmproxy
+    mkdir -p /var/log/tca/nginx
     mkdir -p /var/log/tca/mariadb
     mkdir -p /var/opt/tca/mariadb
     mkdir -p /var/opt/tca/redis
     mkdir -p /var/log/tca/redis
     mkdir -p /var/log/tca/client
+    mkdir -p /var/opt/tca/files
+    mkdir -p /var/opt/tca/tools
+    mkdir -p /etc/tca/
     chown -R mysql:mysql /var/log/tca/mariadb /var/opt/tca/mariadb
 
-    if [ ! -h "/var/log/tca/servers/logs" ]; then
-        ln -s /CodeAnalysis/server/logs /var/log/tca/servers
-    fi
-
-    if [ ! -h "/var/opt/tca/files" ]; then
-        ln -s /CodeAnalysis/server/projects/file/data /var/opt/tca/files
-    fi
-
-    if [ ! -h "/var/opt/tca/tools" ]; then
-        ln -s /CodeAnalysis/tools /var/opt/tca/tools
+    if [ -d "/CodeAnalysis/tools" ]; then
+        mv /CodeAnalysis/tools /var/opt/tca/tools
+        ln -s  /var/opt/tca/tools /CodeAnalysis/tools
+    else
+        ln -s  /var/opt/tca/tools /CodeAnalysis/tools
     fi
 
     if [ ! -f "/etc/tca/config.sh" ]; then

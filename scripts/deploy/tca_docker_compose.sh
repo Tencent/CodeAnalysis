@@ -132,7 +132,11 @@ function start_all_services() {
     docker-compose up -d
 }
 
-function tca_docker_compose_main() {
+function stop_all_services() {
+    docker-compose stop
+}
+
+function deploy_all_services() {
     cd $TCA_PROJECT_PATH
     set_image_with_arch
     start_db || error_exit "start db failed"
@@ -144,3 +148,30 @@ function tca_docker_compose_main() {
     start_all_services
     tca_introduction
 }
+
+
+function tca_docker_compose_main() {
+    command=$1
+    case $command in
+        deploy)
+            LOG_INFO "Deploy tca docker-compose"
+            deploy_all_services
+        ;;
+        start)
+            LOG_INFO "Start tca docker-compose"
+            start_all_services
+        ;;
+        stop)
+            LOG_INFO "Stop tca docker-compose"
+            stop_all_serives
+        ;;
+        build)
+            LOG_INFO "Build tca image"
+            docker-compose build main-server analysis-server file-server login-server scmproxy client
+        ;;
+        *)
+            LOG_ERROR "'$command' not support."
+            exit 1
+    esac
+}
+

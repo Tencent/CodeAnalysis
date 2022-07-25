@@ -6,11 +6,6 @@ TCA_SCRIPT_ROOT=${TCA_SCRIPT_ROOT:-"$TCA_PROJECT_PATH/scripts"}
 
 source $TCA_SCRIPT_ROOT/utils.sh
 source $TCA_SCRIPT_ROOT/base/install_docker.sh
-source $TCA_PROJECT_PATH/server/scripts/config.sh
-source $TCA_SCRIPT_ROOT/config.sh
-source $TCA_SCRIPT_ROOT/deploy/tca_local.sh
-source $TCA_SCRIPT_ROOT/deploy/tca_docker.sh
-source $TCA_SCRIPT_ROOT/deploy/tca_docker_compose.sh
 
 function tca_help() {
     LOG_INFO "Support command:"
@@ -36,7 +31,10 @@ function tca_help() {
     LOG_INFO "        start a stopped tca container:         ./quick_start.sh docker start" 
     LOG_INFO ""
     LOG_INFO "    3. use docker-compose to deploy tca server, web and client"
-    LOG_INFO "        run TCA with docker-compose:           ./quick_install docker-compose"
+    LOG_INFO "        run TCA with docker-compose:           ./quick_install docker-compose deploy"
+    LOG_INFO "        restart TCA with docker-compose:       ./quick_install docker-compose restart  (equal: docker-compose up -d)"
+    LOG_INFO "        rebuild TCA images:                    ./quick_install docker-compose build"
+
 }
 
 deploy() {
@@ -56,18 +54,21 @@ deploy() {
     case "$mode" in
         local)
             LOG_INFO "Start tca directly. [Only support Linux]"
+            source $TCA_SCRIPT_ROOT/deploy/tca_local.sh
             tca_local_main "$2" "$3"
         ;;
         docker)
             LOG_INFO "Start tca using docker"
+            source $TCA_SCRIPT_ROOT/deploy/tca_docker.sh
             interactive_install_docker
             tca_docker_main "$2"
         ;;
         docker-compose)
             LOG_INFO "Start tca using docker-compose"
+            source $TCA_SCRIPT_ROOT/deploy/tca_docker_compose.sh
             interactive_install_docker
             interactive_install_docker_compose
-            tca_docker_compose_main
+            tca_docker_compose_main "$2"
         ;;
         help)
             tca_help

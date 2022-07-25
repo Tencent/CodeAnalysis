@@ -1,28 +1,23 @@
 # 部署 Server 和 Web
 
-## 通过源代码
+## 本地快速部署
 
 ### 依赖环境
 
 - 系统环境
-
   - Linux
-
   - 最低配置：2核4G内存、100G硬盘存储空间
 
 - 环境准备
+> 目前TCA脚本已封装好Python、Mariadb、Redis与Nginx安装步骤，可以按“部署步骤”文档进行操作
 
   - **Python 3.7**，[安装指引](./references/install_python37_on_centos.md)
 
-  - **MySQL服务（5.7.8以上的版本）**，[安装指引](./references/install_mysql_on_centos.md)
+  - **MySQL服务（MySQL5.7.8以上版本或Mariadb 10.5以上版本）**，[安装指引](./references/install_mysql_on_centos.md)
 
   - **Redis服务（4.0版本以上）**，[安装指引](./references/install_redis_on_centos.md)
 
-  - **Nginx服务**，可以使用包管理工具进行安装
-
-    - CentOS 系统：`yum install nginx`
-
-    - Ubuntu 系统：`apt-get install nginx`
+  - **Nginx服务**
 
   :::warning
   仅适用于本地部署体验，生产环境建议使用专业的 MySQL、Redis 等服务
@@ -30,17 +25,115 @@
 
 - 权限准备
 
-  - 安装 Server 依赖软件（python、nginx、yum 等软件包）需要使用 ROOT 权限
+  - 环境权限：安装 Server 依赖软件（python、nginx、yum 等软件包）需要使用 ROOT 权限
+    - 启动 Server服务时可以使用非 ROOT 用户运行
+  - 数据库权限：Server 服务执行数据库初始化需要依赖 ``CREATE、ALTER、INDEX、DELETE、LOCK TABLES、SELECT、INSERT、REFERENCES、UPDATE`` 权限
+- 端口使用：需要开放80端口的访问权限(80为TCA平台默认访问端口)，或调整 Web 服务默认的访问端口地址
 
-    启动 Server服务时可以使用非 ROOT 用户运行
-  
-  - 需要开放80端口的访问权限(80为TCA平台默认访问端口)，或调整 Web 服务默认的访问端口地址
+### 启动操作
 
-  - Server 服务执行数据库初始化需要依赖 ``CREATE、ALTER、INDEX、DELETE、LOCK TABLES、SELECT、INSERT、REFERENCES、UPDATE`` 权限
+1. 进入CodeAnalysis工作目录（例如``~/CodeAnalysis``)，以下路径均为目录内的相对路径
+2. 安装基础软件与部署TCA（可根据脚本选项确定是否要安装相关基础软件），执行
+  ```bash
+  $ ./quick_install.sh local deploy
+  ```
+  执行该命令会做以下事情：
+  - 检测本地Python3.7、Mariadb/MySQL、Redis与Nginx，如果不存在会提示安装（install）
+  - 部署TCA Server、Web与Client，并进行初始化（install）
+  - 启动TCA Server、Web与Client（start）
+  - 检测TCA的运行状态（check）
+   
+  >注：在运行过程中，脚本会检测本地是否安装了相关基础软件（Python3.7、MySQL/Mariadb、Redis、Nignx），如果未安装会输出以下类似提示语：
+  >```
+  >Do you want to install [Redis] by this script?
+  >Please enter:[Y/N]
+  >```
+  >如果确定通过脚本安装可以输入`Y`。
+3. 执行完成，无其他报错，即可登录：
+    - TCA 平台初始登录账号是``CodeDog``，密码是``admin``，
 
-### 部署步骤
+#### 后续更新操作
+1. 更新代码
+2. 执行以下命令：
+    - `./quick_start.sh local install tca`：更新相关配置
+    - `./quick_start.sh local start`：启动服务（会自动关闭之前的服务）
+    - `./quick_start.sh local check`：检查服务是否启动失败
 
-#### 部署 Server
+#### 其他命令介绍
+
+- `./quick_install.sh local install`：安装Python3.7、Mariadb/MySQL、Redis与Nginx，初始化TCA各个服务数据
+- `./quick_install.sh local start`：启动TCA Server、Web、Client
+- `./quick_install.sh local stop`：关闭TCA Server、Web、Client
+- `./quick_install.sh local check`：检查TCA Server、Web运行状态
+- `./quick_install.sh local log`：打印TCA Server各个服务的日志路径
+
+
+## Docker快速部署
+
+:::warning
+仅适用于Docker部署体验，生产环境建议使用专业的 MySQL、Redis 等服务
+:::
+
+### 依赖环境
+
+- 系统环境
+  - Linux、macOS、Windows
+  - 最低配置：2核4G内存、100G硬盘存储空间
+- 环境准备
+  - Docker
+- 权限准备
+  - 需要开放80、8000端口的访问权限(80为TCA平台访问端口，8000为TCA Server访问端口)
+
+### 部署对象
+Server、Web 与 Client
+
+### 启动操作
+
+1. 进入CodeAnalysis工作目录（例如``~/CodeAnalysis``)，以下路径均为目录内的相对路径
+2. 执行命令：
+    ```bash
+    ./quick_install.sh docker deploy
+    ```
+
+注意：通过Docker部署默认会在当前根目录下的挂载三个路径：
+
+- `.docker_temp/logs`：容器内的`/var/log/tca/`，存放TCA平台的日输出文件；
+- `.docker_temp/data`：容器内的`/var/opt/tca/`, 存放TCA平台的服务数据，主要是Mariadb、Redis；
+- `.docker_temp/configs`：容器内的``/etc/tca``，存放TCA平台的配置文件，主要是`config.sh`
+
+#### 后续更新操作
+1. 更新代码
+2. 执行以下命令：
+    - `./quick_start.sh docker deploy`：启动tca_server容器
+
+## Docker-Compose快速部署
+### 部署对象
+Server、Web 与 Client
+:::warning
+仅适用于Docker-Compose部署体验，生产环境建议使用专业的 MySQL、Redis 等服务
+:::
+
+### 启动操作
+
+1. 进入CodeAnalysis工作目录（例如``~/CodeAnalysis``)，以下路径均为目录内的相对路径
+2. 执行命令：
+    - `./quick_start.sh docker-compose deploy`：启动tca_server容器
+
+注意：通过Docker-Compose部署默认会在当前根目录下的挂载三个路径：
+
+- `.docker_data/logs`：存放TCA平台的各个服务日志输出目录；
+- `.docker_data/mysql`：存放TCA平台的MySQL数据
+- `.docker_data/redis`：存放TCA平台的Redis数据
+- `.docker_data/filedata`：存放TCA平台文件服务器的文件
+
+#### 后续更新操作
+1. 更新代码
+2. 执行以下命令：
+    - `./quick_start.sh docker-compose build`：重新构建TCA相关镜像
+    - `./quick_start.sh docker-compose deploy`: 重新部署TCA相关容器与初始化（或刷新数据）
+
+
+#### 部署 Server（旧部署方式）
 
 1. 进入 Server 服务工作目录（例如 ``~/CodeAnalysis/server/``），以下路径均为目录内的相对路径
 
@@ -82,7 +175,7 @@
     bash ./scripts/deploy.sh stop
     ```
 
-#### 部署Web
+#### 部署Web（旧部署方式）
 
 1. 在完成 Server 部署后，进入 Web 服务工作目录（例如 ``~/CodeAnalysis/web/tca-deploy-source``），以下路径均为目录内的相对路径
 

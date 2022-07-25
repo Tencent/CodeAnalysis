@@ -121,7 +121,7 @@ export FILE_DB_PORT=$MYSQL_PORT
 export FILE_SENTRY_DSN=
 
 ## 上报文件存储位置
-export FILE_STORAGE_DIR='data/file/'
+export FILE_STORAGE_DIR=${FILE_STORAGE_DIR:-'data/file/'}
 
 ## MinIO服务配置
 export FILE_MINIO_ENTRYPOINT=
