@@ -18,6 +18,9 @@ check_nginx() {
 config_nginx() {
     LOG_INFO "[NginxInstall] Comment nginx default listen"
     sed -ri 's/^([[:space:]]*)(server_name|listen)/\1#\2/' /etc/nginx/nginx.conf
+    if [ -f "/etc/nginx/sites-enabled/default" ]; then
+        sed -ri 's/^([[:space:]]*)(server_name|listen)/\1#\2/' /etc/nginx/sites-enabled/default
+    fi
 }
 
 quiet_install_nginx() {
