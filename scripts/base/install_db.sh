@@ -47,13 +47,13 @@ function install_and_conf_redis_on_ubuntu() {
 function config_redis() {
     LOG_INFO "[RedisInstall] Config redis auth: "$REDIS_PASSWD
     if [ -f /etc/redis.conf ]; then
-        LOG_INFO "redis.conf path: /etc/redis.conf"
+        LOG_INFO "    redis.conf path: /etc/redis.conf"
         cp /etc/redis.conf /etc/redis.conf.bak
         echo "requirepass $REDIS_PASSWD" >> /etc/redis.conf
     fi
 
     if [ -f /etc/redis/redis.conf ]; then
-        LOG_INFO "redis.conf path: /etc/redis/redis.conf"
+        LOG_INFO "    redis.conf path: /etc/redis/redis.conf"
         cp /etc/redis/redis.conf /etc/redis/redis.conf.bak
         echo "requirepass $REDIS_PASSWD" >> /etc/redis/redis.conf
     fi
@@ -71,6 +71,17 @@ function start_redis() {
         LOG_INFO "Set redis auto start during machine start"
         systemctl enable redis
     else
+        LOG_WARN "Using nohup start redis-server"
+        nohup /usr/bin/redis-server --requirepass $REDIS_PASSWD 2>redis_start.error &
+    fi
+}
+
+function restart_redis() {
+	LOG_INFO "Start redis service"
+    if command_normal systemctl; then
+        systemctl restart redis
+    else
+        normal_kill "redis-server"
         LOG_WARN "Using nohup start redis-server"
         nohup /usr/bin/redis-server --requirepass $REDIS_PASSWD 2>redis_start.error &
     fi
@@ -153,6 +164,18 @@ function start_mariadb() {
         else
             LOG_ERROR "execute 'cat $TCA_PROJECT_PATH/mysql_start.error' to view error log."
         fi
+    fi
+}
+
+
+function restart_mariadb() {
+    if command_normal systemctl; then
+        LOG_INFO "Using systemctl start mysqld"
+        systemctl start mysqld
+    else
+        normal_kill "mariadbd\|mysqld"
+        LOG_WARN "Using nohup start mysqld"
+        nohup /usr/bin/mysqld_safe 2>$TCA_PROJECT_PATH/mysql_start.error &
     fi
 }
 

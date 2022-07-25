@@ -79,6 +79,15 @@ function kill_by_pid_file() {
     fi
 }
 
+function normal_kill() {
+    proc_name=$1
+    pids=$( get_target_process "$proc_name" )
+    if [ ! -n "$pids" ]; then  
+        return 0  
+    fi
+    kill $pids &>/dev/null
+}
+
 function force_kill() {
     proc_name=$1
     pids=$( get_target_process "$proc_name" )

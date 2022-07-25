@@ -68,10 +68,10 @@ function tca_local_start() {
     service=$1
     case "$service" in
         mysql)
-            start_mariadb
+            restart_mariadb
         ;;
         redis)
-            start_redis
+            restart_redis
         ;;
         main)
             restart_main
@@ -157,6 +157,8 @@ function tca_local_main() {
         deploy)
             tca_local_install
             tca_local_start
+            sleep 2
+            check_tca_local_status
         ;;
         install)
             tca_local_install $service
