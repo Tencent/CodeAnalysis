@@ -32,10 +32,11 @@ quiet_install_nginx() {
 
     case "$LINUX_OS" in
         centos|rhel|sles|tlinux|tencentos)
-            LOG_INFO "yum install epel-release nginx [Please wait for a moment.]"
+            LOG_INFO "    Start to run: yum install epel-release nginx [Please wait for a moment.]"
             yum install -q -y epel-release nginx || error_exit "yum install nginx failed"
         ;;
         ubuntu|debian|raspbian)
+            LOG_INFO "    Start to run: apt-get update and apt-get install nginx [Please wait for a moment.]"
             apt-get update -qq || error_exit "apt-get update failed"
             apt-get install -qq -y nginx || error_exit "apt-get install nginx failed"
         ;;

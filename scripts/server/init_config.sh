@@ -8,7 +8,7 @@ source $TCA_SCRIPT_ROOT/config.sh
 source $TCA_SCRIPT_ROOT/server/_base.sh
 
 function create_server_dir() {
-    LOG_INFO "Create server directory"
+    LOG_INFO "[TCAServer] Create server directory"
     mkdir -p $TCA_SERVER_MAIN_PATH/log
     mkdir -p $TCA_SERVER_ANALYSIS_PATH/log
     mkdir -p $TCA_SERVER_LOGIN_PATH/log
@@ -43,7 +43,7 @@ function create_server_dir() {
 }
 
 function copy_server_config() {
-    LOG_INFO "Copy server config"
+    LOG_INFO "[TCAServer] Copy server config"
     rm $TCA_SERVER_MAIN_PATH/codedog/settings/local.py
     ln -s $TCA_SERVER_PATH/configs/django/local_main.py $TCA_SERVER_MAIN_PATH/codedog/settings/local.py
 
@@ -69,14 +69,15 @@ function copy_server_config() {
 }
 
 function install_server_requirments() {
-    LOG_INFO "Install server dependency packages..."
-    LOG_WARN "TCA已配置腾讯云pypi源进行下载，若仍无法正常下载或需更新为其他pypi源，请至~/.pip/pip.conf文件进行调整"
-    LOG_WARN "index-url = <pypi镜像源>"
-    use_right_pip "-r $TCA_SERVER_CONFIG_PATH/requirements.txt"
+    LOG_INFO "[TCAServer] Install server dependency packages..."
+    LOG_INFO "    TCA Server requirements detail: $TCA_SERVER_CONFIG_PATH/requirements.txt"
+    LOG_WARN "    * TCA已配置腾讯云pypi源（https://mirrors.cloud.tencent.com/pypi/simple）进行下载"
+    LOG_WARN "    * 若仍无法正常下载或需更新为其他pypi源，请至/root/.pip/pip.conf文件进行调整, 使用目标镜像源地址进行替换"
+    use_right_pip "-q -r $TCA_SERVER_CONFIG_PATH/requirements.txt"
 }
 
 function create_tool_link() {
-    LOG_INFO "create link with gunicorn、celery"
+    LOG_INFO "[TCAServer] Create link with gunicorn、celery"
     if [ -L "/usr/local/bin/gunicorn" ]; then
         LOG_INFO "/usr/local/bin/gunicorn exist"
         return 0

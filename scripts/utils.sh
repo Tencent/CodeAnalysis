@@ -42,10 +42,10 @@ function install_base() {
 
 	case "$LINUX_OS" in
         centos|rhel|sles|tlinux|tencentos)
-            yum install -q -y wget curl unzip git subversion
+            yum install -q -y wget curl unzip git subversion >/dev/null
         ;;
         ubuntu|debian|raspbian)
-            apt-get install -qq -y wget curl unzip git subversion
+            apt-get install -qq -y wget curl unzip git subversion >/dev/null
         ;;
         *)
             LOG_ERROR "$LINUX_OS not supported."
@@ -92,20 +92,22 @@ function force_kill() {
 function check_ln_file() {
     file=$1
     if [ -f $file ]; then
-      LOG_INFO "$file need to be removed, TCA will replaced it with new soft link file."
-      read -p "please enter: [Y/N]" result
-      case $result in
-          [Yy])
-              rm -f $file
-              ;;
-          [Nn])
-              LOG_WARN "soft link create failed."
-              ;;
-          *)
-              LOG_ERROR "Invalid input. Stop."
-              exit 1
-              ;;
-      esac
+        LOG_INFO "$file need to be removed, TCA will replaced it with new soft link file."
+        read -p "please enter: [Y/N]" result
+        case $result in
+            [Yy])
+                rm -f $file
+            ;;
+            [Nn])
+                LOG_WARN "soft link create failed."
+            ;;
+            *)
+                LOG_ERROR "Invalid input. Stop."
+                exit 1
+            ;;
+        esac
+    fi
+    
 }
 
 ### 核验pip版本 ###
@@ -115,12 +117,12 @@ function use_right_pip() {
     neccessary_pip_py_verson="3.7"
     if command_exists pip; then
         pip_py_version=$(pip -V |awk '{print $6}' |cut -f 1 -d ')')
-        if [ pip_py_version == $neccessary_pip_py_verson ]; then
+        if [ $pip_py_version == $neccessary_pip_py_verson ]; then
             pip install $params
         fi
     elif command_exists pip3; then
         pip3_py_version=$(pip3 -V |awk '{print $6}' |cut -f 1 -d ')')
-        if [ pip3_py_version == $neccessary_pip_py_verson ]; then
+        if [ $pip3_py_version == $neccessary_pip_py_verson ]; then
             pip3 install $params
         fi
     else

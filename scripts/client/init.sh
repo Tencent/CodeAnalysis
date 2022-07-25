@@ -8,16 +8,14 @@ export TCA_CLIENT_PATH=$TCA_PROJECT_PATH/client
 source $TCA_SCRIPT_ROOT/utils.sh
 
 function install_client_requirments() {
-    LOG_INFO "Install client dependency packages..."
-    LOG_WARN "如果访问官方pypi源（files.pythonhosted.org）超时或访问失败，可以配置为腾讯云pypi源进行下载，配置方式可以执行以下命令："
-    LOG_WARN "mkdir ~/.pip/ && printf \"[global]\nindex-url = https://mirrors.cloud.tencent.com/pypi/simple\" >> ~/.pip/pip.conf"
+    LOG_INFO "[TCAClient] Install client dependency packages..."
     use_right_pip "install -q -r $TCA_CLIENT_PATH/requirements/app_reqs.pip"
     cd $TCA_CLIENT_PATH/requirements
     bash install.sh
 }
 
 function init_client_tools() {
-    LOG_INFO "Init client tools..."
+    LOG_INFO "[TCAClient] Init client tools..."
     LOG_INFO "可手动执行：cd $TCA_CLIENT_PATH; python3 codepuppy.py updatetool -a -o linux"
     LOG_INFO "注意事项："
     LOG_WARN "如果访问github速度较慢，推荐使用腾讯工蜂拉取，需要修改 $TCA_PROJECT_PATH/client/config.ini 文件"

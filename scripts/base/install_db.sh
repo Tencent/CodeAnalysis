@@ -33,14 +33,14 @@ function check_mysql() {
 }
 
 function install_and_conf_redis_on_centos() {
-    LOG_INFO "  yum install epel-release redis. [Please wait for moment.]"
+    LOG_INFO "    Start to run: yum install epel-release redis. [Please wait for moment.]"
 	yum install -q -y epel-release redis --nogpgcheck || error_exit "yum install redis failed"
 }
 
 function install_and_conf_redis_on_ubuntu() {
-    LOG_INFO "  apt-get install redis. [Please wait for moment.]"
+    LOG_INFO "    Start to run: apt-get update and apt-get install redis. [Please wait for moment.]"
     apt-get update -qq -y >/dev/null || error_exit "apt-get update"
-    apt-get install -qq -y redis || error_exit "apt-get install redis failed"
+    apt-get install -qq -y redis >/dev/null || error_exit "apt-get install redis failed"
     
 }
 
@@ -196,16 +196,16 @@ function quiet_install_mariadb() {
     case "$LINUX_OS" in
         centos|rhel|sles|tlinux)
             download_and_conf_mariadb_setup_file
-            LOG_INFO "yum install MariaDB-server MariaDB-backup [Please wait for moment.]"
+            LOG_INFO "    Start to run: yum install MariaDB-server MariaDB-backup [Please wait for moment.]"
             yum install -q -y MariaDB-server MariaDB-backup || error_exit "Install mariadb failed"
         ;;
         ubuntu|debian|raspbian)
             download_and_conf_mariadb_setup_file
-            LOG_INFO "apt install mariadb-server mariadb-backup [Please wait for moment.]"
+            LOG_INFO "    Start to run: apt-get install mariadb-server mariadb-backup [Please wait for moment.]"
             apt-get install -qq -y mariadb-server mariadb-backup >/dev/null || error_exit "Install mariadb failed"
         ;;
         tencentos)
-            LOG_WARN "Auto install mysql-server"
+            LOG_INFO "    Start to run: yum install mysql-server"
             yum install -q -y mysql-server
         ;;
         *)

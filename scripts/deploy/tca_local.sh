@@ -135,6 +135,8 @@ function tca_local_stop() {
 }
 
 function tca_local_help() {
+    LOG_INFO "format: ./quick_install.sh local command"
+    LOG_INFO "example: ./quick_install.sh local deploy"
     LOG_INFO "Support command:"
     LOG_INFO "1. deploy : install base sofeware(Python/MySQL/Redis/Nginx), init tca server&web and start all service status"
     LOG_INFO "2. install: install base sofeware(Python/MySQL/Redis/Nginx) and init tca server&web"
@@ -176,7 +178,8 @@ function tca_local_main() {
             tca_local_help
         ;;
         *)
-            LOG_ERROR "Command:'$command' not supported. [Support command: deploy/install/start/stop/check/log/help]"
+            LOG_WARN "Command:'$command' not supported. [Support command: deploy/install/start/stop/check/log/help]"
+            tca_local_help
             exit 1
         ;;
     esac

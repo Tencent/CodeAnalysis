@@ -39,7 +39,8 @@ function check_python_pkg_cache() {
 
 function download_python_src() {
     LOG_INFO "[PythonInstall] Download Python src from $PYTHON_SRC_URL, save to $PYTHON_SRC_PKG_PATH"
-    LOG_WARN "    * 注意：如果下载失败或速度较慢，可以手动下载上述链接的Python包，通过环境变量 PYTHON_SRC_PKG_CACHE_PATH 指定Python包的路径"
+    LOG_WARN "    * 注意：如果下载失败或速度较慢，可以中断当前脚本（中断后可以重新启动），然后手动下载上述链接的Python包，通过环境变量 [ PYTHON_SRC_PKG_CACHE_PATH ] 指定Python包的路径"
+    LOG_WARN "    * 比如：手动下载了Python源码压缩包到 /tmp/ 目录下，可以在运行脚本前设置： export PYTHON_SRC_PKG_CACHE_PATH=/tmp/Python-3.7.12.tgz"
     wget -O $PYTHON_SRC_PKG_PATH $PYTHON_SRC_URL || error_exit "Download Python src failed"
 }
 
@@ -49,14 +50,14 @@ function pre_install() {
     case "$LINUX_OS" in
         centos|rhel|sles|tlinux|tencentos)
             tools="wget zlib-devel bzip2-devel openssl-devel ncurses-devel sqlite-devel readline-devel tk-devel gcc make libffi-devel xz-devel"
-            LOG_INFO "yum install tools: $tools"
+            LOG_INFO "    Start run: yum install tools: $tools"
 	        yum -q -y install $tools || error_exit "[PythonInstall] pre install tools failed"
         ;;
         ubuntu|debian|raspbian)
             tools="wget build-essential zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libssl-dev libsqlite3-dev libreadline-dev libffi-dev libbz2-dev tk-dev gcc make"
-            LOG_INFO "Start run: apt-get update and apt-get install $tools"
+            LOG_INFO "    Start run: apt-get update and apt-get install $tools"
             apt-get update -qq >/dev/null || error_exit "[PythonInstall] pre install tools failed"
-            DEBIAN_FRONTEND=noninteractive apt-get -y install -qq $tools || error_exit "[PythonInstall] pre install tools failed"
+            DEBIAN_FRONTEND=noninteractive apt-get -y install -qq $tools >/dev/null || error_exit "[PythonInstall] pre install tools failed"
         ;;
         *)
             LOG_ERROR "$LINUX_OS not supported."
