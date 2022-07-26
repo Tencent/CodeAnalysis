@@ -16,7 +16,8 @@ WORKDIR /workspace/client
 
 COPY . .
 
-RUN pip3 install --no-cache-dir -r requirements/app_reqs.pip \
+RUN pip3 install -U pip \
+    && pip3 install --no-cache-dir -r requirements/app_reqs.pip \
     && bash requirements/install.sh
 
 CMD [ "python3", "codepuppy.py", "localscan"]

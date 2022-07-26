@@ -18,7 +18,7 @@ TCA_DOCKER_DATA_PATH=${TCA_DATA_PATH:-"$TCA_PROJECT_PATH/.docker_temp/data/"}
 TCA_DOCKER_CONFIG_PATH=${TCA_CONFIG_PATH:-"$TCA_PROJECT_PATH/.docker_temp/configs/"}
 
 function build_image() {
-    if [ "$(docker image inspect $TCA_IMAGE_NAME:$TCA_IMAGE_TAG 2> /dev/null)" == "[]" ]; then
+    if [ "$(docker image inspect $TCA_IMAGE_NAME:$TCA_IMAGE_TAG 2>/dev/null)" == "[]" ]; then
         cd $TCA_PROJECT_PATH
         docker build -t $TCA_IMAGE_NAME:$TCA_IMAGE_TAG .
     fi
@@ -32,7 +32,7 @@ function get_image() {
         return $?
     fi
     LOG_INFO "Pull TCA Image: $TCA_IMAGE_NAME:$TCA_IMAGE_TAG"
-    docker pull $TCA_IMAGE_NAME:$TCA_IMAGE_TAG 2> /dev/null
+    docker pull $TCA_IMAGE_NAME:$TCA_IMAGE_TAG 2>/dev/null
     ret=$?
     if [ "$ret" != "0" ]; then
         build_image

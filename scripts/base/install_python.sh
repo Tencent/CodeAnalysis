@@ -77,7 +77,7 @@ function install_python() {
 	tar zxf $PYTHON_SRC_PKG_PATH -C $PYTHON_SRC_DIR && cd $PYTHON_SRC_PATH
     LOG_INFO "[PythonInstall] Config and install to $PYTHON_INSTALL_PATH"
     # 编译配置和安装
-    ./configure prefix=$PYTHON_INSTALL_PATH --enable-shared >/dev/null && make -j8 >/dev/null && make install >/dev/null && make clean > /dev/null || error_exit "Install Python src failed"
+    ./configure prefix=$PYTHON_INSTALL_PATH --enable-shared >/dev/null && make -j8 >/dev/null && make install >/dev/null && make clean >/dev/null || error_exit "Install Python src failed"
     # 链接构建产出的Python可执行文件到/usr/local/bin目录
     check_ln_file /usr/local/bin/python $PYTHON_INSTALL_PATH/bin/python3
     ln -s $PYTHON_INSTALL_PATH/bin/python3 /usr/local/bin/python

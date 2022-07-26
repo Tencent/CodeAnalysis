@@ -35,14 +35,13 @@ function check_mysql() {
 
 function install_and_conf_redis_on_centos() {
     LOG_INFO "    Start to run: yum install epel-release redis. [Please wait for moment.]"
-	yum install -q -y epel-release redis --nogpgcheck || error_exit "yum install redis failed"
+    yum install -q -y epel-release redis --nogpgcheck || error_exit "yum install redis failed"
 }
 
 function install_and_conf_redis_on_ubuntu() {
     LOG_INFO "    Start to run: apt-get update and apt-get install redis. [Please wait for moment.]"
     apt-get update -qq -y >/dev/null || error_exit "apt-get update"
     apt-get install -qq -y redis >/dev/null || error_exit "apt-get install redis failed"
-    
 }
 
 function config_redis() {
@@ -69,10 +68,10 @@ function start_redis() {
 	LOG_INFO "[RedisInstall] Start redis service"
     if command_normal systemctl; then
         systemctl start redis
-        LOG_INFO "Set redis auto start during machine start"
+        LOG_INFO "    Set redis auto start during machine start"
         systemctl enable redis
     else
-        LOG_WARN "Using nohup start redis-server"
+        LOG_WARN "    Using nohup start redis-server"
         nohup /usr/bin/redis-server --requirepass $REDIS_PASSWD 2>redis_start.error &
     fi
 }
@@ -83,7 +82,7 @@ function restart_redis() {
         systemctl restart redis
     else
         normal_kill "redis-server"
-        LOG_WARN "Using nohup start redis-server"
+        LOG_WARN "    Using nohup start redis-server"
         nohup /usr/bin/redis-server --requirepass $REDIS_PASSWD 2>redis_start.error &
     fi
 }
@@ -91,7 +90,7 @@ function restart_redis() {
 function quiet_install_redis() {
     ret=$( check_redis )
     if [ "$ret" == "true" ]; then
-        LOG_WARN "This machine had installed redis-server"
+        LOG_WARN "[RedisInstall] This machine had installed redis-server"
         return 0
     fi
 
@@ -161,21 +160,21 @@ function start_mariadb() {
     else
         LOG_ERROR "[MariadbInstall] Start mysqld failed"
         if command_normal systemctl; then
-            LOG_ERROR "execute 'systemctl status mysqld' to view error log."
+            LOG_ERROR "Execute 'systemctl status mysqld' to view error log."
         else
-            LOG_ERROR "execute 'cat $TCA_PROJECT_PATH/mysql_start.error' to view error log."
+            LOG_ERROR "Execute 'cat $TCA_PROJECT_PATH/mysql_start.error' to view error log."
         fi
     fi
 }
 
 function restart_mariadb() {
-    LOG_INFO "[MariadbInstall] Start redis service"
+    LOG_INFO "[MariadbInstall] Start mysqld service"
     if command_normal systemctl; then
-        LOG_INFO "Using systemctl start mysqld"
+        LOG_INFO "    Using systemctl start mysqld"
         systemctl restart mysqld
     else
         normal_kill "mariadbd\|mysqld"
-        LOG_WARN "Using nohup start mysqld"
+        LOG_WARN "    Using nohup start mysqld"
         nohup /usr/bin/mysqld_safe 2>$TCA_PROJECT_PATH/mysql_start.error &
     fi
 }

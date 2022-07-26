@@ -12,8 +12,8 @@ function tca_help() {
     LOG_INFO "Arg1: Mode, support value: local, docker, docker-compose, help, default:'help'"
     LOG_INFO "Arg2: Operate, details: "
     LOG_INFO "      [local] deploy, install, start, stop, check, log, help. You can run ./quick_install local help to view more details"
-    LOG_INFO "      [docker] deploy, start"
-    LOG_INFO "      [docker-compose] deploy/start/stop"
+    LOG_INFO "      [docker] deploy, start, stop"
+    LOG_INFO "      [docker-compose] deploy, start, stop, build"
     LOG_INFO ""
     LOG_INFO "Note:"
     LOG_INFO " * Run with local: will help to you install python, mariadb/mysql, redis, nginx. [Only support linux]"
@@ -33,10 +33,11 @@ function tca_help() {
     LOG_INFO "    2. use docker to deploy tca server, web and client"
     LOG_INFO "        run all services in a container:           ./quick_start.sh docker deploy" 
     LOG_INFO "        start a stopped tca container:             ./quick_start.sh docker start" 
+    LOG_INFO "        stop a tca container:                      ./quick_start.sh docker stop" 
     LOG_INFO ""
     LOG_INFO "    3. use docker-compose to deploy tca server, web and client"
     LOG_INFO "        run TCA with docker-compose:               ./quick_install docker-compose deploy"
-    LOG_INFO "        restart TCA with docker-compose:           ./quick_install docker-compose restart  (equal: docker-compose up -d)"
+    LOG_INFO "        restart TCA with docker-compose:           ./quick_install docker-compose start  (equal: docker-compose up -d)"
     LOG_INFO "        rebuild TCA images with docker-compose:    ./quick_install docker-compose build"
 
 }
