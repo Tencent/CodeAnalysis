@@ -57,7 +57,7 @@ function set_image_with_arch() {
     if [ $system_os == "Darwin" ]; then
         sed_command="sed -i.bak -E"
     else
-        sed_command='sed -ir -E'
+        sed_command="sed -ir -E"
     fi
     current_arch=$( uname -m )
     if [ $current_arch == "aarch64" ] || [ $current_arch == "arm64" ]; then
@@ -66,7 +66,6 @@ function set_image_with_arch() {
     else
         $sed_command 's/^([[:space:]]*)\#[[:space:]]*(image: mysql:5)/\1\2/' $TCA_PROJECT_PATH/docker-compose.yml
         $sed_command 's/^([[:space:]]*)[[:space:]]*(image: mariadb:10)/\1\# \2/' $TCA_PROJECT_PATH/docker-compose.yml
-
     fi
 }
 
