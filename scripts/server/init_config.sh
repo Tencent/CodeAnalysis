@@ -58,6 +58,13 @@ function copy_server_config() {
     rm -f $TCA_SERVER_LOGIN_PATH/apps/settings/local.py
     ln -s $TCA_SERVER_PATH/configs/django/local_login.py $TCA_SERVER_LOGIN_PATH/apps/settings/local.py
 
+    if [ ! -d $NGINX_CONF_PATH ]; then
+        LOG_ERROR "[TCAServer] $NGINX_CONF_PATH not exist."
+        LOG_WARN "If you installed nginx into other path, you can set change '$TCA_SCRIPT_ROOT/config.sh' "
+        LOG_WARN "or set environment variable 'NGINX_CONF_PATH' with actual conf path"
+        return 1
+    fi
+
     if [ -f $NGINX_CONF_PATH/tca_8000.conf ]; then
         rm -f $NGINX_CONF_PATH/tca_8000.conf
     fi

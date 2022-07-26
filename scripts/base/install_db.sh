@@ -23,9 +23,19 @@ function check_redis() {
     echo "$ret"
 }
 
-function check_mysql() {
+function check_mysqld() {
     ret=""
     if command_exists mysqld; then
+        ret="true"
+    else
+        ret="false"
+    fi
+    echo "$ret"
+}
+
+function check_mysql_client() {
+    ret=""
+    if command_exists mysql; then
         ret="true"
     else
         ret="false"
@@ -204,11 +214,38 @@ function start_mariadb_with_docker() {
     fi
 }
 
+function quiet_install_mysql_client() {
+    ret=$( check_mysql_client )
+    if [ "$ret" == "true" ]; then
+        LOG_WARN "[MySQLClientInstall] This machine had installed mysql-client"
+        return 0
+    fi
+    
+    LINUX_OS=$( get_linux_os )
+    install_base || error_exit "Install base software failed"
+    LOG_INFO "[MySQLClientInstall] Start to install mysql-client"
+    
+    case "$LINUX_OS" in
+        centos|rhel|sles|tlinux|tencentos)
+            LOG_INFO "    Start to run: yum install mysql-client [Please wait for moment.]"
+            yum install -q -y mysql-client || error_exit "Install mysql-client failed"
+        ;;
+        ubuntu|debian|raspbian)
+            LOG_INFO "    Start to run: apt-get install mariadb-server mariadb-backup [Please wait for moment.]"
+            apt-get install -qq -y mysql-client >/dev/null || error_exit "Install mysql-client failed"
+        ;;
+        *)
+            LOG_ERROR "$LINUX_OS not supported."
+            exit 1
+        ;;
+    esac
+    LOG_INFO "[MySQLClientInstall] install mysql-client successfully"
+}
+
 function quiet_install_mariadb() {
-    ret=$( check_mysql )
+    ret=$( check_mysqld )
     if [ "$ret" == "true" ]; then
         LOG_WARN "[MariadbInstall] This machine had installed mysql-server"
-        start_mariadb
         return 0
     fi
     
@@ -245,10 +282,10 @@ function quiet_install_mariadb() {
 function interactive_install_redis() {
     ret=$( check_redis )
     if [ "$ret" == "true" ]; then
-        start_redis
         return 0
     fi
     LOG_INFO "Do you want to install [Redis] by this script?"
+    LOG_WARN "If you using remote redis service, you can enter N"
     read -p "Please enter:[Y/N]" result
     case $result in
             [yY])
@@ -265,14 +302,33 @@ function interactive_install_redis() {
         esac
 }
 
-
 function interactive_install_mariadb() {
-    ret=$( check_mysql )
+    ret=$( check_mysql_client )
+    if [ "$ret" != "true" ]; then
+        LOG_INFO "Do you want to install [mysql-client] by this script?"
+        LOG_WARN "For initializing tca database"
+        read -p "Please enter:[Y/N]" result
+        case $result in
+            [yY])
+                quiet_install_mysql_client
+                ;;
+            [nN])
+                LOG_WARN "Cancel install mysql-client"
+                return 1
+                ;;
+            *)
+                LOG_ERROR "Invalid input. Stop."
+                exit 1
+                ;;
+        esac
+    fi
+
+    ret=$( check_mysqld )
     if [ "$ret" == "true" ]; then
-        start_mariadb
         return 0
     fi
     LOG_INFO "Do you want to install [Mariadb] by this script?"
+    LOG_WARN "If you using remote mysql service, you can enter N"
     read -p "Please enter:[Y/N]" result
     case $result in
         [yY])
