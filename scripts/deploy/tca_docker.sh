@@ -90,6 +90,7 @@ function stop_container() {
         LOG_INFO "TCA Docker Data Path:    $TCA_DOCKER_DATA_PATH"
         LOG_INFO "TCA Docker Config Path:  $TCA_DOCKER_CONFIG_PATH"
         LOG_WARN "Do not clear the above path unless it is necessary, otherwise it will affect TCA service."
+        LOG_INFO "Stop tca docker successfully"
     fi
 }
 
