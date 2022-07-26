@@ -8,6 +8,7 @@ REDIS_SRC_PKG_PATH=${REDIS_SRC_PKG_PATH:-"/tmp/redis-5.0.4.tar.gz"}
 REDIS_SRC_PATH=${REDIS_SRC_PATH:-"/usr/local/src/redis-5.0.4"}
 REDIS_SRC_DIR=$(dirname  $REDIS_SRC_PATH)
 REDIS_LOG_PATH=${REDIS_LOG_PATH:-"/var/log/redis/redis-server.log"}
+REDIS_LOG_DIR=$(dirname $REDIS_LOG_PATH)
 
 source $TCA_SCRIPT_ROOT/utils.sh
 
@@ -86,7 +87,7 @@ function pre_install_for_redis() {
 function compile_and_link_redis() {
     LOG_INFO "[RedisInstall] Extract into $REDIS_SRC_PATH"
     tar zxf $REDIS_SRC_PKG_PATH -C $REDIS_SRC_DIR && cd $REDIS_SRC_PATH
-    LOG_INFO "[RedisInstall] Config and install"
+    LOG_INFO "[RedisInstall] Config and install redis"
     cd $REDIS_SRC_PATH/deps && make -j4 hiredis jemalloc linenoise lua >/dev/null
     cd $REDIS_SRC_PATH && make -j4 >/dev/null && make install >/dev/null && make clean >/dev/null
     cp $REDIS_SRC_PATH/redis.conf  /etc/redis.conf
@@ -188,7 +189,12 @@ function quiet_install_redis() {
         return 0
     fi
 
-    LINUX_OS=$( get_linux_os )
+    if [ "$SOURCE" == "true" ]; then
+        LINUX_OS=""
+    else
+        LINUX_OS=$( get_linux_os )
+    fi
+
 	LOG_INFO "[RedisInstall] Start to install redis"
 
     case "$LINUX_OS" in
@@ -199,7 +205,8 @@ function quiet_install_redis() {
             install_redis_on_ubuntu
         ;;
         *)
-            LOG_WARN "$LINUX_OS, install by source"
+            LOG_WARN "$LINUX_OS install by source"
+            install_base
             install_redis_using_src
         ;;
     esac
@@ -287,14 +294,26 @@ function start_mariadb_with_docker() {
 }
 
 function restart_mariadb() {
-    LOG_INFO "[MariadbInstall] Start mysqld service"
+    LOG_INFO "[MariadbInstall] Restart mysqld service"
     if command_normal systemctl; then
-        LOG_INFO "    Using systemctl start mysqld"
+        LOG_INFO "    Using systemctl restart mysqld"
         systemctl restart mysqld
     else
         normal_kill "mariadbd\|mysqld"
-        LOG_WARN "    Using nohup start mysqld"
+        LOG_WARN "    Using nohup restart mysqld"
         nohup /usr/bin/mysqld_safe 2>$TCA_PROJECT_PATH/mysql_start.error &
+    fi
+    sleep 10
+    mariadb_ret=$( check_target_process_exist "mariadbd\|mysqld" )
+    if [ $mariadb_ret == "true" ]; then
+        return 0
+    else
+        LOG_ERROR "[MariadbInstall] Restart mysqld failed"
+        if command_normal systemctl; then
+            LOG_ERROR "Execute 'systemctl status mysqld' to view error log."
+        else
+            LOG_ERROR "Execute 'cat $TCA_PROJECT_PATH/mysql_start.error' to view error log."
+        fi
     fi
 }
 

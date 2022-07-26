@@ -28,6 +28,57 @@ function config_nginx() {
     fi
 }
 
+####################################
+#          源码安装Nginx            #
+####################################
+function install_nginx_using_src() {
+    LOG_INFO "    Start to run: download nginx src pkg and compile. [Please wait for moment.]"
+    download_nginx_src
+    pre_install_for_nginx
+    compile_and_link_nginx
+    config_nginx_from_src_install
+}
+
+function download_nginx_src() {
+    LOG_INFO "[NginxInstall] Download nginx src from $NGINX_SRC_URL, save to $NGINX_SRC_PKG_PATH"
+    wget -O $NGINX_SRC_PKG_PATH $NGINX_SRC_URL || error_exit "Download nginx src failed"
+}
+
+function pre_install_for_nginx() {
+    LOG_INFO "[NginxInstall] Pre install tools"
+    case "$LINUX_OS" in
+        ubuntu|debian|raspbian)
+            tools="gcc libssl-dev zlib1g-dev libpcre3-dev libbz2-dev libreadline-dev"
+            LOG_INFO "    Start run: apt-get update and apt-get install $tools"
+            apt-get update -qq >/dev/null || error_exit "[NginxInstall] pre install tools failed"
+            DEBIAN_FRONTEND=noninteractive apt-get -y install -qq $tools >/dev/null || error_exit "[PythonInstall] pre install tools failed"
+        ;;
+        *) 
+            tools="gcc zlib-devel pcre-devel bzip2-devel openssl-devel readline-devel"
+            LOG_INFO "    Start run: yum install tools: $tools"
+	        yum -q -y install $tools || error_exit "[NginxInstall] pre install tools failed"
+        ;;
+    esac
+    LOG_INFO "[NginxInstall] Pre install tools successfully."
+}
+
+function compile_and_link_nginx() {
+    LOG_INFO "[NginxInstall] Extract into $NGINX_SRC_PATH"
+    tar zxf $NGINX_SRC_PKG_PATH -C $NGINX_SRC_DIR && cd $NGINX_SRC_PATH
+    LOG_INFO "[NginxInstall] Config and install nginx"
+    ./configure \
+        --sbin-path=/usr/local/nginx/nginx \
+        --conf-path=/etc/nginx/nginx.conf \
+        --pid-path=/run/nginx.pid \
+        --with-stream \
+        --with-http_ssl_module \
+        --with-http_v2_module \
+        --with-http_auth_request_module >/dev/null || error_exit "Nginx src configure failed"
+    make -j4 >/dev/null && make install >/dev/null && make clean >/dev/null
+    ln -sf /usr/local/nginx/nginx /usr/local/bin/nginx
+    mkdir /etc/nginx/conf.d/ $NGINX_LOG_DIR
+}
+
 function config_nginx_from_src_install() {
     LOG_INFO "[NginxInstall] Config nginx from src"
     cp /etc/nginx/nginx.conf /etc/nginx/nginx.conf.bak
@@ -54,66 +105,17 @@ http {
 }" > /etc/nginx/nginx.conf
 }
 
-####################################
-#          源码安装Nginx            #
-####################################
-function install_nginx_using_src() {
-    LOG_INFO "    Start to run: download nginx src pkg and compile. [Please wait for moment.]"
-    download_ngxin_src
-    pre_install_for_nginx
-    compile_and_link_nginx
-    config_nginx_from_src_install
-}
-
-function download_nginx_src() {
-    LOG_INFO "[NginxInstall] Download nginx src from $NGINX_SRC_URL, save to $NGINX_SRC_PKG_PATH"
-    wget -O $NGINX_SRC_PKG_PATH $NGINX_SRC_URL || error_exit "Download nginx src failed"
-}
-
-function pre_install_for_redis() {
-    LOG_INFO "[NginxInstall] Pre install tools"
-    case "$LINUX_OS" in
-        ubuntu|debian|raspbian)
-            tools="gcc libssl-dev zlib1g-dev libpcre3-dev libbz2-dev libreadline-dev"
-            LOG_INFO "    Start run: apt-get update and apt-get install $tools"
-            apt-get update -qq >/dev/null || error_exit "[NginxInstall] pre install tools failed"
-            DEBIAN_FRONTEND=noninteractive apt-get -y install -qq $tools >/dev/null || error_exit "[PythonInstall] pre install tools failed"
-        ;;
-        *) 
-            tools="gcc zlib-devel pcre-devel bzip2-devel openssl-devel readline-devel"
-            LOG_INFO "    Start run: yum install tools: $tools"
-	        yum -q -y install $tools || error_exit "[NginxInstall] pre install tools failed"
-        ;;
-    esac
-    LOG_INFO "[NginxInstall] Pre install tools successfully."
-}
-
-function compile_and_link_redis() {
-    LOG_INFO "[NginxInstall] Extract into $NGINX_SRC_PATH"
-    tar zvxf nginx-1.20.2.tar.gz -C /usr/local/src
-    tar zxf $NGINX_SRC_PKG_PATH -C $NGINX_SRC_DIR && cd $NGINX_SRC_PATH
-    LOG_INFO "[NginxInstall] Config and install"
-    ./configure 
-        --sbin-path=/usr/local/nginx/nginx \
-        --conf-path=/etc/nginx/nginx.conf \
-        --pid-path=/run/nginx.pid \
-        --with-stream \
-        --with-http_ssl_module \
-        --with-http_v2_module \
-        --with-http_auth_request_module || error_exit "Nginx src configure failed"
-    make -j4 >/dev/null && make install >/dev/null && make clean >/dev/null
-    ln -sf /usr/local/nginx/nginx /usr/local/bin/nginx
-    mkdir /etc/nginx/conf.d/ $NGINX_LOG_DIR
-}
-
 function quiet_install_nginx() {
     ret=$( check_nginx )
     if [ "$ret" == "true" ]; then
         LOG_WARN "This machine had installed nginx"
         return 0
     fi
-
-    LINUX_OS=$( get_linux_os )
+    if [ "$SOURCE" == "true" ]; then
+        LINUX_OS=""
+    else
+        LINUX_OS=$( get_linux_os )
+    fi
 	LOG_INFO "[NginxInstall] Start to install nginx"
 
     case "$LINUX_OS" in
@@ -127,7 +129,8 @@ function quiet_install_nginx() {
             apt-get install -qq -y nginx >/dev/null || error_exit "apt-get install nginx failed"
         ;;
         *)
-            LOG_WARN "$LINUX_OS, install by source"
+            LOG_WARN "$LINUX_OS install by source"
+            install_base
             install_nginx_using_src
         ;;
     esac

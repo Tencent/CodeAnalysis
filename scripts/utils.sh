@@ -48,8 +48,8 @@ function install_base() {
             apt-get install -qq -y wget curl unzip git subversion >/dev/null
         ;;
         *)
-            LOG_ERROR "$LINUX_OS not supported."
-            exit 1
+            LOG_WARN "$LINUX_OS default using yum"
+            yum install -q -y wget curl unzip git subversion >/dev/null || error_exit "$LINUX_OS install base failed"
         ;;
     esac
 }
