@@ -162,7 +162,7 @@ function tca_docker_compose_main() {
         ;;
         stop)
             LOG_INFO "Stop tca docker-compose"
-            stop_all_serives
+            stop_all_services
         ;;
         build)
             LOG_INFO "Build tca image"

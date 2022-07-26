@@ -226,13 +226,19 @@ function quiet_install_mysql_client() {
     LOG_INFO "[MySQLClientInstall] Start to install mysql-client"
     
     case "$LINUX_OS" in
-        centos|rhel|sles|tlinux|tencentos)
-            LOG_INFO "    Start to run: yum install mysql-client [Please wait for moment.]"
-            yum install -q -y mysql-client || error_exit "Install mysql-client failed"
+        centos|rhel|sles|tlinux)
+            LOG_INFO "    Start to run: yum install MariaDB-client [Please wait for moment.]"
+            download_and_conf_mariadb_setup_file
+            yum install -q -y MariaDB-client || error_exit "Install mysql-client failed"
         ;;
         ubuntu|debian|raspbian)
-            LOG_INFO "    Start to run: apt-get install mariadb-server mariadb-backup [Please wait for moment.]"
-            apt-get install -qq -y mysql-client >/dev/null || error_exit "Install mysql-client failed"
+            LOG_INFO "    Start to run: apt-get install MariaDB-client [Please wait for moment.]"
+            download_and_conf_mariadb_setup_file
+            apt-get install -qq -y mariadb-client >/dev/null || error_exit "Install mysql-client failed"
+        ;;
+        tencentos)
+            LOG_INFO "    Start to run: yum install mysql-community-client [Please wait for moment.]"
+            yum install -q -y mysql-community-client || error_exit "Install mysql-client failed"
         ;;
         *)
             LOG_ERROR "$LINUX_OS not supported."
