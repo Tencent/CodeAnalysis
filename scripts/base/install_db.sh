@@ -229,12 +229,12 @@ function quiet_install_mysql_client() {
         centos|rhel|sles|tlinux)
             LOG_INFO "    Start to run: yum install MariaDB-client [Please wait for moment.]"
             download_and_conf_mariadb_setup_file
-            yum install -q -y MariaDB-client || error_exit "Install mysql-client failed"
+            yum install -q -y MariaDB-client || error_exit "Install MariaDB-client failed"
         ;;
         ubuntu|debian|raspbian)
             LOG_INFO "    Start to run: apt-get install MariaDB-client [Please wait for moment.]"
             download_and_conf_mariadb_setup_file
-            apt-get install -qq -y mariadb-client >/dev/null || error_exit "Install mysql-client failed"
+            apt-get install -qq -y mariadb-client >/dev/null || error_exit "Install mariadb-client failed. You can run 'apt-get install mysql-client' manually."
         ;;
         tencentos)
             LOG_INFO "    Start to run: yum install mysql-community-client [Please wait for moment.]"
