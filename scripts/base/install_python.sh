@@ -44,7 +44,7 @@ function download_python_src() {
     wget -O $PYTHON_SRC_PKG_PATH $PYTHON_SRC_URL || error_exit "Download Python src failed"
 }
 
-function pre_install() {
+function pre_install_for_python() {
     ## 安装编译依赖组件
     LOG_INFO "[PythonInstall] Pre install tools"
     case "$LINUX_OS" in
@@ -71,7 +71,7 @@ function check_python_install_path() {
     test -d "$PYTHON_INSTALL_PATH" || error_exit "$PYTHON_INSTALL_PATH exists. Please set 'PYTHON_INSTALL_PATH' value to install other dir."
 }
 
-function install_python() {	
+function compile_and_link_python() {	
     LOG_INFO "[PythonInstall] Extract into $PYTHON_SRC_PATH"
     # 解压源码到/usr/local/src目录
 	tar zxf $PYTHON_SRC_PKG_PATH -C $PYTHON_SRC_DIR && cd $PYTHON_SRC_PATH
@@ -115,7 +115,7 @@ function quiet_install_python() {
         return 0
     fi
     
-    pre_install
+    pre_install_for_python
 
     cache=$( check_python_pkg_cache )
     if [ "$cache" == "false" ]; then
@@ -124,7 +124,7 @@ function quiet_install_python() {
         LOG_INFO "[PythonInstall] Use Python PKG Cache: "$PYTHON_SRC_PKG_CACHE_PATH
         PYTHON_SRC_PKG_PATH=$PYTHON_SRC_PKG_CACHE_PATH
     fi
-    install_python
+    compile_and_link_python
     check_python
     set_pypi_mirror
     LOG_INFO "[PythonInstall] Install Python3.7.12 successfully."
