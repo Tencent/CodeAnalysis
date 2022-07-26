@@ -192,9 +192,9 @@ class TaskResultSerializer(serializers.Serializer):
     """
     task_version = serializers.CharField(max_length=56, help_text="任务的执行版本")
     result_code = serializers.IntegerField(help_text="结果码")
-    result_data_url = serializers.URLField(help_text="结果路径", allow_null=True, allow_blank=True)
+    result_data_url = serializers.CharField(help_text="结果路径", allow_null=True, allow_blank=True)
     result_msg = serializers.CharField(max_length=256, help_text="结果信息")
-    log_url = serializers.URLField(help_text="日志链接", allow_null=True, allow_blank=True)
+    log_url = serializers.CharField(help_text="日志链接", allow_null=True, allow_blank=True)
     processes = serializers.ListField(child=serializers.CharField(
         max_length=64, help_text="进程"), allow_null=True)
 
@@ -224,9 +224,9 @@ class TaskProgressSerializer(serializers.ModelSerializer):
 class TaskResultSerializer(serializers.Serializer):
     task_version = serializers.CharField(max_length=56, help_text="任务的执行版本")
     result_code = serializers.IntegerField(help_text="结果码")
-    result_data_url = serializers.URLField(help_text="结果路径", allow_null=True, allow_blank=True)
+    result_data_url = serializers.CharField(help_text="结果路径", allow_null=True, allow_blank=True)
     result_msg = serializers.CharField(max_length=256, help_text="结果信息")
-    log_url = serializers.URLField(help_text="日志链接", allow_null=True, allow_blank=True)
+    log_url = serializers.CharField(help_text="日志链接", allow_null=True, allow_blank=True)
     processes = serializers.ListField(child=serializers.CharField(
         max_length=64, help_text="进程"), allow_null=True)
 
