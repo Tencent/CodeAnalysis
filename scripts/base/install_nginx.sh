@@ -57,7 +57,7 @@ interactive_install_nginx() {
     if [ "$ret" == "true" ]; then
         return 0
     fi
-    LOG_INFO "Do you want to install [nginx] by this script?"
+    LOG_INFO "Do you want to install [Nginx] by this script?"
     read -p "Please enter:[Y/N]" result
     case $result in
         [yY])
