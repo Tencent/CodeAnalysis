@@ -6,9 +6,11 @@ TCA_PROJECT_PATH=${TCA_PROJECT_PATH:-"$( cd "$(dirname $TCA_SCRIPT_ROOT)"; pwd )
 
 source $TCA_SCRIPT_ROOT/utils.sh
 
-export REDIS_PASSWD=${REDIS_PASSWD:-tca2022}
+export REDIS_PASSWD=${REDIS_PASSWD:-"tca2022"}
+export MYSQL_USERNAME=${MYSQL_USERNAME:-"tca"}
 export MYSQL_PASSWORD=${MYSQL_PASSWORD:-"TCA!@#2021"}
 export MARIADB_SETUP_FILE=${MARIADB_SETUP_FILE:-/tmp/mariadb_repo_setup}
+export MARIADB_SETUP_CACHE_FILE=${MARIADB_SETUP_CACHE_FILE}
 
 
 function check_redis() {
@@ -21,7 +23,7 @@ function check_redis() {
     echo "$ret"
 }
 
-function check_mysql() {
+function check_mysqld() {
     ret=""
     if command_exists mysqld; then
         ret="true"
@@ -31,26 +33,37 @@ function check_mysql() {
     echo "$ret"
 }
 
+function check_mysql_client() {
+    ret=""
+    if command_exists mysql; then
+        ret="true"
+    else
+        ret="false"
+    fi
+    echo "$ret"
+}
+
 function install_and_conf_redis_on_centos() {
-    yum install -y epel-release
-	yum install -y redis --nogpgcheck
+    LOG_INFO "    Start to run: yum install epel-release redis. [Please wait for moment.]"
+    yum install -q -y epel-release redis --nogpgcheck || error_exit "yum install redis failed"
 }
 
 function install_and_conf_redis_on_ubuntu() {
-    apt update -y
-    apt install -y redis
-    
+    LOG_INFO "    Start to run: apt-get update and apt-get install redis. [Please wait for moment.]"
+    apt-get update -qq -y >/dev/null || error_exit "apt-get update"
+    apt-get install -qq -y redis >/dev/null || error_exit "apt-get install redis failed"
 }
 
 function config_redis() {
+    LOG_INFO "[RedisInstall] Config redis auth: "$REDIS_PASSWD
     if [ -f /etc/redis.conf ]; then
-        LOG_INFO "redis.conf path: /etc/redis.conf"
+        LOG_INFO "    redis.conf path: /etc/redis.conf"
         cp /etc/redis.conf /etc/redis.conf.bak
         echo "requirepass $REDIS_PASSWD" >> /etc/redis.conf
     fi
 
     if [ -f /etc/redis/redis.conf ]; then
-        LOG_INFO "redis.conf path: /etc/redis/redis.conf"
+        LOG_INFO "    redis.conf path: /etc/redis/redis.conf"
         cp /etc/redis/redis.conf /etc/redis/redis.conf.bak
         echo "requirepass $REDIS_PASSWD" >> /etc/redis/redis.conf
     fi
@@ -62,27 +75,37 @@ function start_redis() {
         return 0
     fi
 
-	LOG_INFO "start redis service"
-    if command_exists redis; then
+	LOG_INFO "[RedisInstall] Start redis service"
+    if command_normal systemctl; then
         systemctl start redis
-        LOG_INFO "set redis auto start during machine start"
+        LOG_INFO "    Set redis auto start during machine start"
         systemctl enable redis
     else
-        LOG_WARN "using nohup start redis-server"
-        nohup /usr/bin/redis-server --requriepass $REDIS_PASSWD 2>redis_start.error &
+        LOG_WARN "    Using nohup start redis-server"
+        nohup /usr/bin/redis-server --requirepass $REDIS_PASSWD 2>redis_start.error &
+    fi
+}
+
+function restart_redis() {
+	LOG_INFO "[RedisInstall] Start redis service"
+    if command_normal systemctl; then
+        systemctl restart redis
+    else
+        normal_kill "redis-server"
+        LOG_WARN "    Using nohup start redis-server"
+        nohup /usr/bin/redis-server --requirepass $REDIS_PASSWD 2>redis_start.error &
     fi
 }
 
 function quiet_install_redis() {
     ret=$( check_redis )
     if [ "$ret" == "true" ]; then
-        LOG_WARN "This machine had installed redis-server"
+        LOG_WARN "[RedisInstall] This machine had installed redis-server"
         return 0
     fi
 
     LINUX_OS=$( get_linux_os )
-    LOG_INFO "Current OS:"$LINUX_OS
-	LOG_INFO "start to install redis"
+	LOG_INFO "[RedisInstall] Start to install redis"
 
     case "$LINUX_OS" in
         centos|rhel|sles|tlinux|tencentos)
@@ -96,15 +119,31 @@ function quiet_install_redis() {
             exit 1
         ;;
     esac
+    LOG_INFO "[RedisInstall] Install redis successfully."
     
     config_redis
-    start_redis
+    restart_redis
+}
+
+function check_mariadb_cache_file() {
+    if [ -n "$MARIADB_SETUP_CACHE_FILE" ]; then
+        ret="true"
+    else
+        ret="false"
+    fi
+    echo "$ret"
 }
 
 function download_and_conf_mariadb_setup_file() {
-    wget -O $MARIADB_SETUP_FILE http://downloads.mariadb.com/MariaDB/mariadb_repo_setup || error_exit "download mariadb_repo_setup failed"
+    cache=$( check_mariadb_cache_file )
+    if [ "$cache" == "false" ]; then
+        wget -O $MARIADB_SETUP_FILE http://downloads.mariadb.com/MariaDB/mariadb_repo_setup || error_exit "download mariadb_repo_setup failed"
+    else
+        LOG_INFO "Use Mariadb PKG Cache: "$MARIADB_SETUP_FILE
+        MARIADB_SETUP_FILE=$MARIADB_SETUP_CACHE_FILE
+    fi
     chmod +x $MARIADB_SETUP_FILE
-    $MARIADB_SETUP_FILE --mariadb-server-version="mariadb-10.6" || error_exit "config mariadb_repo_setup failed"
+    $MARIADB_SETUP_FILE --mariadb-server-version="mariadb-10.6" >/dev/null || error_exit "config mariadb_repo_setup failed，请手动执行：$MARIADB_SETUP_FILE --mariadb-server-version='mariadb-10.6'"
 }
 
 function start_mariadb() {
@@ -113,15 +152,15 @@ function start_mariadb() {
         return 0
     fi
     
-    LOG_INFO "start mysqld service"
-    if command_exists systemctl; then
-        LOG_INFO "using systemctl start mariadb"
+    LOG_INFO "[MariadbInstall] Start mysqld service"
+    if command_normal systemctl; then
+        LOG_INFO "Using systemctl start mysqld"
         systemctl start mysqld
-        LOG_INFO "set mysqld auto start during machine start"
+        LOG_INFO "Set mysqld auto start during machine start"
         systemctl enable mysqld
     else
-        LOG_WARN "using nohup start mysql"
-        nohup /usr/bin/mysqld_safe &
+        LOG_WARN "Using nohup start mysqld"
+        nohup /usr/bin/mysqld_safe 2>$TCA_PROJECT_PATH/mysql_start.error &
         # nohup /usr/sbin/mariadbd --basedir=/usr --datadir=/var/lib/mysql --plugin-dir=/usr/lib/mysql/plugin --user=mysql --skip-log-error --pid-file=/run/mysqld/mysqld.pid --socket=/run/mysqld/mysqld.sock 2>mysql_start.error &
     fi
     sleep 10
@@ -129,14 +168,31 @@ function start_mariadb() {
     if [ $mariadb_ret == "true" ]; then
         return 0
     else
-        LOG_ERROR "start mysql failed"
-        LOG_ERROR "excute `systemctl status mariadb.service` to show error log"
+        LOG_ERROR "[MariadbInstall] Start mysqld failed"
+        if command_normal systemctl; then
+            LOG_ERROR "Execute 'systemctl status mysqld' to view error log."
+        else
+            LOG_ERROR "Execute 'cat $TCA_PROJECT_PATH/mysql_start.error' to view error log."
+        fi
+    fi
+}
+
+function restart_mariadb() {
+    LOG_INFO "[MariadbInstall] Start mysqld service"
+    if command_normal systemctl; then
+        LOG_INFO "    Using systemctl start mysqld"
+        systemctl restart mysqld
+    else
+        normal_kill "mariadbd\|mysqld"
+        LOG_WARN "    Using nohup start mysqld"
+        nohup /usr/bin/mysqld_safe 2>$TCA_PROJECT_PATH/mysql_start.error &
     fi
 }
 
 function config_mariadb() {
-    mysql -uroot -e "DELETE FROM mysql.user WHERE USER='root' AND HOST='%';FLUSH PRIVILEGES;"
-    mysql -uroot -e "CREATE USER 'root'@'%' IDENTIFIED BY \"$MYSQL_PASSWORD\";ALTER USER 'root'@'localhost' IDENTIFIED BY \"$MYSQL_PASSWORD\";GRANT ALL ON *.* TO 'root'@'%' WITH GRANT OPTION;FLUSH PRIVILEGES;"
+    LOG_INFO "[MariadbInstall] Config mysql auth, user: '$MYSQL_USERNAME', password: '$MYSQL_PASSWORD'"
+    mysql -uroot -hlocalhost -e "DELETE FROM mysql.user WHERE USER='$MYSQL_USERNAME' AND HOST='localhost';FLUSH PRIVILEGES;"
+    mysql -uroot -hlocalhost -e "CREATE USER '$MYSQL_USERNAME'@'localhost' IDENTIFIED BY \"$MYSQL_PASSWORD\";GRANT ALL ON *.* TO '$MYSQL_USERNAME'@'localhost' WITH GRANT OPTION;FLUSH PRIVILEGES;"
 }
 
 function start_mariadb_with_docker() {
@@ -145,44 +201,78 @@ function start_mariadb_with_docker() {
         return 0
     fi
     
-    LOG_WARN "start mysql in docker..."
-    sed -i "s/TCA_MYSQL_PASSWORD/${MYSQL_PASSWORD}/g" "$TCA_PROJECT_PATH/server/sql/reset_root_password.sql"
+    LOG_WARN "[MariadbInstall] Start mysqld in docker..."
+    LOG_WARN "[MariadbInstall] Config mysql auth, user: '$MYSQL_USERNAME', password: '$MYSQL_PASSWORD'"
+    sed -i "s/TCA_MYSQL_PASSWORD/${MYSQL_PASSWORD}/g ; s/TCA_MYSQL_USERNAME/${MYSQL_USERNAME}/g" "$TCA_PROJECT_PATH/server/sql/reset_root_password.sql"
     nohup mysqld --user=mysql --datadir=/var/opt/tca/mariadb --log_error=/var/log/tca/mariadb/mariadb.err --init-file="$TCA_PROJECT_PATH/server/sql/reset_root_password.sql" 2>/var/log/tca/mariadb/mysql_error.out &
-
     sleep 10
     mariadb_ret=$( check_target_process_exist "mariadbd\|mysqld" )
     if [ $mariadb_ret == "true" ]; then
-        LOG_INFO "start mysql success"
+        LOG_INFO "[MariadbInstall] Start mysqld success"
     else
-        LOG_ERROR "start mysql failed"
+        LOG_ERROR "[MariadbInstall] Start mysqld failed"
     fi
 }
 
-function quiet_install_mariadb() {
-    ret=$( check_mysql )
+function quiet_install_mysql_client() {
+    ret=$( check_mysql_client )
     if [ "$ret" == "true" ]; then
-        LOG_WARN "This machine had installed mysql-server"
-        start_mariadb
+        LOG_WARN "[MySQLClientInstall] This machine had installed mysql-client"
         return 0
     fi
     
     LINUX_OS=$( get_linux_os )
-    LOG_INFO "Current OS:"$LINUX_OS
     install_base || error_exit "Install base software failed"
-    LOG_INFO "start to install mysql"
+    LOG_INFO "[MySQLClientInstall] Start to install mysql-client"
+    
+    case "$LINUX_OS" in
+        centos|rhel|sles|tlinux)
+            LOG_INFO "    Start to run: yum install MariaDB-client [Please wait for moment.]"
+            download_and_conf_mariadb_setup_file
+            yum install -q -y MariaDB-client || error_exit "Install MariaDB-client failed"
+        ;;
+        ubuntu|debian|raspbian)
+            LOG_INFO "    Start to run: apt-get install MariaDB-client [Please wait for moment.]"
+            download_and_conf_mariadb_setup_file
+            apt-get install -qq -y mariadb-client >/dev/null || error_exit "Install mariadb-client failed. You can run 'apt-get install mysql-client' manually."
+        ;;
+        tencentos)
+            LOG_INFO "    Start to run: yum install mysql-community-client [Please wait for moment.]"
+            yum install -q -y mysql-community-client || error_exit "Install mysql-client failed"
+        ;;
+        *)
+            LOG_ERROR "$LINUX_OS not supported."
+            exit 1
+        ;;
+    esac
+    LOG_INFO "[MySQLClientInstall] install mysql-client successfully"
+}
+
+function quiet_install_mariadb() {
+    ret=$( check_mysqld )
+    if [ "$ret" == "true" ]; then
+        LOG_WARN "[MariadbInstall] This machine had installed mysql-server"
+        return 0
+    fi
+    
+    LINUX_OS=$( get_linux_os )
+    install_base || error_exit "Install base software failed"
+    LOG_INFO "[MariadbInstall] Start to install mysqld"
     
     case "$LINUX_OS" in
         centos|rhel|sles|tlinux)
             download_and_conf_mariadb_setup_file
-            yum install -y MariaDB-server MariaDB-backup
+            LOG_INFO "    Start to run: yum install MariaDB-server MariaDB-backup [Please wait for moment.]"
+            yum install -q -y MariaDB-server MariaDB-backup || error_exit "Install mariadb failed"
         ;;
         ubuntu|debian|raspbian)
             download_and_conf_mariadb_setup_file
-            apt install -y mariadb-server mariadb-backup
+            LOG_INFO "    Start to run: apt-get install mariadb-server mariadb-backup [Please wait for moment.]"
+            apt-get install -qq -y mariadb-server mariadb-backup >/dev/null || error_exit "Install mariadb failed"
         ;;
         tencentos)
-            LOG_WARN "Auto install mysql-server"
-            yum install -y mysql-server
+            LOG_INFO "    Start to run: yum install mysql-server"
+            yum install -q -y mysql-server
         ;;
         *)
             LOG_ERROR "$LINUX_OS not supported."
@@ -190,13 +280,18 @@ function quiet_install_mariadb() {
         ;;
     esac
 
-    start_mariadb
+    restart_mariadb
     config_mariadb
 }
 
 
 function interactive_install_redis() {
-    LOG_INFO "Do you want to install redis by this script?"
+    ret=$( check_redis )
+    if [ "$ret" == "true" ]; then
+        return 0
+    fi
+    LOG_INFO "Do you want to install [Redis] by this script?"
+    LOG_WARN "If you using remote redis service, you can enter N"
     read -p "Please enter:[Y/N]" result
     case $result in
             [yY])
@@ -213,9 +308,33 @@ function interactive_install_redis() {
         esac
 }
 
-
 function interactive_install_mariadb() {
-    LOG_INFO "Do you want to install mariadb by this script?"
+    ret=$( check_mysql_client )
+    if [ "$ret" != "true" ]; then
+        LOG_INFO "Do you want to install [mysql-client] by this script?"
+        LOG_WARN "For initializing tca database"
+        read -p "Please enter:[Y/N]" result
+        case $result in
+            [yY])
+                quiet_install_mysql_client
+                ;;
+            [nN])
+                LOG_WARN "Cancel install mysql-client"
+                return 1
+                ;;
+            *)
+                LOG_ERROR "Invalid input. Stop."
+                exit 1
+                ;;
+        esac
+    fi
+
+    ret=$( check_mysqld )
+    if [ "$ret" == "true" ]; then
+        return 0
+    fi
+    LOG_INFO "Do you want to install [Mariadb] by this script?"
+    LOG_WARN "If you using remote mysql service, you can enter N"
     read -p "Please enter:[Y/N]" result
     case $result in
         [yY])

@@ -28,16 +28,24 @@ function check_docker_compose() {
 }
 
 function check_docker_service() {
-    if [ -e /var/run/docker.sock ]; then
-        docker version
-        return 0
+    docker ps -q &>/dev/null
+    if [ "$?" == "0" ]; then
+        ret="true"
     else
-        return 1
+        ret="false"
     fi
+    echo "$ret"
 }
 
 function start_docker_service() {
     LOG_INFO "Start Docker service"
+    
+    ret=$( check_docker_service )
+    if [ "$ret" == "true" ]; then
+        LOG_INFO "* Docker had started"
+        return 0
+    fi
+
     systemctl restart docker
     start_docker_exit_code=$?
 
@@ -90,8 +98,14 @@ function quiet_install_docker_compose() {
 
 function interactive_install_docker() {
     ret=$( check_docker )
+    status=$( check_docker_service )
     if [ "$ret" == "true" ]; then
-        return 0
+        if [ "$status" == "true" ]; then
+            return 0
+        else
+            start_docker_service || error_exit "Start docker service failed"
+            return 0
+        fi
     fi
 
     LOG_INFO "Do you want to install docker by this script?"

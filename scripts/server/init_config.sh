@@ -3,15 +3,17 @@
 CURRENT_SCRIPT_PATH=$(cd "$(dirname "${BASH_SOURCE[0]}")";pwd)
 TCA_SCRIPT_ROOT=${TCA_SCRIPT_ROOT:-"$(cd $(dirname $CURRENT_SCRIPT_PATH); pwd)"}
 
+source $TCA_SCRIPT_ROOT/utils.sh
 source $TCA_SCRIPT_ROOT/config.sh
 source $TCA_SCRIPT_ROOT/server/_base.sh
 
 function create_server_dir() {
-    LOG_INFO "Create server directory"
+    LOG_INFO "[TCAServer] Create server directory"
     mkdir -p $TCA_SERVER_MAIN_PATH/log
     mkdir -p $TCA_SERVER_ANALYSIS_PATH/log
     mkdir -p $TCA_SERVER_LOGIN_PATH/log
     mkdir -p $TCA_SERVER_FILE_PATH/log
+    mkdir -p $TCA_SERVER_FILE_PATH/data
     mkdir -p $TCA_SERVER_LOG_PATH
     mkdir -p $TCA_SERVER_TMP_PATH
 
@@ -42,19 +44,26 @@ function create_server_dir() {
 }
 
 function copy_server_config() {
-    LOG_INFO "Copy server config"
-    rm $TCA_SERVER_MAIN_PATH/codedog/settings/local.py
+    LOG_INFO "[TCAServer] Copy server config"
+    rm -f $TCA_SERVER_MAIN_PATH/codedog/settings/local.py
     ln -s $TCA_SERVER_PATH/configs/django/local_main.py $TCA_SERVER_MAIN_PATH/codedog/settings/local.py
 
-    rm $TCA_SERVER_ANALYSIS_PATH/codedog/settings/local.py
+    rm -f $TCA_SERVER_ANALYSIS_PATH/codedog/settings/local.py
     ln -s $TCA_SERVER_PATH/configs/django/local_analysis.py $TCA_SERVER_ANALYSIS_PATH/codedog/settings/local.py
 
     mkdir -p $TCA_SERVER_FILE_PATH/codedog_file_server/env
-    rm $TCA_SERVER_FILE_PATH/codedog_file_server/env/local.py
+    rm -f $TCA_SERVER_FILE_PATH/codedog_file_server/env/local.py
     ln -s $TCA_SERVER_PATH/configs/django/local_file.py $TCA_SERVER_FILE_PATH/codedog_file_server/env/local.py
 
-    rm $TCA_SERVER_LOGIN_PATH/apps/settings/local.py
+    rm -f $TCA_SERVER_LOGIN_PATH/apps/settings/local.py
     ln -s $TCA_SERVER_PATH/configs/django/local_login.py $TCA_SERVER_LOGIN_PATH/apps/settings/local.py
+
+    if [ ! -d $NGINX_CONF_PATH ]; then
+        LOG_ERROR "[TCAServer] $NGINX_CONF_PATH not exist."
+        LOG_WARN "If you installed nginx into other path, you can set change '$TCA_SCRIPT_ROOT/config.sh' "
+        LOG_WARN "or set environment variable 'NGINX_CONF_PATH' with actual conf path"
+        return 1
+    fi
 
     if [ -f $NGINX_CONF_PATH/tca_8000.conf ]; then
         rm -f $NGINX_CONF_PATH/tca_8000.conf
@@ -68,22 +77,23 @@ function copy_server_config() {
 }
 
 function install_server_requirments() {
-    LOG_INFO "Install server dependency packages..."
-    LOG_WARN "TCA已配置腾讯云pypi源进行下载，若仍无法正常下载或需更新为其他pypi源，请至~/.pip/pip.conf文件进行调整"
-    LOG_WARN "index-url = <pypi镜像源>"
-    use_right_pip "-r $TCA_SERVER_CONFIG_PATH/requirements.txt"
+    LOG_INFO "[TCAServer] Install server dependency packages... [Please wait for a moment.]"
+    LOG_INFO "    * TCA Server requirements detail: $TCA_SERVER_CONFIG_PATH/requirements.txt"
+    LOG_WARN "    * TCA已配置腾讯云pypi源（https://mirrors.cloud.tencent.com/pypi/simple）进行下载"
+    LOG_WARN "    * 若仍无法正常下载或需更新为其他pypi源，请至/root/.pip/pip.conf文件进行调整, 使用目标镜像源地址进行替换"
+    use_right_pip " -r $TCA_SERVER_CONFIG_PATH/requirements.txt"
 }
 
 function create_tool_link() {
-    LOG_INFO "create link with gunicorn、celery"
-    if [ ! -h $PYTHON_PATH/gunicorn ]; then
-        LOG_INFO "$PYTHON_PATH/gunicorn exist"
+    LOG_INFO "[TCAServer] Create link with gunicorn、celery"
+    if [ -L "/usr/local/bin/gunicorn" ]; then
+        LOG_INFO "/usr/local/bin/gunicorn exist"
         return 0
     else
         ln -s $PYTHON_PATH/gunicorn /usr/local/bin/gunicorn
     fi
-    if [ ! -h $PYTHON_PATH/celery ]; then
-        LOG_INFO "$PYTHON_PATH/celery exist"
+    if [ -L "/usr/local/bin/celery" ]; then
+        LOG_INFO "/usr/local/bin/celery exist"
         return 0
     else
         ln -s $PYTHON_PATH/celery /usr/local/bin/celery
