@@ -42,13 +42,13 @@ function check_main_worker() {
 
 function get_main_worker_log() {
     LOG_INFO "Check main worker log"
-    worker_log=$( tail -n 100 $TCA_SERVER_MAIN_PATH/log/celery.log )
+    worker_log=$( tail -n 20 $TCA_SERVER_MAIN_PATH/log/celery.log )
     LOG_INFO "$worker_log"
 }
 
 function get_main_worker_error_log() {
     LOG_WARN "Check main worker error log"
-    error_log=$( tail -n 100 $TCA_SERVER_MAIN_PATH/worker_error.out )
+    error_log=$( tail -n 20 $TCA_SERVER_MAIN_PATH/worker_error.out )
     LOG_WARN "$error_log"
 }
 
@@ -63,13 +63,13 @@ function check_main_beat() {
 
 function get_main_beat_log() {
     LOG_INFO "Check main beat log"
-    beat_log=$( tail -n 100 $TCA_SERVER_MAIN_PATH/log/celery.log )
+    beat_log=$( tail -n 20 $TCA_SERVER_MAIN_PATH/log/celery.log )
     LOG_INFO "$beat_log"
 }
 
 function get_main_beat_error_log() {
     LOG_WARN "Check main beat error log"
-    error_log=$( tail -n 100 $TCA_SERVER_MAIN_PATH/beat_error.out )
+    error_log=$( tail -n 20 $TCA_SERVER_MAIN_PATH/beat_error.out )
     LOG_WARN "$error_log"
 }
 
@@ -93,7 +93,7 @@ function check_analysis_worker() {
 
 function get_analysis_worker_error_log() {
     LOG_WARN "Check analysis beat error log"
-    error_log=$( tail -n 100 $TCA_SERVER_ANALYSIS_PATH/worker_error.out )
+    error_log=$( tail -n 20 $TCA_SERVER_ANALYSIS_PATH/worker_error.out )
     LOG_WARN "$error_log"
 }
 

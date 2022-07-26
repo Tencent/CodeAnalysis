@@ -30,7 +30,8 @@ RUN wget "https://www.python.org/ftp/python/3.7.12/Python-3.7.12.tgz" \
     && ln -s /usr/local/python3/lib/libpython3.7m.so.1.0 /usr/lib/libpython3.7m.so.1.0 \
     && ldconfig && mkdir -p ~/.pip/ \
     && echo "[global]\nindex-url = https://mirrors.cloud.tencent.com/pypi/simple\n[install]\ntrusted-host=mirrors.cloud.tencent.com" > ~/.pip/pip.conf \
-    && pip install gunicorn==20.1.0 celery==5.2.2 supervisor==4.2.4\
+    && pip install gunicorn==20.1.0 celery==5.2.2 supervisor==4.2.4 \
+    && pip install -U setuptools pip \
     && ln -s /usr/local/python3/bin/gunicorn /usr/local/bin/gunicorn \
     && ln -s /usr/local/python3/bin/celery /usr/local/bin/celery \
     && ln -s /usr/local/python3/bin/supervisord /usr/local/bin/supervisord \

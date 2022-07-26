@@ -57,7 +57,7 @@ function set_image_with_arch() {
     if [ $system_os == "Darwin" ]; then
         sed_command="sed -i.bak -E"
     else
-        sed_command='sed -ir'
+        sed_command='sed -ir -E'
     fi
     current_arch=$( uname -m )
     if [ $current_arch == "aarch64" ] || [ $current_arch == "arm64" ]; then

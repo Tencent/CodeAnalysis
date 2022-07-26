@@ -7,7 +7,8 @@ export TCA_PROJECT_PATH=${TCA_PROJECT_PATH:-"$( cd $(dirname $TCA_SCRIPT_ROOT); 
 
 source $TCA_SCRIPT_ROOT/utils.sh
 
-TCA_IMAGE_NAME=${TCA_IMAGE_NAME:-"tencenttca/tca-server"}
+TCA_IMAGE_NAME=${TCA_IMAGE_NAME:-"tencenttca/tca"}
+TCA_CONTAINER_NAME=${TCA_CONTAINER_NAME:-"tca-services"}
 TCA_IMAGE_TAG=${TCA_IMAGE_TAG:-"latest"}
 TCA_IMAGE_BUILD=${TCA_IMAGE_BUILD:-"false"}
 TCA_INIT_DATA=${TCA_INIT_DATA:-"true"}
@@ -42,7 +43,7 @@ function deploy_container() {
     LOG_INFO "Deploy tca container command:"
     set -x
     docker run -it --env TCA_INIT_DATA=$TCA_INIT_DATA \
-        --name tca_server --publish 80:80 --publish 8000:8000 --publish 9001:9001 \
+        --name $TCA_CONTAINER_NAME --publish 80:80 --publish 8000:8000 --publish 9001:9001 \
         -v $TCA_DOCKER_LOG_PATH:/var/log/tca/ \
         -v $TCA_DOCKER_DATA_PATH:/var/opt/tca/ \
         -v $TCA_DOCKER_CONFIG_PATH:/etc/tca/ \
@@ -51,7 +52,7 @@ function deploy_container() {
 
     set +x
     if [ "$ret" != "0" ]; then
-        LOG_ERROR "deploy tca docker failed"
+        LOG_ERROR "Deploy tca docker failed"
     else
         LOG_INFO "TCA Docker Log Path:     $TCA_DOCKER_LOG_PATH"
         LOG_INFO "TCA Docker Data Path:    $TCA_DOCKER_DATA_PATH"
@@ -62,16 +63,33 @@ function deploy_container() {
 function start_container() {
     LOG_INFO "Start tca container command:"
     set -x
-    docker start tca_server
+    docker start $TCA_CONTAINER_NAME
     ret=$?
     set +x
     
     if [ "$ret" != "0" ]; then
-        LOG_ERROR "start tca docker failed"
+        LOG_ERROR "Start tca docker failed"
     else
         LOG_INFO "TCA Docker Log Path:     $TCA_DOCKER_LOG_PATH"
         LOG_INFO "TCA Docker Data Path:    $TCA_DOCKER_DATA_PATH"
         LOG_INFO "TCA Docker Config Path:  $TCA_DOCKER_CONFIG_PATH"
+    fi
+}
+
+function stop_container() {
+    LOG_INFO "Stop tca container command:"
+    set -x
+    docker stop $TCA_CONTAINER_NAME
+    ret=$?
+    set +x
+    
+    if [ "$ret" != "0" ]; then
+        LOG_ERROR "Stop tca docker failed"
+    else
+        LOG_INFO "TCA Docker Log Path:     $TCA_DOCKER_LOG_PATH"
+        LOG_INFO "TCA Docker Data Path:    $TCA_DOCKER_DATA_PATH"
+        LOG_INFO "TCA Docker Config Path:  $TCA_DOCKER_CONFIG_PATH"
+        LOG_WARN "Do not clear the above path unless it is necessary, otherwise it will affect TCA service."
     fi
 }
 
@@ -86,6 +104,10 @@ function tca_docker_main() {
         start)
             LOG_INFO "Start tca container"
             start_container
+        ;;
+        stop)
+            LOG_INFO "Stop tca container"
+            stop_container
         ;;
         *)
             LOG_ERROR "'$command' not support."
