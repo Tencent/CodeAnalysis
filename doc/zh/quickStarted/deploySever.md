@@ -1,7 +1,7 @@
 # 部署 Server 和 Web
 
 ## 本地快速部署
-
+兼容旧版的部署方式
 ### 依赖环境
 
 - 系统环境
@@ -30,7 +30,9 @@
   - 数据库权限：Server 服务执行数据库初始化需要依赖 ``CREATE、ALTER、INDEX、DELETE、LOCK TABLES、SELECT、INSERT、REFERENCES、UPDATE`` 权限
 - 端口使用：需要开放80端口的访问权限(80为TCA平台默认访问端口)，或调整 Web 服务默认的访问端口地址
 
-### 启动操作
+### 操作说明
+
+#### 首次启动操作
 
 1. 进入CodeAnalysis工作目录（例如``~/CodeAnalysis``)，以下路径均为目录内的相对路径
 2. 安装基础软件与部署TCA（可根据脚本选项确定是否要安装相关基础软件），执行
@@ -52,21 +54,42 @@
 3. 执行完成，无其他报错，即可登录：
     - TCA 平台初始登录账号是``CodeDog``，密码是``admin``，
 
-#### 后续更新操作
+#### 更新操作
 1. 更新代码
 2. 执行以下命令：
     - `./quick_start.sh local install tca`：更新相关配置
     - `./quick_start.sh local start`：启动服务（会自动关闭之前的服务）
     - `./quick_start.sh local check`：检查服务是否启动失败
 
-#### 其他命令介绍
+注：
+1. `local install`命令行参数说明：
+    - `base`：安装Python、Mariadb/MySQL、Redis与Nginx
+    - `tca`：初始化或更新TCA Server、Web、Client相关配置和数据
+    - `server`：初始化或更新TCA Server相关配置和数据
+    - `web`：初始化或更新TCA Web相关配置和数据
+    - `client`：初始化或更新TCA Client相关配置和数据
+    - 不填参数，默认会执行`base`、`tca`相关操作
 
-- `./quick_install.sh local install`：安装Python3.7、Mariadb/MySQL、Redis与Nginx，初始化TCA各个服务数据
-- `./quick_install.sh local start`：启动TCA Server、Web、Client
-- `./quick_install.sh local stop`：关闭TCA Server、Web、Client
-- `./quick_install.sh local check`：检查TCA Server、Web运行状态
-- `./quick_install.sh local log`：打印TCA Server各个服务的日志路径
+#### 启动和停止服务
 
+- 启动所有服务：`./quick_install.sh local start`
+- 启动Main相关服务：`./quick_install.sh local start main`
+  - `local start`支持启动指定服务，如上述的启动Main服务，还支持`mysql/redis/analysis/file/login/scmproxy/nginx/client/all`
+- 停止所有服务：`./quick_install.sh local stop`
+- 停止Main相关服务：`./quick_install.sh local stop main`
+  - `local stop`支持停止指定服务，如上述的停止Main服务，还支持`analysis/file/login/scmproxy/nginx/client/all`
+
+注：
+1. 启动时会自动关闭之前已经运行的服务
+2. `local start`支持启动指定服务，如上述的启动Main服务，还支持`mysql/redis/main/analysis/file/login/scmproxy/nginx/all`
+  - `mysql`和`redis`默认会使用`systemctl`进行启动，如果`systemctl`无法使用，则会直接使用`nohup`方式运行相关服务
+
+#### 检查服务运行状态
+检查服务运行状态：`./quick_install.sh local check`
+  - 目前支持检查server与web，暂不支持client
+
+#### 获取服务输出日志
+打印TCA Server各个服务的日志路径： `./quick_install.sh local log`
 
 ## Docker快速部署
 
@@ -87,7 +110,8 @@
 ### 部署对象
 Server、Web 与 Client
 
-### 启动操作
+### 操作说明
+#### 首次启动操作
 
 1. 进入CodeAnalysis工作目录（例如``~/CodeAnalysis``)，以下路径均为目录内的相对路径
 2. 执行命令：
@@ -95,25 +119,44 @@ Server、Web 与 Client
     ./quick_install.sh docker deploy
     ```
 
-注意：通过Docker部署默认会在当前根目录下的挂载三个路径：
+注：通过Docker部署默认会在当前根目录下的挂载三个路径：
 
 - `.docker_temp/logs`：容器内的`/var/log/tca/`，存放TCA平台的日输出文件；
 - `.docker_temp/data`：容器内的`/var/opt/tca/`, 存放TCA平台的服务数据，主要是Mariadb、Redis；
 - `.docker_temp/configs`：容器内的``/etc/tca``，存放TCA平台的配置文件，主要是`config.sh`
 
-#### 后续更新操作
+#### 更新操作
 1. 更新代码
 2. 执行以下命令：
-    - `./quick_start.sh docker deploy`：启动tca_server容器
+    - `TCA_IMAGE_BUILD=true ./quick_start.sh docker deploy`：重新构建并启动tca容器
+
+注：`TCA_IMAGE_BUILD=true`表示从本地构建TCA镜像运行
+
+#### 运行容器
+如果已经在机器上执行过``docker deploy``，并保留容器数据的，可以执行以下命令启动容器，继续运行TCA
+
+```bash
+./quick_install.sh docker start
+```
+
+#### 停止容器
+如果容器正在运行，希望停止容器，可以运行
+
+```bash
+./quick_install.sh docker stop
+```
 
 ## Docker-Compose快速部署
 ### 部署对象
 Server、Web 与 Client
+
 :::warning
 仅适用于Docker-Compose部署体验，生产环境建议使用专业的 MySQL、Redis 等服务
+兼容之前的部署方式
 :::
 
-### 启动操作
+### 操作说明
+#### 首次启动操作
 
 1. 进入CodeAnalysis工作目录（例如``~/CodeAnalysis``)，以下路径均为目录内的相对路径
 2. 执行命令：
@@ -126,14 +169,35 @@ Server、Web 与 Client
 - `.docker_data/redis`：存放TCA平台的Redis数据
 - `.docker_data/filedata`：存放TCA平台文件服务器的文件
 
-#### 后续更新操作
+#### 更新操作
 1. 更新代码
 2. 执行以下命令：
     - `./quick_start.sh docker-compose build`：重新构建TCA相关镜像
     - `./quick_start.sh docker-compose deploy`: 重新部署TCA相关容器与初始化（或刷新数据）
 
+#### 运行操作
+如果已经在机器上执行过``docker-compose deploy``，并保留容器数据的，可以执行以下命令启动容器，继续运行TCA
 
-#### 部署 Server（旧部署方式）
+```bash
+./quick_install.sh docker-compose start
+```
+
+#### 停止操作
+如果容器正在运行，希望停止容器，可以执行以下命令
+
+```bash
+./quick_install.sh docker-compose stop
+```
+
+#### 构建镜像操作
+如果希望构建镜像，可以执行以下命令
+
+```
+./quick_install.sh docker-compose build
+```
+
+### 旧部署方式
+#### 部署 Server
 
 1. 进入 Server 服务工作目录（例如 ``~/CodeAnalysis/server/``），以下路径均为目录内的相对路径
 
@@ -175,7 +239,7 @@ Server、Web 与 Client
     bash ./scripts/deploy.sh stop
     ```
 
-#### 部署Web（旧部署方式）
+#### 部署Web
 
 1. 在完成 Server 部署后，进入 Web 服务工作目录（例如 ``~/CodeAnalysis/web/tca-deploy-source``），以下路径均为目录内的相对路径
 
