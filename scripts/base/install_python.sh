@@ -76,6 +76,8 @@ function install_python() {
     ln -s $PYTHON_INSTALL_PATH/lib/libpython3.7m.so.1.0 /usr/lib/libpython3.7m.so.1.0
     # 配置动态库
     ldconfig
+    # 配置路径
+    export PATH=/usr/local/bin:$PATH
 }
 
 function set_pypi_mirror() {
