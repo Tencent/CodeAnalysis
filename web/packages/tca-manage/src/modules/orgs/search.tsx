@@ -7,7 +7,7 @@ import { t } from '@src/i18n/i18next';
 import Filter from '@src/components/filter';
 
 // 模块内
-import { ORG_STATUS_OPTIONS } from './constants';
+import { ORG_STATE_OPTIONS } from './constants';
 
 const numberParams: Array<string> = ['status'];
 const arrayParams: Array<string> = [];
@@ -60,7 +60,7 @@ const Search = ({ searchParams, loading, callback }: SearchProps) => {
         <Select
           style={{ width: 120 }}
           placeholder={t("全部")} size='middle'
-          options={ORG_STATUS_OPTIONS}
+          options={ORG_STATE_OPTIONS}
           onChange={value => onChange('status', value)} />
       </Filter.Item>
       <Filter.Item label="" name="name">

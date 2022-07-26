@@ -1,16 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import { get } from 'lodash';
+import React, { useEffect, useMemo, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { Table, Button, Tag } from 'coding-oa-uikit';
 
 // 项目内
 import { t } from '@src/i18n/i18next';
 import { getTags } from '@src/services/nodes';
-import { getOrgs } from '@src/services/orgs';
-import EllipsisTemplate from '@src/components/ellipsis';
 
 // 模块内
 import { TAG_TYPE_ENUM, TAG_TYPE_CHOICES, TAG_TYPE_COLOR } from './constants';
 import TagModal from './tag-modal';
+import { filter } from 'lodash';
 
 const { Column } = Table;
 
@@ -31,23 +30,20 @@ const TagTable = () => {
   const [listData, setListData] = useState<Array<any>>([]);
   const [visible, setVisible] = useState(false);
   const [selectTag, setSelectTag] = useState(null);
-  const [orgList, setOrgList] = useState<Array<any>>([]);
-  
+  const { orgSid }: any = useParams();
+  const orgTagList = useMemo(() => filter(listData, (tag: any) => (tag.org_sid === orgSid)), [listData]);
+
   /**
    * 获取标签列表
    */
   const getListData = () => {
-    getTags().then((response) => {
+    getTags(orgSid).then((response) => {
       setListData(response.results || []);
     });
   };
 
   useEffect(() => {
     getListData();
-    // 获取活跃团队
-    getOrgs({limit: 1000, offset: 0}).then((res: any) => {
-      setOrgList(res?.results || []);
-    });
   }, []);
 
   const onCreateOrUpdateHandle = (tag: any = null) => {
@@ -69,26 +65,20 @@ const TagTable = () => {
           getListData();
           setVisible(false);
         }}
-        tagInfo={selectTag}
-        orgList={orgList}
+        taginfo={selectTag}
       />
-      <Table rowKey={(item: any) => item.id} dataSource={listData}>
+      <Table rowKey={(item: any) => item.id} dataSource={orgTagList}>
         <Column
           title={t('标签名称')}
           dataIndex="name"
           render={(name: string, record: any) => (
             <>
-            {get(record, 'display_name') || get(record, 'name') }
+            {record?.display_name || record?.name}
             <div className="text-grey-6 fs-12 mt-sm">
               {name}
             </div>
             </>
           )}
-        />
-        <Column
-          title={t('所属团队')}
-          dataIndex="org_info"
-          render={(org_info: any) => org_info?.name ? <EllipsisTemplate>{org_info?.name}</EllipsisTemplate> : '- -'}
         />
         <Column
           title={t('描述')}

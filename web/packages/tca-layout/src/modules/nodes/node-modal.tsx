@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import { Modal, Form, Input, message, Select } from 'coding-oa-uikit';
 
 // 项目内
@@ -18,6 +19,7 @@ interface IProps {
 
 const NodeModal = ({ nodeinfo, visible, onOk, onCancel, tagOptions, members }: IProps) => {
   const [form] = Form.useForm();
+  const { orgSid }: any = useParams();
 
   useEffect(() => {
     if (visible) {
@@ -26,12 +28,12 @@ const NodeModal = ({ nodeinfo, visible, onOk, onCancel, tagOptions, members }: I
   }, [visible]);
 
   /**
-     * 表单保存操作
-     * @param formData 参数
-     */
+   * 表单保存操作
+   * @param formData 参数
+   */
   const onSubmitHandle = () => {
     form.validateFields().then((formData) => {
-      putNode(nodeinfo.id, formData).then(() => {
+      putNode(orgSid, nodeinfo.id, formData).then(() => {
         message.success(t('已更新节点'));
         onOk();
       });
@@ -75,7 +77,7 @@ const NodeModal = ({ nodeinfo, visible, onOk, onCancel, tagOptions, members }: I
           name="related_managers"
           label="关注人"
         >
-          <Select mode="multiple" showSearch>
+          <Select mode="multiple">
             {members.map((item: any) => (
               <Option key={item.username} value={item.username}>
                 {item.nickname}
@@ -86,7 +88,7 @@ const NodeModal = ({ nodeinfo, visible, onOk, onCancel, tagOptions, members }: I
         <Form.Item
           name="manager"
           label="管理员"
-          rules={[{ required: true, message: t('管理员为必选项') }]}
+          rules={[{ required: true, message: t('管理员为必填项') }]}
         >
           <Select showSearch>
             {members.map((item: any) => (

@@ -15,17 +15,17 @@ import { getOrgRouter } from '@src//utils/getRoutePath';
 
 // 模块内
 import {
-  ORG_STATUS_ENUM,
-  ORG_STATUS_CHOICES,
+  ORG_STATE_ENUM,
+  ORG_STATE_CHOICES,
 } from './constants';
 
 const FormatStatus = (org: any) => {
   const status = org?.status;
-  const info = status === ORG_STATUS_ENUM.ACTIVE ? {
-    text: ORG_STATUS_CHOICES[ORG_STATUS_ENUM.ACTIVE],
+  const info = status === ORG_STATE_ENUM.ACTIVE ? {
+    text: ORG_STATE_CHOICES[ORG_STATE_ENUM.ACTIVE],
     color: 'success',
   } : {
-    text: ORG_STATUS_CHOICES[ORG_STATUS_ENUM.INACTIVE],
+    text: ORG_STATE_CHOICES[ORG_STATE_ENUM.INACTIVE],
     color : 'red',
   };
   return (
@@ -35,7 +35,7 @@ const FormatStatus = (org: any) => {
 
 const FormatName = (org: any) => (
   <>
-    {org?.status === ORG_STATUS_ENUM.ACTIVE 
+    {org?.status === ORG_STATE_ENUM.ACTIVE 
     ? <Link
       to={`${getOrgRouter(org.org_sid)}/${org.repo_count !== 0 ? 'workspace' : 'projects'}`}
     >
@@ -100,7 +100,7 @@ const FormatOp = (org: any, onDelete: (org: any) => void, onRecover: (org: any) 
           }}
         />
       </Tooltip>
-      {status === ORG_STATUS_ENUM.ACTIVE && <Tooltip title={t('禁用团队')}>
+      {status === ORG_STATE_ENUM.ACTIVE && <Tooltip title={t('禁用团队')}>
         <Button
           className="mr-sm"
           shape="circle"
@@ -109,7 +109,7 @@ const FormatOp = (org: any, onDelete: (org: any) => void, onRecover: (org: any) 
           onClick={() => onDelete(org)}
         />
       </Tooltip>}
-      {status === ORG_STATUS_ENUM.INACTIVE && <Tooltip title={t('恢复团队')}>
+      {status === ORG_STATE_ENUM.INACTIVE && <Tooltip title={t('恢复团队')}>
         <Button
           className="mr-sm"
           shape="circle"

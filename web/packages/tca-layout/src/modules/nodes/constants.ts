@@ -14,12 +14,12 @@ export const STATUS_CHOICES = {
 
 export const STATE_ENUM = {
   FREE: 0,
-  BUSY: 1,
+  BUSY: 1
 }
 
 export const STATE_CHOICES = {
-  [STATE_ENUM.BUSY]: '忙碌',
-  [STATE_ENUM.FREE]: '空闲'
+  [STATE_ENUM.BUSY]: t('忙碌'),
+  [STATE_ENUM.FREE]: t('空闲')
 }
 
 export const STATUS_OPTIONS = [{
@@ -36,7 +36,7 @@ export const STATUS_OPTIONS = [{
 export const TAG_TYPE_ENUM = {
   PUBLIC: 1,
   PRIVATE: 2,
-  DISABLED: 99,
+  DISABLED: 99
 };
 
 export const TAG_TYPE_CHOICES = {
@@ -46,9 +46,6 @@ export const TAG_TYPE_CHOICES = {
 };
 
 export const TAG_TYPE_OPTIONS = [{
-  text: TAG_TYPE_CHOICES[TAG_TYPE_ENUM.PUBLIC],
-  value: TAG_TYPE_ENUM.PUBLIC,
-}, {
   text: TAG_TYPE_CHOICES[TAG_TYPE_ENUM.PRIVATE],
   value: TAG_TYPE_ENUM.PRIVATE,
 }, {
@@ -57,7 +54,25 @@ export const TAG_TYPE_OPTIONS = [{
 }];
 
 export const TAG_TYPE_COLOR = {
-  [TAG_TYPE_ENUM.PUBLIC]: 'blue',
-  [TAG_TYPE_ENUM.PRIVATE]: 'cyan',
+  [TAG_TYPE_ENUM.PUBLIC]: 'geekblue',
+  [TAG_TYPE_ENUM.PRIVATE]: 'blue',
   [TAG_TYPE_ENUM.DISABLED]: 'default',
+};
+
+export const TASK_STATE_ENUM = {
+  WAITING: 0,
+  RUNNING: 1,
+  CLOSED: 2,
+  CLOSING: 3,
+  INITING: 4,
+  INITED: 5,
+};
+
+export const TASK_STATE_CHOICES = {
+  [TASK_STATE_ENUM.WAITING]: t('等待中'),
+  [TASK_STATE_ENUM.RUNNING]: t('执行中'),
+  [TASK_STATE_ENUM.CLOSED]: t('已结束'),
+  [TASK_STATE_ENUM.CLOSING]: t('入库中'),
+  [TASK_STATE_ENUM.INITING]: t('初始化'),
+  [TASK_STATE_ENUM.INITED]: t('已初始化'),
 };
