@@ -20,8 +20,9 @@ RUN set -ex && cd / \
     && yum clean all
 
 RUN wget "https://www.python.org/ftp/python/3.7.12/Python-3.7.12.tgz" \
-    && tar zvxf Python-3.7.12.tgz -C /usr/local/src \
-    && rm Python-3.7.12.tgz && cd /usr/local/src/Python-3.7.12 \
+    && gzip -d Python-3.7.12.tgz \
+    && tar xvf Python-3.7.12.tar -C /usr/local/src \
+    && rm Python-3.7.12.tar && cd /usr/local/src/Python-3.7.12 \
     && ./configure prefix=/usr/local/python3 --enable-shared \
     && make -j8 && make install && make clean \
     && ln -s /usr/local/python3/bin/python3 /usr/local/bin/python \
