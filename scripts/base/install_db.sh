@@ -134,18 +134,17 @@ function install_redis_on_ubuntu() {
 function config_redis() {
     mkdir -p $REDIS_LOG_DIR
     LOG_INFO "[RedisInstall] Config redis auth: "$REDIS_PASSWD
-    if [ -f /etc/redis.conf ]; then
-        LOG_INFO "    redis.conf path: /etc/redis.conf"
-        cp /etc/redis.conf /etc/redis.conf.bak
-        echo "requirepass $REDIS_PASSWD" >> /etc/redis.conf
-        echo "logfile $REDIS_LOG_PATH" >> /etc/redis.conf
+    redis_conf_path=""
+    if [ -f "/etc/redis.conf" ]; then
+        redis_conf_path="/etc/redis.conf"
+    elif [ -f "/etc/redis/redis.conf" ]; then
+        redis_conf_path="/etc/redis/redis.conf"
     fi
-
-    if [ -f /etc/redis/redis.conf ]; then
-        LOG_INFO "    redis.conf path: /etc/redis/redis.conf"
-        cp /etc/redis/redis.conf /etc/redis/redis.conf.bak
-        echo "requirepass $REDIS_PASSWD" >> /etc/redis/redis.conf
-    fi
+    LOG_INFO "    redis.conf path: $redis_conf_path"
+    cp "$redis_conf_path" "$redis_conf_path".bak
+    echo "requirepass $REDIS_PASSWD" >> $redis_conf_path
+    echo "logfile $REDIS_LOG_PATH" >> $redis_conf_path
+    echo "daemonize no" >> $redis_conf_path
 }
 
 ####################################

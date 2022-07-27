@@ -9,6 +9,7 @@ export DAEMON=False
 export SERVER_ACCESS_LOG="-"
 export SERVER_ERROR_LOG="-"
 export FILE_STORAGE_DIR="/var/opt/tca/files/"
+export REDIS_LOG_PATH="/var/log/tca/redis/redis.log"
 
 source $TCA_SCRIPT_ROOT/utils.sh
 source $TCA_SCRIPT_ROOT/config.sh
