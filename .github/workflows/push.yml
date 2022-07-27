@@ -1,4 +1,4 @@
-.github/workflows/push.ymlname: TCA docker image build and push
+name: TCA docker image build and push
 on: 
   release:
     types: [published]
