@@ -39,7 +39,7 @@ class LabelSerializer(serializers.ModelSerializer):
         return "基础" in label.name
 
     def get_display_name(self, label):
-          return "%s扫描" % label.name
+        return "%s扫描" % label.name
 
     class Meta:
         model = models.Label

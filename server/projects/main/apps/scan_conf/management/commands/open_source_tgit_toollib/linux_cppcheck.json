@@ -1,0 +1,11 @@
+{
+  "name": "LINUX_CPPCHECK",
+  "scm_url": "https://git.code.tencent.com/TCA/tca-tools/linux-cppcheck-1.78",
+  "scm_type": "git",
+  "envs": {
+    "CPPCHECK_HOME": "$ROOT_DIR",
+    "PATH": "$ROOT_DIR/bin;$ROOT_DIR"
+  },
+  "lib_os": "linux",
+  "lib_type": "public"
+}

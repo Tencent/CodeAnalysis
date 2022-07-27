@@ -9,7 +9,7 @@ import hudson.model.Run;
 import jenkins.model.RunAction2;
 
 public class ViewReportAction implements RunAction2 {
-    private String jsonStr;
+    private final String jsonStr;
     private transient Run run;
 
     public ViewReportAction(String jsonStr){

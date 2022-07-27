@@ -53,7 +53,7 @@ class NodeManager(object):
             if node.enabled == models.Node.EnabledEnum.OFFLINE:
                 models.Node.objects.filter(id=node.id).update(enabled=models.Node.EnabledEnum.ACTIVE)
         except Exception as err:
-            logger.exception("[Node: %s] refresh node heartbeat exception: %s" % err)
+            logger.exception("[Node: %s] refresh node heartbeat exception: %s" % (node, err))
         return {"id": node.id}
 
     @classmethod
@@ -104,10 +104,14 @@ class NodeManager(object):
         """
         ip = cls.get_node_ip(request)
         logger.info("[Node] create new node, ip: %s" % ip)
+        if request.user.is_superuser is True:
+            enabled = models.Node.EnabledEnum.ACTIVE
+        else:
+            enabled = models.Node.EnabledEnum.DISABLED
         node = models.Node(
             name=data['uuid'],
             addr=ip,
-            enabled=models.Node.EnabledEnum.DISABLED,
+            enabled=enabled,
             last_beat_time=now(),
             uuid=data['uuid'],
             tag=data.get("tag"),

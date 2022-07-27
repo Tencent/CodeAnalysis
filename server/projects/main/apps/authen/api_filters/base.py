@@ -24,10 +24,11 @@ class OrganizationFilter(filters.FilterSet):
     """团队筛选项
 
     name: str, 团队名称, 模糊匹配
+    status: int, 团队状态
     """
 
     name = filters.CharFilter(help_text="团队名称", lookup_expr="icontains")
 
     class Meta:
         model = models.Organization
-        fields = ["name"]
+        fields = ["name", "status"]

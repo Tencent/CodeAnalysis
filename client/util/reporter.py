@@ -22,6 +22,8 @@ import collections
 from node.app import settings, persist_data
 from util.api.dogserver import RetryDogServer
 from util.crypto import Crypto
+from util.taskscene import TaskScene
+from node.quicktask.quickscan import QuickScan
 
 logger = logging.getLogger(__name__)
 
@@ -76,6 +78,11 @@ class Reporter(object):
         :param info: 上报信息Info实例
         :return:
         """
+        # test任务无需上报,直接返回
+        if self._task_scene and self._task_scene in [TaskScene.TEST]:
+            return
+        if QuickScan.is_quick_scan():
+            return
         try:
             # 从param中获取server_url
             server_url = self._task_params.get("server_url", None)

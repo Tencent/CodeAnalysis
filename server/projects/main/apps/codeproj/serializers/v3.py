@@ -18,7 +18,7 @@ from django.db import transaction
 from rest_framework import serializers
 
 # 项目内 import
-from apps.authen.serializers.base import ScmAuthSerializer, ScmAuthCreateSerializer
+from apps.authen.serializers.base import ScmAuthCreateSerializer, ScmAuthSerializer
 from apps.base.serializers import CDBaseModelSerializer
 from apps.codeproj import core
 from apps.codeproj import models
@@ -96,6 +96,7 @@ class RepositoryListSerializer(CDBaseModelSerializer):
         user = request.user if request else None
         # 更新字段
         instance.name = validated_data.get("name", instance.name)
+        instance.ssh_url = validated_data.get("ssh_url", instance.ssh_url)
         instance.save(user=user)
 
         if user:
@@ -105,7 +106,8 @@ class RepositoryListSerializer(CDBaseModelSerializer):
     class Meta:
         model = models.Repository
         fields = ["id", "name", "scm_url", "scm_type", "branch_count", "scheme_count", "job_count",
-                  "created_time", "recent_active", "created_from", "creator", "scm_auth", "project_team"]
+                  "created_time", "recent_active", "created_from", "creator", "scm_auth", "project_team",
+                  "ssh_url"]
         read_only_fields = ["scm_url", "scm_type", "created_from"]
 
 
@@ -129,6 +131,7 @@ class RepositoryCreateSerializer(CDBaseModelSerializer):
     def validate(self, attrs):
         scm_type = attrs["scm_type"]
         scm_url = attrs["scm_url"]
+        ssh_url = attrs.get("ssh_url") or scm_url
         scm_auth = attrs.get("scm_auth")
         request = self.context.get("request")
         user = request.user
@@ -150,8 +153,19 @@ class RepositoryCreateSerializer(CDBaseModelSerializer):
             scm_ssh_info = core.ScmAuthManager.get_scm_sshinfo_with_id(user, scm_ssh_id)
             if not scm_ssh_info:
                 raise serializers.ValidationError({"cd_error": "SSH凭证不存在"})
-            scm_client = scm.ScmClient(scm_type, scm_url, auth_type,
+            scm_client = scm.ScmClient(scm_type, ssh_url, auth_type,
                                        ssh_key=scm_ssh_info.ssh_private_key, ssh_password=scm_ssh_info.password)
+        elif auth_type == models.ScmAuth.ScmAuthTypeEnum.OAUTH:
+            scm_oauth = scm_auth.get("scm_oauth")
+            scm_oauth_id = scm_oauth.id if scm_oauth else None
+            scm_auth_info = core.ScmAuthManager.get_scm_authinfo_with_id(user, scm_oauth_id)
+            # 注意判空
+            scm_password = scm_auth_info.gitoa_access_token if scm_auth_info and \
+                                                               scm_auth_info.gitoa_access_token else None
+            if not scm_password:
+                raise serializers.ValidationError({"scm_auth": "请授权给CodeDog"})
+            scm_client = scm.ScmClient(scm_type, scm_url, auth_type,
+                                       username=user.username, password=scm_password)
         else:
             raise serializers.ValidationError({"cd_error": "不支持%s鉴权方式" % auth_type})
 
@@ -184,14 +198,15 @@ class RepositoryCreateSerializer(CDBaseModelSerializer):
                 ssh_url = scm_client.get_ssh_url()
         ssh_url = scm.ScmUrlFormatter.get_git_ssh_url(ssh_url)
         return http_url, ssh_url
-    
+
     def set_scm_auth(self, repo, scm_auth, user):
         """获取SCM鉴权信息
         """
         core.ScmAuthManager.create_repository_auth(
             repo, user, scm_auth_type=scm_auth.get("auth_type"),
             scm_account=scm_auth.get("scm_account"),
-            scm_ssh_info=scm_auth.get("scm_ssh")
+            scm_ssh_info=scm_auth.get("scm_ssh"),
+            scm_oauth=scm_auth.get("scm_oauth"),
         )
 
     def create(self, validated_data):
@@ -218,8 +233,7 @@ class RepositoryCreateSerializer(CDBaseModelSerializer):
 
     class Meta:
         model = models.Repository
-        fields = ["id", "name", "scm_url", "scm_type", "created_from", "scm_auth", "labels"]
-
+        fields = ["id", "name", "scm_url", "ssh_url", "scm_type", "created_from", "scm_auth", "labels"]
 
 
 class RepositoryAuthSerializer(CDBaseModelSerializer):
@@ -247,13 +261,25 @@ class RepositoryAuthUpdateSerializer(serializers.Serializer):
         request = self.context.get("request")
         user = request.user
         scm_type = self.instance.scm_type
-        scm_url = self.instance.scm_url
+        scm_url = self.instance.get_format_url()
         ssh_url = self.instance.ssh_url or scm_url
 
         # 与RepositoryCreateSerializer校验鉴权相同
         scm_auth = attrs.get("scm_auth")
         auth_type = scm_auth.get("auth_type")
-        if auth_type == models.ScmAuth.ScmAuthTypeEnum.PASSWORD:
+
+        if auth_type == models.ScmAuth.ScmAuthTypeEnum.OAUTH:
+            scm_oauth = scm_auth.get("scm_oauth")
+            scm_oauth_id = scm_oauth.id if scm_oauth else None
+            scm_auth_info = core.ScmAuthManager.get_scm_authinfo_with_id(user, scm_oauth_id)
+            # 注意判空
+            scm_password = scm_auth_info.gitoa_access_token if scm_auth_info and \
+                                                               scm_auth_info.gitoa_access_token else None
+            if not scm_password:
+                raise serializers.ValidationError({"scm_auth": "请授权给CodeDog"})
+            scm_client = scm.ScmClient(scm_type, scm_url, auth_type,
+                                       username=user.username, password=scm_password)
+        elif auth_type == models.ScmAuth.ScmAuthTypeEnum.PASSWORD:
             scm_account = scm_auth.get("scm_account")
             scm_account_id = scm_account.id if scm_account else None
             scm_account = core.ScmAuthManager.get_scm_account_with_id(user, scm_account_id)
@@ -267,7 +293,7 @@ class RepositoryAuthUpdateSerializer(serializers.Serializer):
             scm_ssh_info = core.ScmAuthManager.get_scm_sshinfo_with_id(user, scm_ssh_id)
             if not scm_ssh_info:
                 raise serializers.ValidationError({"scm_ssh": "您名下没有指定的SSH授权信息: %s" % scm_ssh})
-            
+
             scm_client = scm.ScmClient(scm_type, ssh_url, auth_type,
                                        ssh_key=scm_ssh_info.ssh_private_key, ssh_password=scm_ssh_info.password)
         else:
@@ -297,7 +323,8 @@ class RepositoryAuthUpdateSerializer(serializers.Serializer):
             core.ScmAuthManager.create_repository_auth(
                 instance, user, scm_auth_type=auth_type,
                 scm_account=scm_auth.get("scm_account"),
-                scm_ssh_info=scm_auth.get("scm_ssh")
+                scm_ssh_info=scm_auth.get("scm_ssh"),
+                scm_oauth=scm_auth.get("scm_oauth"),
             )
 
         if user:

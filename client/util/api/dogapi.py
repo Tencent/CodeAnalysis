@@ -8,6 +8,7 @@
 """ 与codedog server通信的resful api接口实现
 """
 
+import json
 import logging
 import sys
 
@@ -35,10 +36,16 @@ class CodeDogApiServer(object):
         }
         self._server_url = server_url
 
-    def get_data_from_result(self, result):
+    def get_data_from_result(self, response):
         """
         Analysis返回格式调整，不具备通用性，需要特殊适配
         """
+        return_data = response.read()
+        return_str = return_data.decode("utf8")
+        # 可能为空字符串，直接返回，不需要转换json
+        if not return_str:
+            return return_str
+        result = json.loads(return_str)
         if isinstance(result, dict):
             if result.get("data") is not None and result.get("code") is not None \
                     and result.get("status_code") is not None:
@@ -261,7 +268,9 @@ class CodeDogApiServer(object):
         判断代码仓库是否存在（即代码库是否在平台上已关联）
         :return:
         """
-        rel_url = f"api/orgs/{org_sid}/teams/{team_name}/repos/?scm_url={quote(repo_url)}"
+        rel_url = f"api/orgs/{quote(org_sid)}/teams/{quote(team_name)}/repos/?scm_url={quote(repo_url)}"
+        # logger.info(f"---> org_sid: {org_sid}, team_name: {team_name}")
+        # logger.info(f"---> org_sid: {quote(org_sid)}, team_name: {quote(team_name)}")
         rsp = CodeDogHttpClient(self._server_url, rel_url, headers=self._headers).get()
         # logger.info(f">>>> {type(rsp)} rsp: {rsp}")
         data = self.get_data_from_result(rsp)
@@ -444,3 +453,22 @@ class CodeDogApiServer(object):
         rel_url = f"api/orgs/{org_sid}/teams/{team_name}/repos/{repo_id}/projects/{proj_id}/confs/"
         rsp = CodeDogHttpClient(self._server_url, rel_url, headers=self._headers).get()
         return self.get_data_from_result(rsp)
+
+    def get_scheme_by_id(self, scheme_id, org_sid):
+        """根据分析方案模板id，获取方案模板的名称"""
+        rel_url = f"api/orgs/{org_sid}/schemes/{scheme_id}/"
+        rsp = CodeDogHttpClient(self._server_url, rel_url, headers=self._headers).get()
+        data = self.get_data_from_result(rsp)
+        return data
+
+    def get_jobconfs_by_scheme_template(self, scheme_id, org_sid):
+        """
+        获取分析方案模板的任务执行参数
+        :param scheme_id:分析方案模板id
+        :param org_sid: 团队编号
+        :return:
+        """
+        rel_url = f"api/orgs/{org_sid}/schemes/{scheme_id}/jobconfs/"
+        rsp = CodeDogHttpClient(self._server_url, rel_url, headers=self._headers).get()
+        data = self.get_data_from_result(rsp)
+        return data

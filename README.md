@@ -6,9 +6,13 @@
     <em>code-named: CodeDog</em>
 </p>
 
-[![license](https://img.shields.io/badge/License-MIT-brightgreen.svg?style=flat)](LICENSE)
+[![license](https://img.shields.io/badge/License-MIT-brightgreen.svg?style=flat)](LICENSE) [![docs](https://img.shields.io/badge/docs-read-brightgreen.svg?style=flat)](https://tencent.github.io/CodeAnalysis/)
 
 English | [简体中文](README_ZH.md)
+
+## TCA Github Pages
+
+[https://tencent.github.io/CodeAnalysis/](https://tencent.github.io/CodeAnalysis/)
 
 ## Repo Mirror
 
@@ -26,10 +30,6 @@ Using TCA can help team find normative, structural, security vulnerabilities and
 
 ![流程图](https://tencent.github.io/CodeAnalysis/media/Flow.png)
 
-## TCA Github Pages
-
-[https://tencent.github.io/CodeAnalysis/](https://tencent.github.io/CodeAnalysis/)
-
 ## Experience
 
 [Apply Link](http://tca.tencent.com)
@@ -44,6 +44,7 @@ Using TCA can help team find normative, structural, security vulnerabilities and
 ## Getting Started
 
 - [How to get start](https://tencent.github.io/CodeAnalysis/)
+- [How to use TCA Action](https://github.com/TCATools/TCA-action/blob/main/README.md)
 - [How to deploy server and web](https://tencent.github.io/CodeAnalysis/zh/quickStarted/deploySever.html#通过源代码)
 - [How to deploy server and web with docker-compose](https://tencent.github.io/CodeAnalysis/zh/quickStarted/deploySever.html#通过docker-compose)
 - [How to use client](https://tencent.github.io/CodeAnalysis/zh/quickStarted/deployClient.html)

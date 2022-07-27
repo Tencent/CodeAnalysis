@@ -7,4 +7,5 @@
 
 from apps.authen.core.usermgr import *
 from apps.authen.core.orgmgr import *
+from apps.authen.core.oauthmgr import *
 

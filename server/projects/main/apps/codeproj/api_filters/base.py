@@ -31,10 +31,14 @@ class ProjectTeamFilter(filters.FilterSet):
     ```
     """
     display_name = filters.CharFilter(help_text="项目显示名称", lookup_expr="icontains")
+    organization_name = filters.CharFilter(help_text="团队名称", field_name="organization__name",
+                                           lookup_expr="icontains")
+    organization_sid = filters.CharFilter(help_text="团队编号", field_name="organization__org_sid",
+                                          lookup_expr="icontains")
 
     class Meta:
         model = models.ProjectTeam
-        fields = ["status", "display_name"]
+        fields = ["status", "display_name", "organization_name", "organization_sid"]
 
 
 class ApiProjectFilter(filters.FilterSet):

@@ -1,0 +1,11 @@
+{
+  "name": "LINUX_GOMETALINTER",
+  "scm_url": "https://github.com/TCATools/linux-gometalinter-v2.0.12.git",
+  "scm_type": "git",
+  "envs": {
+    "GOMETALINTER_HOME": "$ROOT_DIR",
+    "PATH": "$ROOT_DIR/bin;$ROOT_DIR"
+  },
+  "lib_os": "linux",
+  "lib_type": "public"
+}

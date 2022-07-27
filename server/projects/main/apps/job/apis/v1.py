@@ -42,7 +42,7 @@ logger = logging.getLogger(__name__)
 class ProjectJobListApiView(generics.ListAPIView, ProjectBaseAPIView):
     """项目任务列表接口
 
-    ### get
+    ### GET
     应用场景：获取指定项目任务列表详情
     """
     serializer_class = serializers.JobCodeLineSerializer
@@ -57,7 +57,7 @@ class ProjectJobListApiView(generics.ListAPIView, ProjectBaseAPIView):
 class ProjectJobDetailApiView(generics.RetrieveAPIView, ProjectBaseAPIView):
     """项目任务详情接口
 
-    ### get
+    ### GET
     应用场景：获取指定项目指定任务详情
     """
     serializer_class = serializers.JobSerializer
@@ -73,7 +73,7 @@ class ProjectJobApiView(generics.GenericAPIView):
     """任务关闭接口
     使用对象：服务内部
 
-    ### put
+    ### PUT
     应用场景：Job JobClosed 的回调
     """
     schema = None
@@ -98,10 +98,10 @@ class ProjectScanJobInitApiView(generics.GenericAPIView, ProjectBaseAPIView):
     """项目扫描初始化
     使用对象：节点
 
-    ### get
+    ### GET
     应用场景：获取项目扫描配置的api，供节点端离线扫描使用
 
-    ### post
+    ### POST
     应用场景：创建新的扫描任务，仅做初始化
     """
     schema = None
@@ -134,7 +134,7 @@ class ProjectJobFinishApiView(generics.GenericAPIView, ProjectBaseAPIView):
     """项目本地扫描完成，上报结果
     使用对象：节点
 
-    ### post
+    ### POST
     应用场景：上报本地扫描的任务结果
     """
     schema = None
@@ -145,7 +145,7 @@ class ProjectJobFinishApiView(generics.GenericAPIView, ProjectBaseAPIView):
         project = self.get_project()
         job = get_object_or_404(models.Job, id=kwargs["job_id"], project_id=kwargs["project_id"])
         if not request.user.is_superuser:
-            schemeperm = ScanSchemePerm.objects.filter(scan_scheme=project.scan_scheme).first()
+            schemeperm = ScanSchemePerm.everything.filter(scan_scheme=project.scan_scheme).first()
             if schemeperm and schemeperm.execute_scope == ScanSchemePerm.ScopeEnum.PRIVATE \
                     and not schemeperm.check_user_execute_manager_perm(request.user):
                 logger.error("本地扫描/CI流水线，代码库内创建分支项目/启动分支项目扫描无权限：%s" % request.user)
@@ -170,7 +170,7 @@ class NodeTaskAckApiView(APIView):
 
     def post(self, request, node_id, task_id):
         """
-        ### post
+        ### POST
         应用场景：更新指定节点注册的指定Task状态为执行中，表示Task已被节点正常获取
         """
         nrows = models.Task.objects.filter(id=task_id, node_id=node_id, state=models.Task.StateEnum.ACKING).update(
@@ -234,10 +234,10 @@ class NodeTaskRegisterApiView(APIView):
 class TaskProgressApiView(generics.ListCreateAPIView):
     """指定task进度接口
 
-    ### get
+    ### GET
     应用场景：获取指定task的进度
 
-    ### post
+    ### POST
     应用场景：上报指定task的进度数据
     """
     authentication_classes = [TCANodeTokenBackend]
@@ -250,7 +250,7 @@ class TaskProgressApiView(generics.ListCreateAPIView):
 class TaskDetailApiView(generics.GenericAPIView):
     """指定task详情接口
 
-    ### put
+    ### PUT
     应用场景：上报task结果
     """
     schema = None
@@ -306,7 +306,7 @@ class ExcutePrivateTask(generics.GenericAPIView):
 class JobTasksBeatApiView(generics.GenericAPIView):
     """指定Task的心跳上报接口
 
-    ### post
+    ### POST
     应用场景：更新job下所有task的心跳时间
     """
     schema = None
@@ -325,7 +325,7 @@ class JobTasksBeatApiView(generics.GenericAPIView):
 class JobApiView(generics.RetrieveUpdateAPIView):
     """指定Job详情接口
 
-    ### get
+    ### GET
     应用场景：获取指定job的详情
 
     ###put
@@ -341,7 +341,7 @@ class JobApiView(generics.RetrieveUpdateAPIView):
 class JobTasksApiView(generics.ListAPIView):
     """指定Job的task列表查询接口
 
-    ### get
+    ### GET
     应用场景：获取Job的Task列表
     """
     schema = None

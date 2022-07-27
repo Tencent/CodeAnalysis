@@ -12,6 +12,20 @@
       font-weight: 500;
     }
   }
+
+  .lib-tag {
+    color: $blue-5;
+    border: 1px solid $blue-5;
+    background-color: #fff;
+    border-radius: 2px;
+
+    &.privite {
+      color: $green-6;
+      border: 1px solid $green-6;
+    }
+  }
+
+
 }
 
 .filter {
@@ -30,5 +44,18 @@
   .envs {
     font-size: 12px;
     margin-bottom: 2px;
+  }
+}
+
+.create-modal {
+  .question-icon {
+    color: $grey-6;
+    margin: 0 4px;
+    transition: all 0.3s;
+    cursor: pointer;
+
+    &:hover {
+      color: $grey-7;
+    }
   }
 }

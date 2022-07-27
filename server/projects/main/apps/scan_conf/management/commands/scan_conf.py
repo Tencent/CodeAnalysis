@@ -27,7 +27,7 @@ class Command(BaseCommand):
     def add_arguments(self, parser):
         parser.add_argument("-func", "--func", type=str, help="方法名称")
         parser.add_argument("-params", "--params", nargs="+", type=str, help="参数")
-    
+
     def tool_to_private(self, tool_names, org_sid):
         """将工具私有化
         :param tool_names: str, 工具名称，,分隔
@@ -42,7 +42,7 @@ class Command(BaseCommand):
         checktools.update(tool_key=tool_key, open_user=False)
         for checktool in checktools:
             CheckToolWhiteKey.objects.get_or_create(tool_key=tool_key, tool_id=checktool.id)
-    
+
     def tool_add_org(self, tool_names, org_sid):
         """工具添加到团队，即工具增加团队白名单
         :param tool_names: str, 工具名称，,分隔
@@ -56,7 +56,7 @@ class Command(BaseCommand):
         tool_key = CheckToolManager.get_tool_key(org=org)
         for checktool in checktools:
             CheckToolWhiteKey.objects.get_or_create(tool_key=tool_key, tool_id=checktool.id)
-    
+
     def handle(self, *args, **options):
         func = options.get("func")
         params = options.get("params") or []

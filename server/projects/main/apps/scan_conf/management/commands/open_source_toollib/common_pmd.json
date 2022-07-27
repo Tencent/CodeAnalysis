@@ -1,0 +1,11 @@
+{
+  "name": "COMMON_PMD",
+  "scm_url": "https://github.com/TCATools/common-pmd-bin-5.8.1.git",
+  "scm_type": "git",
+  "envs": {
+    "PMD_HOME": "$ROOT_DIR",
+    "PATH": "$ROOT_DIR/bin;$ROOT_DIR"
+  },
+  "lib_os": "linux;mac;windows;linux_arm64",
+  "lib_type": "public"
+}

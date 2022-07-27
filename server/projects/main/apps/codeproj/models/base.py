@@ -14,16 +14,15 @@ import logging
 
 # 第三方 import
 from django.conf import settings
-from django.db import models, IntegrityError
-from django.contrib.auth.models import User, Group
+from django.contrib.auth.models import Group, User
+from django.db import IntegrityError, models
 from guardian.shortcuts import assign_perm
 
 # 项目内 import
-from apps.authen.models import ScmAuth, Organization
-from apps.base.basemodel import CDBaseModel, BasePerm
+from apps.authen.models import Organization, ScmAuth
+from apps.base.basemodel import BasePerm, CDBaseModel
 from apps.nodemgr.models import ExecTag
 from apps.scan_conf.models import Language
-
 from util.webclients import AnalyseClient
 
 logger = logging.getLogger(__name__)
@@ -32,6 +31,13 @@ logger = logging.getLogger(__name__)
 # ****************************
 # * 项目基础信息配置
 # ****************************
+
+class ActiveProjectTeamManager(models.Manager):
+    """活跃项目筛选器
+    """
+
+    def get_queryset(self):
+        return super().get_queryset().filter(status=ProjectTeam.StatusEnum.ACTIVE)
 
 
 class ProjectTeam(CDBaseModel, BasePerm):
@@ -53,7 +59,7 @@ class ProjectTeam(CDBaseModel, BasePerm):
 
     STATUS_CHOICES = (
         (StatusEnum.ACTIVE, "活跃"),
-        (StatusEnum.DISACTIVE, "失活"),
+        (StatusEnum.DISACTIVE, "禁用"),
     )
 
     # SlugField会校验，r"^[-a-zA-Z0-9_]+\Z"，只能包含字母，数字，下划线或者中划线
@@ -62,6 +68,8 @@ class ProjectTeam(CDBaseModel, BasePerm):
     description = models.TextField(help_text="项目描述信息", null=True, blank=True)
     organization = models.ForeignKey(Organization, on_delete=models.SET_NULL, help_text="所属组织", null=True, blank=True)
     status = models.IntegerField(help_text="项目团队状态", default=StatusEnum.ACTIVE, choices=STATUS_CHOICES)
+
+    active_pts = ActiveProjectTeamManager()
 
     def _get_group(self, perm):
         permission_choices = dict(self.PERMISSION_CHOICES)
@@ -292,8 +300,14 @@ class BaseScanScheme(CDBaseModel):
     created_from = models.CharField(max_length=32, help_text="创建渠道", default=CreatedFromEnum.WEB)
     issue_global_ignore = models.BooleanField(default=True, verbose_name="是否开启问题全局忽略，默认为True（开启）")
     status = models.IntegerField(choices=STATUS_CHOICES, default=StatusEnum.ACTIVE, help_text="扫描方案状态")
-    scheme_key = models.CharField(max_length=64, verbose_name="扫描方案key值", null=True, blank=True)
+    scheme_key = models.CharField(max_length=64, verbose_name="扫描方案key值", null=True, blank=True, db_index=True)
     scheme_type = models.IntegerField(help_text="方案类型", default=SchemeTypeEnum.CUSTOM, null=True, blank=True)
+    ignore_merged_issue = models.BooleanField(default=False, verbose_name="过滤其他分支合入的问题")
+    ignore_branch_issue = models.CharField(max_length=128, help_text="过滤参考分支引入的问题", null=True, blank=True)
+    ignore_submodule_clone = models.BooleanField(default=False, verbose_name="是否忽略子模块clone，默认为False（不忽略）")
+    ignore_submodule_issue = models.BooleanField(default=True, verbose_name="是否忽略子模块问题，默认为True（忽略）")
+    lfs_flag = models.BooleanField(verbose_name="是否开启拉取代码时默认拉取lfs文件，默认为True（开启）", default=True,
+                                   null=True, blank=True)
 
     class Meta:
         unique_together = ("repo", "name")
@@ -305,6 +319,21 @@ class BaseScanScheme(CDBaseModel):
         """获取规则集
         """
         return self.lintbasesetting.checkprofile
+
+    def get_envs(self):
+        """获取配置的环境变量
+        """
+        return self.lintbasesetting.envs.strip() if self.lintbasesetting.envs else ""
+
+    def get_tag_name(self):
+        """获取配置的标签名称
+        """
+        return self.tag.name if self.tag else None
+
+    def get_lang_names(self):
+        """获取语言名称列表
+        """
+        return [lang.name for lang in self.languages.all()]
 
     def get_projects(self):
         return self.baseproject_set.all()
@@ -346,15 +375,16 @@ class BaseProject(CDBaseModel):
     """
 
     class StatusEnum(object):
-        APPLYING = 0
         ACTIVE = 1
         DISACTIVE = 2
-        CLOSED = 3
+        ARCHIVING = 3
+        ARCHIVED = 4
 
     STATUS_CHOICES = (
         (StatusEnum.ACTIVE, "活跃"),
         (StatusEnum.DISACTIVE, "失活"),
-        (StatusEnum.CLOSED, "关闭"),
+        (StatusEnum.ARCHIVING, "归档中"),
+        (StatusEnum.ARCHIVED, "已归档")
     )
 
     class CreatedFromEnum(object):

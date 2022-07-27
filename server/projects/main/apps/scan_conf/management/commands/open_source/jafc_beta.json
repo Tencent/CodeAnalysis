@@ -1,0 +1,195 @@
+[
+    {
+        "name": "jafc_beta",
+        "display_name": "JAFCBeta",
+        "description": "扫描项目代码中的API调用",
+        "license": "自研",
+        "libscheme_set": [],
+        "task_processes": [
+            "analyze",
+            "datahandle",
+            "compile"
+        ],
+        "scan_app": "codelint",
+        "scm_url": null,
+        "run_cmd": null,
+        "envs": null,
+        "build_flag": true,
+        "checkrule_set": [
+            {
+                "real_name": "DynamicAPICameraManager",
+                "display_name": "DynamicAPICameraManager",
+                "severity": "warning",
+                "category": "correctness",
+                "rule_title": "动态权限API检测 - CameraManager",
+                "rule_params": "class = CameraManager\nmethod = openCamera\nmsg = 该API会触发动态权限申请，请检查代码逻辑是否在拒绝权限后正常运行。",
+                "custom": true,
+                "languages": [
+                    "java"
+                ],
+                "solution": null,
+                "owner": null,
+                "labels": [],
+                "description": "####规则背景\nAndroid 6.0版本(Api 23)推出动态权限管理，应用的相关功能每次在使用危险权限时需要动态的申请并得到用户的授权才能使用。\n\n####规则扫描内容\n发现项目中代码以及组件中对危险权限的API调用，提示开发人员对旧的代码逻辑进行检查，防止无容错等逻辑导致程序异常",
+                "disable": false
+            },
+            {
+                "real_name": "DynamicAPIGetExternalStorageDirectory",
+                "display_name": "DynamicAPIGetExternalStorageDirectory",
+                "severity": "warning",
+                "category": "correctness",
+                "rule_title": "动态权限API检测 - Environment.getExternalStorageDirectory",
+                "rule_params": "class = Environment\nmethod = getExternalStorageDirectory\nmsg = 该API会触发动态权限申请，请检查代码逻辑是否在拒绝权限后正常运行。",
+                "custom": true,
+                "languages": [
+                    "java"
+                ],
+                "solution": null,
+                "owner": null,
+                "labels": [],
+                "description": "####规则背景\nAndroid 6.0版本(Api 23)推出动态权限管理，应用的相关功能每次在使用危险权限时需要动态的申请并得到用户的授权才能使用。\n\n####规则扫描内容\n发现项目中代码以及组件中对危险权限的API调用，提示开发人员对旧的代码逻辑进行检查，防止无容错等逻辑导致程序异常",
+                "disable": false
+            },
+            {
+                "real_name": "DynamicAPILocationManager",
+                "display_name": "DynamicAPILocationManager",
+                "severity": "warning",
+                "category": "correctness",
+                "rule_title": "动态权限API检测 - LocationManager",
+                "rule_params": "class = android.location.LocationManager\nmsg = android.location.LocationManager的API可能会触发动态权限申请，请检查代码逻辑是否在拒绝权限后正常运行。",
+                "custom": true,
+                "languages": [
+                    "java"
+                ],
+                "solution": null,
+                "owner": null,
+                "labels": [],
+                "description": "####规则背景\nAndroid 6.0版本(Api 23)推出动态权限管理，应用的相关功能每次在使用危险权限时需要动态的申请并得到用户的授权才能使用。\n\n####规则扫描内容\n发现项目中代码以及组件中对危险权限的API调用，提示开发人员对旧的代码逻辑进行检查，防止无容错等逻辑导致程序异常",
+                "disable": false
+            },
+            {
+                "real_name": "DynamicAPISubscriptionManager",
+                "display_name": "DynamicAPISubscriptionManager",
+                "severity": "warning",
+                "category": "correctness",
+                "rule_title": "动态权限API检测 - SubscriptionManager",
+                "rule_params": "class = SubscriptionManager\nmethod = getActiveSubscriptionInfo;getActiveSubscriptionInfoForSimSlotIndex;getActiveSubscriptionInfoList;getActiveSubscriptionInfoCount\nmsg = 该API会触发动态权限申请，请检查代码逻辑是否在拒绝权限后正常运行。",
+                "custom": true,
+                "languages": [
+                    "java"
+                ],
+                "solution": null,
+                "owner": null,
+                "labels": [],
+                "description": "####规则背景\nAndroid 6.0版本(Api 23)推出动态权限管理，应用的相关功能每次在使用危险权限时需要动态的申请并得到用户的授权才能使用。\n\n####规则扫描内容\n发现项目中代码以及组件中对危险权限的API调用，提示开发人员对旧的代码逻辑进行检查，防止无容错等逻辑导致程序异常",
+                "disable": false
+            },
+            {
+                "real_name": "DynamicAPITelephonyManager",
+                "display_name": "DynamicAPITelephonyManager",
+                "severity": "warning",
+                "category": "correctness",
+                "rule_title": "动态权限API检测 - TelephonyManager",
+                "rule_params": "class = TelephonyManager\nmsg = TelephonyManager的API可能会触发动态权限申请，请检查代码逻辑是否在拒绝权限后正常运行。",
+                "custom": true,
+                "languages": [
+                    "java"
+                ],
+                "solution": null,
+                "owner": null,
+                "labels": [],
+                "description": "####规则背景\nAndroid 6.0版本(Api 23)推出动态权限管理，应用的相关功能每次在使用危险权限时需要动态的申请并得到用户的授权才能使用。\n\n####规则扫描内容\n发现项目中代码以及组件中对危险权限的API调用，提示开发人员对旧的代码逻辑进行检查，防止无容错等逻辑导致程序异常",
+                "disable": false
+            },
+            {
+                "real_name": "DynamicAPITwilightManager",
+                "display_name": "DynamicAPITwilightManager",
+                "severity": "warning",
+                "category": "correctness",
+                "rule_title": "动态权限API检测 - TwilightManager",
+                "rule_params": "class = TwilightManager\nmethod = getLastKnownLocationForProvider\nmsg = 该API会触发动态权限申请，请检查代码逻辑是否在拒绝权限后正常运行。",
+                "custom": true,
+                "languages": [
+                    "java"
+                ],
+                "solution": null,
+                "owner": null,
+                "labels": [],
+                "description": "####规则背景\nAndroid 6.0版本(Api 23)推出动态权限管理，应用的相关功能每次在使用危险权限时需要动态的申请并得到用户的授权才能使用。\n\n####规则扫描内容\n发现项目中代码以及组件中对危险权限的API调用，提示开发人员对旧的代码逻辑进行检查，防止无容错等逻辑导致程序异常",
+                "disable": false
+            },
+            {
+                "real_name": "DynamicAPIWallpaperManager",
+                "display_name": "DynamicAPIWallpaperManager",
+                "severity": "warning",
+                "category": "correctness",
+                "rule_title": "动态权限API检测 - WallpaperManager",
+                "rule_params": "class = WallpaperManager\nmethod = getFastDrawable;peekFastDrawable;getWallpaperFile\nmsg = 该API会触发动态权限申请，请检查代码逻辑是否在拒绝权限后正常运行。",
+                "custom": true,
+                "languages": [
+                    "java"
+                ],
+                "solution": null,
+                "owner": null,
+                "labels": [],
+                "description": "####规则背景\nAndroid 6.0版本(Api 23)推出动态权限管理，应用的相关功能每次在使用危险权限时需要动态的申请并得到用户的授权才能使用。\n\n####规则扫描内容\n发现项目中代码以及组件中对危险权限的API调用，提示开发人员对旧的代码逻辑进行检查，防止无容错等逻辑导致程序异常",
+                "disable": false
+            },
+            {
+                "real_name": "DynamicAPIWifiRttManager",
+                "display_name": "DynamicAPIWifiRttManager",
+                "severity": "warning",
+                "category": "correctness",
+                "rule_title": "动态权限API检测 - WifiRttManager",
+                "rule_params": "class = WifiRttManager\nmethod = startRanging\nmsg = 该API会触发动态权限申请，请检查代码逻辑是否在拒绝权限后正常运行。",
+                "custom": true,
+                "languages": [
+                    "java"
+                ],
+                "solution": null,
+                "owner": null,
+                "labels": [],
+                "description": "####规则背景\nAndroid 6.0版本(Api 23)推出动态权限管理，应用的相关功能每次在使用危险权限时需要动态的申请并得到用户的授权才能使用。\n\n####规则扫描内容\n发现项目中代码以及组件中对危险权限的API调用，提示开发人员对旧的代码逻辑进行检查，防止无容错等逻辑导致程序异常",
+                "disable": false
+            },
+            {
+                "real_name": "FindLog4j",
+                "display_name": "FindLog4j",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "扫描log4j api调用位置，辅助升级log4j",
+                "rule_params": "class = org.apache.logging.log4j.Logger\nmethod = error;warn;info;debug;fatal;trace;log\nmsg = 扫描log4j api调用位置，辅助升级log4j",
+                "custom": true,
+                "languages": [
+                    "java"
+                ],
+                "solution": "检查log4j版本是否符合要求，请及时升级。",
+                "owner": null,
+                "labels": [],
+                "description": "扫描log4j api调用位置，辅助升级log4j",
+                "disable": false
+            },
+            {
+                "real_name": "Log4jLogManager",
+                "display_name": "Log4jLogManager",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "扫描log4j LogManager api调用位置，辅助升级log4j",
+                "rule_params": "class = org.apache.logging.log4j.LogManager\nmethod = getLogger\nmsg = 扫描log4j api调用位置，辅助升级log4j",
+                "custom": true,
+                "languages": [
+                    "java"
+                ],
+                "solution": "检查log4j版本是否符合要求，请及时升级。",
+                "owner": null,
+                "labels": [],
+                "description": "扫描log4j LogManager api调用位置，辅助升级log4j",
+                "disable": false
+            }
+        ],
+        "open_user": true,
+        "open_saas": false,
+        "virtual_name": "41",
+        "show_display_name": true
+    }
+]

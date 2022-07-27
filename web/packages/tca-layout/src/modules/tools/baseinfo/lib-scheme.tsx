@@ -79,7 +79,7 @@ const LibScheme = (props: LibSchemeProps) => {
     } else {
       form.setFieldsValue({
         ...curScheme,
-        scheme_os: curScheme?.scheme_os?.split(','),
+        scheme_os: curScheme?.scheme_os?.split(';'),
         tool_libs: curScheme?.toollib_maps?.map((item: any) => item.toollib.id) ?? []
       })
     }
@@ -105,7 +105,7 @@ const LibScheme = (props: LibSchemeProps) => {
     const arrs = fields;
 
     if (index >= 0 && index <= arrs.length) {
-      const values = form.getFieldValue('tool_libs');
+      const values = form.getFieldValue('tool_libs') || [];
       form.setFieldsValue({
         tool_libs: [
           ...values.slice(0, index + 1),
@@ -150,7 +150,7 @@ const LibScheme = (props: LibSchemeProps) => {
     const params = {
       ...formData,
       condition: formData.condition || null,
-      scheme_os: formData.scheme_os?.join(','),
+      scheme_os: formData.scheme_os?.join(';'),
       tool_libs: compact(formData.tool_libs)?.map((id: number) => ({ toollib: id })),
     };
     if (activeKey !== -1) {
@@ -320,11 +320,23 @@ const LibScheme = (props: LibSchemeProps) => {
                   .then(onFinish)
                 }
               >{activeKey === -1 ? '新增' : '修改'}</Button>
-              <Button
-                className="ml-12"
-                danger
-                onClick={onDelLibScheme}
-              >删除</Button>
+              {
+                activeKey === -1 ? (
+                  <Button
+                    className="ml-12"
+                    onClick={() => {
+                      form.resetFields();
+                      setFields(defaultFields);
+                    }}
+                  >取消</Button>
+                ) : (
+                  <Button
+                    className="ml-12"
+                    danger
+                    onClick={onDelLibScheme}
+                  >删除</Button>
+                )
+              }
             </Form.Item>
           )
         }

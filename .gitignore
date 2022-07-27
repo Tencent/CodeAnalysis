@@ -26,6 +26,9 @@ __pycache__
 
 # Other
 .docker_data
+.docker_temp
+docker-compose.yml.bak
 client/data/taskdirs/*
 **/*.log
 data/
+*.out

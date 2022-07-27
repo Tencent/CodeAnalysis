@@ -11,6 +11,7 @@
 
 import logging
 import hashlib
+import os
 
 from urllib.parse import urljoin
 from util import wrapper
@@ -45,22 +46,16 @@ class FlieHash(object):
 
 
 class FileServer(object):
-    def __init__(self, http_file_proxy=None):
+    def __init__(self):
         """
         构造函数
-        :param http_file_proxy: 代理服务器地址及端口号
         :return:
         """
-        self._server_url = settings.FILE_SERVER['URL']
-        self._headers = {'Authorization': 'Token %s' % settings.FILE_SERVER['TOKEN']}
-
-        # 如果用户填写的是默认的文件服务器devnet代理变量,使用默认代理
-        # 如果用户填写的是自己的代理,使用该代理
-        # 如果用户没有填写代理,不使用代理
-        if http_file_proxy:
-            self._proxies = {"http": http_file_proxy}
-        else:
-            self._proxies = None
+        # 优先从环境变量读取文件服务器url和token，没有再使用默认值
+        self._server_url = os.getenv("FILE_SERVER_URL", settings.FILE_SERVER['URL'])
+        file_server_token = os.getenv("FILE_SERVER_TOKEN", settings.FILE_SERVER['TOKEN'])
+        self._headers = {'Authorization': 'Token %s' % file_server_token}
+        self._proxies = None
 
     def modify_save_time(self, rel_dir, days):
         """
@@ -83,7 +78,6 @@ class FileServer(object):
         :return: 上传到服务器后的完整url, 如果上传失败, 返回 None
         """
         file_url = urljoin(self._server_url, rel_url)
-        # logger.info(f">> file_url: {file_url}")
         HttpClient(self._server_url, rel_url, headers=headers, data=data, proxies=self._proxies).put()
         return file_url
 
@@ -109,7 +103,7 @@ class FileServer(object):
         :return:
         """
         rsp = HttpClient(self._server_url, rel_url, headers=self._headers, proxies=self._proxies).get()
-        return rsp.content
+        return rsp.read()
 
     def download_file(self, rel_url, filepath):
         """
@@ -125,15 +119,13 @@ class FileServer(object):
 
 
 class RetryFileServer(object):
-    def __init__(self, retry_times=-1, http_file_proxy=None):
+    def __init__(self, retry_times=-1):
         """
         构造函数
         :param retry_times: 重试次数,默认-1,即一直重试直到成功
-        :param http_file_proxy: 代理服务器地址及端口号
         :return:
         """
         self._retry_times = retry_times
-        self._http_file_proxy = http_file_proxy
 
     def retry_on_error(self, error, method_name):
         """
@@ -149,5 +141,5 @@ class RetryFileServer(object):
         获取一个server实例
         :return:
         """
-        file_server = FileServer(http_file_proxy=self._http_file_proxy)
+        file_server = FileServer()
         return wrapper.Retry(server=file_server, on_error=self.retry_on_error, total=self._retry_times)

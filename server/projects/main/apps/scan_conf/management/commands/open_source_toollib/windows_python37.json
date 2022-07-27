@@ -1,0 +1,12 @@
+{
+  "name": "WINDOWS_PYTHON37",
+  "scm_url": "https://github.com/TCATools/win-Python-v3.7.0.git",
+  "scm_type": "git",
+  "envs": {
+    "PYTHON_HOME": "$ROOT_DIR",
+    "PYTHON37_HOME": "$ROOT_DIR",
+    "PATH": "$ROOT_DIR/bin;$ROOT_DIR"
+  },
+  "lib_os": "windows",
+  "lib_type": "public"
+}

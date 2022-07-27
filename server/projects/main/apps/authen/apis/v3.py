@@ -10,6 +10,7 @@ authen - apis for v3
 """
 # python 原生import
 import logging
+import uuid
 
 # 第三方 import
 from django.contrib.auth.models import User
@@ -17,6 +18,7 @@ from django.shortcuts import get_object_or_404
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import generics, status
 from rest_framework.authtoken.models import Token
+from rest_framework.exceptions import ParseError
 from rest_framework.response import Response
 from rest_framework.serializers import ValidationError
 from rest_framework.views import APIView
@@ -24,13 +26,17 @@ from rest_framework.views import APIView
 # 项目内 import
 from apps.authen import models
 from apps.authen.api_filters import base as base_filters
+from apps.authen.core import OauthManager
 from apps.authen.core import OrganizationManager
 from apps.authen.permissions import CodeDogSuperVipUserLevelPermission, CodeDogUserPermission, \
     OrganizationDefaultPermission, OrganizationDetailUpdatePermission
 from apps.authen.serializers import base_org
 from apps.authen.serializers.base import ScmAccountSerializer, ScmSshInfoSerializer, ScmSshInfoUpdateSerializer, \
-    UserSerializer, UserSimpleSerializer
-from apps.codeproj.models import ProjectTeam
+    UserSerializer, UserSimpleSerializer, ScmAuthInfoSerializer
+from apps.codeproj.core import ScmAuthManager
+from apps.codeproj.models import ProjectTeam, Repository
+from util import scm
+from util.authticket import TempTokenTicket
 from util.operationrecord import OperationRecordHandler
 
 logger = logging.getLogger(__name__)
@@ -38,10 +44,10 @@ logger = logging.getLogger(__name__)
 
 class UserInfoApiView(generics.RetrieveUpdateAPIView):
     """用户信息
-    ### get
+    ### GET
     应用场景：获取用户信息
 
-    ### put
+    ### PUT
     应用场景：更新用户信息
     """
     permission_classes = [CodeDogUserPermission]
@@ -54,11 +60,11 @@ class UserInfoApiView(generics.RetrieveUpdateAPIView):
 class UserTokenView(APIView):
     """用户信息API
 
-    ### get
+    ### GET
 
     应用场景：获取当前登录用户Token
 
-    ### post
+    ### POST
 
     应用场景：更新当前用户Token
     """
@@ -70,7 +76,7 @@ class UserTokenView(APIView):
         """
         logger.info("hello, %s" % request.user)
         token, _ = Token.objects.get_or_create(user=request.user)
-        return Response(data={"token": token.key}, status=status.HTTP_200_OK)
+        return Response(data={"token": token.key, "tca_ut": TempTokenTicket.generate_ticket(token.key)})
 
     def put(self, request):
         """
@@ -85,7 +91,7 @@ class UserTokenView(APIView):
 class OrganizationListApiView(generics.ListCreateAPIView):
     """团队列表
 
-    ### get
+    ### GET
     应用场景：获取团队列表
     ```bash
     筛选参数：
@@ -93,7 +99,7 @@ class OrganizationListApiView(generics.ListCreateAPIView):
     scope: 1 为我管理的
     ```
 
-    ### post
+    ### POST
     应用场景：创建团队
     """
     permission_classes = [CodeDogUserPermission]
@@ -116,22 +122,37 @@ class OrganizationListApiView(generics.ListCreateAPIView):
 class OrganizationDetailApiView(generics.RetrieveUpdateAPIView):
     """团队详情
 
-    ### get
+    ### GET
     应用场景：获取团队详情
 
-    ### put
+    ### PUT
     应用场景：更新团队
     """
     permission_classes = [OrganizationDetailUpdatePermission]
     serializer_class = base_org.OrganizationSerializer
-    queryset = models.Organization.objects.all()
-    lookup_field = 'org_sid'
+    queryset = models.Organization.objects.exclude(status=models.Organization.StatusEnum.FORBIDEN)
+    lookup_field = "org_sid"
+
+
+class OrganizationStatusApiView(generics.RetrieveUpdateAPIView):
+    """团队状态变更接口
+
+    ### GET
+    应用场景：获取团队简要信息
+
+    ### PUT
+    应用场景：更新团队状态
+    """
+    permission_classes = [OrganizationDefaultPermission]
+    serializer_class = base_org.OrganizationSimpleSerializer
+    queryset = models.Organization.active_orgs.all()
+    lookup_field = "org_sid"
 
 
 class OrganizationMemberDeleteApiView(APIView):
     """删除团队成员
 
-    ### delete
+    ### DELETE
     应用场景：删除团队成员
     """
     permission_classes = [OrganizationDefaultPermission]
@@ -164,10 +185,10 @@ class OrganizationMemberDeleteApiView(APIView):
 class OrganizationMemberInviteApiView(APIView):
     """组织成员权限管理
 
-    ### get
+    ### GET
     应用场景：获取组织成员
 
-    ### post
+    ### POST
     应用场景：邀请成员，得到 一个邀请码
     ```python
     {
@@ -198,7 +219,7 @@ class OrganizationMemberInviteApiView(APIView):
 class OrganizationMemberConfInvitedApiView(generics.GenericAPIView):
     """组织成员邀请
 
-    ### post
+    ### POST
     应用场景：根据邀请码将用户添加到组织内
     """
     permission_classes = [CodeDogUserPermission]
@@ -217,7 +238,7 @@ class OrganizationMemberConfInvitedApiView(generics.GenericAPIView):
 class ScmAllAcountListApiView(generics.GenericAPIView):
     """展示用户全部账号列表
 
-    ### get
+    ### GET
     应用场景：获取当前用户全部账号，便于前端处理
     """
     permission_classes = [CodeDogUserPermission]
@@ -235,10 +256,10 @@ class ScmAllAcountListApiView(generics.GenericAPIView):
 class ScmAccountListApiView(generics.ListCreateAPIView):
     """用户账号列表（用户名+密码）
 
-    ### get
+    ### GET
     应用场景：获取用户账号列表
 
-    ### post
+    ### POST
     应用场景：创建用户账号
     """
     permission_classes = [CodeDogUserPermission]
@@ -252,13 +273,13 @@ class ScmAccountListApiView(generics.ListCreateAPIView):
 class ScmAccountDetailApiView(generics.RetrieveUpdateDestroyAPIView):
     """用户账号列表（用户名+密码）
 
-    ### get
+    ### GET
     应用场景：获取用户指定的账号
 
-    ### put
+    ### PUT
     应用场景：更新用户指定的账号
 
-    ### delete
+    ### DELETE
     应用场景：删除用户指定的账号
     """
     permission_classes = [CodeDogUserPermission]
@@ -276,10 +297,10 @@ class ScmAccountDetailApiView(generics.RetrieveUpdateDestroyAPIView):
 class ScmSSHInfoListApiView(generics.ListCreateAPIView):
     """用户SSH授权列表
 
-    ### get
+    ### GET
     应用场景：获取用户SSH授权列表
 
-    ### post
+    ### POST
     应用场景：创建用户SSH授权列表
     """
     permission_classes = [CodeDogUserPermission]
@@ -293,13 +314,13 @@ class ScmSSHInfoListApiView(generics.ListCreateAPIView):
 class ScmSSHInfoDetailApiView(generics.RetrieveUpdateDestroyAPIView):
     """用户SSH授权详情
 
-    ### get
+    ### GET
     获取用户SSH授权详情
 
-    ### put
+    ### PUT
     更新用户指定的SSH授权
 
-    ### delete
+    ### DELETE
     创建用户SSH授权列表
     """
     permission_classes = [CodeDogUserPermission]
@@ -312,3 +333,125 @@ class ScmSSHInfoDetailApiView(generics.RetrieveUpdateDestroyAPIView):
     def get_object(self):
         user = self.request.user
         return get_object_or_404(models.ScmSshInfo, user=user, id=self.kwargs["sshinfo_id"])
+
+
+class OauthSettingsStatusAPIView(generics.GenericAPIView):
+    """获得平台oauth设置状态
+
+    ### GET
+    应用场景：获得各scm平台配置状态
+    """
+
+    def get(self, request):
+        result = {}
+        for scm_platform_name, scm_platform_num in scm.SCM_PLATFORM_NAME_AS_KEY.items():
+            oauth_setting = models.ScmOauthSetting.objects.filter(scm_platform=scm_platform_num).first()
+            if oauth_setting:
+                result.update({scm_platform_name: True})
+            else:
+                result.update({scm_platform_name: False})
+        return Response(result)
+
+
+class ScmAuthInfoCheckApiView(generics.GenericAPIView):
+    """
+    ### get
+    应用场景：获取用户工蜂授权信息 (注：前端处理时需要修改state和redirect_uri)
+
+    ### delete
+    删除用户指定平台的授权信息
+    """
+
+    def get(self, request):
+        scm_platform_name = request.query_params.get('scm_platform_name', None)
+        if not scm_platform_name:
+            # 获取各平台授权信息
+            result = OauthManager.get_user_oauth_info(request.user)
+            return Response(result)
+
+        scm_platform = scm.SCM_PLATFORM_NAME_AS_KEY.get(scm_platform_name)
+        oauth_setting = OauthManager.get_oauth_setting(scm_platform_name)
+        if not oauth_setting:
+            raise ParseError("wrong scm platform provided or no oauth setting")
+        oauth_setting = oauth_setting.first()
+
+        scm_auth_info = ScmAuthManager.get_scm_auth(user=request.user, scm_platform=scm_platform)
+        git_authed = True if scm_auth_info and scm_auth_info.gitoa_access_token else False
+        state_hash = str(uuid.uuid4())[0:8]
+        git_auth_url = '%s?client_id=%s&response_type=' \
+                       'code&state=%s&redirect_uri=%s&scope=%s' % (
+                           oauth_setting.oauth_url,
+                           oauth_setting.decrypted_client_id,
+                           state_hash,
+                           oauth_setting.redirect_uri,
+                           "repo" if scm_platform == scm.ScmPlatformEnum.GITHUB else "")
+        result = {
+            'git': git_authed,
+            'git_auth_url': git_auth_url
+        }
+        return Response(result)
+
+    def delete(self, request):
+        scm_platform_name = request.data.get("scm_platform_name", None)
+        if not scm_platform_name:
+            scm_platform_name = scm.SCM_PLATFORM_NUM_AS_KEY[scm.ScmPlatformEnum.GIT_OA]
+        scm_auth_info = ScmAuthManager.get_scm_auth(user=request.user, scm_platform=scm_platform_name)
+        if scm_auth_info:
+            scm_auth_info.gitoa_access_token = None
+            scm_auth_info.gitoa_refresh_token = None
+            scm_auth_info.save()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class ScmAuthInfoListApiView(generics.ListAPIView):
+    """用户授权列表
+
+    ### GET
+    获取用户的授权列表
+    """
+    serializer_class = ScmAuthInfoSerializer
+
+    def get_queryset(self):
+        user = self.request.user
+        return models.ScmAuthInfo.objects.filter(user=user, gitoa_access_token__isnull=False).order_by("-id")
+
+
+class GitCallbackPlatformByScmProxy(generics.GenericAPIView):
+    """通过ScmProxy授权
+    """
+
+    def get(self, request, scm_platform_name):
+        if not request.user:
+            return Response("login required!", status=status.HTTP_401_UNAUTHORIZED)
+        user = request.user
+        authorization_code = request.query_params.get("code", None)
+        if authorization_code:
+            oauth_setting = OauthManager.get_oauth_setting(scm_platform_name)
+            if not oauth_setting:
+                raise ParseError("wrong scm platform provided or no oauth setting")
+            oauth_setting = oauth_setting.first()
+            data = {
+                "grant_type": "authorization_code",
+                "client_id": oauth_setting.decrypted_client_id,
+                "client_secret": oauth_setting.decrypted_client_secret,
+                "code": authorization_code,
+                "redirect_uri": oauth_setting.redirect_uri
+            }
+            try:
+                git_client = scm.ScmClient(Repository.ScmTypeEnum.GIT, scm_url="", auth_type="oauth",
+                                           scm_platform=scm_platform_name)
+                oauth_info = git_client.get_oauth(auth_info=data)
+            except Exception as msg:
+                logger.exception("oauth failed, err: %s" % msg)
+                raise ParseError("oauth failed, err: %s" % msg)
+            ScmAuthManager.create_or_update_scm_auth(
+                user=user,
+                access_token=oauth_info["access_token"],
+                refresh_token=oauth_info.get("refresh_token", None),
+                scm_platform=scm.SCM_PLATFORM_NAME_AS_KEY.get(scm_platform_name),
+                expires_in=oauth_info.get("expires_in", None),
+                created_at=oauth_info.get("created_at", None),
+            )
+            return Response(data={"msg": "Success"})
+        else:
+            raise ParseError("no authorization_code provided!")

@@ -199,7 +199,7 @@ class AndroidLint(CodeLintModel):
     def __get_issues_from_file(self, file_path, source_dir):
         items = []
         lint_proj_dir = os.environ.get(PROJECT_DIR_ENV)
-        if not os.path.exists(file_path):
+        if not os.path.exists(file_path) or os.stat(file_path).st_size == 0:
             return items
         warning_data = ET.ElementTree(file=file_path)
         for bug in warning_data.iter(tag="issue"):

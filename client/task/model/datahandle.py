@@ -12,6 +12,7 @@
 import time
 import logging
 
+from node.quicktask.quickscan import QuickScan
 from task.taskmodel import ITaskModel
 from task.basic.datahandler.blamer import Blamer
 from task.basic.datahandler.filter import Filter, PostFilter
@@ -62,6 +63,8 @@ class DataHandleTask(ITaskModel):
         # 调整扫描结果数据结构
         # 循环执行结果处理队列
         for datahander_type in HANDLE_QUEUE:
+            if QuickScan.is_quick_scan() and datahander_type not in [Formater, IssueIgnore]:
+                continue
             tool_handle_type_name = datahander_type.get_tool_handle_type_name()
             logger.info(f"[Start] {tool_handle_type_name}")
             start_time = time.time()

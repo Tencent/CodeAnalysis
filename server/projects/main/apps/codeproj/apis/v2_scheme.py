@@ -41,10 +41,10 @@ class ScanSchemeListApiView(CustomSerilizerMixin, generics.ListCreateAPIView):
     1. 支持用户筛选平台通用的、当前组织内的、自己创建的或有权限的扫描方案
     2. 支持用户创建扫描方案
 
-    ### get
+    ### GET
     获取扫描方案列表
 
-    ### post
+    ### POST
     创建新的扫描方案
     """
     serializer_class = base_scheme.GlobalScanSchemeTemplateSerializer
@@ -64,10 +64,10 @@ class ScanSchemeDetailApiView(generics.RetrieveUpdateAPIView):
     1. 支持用户查阅平台通用的、自己创建的或有权限的扫描方案详情
     2. 支持用户编辑自己创建的或有权限的扫描方案详情
 
-    ### get
+    ### GET
     获取指定的扫描方案
 
-    ### put
+    ### PUT
     更新指定的扫描方案
     """
     permission_classes = [ScanSchemePermission]
@@ -83,10 +83,10 @@ class ScanSchemeLintConfApiView(generics.RetrieveUpdateAPIView):
     1. 支持用户查阅平台通用的、自己创建的或有权限的扫描方案详情
     2. 支持用户编辑自己创建的或有权限的扫描方案详情
 
-    ### get
+    ### GET
     应用场景：获取指定扫描方案的lint配置
 
-    ### put
+    ### PUT
     应用场景：更新指定扫描方案的lint配置
     """
     permission_classes = [ScanSchemePermission]
@@ -103,10 +103,10 @@ class ScanSchemeMetricConfApiView(generics.RetrieveUpdateAPIView):
     1. 支持用户查阅平台通用的、自己创建的或有权限的扫描方案详情
     2. 支持用户编辑自己创建的或有权限的扫描方案详情
 
-    ### get
+    ### GET
     应用场景：获取指定扫描方案的metric配置
 
-    ### put
+    ### PUT
     应用场景：更新指定扫描方案的metric配置
     """
     permission_classes = [ScanSchemePermission]
@@ -123,10 +123,10 @@ class ScanSchemeDirListApiView(generics.ListCreateAPIView):
     1. 支持用户查阅平台通用的、自己创建的或有权限的扫描方案详情
     2. 支持用户编辑自己创建的或有权限的扫描方案详情
 
-    ### get
+    ### GET
     应用场景：获取指定扫描方案的扫描目录列表
 
-    ### post
+    ### POST
     应用场景：创建指定扫描方案的扫描目录
     """
     serializer_class = base_serializers.ScanDirConfSerializer
@@ -140,7 +140,7 @@ class ScanSchemeDirListApiView(generics.ListCreateAPIView):
 
 class ScanSchemeDirBulkCreateApiView(generics.GenericAPIView):
     """扫描方案过滤路径，批量增加扫描目录
-    ### post
+    ### POST
     批量创建过滤路径
     """
     serializer_class = base_serializers.ScanDirConfBulkCreateSerialzier
@@ -192,13 +192,13 @@ class ScanSchemeDirClearApiView(APIView):
 class ScanSchemeDirDetailApiView(generics.RetrieveUpdateDestroyAPIView):
     """扫描方案指定扫描目录详情管理接口
 
-    ### get
+    ### GET
     应用场景：获取指定扫描方案的指定扫描目录
 
-    ### put
+    ### PUT
     应用场景：更新指定扫描方案的指定扫描目录
 
-    ### delete
+    ### DELETE
     应用场景：删除指定扫描方案的指定扫描目录
     """
     permission_classes = [ScanSchemePermission]
@@ -226,10 +226,10 @@ class ScanSchemeDirDetailApiView(generics.RetrieveUpdateDestroyAPIView):
 class ScanSchemePermConfApiView(generics.RetrieveUpdateAPIView):
     """扫描方案权限配置
 
-    ### get
+    ### GET
     应用场景：获取指定扫描方案的权限信息
 
-    ### put
+    ### PUT
     应用场景：更新指定扫描方案的权限信息
     """
 
@@ -246,7 +246,7 @@ class ScanSchemePermConfApiView(generics.RetrieveUpdateAPIView):
 class ScanSchemeChildrenListApiView(generics.ListAPIView):
     """模板子扫描方案列表
 
-    ### get
+    ### GET
     应用场景：获取指定模板的子扫描方案列表
     """
     serializer_class = base_serializers.ScanSchemeRepoInfoSimpleSerializer
@@ -286,11 +286,11 @@ class ScanSchemePushApiView(generics.GenericAPIView):
 class ScanSchemeDefaultScanPathListApiView(CustomSerilizerMixin, generics.ListCreateAPIView):
     """
 
-    ### get
+    ### GET
     获取指定扫描方案的默认过滤路径
     > exclude=1表示筛选被屏蔽了的路径列表
 
-    ### post
+    ### POST
     在指定扫描方案屏蔽指定默认路径
     """
 
@@ -327,10 +327,10 @@ class ScanSchemeDefaultScanPathListApiView(CustomSerilizerMixin, generics.ListCr
 
 class ScanSchemeDefaultScanPathDetailApiView(generics.RetrieveDestroyAPIView):
     """
-    ### get
+    ### GET
     获取指定扫描方案指定屏蔽的过滤路径
 
-    ### delete
+    ### DELETE
     在指定扫描方案取消屏蔽指定过滤路径
     """
     permission_classes = [ScanSchemePermission]
@@ -357,7 +357,7 @@ class ScanSchemeDefaultScanPathDetailApiView(generics.RetrieveDestroyAPIView):
 class ScanSchemeOperationRecordListApiView(generics.ListAPIView):
     """方案模板操作记录
 
-    ### get
+    ### GET
     应用场景：获取方案模板的操作历史记录（默认倒序）
     """
     serializer_class = OperationRecordSerializer

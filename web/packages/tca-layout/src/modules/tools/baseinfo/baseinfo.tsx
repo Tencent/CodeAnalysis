@@ -3,22 +3,20 @@
  */
 import React, { useState, useEffect, useRef } from 'react';
 import cn from 'classnames';
-import { isEmpty, toNumber, find, get } from 'lodash';
-import { Form, Button, Input, Checkbox, Select, Tooltip, message, Tag, Modal, Radio } from 'coding-oa-uikit';
-import PlusIcon from 'coding-oa-uikit/lib/icon/Plus';
-import RefreshIcon from 'coding-oa-uikit/lib/icon/Refresh';
+import { toNumber, get } from 'lodash';
+import { Form, Button, Input, Checkbox, Select, message, Tag, Modal, Radio } from 'coding-oa-uikit';
 import EditIcon from 'coding-oa-uikit/lib/icon/Edit';
 
 import { formatDateTime } from '@src/utils';
 import { updateTool, updateToolStatus } from '@src/services/tools';
-import { gScmAccounts, getSSHInfo } from '@src/services/user';
-import { AUTH_TYPE, AUTH_TYPE_TXT, AUTH_DICT, REPO_TYPE_OPTIONS, TOOL_STATUS, STATUSENUM } from '../constants';
+import { AUTH_TYPE, AUTH_DICT, REPO_TYPE_OPTIONS, TOOL_STATUS, STATUSENUM, SCM_PLATFORM, AUTH_ID_PATH } from '../constants';
+import { SCM_MAP } from '@src/common/constants/authority';
 
-import LibScheme from './lib-scheme';
+import Authority from '@src/components/authority';
 import style from '../detail.scss';
 
 const { TextArea } = Input;
-const { Option, OptGroup } = Select;
+const { Option } = Select;
 
 const layout = {
   labelCol: { span: 6 },
@@ -33,81 +31,29 @@ interface BaseInfoProps {
   getDetail: () => void;
 }
 
-const BaseInfo = ({ orgSid, toolId, data, editable, getDetail }: BaseInfoProps) => {
+const BaseInfo = ({ orgSid, data, editable, getDetail }: BaseInfoProps) => {
   const [form] = Form.useForm();
   const [isEdit, setIsEdit] = useState(false);
-  const [sshAuthList, setSshAuthList] = useState<any>([]);
-  const [httpAuthList, setHttpAuthList] = useState<any>([]);
-  const [authLoading, setAuthLoading] = useState(false);
+
   const statusRef = useRef();
-
-  useEffect(() => getAuth(), []);
-
-  useEffect(() => {
-    if (!authLoading && data.id && data.scm_auth) {
-      const curAuth = data.scm_auth || {};
-      if (
-        curAuth.scm_ssh?.id
-        && curAuth.auth_type === AUTH_TYPE.SSH
-        && !find(sshAuthList, { id: curAuth.scm_ssh?.id })
-      ) {
-        setSshAuthList([{
-          ...curAuth.scm_ssh,
-          authId: `${curAuth.auth_type}#${curAuth.scm_ssh?.id}`,
-        }, ...sshAuthList]);
-      }
-      if (
-        curAuth.scm_account?.id
-        && curAuth.auth_type === AUTH_TYPE.HTTP
-        && !find(httpAuthList, { id: curAuth.scm_account?.id })
-      ) {
-        setHttpAuthList([{
-          ...curAuth.scm_account,
-          authId: `${curAuth.auth_type}#${curAuth.scm_account?.id}`,
-        }, ...httpAuthList]);
-      }
-    }
-  }, [authLoading, data.id]);
 
   useEffect(() => {
     form.resetFields();
     statusRef.current = data.status;
   }, [isEdit, data.id]);
 
-  const getAuth = () => {
-    setAuthLoading(true);
-    Promise.all([
-      getSSHInfo().then(r => r.results || []),
-      gScmAccounts().then(r => r.results || []),
-    ])
-      .then((result) => {
-        // HTTP 和 SSH ID可能重复
-        setSshAuthList(result[0]?.map((item: any) => ({
-          ...item,
-          authId: `${AUTH_TYPE.SSH}#${item.id}`,
-        })));
-        setHttpAuthList(result[1].map((item: any) => ({
-          ...item,
-          authId: `${AUTH_TYPE.HTTP}#${item.id}`,
-        })));
-      })
-      .finally(() => {
-        setAuthLoading(false);
-      });
-  };
-
   const onFinish = (formData: any) => {
     const newFormData = formData;
-    const [authType, id] = formData?.scm_auth_id?.split('#') ?? [];
-    delete newFormData.scm_auth_id;
-
-    newFormData.scm_auth = { auth_type: authType };
-
-    if (newFormData.scm_auth.auth_type === AUTH_TYPE.HTTP) {
-      newFormData.scm_auth.scm_account = id;
+    if (newFormData.scm) {
+      const [authType, id] = newFormData?.scm?.split('#') ?? [];
+      newFormData.scm_auth = { auth_type: authType };
+      if (SCM_MAP[authType]) {
+        newFormData.scm_auth[SCM_MAP[authType]] = id;
+      }
     } else {
-      newFormData.scm_auth.scm_ssh = id;
+      newFormData.scm_auth = null
     }
+    delete newFormData.scm;
 
     updateTool(orgSid, data.id, {
       ...data,
@@ -158,6 +104,10 @@ const BaseInfo = ({ orgSid, toolId, data, editable, getDetail }: BaseInfoProps) 
       return `${auth?.scm_ssh?.name}（${AUTH_DICT[data?.scm_auth?.auth_type]}）`;
     }
 
+    if (auth.auth_type === AUTH_TYPE.OAUTH) {
+      return `${get(SCM_PLATFORM, auth?.scm_oauth?.scm_platform, '其他')}（${AUTH_DICT[data?.scm_auth?.auth_type]}）`;
+    }
+
     return '';
   };
 
@@ -172,7 +122,7 @@ const BaseInfo = ({ orgSid, toolId, data, editable, getDetail }: BaseInfoProps) 
         initialValues={{
           ...data,
           status: STATUSENUM.NORMAL,
-          scm_auth_id: `${data.scm_auth?.auth_type}#${data.scm_auth?.auth_type === AUTH_TYPE.HTTP ? data.scm_auth?.scm_account?.id : data.scm_auth?.scm_ssh?.id}`,
+          scm_auth_id: `${data.scm_auth?.auth_type}#${get(data, ['scm_auth', AUTH_ID_PATH[data.scm_auth?.auth_type], 'id'])}`,
         }}
         onFinish={isEdit ? onFinish : undefined}
       >
@@ -272,59 +222,19 @@ const BaseInfo = ({ orgSid, toolId, data, editable, getDetail }: BaseInfoProps) 
           )
         }
         {
-          data.scm_auth && (
-            <Form.Item label="凭证" required={isEdit}>
+          (data.scm_auth || isEdit) && (
+            <Form.Item label="凭证">
               {
                 getComponent(
-                  <>
-                    <Form.Item noStyle name="scm_auth_id" rules={[{ required: true, message: '请选择仓库凭证' }]}>
-                      <Select style={{ width: 480 }}>
-                        {!isEmpty(sshAuthList) && (
-                          <OptGroup label={AUTH_TYPE_TXT.SSH}>
-                            {sshAuthList.map((auth: any) => (
-                              <Option
-                                key={auth.authId}
-                                value={auth.authId}
-                                auth_type={AUTH_TYPE.SSH}
-                              >
-                                {auth.name}
-                              </Option>
-                            ))}
-                          </OptGroup>
-                        )}
-                        {!isEmpty(httpAuthList) && (
-                          <OptGroup label={AUTH_TYPE_TXT.HTTP}>
-                            {httpAuthList.map((auth: any) => (
-                              <Option
-                                key={auth.authId}
-                                value={auth.authId}
-                                auth_type={AUTH_TYPE.HTTP}
-                              >
-                                {auth.scm_username}
-                              </Option>
-                            ))}
-                          </OptGroup>
-                        )}
-                      </Select>
-                    </Form.Item>
-                    <div style={{
-                      position: 'absolute',
-                      top: 3,
-                      right: 10,
-                    }}>
-                      <Tooltip title='新增凭证' placement='top' getPopupContainer={() => document.body}>
-                        <Button type='link' className="mr-12" href='/user/auth' target='_blank'><PlusIcon /></Button>
-                      </Tooltip>
-                      <Tooltip title='刷新凭证' placement='top' getPopupContainer={() => document.body}>
-                        <Button
-                          type='link'
-                          disabled={authLoading}
-                          onClick={getAuth}
-                        ><RefreshIcon /></Button>
-                      </Tooltip>
-                    </div>
-                  </>,
-                  getAuthDisplay(data.scm_auth),
+                  <Authority
+                    form={form}
+                    name='scm'
+                    label=''
+                    initAuth={data.scm_auth}
+                    selectStyle={{ width: 360 }}
+                    placeholder='拉取代码库所需的凭证'
+                  />,
+                  getAuthDisplay(data.scm_auth || {}),
                 )
               }
             </Form.Item>
@@ -369,13 +279,6 @@ const BaseInfo = ({ orgSid, toolId, data, editable, getDetail }: BaseInfoProps) 
             )
           }
         </Form.Item>
-        <LibScheme
-          layout={layout}
-          orgSid={orgSid}
-          toolId={toolId}
-          isEdit={isEdit}
-          getComponent={getComponent}
-        />
         <Form.Item label='语言' >
           {data.languages?.join(' | ')}
         </Form.Item>

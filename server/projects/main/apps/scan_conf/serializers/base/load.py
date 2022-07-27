@@ -99,7 +99,7 @@ class CheckerSerializer(serializers.ModelSerializer):
         elif models.CheckTool.objects.filter(name=name).exists():  # 创建操作，校验是否已存在工具
             raise serializers.ValidationError("该工具已存在")
         return name
-    
+
     def validate_libscheme_set(self, libscheme_set):
         for libscheme in libscheme_set:
             toollibmap_set = libscheme.get("toollibmap")
@@ -165,7 +165,7 @@ class CheckPackageJsonSerializer(serializers.ModelSerializer):
                                 default=models.CheckPackage.PackageTypeEnum.OFFICIAL)
     languages = serializers.SlugRelatedField(slug_field="name", many=True, queryset=models.Language.objects.all())
     open_saas = serializers.BooleanField(required=False)
-    status = serializers.ChoiceField(choices=models.CheckPackage.STATUS_CHOICES, 
+    status = serializers.ChoiceField(choices=models.CheckPackage.STATUS_CHOICES,
                           default=models.CheckPackage.StatusEnum.RUNNING,
                           write_only=True, required=False)
 

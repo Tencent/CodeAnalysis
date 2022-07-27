@@ -1,0 +1,81 @@
+[
+    {
+        "name": "Log4j漏洞",
+        "description": "Apache Log4j高危组件检查。适用场景：\n1. 检查项目使用的Log4j版本号是否满足安全要求。默认启用。\n2. 检查.java中Log4j API调用位置，校验项目是否使用Log4j组件，方便开发查找并修改，默认屏蔽。",
+        "revision": null,
+        "package_type": "official",
+        "languages": [
+            "java"
+        ],
+        "labels": [
+            "安全"
+        ],
+        "checkrule_set": [
+            {
+                "checktool": "regexfilescan",
+                "checkrule": "log4jcheck",
+                "severity": "fatal",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "semgrep",
+                "checkrule": "log4j-message-lookup-injection",
+                "severity": "error",
+                "rule_params": null,
+                "state": "disabled"
+            },
+            {
+                "checktool": "semgrep",
+                "checkrule": "detected-log4j-core",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "semgrep",
+                "checkrule": "log4j-message-injection",
+                "severity": "error",
+                "rule_params": null,
+                "state": "disabled"
+            },
+            {
+                "checktool": "codedog_0Day_checker",
+                "checkrule": "log4j",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jafc_beta",
+                "checkrule": "FindLog4j",
+                "severity": "error",
+                "rule_params": null,
+                "state": "disabled"
+            },
+            {
+                "checktool": "jaff_beta",
+                "checkrule": "FindLog4j",
+                "severity": "error",
+                "rule_params": null,
+                "state": "disabled"
+            },
+            {
+                "checktool": "jafc_beta",
+                "checkrule": "Log4jLogManager",
+                "severity": "error",
+                "rule_params": null,
+                "state": "disabled"
+            },
+            {
+                "checktool": "jaff_beta",
+                "checkrule": "Log4jLogManager",
+                "severity": "error",
+                "rule_params": null,
+                "state": "disabled"
+            }
+        ],
+        "open_saas": false,
+        "envs": null
+    }
+]

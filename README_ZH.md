@@ -6,7 +6,11 @@
     <em>代号：CodeDog</em>
 </p>
 
-[![license](https://img.shields.io/badge/License-MIT-brightgreen.svg?style=flat)](LICENSE)
+[![license](https://img.shields.io/badge/License-MIT-brightgreen.svg?style=flat)](LICENSE) [![docs](https://img.shields.io/badge/docs-read-brightgreen.svg?style=flat)](https://tencent.github.io/CodeAnalysis/)
+
+## TCA Github Pages
+
+[https://tencent.github.io/CodeAnalysis/](https://tencent.github.io/CodeAnalysis/)
 
 ## 工蜂代码库镜像
 
@@ -24,10 +28,6 @@
 
 ![流程图](https://tencent.github.io/CodeAnalysis/media/Flow.png)
 
-## TCA Github Pages
-
-[https://tencent.github.io/CodeAnalysis/](https://tencent.github.io/CodeAnalysis/)
-
 ## 体验
 
 [官方版本](http://tca.tencent.com)
@@ -42,6 +42,7 @@
 ## 快速入门
 
 - [快速入门](https://tencent.github.io/CodeAnalysis/)
+- [如何使用TCA Action快速体验](https://github.com/TCATools/TCA-action/blob/main/README.md)
 - [如何在本地部署Server与Web](https://tencent.github.io/CodeAnalysis/zh/quickStarted/deploySever.html#通过源代码)
 - [如何通过Docker-Compose部署Server与Web](https://tencent.github.io/CodeAnalysis/zh/quickStarted/deploySever.html#通过docker-compose)
 - [如何使用客户端](https://tencent.github.io/CodeAnalysis/zh/quickStarted/deployClient.html)

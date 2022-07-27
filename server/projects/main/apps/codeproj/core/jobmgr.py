@@ -25,7 +25,7 @@ from apps.nodemgr.models import ExecTag
 from apps.scan_conf.core import CheckPackageManager
 from apps.scan_conf.models import CheckTool, Label, Language, PackageMap, ScanApp, ToolProcessRelation
 from util import errcode
-from util.exceptions import CDErrorBase, CDScmError, ClientError
+from util.exceptions import CDErrorBase, CDScmError, ClientError, ProjectScanConfigError
 from util.retrylib import RetryDecor
 from util.scm.base import ScmAccessDeniedError, ScmClientError, ScmError, ScmNotFoundError
 from util.webclients import AnalyseClient
@@ -37,11 +37,11 @@ class JobManager(object):
     """任务管理
     """
 
-    def __init__(self, project):
+    def __init__(self, project=None):
         """初始化函数
         """
         self._project = project
-        self._log_prefix = "[Project: %d]" % project.id
+        self._log_prefix = "[Project: %d]" % project.id if project else ""
         self._analysis_client = AnalyseClient()
 
     def _format_scm_time(self, scm_time):
@@ -170,25 +170,25 @@ class JobManager(object):
         if error:
             raise CDErrorBase(code=errcode.E_CLIENT, msg="参数错误", data=error)
 
-    def get_job_basic_confs(self, job_context):
+    def get_job_basic_confs(self, job_context, scan_scheme=None):
         """获取项目的基础任务配置
         """
         if job_context is None:
             job_context = {}
-        scan_scheme = self._project.scan_scheme
-        project_team = self._project.repo.project_team
-        organization = self._project.repo.organization
+        if not scan_scheme:
+            if self._project:
+                scan_scheme = self._project.scan_scheme
+            else:
+                raise ProjectScanConfigError(msg="未指定项目或扫描方案，无法获取任务参数配置")
         job_context.update({
-            "project_id": self._project.id,
-            "repo_id": self._project.repo.id,
-            "repo_id": self._project.repo.id,
-            "team_name": project_team.name if project_team else None,
-            "org_sid": organization.org_sid if organization else None,
             "scheme_id": scan_scheme.id,
             "scheme_name": scan_scheme.name,
             "issue_global_ignore": scan_scheme.issue_global_ignore,
-            "scm_type": self._project.scm_type,
-            "scm_url": self._project.get_scm_url_with_auth(),
+            "ignore_merged_issue": scan_scheme.ignore_merged_issue,
+            "ignore_branch_issue": scan_scheme.ignore_branch_issue,
+            "ignore_submodule_clone": scan_scheme.ignore_submodule_clone,
+            "ignore_submodule_issue": scan_scheme.ignore_submodule_issue,
+            "lfs_flag": scan_scheme.lfs_flag,
             "path_filters": {
                 "inclusion": ScanSchemeManager.get_path_list_with_scheme(
                     scan_scheme=scan_scheme, scan_type=models.ScanDir.ScanTypeEnum.INCLUDE,
@@ -203,8 +203,20 @@ class JobManager(object):
                     scan_scheme, path_type=models.ScanDir.PathTypeEnum.REGULAR,
                     scan_type=models.ScanDir.ScanTypeEnum.EXCLUDE)
             },
-            "scm_initial_revision": self._project.scm_initial_revision,
         })
+        if self._project:
+            project_team = self._project.repo.project_team
+            organization = self._project.repo.organization
+            job_context.update({
+                "project_id": self._project.id,
+                "repo_id": self._project.repo.id,
+                "team_name": project_team.name if project_team else None,
+                "org_sid": organization.org_sid if organization else None,
+                "scm_type": self._project.scm_type,
+                "scm_url": self._project.get_scm_url_with_auth(),
+                "scm_initial_revision": self._project.scm_initial_revision,
+            })
+
         return job_context
 
     def get_task_process_confs(self, task_confs):
@@ -226,17 +238,15 @@ class JobManager(object):
             task_conf["task_params"].update({"checktool": checktool_conf})
         return task_confs
 
-    def get_lint_setting(self):
+    def get_lint_setting(self, scan_scheme):
         """获取lint setting
         """
-        scan_scheme = self._project.scan_scheme
         lint_setting, _ = models.LintBaseSetting.objects.get_or_create(scan_scheme=scan_scheme)
         return lint_setting
 
-    def get_execute_tag(self, job_context):
+    def get_execute_tag(self, job_context, scan_scheme):
         """获取执行标签
         """
-        scan_scheme = self._project.scan_scheme
         if job_context.get("tag"):
             tag = job_context["tag"]
         else:
@@ -342,11 +352,14 @@ class JobManager(object):
         #如未启用，则返回 []
         """
         # 基础参数获取
-        scan_scheme = self._project.scan_scheme
-        lint_setting = self.get_lint_setting()
+        if kwargs.get("scan_scheme"):
+            scan_scheme = kwargs["scan_scheme"]
+        else:
+            scan_scheme = self._project.scan_scheme
+        lint_setting = self.get_lint_setting(scan_scheme)
         if not lint_setting.enabled:
             return []
-        tag = self.get_execute_tag(job_context)
+        tag = self.get_execute_tag(job_context, scan_scheme)
         checkprofile = lint_setting.checkprofile
         # 检查参数
         if not scm_last_revision:
@@ -365,7 +378,12 @@ class JobManager(object):
             "envs": lint_setting.envs.strip() if lint_setting.envs else "",
             "scm_last_revision": scm_last_revision,
             "incr_scan": job_context.get("incr_scan", True) if scm_last_revision else False,
-            "tag": tag
+            "ignore_merged_issue": scan_scheme.ignore_merged_issue,
+            "ignore_branch_issue": scan_scheme.ignore_branch_issue,
+            "ignore_submodule_clone": scan_scheme.ignore_submodule_clone,
+            "ignore_submodule_issue": scan_scheme.ignore_submodule_issue,
+            "lfs_flag": scan_scheme.lfs_flag,
+            "tag": tag,
         }
 
         if kwargs.get("labels") and kwargs.get("languages"):
@@ -390,7 +408,10 @@ class JobManager(object):
         }]
         #如未启用，则返回 []
         """
-        scan_scheme = self._project.scan_scheme
+        if kwargs.get("scan_scheme"):
+            scan_scheme = kwargs["scan_scheme"]
+        else:
+            scan_scheme = self._project.scan_scheme
         lint_setting, _ = models.LintBaseSetting.objects.get_or_create(scan_scheme=scan_scheme)
         metric_setting, _ = models.MetricSetting.objects.get_or_create(scan_scheme=scan_scheme)
         if not metric_setting.dup_scan_enabled \
@@ -402,14 +423,22 @@ class JobManager(object):
         else:
             scan_scheme_languages = [l.name for l in scan_scheme.languages.all()]
 
-        tag = self.get_execute_tag(job_context)
+        tag = self.get_execute_tag(job_context, scan_scheme)
+        basic_params = {
+            "envs": lint_setting.envs.strip() if lint_setting.envs else "",
+            "ignore_merged_issue": scan_scheme.ignore_merged_issue,
+            "ignore_branch_issue": scan_scheme.ignore_branch_issue,
+            "ignore_submodule_clone": scan_scheme.ignore_submodule_clone,
+            "ignore_submodule_issue": scan_scheme.ignore_submodule_issue,
+            "lfs_flag": scan_scheme.lfs_flag,
+        }
         tasks = []
         # 增加cpd task 重复代码扫描
         if metric_setting.dup_scan_enabled:
             if not scan_scheme_languages:
                 raise ClientError(errcode.E_CLIENT_CONFIG_ERROR, '配置错误，请在项目配置中设置项目语言。')
             last_dup_scan = models.CodeMetricDupInfo.objects.filter(project=self._project).first()
-            if not scm_last_revision:
+            if not scm_last_revision and self._project:
                 scm_last_revision = last_dup_scan.scan_revision if last_dup_scan else self._project.scm_initial_revision
             task_params = {
                 "scan_languages": scan_scheme_languages,
@@ -422,7 +451,7 @@ class JobManager(object):
                 "dup_min_dup_times": metric_setting.dup_min_dup_times,
                 "dup_max_dup_times": metric_setting.dup_max_dup_times,
                 "scm_last_revision": scm_last_revision,
-                "envs": lint_setting.envs.strip() if lint_setting.envs else ""
+                **basic_params,
             }
             tasks.append({
                 "task_name": 'cpd',
@@ -438,13 +467,12 @@ class JobManager(object):
                 raise ClientError(errcode.E_CLIENT_CONFIG_ERROR, '配置错误，请在项目配置中设置项目语言。')
 
             last_cc_scan = models.CodeMetricCCInfo.objects.filter(project=self._project).first()
-            if not scm_last_revision:
+            if not scm_last_revision and self._project:
                 scm_last_revision = last_cc_scan.scan_revision if last_cc_scan else self._project.scm_initial_revision
             task_params = {
                 "scan_languages": scan_scheme_languages,
                 "scm_last_revision": scm_last_revision,
                 "min_ccn": metric_setting.min_ccn,
-                "envs": lint_setting.envs.strip() if lint_setting.envs else ""
             }
             tasks.append({
                 "task_name": 'lizard',
@@ -456,7 +484,7 @@ class JobManager(object):
 
         if metric_setting.cloc_scan_enabled:
             last_cloc_scan = models.CodeMetricClocInfo.objects.filter(project=self._project).first()
-            if not scm_last_revision:
+            if not scm_last_revision and self._project:
                 scm_last_revision = last_cloc_scan.scan_revision \
                     if last_cloc_scan else self._project.scm_initial_revision
 
@@ -467,7 +495,7 @@ class JobManager(object):
                 "use_lang": metric_setting.use_lang,
                 "incr_scan": True,
                 "business_infos": [],
-                "envs": lint_setting.envs.strip() if lint_setting.envs else ""
+                **basic_params
             }
             tasks.append({
                 "task_name": 'codecount',
@@ -502,15 +530,17 @@ class JobManager(object):
             }]
         }
         """
-        job_context = self.get_job_basic_confs(job_context)
+        job_context = self.get_job_basic_confs(job_context, kwargs.get("scan_scheme"))
         languages = self._filter_languages(kwargs.get("languages"))
         labels = self._filter_labels(kwargs.get("labels"))
         logger.info("%s开始获取任务参数，显式指定的语言列表: %s，标签列表: %s" % (self._log_prefix, languages, labels))
         try:
             logger.info("%s开始获取codelint参数" % self._log_prefix)
-            lint_tasks = self.get_codelint_task_confs(job_context, last_revision, languages=languages, labels=labels)
+            lint_tasks = self.get_codelint_task_confs(job_context, last_revision, languages=languages,
+                                                      labels=labels, scan_scheme=kwargs.get("scan_scheme"))
             logger.info("%s开始获取codemetric参数" % self._log_prefix)
-            metric_tasks = self.get_codemetric_task_confs(job_context, last_revision)
+            metric_tasks = self.get_codemetric_task_confs(job_context, last_revision,
+                                                          scan_scheme=kwargs.get("scan_scheme"))
             if not lint_tasks and not metric_tasks:
                 raise ClientError(errcode.E_CLIENT_CONFIG_ERROR, '配置错误，请在设置中启用代码检查或代码度量功能')
             tasks = lint_tasks + metric_tasks
@@ -853,8 +883,8 @@ class JobManager(object):
                 module = "codemetric"
             else:
                 module = "codelint"
-            t, created = Task.objects.get_or_create(job=job, task_name=task, module=module,
-                                                    defaults={"state": Task.StateEnum.RUNNING})
+            t, _ = Task.objects.get_or_create(job=job, task_name=task, module=module,
+                                              defaults={"state": Task.StateEnum.RUNNING})
             task_infos[task] = t.id
             tool_processes = ToolProcessRelation.objects.filter(checktool__name=task).order_by("priority")
             for tool_process in tool_processes:
@@ -950,14 +980,14 @@ class JobManager(object):
         self._upload_job_context(job, job_context)
         failed_tasks = job.task_set.filter(result_code__gte=errcode.E_SERVER)
         if failed_tasks:
-            logger.info("job[%d]存在失败的tasks，开始取消任务..." % job.id)
+            logger.info("[Job: %d] 存在失败的tasks，开始取消任务..." % job.id)
             task = failed_tasks.order_by("result_code").first()
             JobCloseHandler.revoke_job(job, task.result_code, "task[%d] %s" % (task.id, task.result_msg))
         elif ignore_task_num and ignore_task_num == job.task_num:
-            logger.info("job[%d]创建完成，因代码无变更，不需要启动扫描，开始结束任务..." % job.id)
+            logger.info("[Job: %d] 创建完成，因代码无变更，不需要启动扫描，开始结束任务..." % job.id)
             JobCloseHandler.revoke_job(job, errcode.INCR_IGNORE, "代码无变更，无需再次增量扫描。如有需要，请启动全量扫描。")
         else:
-            logger.info("job[%d]创建完成，尝试结束任务..." % job.id)
+            logger.info("[Job: %d] 创建完成，尝试结束任务..." % job.id)
             JobCloseHandler.close_job(job.id)
         self.finish_initialized_job(job)
         JobDispatchHandler.add_job_to_queue(job)

@@ -24,7 +24,7 @@ logger = logging.getLogger(__name__)
 class CheckToolSerializer(base.CheckToolSerializer):
     """工具序列化
     """
-    
+
     class Meta:
         model = models.CheckTool
         exclude = ["open_saas", "users", "co_owners", "owners"]

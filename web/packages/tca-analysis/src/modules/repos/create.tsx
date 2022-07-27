@@ -8,7 +8,7 @@ import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { Form, Select, Input, Button, message } from 'coding-oa-uikit';
 // Radio
-import { get, isEmpty } from 'lodash';
+import { get, isEmpty, filter } from 'lodash';
 import PlusIcon from 'coding-oa-uikit/lib/icon/Plus';
 import RefreshIcon from 'coding-oa-uikit/lib/icon/Refresh';
 
@@ -16,7 +16,7 @@ import RefreshIcon from 'coding-oa-uikit/lib/icon/Refresh';
 import { useStateStore, useDispatchStore } from '@src/context/store';
 import { SCM_PLATFORM } from '@src/common/constants';
 import { SET_CUR_REPO, SET_REPOS } from '@src/context/constant';
-import { getScmAccounts, postRepo, getSSHInfo } from '@src/services/repos';
+import { getScmAccounts, postRepo, getSSHInfo, getOAuthInfo, getPlatformStatus } from '@src/services/repos';
 import { t } from '@src/i18n/i18next';
 import { getPCAuthRouter, getRepoRouter } from '@src/modules/repos/routes';
 import { AUTH_TYPE, AUTH_TYPE_TXT, REPO_TYPE, REPO_TYPE_OPTIONS } from './constants';
@@ -55,6 +55,7 @@ const Create = () => {
   // const [allAuthList, setAllAuthList] = useState<Array<any>>([]);
   const [sshAuthList, setSshAuthList] = useState<any>([]);
   const [httpAuthList, setHttpAuthList] = useState<any>([]);
+  const [oauthAuthList, setOauthAuthList] = useState<any>([]);
   const [submitLoading, setSubmitLoading] = useState(false);
   const [reload, setReload] = useState(false);
   const [authLoading, setAuthLoading] = useState(false);
@@ -68,8 +69,17 @@ const Create = () => {
     Promise.all([
       getSSHInfo().then(r => r.results || []),
       getScmAccounts().then(r => r.results || []),
+      getOAuthInfo().then(r => r.results || []),
+      getPlatformStatus().then(r => r || []),
     ])
       .then((result) => {
+        const activeOauth = filter(
+          result[2].map((item:any)=>({ 
+            ...item, 
+            platform_status: get(result[3], item.scm_platform_name, [false]),
+          })),
+          'platform_status'
+        );
         // HTTP 和 SSH ID可能重复
         setSshAuthList(result[0]?.map((item: any) => ({
           ...item,
@@ -78,6 +88,10 @@ const Create = () => {
         setHttpAuthList(result[1].map((item: any) => ({
           ...item,
           authId: `${AUTH_TYPE.HTTP}#${item.id}`,
+        })));
+        setOauthAuthList(activeOauth.map((item:any)=>({ 
+            ...item, 
+            authId: `${AUTH_TYPE.OAUTH}#${item.id}`,
         })));
       })
       .finally(() => {
@@ -98,10 +112,16 @@ const Create = () => {
       ...address,
     };
 
-    if (data.scm_auth.auth_type === AUTH_TYPE.HTTP) {
-      data.scm_auth.scm_account = id;
-    } else {
-      data.scm_auth.scm_ssh = id;
+    switch (data.scm_auth.auth_type) {
+      case AUTH_TYPE.HTTP:
+        data.scm_auth.scm_account = id;
+        break;
+      case AUTH_TYPE.SSH:
+        data.scm_auth.scm_ssh = id;
+        break;
+      case AUTH_TYPE.OAUTH:
+        data.scm_auth.scm_oauth = id;
+        break;
     }
 
     if (symbol) {
@@ -183,16 +203,15 @@ const Create = () => {
                 ))}
               </Select>
             </Form.Item>
-
             <Form.Item
               name={['address', 'scm_url']}
               noStyle
               rules={[
                 { required: true, message: t('请输入代码库地址') },
-                // {
-                //     pattern: /(https?):\/\/[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]/,
-                //     message: t('请输入合法的代码库地址'),
-                // },
+                {
+                    pattern: /(https?):\/\/[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]/,
+                    message: t('请输入合法的http代码库地址'),
+                },
               ]}
             >
               <Input style={{ width: 430 }} />
@@ -201,6 +220,27 @@ const Create = () => {
               由于境外代码托管平台可能存在网络问题，建议使用境内托管平台的代码库
             </p>
           </Input.Group>
+        </Form.Item>
+        <Form.Item
+          noStyle
+          shouldUpdate={(prevValues, curValues) => prevValues.scm_auth_id !== curValues.scm_auth_id}
+        >
+          {({ getFieldValue }) => {
+              const scmAuth = getFieldValue('scm_auth_id');
+              return scmAuth?.startsWith('ssh_token') && (
+                <>
+                  <Form.Item
+                    name={['address', 'ssh_url']}
+                    label={t('ssh地址')}
+                    rules={[
+                      { required: true, message: t('请输入代码库的ssh地址') },
+                    ]}
+                  >
+                    <Input style={{ width: 500 }} />
+                  </Form.Item>
+                </>
+              );
+          }}
         </Form.Item>
         <Form.Item
           name="name"
@@ -220,6 +260,19 @@ const Create = () => {
             rules={[{ required: true, message: t('请选择一项仓库认证方式') }]}
           >
             <Select style={{ width: 500 }} getPopupContainer={() => document.body}>
+              {!isEmpty(oauthAuthList) && (
+                <OptGroup label={AUTH_TYPE_TXT.OAUTH}>
+                  {oauthAuthList.map((auth: any) => (
+                    <Option
+                      key={auth.authId}
+                      value={auth.authId}
+                      auth_type={AUTH_TYPE.OAUTH}
+                    >
+                      {get(SCM_PLATFORM, auth.scm_platform, '其他')}
+                    </Option>
+                  ))}
+                </OptGroup>
+              )}
               {!isEmpty(sshAuthList) && (
                 <OptGroup label={AUTH_TYPE_TXT.SSH}>
                   {sshAuthList.map((auth: any) => (

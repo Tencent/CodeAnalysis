@@ -22,6 +22,7 @@ from util import errcode
 from util.httpclient import HttpClient
 from util.exceptions import ServerError
 from util.retrylib import RetryDecor
+from util.authticket import ServerInternalTicket
 
 
 logger = logging.getLogger(__name__)
@@ -45,9 +46,8 @@ class FileServer(object):
     def __init__(self, server_conf):
         self._http_client = HttpClient()
         self._server_url = server_conf["URL"]
-        self._server_token = server_conf["TOKEN"]
         self._type_prefix = server_conf["TYPE_PREFIX"]
-        self._headers = {"Authorization": "Token %s" % self._server_token}
+        self._server_token = server_conf.get("TOKEN")
 
     @classmethod
     def get_data_md5(cls, data):
@@ -65,6 +65,14 @@ class FileServer(object):
         sha256_val.update(data.encode("utf-8"))
         return sha256_val.hexdigest()
 
+    def get_auth_headers(self):
+        """获取头部信息
+        """
+        if self._server_token:
+            return {"Authorization": "Token %s" % self._server_token}
+        else:
+            return {"SERVER-TICKET": ServerInternalTicket.generate_ticket()}
+
     @RetryDecor(interval=3)
     def put_file(self, data, to_file_url_or_path=None, type=TypeEnum.TEMPORARY):
         """将指定数据存储到文件服务器的指定路径下
@@ -74,7 +82,7 @@ class FileServer(object):
         :type to_file_url_or_path: string
         :params type: 仅在to_file_url_or_path为路径时有效
         :type type: FileServer.TypeEnum
-        :return: file_url：文件服务器指定的路径 
+        :return: file_url：文件服务器指定的路径
         """
         if type not in self.TypeEnum.values():
             raise ValueError("type参数错误。支持的类型：%s" % self.TypeEnum.values())
@@ -85,19 +93,20 @@ class FileServer(object):
             # 无命名文件默认上传到临时文件夹，数据保留7天
             file_url = urllib.parse.urljoin(self._server_url, "%s_%s/unnamed/%s.file" % (
                 self._type_prefix, self.TypeEnum.TEMPORARY, uuid.uuid1().hex))
-        headers = copy.copy(self._headers)
+        headers = copy.copy(self.get_auth_headers())
         headers.update({"Content-SHA256": self.get_data_sha256(data), "Content-MD5": self.get_data_md5(data)})
         rsp = self._http_client.put(file_url, data=data, headers=headers)
         if rsp.status == self.OK_STATUS:
             return file_url
         else:
-            logger.error('return code %d when put file to %s, content: %s' % (rsp.status, file_url, rsp.data.decode("utf-8")))
+            logger.error('return code %d when put file to %s, content: %s' % (
+                rsp.status, file_url, rsp.data.decode("utf-8")))
             raise ServerError(errcode.E_SERVER, 'return code %d when put file to %s' % (rsp.status, file_url))
 
     @RetryDecor(interval=3)
     def get_file(self, file_url):
         """获取指定路径文件数据，返回该文件的路径信息"""
-        rsp = self._http_client.get(file_url, headers=self._headers)
+        rsp = self._http_client.get(file_url, headers=self.get_auth_headers())
         if rsp.status == self.OK_STATUS:
             return rsp.data
         else:
@@ -106,7 +115,7 @@ class FileServer(object):
 
     def delete_file(self, file_url):
         """删除指定路径文件"""
-        rsp = self._http_client.delete(file_url, headers=self._headers)
+        rsp = self._http_client.delete(file_url, headers=self.get_auth_headers())
         if rsp.status == self.OK_STATUS:
             return True
         else:

@@ -12,6 +12,8 @@
     padding: 0 20px;
     margin-top: $mg;
     margin-right: -$mg;
+    overflow: auto;
+    height: calc(100vh - 209px);
 
     .team {
       display: inline-block;

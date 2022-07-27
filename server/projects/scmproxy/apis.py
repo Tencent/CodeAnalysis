@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # Copyright (c) 2021-2022 THL A29 Limited
-#
+# 
 # This source code file is made available under MIT License
 # See LICENSE for details
 # ==============================================================================
@@ -8,15 +8,19 @@
 """ScmProxy API 列表
 """
 
+import logging
 import os
 import re
-import stat
 import shutil
-import logging
+import stat
 import tempfile
 from functools import wraps
 
 import settings
+from clients.gitee.client import GiteeAPIClient
+from clients.github.client import GitHubAPIClient
+from clients.gitlab.client import GitLabAPIClient
+from clients.tgitsaas.client import TGitSaaSAPIClient
 from lib.cmdscm import ScmClient
 from utils import get_source_dir
 
@@ -26,6 +30,12 @@ logger = logging.getLogger(__file__)
 class ScmInit(object):
     """scm初始化装饰器，用于在目标方法调用前添加scm_client参数
     """
+    SCM_CLIENT_DICT = {
+        "tgitsaas": TGitSaaSAPIClient,
+        "github": GitHubAPIClient,
+        "gitee": GiteeAPIClient,
+        "gitlab": GitLabAPIClient
+    }
 
     def __init__(self, checkout=True):
         """构造函数
@@ -62,17 +72,17 @@ class ScmInit(object):
         logger.info("start to checkout or update: %s" % source_dir)
         if os.path.exists(source_dir):
             try:
-                scm_client.update(enable_submodules=False)
+                scm_client.update(enable_submodules=False, enable_lfs=False, enable_reset=False)
             except Exception as err:
                 logger.exception("update source dir %s failed: %s" % (source_dir, err))
                 shutil.rmtree(source_dir, ignore_errors=True)
                 logger.exception("remove old source dir and checkout out again: %s" % source_dir)
-                scm_client.checkout(enable_submodules=False)
+                scm_client.checkout(enable_submodules=False, enable_lfs=False)
         else:
-            scm_client.checkout(enable_submodules=False)
+            scm_client.checkout(enable_submodules=False, enable_lfs=False)
         logger.info("end to checkout or update: %s" % source_dir)
 
-    def __get_client_by_scm_type(self, scm_type, scm_url, method_name, **kwargs):
+    def __get_client_by_scm_type(self, scm_type, scm_url, method_name, scm_platform=None, **kwargs):
         """通过scm类型获取相应客户端
         :param scm_type: str, scm类型
         :param scm_url: str，scm链接
@@ -81,7 +91,13 @@ class ScmInit(object):
         :return: ScmClient
         """
         source_dir = self.__get_source_dir(scm_url)
-        if scm_type.startswith("ssh"):
+        if scm_platform in self.SCM_CLIENT_DICT and method_name in dir(self.SCM_CLIENT_DICT[scm_platform]):
+            ScmClientClass = self.SCM_CLIENT_DICT[scm_platform]
+            scm_client = ScmClientClass(scm_url, **kwargs)
+        elif scm_type in self.SCM_CLIENT_DICT and method_name in dir(self.SCM_CLIENT_DICT[scm_type]):
+            ScmClientClass = self.SCM_CLIENT_DICT[scm_type]
+            scm_client = ScmClientClass(scm_url, **kwargs)
+        elif scm_type.startswith("ssh"):
             scm_type = scm_type.split('+')[-1]
             ssh_key = kwargs.get("ssh_key") or kwargs.get("password", "")
             ssh_key_path = self.__write_ssh_key_to_local(ssh_key)
@@ -102,6 +118,7 @@ class ScmInit(object):
             logger.info("method: %s, scm_url: %s, scm_type: %s, username: %s" % (
                 func.__name__, scm_info["scm_url"], scm_info["scm_type"], scm_info.get("username")))
             scm_client = self.__get_client_by_scm_type(scm_info["scm_type"], scm_info["scm_url"], func.__name__,
+                                                       scm_platform=scm_info.get("scm_platform"),
                                                        username=scm_info.get("username"),
                                                        password=scm_info.get("password"),
                                                        ssh_key=scm_info.get("ssh_key"),
@@ -162,7 +179,6 @@ class ScmAPI(object):
     @ScmInit()
     def cat_file(self, scm_info, path, revision):
         """获取文件内容
-        【待废弃】
         :param scm_info: scm信息，包括scm_client, scm_url, username, password
         :param path: 文件路径
         :param revision: 文件版本
@@ -212,6 +228,46 @@ class ScmAPI(object):
         scm_client = scm_info['scm_client']
         return scm_client.revision_range(start_revision=start_revision, end_revision=end_revision)
 
+    def git_oauth(self, scm_info, auth_info):
+        """Git OAuth授权
+
+        :param scm_info: scm信息，包括scm_client, scm_url, username, password
+        :param auth_info: dict - 格式如下：
+            {
+                "client_id": "xxx",
+                "client_secret": "xxx",
+                "authorization_code": "xxx"
+            }
+        :return: dict - 格式如下：
+            {
+                "access_token": xx,
+                "refresh_token": xx
+            }
+        """
+        logger.info("get oauth, scm_url: %s" % scm_info.get("scm_url"))
+        ScmAPIClient = ScmInit.SCM_CLIENT_DICT.get(scm_info.get("scm_platform"))
+        return ScmAPIClient(scm_info.get("scm_url", "")).get_oauth(auth_info)
+
+    def get_token_through_refresh_token(self, scm_info, auth_info):
+        """根据Refresh Token刷新Token
+
+        :param scm_info: scm信息，包括scm_client, scm_url, username, password, scm_platform
+        :param auth_info: dict - 格式如下：
+            {
+                "refresh_token": "xxx",
+            }
+        :return: dict - 格式如下：
+            {
+                "access_token": "xx",
+                "refresh_token": "xx",
+                "expires_in": xx,
+                "created_at": xx
+            }
+        """
+        logger.info("refresh token from %s scm platform" % scm_info.get("scm_platform"))
+        ScmAPIClient = ScmInit.SCM_CLIENT_DICT.get(scm_info.get("scm_platform"))
+        return ScmAPIClient(scm_info.get("scm_url", "")).get_token_through_refresh_token(auth_info)
+
 
 def register_apis(server):
     scm_api = ScmAPI()
@@ -223,6 +279,8 @@ def register_apis(server):
     server.register_function(scm_api.latest_revision, "latest_revision")
     server.register_function(scm_api.revisions_range, "revisions_range")
     server.register_function(scm_api.get_revision_time, "get_revision_time")
+    server.register_function(scm_api.git_oauth, "git_oauth")
+    server.register_function(scm_api.get_token_through_refresh_token, "get_token_through_refresh_token")
 
 
 if __name__ == '__main__':

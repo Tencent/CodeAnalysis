@@ -1,6 +1,6 @@
 [
   {
-    "name": "【Java】 基础规则包",
+    "name": "【Java】基础规则包",
     "description": "扫描基础的安全、缺陷、性能等类型问题，无需提供编译信息。更多能力可开启 Java 功能规则包、Java 安全规则包。",
     "open_saas": true,
     "package_type": "official",

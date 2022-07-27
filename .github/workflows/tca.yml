@@ -1,0 +1,27 @@
+name: Tencent Cloud Code Analysis
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  TCA:
+    name: Tencent Cloud Code Analysis
+    runs-on: ubuntu-latest
+    env:
+      INPUT_BLOCK: false
+      INPUT_LABEL: safety
+      INPUT_IGNORE_PATHS: .git/.*,.github/workflows/.*
+      INPUT_FROM_FILE: changed.txt
+    container:
+      image: bensonhome/tca-action
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
+      - name: get git diff files
+        run: git diff ${{ github.sha }} ${{ github.sha }}^ --name-only > changed.txt  && cat changed.txt
+      - name: Tencent Cloud Code Analysis
+        run: /tca_action/entrypoint.sh

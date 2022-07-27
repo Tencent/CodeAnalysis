@@ -244,7 +244,7 @@ class RepositoryManager(object):
             raise ServerOperationError("代码库[%s]不存在" % repo_id)
         old_scm_url = repo.scm_url
         deleted_time = now()
-        repo.scm_url = "%s [deleted by %s(%s)]" % (repo.scm_url, user.username, deleted_time)
+        repo.scm_url = ("%s [deleted by %s(%s)]" % (repo.scm_url, user.username, deleted_time))[:198]
         repo.save()
         logger.info("[User: %s] 在 %s 删除了代码库 %s-%s" % (user.username, deleted_time, repo_id, old_scm_url))
         repo.delete(user=user)
@@ -289,8 +289,8 @@ class ScanSchemeManager(object):
         :return schemes: 方案模板
         """
         org_scheme_key = "%s_%s" % (models.ScanScheme.SchemeKey.ORG_KEY, org_sid)
-        scheme_ids = models.ScanSchemePerm.objects.filter(
-            Q(edit_managers__in=[user]) | Q(execute_managers__in=[user])).values_list("scan_scheme_id", flat=True)
+        scheme_ids = list(models.ScanSchemePerm.objects.filter(scan_scheme__repo__isnull=True).filter(
+            Q(edit_managers__in=[user]) | Q(execute_managers__in=[user])).values_list("scan_scheme_id", flat=True))
         # 系统模板、团队内公开模板、团队内有权限模板
         global_scheme_templates = models.ScanScheme.objects.filter(repo__isnull=True).filter(
             Q(scheme_key=models.ScanScheme.SchemeKey.PUBLIC) |
@@ -569,7 +569,12 @@ class ScanSchemeManager(object):
                     pass
         if sync_all or kwargs.get("sync_filter_other_conf"):
             # 同步过滤其他配置
+            scan_scheme.ignore_merged_issue = ref_scheme.ignore_merged_issue
+            scan_scheme.ignore_branch_issue = ref_scheme.ignore_branch_issue
+            scan_scheme.ignore_submodule_clone = ref_scheme.ignore_submodule_clone
+            scan_scheme.ignore_submodule_issue = ref_scheme.ignore_submodule_issue
             scan_scheme.issue_global_ignore = ref_scheme.issue_global_ignore
+            scan_scheme.lfs_flag = ref_scheme.lfs_flag
         scan_scheme.save()
 
         # 创建权限，不做copy
@@ -637,6 +642,11 @@ class ScanSchemeManager(object):
         scan_scheme.refer_template_ids = kwargs.get("refer_template_ids", scan_scheme.refer_template_ids)
         scan_scheme.created_from = kwargs.get("created_from", scan_scheme.created_from)
         scan_scheme.issue_global_ignore = kwargs.get("issue_global_ignore", scan_scheme.issue_global_ignore)
+        scan_scheme.ignore_merged_issue = kwargs.get("ignore_merged_issue", scan_scheme.ignore_merged_issue)
+        scan_scheme.ignore_branch_issue = kwargs.get("ignore_branch_issue", scan_scheme.ignore_branch_issue)
+        scan_scheme.ignore_submodule_clone = kwargs.get("ignore_submodule_clone", scan_scheme.ignore_submodule_clone)
+        scan_scheme.ignore_submodule_issue = kwargs.get("ignore_submodule_issue", scan_scheme.ignore_submodule_issue)
+        scan_scheme.lfs_flag = kwargs.get("lfs_flag", scan_scheme.lfs_flag)
         scan_scheme.save(user=user)
         return scan_scheme
 
@@ -1045,7 +1055,7 @@ class ProjectManager(object):
         old_branch = project.branch
         deleted_time = now()
         logger.info("[User: %s] 在 %s 删除了 %s 分支项目" % (user.username, deleted_time, project))
-        project.branch = "deleted by %s(%s)" % (user.username, deleted_time)
+        project.branch = ("deleted by %s(%s)" % (user.username, deleted_time))[:198]
         project.remark = json.dumps({"branch": old_branch})
         project.save()
         project.delete(user=user)

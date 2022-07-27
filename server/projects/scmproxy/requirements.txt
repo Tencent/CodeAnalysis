@@ -1,3 +1,7 @@
+urllib3==1.26.7
+
 psutil==5.8.0
 
 sentry-sdk==0.19.4
+
+pytz==2019.3

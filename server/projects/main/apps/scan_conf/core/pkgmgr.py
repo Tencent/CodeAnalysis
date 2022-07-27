@@ -166,7 +166,7 @@ class BasePkgManager(object):
                                                                   checkrule=rule,
                                                                   checktool=rule.checktool)
 
-            # # 赋予规则状态到packgemap  
+            # # 赋予规则状态到packgemap
             # if pm.state == models.PackageMap.StateEnum.DISABLED or not pm.severity or not pm.rule_params:
             #     pm.state = models.PackageMap.StateEnum.ENABLED
             #     pm.severity = pm.severity or rule.severity
@@ -312,6 +312,7 @@ class BasePkgManager(object):
         update_num, display_names = cls._update_pms(checkpackage, packagemaps, user=user, rule_params=rule_params,
                                                     **kwargs)
         message = "修改%d个规则的参数为%s。规则： %s" % (update_num, rule_params, display_names)
+
         cls.operation_record(checkpackage, "批量更新规则", user, message)
 
     @classmethod

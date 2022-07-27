@@ -11,7 +11,7 @@
 import logging
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
-# 项目内 
+# 项目内
 from apps.scan_conf import models
 from apps.scan_conf.core import CheckToolManager, CheckPackageManager, ToolLibManager
 from apps.scan_conf.serializers.base import CheckerSerializer, CheckPackageJsonSerializer, ToolLibEditSerializer
@@ -23,7 +23,7 @@ logger = logging.getLogger(__name__)
 class ToolLibLoadManager(object):
     """工具依赖load管理
     """
-    
+
     @classmethod
     def preload_handler(cls, toollib_json):
         """工具依赖json前置处理
@@ -31,7 +31,7 @@ class ToolLibLoadManager(object):
         :return: toollib_json
         """
         return toollib_json
-    
+
     @classmethod
     def postload_handler(cls, toollib, scm_auth, user):
         """工具依赖后置处理
@@ -46,9 +46,9 @@ class ToolLibLoadManager(object):
                 toollib, user, scm_auth_type=scm_auth.get("auth_type"),
                 scm_account=scm_auth.get("scm_account"),
                 scm_ssh_info=scm_auth.get("scm_ssh")
-            )  
+            )
         return toollib.name
-    
+
     @classmethod
     def loadlib(cls, toollib_json, user):
         """工具依赖json load
@@ -73,7 +73,7 @@ class ToolLibLoadManager(object):
         except Exception as e:
             logger.error(e)
             return False, toollib_name
-    
+
     @classmethod
     def loadlib_by_workers(cls, toollib_json_list, user, workers=10):
         """并发执行工具依赖json load
@@ -100,12 +100,12 @@ class ToolLibLoadManager(object):
                 for future in as_completed(all_task):
                     load_res_list.append(future.result())
         return load_res_list
-    
+
 
 class CheckToolLoadManager(object):
     """工具load管理
     """
-    
+
     @classmethod
     def preload_handler(cls, checktool_json):
         """工具json前置处理
@@ -113,7 +113,7 @@ class CheckToolLoadManager(object):
         :return: checktool_json
         """
         return checktool_json
-    
+
     @classmethod
     def postload_handler(cls, checktool, admins=None):
         """工具后置处理
@@ -125,7 +125,7 @@ class CheckToolLoadManager(object):
             # 如果工具owners为农历了
             checktool.owners.add(*admins)
         return checktool.name
-    
+
     @classmethod
     def loadchecker(cls, checktool_json, admins=None):
         """工具json load
@@ -148,7 +148,7 @@ class CheckToolLoadManager(object):
         except Exception as e:
             logger.error(e)
             return False, checktool_name
-    
+
     @classmethod
     def loadchecker_by_workers(cls, checktool_json_list, admins=None, workers=10):
         """并发执行工具json load
@@ -190,7 +190,7 @@ class CheckToolLoadManager(object):
 class CheckPackageLoadManager(object):
     """规则包load管理
     """
-    
+
     @classmethod
     def preload_handler(cls, checkpackage_json):
         """工具json前置处理
@@ -198,7 +198,7 @@ class CheckPackageLoadManager(object):
         :return: checkpackage_json
         """
         return checkpackage_json
-    
+
     @classmethod
     def postload_handler(cls, checkpackage):
         """工具后置处理
@@ -211,7 +211,7 @@ class CheckPackageLoadManager(object):
             checkpackage.package_type = models.CheckPackage.PackageTypeEnum.OFFICIAL
             checkpackage.save()
         return checkpackage.name
-    
+
     @classmethod
     def loadpkg(cls, checkpackage_json):
         """规则包json load
@@ -232,7 +232,7 @@ class CheckPackageLoadManager(object):
         except Exception as e:
             logger.error(e)
             return False, checkpackage_name
-    
+
     @classmethod
     def loadpkg_by_workers(cls, checkpackage_json_list, workers=10):
         """并发执行工具json load
@@ -252,13 +252,13 @@ class CheckPackageLoadManager(object):
                         break
                     checkpackage_json = checkpackage_json_list[i_idx+j_idx]
                     logger.info('--> [%s/%s], checkpackage name: %s' % (
-                        checkpackage_count, index+1, checkpackage_json["name"]))
+                        index+1, checkpackage_count, checkpackage_json["name"]))
                     task = t_thread.submit(cls.loadpkg, checkpackage_json)
                     all_task.append(task)
                 for future in as_completed(all_task):
                     load_res_list.append(future.result())
         return load_res_list
-    
+
     @classmethod
     def getpkg(cls, checkpackage_id):
         """获取规则包json

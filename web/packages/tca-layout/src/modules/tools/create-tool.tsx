@@ -2,21 +2,19 @@
  * 创建工具弹框
  */
 
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { isEmpty } from 'lodash';
-import { Modal, Form, Input, Checkbox, Select, Tooltip, Button, message } from 'coding-oa-uikit';
-import PlusIcon from 'coding-oa-uikit/lib/icon/Plus';
-import RefreshIcon from 'coding-oa-uikit/lib/icon/Refresh';
+import { Modal, Form, Input, Checkbox, Select, message } from 'coding-oa-uikit';
 
 import { getToolsRouter } from '@src/utils/getRoutePath';
-import { gScmAccounts, getSSHInfo } from '@src/services/user';
 import { createTool } from '@src/services/tools';
-import { AUTH_TYPE, AUTH_TYPE_TXT, REPO_TYPE_OPTIONS, REPO_TYPE } from './constants';
+import { REPO_TYPE_OPTIONS, REPO_TYPE } from './constants';
+import { SCM_MAP } from '@src/common/constants/authority';
 
+import Authority from '@src/components/authority';
 
 const { TextArea } = Input;
-const { Option, OptGroup } = Select;
+const { Option } = Select;
 
 const layout = {
   labelCol: { span: 5 },
@@ -33,54 +31,22 @@ const CreateToolModal = (props: CreateToolModalProps) => {
   const [form] = Form.useForm();
   const history = useHistory();
   const { orgId, visible, onClose } = props;
-  const [sshAuthList, setSshAuthList] = useState<any>([]);
-  const [httpAuthList, setHttpAuthList] = useState<any>([]);
-  const [authLoading, setAuthLoading] = useState(false);
 
-  useEffect(() => {
-    if (visible) {
-      getAuth();
-    }
-  }, [visible]);
-
-  const getAuth = () => {
-    setAuthLoading(true);
-    Promise.all([
-      getSSHInfo().then(r => r.results || []),
-      gScmAccounts().then(r => r.results || []),
-    ])
-      .then((result) => {
-        // HTTP 和 SSH ID可能重复
-        setSshAuthList(result[0]?.map((item: any) => ({
-          ...item,
-          authId: `${AUTH_TYPE.SSH}#${item.id}`,
-        })));
-        setHttpAuthList(result[1].map((item: any) => ({
-          ...item,
-          authId: `${AUTH_TYPE.HTTP}#${item.id}`,
-        })));
-      })
-      .finally(() => {
-        setAuthLoading(false);
-      });
-  };
-
-  const onFinish = (data: any) => {
-    const newFormData = data;
-    const [authType, id] = data?.scm_auth_id?.split('#') ?? [];
-    delete newFormData.scm_auth_id;
-
-    newFormData.scm_auth = { auth_type: authType };
-
-    if (newFormData.scm_auth.auth_type === AUTH_TYPE.HTTP) {
-      newFormData.scm_auth.scm_account = id;
+  const onFinish = (formData: any) => {
+    if (formData.scm) {
+      const [authType, id] = formData?.scm?.split('#') ?? [];
+      formData.scm_auth = { auth_type: authType };
+      if (SCM_MAP[authType]) {
+        formData.scm_auth[SCM_MAP[authType]] = id;
+      }
     } else {
-      newFormData.scm_auth.scm_ssh = id;
+      formData.scm_auth = null
     }
+    delete formData.scm
 
-    createTool(orgId, newFormData).then((res) => {
+    createTool(orgId, formData).then((res) => {
       message.success('创建成功');
-      history.push(`${getToolsRouter(orgId)}/${res.id}/rules`);
+      history.push(`${getToolsRouter(orgId)}/${res.id}/tool-libs`);
     });
   };
 
@@ -111,21 +77,21 @@ const CreateToolModal = (props: CreateToolModalProps) => {
         <Form.Item
           label="工具展示名称"
           name="display_name"
-          rules={[{ required: true, message: '请输入前端展示名称!' }]}
+          rules={[{ required: true, message: '请输入前端展示名称' }]}
         >
           <Input placeholder="请使用大驼峰命名，如PyLint。" />
         </Form.Item>
         <Form.Item
           label="工具描述"
           name="description"
-          rules={[{ required: true, message: '请输入工具描述!' }]}
+          rules={[{ required: true, message: '请输入工具描述' }]}
         >
           <TextArea placeholder="长度限制256个字符。" rows={3} />
         </Form.Item>
         <Form.Item
           label="工具仓库地址"
           name="scm_url"
-          required
+          rules={[{ required: true, message: '请输入工具仓库地址' }]}
         >
           <Input.Group compact>
             <Form.Item name='scm_type' noStyle>
@@ -140,62 +106,18 @@ const CreateToolModal = (props: CreateToolModalProps) => {
             <Form.Item
               name='scm_url'
               noStyle
-              rules={[
-                { required: true, message: '请输入工具仓库地址' },
-              ]}
             >
               <Input style={{ width: 357 }} />
             </Form.Item>
           </Input.Group>
         </Form.Item>
-        <Form.Item label="凭证" required>
-          <Form.Item noStyle name="scm_auth_id" rules={[{ required: true, message: '请选择仓库凭证' }]}>
-            <Select style={{ width: 360 }}>
-              {!isEmpty(sshAuthList) && (
-                <OptGroup label={AUTH_TYPE_TXT.SSH}>
-                  {sshAuthList.map((auth: any) => (
-                    <Option
-                      key={auth.authId}
-                      value={auth.authId}
-                      auth_type={AUTH_TYPE.SSH}
-                    >
-                      {auth.name}
-                    </Option>
-                  ))}
-                </OptGroup>
-              )}
-              {!isEmpty(httpAuthList) && (
-                <OptGroup label={AUTH_TYPE_TXT.HTTP}>
-                  {httpAuthList.map((auth: any) => (
-                    <Option
-                      key={auth.authId}
-                      value={auth.authId}
-                      auth_type={AUTH_TYPE.HTTP}
-                    >
-                      {auth.scm_username}
-                    </Option>
-                  ))}
-                </OptGroup>
-              )}
-            </Select>
-          </Form.Item>
-          <div style={{
-            position: 'absolute',
-            top: 5,
-            right: 10,
-          }}>
-            <Tooltip title='新增凭证' placement='top' getPopupContainer={() => document.body}>
-              <Button type='link' className="mr-12" href='/user/auth' target='_blank'><PlusIcon /></Button>
-            </Tooltip>
-            <Tooltip title='刷新凭证' placement='top' getPopupContainer={() => document.body}>
-              <Button
-                type='link'
-                disabled={authLoading}
-                onClick={getAuth}
-              ><RefreshIcon /></Button>
-            </Tooltip>
-          </div>
-        </Form.Item>
+        <Authority
+          form={form}
+          name='scm'
+          label='凭证'
+          selectStyle={{ width: 360 }}
+          placeholder='拉取代码库所需的凭证'
+        />
         <Form.Item
           label="执行命令"
           name="run_cmd"

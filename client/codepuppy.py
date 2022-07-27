@@ -61,7 +61,7 @@ class CodePuppy(object):
         else:
             level = logging.INFO
 
-        format_pattern = '%(asctime)s-%(levelname)s-%(name)s: %(message)s'
+        format_pattern = '%(asctime)s-%(levelname)s: %(message)s'
         logging.basicConfig(level=level, format=format_pattern)
         # 设置日志输出文件,如果文件大于10MB,自动备份,备份文件多于10个时,自动删除
         if self._params.log_file:
@@ -109,15 +109,32 @@ class CodePuppy(object):
             else:
                 LogPrinter.error("缺少token参数,请通过-t <token>启动start命令.")
 
+        elif args.command == 'quickinit':
+            '''快速分析初始化工具'''
+            from node.quicktask.toolloader import QuickScanToolLoader
+            QuickScanToolLoader.load_tools(args)
+
+        elif args.command == 'quickscan':
+            from node.quicktask.quickrunner import QuickRunner
+            QuickRunner(args).run()
+
+        elif args.command == 'task':
+            '''执行单个工具任务'''
+            from node.testrunner import TestRunner
+            if args.request_file:
+                TestRunner(args.request_file).run()
+            else:
+                LogPrinter.error("请输入request.json文件, 输入 -h 查看帮助文档.")
+
         elif args.command == 'updatetool':
             '''更新工具库'''
             # 从git拉取工具配置库
             ToolConfigLoader().load_tool_config()
             if args.tool:  # 更新指定工具
                 tool_name_list = StringMgr.str_to_list(args.tool)
-                ToolLoader(tool_names=tool_name_list, os_type=args.os_type).git_load_tools(print_enable=False)
+                ToolLoader(tool_names=tool_name_list, os_type=args.os_type, include_common=False).git_load_tools(print_enable=False)
             elif args.all_tools:  # 更新全量工具
-                ToolLoader(os_type=args.os_type).git_load_tools(print_enable=False)
+                ToolLoader(os_type=args.os_type, config_all_tools=True, include_common=False).git_load_tools(print_enable=False)
             else:
                 LogPrinter.error("请输入必要的参数(-a|-t)! 输入 -h 查看帮助文档.")
 
@@ -125,11 +142,8 @@ class CodePuppy(object):
             '''输出帮助文档'''
             CmdArgParser.print_help()
 
-        # elif args.show_help:
-        #     CmdArgParser.print_help()
-
         else:
-            print('输入命令有误,请输入 -h 命令查看帮助文档!')
+            CmdArgParser.print_help()
 
 
 if __name__ == "__main__":
