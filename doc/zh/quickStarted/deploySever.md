@@ -57,9 +57,9 @@
 #### 更新操作
 1. 更新代码
 2. 执行以下命令：
-    - `./quick_start.sh local install tca`：更新相关配置
-    - `./quick_start.sh local start`：启动服务（会自动关闭之前的服务）
-    - `./quick_start.sh local check`：检查服务是否启动失败
+    - `./quick_install.sh local install tca`：更新相关配置
+    - `./quick_install.sh local start`：启动服务（会自动关闭之前的服务）
+    - `./quick_install.sh local check`：检查服务是否启动失败
 
 注：
 1. `local install`命令行参数说明：
@@ -128,7 +128,7 @@ Server、Web 与 Client
 #### 更新操作
 1. 更新代码
 2. 执行以下命令：
-    - `TCA_IMAGE_BUILD=true ./quick_start.sh docker deploy`：重新构建并启动tca容器
+    - `TCA_IMAGE_BUILD=true ./quick_install.sh docker deploy`：重新构建并启动tca容器
 
 注：`TCA_IMAGE_BUILD=true`表示从本地构建TCA镜像运行
 
@@ -160,7 +160,7 @@ Server、Web 与 Client
 
 1. 进入CodeAnalysis工作目录（例如``~/CodeAnalysis``)，以下路径均为目录内的相对路径
 2. 执行命令：
-    - `./quick_start.sh docker-compose deploy`：启动tca_server容器
+    - `./quick_install.sh docker-compose deploy`：启动tca_server容器
 
 注意：通过Docker-Compose部署默认会在当前根目录下的挂载三个路径：
 
@@ -172,8 +172,8 @@ Server、Web 与 Client
 #### 更新操作
 1. 更新代码
 2. 执行以下命令：
-    - `./quick_start.sh docker-compose build`：重新构建TCA相关镜像
-    - `./quick_start.sh docker-compose deploy`: 重新部署TCA相关容器与初始化（或刷新数据）
+    - `./quick_install.sh docker-compose build`：重新构建TCA相关镜像
+    - `./quick_install.sh docker-compose deploy`: 重新部署TCA相关容器与初始化（或刷新数据）
 
 #### 运行操作
 如果已经在机器上执行过``docker-compose deploy``，并保留容器数据的，可以执行以下命令启动容器，继续运行TCA

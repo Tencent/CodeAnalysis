@@ -86,13 +86,13 @@ function install_server_requirments() {
 
 function create_tool_link() {
     LOG_INFO "[TCAServer] Create link with gunicorn、celery"
-    if [ -L "/usr/local/bin/gunicorn" ]; then
+    if [ -f "/usr/local/bin/gunicorn" ]; then
         LOG_INFO "/usr/local/bin/gunicorn exist"
         return 0
     else
         ln -s $PYTHON_PATH/gunicorn /usr/local/bin/gunicorn
     fi
-    if [ -L "/usr/local/bin/celery" ]; then
+    if [ -f "/usr/local/bin/celery" ]; then
         LOG_INFO "/usr/local/bin/celery exist"
         return 0
     else

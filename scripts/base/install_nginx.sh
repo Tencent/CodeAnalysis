@@ -143,6 +143,7 @@ function interactive_install_nginx() {
     if [ "$ret" == "true" ]; then
         return 0
     fi
+    LOG_WARN "Deploying TCA with docker/docker-compose depends on Nginx. Current machine has not installed nginx."
     LOG_INFO "Do you want to install [Nginx] by this script?"
     read -p "Please enter:[Y/N]" result
     case $result in

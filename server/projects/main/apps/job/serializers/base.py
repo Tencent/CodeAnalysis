@@ -34,6 +34,7 @@ class TaskBriefSerializer(serializers.ModelSerializer):
         fields = ["id", "module", "task_name", "progress_rate",
                   "state", "result_code", "result_msg", "result_path"]
 
+
 class JobProjectSerializer(serializers.ModelSerializer):
     """任务项目信息序列化
     """
