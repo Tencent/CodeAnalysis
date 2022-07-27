@@ -74,4 +74,14 @@ function stop_db() {
 
 start_db_and_init_data
 stop_db
+LOG_INFO "===================================TCA启动说明==================================="
+LOG_INFO "TCA服务已经基于Docker启动，可以观察下方日志，每个服务都进入 'RUNNING state'，说明服务都启动成功"
+LOG_INFO "TCA访问入口：http://127.0.0.1"
+LOG_INFO "TCA服务状态监控平台：http://127.0.0.1:9001"
+LOG_INFO "TCA容器名称: tca-services"
+LOG_INFO ""
+LOG_INFO "注意："
+LOG_INFO " - TCA首次启动默认使用前台进程模式运行"
+LOG_INFO " - 如果需要后台模式运行，可以关闭当前进程，然后再执行 ./quick_install.sh docker start，则会以后台模式运行"
+LOG_INFO "===================================TCA启动说明==================================="
 supervisord -n -c /CodeAnalysis/scripts/docker/supervisord.conf

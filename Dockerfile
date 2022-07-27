@@ -19,6 +19,10 @@ RUN set -ex && cd / \
     && locale-gen \
     && ln -sf /usr/share/zoneinfo/Asia/Hong_Kong /etc/localtime
 
+# Add pypi tencent mirror
+# RUN mkdir -p ~/.pip/ \
+#     && echo "[global]\nindex-url = https://mirrors.cloud.tencent.com/pypi/simple\n[install]\ntrusted-host=mirrors.cloud.tencent.com" > ~/.pip/pip.conf
+
 RUN pip install -U setuptools pip \
     && pip install gunicorn==20.1.0 celery==5.2.3 supervisor==4.2.4 
 
