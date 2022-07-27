@@ -14,10 +14,12 @@ RUN apt-get update \
 
 WORKDIR /workspace/client
 
-COPY . .
+COPY requirements requirements
 
-RUN pip3 install -U pip \
+RUN pip3 install --no-cache-dir -U pip \
     && pip3 install --no-cache-dir -r requirements/app_reqs.pip \
     && bash requirements/install.sh
+
+COPY . .
 
 CMD [ "python3", "codepuppy.py", "localscan"]

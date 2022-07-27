@@ -17,8 +17,12 @@ RUN set -ex && cd / \
 
 WORKDIR /var/www/django/codedog
 
+ADD requirements.txt requirements.txt
+
+RUN mkdir ~/.pip/ && \
+    pip install --no-cache-dir -U setuptools pip && \
+    pip install --no-cache-dir -r requirements.txt
+
 COPY . .
 
-RUN mkdir -p log/ && \
-    pip install -U setuptools pip && \
-    pip install -r requirements.txt
+RUN mkdir -p log
