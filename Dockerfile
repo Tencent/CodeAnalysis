@@ -20,6 +20,8 @@ RUN set -ex && cd / \
     # && yum clean all
 
 RUN wget "https://www.python.org/ftp/python/3.7.12/Python-3.7.12.tgz" \
+    && yum install -y $EXTRA_TOOLS \
+    && yum clean all \
     && gzip -d Python-3.7.12.tgz \
     && tar xvf Python-3.7.12.tar -C /usr/local/src \
     && rm Python-3.7.12.tar && cd /usr/local/src/Python-3.7.12 \
