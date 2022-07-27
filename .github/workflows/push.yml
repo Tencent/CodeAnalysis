@@ -4,7 +4,7 @@ on:
     types: [published]
     branches: 
       - 'main'
-      - 'dev/deploy_script_opti'
+  
   
 jobs:
   build: 
@@ -37,7 +37,7 @@ jobs:
         context: ./
         file: ./Dockerfile
         platforms: linux/amd64, linux/arm64
-        # push: true
+        push: true
         tags: ${{ secrets.DOCKER_HUB_USERNAME }}/tca:latest, ${{ secrets.DOCKER_HUB_USERNAME }}/tca:${{ github.event.release.name }}
 
     # 5. 打印docker镜像SHA256值
