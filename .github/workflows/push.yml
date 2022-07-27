@@ -1,4 +1,4 @@
-name: TCA docker image build and push
+.github/workflows/push.ymlname: TCA docker image build and push
 on: 
   release:
     types: [published]
@@ -7,7 +7,6 @@ on:
   push:
     branches:
       - 'dev/deploy_script_opti'
-
   
 jobs:
   build: 
@@ -39,7 +38,7 @@ jobs:
         file: ./Dockerfile
         platforms: linux/amd64,linux/arm64
         push: true
-        tags: ${{ secrets.DOCKER_HUB_USERNAME }}/tca:latest, ${{ secrets.DOCKER_HUB_USERNAME }}/tca:latest
+        tags: ${{ secrets.DOCKER_HUB_USERNAME }}/tca:latest, ${{ secrets.DOCKER_HUB_USERNAME }}/tca:${{ steps.meta.outputs.tags }}
 
     # 5. 打印docker镜像SHA256值
     - name: Image digest
