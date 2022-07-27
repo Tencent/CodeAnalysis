@@ -8,7 +8,7 @@ source $TCA_SCRIPT_ROOT/deploy/tca_docker_compose.sh
 
 function start_deploy_with_docker_compose() {
     bash $TCA_PROJECT_PATH/server/scripts/deploy_test_docker.sh
-    tca_docker_compose_main
+    tca_docker_compose_main "deploy"
 }
 
 start_deploy_with_docker_compose
