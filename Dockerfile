@@ -3,7 +3,7 @@ FROM centos:centos7
 ENV REDIS_PASSWD=tca2022
 ENV MYSQL_PASSWORD=TCA!@#2021
 
-ARG EXTRA_TOOLS="wget zlib-devel bzip2-devel openssl-devel ncurses-devel sqlite-devel readline-devel tk-devel gcc make libffi-devel xz-devel unzip git subversion"
+ARG EXTRA_TOOLS="wget zlib-devel bzip2-devel openssl-devel ncurses-devel sqlite-devel readline-devel tk-devel gcc g++ make libffi-devel xz-devel unzip git subversion"
 
 RUN set -ex && cd / \
     && yum install -y $EXTRA_TOOLS \
@@ -12,12 +12,12 @@ RUN set -ex && cd / \
     && echo "LC_ALL=zh_CN.UTF-8" >> /etc/profile \
     && echo "LC_ALL=zh_CN.UTF-8" >> /etc/environment \
     && echo "zh_CN.UTF-8 UTF-8" > /etc/locale.gen \
-    && echo "LANG=zh_CN.UTF-8" > /etc/locale.conf \
-    && wget -O /tmp/mariadb_repo_setup http://downloads.mariadb.com/MariaDB/mariadb_repo_setup \
-    && chmod +x /tmp/mariadb_repo_setup \
-    && bash /tmp/mariadb_repo_setup --mariadb-server-version="mariadb-10.6" \
-    && yum install -y MariaDB-server MariaDB-backup \
-    && yum clean all
+    && echo "LANG=zh_CN.UTF-8" > /etc/locale.conf
+    # && wget -O /tmp/mariadb_repo_setup http://downloads.mariadb.com/MariaDB/mariadb_repo_setup \
+    # && chmod +x /tmp/mariadb_repo_setup \
+    # && bash /tmp/mariadb_repo_setup --mariadb-server-version="mariadb-10.6" \
+    # && yum install -y MariaDB-server MariaDB-backup \
+    # && yum clean all
 
 RUN wget "https://www.python.org/ftp/python/3.7.12/Python-3.7.12.tgz" \
     && gzip -d Python-3.7.12.tgz \
@@ -37,7 +37,8 @@ RUN wget "https://www.python.org/ftp/python/3.7.12/Python-3.7.12.tgz" \
     && ln -s /usr/local/python3/bin/gunicorn /usr/local/bin/gunicorn \
     && ln -s /usr/local/python3/bin/celery /usr/local/bin/celery \
     && ln -s /usr/local/python3/bin/supervisord /usr/local/bin/supervisord \
-    && ln -s /usr/local/python3/bin/supervisorctl /usr/local/bin/supervisorctl
+    && ln -s /usr/local/python3/bin/supervisorctl /usr/local/bin/supervisorctl \
+    && fine
 
 COPY ./ /CodeAnalysis/
 WORKDIR /CodeAnalysis/
