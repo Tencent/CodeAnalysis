@@ -15,7 +15,7 @@ RUN set -ex && cd / \
     && echo "LANG=zh_CN.UTF-8" > /etc/locale.conf \
     && wget -O /tmp/mariadb_repo_setup http://downloads.mariadb.com/MariaDB/mariadb_repo_setup \
     && chmod +x /tmp/mariadb_repo_setup \
-    && /tmp/mariadb_repo_setup --mariadb-server-version="mariadb-10.6" \
+    && bash /tmp/mariadb_repo_setup --mariadb-server-version="mariadb-10.6" \
     && yum install -y MariaDB-server MariaDB-backup \
     && yum clean all
 
