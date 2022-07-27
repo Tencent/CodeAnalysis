@@ -37,7 +37,6 @@ jobs:
         context: ./
         file: ./Dockerfile
         platforms: linux/arm64
-        push: true
         tags: ${{ secrets.DOCKER_HUB_USERNAME }}/tca:latest
 
     # 5. 打印docker镜像SHA256值

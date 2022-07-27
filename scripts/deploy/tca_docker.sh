@@ -20,7 +20,7 @@ TCA_DOCKER_CONFIG_PATH=${TCA_CONFIG_PATH:-"$TCA_PROJECT_PATH/.docker_temp/config
 function build_image() {
     if [ "$(docker image inspect $TCA_IMAGE_NAME:$TCA_IMAGE_TAG 2>/dev/null)" == "[]" ]; then
         cd $TCA_PROJECT_PATH
-        docker build -t $TCA_IMAGE_NAME:$TCA_IMAGE_TAG .
+        docker build -t $TCA_IMAGE_NAME:$TCA_IMAGE_TAG . || error_exit "Build image failed"
     fi
 }
 

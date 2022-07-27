@@ -75,7 +75,7 @@ function compile_and_link_python() {
     LOG_INFO "[PythonInstall] Extract into $PYTHON_SRC_PATH"
     # 解压源码到/usr/local/src目录
 	tar zxf $PYTHON_SRC_PKG_PATH -C $PYTHON_SRC_DIR && cd $PYTHON_SRC_PATH
-    LOG_INFO "[PythonInstall] Config and install to $PYTHON_INSTALL_PATH"
+    LOG_INFO "[PythonInstall] Config and install to $PYTHON_INSTALL_PATH [Please wait for moment.]"
     # 编译配置和安装
     ./configure prefix=$PYTHON_INSTALL_PATH --enable-shared >/dev/null && make -j8 >/dev/null && make install >/dev/null && make clean >/dev/null || error_exit "Install Python src failed"
     # 链接构建产出的Python可执行文件到/usr/local/bin目录
@@ -135,6 +135,7 @@ function interactive_install_python() {
     if [ "$ret" == "true" ]; then
         return 0
     fi
+    LOG_WARN "Deploying TCA depend on Python3.7. Current machine has not installed Python3.7."
     LOG_INFO "Do you want to install [Python3.7] by this script?"
     read -p "Please enter:[Y/N]" result
     case $result in

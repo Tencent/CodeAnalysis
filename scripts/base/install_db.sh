@@ -408,7 +408,7 @@ function interactive_install_redis() {
         return 0
     fi
     LOG_INFO "Do you want to install [Redis] by this script?"
-    LOG_WARN "If you using remote redis service, you can enter N"
+    LOG_WARN "Deploying TCA depends on Redis. If you using remote redis service, you can enter N"
     read -p "Please enter:[Y/N]" result
     case $result in
             [yY])
@@ -454,7 +454,7 @@ function interactive_install_mariadb() {
         return 0
     fi
     LOG_INFO "Do you want to install [Mariadb] by this script?"
-    LOG_WARN "If you using remote mysql service, you can enter N"
+    LOG_WARN "Deploying TCA depends on MySQL/Mariadb. If you using remote mysql service, you can enter N"
     read -p "Please enter:[Y/N]" result
     case $result in
         [yY])

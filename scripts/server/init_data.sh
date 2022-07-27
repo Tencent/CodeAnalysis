@@ -27,33 +27,33 @@ function create_database() {
 }
 
 function init_main_db() {
-    LOG_INFO "[TCAServer] Init main db"
+    LOG_INFO "[TCAServer] Init main db..."
     python manage.py createcachetable >/dev/null
     python manage.py migrate --noinput --traceback >/dev/null
 }
 
 function init_analysis_db() {
-    LOG_INFO "[TCAServer] Init analysis db"
+    LOG_INFO "[TCAServer] Init analysis db..."
     python manage.py createcachetable >/dev/null
     python manage.py migrate --noinput --traceback >/dev/null
 }
 
 function init_login_db() {
-    LOG_INFO "[TCAServer] Init login db"
+    LOG_INFO "[TCAServer] Init login db..."
     python manage.py createcachetable >/dev/null
     python manage.py migrate --noinput --traceback >/dev/null
 }
 
 function init_file_db() {
-    LOG_INFO "[TCAServer] Init file db"
+    LOG_INFO "[TCAServer] Init file db..."
     python manage.py migrate --noinput --traceback >/dev/null
 }
 
 function init_main_data() {
-    LOG_INFO "[TCAServer] Init main data"
+    LOG_INFO "[TCAServer] Init main data..."
     python manage.py initializedb_open
     python manage.py initialize_exclude_paths
-    LOG_INFO "[TCAServer] Init checker config"
+    LOG_INFO "[TCAServer] Init checker config..."
     python manage.py loadcheckers all --dirname open_source >/dev/null
     python manage.py loadpackages all --dirname open_source_package >/dev/null
     LOG_INFO "Init checkertool and checkerpackage successfully"
@@ -61,13 +61,13 @@ function init_main_data() {
 }
 
 function init_analysis_data() {
-    LOG_INFO "[TCAServer] Init analysis data"
+    LOG_INFO "[TCAServer] Init analysis data..."
     python manage.py initialuser >/dev/null
     return 0
 }
 
 function init_login_data() {
-    LOG_INFO "[TCAServer] Init login data"
+    LOG_INFO "[TCAServer] Init login data..."
     python manage.py initializedb >/dev/null
     LOG_INFO "################################"
     LOG_INFO "Current dafault admin/password: "$TCA_DEFAULT_ADMIN/$TCA_DEFAULT_PASSWORD

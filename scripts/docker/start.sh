@@ -33,14 +33,15 @@ function init_directory() {
     mkdir -p /var/log/tca/client
     mkdir -p /var/opt/tca/files
     mkdir -p /var/opt/tca/tools
+    mkdir -p /run/mysqld/
     mkdir -p /etc/tca/
-    chown -R mysql:mysql /var/log/tca/mariadb /var/opt/tca/mariadb
+    chown -R mysql:mysql /var/log/tca/mariadb /var/opt/tca/mariadb /run/mysqld
 
     if [ -d "/CodeAnalysis/tools" ]; then
         mv /CodeAnalysis/tools /var/opt/tca/tools
-        ln -s  /var/opt/tca/tools /CodeAnalysis/tools
+        ln -s /var/opt/tca/tools /CodeAnalysis/tools
     else
-        ln -s  /var/opt/tca/tools /CodeAnalysis/tools
+        ln -s /var/opt/tca/tools /CodeAnalysis/tools
     fi
 
     if [ ! -f "/etc/tca/config.sh" ]; then
