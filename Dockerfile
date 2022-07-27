@@ -3,7 +3,7 @@ FROM centos:centos7
 ENV REDIS_PASSWD=tca2022
 ENV MYSQL_PASSWORD=TCA!@#2021
 
-ARG EXTRA_TOOLS="wget zlib-devel bzip2-devel openssl-devel ncurses-devel sqlite-devel readline-devel tk-devel gcc g++ make libffi-devel xz-devel unzip git subversion"
+ARG EXTRA_TOOLS="wget zlib-devel bzip2-devel openssl-devel ncurses-devel sqlite-devel readline-devel tk-devel gcc make libffi-devel xz-devel unzip git subversion"
 
 RUN set -ex && cd / \
     && yum install -y $EXTRA_TOOLS \
