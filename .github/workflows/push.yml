@@ -4,8 +4,6 @@ on:
     types: [published]
     branches: 
       - 'main'
-  push:
-    branches:
       - 'dev/deploy_script_opti'
   
 jobs:
@@ -31,15 +29,20 @@ jobs:
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v1
       
-    # 4. 构建并推送镜像: latest tag
+    # 4. 构建并推送镜像
     - name: Build and push with latest tag
       id: docker_build
       uses: docker/build-push-action@v2
       with:
         context: ./
         file: ./Dockerfile
-        platforms: linux/arm64
-        tags: ${{ secrets.DOCKER_HUB_USERNAME }}/tca:latest
+        platforms:
+          - linux/amd64
+          - linux/arm64
+        # push: true
+        tags: 
+          - ${{ secrets.DOCKER_HUB_USERNAME }}/tca:latest
+          - ${{ secrets.DOCKER_HUB_USERNAME }}/tca:${{ github.event.release.name }}
 
     # 5. 打印docker镜像SHA256值
     - name: Image digest
