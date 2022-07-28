@@ -39,7 +39,7 @@ function init_directory() {
     chown -R mysql:mysql /var/log/tca/mariadb /var/opt/tca/mariadb /run/mysqld
 
     if [ -d "/CodeAnalysis/tools" ]; then
-        mv /CodeAnalysis/tools /var/opt/tca/tools
+        mv /CodeAnalysis/tools /var/opt/tca/
         ln -s /var/opt/tca/tools /CodeAnalysis/tools
     else
         ln -s /var/opt/tca/tools /CodeAnalysis/tools
@@ -54,13 +54,13 @@ function init_directory() {
 }
 
 function start_db_and_init_data() {
+    init_directory
+    config_redis
     if [ $TCA_INIT_DATA == "true" ]; then
-        init_directory
         if [ ! -d "/var/opt/tca/mariadb/mysql" ]; then
             mysql_install_db --user=mysql --datadir=/var/opt/tca/mariadb
         fi
         start_mariadb_with_docker
-        config_redis
         init_server_db_and_data
     fi
     init_web_config
