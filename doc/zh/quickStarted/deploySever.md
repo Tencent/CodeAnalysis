@@ -97,7 +97,7 @@ bash ./quick_install.sh docker stop
 
 - 更多分析方案配置可查阅[帮助文档-分析方案](../guide/分析方案/基础属性配置.md)
 
-![creataAnalysePlan](../../images/createAnalysePlan.png)
+![creataAnalysePlan](../../images/creataAnalysePlan.png)
 注：运行环境请选择「Codedog_Linux」
 
 ![planPage](../../images/planPage.png)
