@@ -35,7 +35,7 @@
 1. 进入CodeAnalysis工作目录（例如``~/CodeAnalysis``)，以下路径均为目录内的相对路径
 2. 安装基础软件与部署TCA（可根据脚本选项确定是否要安装相关基础软件），执行
   ```bash
-  $ ./quick_install.sh local deploy
+  $ bash ./quick_install.sh local deploy
   ```
   执行该命令会做以下事情：
   - 检测本地Python3.7、Mariadb/MySQL、Redis与Nginx，如果不存在会提示安装（install）
@@ -55,9 +55,9 @@
 #### 更新操作
 1. 更新代码
 2. 执行以下命令：
-    - `./quick_install.sh local install tca`：更新相关配置
-    - `./quick_install.sh local start`：启动服务（会自动关闭之前的服务）
-    - `./quick_install.sh local check`：检查服务是否启动失败
+    - `bash ./quick_install.sh local install tca`：更新相关配置
+    - `bash ./quick_install.sh local start`：启动服务（会自动关闭之前的服务）
+    - `bash ./quick_install.sh local check`：检查服务是否启动失败
 
 注：
 1. `local install`命令行参数说明：
@@ -70,11 +70,11 @@
 
 #### 启动和停止服务
 
-- 启动所有服务：`./quick_install.sh local start`
-- 启动Main相关服务：`./quick_install.sh local start main`
+- 启动所有服务：`bash ./quick_install.sh local start`
+- 启动Main相关服务：`bash ./quick_install.sh local start main`
   - `local start`支持启动指定服务，如上述的启动Main服务，还支持`mysql/redis/analysis/file/login/scmproxy/nginx/client/all`
-- 停止所有服务：`./quick_install.sh local stop`
-- 停止Main相关服务：`./quick_install.sh local stop main`
+- 停止所有服务：`.bash /quick_install.sh local stop`
+- 停止Main相关服务：`bash ./quick_install.sh local stop main`
   - `local stop`支持停止指定服务，如上述的停止Main服务，还支持`analysis/file/login/scmproxy/nginx/client/all`
 
 注：
@@ -83,8 +83,8 @@
   - `mysql`和`redis`默认会使用`systemctl`进行启动，如果`systemctl`无法使用，则会直接使用`nohup`方式运行相关服务
 
 #### 检查服务运行状态
-检查服务运行状态：`./quick_install.sh local check`
+检查服务运行状态：`bash ./quick_install.sh local check`
   - 目前支持检查server与web，暂不支持client
 
 #### 获取服务输出日志
-打印TCA Server各个服务的日志路径： `./quick_install.sh local log`
+打印TCA Server各个服务的日志路径： `bash ./quick_install.sh local log`

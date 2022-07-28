@@ -42,14 +42,14 @@ jobs:
       if: ${{ github.event_name == 'release' }}
 
     - name: Build and push with latest tag
-        id: docker_build
-        uses: docker/build-push-action@v2
-        with:
-          context: ./
-          file: ./Dockerfile
-          platforms: linux/amd64, linux/arm64
-          push: true
-          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/tca:beta
+      id: docker_build
+      uses: docker/build-push-action@v2
+      with:
+        context: ./
+        file: ./Dockerfile
+        platforms: linux/amd64, linux/arm64
+        push: true
+        tags: ${{ secrets.DOCKER_HUB_USERNAME }}/tca:beta
       if: ${{ github.event_name == 'workflow_dispatch' }}
 
     # 5. 打印docker镜像SHA256值
