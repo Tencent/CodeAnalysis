@@ -134,18 +134,17 @@ function install_redis_on_ubuntu() {
 function config_redis() {
     mkdir -p $REDIS_LOG_DIR
     LOG_INFO "[RedisInstall] Config redis auth: "$REDIS_PASSWD
-    if [ -f /etc/redis.conf ]; then
-        LOG_INFO "    redis.conf path: /etc/redis.conf"
-        cp /etc/redis.conf /etc/redis.conf.bak
-        echo "requirepass $REDIS_PASSWD" >> /etc/redis.conf
-        echo "logfile $REDIS_LOG_PATH" >> /etc/redis.conf
+    redis_conf_path=""
+    if [ -f "/etc/redis.conf" ]; then
+        redis_conf_path="/etc/redis.conf"
+    elif [ -f "/etc/redis/redis.conf" ]; then
+        redis_conf_path="/etc/redis/redis.conf"
     fi
-
-    if [ -f /etc/redis/redis.conf ]; then
-        LOG_INFO "    redis.conf path: /etc/redis/redis.conf"
-        cp /etc/redis/redis.conf /etc/redis/redis.conf.bak
-        echo "requirepass $REDIS_PASSWD" >> /etc/redis/redis.conf
-    fi
+    LOG_INFO "    redis.conf path: $redis_conf_path"
+    cp "$redis_conf_path" "$redis_conf_path".bak
+    echo "requirepass $REDIS_PASSWD" >> $redis_conf_path
+    echo "logfile $REDIS_LOG_PATH" >> $redis_conf_path
+    echo "daemonize no" >> $redis_conf_path
 }
 
 ####################################
@@ -408,7 +407,7 @@ function interactive_install_redis() {
         return 0
     fi
     LOG_INFO "Do you want to install [Redis] by this script?"
-    LOG_WARN "If you using remote redis service, you can enter N"
+    LOG_WARN "Deploying TCA depends on Redis. If you using remote redis service, you can enter N"
     read -p "Please enter:[Y/N]" result
     case $result in
             [yY])
@@ -454,7 +453,7 @@ function interactive_install_mariadb() {
         return 0
     fi
     LOG_INFO "Do you want to install [Mariadb] by this script?"
-    LOG_WARN "If you using remote mysql service, you can enter N"
+    LOG_WARN "Deploying TCA depends on MySQL/Mariadb. If you using remote mysql service, you can enter N"
     read -p "Please enter:[Y/N]" result
     case $result in
         [yY])

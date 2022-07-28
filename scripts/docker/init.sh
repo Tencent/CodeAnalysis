@@ -12,7 +12,7 @@ source $TCA_SCRIPT_ROOT/client/init.sh
 # 配置DB初始化密码
 sed "s/TCA_MYSQL_PASSWORD/${MYSQL_PASSWORD}/g" /CodeAnalysis/server/sql/_temp.sql > /CodeAnalysis/server/sql/reset_root_password.sql
 # 调整redis rdb位置
-sed -i "s/^dir\s.*/dir \/var\/opt\/tca\/redis/g" /etc/redis.conf
+sed -i "s/^dir\s.*/dir \/var\/opt\/tca\/redis/g" /etc/redis/redis.conf
 
 init_server_config
 init_client_config

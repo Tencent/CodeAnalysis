@@ -110,14 +110,9 @@ export const zh: SidebarConfig = {
       text: '快速入门',
       children: [
         {
-          text: '概述',
-          link: '/zh/quickStarted/intro.md',
+          text: '快速入门',
+          link: '/zh/quickStarted/deploySever.md',
         },
-        '/zh/quickStarted/deploySever.md',
-        '/zh/quickStarted/initRepo.md',
-        '/zh/quickStarted/deployClient.md',
-        '/zh/quickStarted/runProject.md',
-        '/zh/quickStarted/FAQ.md',
       ],
     },
     {
@@ -136,7 +131,11 @@ export const zh: SidebarConfig = {
       text: '其他',
       // collapsible: true,
       children: [
+        '/zh/quickStarted/intro.md',
         '/zh/quickStarted/tools.md',
+        '/zh/quickStarted/FAQ.md',
+        '/zh/quickStarted/codeDeploy.md',
+        '/zh/quickStarted/dockercomposeDeploy.md',
       ],
     },
   ],

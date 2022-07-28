@@ -104,11 +104,12 @@ function interactive_install_docker() {
             return 0
         else
             start_docker_service || error_exit "Start docker service failed"
+            sleep 5
             return 0
         fi
     fi
-
-    LOG_INFO "Do you want to install docker by this script?"
+    LOG_WARN "Deploying TCA with docker/docker-compose depends on docker. Current machine has not installed docker."
+    LOG_INFO "Do you want to install [Docker] by this script?"
     read -p "Please enter:[Y/N]" result
     case $result in
             [yY])
@@ -132,6 +133,7 @@ function interactive_install_docker_compose() {
         return 0
     fi
 
+    LOG_WARN "Deploying TCA with docker/docker-compose depends on docker. Current machine has not installed docker-compose."
     LOG_INFO "Do you want to install docker-compose by this script?"
     read -p "Please enter:[Y/N]" result
     case $result in

@@ -4,10 +4,8 @@ on:
     types: [published]
     branches: 
       - 'main'
-  push:
-    branches:
-      - 'dev/deploy_script_opti'
-  
+  workflow_dispatch:
+
 jobs:
   build: 
     runs-on: ubuntu-latest
@@ -25,20 +23,34 @@ jobs:
         password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
     # 3. 设置 docker 环境
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v1
+
     - name: Set up Docker Buildx
-      id: buildx
       uses: docker/setup-buildx-action@v1
       
-    # 4. 构建并推送镜像: latest tag
+    # 4. 构建并推送镜像
     - name: Build and push with latest tag
       id: docker_build
       uses: docker/build-push-action@v2
       with:
         context: ./
         file: ./Dockerfile
-        platforms: linux/arm64
+        platforms: linux/amd64, linux/arm64
         push: true
-        tags: ${{ secrets.DOCKER_HUB_USERNAME }}/tca:latest
+        tags: ${{ secrets.DOCKER_HUB_USERNAME }}/tca:latest, ${{ secrets.DOCKER_HUB_USERNAME }}/tca:${{ github.event.release.name }}
+      if: ${{ github.event_name == 'release' }}
+
+    - name: Build and push with latest tag
+        id: docker_build
+        uses: docker/build-push-action@v2
+        with:
+          context: ./
+          file: ./Dockerfile
+          platforms: linux/amd64, linux/arm64
+          push: true
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/tca:beta
+      if: ${{ github.event_name == 'workflow_dispatch' }}
 
     # 5. 打印docker镜像SHA256值
     - name: Image digest
