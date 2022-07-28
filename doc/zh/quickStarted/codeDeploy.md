@@ -1,6 +1,6 @@
 # 源码部署
 兼容旧版的部署方式
-### 依赖环境
+#### 依赖环境
 
 - 系统环境
   - Linux
@@ -28,9 +28,9 @@
   - 数据库权限：Server 服务执行数据库初始化需要依赖 ``CREATE、ALTER、INDEX、DELETE、LOCK TABLES、SELECT、INSERT、REFERENCES、UPDATE`` 权限
 - 端口使用：需要开放80端口的访问权限(80为TCA平台默认访问端口)，或调整 Web 服务默认的访问端口地址
 
-### 操作说明
+#### 操作说明
 
-#### 首次启动操作
+##### 首次启动操作
 
 1. 进入CodeAnalysis工作目录（例如``~/CodeAnalysis``)，以下路径均为目录内的相对路径
 2. 安装基础软件与部署TCA（可根据脚本选项确定是否要安装相关基础软件），执行
@@ -52,7 +52,7 @@
 3. 执行完成，无其他报错，即可登录：
     - TCA 平台初始登录账号是``CodeDog``，密码是``admin``，
 
-#### 更新操作
+##### 更新操作
 1. 更新代码
 2. 执行以下命令：
     - `bash ./quick_install.sh local install tca`：更新相关配置
@@ -68,7 +68,7 @@
     - `client`：初始化或更新TCA Client相关配置和数据
     - 不填参数，默认会执行`base`、`tca`相关操作
 
-#### 启动和停止服务
+##### 启动和停止服务
 
 - 启动所有服务：`bash ./quick_install.sh local start`
 - 启动Main相关服务：`bash ./quick_install.sh local start main`
@@ -82,9 +82,9 @@
 2. `local start`支持启动指定服务，如上述的启动Main服务，还支持`mysql/redis/main/analysis/file/login/scmproxy/nginx/all`
   - `mysql`和`redis`默认会使用`systemctl`进行启动，如果`systemctl`无法使用，则会直接使用`nohup`方式运行相关服务
 
-#### 检查服务运行状态
+##### 检查服务运行状态
 检查服务运行状态：`bash ./quick_install.sh local check`
   - 目前支持检查server与web，暂不支持client
 
-#### 获取服务输出日志
+##### 获取服务输出日志
 打印TCA Server各个服务的日志路径： `bash ./quick_install.sh local log`

@@ -108,12 +108,13 @@ export const en: SidebarConfig = {
   '/en/quickStarted/': [
     {
       text: '快速入门',
-      children: [
-        {
-          text: '快速入门',
-          link: '/zh/quickStarted/deploySever.md',
-        },
-      ],
+      link: '/zh/quickStarted/deploySever.md',
+      // children: [
+      //   {
+      //     text: '快速入门',
+      //     link: '/zh/quickStarted/deploySever.md',
+      //   },
+      // ],
     },
     {
       text: '依赖安装参考',
@@ -122,9 +123,9 @@ export const en: SidebarConfig = {
         '/en/quickStarted/references/install_python37_on_centos.md',
         '/en/quickStarted/references/install_python37_on_ubuntu.md',
         '/en/quickStarted/references/install_mysql_on_centos.md',
-        '/en/quickStarted/references/install_nginx_from_source.md',
-        '/en/quickStarted/references/install_redis_from_source.md',
         '/en/quickStarted/references/install_redis_on_centos.md',
+        '/en/quickStarted/references/install_redis_from_source.md',
+        '/en/quickStarted/references/install_nginx_from_source.md',
       ],
     },
     {

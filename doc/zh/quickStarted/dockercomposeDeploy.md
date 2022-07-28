@@ -1,4 +1,4 @@
-## Docker-Compose快速部署
+# Docker-Compose快速部署
 ### 部署对象
 Server、Web 与 Client
 
@@ -12,7 +12,7 @@ Server、Web 与 Client
 
 1. 进入CodeAnalysis工作目录（例如``~/CodeAnalysis``)，以下路径均为目录内的相对路径
 2. 执行命令：
-    - `bash ./quick_start.sh docker-compose deploy`：启动tca_server容器
+    - `bash ./quick_install.sh docker-compose deploy`：启动tca_server容器
 
 注意：通过Docker-Compose部署默认会在当前根目录下的挂载三个路径：
 
@@ -24,8 +24,8 @@ Server、Web 与 Client
 #### 更新操作
 1. 更新代码
 2. 执行以下命令：
-    - `bash ./quick_start.sh docker-compose build`：重新构建TCA相关镜像
-    - `bash ./quick_start.sh docker-compose deploy`: 重新部署TCA相关容器与初始化（或刷新数据）
+    - `bash ./quick_install.sh docker-compose build`：重新构建TCA相关镜像
+    - `bash ./quick_install.sh docker-compose deploy`: 重新部署TCA相关容器与初始化（或刷新数据）
 
 #### 运行操作
 如果已经在机器上执行过``docker-compose deploy``，并保留容器数据的，可以执行以下命令启动容器，继续运行TCA
