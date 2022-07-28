@@ -29,19 +29,20 @@ Server、Web 与 Client
     ```bash
     bash ./quick_install.sh docker deploy
     ```
-
-注：通过Docker部署默认会在当前根目录下的挂载三个路径：
-
+::: tip
+通过Docker部署默认会在当前根目录下的挂载三个路径：
 - `.docker_temp/logs`：容器内的`/var/log/tca/`，存放TCA平台的日输出文件；
 - `.docker_temp/data`：容器内的`/var/opt/tca/`, 存放TCA平台的服务数据，主要是Mariadb、Redis；
 - `.docker_temp/configs`：容器内的``/etc/tca``，存放TCA平台的配置文件，主要是`config.sh`
+:::
 
 #### 更新操作
 1. 更新代码
 2. 执行以下命令：
     - `TCA_IMAGE_BUILD=true ./quick_install.sh docker deploy`：重新构建并启动tca容器
-
-注：`TCA_IMAGE_BUILD=true`表示从本地构建TCA镜像运行
+::: tip
+`TCA_IMAGE_BUILD=true`表示从本地构建TCA镜像运行
+:::
 
 #### 运行容器
 如果已经在机器上执行过``docker deploy``，并保留容器数据的，可以执行以下命令启动容器，继续运行TCA
@@ -86,7 +87,6 @@ bash ./quick_install.sh docker stop
 ![开始分析](../../images/start_scan_02.png)
 
 ::: tip
-
 1. 用户可选择使用分析方案模板，或创建分析方案的方式，利用方案的分析配置进行代码分析。
 2. 点击确认时，平台会首先创建该代码库的分析方案，然后根据代码库分支、当前分析方案创建分支项目。
 :::
@@ -98,7 +98,10 @@ bash ./quick_install.sh docker stop
 - 更多分析方案配置可查阅[帮助文档-分析方案](../guide/分析方案/基础属性配置.md)
 
 ![creataAnalysePlan](../../images/creataAnalysePlan.png)
-注：运行环境请选择「Codedog_Linux」
+
+::: tip
+本次部署会默认启动运行环境为「Codedog_Linux」的客户端，若需扩展更多运行环境，详见客户端[常驻节点分析](../guide/客户端/常驻节点分析.md)  
+:::
 
 ![planPage](../../images/planPage.png)
 
@@ -108,10 +111,11 @@ bash ./quick_install.sh docker stop
 
 ![代码分析](../../images/start_scan_06.png)
 
-注：  
+::: tip 
 - TCA推荐使用`在线分析`，您可根据具体使用场景选择其一。
 - `在线分析`表示配置代码库链接后，TCA客户端拉取代码后进行分析；`客户端分析`在配置本地待扫描代码路径后，无需代码拉取直接分析本地代码。  
 - `在线分析`与`客户端分析`具体详情及配置参考[TCA客户端配置详情](../guide/客户端/配置详情.md)
+:::
 
 ## 查看分析历史
 
