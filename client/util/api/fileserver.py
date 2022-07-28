@@ -11,6 +11,7 @@
 
 import logging
 import hashlib
+import os
 
 from urllib.parse import urljoin
 from util import wrapper
@@ -50,8 +51,10 @@ class FileServer(object):
         构造函数
         :return:
         """
-        self._server_url = settings.FILE_SERVER['URL']
-        self._headers = {'Authorization': 'Token %s' % settings.FILE_SERVER['TOKEN']}
+        # 优先从环境变量读取文件服务器url和token，没有再使用默认值
+        self._server_url = os.getenv("FILE_SERVER_URL", settings.FILE_SERVER['URL'])
+        file_server_token = os.getenv("FILE_SERVER_TOKEN", settings.FILE_SERVER['TOKEN'])
+        self._headers = {'Authorization': 'Token %s' % file_server_token}
         self._proxies = None
 
     def modify_save_time(self, rel_dir, days):
@@ -75,7 +78,6 @@ class FileServer(object):
         :return: 上传到服务器后的完整url, 如果上传失败, 返回 None
         """
         file_url = urljoin(self._server_url, rel_url)
-        # logger.info(f">> file_url: {file_url}")
         HttpClient(self._server_url, rel_url, headers=headers, data=data, proxies=self._proxies).put()
         return file_url
 

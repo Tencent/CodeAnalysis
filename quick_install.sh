@@ -1,202 +1,88 @@
-#!/bin/sh
-# -*-*-*-*-*- 持续完善ING -*-*-*-*-*-
-# TCA Server与Web Docker-Compose 一键部署脚本
-# 1. 支持检测Docker和安装Docker
-# 2. 支持检测Docker状态，并进行启动
-# 3. 支持检测Docker-Compose和安装Docker-Compose
-# 4. 一键部署Server与Web服务
-# -*-*-*-*-*- 持续完善ING -*-*-*-*-*-
+#!/bin/bash
 
+CURRENT_SCRIPT_PATH=$(cd "$(dirname "${BASH_SOURCE[0]}")";pwd)
+TCA_PROJECT_PATH=${TCA_PROJECT_PATH:-"$CURRENT_SCRIPT_PATH"}
+TCA_SCRIPT_ROOT=${TCA_SCRIPT_ROOT:-"$TCA_PROJECT_PATH/scripts"}
 
-is_dry_run() {
-    if [ -z "$DRY_RUN" ]; then
-        return 1
-    else
-        return 0
-    fi
-}
+source $TCA_SCRIPT_ROOT/utils.sh
+source $TCA_SCRIPT_ROOT/base/install_docker.sh
 
-command_exists() {
-    command -v "$@" > /dev/null 2>&1
-}
+function tca_help() {
+    LOG_INFO "Support command:"
+    LOG_INFO "Arg1: Mode, support value: local, docker, docker-compose, help, default:'help'"
+    LOG_INFO "Arg2: Operate, details: "
+    LOG_INFO "      [local] deploy, install, start, stop, check, log, help. You can run ./quick_install.sh local help to view more details"
+    LOG_INFO "      [docker] deploy, start, stop"
+    LOG_INFO "      [docker-compose] deploy, start, stop, build"
+    LOG_INFO ""
+    LOG_INFO "Note:"
+    LOG_INFO " * Run with local: will help to you install python, mariadb/mysql, redis, nginx. [Only support linux]"
+    LOG_INFO " * Run with docker: will help you to install docker"
+    LOG_INFO " * Run with docker-compose: will help you to install docker and docker-compose"
+    LOG_INFO ""
+    LOG_INFO "example:"
+    LOG_INFO "    1. use current machine to deploy tca server, web and client"
+    LOG_INFO "        install TCA on local:                      ./quick_install.sh local install"
+    LOG_INFO "        install base tools on local:               ./quick_install.sh local install base"
+    LOG_INFO "        start TCA on local:                        ./quick_install.sh local start"
+    LOG_INFO "        start TCA main services on local:          ./quick_install.sh local start main"
+    LOG_INFO "        install and start TCA on local:            ./quick_install.sh local deploy"
+    LOG_INFO "        check TCA status on local:                 ./quick_install.sh local check"
+    LOG_INFO "        stop tca on local:                         ./quick_install.sh local stop"
+    LOG_INFO ""
+    LOG_INFO "    2. use docker to deploy tca server, web and client"
+    LOG_INFO "        run all services in a container:           ./quick_install.sh docker deploy" 
+    LOG_INFO "        start a stopped tca container:             ./quick_install.sh docker start" 
+    LOG_INFO "        stop a tca container:                      ./quick_install.sh docker stop" 
+    LOG_INFO ""
+    LOG_INFO "    3. use docker-compose to deploy tca server, web and client"
+    LOG_INFO "        run TCA with docker-compose:               ./quick_install.sh docker-compose deploy"
+    LOG_INFO "        restart TCA with docker-compose:           ./quick_install.sh docker-compose start  (equal: docker-compose up -d)"
+    LOG_INFO "        rebuild TCA images with docker-compose:    ./quick_install.sh docker-compose build"
 
-install_docker() {
-    echo "* Download docker and install"
-    set -x
-    $sh_c 'curl -fsSL https://get.docker.com -o get-docker.sh'
-    $sh_c 'sh ./get-docker.sh'
-    set +x
-    if is_dry_run; then
-        $sh_c 'rm ./get-docker.sh'
-    fi
-}
-
-check_docker_service() {
-    if [ -e /var/run/docker.sock ]; then
-        set -x
-        $sh_c 'docker version'
-        set +x
-        return 0
-    else
-        return 1
-    fi
-}
-
-start_docker_service() {
-    echo "* Start Docker service"
-    set -x 
-    $sh_c 'systemctl restart docker'
-    start_docker_exit_code=$?
-    set +x
-
-    if is_dry_run; then
-        return
-    fi
-
-    if [ "$start_docker_exit_code" = "0" ]; then
-        echo "* Start Docker success"
-    else
-        ehco "\033[33m!! Start Docker failed. Please check log\033[0m"
-        exit $start_docker_exit_code
-    fi
-}
-
-install_docker_compose() {
-    echo "# Download docker-compose and install"
-    set -x
-    docker_compose_url="https://github.com/docker/compose/releases/download/1.27.2/docker-compose-$(uname -s)-$(uname -m)"
-    $sh_c "curl -L ${docker_compose_url} -o /usr/local/bin/docker-compose"
-    $sh_c 'chmod +x /usr/local/bin/docker-compose'
-    retval=$?
-    set +x
-    if [ "$retval" -ne 0 ]; then
-        echo -e "\033[31m!! Download docker-compose failed.\033[0m"; 
-        echo -e "\033[33m* Please download manually, url: ${docker_compose_url}"
-        echo -e "   After download, copy to /usr/loca/bin/ and execute command: chmod +x /usr/local/bin/docker-compose"
-        echo -e "   docker-compose install Tutorial: https://docs.docker.com/compose/install/#install-compose-on-linux-systems \033[0m"
-        exit 1; 
-    fi
-}
-
-start_tca_service() {
-    set -x
-    $sh_c './compose_init.sh'
-    set +x
 }
 
 deploy() {
-    echo "-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-"
-    echo "         TCA deloy script          "
-    echo "-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-"
+    mode=$1
+    command=$2
+    options=$3
 
-    user="$(id -un 2>/dev/null || true)"
-
-    sh_c='sh -c'
-    if [ "$user" != 'root' ]; then
-        if command_exists sudo; then
-            sh_c='sudo -E sh -c'
-        elif command_exists su; then
-            sh_c='su -c'
-        else
-            echo -e "\033[31mError: this installer needs the ability to run commands as root."
-            echo -e " We are unable to find either \"sudo\" or \"su\" available to make this happen.\033[0m"
-            exit 1
-        fi
-    fi
-
-    if is_dry_run; then
-        sh_c="echo"
-    fi
-
-    echo
-    echo "###################################"
-    echo " 1. Check Docker                   "
-    echo "###################################"
-    echo
-
-    if command_exists docker; then
-        echo -e "\033[32m* This machine had installed Docker, continue to deploy. \033[0m\n"
-        ( set -x; sleep 2 )
-    else
-        echo -e "\033[33m!! This machine does not install Docker. Do you want to install by this script?\033[0m"
-        read -p " ?? Please enter:[Y/N] " result
-
-        case $result in
-            [yY])
-                echo "* Start to install Docker..."
-                ( set -x; sleep 2 )
-                install_docker
-                ;;
-            [nN])
-                echo -e "\033[33m!! Stop to deploy...\033[0m"
-                exit 1
-                ;;
-            *)
-                echo -e "\033[33m!! Invalid input. Stop to deploy...\033[0m"
-                exit 1
-                ;;
-        esac
-    fi
-
-    check_docker_service
-    if [ "$?" -ne 0 ] ; then
-        echo -e "\033[33m!! Docker service was not working. Do you want to start it by this script?\033[0m"        
-        read -p " ?? Please enter:[Y/N] " result
-
-        case $result in
-            [yY])
-                echo "* Start to run Docker service..."
-                ( set -x; sleep 2 )
-                start_docker_service
-                ;;
-            [nN])
-                echo -e "\033[33m!! Stop to deploy...\033[0m"
-                exit 1
-                ;;
-            *)
-                echo -e "\033[33m!! Invalid input. Stop to deploy...\033[0m"
-                exit 1
-                ;;
-        esac
-    fi
-
-    echo
-    echo "###################################"
-    echo " 2. Check Docker-Compose           "
-    echo "###################################"
-    echo
-
-    if command_exists docker-compose; then
-        echo -e "\033[32m* This machine had installed docker-compose, continue to deploy\n\033[0m"
-        ( set -x; sleep 2 )
-    else
-        echo -e "\033[33m !! This machine does not install docker-compose. Do you want to install by this script?\033[0m"
-        read -p " ?? Please enter:[Y/N] " result
-
-        case $result in
-            [yY])
-                echo " * Start to install docker-compose..."
-                ( set -x; sleep 5 )
-                install_docker_compose
-                ;;
-            [nN])
-                echo -e "\033[33m!! Stop to deploy...\033[0m"
-                exit 1
-                ;;
-            *)
-                echo -e "\033[33m!! Invalid input. Stop to deploy...\033[0m"
-                exit 1
-                ;;
-        esac
-    fi
-
-    echo 
-    echo "###################################"
-    echo " 3. Deploy TCA Server & Web        "
-    echo "###################################"
-    echo 
-    ( set -x; sleep 2 )
-    start_tca_service
+    LOG_INFO "===========================================================" 
+    LOG_INFO "                  _______    _____                         "
+    LOG_INFO "                 |__   __|  / ____|     /\                 "   
+    LOG_INFO "                    | |    | |         /  \                "  
+    LOG_INFO "                    | |    | |        / /\ \               "  
+    LOG_INFO "                    | |    | |____   / ____ \              "
+    LOG_INFO "                    |_|     \_____| /_/    \_\             "
+    LOG_INFO "                                                           "         
+    LOG_INFO "==========================================================="
+    case "$mode" in
+        local)
+            LOG_INFO "Start tca directly. [Only support Linux]"
+            source $TCA_SCRIPT_ROOT/deploy/tca_local.sh
+            tca_local_main "$2" "$3"
+        ;;
+        docker)
+            LOG_INFO "Start tca using docker"
+            source $TCA_SCRIPT_ROOT/deploy/tca_docker.sh
+            interactive_install_docker
+            tca_docker_main "$2"
+        ;;
+        docker-compose)
+            LOG_INFO "Start tca using docker-compose"
+            source $TCA_SCRIPT_ROOT/deploy/tca_docker_compose.sh
+            interactive_install_docker
+            interactive_install_docker_compose
+            tca_docker_compose_main "$2"
+        ;;
+        help)
+            tca_help
+        ;;
+        *)
+            LOG_WARN "Mode '$mode' not supported [Support mode: local、docker、docker-compose]"
+            tca_help
+        ;;
+    esac
 }
 
-deploy
+deploy "$1" "$2" "$3"

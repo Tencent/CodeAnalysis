@@ -52,7 +52,7 @@ schema_view = get_schema_view(
     ),
     url=settings.SWAGGER_SETTINGS["API_URL"],
     patterns=[
-        path("api/orgs/<str:org_sid>/teams/", include("apps.codeproj.api_urls.v1_org")),
+        path("api/orgs/<str:org_sid>/", include("apps.codeproj.api_urls.v1_org")),
         path("api/conf/", include("apps.scan_conf.api_urls.v1")),
 
     ],
@@ -79,7 +79,7 @@ urlpatterns += [
     path("api/conf/", include("apps.scan_conf.api_urls.v1")),
     path("api/jobs/", include("apps.job.api_urls.v1_job")),
     path("api/nodes/", include("apps.nodemgr.api_urls.v1")),
-    path("api/orgs/<str:org_sid>/teams/", include("apps.codeproj.api_urls.v1_org")),
+    path("api/orgs/<str:org_sid>/", include("apps.codeproj.api_urls.v1_org")),
 
     # V2 APIs
     path("api/v2/authen/", include("apps.authen.api_urls.v2")),

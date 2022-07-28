@@ -116,6 +116,16 @@ class RepositorySchemeDefaultPermission(CodeDogUserPermission):
     > 需团队验证通过，当前用户如果是团队管理员、项目管理员、代码库创建者或管理员、扫描方案创建者可操作，项目普通成员可查看
     """
 
+    def has_permission(self, request, view):
+        result = super(RepositorySchemeDefaultPermission, self).has_permission(request, view)
+        if not result:
+            return False
+        org_sid = view.kwargs.get("org_sid")
+        team_name = view.kwargs.get("team_name")
+        repo_id = view.kwargs.get("repo_id")
+        scheme_id = view.kwargs.get("scheme_id")
+        return self.has_repo_scheme_permission(request, org_sid, team_name, repo_id, scheme_id)
+
     def has_repo_scheme_permission(self, request, org_sid, team_name, repo_id, scheme_id):
         """代码库扫描方案默认权限判断
         """
@@ -133,16 +143,6 @@ class RepositorySchemeDefaultPermission(CodeDogUserPermission):
                or request.user.has_perm(Repository.PermissionNameEnum.CHANGE_REPO_PERM, scheme.repo) \
                or request.user.has_perm(ProjectTeam.PermissionNameEnum.CHANGE_TEAM_PERM, project_team) \
                or request.user.has_perm(Organization.PermissionNameEnum.CHANGE_ORG_PERM, project_team.organization)
-
-    def has_permission(self, request, view):
-        result = super(RepositorySchemeDefaultPermission, self).has_permission(request, view)
-        if not result:
-            return False
-        org_sid = view.kwargs.get("org_sid")
-        team_name = view.kwargs.get("team_name")
-        repo_id = view.kwargs.get("repo_id")
-        scheme_id = view.kwargs.get("scheme_id")
-        return self.has_repo_scheme_permission(request, org_sid, team_name, repo_id, scheme_id)
 
 
 class RepositoryProjectDefaultPermission(CodeDogUserPermission):
@@ -250,13 +250,12 @@ class SchemeDefaultPermission(RepositorySchemeDefaultPermission):
         if not scheme:
             scheme = get_object_or_404(ScanScheme, id=scheme_id, repo__isnull=True, scheme_key='org_%s' % org_sid)
         return self.is_check_adminuser(request.user) \
-               or (request.method in permissions.SAFE_METHODS and
-                   ScanSchemePermManager.check_user_view_perm(scheme, request.user, org_sid)) \
-               or (scheme.scheme_key != ScanScheme.SchemeKey.PUBLIC and
-                   ScanSchemePermManager.check_user_edit_manager_perm(scheme, request.user))
+               or (request.method in permissions.SAFE_METHODS
+                   and ScanSchemePermManager.check_user_view_perm(scheme, request.user, org_sid)) \
+               or (scheme.scheme_key != ScanScheme.SchemeKey.PUBLIC
+                   and ScanSchemePermManager.check_user_edit_manager_perm(scheme, request.user))
 
     def has_permission(self, request, view):
-        # result = super(SchemeDefaultPermission, self).super().has_permission(request, view)
         result = CodeDogUserPermission.has_permission(self, request, view)
         if not result:
             return False
