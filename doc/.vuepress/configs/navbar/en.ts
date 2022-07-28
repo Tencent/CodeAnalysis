@@ -3,7 +3,7 @@ import type { NavbarConfig } from '@vuepress/theme-default'
 export const en: NavbarConfig = [
   {
     text: '快速入门',
-    link: '/en/quickStarted/intro.md',
+    link: '/en/quickStarted/deploySever.md',
   },
   {
     text: '帮助文档',

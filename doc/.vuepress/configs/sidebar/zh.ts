@@ -108,17 +108,13 @@ export const zh: SidebarConfig = {
   '/zh/quickStarted/': [
     {
       text: '快速入门',
-      children: [
-        {
-          text: '概述',
-          link: '/zh/quickStarted/intro.md',
-        },
-        '/zh/quickStarted/deploySever.md',
-        '/zh/quickStarted/initRepo.md',
-        '/zh/quickStarted/deployClient.md',
-        '/zh/quickStarted/runProject.md',
-        '/zh/quickStarted/FAQ.md',
-      ],
+      link: '/zh/quickStarted/deploySever.md',
+      // children: [
+      //   {
+      //     text: '快速入门',
+      //     link: '/zh/quickStarted/deploySever.md',
+      //   },
+      // ],
     },
     {
       text: '依赖安装参考',
@@ -127,16 +123,20 @@ export const zh: SidebarConfig = {
         '/zh/quickStarted/references/install_python37_on_centos.md',
         '/zh/quickStarted/references/install_python37_on_ubuntu.md',
         '/zh/quickStarted/references/install_mysql_on_centos.md',
-        '/zh/quickStarted/references/install_nginx_from_source.md',
-        '/zh/quickStarted/references/install_redis_from_source.md',
         '/zh/quickStarted/references/install_redis_on_centos.md',
+        '/zh/quickStarted/references/install_redis_from_source.md',
+        '/zh/quickStarted/references/install_nginx_from_source.md',
       ],
     },
     {
       text: '其他',
       // collapsible: true,
       children: [
+        '/zh/quickStarted/intro.md',
         '/zh/quickStarted/tools.md',
+        '/zh/quickStarted/FAQ.md',
+        '/zh/quickStarted/codeDeploy.md',
+        '/zh/quickStarted/dockercomposeDeploy.md',
       ],
     },
   ],
