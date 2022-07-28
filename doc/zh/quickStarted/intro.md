@@ -9,11 +9,11 @@
 
 拉取 [代码库](https://github.com/Tencent/CodeAnalysis) 后，您可以通过以下三种方式部署腾讯云代码分析平台：
 
-- [通过docker部署](./deployServer.md)
+- [通过 Docker 部署](./deployServer.md#通过docker)
 
-- [通过源代码](./deploySever.md#通过源代码)
+- [通过源代码](./codeDeploy.md#通过源代码)
 
-- [通过 Docker-Compose 部署](./deploySever.md#通过docker-compose)
+- [通过 Docker-Compose 部署](./dockercomposeDeploy.md#通过docker-compose)
 
 ### 创建首个代码分析项目
 

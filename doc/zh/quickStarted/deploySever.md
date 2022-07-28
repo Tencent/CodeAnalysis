@@ -1,6 +1,6 @@
 # 部署 TCA
-TCA提供部署脚本，支持一键式快速部署server、web、client。  
-脚本共提供三种部署方式：docker部署(推荐)、[docker-compose部署](./dockercomposeDeploy.md)、[源码部署](./codeDeploy.md)，可根据您的具体使用场景任意选择其一进行部署。
+TCA提供部署脚本，支持一键式快速部署Server、Web、Client。  
+脚本共提供三种部署方式：Docker部署(推荐)、[Docker-Compose部署](./dockercomposeDeploy.md)、[源码部署](./codeDeploy.md)，可根据您的具体使用场景任意选择其一进行部署。
 
 ## Docker快速部署
 
