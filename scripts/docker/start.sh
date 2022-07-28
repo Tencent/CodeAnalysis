@@ -70,6 +70,7 @@ function start_db_and_init_data() {
 
 function stop_db() {
     force_kill "mariadbd\|mysqld"
+    sleep 1
 }
 
 start_db_and_init_data
