@@ -15,27 +15,76 @@ source $TCA_SCRIPT_ROOT/web/init.sh
 source $TCA_SCRIPT_ROOT/server/start.sh
 source $TCA_SCRIPT_ROOT/server/stop.sh
 source $TCA_SCRIPT_ROOT/server/healthcheck.sh
+source $TCA_SCRIPT_ROOT/client/init.sh
+source $TCA_SCRIPT_ROOT/client/start.sh
+source $TCA_SCRIPT_ROOT/client/stop.sh
 
 
 function tca_local_install() {
-    LOG_INFO "1. install base software: Python/Redis/Mariadb(or MySQL)/Nginx"
-    interactive_install_python
-    interactive_install_redis
-    interactive_install_mariadb
-    interactive_install_nginx
+    service=$1
+    case $service in
+        base)
+            LOG_INFO "Install base software: Python3.7, Redis, Mariadb(or MySQL), Nginx"
+            interactive_install_python
+            interactive_install_redis
+            interactive_install_mariadb
+            interactive_install_nginx
+        ;;
+        server)
+            LOG_INFO "Init tca server config"
+            init_server_config
+            init_server_db_and_data
+        ;;
+        web)
+            LOG_INFO "Init tca web config"
+            init_web_config
+        ;;
+        client)
+            LOG_INFO "Init tca client config"
+            init_client_config
+        ;;
+        tca)
+            LOG_INFO "Init tca server config"
+            init_server_config
+            init_server_db_and_data
+            LOG_INFO "Init tca web config"
+            init_web_config
+            LOG_INFO "Init tca client config"
+            init_client_config
+        ;;
+        *)
+            LOG_INFO "1. Install base software: Python, Redis, Mariadb(or MySQL), Nginx"
+            interactive_install_python
+            interactive_install_redis
+            interactive_install_mariadb
+            interactive_install_nginx
 
-    LOG_INFO "2. init tca server config"
-    init_server_config
-    init_server_db_and_data
+            LOG_INFO "2. Init tca server config"
+            init_server_config
+            init_server_db_and_data
 
-    LOG_INFO "3. init tca web config"
-    init_web_config
+            LOG_INFO "3. Init tca web config"
+            init_web_config
+
+            LOG_INFO "4. Init tca client config"
+            init_client_config
+        ;;
+    esac
 }
 
 function tca_local_start() {
     LOG_INFO "start tca server"
     service=$1
     case "$service" in
+        mysql)
+            restart_mariadb
+        ;;
+        mariadb)
+            restart_mariadb
+        ;;
+        redis)
+            restart_redis
+        ;;
         main)
             restart_main
         ;;
@@ -54,8 +103,12 @@ function tca_local_start() {
         nginx)
             start_nginx
         ;;
+        client)
+            start_client
+        ;;
         *)
             start_tca_server
+            start_client
         ;;
     esac
 }
@@ -83,22 +136,27 @@ function tca_local_stop() {
         nginx)
             stop_nginx
         ;;
+        client)
+            stop_client
+        ;;
         *)
             stop_tca_server
+            stop_client
         ;;
     esac
 }
 
 function tca_local_help() {
+    LOG_INFO "format: ./quick_install.sh local command"
+    LOG_INFO "example: ./quick_install.sh local deploy"
     LOG_INFO "Support command:"
     LOG_INFO "1. deploy : install base sofeware(Python/MySQL/Redis/Nginx), init tca server&web and start all service status"
     LOG_INFO "2. install: install base sofeware(Python/MySQL/Redis/Nginx) and init tca server&web"
-    LOG_INFO "3. start  : start service, params: main/analysis/file/login/scmproxy/nginx/all"
+    LOG_INFO "3. start  : start service, params: mysql/redis/main/analysis/file/login/scmproxy/nginx/all"
     LOG_INFO "4. stop   : stop service, params: main/analysis/file/login/scmproxy/nginx/all"
     LOG_INFO "5. check  : check all serivces status."
     LOG_INFO "6. log    : print all serivces log path."
     LOG_INFO "7. help   : print script document."
-
 }
 
 function tca_local_main() {
@@ -109,10 +167,12 @@ function tca_local_main() {
     case "$command" in
         deploy)
             tca_local_install
-            tca_local_start $service
+            tca_local_start
+            sleep 2
+            check_tca_local_status
         ;;
         install)
-            tca_local_install
+            tca_local_install $service
         ;;
         start)
             tca_local_start $service
@@ -131,7 +191,8 @@ function tca_local_main() {
             tca_local_help
         ;;
         *)
-            LOG_ERROR "Command:'$command' not supported. [Support command: install/start/stop/check/log/help]"
+            LOG_WARN "Command:'$command' not supported. [Support command: deploy/install/start/stop/check/log/help]"
+            tca_local_help
             exit 1
         ;;
     esac

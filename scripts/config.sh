@@ -3,7 +3,7 @@
 # 数据库配置，默认MySQL端口号为3306
 export MYSQL_HOST=${MYSQL_HOST:-127.0.0.1}
 export MYSQL_PORT=${MYSQL_PORT:-3306}
-export MYSQL_USER=${MYSQL_USER:-root}
+export MYSQL_USER=${MYSQL_USER:-tca}
 export MYSQL_PASSWORD=${MYSQL_PASSWORD:-"TCA!@#2021"}
 
 # Redis配置，默认Redis端口号为6379
@@ -14,10 +14,10 @@ export REDIS_PASSWD=${REDIS_PASSWD:-"tca2022"}
 
 # -*-*-*- 以下配置均提供默认值，可以根据需要进行调整 -*-*-*-
 # Nginx配置
-export NGINX_PATH=/etc/nginx
-export NGINX_CONF_PATH=/etc/nginx/conf.d
-export NGINX_LOG_PATH=/var/log/nginx
-export TCA_WEB_DEPLOY_PATH=/usr/share/nginx/www
+export NGINX_PATH=${NGINX_PATH:-"/etc/nginx"}
+export NGINX_CONF_PATH=${NGINX_CONF_PATH:-"/etc/nginx/conf.d"}
+export NGINX_LOG_PATH=${NGINX_LOG_PATH:-"/var/log/nginx"}
+export TCA_WEB_DEPLOY_PATH=${TCA_WEB_DEPLOY_PATH:-"/usr/share/nginx/www"}
 
 # Web配置
 # TCA Web配置服务地址
@@ -26,6 +26,10 @@ export TCA_WEB_HOST=${TCA_WEB_HOST:-"0.0.0.0"}
 export TCA_WEB_PORT=${TCA_WEB_PORT:-"80"}
 # TCA Server后端地址
 export TCA_SERVER_ADDR=${TCA_SERVER_ADDR:-"127.0.0.1:8000"}
+
+# Client配置
+export CODEDOG_SERVER=${CODEDOG_SERVER:-"http://$TCA_WEB_HOST/server/main/"}
+export FILE_SERVER_URL=${FILE_SERVER_URL:-"http://$TCA_WEB_HOST/server/files/"}
 
 # Main工程配置
 ## 框架配置
@@ -117,7 +121,7 @@ export FILE_DB_PORT=$MYSQL_PORT
 export FILE_SENTRY_DSN=
 
 ## 上报文件存储位置
-export FILE_STORAGE_DIR='data/file/'
+export FILE_STORAGE_DIR=${FILE_STORAGE_DIR:-'data/file/'}
 
 ## MinIO服务配置
 export FILE_MINIO_ENTRYPOINT=

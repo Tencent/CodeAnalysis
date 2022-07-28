@@ -252,7 +252,7 @@ class CheckPackageLoadManager(object):
                         break
                     checkpackage_json = checkpackage_json_list[i_idx+j_idx]
                     logger.info('--> [%s/%s], checkpackage name: %s' % (
-                        checkpackage_count, index+1, checkpackage_json["name"]))
+                        index+1, checkpackage_count, checkpackage_json["name"]))
                     task = t_thread.submit(cls.loadpkg, checkpackage_json)
                     all_task.append(task)
                 for future in as_completed(all_task):

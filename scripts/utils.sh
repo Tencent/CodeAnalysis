@@ -32,20 +32,24 @@ function command_exists() {
 	command -v "$@" > /dev/null 2>&1
 }
 
-# 安装基础软件：wget、curl、unzip
+function command_normal() {
+	"$@" > /dev/null 2>&1
+}
+
+# 安装基础软件：wget、curl、unzip git subversion
 function install_base() {
 	LINUX_OS=$( get_linux_os )
 
 	case "$LINUX_OS" in
-        centos|rhel|sles|tlinux)
-            yum install -y wget curl unzip
+        centos|rhel|sles|tlinux|tencentos)
+            yum install -q -y wget curl unzip git subversion >/dev/null
         ;;
         ubuntu|debian|raspbian)
-            apt install -y wget curl unzip
+            apt-get install -qq -y wget curl unzip git subversion >/dev/null
         ;;
         *)
-            LOG_ERROR "$LINUX_OS not supported."
-            exit 1
+            LOG_WARN "$LINUX_OS default using yum"
+            yum install -q -y wget curl unzip git subversion >/dev/null || error_exit "$LINUX_OS install base failed"
         ;;
     esac
 }
@@ -71,8 +75,17 @@ function check_target_process_exist() {
 function kill_by_pid_file() {
     pid_file=$1
     if [ -f "$pid_file" ]; then
-        kill -15 `cat $pid_file` >/dev/null 2>&1 
+        kill -15 `cat $pid_file` &>/dev/null
     fi
+}
+
+function normal_kill() {
+    proc_name=$1
+    pids=$( get_target_process "$proc_name" )
+    if [ ! -n "$pids" ]; then  
+        return 0  
+    fi
+    kill $pids &>/dev/null
 }
 
 function force_kill() {
@@ -81,7 +94,50 @@ function force_kill() {
     if [ ! -n "$pids" ]; then  
         return 0  
     fi
-    kill -9 $pids
+    kill -9 $pids &>/dev/null
+}
+
+### 检验软链文件是否存在，存在则询问是否删除 ###
+function check_ln_file() {
+    file=$1
+    new_soft_link=$2
+    if [ -f $file ]; then
+        LOG_INFO "$file need to be removed, TCA will replaced it with new soft link file: $new_soft_link"
+        read -p "please enter: [Y/N]" result
+        case $result in
+            [Yy])
+                rm -f $file
+            ;;
+            [Nn])
+                LOG_WARN "soft link create failed."
+            ;;
+            *)
+                LOG_ERROR "Invalid input. Stop."
+                exit 1
+            ;;
+        esac
+    fi
+    
+}
+
+### 核验pip版本 ###
+### 保证使用python3.7对应的pip安装依赖 ###
+function use_right_pip() {
+    params=$1
+    neccessary_pip_py_verson="3.7"
+    if command_exists pip; then
+        pip_py_version=$(pip -V |awk '{print $6}' |cut -f 1 -d ')')
+        if [ $pip_py_version == $neccessary_pip_py_verson ]; then
+            pip install $params
+        fi
+    elif command_exists pip3; then
+        pip3_py_version=$(pip3 -V |awk '{print $6}' |cut -f 1 -d ')')
+        if [ $pip3_py_version == $neccessary_pip_py_verson ]; then
+            pip3 install $params
+        fi
+    else
+        error_exit "Please make sure pip's python version is 3.7! otherwise TCA CAN'T be used"
+    fi
 }
 
 #--------------------------------------------
@@ -92,13 +148,13 @@ function force_kill() {
 function pre_check() {
     root_check
     os_digits_check
-    os_version_check
+    # os_version_check
     http_proxy_check
 }
 
 ### 校验是否为root权限 ### 
 function root_check() {
-    if [ $(whoami) != "root"]; then
+    if [ "$(whoami)" != "root" ]; then
         error_exit "Please use TCA init script under root privilege."
     fi
 }
@@ -116,16 +172,16 @@ function os_digits_check() {
 ### 若其他系统版本不可用，可至https://github.com/Tencent/CodeAnalysis发出issue ###
 function os_version_check() {
     if [ -s "/etc/redhat-release" ]; then
-        centos_version_check=$(cat /etc/redhat-release | grep -iE ' 1.|2.|3.|4.|5.|6.' | grep -iE 'centos|Red Hat')
-        if [ "$(centos_version_check)" ]; then
-            error_exit "version of centos must be 7. or above, otherwise TCA CAN'T be used."
+        centos_version=$(cat /etc/redhat-release | grep -iE 'release [1-7]\.' | grep -iE 'centos|Red Hat')
+        if [ "$centos_version" ]; then
+            LOG_WARN "current centOS version is $centos_version, we recommend you use 7 or above."
         fi
     elif [ -s "/etc/issue" ]; then
-        ubuntu_version=$(cat /etc/issue|grep Ubuntu|awk '{print $2}'|cut -f 1 -d '.')
+        ubuntu_version=$(cat /etc/issue |grep Ubuntu |awk '{print $2}')
         min_version="18.03"
-        if [ "$(ubuntu_version)" ]; then
-            if [[ $ubuntu_version > $min_version ]]; then
-                error_exit "version of ubuntu must be 18.04 or above, otherwise TCA CAN'T be used."
+        if [ "$ubuntu_version" ]; then
+            if [[ $ubuntu_version < $min_version ]]; then
+                LOG_WARN "current Ubuntu version is $ubuntu_version, we recommend you use 18.04 or above."
             fi
         fi
     fi
@@ -133,11 +189,11 @@ function os_version_check() {
 
 ### 监测是否设置网络代理 ###
 function http_proxy_check() {
-    http_proxy=$(export |grep HTTP_PROXY)
-    https_proxy=$(export |grep HTTPS_PROXY)
-    no_proxy=$(export |grep no_proxy)
+    http_proxy=$HTTP_PROXY
+    https_proxy=$HTTPS_PROXY
+    no_proxy=$no_proxy
     if [ $http_proxy ] || [ $https_proxy ]; then
-        if [[ $no_proxy == *"127.0.0.1"* ]]; then
+        if [[ $no_proxy != *"127.0.0.1"* ]]; then
             LOG_INFO "TCA script will unset HTTP_PROXY/HTTPS_PROXY or set NO_PROXY，otherwise TCA will be unavaliable."
             LOG_INFO "1. unset HTTP_PROXY/HTTPS_PROXY. <please note after unset, your node may lose access to Extranet> "
             LOG_INFO "2. set NO_PROXY=127.0.0.1, cause TCA server is deployed on http:/127.0.0.1:8000/"
@@ -158,6 +214,7 @@ function http_proxy_check() {
                 [3])
                     LOG_INFO "do nothing about PROXY setting"
                     return 1
+                    ;;
                 *)
                     LOG_ERROR "Invalid input. Stop."
                     exit 1

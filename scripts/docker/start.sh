@@ -8,6 +8,8 @@ TCA_INIT_DATA=${TCA_INIT_DATA:-"false"}
 export DAEMON=False
 export SERVER_ACCESS_LOG="-"
 export SERVER_ERROR_LOG="-"
+export FILE_STORAGE_DIR="/var/opt/tca/files/"
+export REDIS_LOG_PATH="/var/log/tca/redis/redis.log"
 
 source $TCA_SCRIPT_ROOT/utils.sh
 source $TCA_SCRIPT_ROOT/config.sh
@@ -19,14 +21,28 @@ source $TCA_SCRIPT_ROOT/web/init.sh
 
 function init_directory() {
     mkdir -p /var/log/tca/supervisord
+    mkdir -p /var/log/tca/servers/main
+    mkdir -p /var/log/tca/servers/analysis
+    mkdir -p /var/log/tca/servers/login
+    mkdir -p /var/log/tca/servers/file
+    mkdir -p /var/log/tca/servers/scmproxy
+    mkdir -p /var/log/tca/nginx
     mkdir -p /var/log/tca/mariadb
     mkdir -p /var/opt/tca/mariadb
     mkdir -p /var/opt/tca/redis
     mkdir -p /var/log/tca/redis
-    chown -R mysql:mysql /var/log/tca/mariadb /var/opt/tca/mariadb
+    mkdir -p /var/log/tca/client
+    mkdir -p /var/opt/tca/files
+    mkdir -p /var/opt/tca/tools
+    mkdir -p /run/mysqld/
+    mkdir -p /etc/tca/
+    chown -R mysql:mysql /var/log/tca/mariadb /var/opt/tca/mariadb /run/mysqld
 
-    if [ ! -h "/var/log/tca/servers" ]; then
-        ln -s /CodeAnalysis/server/logs /var/log/tca/servers
+    if [ -d "/CodeAnalysis/tools" ]; then
+        mv /CodeAnalysis/tools /var/opt/tca/tools
+        ln -s /var/opt/tca/tools /CodeAnalysis/tools
+    else
+        ln -s /var/opt/tca/tools /CodeAnalysis/tools
     fi
 
     if [ ! -f "/etc/tca/config.sh" ]; then
@@ -58,4 +74,14 @@ function stop_db() {
 
 start_db_and_init_data
 stop_db
+LOG_INFO "===================================TCA启动说明==================================="
+LOG_INFO "TCA服务已经基于Docker启动，可以观察下方日志，每个服务都进入 'RUNNING state'，说明服务都启动成功"
+LOG_INFO "TCA访问入口：http://127.0.0.1"
+LOG_INFO "TCA服务状态监控平台：http://127.0.0.1:9001"
+LOG_INFO "TCA容器名称: tca-services"
+LOG_INFO ""
+LOG_INFO "注意："
+LOG_INFO " - TCA首次启动默认使用前台进程模式运行"
+LOG_INFO " - 如果需要后台模式运行，可以关闭当前进程，然后再执行 ./quick_install.sh docker start，则会以后台模式运行"
+LOG_INFO "===================================TCA启动说明==================================="
 supervisord -n -c /CodeAnalysis/scripts/docker/supervisord.conf

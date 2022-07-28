@@ -28,16 +28,24 @@ function check_docker_compose() {
 }
 
 function check_docker_service() {
-    if [ -e /var/run/docker.sock ]; then
-        docker version
-        return 0
+    docker ps -q &>/dev/null
+    if [ "$?" == "0" ]; then
+        ret="true"
     else
-        return 1
+        ret="false"
     fi
+    echo "$ret"
 }
 
 function start_docker_service() {
     LOG_INFO "Start Docker service"
+    
+    ret=$( check_docker_service )
+    if [ "$ret" == "true" ]; then
+        LOG_INFO "* Docker had started"
+        return 0
+    fi
+
     systemctl restart docker
     start_docker_exit_code=$?
 
@@ -90,11 +98,18 @@ function quiet_install_docker_compose() {
 
 function interactive_install_docker() {
     ret=$( check_docker )
+    status=$( check_docker_service )
     if [ "$ret" == "true" ]; then
-        return 0
+        if [ "$status" == "true" ]; then
+            return 0
+        else
+            start_docker_service || error_exit "Start docker service failed"
+            sleep 5
+            return 0
+        fi
     fi
-
-    LOG_INFO "Do you want to install docker by this script?"
+    LOG_WARN "Deploying TCA with docker/docker-compose depends on docker. Current machine has not installed docker."
+    LOG_INFO "Do you want to install [Docker] by this script?"
     read -p "Please enter:[Y/N]" result
     case $result in
             [yY])
@@ -118,6 +133,7 @@ function interactive_install_docker_compose() {
         return 0
     fi
 
+    LOG_WARN "Deploying TCA with docker/docker-compose depends on docker. Current machine has not installed docker-compose."
     LOG_INFO "Do you want to install docker-compose by this script?"
     read -p "Please enter:[Y/N]" result
     case $result in

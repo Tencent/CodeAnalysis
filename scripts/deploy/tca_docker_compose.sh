@@ -57,7 +57,7 @@ function set_image_with_arch() {
     if [ $system_os == "Darwin" ]; then
         sed_command="sed -i.bak -E"
     else
-        sed_command='sed -ir'
+        sed_command="sed -ir -E"
     fi
     current_arch=$( uname -m )
     if [ $current_arch == "aarch64" ] || [ $current_arch == "arm64" ]; then
@@ -66,7 +66,6 @@ function set_image_with_arch() {
     else
         $sed_command 's/^([[:space:]]*)\#[[:space:]]*(image: mysql:5)/\1\2/' $TCA_PROJECT_PATH/docker-compose.yml
         $sed_command 's/^([[:space:]]*)[[:space:]]*(image: mariadb:10)/\1\# \2/' $TCA_PROJECT_PATH/docker-compose.yml
-
     fi
 }
 
@@ -132,7 +131,11 @@ function start_all_services() {
     docker-compose up -d
 }
 
-function tca_docker_compose_main() {
+function stop_all_services() {
+    docker-compose stop
+}
+
+function deploy_all_services() {
     cd $TCA_PROJECT_PATH
     set_image_with_arch
     start_db || error_exit "start db failed"
@@ -144,3 +147,30 @@ function tca_docker_compose_main() {
     start_all_services
     tca_introduction
 }
+
+
+function tca_docker_compose_main() {
+    command=$1
+    case $command in
+        deploy)
+            LOG_INFO "Deploy tca docker-compose"
+            deploy_all_services
+        ;;
+        start)
+            LOG_INFO "Start tca docker-compose"
+            start_all_services
+        ;;
+        stop)
+            LOG_INFO "Stop tca docker-compose"
+            stop_all_services
+        ;;
+        build)
+            LOG_INFO "Build tca image"
+            docker-compose build main-server analysis-server file-server login-server scmproxy client
+        ;;
+        *)
+            LOG_ERROR "'$command' not support."
+            exit 1
+    esac
+}
+
