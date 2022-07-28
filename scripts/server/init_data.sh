@@ -22,8 +22,14 @@ function check_redis_config() {
 }
 
 function create_database() {
-    LOG_INFO "[TCAServer] Init db, create database..."
+    LOG_INFO "[TCAServer] Init db, create database...[DB: MYSQL_HOST=$MYSQL_HOST, MYSQL_PORT=$MYSQL_PORT, MYSQL_USER=$MYSQL_USER]"
     mysql -u$MYSQL_USER -p$MYSQL_PASSWORD -h$MYSQL_HOST -P$MYSQL_PORT < $TCA_SERVER_PATH/sql/init.sql
+    if [ "$?" != "0" ]; then
+        LOG_ERROR "Create TCA database failed."
+        LOG_ERROR "请检查连接数据库的HOST、PORT、USER、PORT是否准确，或配置的USER是否有权限创建DB"
+        LOG_ERROR "可在执行脚本之前设置 MYSQL_HOST、MYSQL_PORT、MYSQL_USER、MYSQL_PASSWORD 环境变量或直接调整 scripts/config.sh 脚本中相关变量"
+        exit 1
+    fi
 }
 
 function init_main_db() {
