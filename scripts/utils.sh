@@ -148,7 +148,7 @@ function use_right_pip() {
 function pre_check() {
     root_check
     os_digits_check
-    # os_version_check
+    os_version_check
     http_proxy_check
 }
 
