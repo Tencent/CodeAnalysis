@@ -5,6 +5,13 @@ ENV MYSQL_PASSWORD=TCA!@#2021
 
 ARG EXTRA_TOOLS="gnupg curl wget jq net-tools procps python3-dev default-libmysqlclient-dev locales inotify-tools gcc subversion git telnet iputils-ping vim openssh-client redis nginx unzip"
 
+# RUN mv /etc/apt/sources.list /etc/apt/sources.list.bak && \
+#     && echo 'deb http://mirrors.tencent.com/debian/ bullseye main non-free contrib' > /etc/apt/sources.list \
+#     && echo 'deb http://mirrors.tencent.com/debian/ bullseye-updates main non-free contrib' >> /etc/apt/sources.list \
+#     && echo 'deb http://mirrors.tencent.com/debian-security bullseye-security main non-free contrib' >> /etc/apt/sources.list \
+#     && mkdir -p ~/.pip/ \
+#     && echo "[global]\nindex-url = https://mirrors.cloud.tencent.com/pypi/simple\n[install]\ntrusted-host=mirrors.cloud.tencent.com" > ~/.pip/pip.conf
+
 RUN set -ex && cd / \
     && apt-get update \
     && apt-get install -y --no-install-recommends $EXTRA_TOOLS \
@@ -18,10 +25,6 @@ RUN set -ex && cd / \
     && echo "LANG=zh_CN.UTF-8" > /etc/locale.conf \
     && locale-gen \
     && ln -sf /usr/share/zoneinfo/Asia/Hong_Kong /etc/localtime
-
-# Add pypi tencent mirror
-# RUN mkdir -p ~/.pip/ \
-#     && echo "[global]\nindex-url = https://mirrors.cloud.tencent.com/pypi/simple\n[install]\ntrusted-host=mirrors.cloud.tencent.com" > ~/.pip/pip.conf
 
 RUN pip install -U setuptools pip \
     && pip install gunicorn==20.1.0 celery==5.2.3 supervisor==4.2.4 
