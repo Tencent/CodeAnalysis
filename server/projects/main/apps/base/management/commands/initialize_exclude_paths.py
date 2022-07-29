@@ -14,6 +14,7 @@
 
 import logging
 
+from django.conf import settings
 from django.contrib.auth.models import User
 from django.core.management.base import BaseCommand
 
@@ -144,7 +145,7 @@ class Command(BaseCommand):
         self.stdout.write('新增默认过滤路径...')
         default_paths = []
         # 获取用户
-        user, _ = User.objects.get_or_create(username="CodeDog")
+        user, _ = User.objects.get_or_create(username=settings.DEFAULT_USERNAME)
         for path in EXCLUDE_PATHS:
             default_paths.append(DefaultScanPath(
                 dir_path=path, path_type=DefaultScanPath.PathTypeEnum.REGULAR, creator=user))
