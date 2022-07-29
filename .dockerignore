@@ -1,0 +1,34 @@
+# Python
+.__pycache__
+__pycache__
+
+
+# MacOS
+.DS_Store
+
+
+# PyCharm IDEA
+.idea
+
+
+# VSCode
+.vscode
+
+
+# git
+.git
+
+
+# SVN
+.svn
+
+
+# Cython
+*.pyx
+*.c
+
+
+# Other
+.docker_data
+.docker_temp
+
