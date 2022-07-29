@@ -61,7 +61,7 @@ const NodeTaskModal = ({ visible, nodeId, onCancel }: NodeTaskModalProps) => {
   return (
     <Modal
       forceRender
-      title={t('批量配置节点进程')}
+      title={t('执行任务列表')}
       visible={visible}
       footer={null}
       onCancel={onCancel}
