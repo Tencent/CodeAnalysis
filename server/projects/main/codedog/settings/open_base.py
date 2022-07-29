@@ -231,6 +231,8 @@ REST_FRAMEWORK = {
 # CodeDog开关配置
 LOGIN_USER_TYPE = "codedog_user"
 CODEDOG_USER_CHECK = False
+DEFAULT_USERNAME = "CodeDog"
+DEFAULT_ORIGIN_ID = "CodeDog"
 # HTTPS克隆开关
 HTTPS_CLONE_FLAG = False
 
