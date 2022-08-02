@@ -49,7 +49,9 @@ TCA独立工具License申请邮件
 | 首次登记的机器码 | xxx |
 | 体验申请用途 | xxx |
 
-4. 收到TCA团队回复邮件之后，在CLS目录下的[config.yaml](config.yaml)文件中填写License
+4. 收到TCA团队回复邮件之后，在CLS目录下的[config.yaml](config.yaml)文件中填写License <br>
+注意！请遵从yaml格式，比如：
+- 键值对中，冒号 `:` 后面一定要跟一个空白字符，示例 `key: value`.
 
 5. 执行以下命令启动
 ```shell
