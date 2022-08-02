@@ -120,7 +120,7 @@ class PackDiffInfo(HandlerBase):
                     diff_info = scm_client.diff_lines(path, last_revision, now_revision)
                     # 需要遍历file里面的issue
                     for issue in fileissue.get("issues", []):
-                        change_type = SCMMgr.get_block_change_type(
+                        change_type = SCMMgr(params).get_block_change_type(
                             diff_info, issue["start_line_no"], issue["end_line_no"]
                         )
                         issue["change_type"] = change_type
@@ -255,7 +255,7 @@ class PackDiffInfo(HandlerBase):
                     diff_info = scm_client.diff_lines(path, last_revision, now_revision)
                     # 需要遍历file里面的issue
                     for issue in fileissue.get("code_blocks", []):
-                        change_type = SCMMgr.get_block_change_type(
+                        change_type = SCMMgr(params).get_block_change_type(
                             diff_info, issue["start_line_num"], issue["end_line_num"]
                         )
                         issue["change_type"] = change_type

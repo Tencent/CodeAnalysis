@@ -7,7 +7,7 @@
   - 最低配置：2核4G内存、100G硬盘存储空间
 
 - 环境准备
-> 目前TCA脚本已封装好Python、Mariadb、Redis与Nginx安装步骤，可以按“部署步骤”文档进行操作
+> 目前TCA脚本已封装好Python、Mariadb、Redis与Nginx安装步骤，可以按“操作说明”内容进行操作
 
   - **Python 3.7**，[安装指引](./references/install_python37_on_centos.md)
 
