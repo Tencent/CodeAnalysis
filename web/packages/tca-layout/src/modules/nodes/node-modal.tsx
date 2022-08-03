@@ -6,6 +6,9 @@ import { Modal, Form, Input, message, Select } from 'coding-oa-uikit';
 import { t } from '@src/i18n/i18next';
 import { putNode } from '@src/services/nodes';
 
+// 模块内
+import { STATUS_OPTIONS } from './constants';
+
 const { Option } = Select;
 
 interface IProps {
@@ -62,11 +65,24 @@ const NodeModal = ({ nodeinfo, visible, onOk, onCancel, tagOptions, members }: I
         </Form.Item>
         <Form.Item
           name="exec_tags"
-          label="标签"
+          label="所属标签"
           rules={[{ required: true, message: t('节点标签为必选项') }]}
         >
           <Select mode="multiple">
             {tagOptions.map((item: any) => (
+              <Option key={item.value} value={item.value}>
+                {item.text}
+              </Option>
+            ))}
+          </Select>
+        </Form.Item>
+        <Form.Item
+          name="enabled"
+          label="节点可用性"
+          rules={[{ required: true, message: t('节点可用性为必选项') }]}
+        >
+          <Select>
+            {STATUS_OPTIONS.map((item: any) => (
               <Option key={item.value} value={item.value}>
                 {item.text}
               </Option>
