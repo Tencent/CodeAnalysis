@@ -30,6 +30,7 @@ export TCA_SERVER_ADDR=${TCA_SERVER_ADDR:-"127.0.0.1:8000"}
 # Client配置
 export CODEDOG_SERVER=${CODEDOG_SERVER:-"http://$TCA_WEB_HOST/server/main/"}
 export FILE_SERVER_URL=${FILE_SERVER_URL:-"http://$TCA_WEB_HOST/server/files/"}
+export TCA_APP_DATA_DIR=${TCA_APP_DATA_DIR}
 
 # Main工程配置
 ## 框架配置
