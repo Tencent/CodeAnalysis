@@ -764,7 +764,7 @@ class RepositoryAuthUpdateSerializer(serializers.Serializer):
                                        username=scm_account.scm_username, password=scm_account.scm_password)
         elif auth_type == models.ScmAuth.ScmAuthTypeEnum.OAUTH:
             scm_auth_info = models.ScmAuthInfo.objects.filter(
-                user=user, auth_origin__name="CodeDog", scm_platform=scm_platform).first()
+                user=user, auth_origin__name=settings.DEFAULT_ORIGIN_ID, scm_platform=scm_platform).first()
             scm_password = scm_auth_info.gitoa_access_token if scm_auth_info and scm_auth_info.gitoa_access_token \
                 else None
             if not scm_password:
@@ -1702,13 +1702,13 @@ class APIProjectsSerializer(CDBaseModelSerializer):
         scm_username = validated_data.get("scm_username")
         scm_password = validated_data.get("scm_password")
         scm_account = models.ScmAccount.objects.filter(user=user, scm_username=scm_username,
-                                                       auth_origin_id="Codedog").first()
+                                                       auth_origin_id=settings.DEFAULT_ORIGIN_ID).first()
         if not scm_account:
             scm_account = models.ScmAccount.objects.create(
                 user=user,
                 scm_username=scm_username,
                 scm_password=scm_password,
-                auth_origin_id="Codedog"
+                auth_origin_id=settings.DEFAULT_ORIGIN_ID
             )
             logger.info("[Repo: %s][User: %s] create scm auth: %s" % (repo.id, user, scm_username))
         core.ScmAuthManager.create_repository_auth(repository=repo, user=user,

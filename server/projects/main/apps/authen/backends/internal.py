@@ -56,7 +56,7 @@ class ServerAPIAuthentication(BaseAuthentication):
             raise AuthenticationFailed({"code": self.FailedCodeEnum.TICKET_EXPIRED, "msg": "ticket过期"})
         elif sha256(ticket_string.encode("utf-8")).hexdigest().upper() != ticket_signature:
             raise AuthenticationFailed({"code": self.FailedCodeEnum.TICKET_INVALID, "msg": "鉴权失败"})
-        user = User.objects.get_or_create(username="codedog")[0]
+        user = User.objects.get_or_create(username=settings.DEFAULT_USERNAME)[0]
         CodeDogUserManager.get_codedog_user(user)
         return (user, None)
 

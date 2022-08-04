@@ -1,5 +1,8 @@
 用于统一存放工具（可外链仓库）
 
+## **注意**
+以下部分独立工具需要申请授权，具体操作可以参考[CLS使用文档](../server/cls/README.md).
+
 ## [TCA-Collie(测试版)](https://github.com/TCATools/collie)
 一款多语言非编译型静态代码分析工具，支持C/C++/ObjectiveC/C#/CSS/Dart/Java/JavaScript/TypeScript/Kotlin/Lua/PHP/Python/Go/Ruby/Scala/Swift等17门语言。
 

@@ -295,7 +295,7 @@ class BaseTask(models.Model, TaskRunTime):
     state = models.IntegerField(default=StateEnum.CREATING, choices=STATE_CHOICES, verbose_name="状态", db_index=True)
     create_time = models.DateTimeField(auto_now_add=True, verbose_name="创建时间")
     register_time = models.DateTimeField(null=True, verbose_name="注册时间", blank=True)
-    log_url = models.URLField(verbose_name="日志链接", null=True, blank=True)
+    log_url = models.TextField(verbose_name="日志链接", null=True, blank=True)
     progress_rate = models.IntegerField(default=0, verbose_name="完成进度")
     last_beat_time = models.DateTimeField(null=True, verbose_name="心跳时间", blank=True, auto_now_add=True)
 
@@ -467,7 +467,7 @@ class BaseTaskProcessRelation(models.Model, TaskRunTime):
     result_code = models.IntegerField(verbose_name="结果码", null=True, blank=True)
     result_msg = models.TextField(default=None, verbose_name="结果信息", null=True, blank=True)
     result_url = models.TextField(verbose_name="结果路径", null=True, blank=True)
-    log_url = models.URLField(verbose_name="日志链接", null=True, blank=True)
+    log_url = models.TextField(verbose_name="日志链接", null=True, blank=True)
 
     class Meta:
         abstract = True
