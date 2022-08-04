@@ -22,11 +22,13 @@ class Collie(CodeLintModel):
         self.sensitive_word_maps = {"Collie": "Tool", "collie": "Tool"}
 
     def analyze(self, params):
+        relpos = len(params.source_dir) + 1
         issues = list()
         collie = Tool(params=params)
         func_output = collie.check()
         if func_output and os.path.exists(os.path.join(func_output, "check.csv")):
             for issue in collie.get_issue(os.path.join(func_output, "check.csv")):
+                issue["path"] = issue["path"][relpos:]
                 issues.append(issue)
 
         return issues
