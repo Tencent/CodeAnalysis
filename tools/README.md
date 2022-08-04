@@ -13,23 +13,58 @@
 
 需要申请License。
 
-## [TCA-Loong龙(测试版)](https://github.com/TCATools/loong)
+## TCA-Loong龙(测试版)
 Java/Kotlin API和函数调用链分析工具，需要申请License。
+### 命令行工具
+涉及到的命令行工具有：
+- [TCA-Loong龙(测试版)](https://github.com/TCATools/loong)
 
-## [TCA-Loong_Beta龙(测试版)](https://github.com/TCATools/loong_beta)
+### 呈现工具
+在TCA Server上呈现的工具是：
+- [JAAF](../server/projects/main/apps/scan_conf/management/commands/open_source/jaaf.json#L4)
+- [JAFC](../server/projects/main/apps/scan_conf/management/commands/open_source/jafc.json#L4)
+- [JAFF](../server/projects/main/apps/scan_conf/management/commands/open_source/jaff.json#L4)
+
+## TCA-Loong_Beta龙(测试版)
 Java/Kotlin API和函数调用链分析工具，无需申请License。
+### 命令行工具
+涉及到的命令行工具有：
+- [TCA-Loong_Beta龙(测试版)](https://github.com/TCATools/loong_beta)
 
-## [TCA-Zeus(测试版)](https://github.com/TCATools/TCA-Zeus-linux)
+### 呈现工具
+在TCA Server上呈现的工具是：
+- [JAFCBeta](../server/projects/main/apps/scan_conf/management/commands/open_source/jafc_beta.json#L4)
+- [JAFFBeta](../server/projects/main/apps/scan_conf/management/commands/open_source/jaff_beta.json#L4)
+
+## TCA-QL(测试版)
 一款静态代码分析的解析端，开源测试版仅开放在linux上运行，需要申请License。
 
-## [TCA-Zeus_Beta(测试版)](https://github.com/TCATools/Zeus_Beta)
+### 命令行工具
+涉及到的命令行工具有：
+- [TCA-Zeus(测试版)](https://github.com/TCATools/TCA-Zeus-linux)
+- [TCA-Hades(测试版)](https://github.com/TCATools/TCA-Hades-linux)
+
+### 呈现工具
+在TCA Server上呈现的工具是：
+- [TCA_QL_CPP](../server/projects/main/apps/scan_conf/management/commands/open_source/tca_ql_cpp.json#L4)
+- [TCA_QL_Go](../server/projects/main/apps/scan_conf/management/commands/open_source/tca_ql_go.json#L4)
+- [TCA_QL_PHP](../server/projects/main/apps/scan_conf/management/commands/open_source/tca_ql_php.json#L4)
+- [TCA_QL_Python](../server/projects/main/apps/scan_conf/management/commands/open_source/tca_ql_python.json#L4)
+
+### TCA-QL_Beta(测试版)
 一款静态代码分析的解析端，开源测试版仅支持PHP语言，开源测试版仅开放在linux上运行，无需申请License。
 
-## [TCA-Hades(测试版)](https://github.com/TCATools/TCA-Hades-linux)
-一款静态代码分析的分析端，开源测试版仅开放在linux上运行，需要申请License。
+### 命令行工具
+涉及到的命令行工具有：
+- [TCA-Zeus_Beta(测试版)](https://github.com/TCATools/Zeus_Beta)
+- [TCA-Hades_Beta(测试版)](https://github.com/TCATools/Hades_Beta)
 
-## [TCA-Hades_Beta(测试版)](https://github.com/TCATools/Hades_Beta)
-一款静态代码分析的分析端，目前主要支持安全分析，开源测试版仅开放在linux上运行，无需申请License。
+### 呈现工具
+在TCA Server上呈现的工具是：
+- [TCA_QL_Beta_PHP](../server/projects/main/apps/scan_conf/management/commands/open_source/tca_ql_php_beta.json#L4)
 
 ## [TCA-0Day_Checker(测试版)](https://github.com/TCATools/codedog_0Day_checker)
-用于一些爆出高危漏洞的组件检查，主要用于前段时间的log4j检查，支持自定义规则用于检查其他组件，需要申请License。
+用于一些爆出高危漏洞的组件检查，主要用于前段时间的log4j检查，支持自定义规则用于检查其他组件，无需申请License。
+
+在TCA Server上呈现的工具是：
+- [0DayChecker](../server/projects/main/apps/scan_conf/management/commands/open_source/0daychecker.json#L4)
