@@ -1,7 +1,7 @@
 [
     {
         "name": "【Objective-C】代码规范规则包",
-        "description": "【Objective-C】代码规范规则包。",
+        "description": "【Objective-C】代码规范规则包，要求启用独立工具。",
         "revision": null,
         "package_type": "official",
         "languages": [

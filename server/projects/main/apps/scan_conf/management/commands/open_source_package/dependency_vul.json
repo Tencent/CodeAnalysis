@@ -1,7 +1,7 @@
 [
     {
         "name": "依赖漏洞规则包",
-        "description": "分析依赖组件漏洞。",
+        "description": "分析依赖组件漏洞，要求启用独立工具。",
         "revision": null,
         "package_type": "official",
         "languages": [

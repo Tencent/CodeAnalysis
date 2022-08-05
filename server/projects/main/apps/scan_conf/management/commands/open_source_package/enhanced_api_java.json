@@ -1,7 +1,7 @@
 [
     {
         "name": "【Java】强化API分析",
-        "description": "危险权限分析规则包、动态权限调用分析规则包、隐私合规检查规则包的强化版。",
+        "description": "危险权限分析规则包、动态权限调用分析规则包、隐私合规检查规则包的强化版，要求启用独立工具。",
         "revision": null,
         "package_type": "official",
         "languages": [
