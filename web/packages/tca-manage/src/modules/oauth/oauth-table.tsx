@@ -1,69 +1,84 @@
 import React from 'react';
-import { Table, Button, Tag } from 'coding-oa-uikit';
-import Edit from 'coding-oa-uikit/lib/icon/Edit';
-import Trash from 'coding-oa-uikit/lib/icon/Trash';
-import Plus from 'coding-oa-uikit/lib/icon/Plus';
+import { useTranslation } from 'react-i18next';
 import { get } from 'lodash';
+import { Table, Tag, Space, PrimaryTableCol } from 'tdesign-react';
 
 // 项目内
-import { t } from '@src/i18n/i18next';
+import s from '@src/modules/style.scss';
+import { ScmPlatformEnum, SCM_PLATFORM_URL_PREFIX_CHOICES, SCM_PLATFORM_CHOICES } from '@plat/oauth';
 
 // 模块内
-import { SCM_PLATFORM } from './constants';
 
-interface IProps {
-  dataSource: Array<any>;
-  onEdit: (platform_info: any, create: boolean) => void;
-  onDelete: (platform_info: any) => void;
+import { OAuthSettingData } from './types';
+
+interface OAuthTableProps {
+  dataSource: OAuthSettingData[];
+  onEdit: (platformInfo: OAuthSettingData, create: boolean) => void;
+  onDelete: (platformInfo: OAuthSettingData) => void;
 }
 
-const OAuthTable = ({ dataSource, onEdit, onDelete }: IProps) => {
+const OAuthTable = ({ dataSource, onEdit, onDelete }: OAuthTableProps) => {
+  const { t } = useTranslation();
 
-  const columns = [
+  const columns: PrimaryTableCol<OAuthSettingData>[] = [
     {
       title: t('平台'),
-      dataIndex: 'scm_platform',
-      key: 'scm_platform',
-      render: (scm_platform: number) => (
-        <span>{get(SCM_PLATFORM, scm_platform) || scm_platform}</span>
+      colKey: 'scm_platform',
+      width: 100,
+      cell: ({ row }) => (
+        <a
+          className='link-name text-weight-bold'
+          href={get(SCM_PLATFORM_URL_PREFIX_CHOICES, row.scm_platform, '') as string}
+          target='_blank'
+          rel="noopener noreferrer"
+        >
+          {SCM_PLATFORM_CHOICES[row.scm_platform as ScmPlatformEnum] || row.scm_platform_name}
+        </a>
       ),
     },
     {
       title: t('平台描述'),
-      dataIndex: 'scm_platform_desc',
-      key: 'scm_platform_desc',
-      render: (scm_platform_desc: string) => (
-        <span>{scm_platform_desc}</span>
-      ),
+      colKey: 'scm_platform_desc',
+      width: 240,
     },
     {
       title: t('配置状态'),
-      dataIndex: 'client_id',
-      key: 'client_id',
-      render: (client_id: string) => (
-        client_id ? <Tag color='success'>已配置</Tag> : <Tag color='default'>未配置</Tag>
+      colKey: 'client_id',
+      width: 100,
+      cell: ({ row }) => (
+        row.client_id ? <Tag theme='success' variant='light'>{t('已配置')}</Tag> : <Tag>{t('未配置')}</Tag>
       ),
     },
     {
       title: t('操作'),
-      dataIndex: 'op',
-      key: 'op',
-      width: 100,
-      render: (_: string, platform_info: any) => (
-        platform_info?.client_id ? <>
-        <Button type="text" icon={<Edit/>} onClick={() => onEdit?.(platform_info, false)}/>
-        <Button type="text" icon={<Trash />} onClick={() => onDelete?.(platform_info)}/>
-        </> : <>
-        <Button type="text" icon={<Plus />} onClick={() => onEdit?.(platform_info, true)}/>
-        </>
+      colKey: 'op',
+      width: 120,
+      cell: ({ row }) => (
+        row.client_id ? <Space breakLine>
+          <a
+            onClick={() => onEdit?.(row, false)}
+          >
+            {t('更新配置')}
+          </a>
+          <a
+            onClick={() => onDelete?.(row)}
+            className={s.deleteOp}
+          >
+            {t('删除配置')}
+          </a>
+        </Space> : <a
+          onClick={() => onEdit?.(row, true)}
+        >
+          {t('创建配置')}
+        </a>
       ),
     },
   ];
+
   return (
     <Table
-      pagination={false}
-      rowKey={(item: any) => item.scm_platform }
-      dataSource={dataSource}
+      rowKey='scm_platform'
+      data={dataSource}
       columns={columns}
     />
   );

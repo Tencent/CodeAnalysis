@@ -1,0 +1,105 @@
+@import "@tencent/micro-frontend-shared/style/color.scss";
+
+.header {
+  padding: 0 24px;
+  border-bottom: 1px solid #dadfe6;
+  :global(.t-tabs__nav-container.t-is-top::after){
+    height: 0;
+  }
+}
+
+.tool-tag {
+  border: none;
+
+  &.build {
+    color: $red-8;
+    background-color: rgba($color: $red-8, $alpha: 0.07);
+  }
+
+  &.maintain {
+    color: $purple-8;
+    background-color: rgba($color: $purple-8, $alpha: 0.07);
+  }
+
+  &.custom {
+    color: $orange-7;
+    background-color: rgba($color: $orange-7, $alpha: 0.08);
+  }
+
+  &.default {
+    color: $cyan-7;
+    background-color: rgba($color: $cyan-7, $alpha: 0.08);
+  }
+
+  &.status-0 {
+    color: $blue-7;
+    background-color: rgba($color: $blue-7, $alpha: 0.08);
+  }
+
+  &.status-1 {
+    color: $yellow-7;
+    background-color: rgba($color: $yellow-7, $alpha: 0.08);
+  }
+
+  &.status-2 {
+    color: $grey-7;
+    background-color: rgba($color: $grey-7, $alpha: 0.1);
+  }
+
+  &.status-3 {
+    color: $cyan-8;
+    background-color: rgba($color: $cyan-8, $alpha: 0.08);
+  }
+}
+
+.user-tag {
+
+  &.level-2 {
+    color: $yellow-5;
+    background-color: rgba($color: $yellow-5, $alpha: 0.1);
+  }
+
+  &.level-3 {
+    color: $orange-5;
+    background-color: rgba($color: $orange-5, $alpha: 0.1);
+  }
+}
+
+.org-info-tip {
+  height: 22px;
+
+  :global(.t-popup__reference) {
+    height: 22px;
+    display: flex;
+    align-items: center;
+  }
+}
+
+.tool-filter {
+  padding: 1px 24px;
+  margin-bottom: 1px;
+  background-color: hsla(0, 0%, 98.8%, 0.98);
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.1), 0 0.5px 0 0 rgba(0, 0, 0, 0.08);
+  min-height: 42px;
+
+  .search-content {
+    margin: 5px 0;
+  }
+}
+
+.tool-container {
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  .tool-wrapper {
+    white-space: normal;
+    padding: 20px 24px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: calc(100vh - 158px);
+  }
+}
+
+.delete-op {
+  color: red;
+}

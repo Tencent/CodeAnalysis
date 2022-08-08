@@ -1,34 +1,49 @@
-import { get, post, put, del } from './index';
-import { MAIN_SERVER_API } from './common';
+import { MAIN_SERVER_API, fetchAPIManager, get, put } from '@plat/api';
+
+/** node restful api */
+export const nodeAPI = fetchAPIManager(`${MAIN_SERVER_API}/nodes/`);
 
 /**
- * 获取节点列表
- * @param params 筛选参数
+ * 批量更新节点信息
+ * @param data 更新数据
+ * @returns
  */
-export const getNodes = (params: any = null) => get(`${MAIN_SERVER_API}/nodes/`, params);
+export const putMultiNode = (data: any) => put(`${MAIN_SERVER_API}/nodes/batchupdate/`, data);
 
-export const getNode = (nodeId: number | string) => get(`${MAIN_SERVER_API}/nodes/${nodeId}/`);
+/**
+ * 获取节点子进程配置列表
+ * @param nodeId 节点ID
+ * @returns
+ */
+export const getNodeProcess = (nodeId: number) => get(`${MAIN_SERVER_API}/nodes/${nodeId}/processes/`);
 
-export const putNode = (nodeId: number | string, params: any) => put(`${MAIN_SERVER_API}/nodes/${nodeId}/`, params);
-
-export const putMultiNode = (params: any) => put(`${MAIN_SERVER_API}/nodes/batchupdate/`, params);
-
-export const delNode = (nodeId: number | string) => del(`${MAIN_SERVER_API}/nodes/${nodeId}/`);
-
-export const getNodeProcess = (nodeId: number | string) => get(`${MAIN_SERVER_API}/nodes/${nodeId}/processes/`);
-
+/**
+ * 获取通用工具进程配置列表
+ * @returns
+ */
 export const getProcess = () => get(`${MAIN_SERVER_API}/nodes/processes/`);
 
-export const putNodeProcess = (nodeId: number | string, data: any) => put(`${MAIN_SERVER_API}/nodes/${nodeId}/processes/`, data);
+/**
+ * 获取节点任务列表
+ * @param nodeId 节点ID
+ * @returns
+ */
+export const getNodeTask = (nodeId: number | string, params: any) => get(`${MAIN_SERVER_API}/nodes/${nodeId}/tasks/`, params);
 
+/**
+ * 更新节点子进程配置
+ * @param nodeId 节点ID
+ * @param data 更新数据
+ * @returns
+ */
+export const putNodeProcess = (nodeId: number, data: any) => put(`${MAIN_SERVER_API}/nodes/${nodeId}/processes/`, data);
+
+/**
+ * 批量更新节点子进程配置
+ * @param data 更新数据
+ * @returns
+ */
 export const putMultiNodeProcess = (data: any) => put(`${MAIN_SERVER_API}/nodes/processes/batchupdate/`, data);
 
-export const getTags = (params: any = null) => get(`${MAIN_SERVER_API}/tags/?limit=100`, params);
-
-export const postTags = (params: any = null) => post(`${MAIN_SERVER_API}/tags/`, params);
-
-export const putTag = (tagId: number | string, params: any = null) => put(`${MAIN_SERVER_API}/tags/${tagId}/`, params);
-
-export const delTag = (tagId: number | string) => del(`${MAIN_SERVER_API}/tags/${tagId}/`);
-
-export const getNodeTask = (nodeId: number | string, params: any) => get(`${MAIN_SERVER_API}/nodes/${nodeId}/tasks/`, params);
+/** tag restful api */
+export const tagAPI = fetchAPIManager(`${MAIN_SERVER_API}/tags/`);

@@ -1,118 +1,123 @@
-import React, { useEffect, useState } from 'react';
-import { Modal, Form, Input, Select, Tooltip } from 'coding-oa-uikit';
-import QuestionCircle from 'coding-oa-uikit/lib/icon/QuestionCircle';
+import React, { useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { get } from 'lodash';
-
+import { Dialog, Form, Input, Select, Tooltip, Textarea, FormInstanceFunctions, InputAdornment } from 'tdesign-react';
+import { HelpCircleIcon } from 'tdesign-icons-react';
 
 // 项目内
-import { t } from '@src/i18n/i18next';
+import { SCM_PLATFORM_OPTIONS } from '@plat/oauth';
 
 // 模块内
-import { SCM_PLATFORM_OPTIONS } from './constants';
+import { OAuthSettingData } from './types';
 
-const { TextArea } = Input;
+const { FormItem } = Form;
 
-interface IProps {
+const getHostName = (redirect_uri: string) => {
+  if (redirect_uri) {
+    const urlList = redirect_uri.split('/');
+    const hostname = (urlList.length > 3) ? get(urlList, 2) : redirect_uri;
+    return hostname;
+  }
+  return '';
+};
+
+interface OAuthModalProps {
   visible: boolean;
-  scminfo: any;
+  scminfo: OAuthSettingData;
   onCancel: () => void;
-  onOk: ( formData:any ) => void;
+  onOk: (scminfo: OAuthSettingData, formData: any) => void;
 }
 
-const OAuthModal = ({ scminfo, visible, onCancel, onOk }: IProps) => {
-  const [form] = Form.useForm();
-  const [appInfo, setAppInfo] = useState<any>(null);
+const OAuthModal = ({ scminfo, visible, onCancel, onOk }: OAuthModalProps) => {
+  const formRef = useRef<FormInstanceFunctions>(null);
+  const { t } = useTranslation();
 
-  useEffect(() => {
-    if (visible) {
-      // 格式化回调地址
-      if (scminfo?.redirect_uri) {
-        const urlList = scminfo?.redirect_uri.split('/');
-        const hostname = (urlList.length>3) ? get(urlList,2):scminfo?.redirect_uri;
-        scminfo.redirect_uri=hostname;
-      }
-      setAppInfo(scminfo);
-    }
-  }, [visible]);
-
-  useEffect(()=>{
-    form.resetFields();
-  }, [appInfo])
-
-  /**
-     * 表单保存操作
-     * @param formData 参数
-     */
+  /** 表单保存操作 */
   const onSubmitHandle = () => {
-    form.validateFields().then((formData) => {
-      // 格式化回调地址
-      formData.redirect_uri=`http://${formData.redirect_uri}/cb_git_auth/${appInfo?.scm_platform_name}`;
-      onOk(formData);
+    formRef.current?.validate().then((result: any) => {
+      if (result === true) {
+        const fieldsValue = formRef.current?.getFieldsValue(true);
+        console.log(fieldsValue);
+        onOk(scminfo, {
+          ...fieldsValue,
+          redirect_uri: `http://${fieldsValue.redirect_uri}/cb_git_auth/${scminfo?.scm_platform_name}`,
+        });
+      }
     });
   };
 
+  /** 重置表单操作 */
+  const onReset = () => {
+    formRef.current?.reset();
+  };
+
   return (
-    <Modal
-      forceRender
-      title={scminfo?.client_id ? t('更新配置') : t('创建配置')}
+    <Dialog
+      header={scminfo?.client_id ? t('更新配置') : t('创建配置')}
       visible={visible}
-      onOk={onSubmitHandle}
-      onCancel={onCancel}
-      afterClose={form.resetFields}
+      onConfirm={onSubmitHandle}
+      width={610}
+      onClose={onCancel}
+      onOpened={onReset}
+      onClosed={onReset}
     >
-      <Form 
-        layout={'vertical'} 
-        form={form} 
-        initialValues={appInfo || {}}
+      <Form
+        layout='vertical'
+        ref={formRef}
+        resetType='initial'
+        labelWidth={120}
       >
-        <Form.Item name="scm_platform" label="平台类型">
-          <Select options={SCM_PLATFORM_OPTIONS} disabled/>
-        </Form.Item>
-        <Form.Item
+        <FormItem name="scm_platform" label={t('平台类型')} initialData={scminfo?.scm_platform}>
+          <Select options={SCM_PLATFORM_OPTIONS} disabled />
+        </FormItem>
+        <FormItem
           name="client_id"
           label={t('Client ID')}
           rules={[{ required: true, message: t('Client ID为必填项') }]}
+          initialData={scminfo?.client_id}
         >
           <Input />
-        </Form.Item>
-        <Form.Item
+        </FormItem>
+        <FormItem
           name="client_secret"
           label={t('Client Secret')}
           rules={[{ required: true, message: t('Client Secret为必填项') }]}
+          initialData={scminfo?.client_secret}
         >
-          <Input.Password />
-        </Form.Item>
-        <Form.Item
+          <Input type="password" />
+        </FormItem>
+        <FormItem
           name="redirect_uri"
           label={
             <>
-            {t('回调地址')}
-            <Tooltip
-              title={<p>请填入当前TCA平台配置的域名或IP地址<br/>（如当前页面非80端口，需要显式指定端口号）</p>}
-              placement="top"
-              getPopupContainer={() => document.body	}
-            >
-              <QuestionCircle />
-            </Tooltip>
+              {t('回调地址')}
+              <Tooltip
+                content={<p>{t('请填入当前TCA平台配置的域名或IP地址')}<br />{t('（如当前页面非80端口，需要显式指定端口号）')}</p>}
+                placement="top"
+              >
+                <HelpCircleIcon className='ml-xs' />
+              </Tooltip>
             </>
           }
           rules={[{ required: true, message: t('回调地址为必填项') }]}
+          initialData={getHostName(scminfo?.redirect_uri)}
         >
-          <Input 
-            addonBefore="http://" 
-            addonAfter={`/cb_git_auth/${appInfo?.scm_platform_name}`} 
-            placeholder="部署机IP"
-          />
-        </Form.Item>
-        <Form.Item
+          <InputAdornment style={{ width: '100%' }}
+            prepend={<div style={{ width: 46 }}>http://</div>}
+            append={<div style={{ width: 150 }}>/cb_git_auth/{scminfo?.scm_platform_name}</div>}>
+            <Input placeholder="部署机IP" />
+          </InputAdornment>
+        </FormItem>
+        <FormItem
           name="scm_platform_desc"
           label={t('平台描述')}
-          rules={[{ max: 32 }]}
+          rules={[{ max: 64, message: '平台描述不能超过32字' }]}
+          initialData={scminfo?.scm_platform_desc}
         >
-          <TextArea maxLength={32} placeholder={'最多32个字符'}/>
-        </Form.Item>
+          <Textarea maxlength={32} placeholder={'平台描述'} />
+        </FormItem>
       </Form>
-    </Modal>
+    </Dialog>
   );
 };
 
