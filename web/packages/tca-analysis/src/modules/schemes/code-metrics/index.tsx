@@ -21,56 +21,56 @@ import style from './style.scss';
 import formStyle from '../style.scss';
 
 const defaultValues = {
-  min_ccn: 20,
-  dup_block_length_min: 120,
-  dup_min_dup_times: 2,
-  dup_issue_limit: 1000,
+    min_ccn: 20,
+    dup_block_length_min: 120,
+    dup_min_dup_times: 2,
+    dup_issue_limit: 1000,
 };
 
 const layout = {
-  labelCol: { span: 5 },
-  wrapperCol: { span: 19 },
+    labelCol: { span: 5 },
+    wrapperCol: { span: 19 },
 };
 
 interface CodeMetricsProps {
-  repoId: number;
-  schemeId: number;
-  orgSid: string;
-  teamName: string;
+    repoId: number;
+    schemeId: number;
+    orgSid: string;
+    teamName: string;
 }
 
 const CodeMetrics = (props: CodeMetricsProps) => {
-  const { orgSid, teamName, repoId, schemeId } = props;
-  const [form] = Form.useForm();
-  const [data, setData] = useState<any>({});
+    const { orgSid, teamName, repoId, schemeId } = props;
+    const [form] = Form.useForm();
+    const [data, setData] = useState<any>({});
 
-  useEffect(() => {
-    getCodeMetrics(orgSid, teamName, repoId, schemeId).then((response: any) => {
-      setData(response);
-      form.resetFields();
-    });
-  }, [schemeId]);
+    useEffect(() => {
+        getCodeMetrics(orgSid, teamName, repoId, schemeId).then((response: any) => {
+            setData(response);
+            form.resetFields();
+        });
+    }, [schemeId]);
 
-  const update = (formData: any, info: string) => {
-    updateCodeMetrics(orgSid, teamName, repoId, schemeId, {
-      ...data,
-      ...formData,
-    }).then((response: any) => {
-      message.success(`${info}成功`);
-      setData(response);
-      form.resetFields();
-    });
-  };
+    const update = (formData: any, info: string) => {
+        updateCodeMetrics(orgSid, teamName, repoId, schemeId, {
+            ...data,
+            ...formData,
+        }).then((response: any) => {
+            message.success(`${info}成功`);
+            setData(response);
+            form.resetFields();
+        });
+    };
 
-  const onFinish = (formData: any) => {
-    update({
-      ...formData,
-      ...defaultValues,
-      ...pickBy(formData, key => isNumber(key)),
-    }, '更新');
-  };
+    const onFinish = (formData: any) => {
+        update({
+            ...formData,
+            ...defaultValues,
+            ...pickBy(formData, key => isNumber(key)),
+        }, '更新');
+    };
 
-  return (
+    return (
         <Form
             labelAlign="left"
             className={cn(style.codeMetrics, formStyle.schemeFormVertical)}
@@ -81,7 +81,6 @@ const CodeMetrics = (props: CodeMetricsProps) => {
             <h2 className={style.title}>
                 圈复杂度
                 <Tooltip
-                    // @ts-ignore
                     getPopupContainer={() => document.getElementById('container')}
                     title='可以发现执行路径较多的方法，降低代码的圈复杂度，可测性更高。支持C、C++、Java、C#、JavaScript、Python、Objective-C、Ruby、PHP、Swift、Scala、Go、Lua共13种语言'
                 >
@@ -93,7 +92,7 @@ const CodeMetrics = (props: CodeMetricsProps) => {
                     size='small'
                     checked={data.cc_scan_enabled}
                     onChange={(checked: boolean) => update({
-                      cc_scan_enabled: checked,
+                        cc_scan_enabled: checked,
                     }, `圈复杂度${checked ? '开启' : '关闭'}`)}
                 />
             </Form.Item>
@@ -107,7 +106,6 @@ const CodeMetrics = (props: CodeMetricsProps) => {
                             <span>
                                 检测阈值
                                 <Tooltip
-                                    // @ts-ignore
                                     getPopupContainer={() => document.getElementById('container')}
                                     title='仅上报圈复杂度超过该阈值的方法，默认20'
                                 >
@@ -116,7 +114,7 @@ const CodeMetrics = (props: CodeMetricsProps) => {
                             </span>
                         }
                     >
-                        <InputNumber precision={0} placeholder='默认20'  style={{ width: 130 }}/>
+                        <InputNumber precision={0} placeholder='默认20' style={{ width: 130 }} />
                     </Form.Item>
                 )
             }
@@ -124,7 +122,6 @@ const CodeMetrics = (props: CodeMetricsProps) => {
             <h2 className={style.title}>
                 重复代码
                 <Tooltip
-                    // @ts-ignore
                     getPopupContainer={() => document.getElementById('container')}
                     title='可以发现重复的代码，避免重复代码可以让代码更简洁，更易维护。支持C、C++、Java、JavaScript、Objective-C、PHP、Python、C#、Ruby、Kotlin、Go、Lua、Swift、Scala共14种语言'
                 >
@@ -137,7 +134,7 @@ const CodeMetrics = (props: CodeMetricsProps) => {
                     size='small'
                     checked={data.dup_scan_enabled}
                     onChange={(checked: boolean) => update({
-                      dup_scan_enabled: checked,
+                        dup_scan_enabled: checked,
                     }, `重复代码${checked ? '开启' : '关闭'}`)}
                 />
             </Form.Item>
@@ -150,7 +147,6 @@ const CodeMetrics = (props: CodeMetricsProps) => {
                                 <span>
                                     长度区间
                                     <Tooltip
-                                        // @ts-ignore
                                         getPopupContainer={() => document.getElementById('container')}
                                         title='一个单词（变量或操作符）记为1'
                                     >
@@ -179,7 +175,6 @@ const CodeMetrics = (props: CodeMetricsProps) => {
                                 <span>
                                     重复次数
                                     <Tooltip
-                                        // @ts-ignore
                                         getPopupContainer={() => document.getElementById('container')}
                                         title='当一段代码重复次数达到指定区间才认为是有风险的'
                                     >
@@ -209,7 +204,6 @@ const CodeMetrics = (props: CodeMetricsProps) => {
                                 <span>
                                     上报限制
                                     <Tooltip
-                                        // @ts-ignore
                                         getPopupContainer={() => document.getElementById('container')}
                                         title='限制上报的重复代码块数，可以减少开发的压力，提高修复积极性'
                                     >
@@ -218,7 +212,7 @@ const CodeMetrics = (props: CodeMetricsProps) => {
                                 </span>
                             }
                         >
-                            <InputNumber precision={0} placeholder='默认1000' style={{ width: 130 }}/>
+                            <InputNumber precision={0} placeholder='默认1000' style={{ width: 130 }} />
                         </Form.Item>
                     </>
                 )
@@ -227,7 +221,6 @@ const CodeMetrics = (props: CodeMetricsProps) => {
             <h2 className={style.title}>
                 代码统计
                 <Tooltip
-                    // @ts-ignore
                     getPopupContainer={() => document.getElementById('container')}
                     title='从目录和业务纬度统计代码行数，也可以获取提交记录便于代码Review。'
                 >
@@ -239,7 +232,7 @@ const CodeMetrics = (props: CodeMetricsProps) => {
                     size='small'
                     checked={data.cloc_scan_enabled}
                     onChange={(checked: boolean) => update({
-                      cloc_scan_enabled: checked,
+                        cloc_scan_enabled: checked,
                     }, `代码统计${checked ? '开启' : '关闭'}`)}
                 />
             </Form.Item>
@@ -249,7 +242,7 @@ const CodeMetrics = (props: CodeMetricsProps) => {
                 <Button onClick={() => form.resetFields()}>取消</Button>
             </Form.Item>
         </Form>
-  );
+    );
 };
 
 export default CodeMetrics;

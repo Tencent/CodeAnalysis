@@ -65,99 +65,95 @@ const Permission = (props: PermissionProps) => {
   };
 
   return (
-        <Form
-            labelAlign="left"
-            className={cn(formStyle.schemeFormVertical, style.permissionForm)}
-            form={form}
-            initialValues={{
-              execute_scope: data.execute_scope === 1,
-              edit_managers_list: data.edit_managers?.map((item: any) => item.username),
-              execute_managers_list: data.execute_managers?.map((item: any) => item.username),
-            }}
-            onFinish={onFinish}
-        >
-            <Form.Item
-                {...layout}
-                label="是否团队内公开"
-                name="execute_scope"
-                valuePropName="checked"
+    <Form
+      labelAlign="left"
+      className={cn(formStyle.schemeFormVertical, style.permissionForm)}
+      form={form}
+      initialValues={{
+        execute_scope: data.execute_scope === 1,
+        edit_managers_list: data.edit_managers?.map((item: any) => item.username),
+        execute_managers_list: data.execute_managers?.map((item: any) => item.username),
+      }}
+      onFinish={onFinish}
+    >
+      <Form.Item
+        {...layout}
+        label="是否团队内公开"
+        name="execute_scope"
+        valuePropName="checked"
+      >
+        <Switch />
+      </Form.Item>
+      <Form.Item
+        {...layout}
+        name="edit_managers_list"
+        label={
+          <span>
+            管理员
+            <Tooltip
+              getPopupContainer={() => document.getElementById('main-container')}
+              title="拥有模板编辑权限"
             >
-                <Switch />
-            </Form.Item>
-            <Form.Item
-                {...layout}
-                name="edit_managers_list"
-                label={
-                    <span>
-                        管理员
-                        <Tooltip
-                            // @ts-ignore
-                            getPopupContainer={() => document.getElementById('main-container')}
-                            title="拥有模板编辑权限"
-                        >
-                            <QuestionCircle className={formStyle.questionIcon} />
-                        </Tooltip>
-                    </span>
-                }
-            >
-                <Select
-                    showSearch
-                    mode="multiple"
-                    disabled={isSysTmpl}
-                    optionFilterProp="label"
-                    // @ts-ignore
-                    getPopupContainer={() => document.getElementById('main-container')}
-                    options={teamMembers.map((item: any) => ({
-                      label: item.nickname,
-                      value: item.username,
-                    }))}
-                />
-            </Form.Item>
+              <QuestionCircle className={formStyle.questionIcon} />
+            </Tooltip>
+          </span>
+        }
+      >
+        <Select
+          showSearch
+          mode="multiple"
+          disabled={isSysTmpl}
+          optionFilterProp="label"
+          getPopupContainer={() => document.getElementById('main-container')}
+          options={teamMembers.map((item: any) => ({
+            label: item.nickname,
+            value: item.username,
+          }))}
+        />
+      </Form.Item>
 
-            <Form.Item
-                {...layout}
-                name="execute_managers_list"
-                label={
-                    <span>
-                        普通成员
-                        <Tooltip
-                            // @ts-ignore
-                            getPopupContainer={() => document.getElementById('main-container')}
-                            title="可使用模板"
-                        >
-                            <QuestionCircle className={formStyle.questionIcon} />
-                        </Tooltip>
-                    </span>
-                }
+      <Form.Item
+        {...layout}
+        name="execute_managers_list"
+        label={
+          <span>
+            普通成员
+            <Tooltip
+              getPopupContainer={() => document.getElementById('main-container')}
+              title="可使用模板"
             >
-                <Select
-                    showSearch
-                    mode="multiple"
-                    disabled={isSysTmpl}
-                    optionFilterProp="label"
-                    // @ts-ignore
-                    getPopupContainer={() => document.getElementById('main-container')}
-                    options={teamMembers.map((item: any) => ({
-                      label: item.nickname,
-                      value: item.username,
-                    }))}
-                />
-            </Form.Item>
-            {!isSysTmpl && (
-                <Form.Item style={{ marginTop: 30 }}>
-                    <Button type="primary" htmlType="submit" style={{ marginRight: 10 }}>
-                        保存
-                    </Button>
-                    <Button
-                        onClick={() => {
-                          form.resetFields();
-                        }}
-                    >
-                        取消
-                    </Button>
-                </Form.Item>
-            )}
-        </Form>
+              <QuestionCircle className={formStyle.questionIcon} />
+            </Tooltip>
+          </span>
+        }
+      >
+        <Select
+          showSearch
+          mode="multiple"
+          disabled={isSysTmpl}
+          optionFilterProp="label"
+          getPopupContainer={() => document.getElementById('main-container')}
+          options={teamMembers.map((item: any) => ({
+            label: item.nickname,
+            value: item.username,
+          }))}
+        />
+      </Form.Item>
+      {!isSysTmpl && (
+        <Form.Item style={{ marginTop: 30 }}>
+          <Button type="primary" htmlType="submit" style={{ marginRight: 10 }}>
+            保存
+          </Button>
+          <Button
+            onClick={() => {
+              form.resetFields();
+            }}
+          >
+            取消
+          </Button>
+        </Form.Item>
+      )}
+    </Form>
   );
 };
 

@@ -85,7 +85,7 @@ const IssueModal = (props: IssueModalProps) => {
   };
 
   const rowRenderer = ({ index, style: rowStyle }: any) => {
-    const { lineNum: line, content } = codeFile?.codeContents[index];
+    const { lineNum: line, content } = codeFile?.codeContents[index] || {};
     const rowRef: any = useRef({});
     const language = detail.language ?? codeFile.suffix?.split('.')[1] ?? 'plaintext';
 
@@ -181,19 +181,19 @@ const IssueModal = (props: IssueModalProps) => {
           {loading ? (
             <Loading />
           ) : (
-              <AutoSizer>
-                {({ height, width }: any) => (
-                  <List
-                    ref={listRef}
-                    height={height}
-                    itemCount={codeFile.codeContents?.length || 0}
-                    itemSize={getRowHeight}
-                    width={width}
-                  >
-                    {rowRenderer}
-                  </List>
-                )}
-              </AutoSizer>
+            <AutoSizer>
+              {({ height, width }: any) => (
+                <List
+                  ref={listRef}
+                  height={height}
+                  itemCount={codeFile.codeContents?.length || 0}
+                  itemSize={getRowHeight}
+                  width={width}
+                >
+                  {rowRenderer}
+                </List>
+              )}
+            </AutoSizer>
           )}
         </div>
       </div>

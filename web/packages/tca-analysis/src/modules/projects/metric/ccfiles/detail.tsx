@@ -109,7 +109,7 @@ const Detail = () => {
 
   // 渲染每行显示
   const rowRenderer = ({ index, style: rowStyle }: any) => {
-    const { lineNum: line, content } = codeFile?.codeContents[index];
+    const { lineNum: line, content } = codeFile?.codeContents[index] || {};
     const rowRef: any = useRef({});
     const language = fileInfo.language ?? codeFile.suffix?.split('.')[1] ?? 'plaintext';
 
