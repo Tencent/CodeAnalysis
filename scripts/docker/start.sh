@@ -10,6 +10,7 @@ export SERVER_ACCESS_LOG="-"
 export SERVER_ERROR_LOG="-"
 export FILE_STORAGE_DIR="/var/opt/tca/files/"
 export REDIS_LOG_PATH="/var/log/tca/redis/redis.log"
+export TCA_APP_DATA_DIR="/var/opt/tca/client"
 
 source $TCA_SCRIPT_ROOT/utils.sh
 source $TCA_SCRIPT_ROOT/config.sh
@@ -34,6 +35,7 @@ function init_directory() {
     mkdir -p /var/log/tca/client
     mkdir -p /var/opt/tca/files
     mkdir -p /var/opt/tca/tools
+    mkdir -p /var/opt/tca/client
     mkdir -p /run/mysqld/
     mkdir -p /etc/tca/
     chown -R mysql:mysql /var/log/tca/mariadb /var/opt/tca/mariadb /run/mysqld
