@@ -16,8 +16,14 @@
     width: 400px;
     .body {
       min-height: 400px;
+      background-color: transparent;
+      
+      :global(.t-tabs__nav-scroll) {
+        justify-content: center;
+      }
     }
   }
+
   .language-dropdown {
     position: absolute;
     bottom: 30px;
@@ -25,12 +31,26 @@
     text-align: center;
     transform: translateX(-50%);
   }
+
+  .iconQQ {
+    width: 11px;
+    height: 12px;
+    background-image: url(./assets/login.svg);
+    background-position: 41.42% 83.33%;
+    background-size: 1636.3636363636363% 1050%;
+    background-repeat: no-repeat;
+    margin-right: 5px;
+    display: inline-block;
+  }
 }
+
 .login-box {
   text-align: center;
   height: 300px;
-  margin-top: 16px;
+  margin: 16px 0px;
+  padding: 20px;
 }
+
 .associate-items {
   .item {
     margin-bottom: 16px;
@@ -45,6 +65,7 @@
     }
   }
 }
+
 .hidden {
   display: none;
 }
