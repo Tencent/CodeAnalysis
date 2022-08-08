@@ -1,0 +1,59 @@
+@import "./color.scss";
+
+:global(.t-progress__info) {
+  display: flex;
+  align-items: center;
+}
+
+:global(.t-table__body) {
+  &>tr {
+    td>a.link-name {
+      color: $grey-8;
+
+      &:hover {
+        color: $blue-5  !important;
+      }
+
+      &.with-icon {
+        display: flex;
+        align-items: center;
+      }
+
+      .path {
+        font-size: 12px;
+        color: $grey-7;
+        max-width: 400px;
+        word-break: break-all;
+      }
+    }
+  }
+}
+
+:global(.t-tag) {
+
+  &.warning {
+    color: $warging-color;
+    background-color: $warging-bg;
+  }
+
+  &.success {
+    color: $success-color;
+    background-color: $success-bg;
+  }
+
+  &.fatal {
+    color: $fatal-color;
+    background-color: $fatal-bg;
+  }
+
+  &.error {
+    color: $error-color;
+    background-color: $error-bg;
+  }
+
+  &.processing,
+  &.info {
+    color: $tip-color;
+    background-color: $tip-bg;
+  }
+}

@@ -1,0 +1,11 @@
+.search {
+  padding: 1px 24px;
+  margin-bottom: 1px;
+  background-color: hsla(0, 0%, 98.8%, 0.98);
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.1), 0 0.5px 0 0 rgba(0, 0, 0, 0.08);
+  min-height: 42px;
+
+  .search-content {
+    margin: 5px 0;
+  }
+}
