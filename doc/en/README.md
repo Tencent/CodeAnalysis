@@ -4,7 +4,7 @@ title: 腾讯云代码分析文档
 heroImage: /images/Logo.svg
 actions:
   - text: 快速入门
-    link: /zh/quickStarted/intro.html
+    link: /zh/quickStarted/deploySever.html
     type: primary
   - text: 帮助文档
     link: /zh/guide/
