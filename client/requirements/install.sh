@@ -17,7 +17,7 @@ OS=`uname -s`
 pip3 install -q pylint==2.6.0
 
 # install semgrep
-pip3 install -q semgrep==0.54.0
+pip3 install -q semgrep==0.100.0
 # SEMGREP_HOME="$TOOLS_DIR/semgrep"
 # SEMGREP_RULES_HOME="$SEMGREP_HOME/rules"
 # cd $SEMGREP_HOME
