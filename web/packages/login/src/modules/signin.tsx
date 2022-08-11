@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { get } from 'lodash';
-import { Form, Input, Button, MessagePlugin, SubmitContext } from 'tdesign-react';
+import { Form, Input, Button, MessagePlugin, SubmitContext, FormInstanceFunctions } from 'tdesign-react';
 import { DesktopIcon, LockOnIcon } from 'tdesign-icons-react';
 import { getURLSearch } from '@tencent/micro-frontend-shared/util';
 // 项目内
@@ -12,7 +12,7 @@ import s from '@src/style.scss';
 const { FormItem } = Form;
 
 const NormalSignin = () => {
-  const formRef = useRef<any>(null);
+  const formRef = useRef<FormInstanceFunctions>(null);
   const { t } = useTranslation();
 
   const onSubmit = (e: SubmitContext) => {
@@ -46,7 +46,9 @@ const NormalSignin = () => {
           <Input clearable={true} prefixIcon={<DesktopIcon />} placeholder={t('用户名')} />
         </FormItem>
         <FormItem name="password" rules={[{ required: true, message: t('请输入密码') }]}>
-          <Input type='password' prefixIcon={<LockOnIcon />} clearable={true} placeholder={t('密码')} />
+          <Input type='password' prefixIcon={<LockOnIcon />} clearable={true} placeholder={t('密码')} onEnter={() => {
+            formRef.current.submit();
+          }} />
         </FormItem>
         <FormItem>
           <Button theme="primary" type="submit" block>
