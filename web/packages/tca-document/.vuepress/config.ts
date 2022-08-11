@@ -30,7 +30,7 @@ export default defineUserConfig({
 
   markdown: {
     toc: {
-      level: [2,3,4],
+      level: [2, 3, 4],
     }
   },
 
@@ -54,7 +54,7 @@ export default defineUserConfig({
 
     repo: 'https://github.com/Tencent/CodeAnalysis',
 
-    docsDir: 'web/packages/tca-document',
+    docsDir: 'doc',
 
     // theme-level locales config
     locales: {

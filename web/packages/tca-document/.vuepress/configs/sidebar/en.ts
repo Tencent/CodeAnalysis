@@ -6,6 +6,7 @@ export const en: SidebarConfig = {
       text: '介绍',
       children: [
         '/en/guide/README.md',
+        '/en/guide/快速入门/快速启动一次代码分析.md'
       ],
     },
     {
@@ -37,7 +38,6 @@ export const en: SidebarConfig = {
       text: '工具管理',
       children: [
         '/en/guide/工具管理/工具管理说明.md',
-        '/en/guide/工具管理/工具列表.md',
         '/en/guide/工具管理/自定义规则.md',
         '/en/guide/工具管理/自定义工具.md',
       ]
@@ -59,8 +59,8 @@ export const en: SidebarConfig = {
     {
       text: '服务端',
       children: [
-        '/en/guide/服务器/server.md',
-        '/en/guide/服务器/deploy_with_minio.md',
+        '/en/guide/服务端/server.md',
+        '/en/guide/服务端/deploy_with_minio.md',
       ]
     },
     {
@@ -73,31 +73,12 @@ export const en: SidebarConfig = {
   ],
   '/en/advanced/': [
     {
-      text: '后台管理',
+      text: '深入',
       children: [
-        '/en/advanced/manage/description.md',
-      ]
-    },
-    {
-      text: '工具管理',
-      children: [
-        '/en/advanced/tool/description.md',
-        '/en/advanced/tool/customrule.md',
-        '/en/advanced/tool/customtool.md',
-      ]
-    },
-    {
-      text: '分布式执行',
-      children: [
-        '/en/advanced/distributed.md',
-      ]
-    },
-    {
-      text: '持久化存储',
-      children: [
-        '/en/advanced/minio.md',
-      ]
-    },
+        '/en/advanced/任务分布式执行.md',
+        '/en/advanced/集成代码分析工具.md',
+      ],
+    }
   ],
   '/en/community/': [
     {
@@ -127,15 +108,35 @@ export const en: SidebarConfig = {
   '/en/quickStarted/': [
     {
       text: '快速入门',
-      children: [ 
-        {
-          text: '概述',
-          link: '/en/quickStarted/intro.md',
-        },
-        '/en/quickStarted/deploySever.md',
-        '/en/quickStarted/setup.md',
-        '/en/quickStarted/deployClient.md',
+      link: '/zh/quickStarted/deploySever.md',
+      // children: [
+      //   {
+      //     text: '快速入门',
+      //     link: '/zh/quickStarted/deploySever.md',
+      //   },
+      // ],
+    },
+    {
+      text: '依赖安装参考',
+      // collapsible: true,
+      children: [
+        '/en/quickStarted/references/install_python37_on_centos.md',
+        '/en/quickStarted/references/install_python37_on_ubuntu.md',
+        '/en/quickStarted/references/install_mysql_on_centos.md',
+        '/en/quickStarted/references/install_redis_on_centos.md',
+        '/en/quickStarted/references/install_redis_from_source.md',
+        '/en/quickStarted/references/install_nginx_from_source.md',
+      ],
+    },
+    {
+      text: '其他',
+      // collapsible: true,
+      children: [
+        '/en/quickStarted/intro.md',
+        '/en/quickStarted/tools.md',
         '/en/quickStarted/FAQ.md',
+        '/en/quickStarted/codeDeploy.md',
+        '/en/quickStarted/dockercomposeDeploy.md',
       ],
     },
   ],

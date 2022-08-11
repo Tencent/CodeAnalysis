@@ -131,7 +131,7 @@ const NodeTable = () => {
         total: count,
         showTotal: (total: any, range: any) => `${range[0]} - ${range[1]} 条数据，共 ${total} 条`,
         onChange: onChangePageSize,
-      }} rowKey={(item: any) => item.id} dataSource={listData}>
+      }} rowKey={(item: any) => item.id} dataSource={listData} scroll={{ x: true }} >
         <Column
           title={t('节点名称')}
           dataIndex="name"
@@ -157,7 +157,7 @@ const NodeTable = () => {
           title={t('所属标签')}
           dataIndex="exec_tag_details"
           key="exec_tag_details"
-          render={(exec_tag_details: any) => exec_tag_details.map((item: any) => 
+          render={(exec_tag_details: any) => exec_tag_details.map((item: any) =>
             <Tag
               key={item.name}
               color={item?.tag_type ? TAG_TYPE_COLOR[item?.tag_type] : TAG_TYPE_COLOR[TAG_TYPE_ENUM.PUBLIC]}

@@ -1,9 +1,10 @@
-# TCA 工具列表
-目前TCA支持以下工具：
+# 工具列表
+
+目前 TCA 支持以下工具：
 
 |   官方工具    |   第三方工具    |
 | :--------: | :-------: |
-|[0daychecker](../tools/codedog_0Day_checker)| androidlint |
+|[0daychecker](https://github.com/Tencent/CodeAnalysis/tree/main/tools/codedog_0Day_checker)| androidlint |
 |clangwarning| checkstyle |
 |codecount| clang |
 |customfilescan| cobra |
@@ -12,10 +13,10 @@
 |javawarning| cpplint |
 |regexfilescan| dart_code_metrics |
 |regexscan| dartanalyzer |
-|[tca_ql_php_beta](../tools/Hades_Beta/README.md)| detekt |
+|[tca_ql_php_beta](https://github.com/Tencent/CodeAnalysis/tree/main/tools/Hades_Beta)| detekt |
 |unusedresource| eslint |
-|[collie](../tools/collie/README.md)| eslint_typescript |
-|[compass](../tools/compass/README.md)| eslint_vue |
+|[collie](https://github.com/Tencent/CodeAnalysis/tree/main/tools/collie/)| eslint_typescript |
+|[compass](https://github.com/Tencent/CodeAnalysis/tree/main/tools/compass)| eslint_vue |
 || findbugs |
 || flake8 |
 || [flawfinder](https://github.com/TCATools/flawfinder) |
