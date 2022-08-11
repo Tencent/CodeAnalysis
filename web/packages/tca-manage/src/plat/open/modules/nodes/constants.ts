@@ -37,6 +37,26 @@ export const STATE_CHOICES = {
   [NodeStateEnum.FREE]: '空闲',
 };
 
+/** 节点可用状态 */
+export enum NodeEnabledEnum {
+  /** 不可用 */
+  DISACTIVE =0,
+  /** 活跃 */
+  ACTIVE,
+  /** 离线 */
+  OFFLINE,
+}
+
+/** 节点可用状态 kv */
+export const NODE_ENABLED_CHOICES = {
+  [NodeEnabledEnum.DISACTIVE]: '不可用',
+  [NodeEnabledEnum.ACTIVE]: '活跃',
+  [NodeEnabledEnum.OFFLINE]: '离线',
+};
+
+/** 节点可用状态 options */
+export const NODE_ENABLED_OPTIONS = generateOptions(NODE_ENABLED_CHOICES, true);
+
 /** 节点标签类型 */
 export enum TagTypeEnum {
   /** 公共 */

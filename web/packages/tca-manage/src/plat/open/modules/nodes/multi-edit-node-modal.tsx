@@ -2,7 +2,7 @@
  * 批量编辑节点信息弹框
  */
 import React, { useRef, useState } from 'react';
-import { Dialog, Form, Select, Loading, MessagePlugin } from 'tdesign-react';
+import { Dialog, Form, Select, Loading, MessagePlugin, FormInstanceFunctions } from 'tdesign-react';
 import { useTranslation } from 'react-i18next';
 
 import { putMultiNode } from '@src/services/nodes';
@@ -25,7 +25,7 @@ const MultiEditNodeModal = ({
 }: MultiEditNodeModalProps) => {
   const { t } = useTranslation();
   const [loading, setLoading] = useState<boolean>(false);
-  const formRef = useRef<any>(null);
+  const formRef = useRef<FormInstanceFunctions>(null);
 
   /**
    * 表单保存操作
@@ -56,20 +56,27 @@ const MultiEditNodeModal = ({
     });
   };
 
+  /** 重置表单操作 */
+  const onReset = () => {
+    formRef.current?.reset();
+  };
+
   return (
     <Dialog
       header={t('批量编辑节点信息')}
       visible={visible}
-      onClose={onCancel}
       width={500}
       onConfirm={onSubmitHandle}
-      onClosed={formRef.current?.reset()}
+      onClose={onCancel}
+      onOpened={onReset}
+      onClosed={onReset}
     >
       <Loading loading={loading}>
         <Form
           layout='vertical'
           ref={formRef}
           labelWidth={120}
+          resetType='initial'
         >
           <FormItem
             label={<>{t('标签')}<span className={s.optionalMark}>{t('（可选）')}</span></>}

@@ -5,6 +5,7 @@ import { Dialog, Form, MessagePlugin, Input, Select } from 'tdesign-react';
 
 // 项目内
 import { nodeAPI } from '@src/services/nodes';
+import { NODE_ENABLED_OPTIONS } from './constants';
 
 const { FormItem } = Form;
 
@@ -75,6 +76,14 @@ const NodeModal = ({ nodeinfo, visible, onOk, onCancel, tagOptions, memberOption
           rules={[{ required: true, message: t('节点标签为必选项') }]}
         >
           <Select multiple options={tagOptions} />
+        </FormItem>
+        <FormItem
+          name="enabled"
+          label="节点可用性"
+          initialData={get(nodeinfo, 'enabled')}
+          rules={[{ required: true, message: t('节点可用性为必选项') }]}
+        >
+          <Select options={NODE_ENABLED_OPTIONS} />
         </FormItem>
         <FormItem
           name="related_managers"
