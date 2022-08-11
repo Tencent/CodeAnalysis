@@ -9,6 +9,5 @@ const { config } = webpackConfig({
 
 export default merge(config, {
   devServer: {
-
   },
 });

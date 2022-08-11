@@ -7,7 +7,6 @@
     "single-spa",
     "micro-frontend"
   ],
-  "author": "nickctang <nickctang@tencent.com>",
   "license": "MIT",
   "main": "src/index.ts",
   "files": [

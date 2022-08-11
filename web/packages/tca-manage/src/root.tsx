@@ -10,7 +10,7 @@ const Root = () => <Router>
   <Suspense fallback={<Loading />}>
     <Switch>
       {routes.map(item => <Route key={`${item.path}`} path={item.path} component={item.component} />)}
-      <Redirect from="/" to={routes[0].path instanceof Array ? routes[0].path[0] : routes[0].path} />,
+      <Redirect from="/manage" to={routes[0].path instanceof Array ? routes[0].path[0] : routes[0].path} />,
     </Switch>
   </Suspense>
 </Router >;

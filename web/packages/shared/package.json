@@ -6,7 +6,6 @@
     "micro-frontend",
     "shared"
   ],
-  "author": "nickctang <nickctang@tencent.com>",
   "homepage": "https://github.com/Tencent/CodeAnalysis",
   "license": "MIT",
   "main": "dist/index.js",

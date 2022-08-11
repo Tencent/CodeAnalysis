@@ -37,7 +37,6 @@ const OAuthModal = ({ scminfo, visible, onCancel, onOk }: OAuthModalProps) => {
     formRef.current?.validate().then((result: any) => {
       if (result === true) {
         const fieldsValue = formRef.current?.getFieldsValue(true);
-        console.log(fieldsValue);
         onOk(scminfo, {
           ...fieldsValue,
           redirect_uri: `http://${fieldsValue.redirect_uri}/cb_git_auth/${scminfo?.scm_platform_name}`,
