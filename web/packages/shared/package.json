@@ -38,7 +38,7 @@
     "i18next-http-backend": "^1.4.0",
     "i18next-scanner": "^3.1.0",
     "universal-cookie": "^4.0.4",
-    "moment": "^2.29.1",
+    "moment": "^2.29.4",
     "qs": "^6.10.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",

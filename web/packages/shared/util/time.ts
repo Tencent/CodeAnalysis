@@ -25,7 +25,7 @@ export const formatDateTime = (time: MomentInput, format = 'YYYY-MM-DD HH:mm:ss'
  * @param sec 秒
  * @returns H 时 m 分 s 秒
  */
-export const secToHMS = (sec: number) => {
+export const secToHMS = (sec: number|string) => {
   const time = Moment.duration(sec, 'seconds');
   const h = time.hours();
   const m = time.minutes();

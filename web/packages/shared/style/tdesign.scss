@@ -10,10 +10,6 @@
     td>a.link-name {
       color: $grey-8;
 
-      &:hover {
-        color: $blue-5  !important;
-      }
-
       &.with-icon {
         display: flex;
         align-items: center;
@@ -24,6 +20,12 @@
         color: $grey-7;
         max-width: 400px;
         word-break: break-all;
+      }
+    }
+    
+    &:hover {
+      td>a.link-name {
+        color: $blue-5  !important;
       }
     }
   }

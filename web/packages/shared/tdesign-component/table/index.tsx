@@ -8,13 +8,14 @@ import { PrimaryTable, PrimaryTableProps, PaginationProps, PageInfo } from 'tdes
 import { getPaginationParams, getURLPathByFilterParams } from '@tencent/micro-frontend-shared/util';
 import { FilterField } from '@tencent/micro-frontend-shared/util/types';
 import s from './style.scss';
-interface RouteTableProps extends PrimaryTableProps {
+interface RouteTableProps extends Omit<PrimaryTableProps, 'rowKey'> {
+  rowKey?: string
   pagination: PaginationProps;
   filterFields?: FilterField[]
 }
 
 const RouteTable = (props: RouteTableProps) => {
-  const { pagination, filterFields = [], className, ...otherProps } = props;
+  const { pagination, filterFields = [], className, rowKey = 'id', hover = true, ...otherProps } = props;
   const history = useHistory();
   const onChange = (pageInfo: PageInfo) => {
     if (!pageInfo.pageSize) {
@@ -30,7 +31,7 @@ const RouteTable = (props: RouteTableProps) => {
       pagination={{
         onChange,
         ...pagination,
-      }}
+      }} rowKey={rowKey} hover={hover}
       {...otherProps} />
   );
 };

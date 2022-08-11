@@ -6,7 +6,7 @@ import { useHistory } from 'react-router-dom';
 import { get, isEmpty, pick } from 'lodash';
 import classnames from 'classnames';
 import { Button, Checkbox, Input, Select, DatePicker, Loading, Row, Col, DateRangePicker, Form } from 'tdesign-react';
-import { ChevronDownIcon, ChevronUpIcon } from 'tdesign-icons-react';
+import { ChevronDownIcon, ChevronUpIcon, ClearIcon } from 'tdesign-icons-react';
 import { getURLPathByFilterParams } from '../../util/route';
 import { FilterField, Filter as FilterParams } from '../../util/types';
 import { formatDate } from '../../util';
@@ -180,64 +180,70 @@ const Search = ({
   };
 
   return (
-  <Loading size="small" loading={loading} showOverlay>
-    <div className={classnames(s.search, className)} style={style}>
-      <Form
-        className={s.searchContent}
-        labelWidth={60}
-        style={{ width: '100%' }}
-        ref={formRef}
-      >
-        <Row gutter={[16, 8]}>
-          {fields
-            .map(field => (<Col key={field.name} {...formLayout}>
-            <FormItem
-              key={field.name}
-              label={field.label}
-              name={field.name}
-              initialData={getInitData(field)}
-            >
-              {getItem(field)}
-            </FormItem>
-          </Col>))}
-          {!isEmpty(moreFields) && !loading
-            && <Col>
-              <Button
-                theme="primary"
-                variant="text"
-                onClick={() => setMore(!more)}
-                style={{ height: '32px' }}
-                icon={more ? <ChevronUpIcon /> : <ChevronDownIcon />}
-              >
-                高级搜索
-              </Button>
-            </Col>
-          }
-          {isExistSearchParam(searchParams)
-            && <Col>
-                <Button theme="primary" variant="text" style={{ height: '32px' }} onClick={onClear}>
+    <Loading size="small" loading={loading} showOverlay>
+      <div className={classnames(s.search, className)} style={style}>
+        <Form
+          className={s.searchContent}
+          labelWidth={60}
+          style={{ width: '100%' }}
+          ref={formRef}
+        >
+          <Row gutter={[16, 8]}>
+            {fields
+              .map(field => (<Col key={field.name} {...formLayout}>
+                <FormItem
+                  key={field.name}
+                  label={field.label}
+                  name={field.name}
+                  initialData={getInitData(field)}
+                >
+                  {getItem(field)}
+                </FormItem>
+              </Col>))}
+            {!isEmpty(moreFields) && !loading
+              && <Col>
+                <Button
+                  theme="primary"
+                  variant="text"
+                  onClick={() => setMore(!more)}
+                  style={{ height: '32px' }}
+                  icon={more ? <ChevronUpIcon /> : <ChevronDownIcon />}
+                >
+                  高级搜索
+                </Button>
+              </Col>
+            }
+            {isExistSearchParam(searchParams)
+              && <Col>
+                <Button
+                  theme='danger'
+                  variant="text"
+                  onClick={onClear}
+                  style={{ height: '32px' }}
+                  icon={<ClearIcon />}
+                >
                   清空过滤
                 </Button>
               </Col>
-          }
-        </Row>
-        {moreFields && more && <Row gutter={[16, 8]} style={{ marginTop: '8px' }}>
-          {moreFields
-            .map(field => <Col key={field.name} {...formLayout}>
-              <FormItem
-                key={field.name}
-                label={field.label}
-                name={field.name}
-                initialData={getInitData(field)}
-              >
-                {getItem(field)}
-              </FormItem>
-            </Col>)}
-        </Row>}
-      </Form>
-      {extraContent}
-    </div>
-  </Loading>);
+            }
+          </Row>
+          {moreFields && more && <Row gutter={[16, 8]} style={{ marginTop: '8px' }}>
+            {moreFields
+              .map(field => <Col key={field.name} {...formLayout}>
+                <FormItem
+                  key={field.name}
+                  label={field.label}
+                  name={field.name}
+                  initialData={getInitData(field)}
+                >
+                  {getItem(field)}
+                </FormItem>
+              </Col>)}
+          </Row>}
+        </Form>
+        {extraContent}
+      </div>
+    </Loading>);
 };
 
 export default Search;

@@ -55,11 +55,22 @@ const MicroInit = <State extends StateProps = StateProps, Action extends ActionP
   };
 
   const create = (rootDom: HTMLElement) => {
-    const e = document.getElementById(id);
-    if (rootDom && !e) {
-      const childDom = document.createElement('div');
-      childDom.id = id;
-      rootDom.appendChild(childDom);
+    if (rootDom) {
+      let wrapDom = document.getElementById(name);
+      if (!wrapDom) {
+        wrapDom = document.createElement('div');
+        wrapDom.id = name;
+        wrapDom.className = `${name}-container`;
+      }
+      let containerDom = document.getElementById(id);
+      if (!containerDom) {
+        containerDom = document.createElement('div');
+        containerDom.id = id;
+        containerDom.appendChild(wrapDom);
+        rootDom.appendChild(containerDom);
+      } else {
+        containerDom.appendChild(wrapDom);
+      }
     }
   };
 
@@ -72,9 +83,7 @@ const MicroInit = <State extends StateProps = StateProps, Action extends ActionP
       locale={locale}
       getPopupContainer={node => (node ? node.parentNode as HTMLElement : document.body)}
     >
-      <div id={name} className={`${name}-container`}>
-        {container}
-      </div>
+      {container}
     </ConfigProvider>;
 
     if (hookStore?.enable) {
@@ -94,13 +103,14 @@ const MicroInit = <State extends StateProps = StateProps, Action extends ActionP
       </Provider>;
     }
 
-    render(renderContent, document.getElementById(id));
+    render(renderContent, document.getElementById(name));
   };
 
   const unmount = () => {
-    const e = document.getElementById(id);
+    const e = document.getElementById(name);
     if (e) {
       unmountComponentAtNode(e);
+      e.remove();
     }
   };
 

@@ -43,17 +43,22 @@ const MicroInit = <State extends StateProps = StateProps, Action extends ActionP
   };
 
   const create = (rootDom: HTMLElement) => {
-    const e = document.getElementById(id);
-    const wrapDom = document.createElement('div');
-    wrapDom.id = name;
-    wrapDom.className = `${name}-container`;
-    if (rootDom && !e) {
-      const childDom = document.createElement('div');
-      childDom.id = id;
-      childDom.appendChild(wrapDom);
-      rootDom.appendChild(childDom);
-    } else if (e) {
-      e.appendChild(wrapDom);
+    if (rootDom) {
+      let wrapDom = document.getElementById(name);
+      if (!wrapDom) {
+        wrapDom = document.createElement('div');
+        wrapDom.id = name;
+        wrapDom.className = `${name}-container`;
+      }
+      let containerDom = document.getElementById(id);
+      if (!containerDom) {
+        containerDom = document.createElement('div');
+        containerDom.id = id;
+        containerDom.appendChild(wrapDom);
+        rootDom.appendChild(containerDom);
+      } else {
+        containerDom.appendChild(wrapDom);
+      }
     }
   };
 
@@ -66,7 +71,7 @@ const MicroInit = <State extends StateProps = StateProps, Action extends ActionP
     let renderContent = <ConfigProvider
       globalConfig={locale}
     >
-      <>{container}</>
+      {container}
     </ConfigProvider>;
 
     if (hookStore?.enable) {
