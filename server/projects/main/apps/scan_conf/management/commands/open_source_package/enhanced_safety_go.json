@@ -1,0 +1,60 @@
+[
+    {
+        "name": "【Go】强化Go安全规则",
+        "description": "Go安全规则，需要申请licesne使用",
+        "revision": null,
+        "package_type": "official",
+        "languages": [
+            "Go"
+        ],
+        "labels": [
+            "安全"
+        ],
+        "checkrule_set": [
+            {
+                "checktool": "tca_ql_go",
+                "checkrule": "cmd",
+                "severity": "fatal",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "tca_ql_go",
+                "checkrule": "path_traversal",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "tca_ql_go",
+                "checkrule": "text_template_xss",
+                "severity": "fatal",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "tca_ql_go",
+                "checkrule": "sql",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "tca_ql_go",
+                "checkrule": "ssrf",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "tca_ql_go",
+                "checkrule": "xss",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            }
+        ],
+        "open_saas": true,
+        "envs": null
+    }
+]

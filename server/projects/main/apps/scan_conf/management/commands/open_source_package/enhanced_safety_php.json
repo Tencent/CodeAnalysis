@@ -1,0 +1,102 @@
+[
+    {
+        "name": "【PHP】强化PHP安全规则",
+        "description": "PHP安全规则，需要申请licesne使用",
+        "revision": null,
+        "package_type": "official",
+        "languages": [
+            "php"
+        ],
+        "labels": [
+            "安全"
+        ],
+        "checkrule_set": [
+            {
+                "checktool": "tca_ql_php",
+                "checkrule": "cmd",
+                "severity": "fatal",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "tca_ql_php",
+                "checkrule": "code",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "tca_ql_php",
+                "checkrule": "deser",
+                "severity": "fatal",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "tca_ql_php",
+                "checkrule": "file_inclusion",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "tca_ql_php",
+                "checkrule": "http",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "tca_ql_php",
+                "checkrule": "ldap_injection",
+                "severity": "fatal",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "tca_ql_php",
+                "checkrule": "reflectioni",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "tca_ql_php",
+                "checkrule": "session",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "tca_ql_php",
+                "checkrule": "sql",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "tca_ql_php",
+                "checkrule": "phpinfo",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "tca_ql_php",
+                "checkrule": "ssrf",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "tca_ql_php",
+                "checkrule": "xss",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            }
+        ],
+        "open_saas": true,
+        "envs": null
+    }
+]
