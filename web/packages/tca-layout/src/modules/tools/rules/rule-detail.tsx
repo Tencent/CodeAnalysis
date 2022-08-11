@@ -64,7 +64,9 @@ const RuleDetail = ({ visible, data, onClose }: RuleDetailProps) => (
       {
         data.checkruledesc?.desc && (
           <Col span={18}>
-            <ReactMarkdown source={data.checkruledesc?.desc} />
+            <ReactMarkdown>
+              {data.checkruledesc?.desc}
+            </ReactMarkdown>
           </Col>
         )
       }

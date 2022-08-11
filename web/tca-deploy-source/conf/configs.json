@@ -2,12 +2,12 @@
   {
     "name": "tca-layout",
     "description": "tca layout微前端",
-    "commitId": "aa3edf7c7a4270197a250ab2920cb3f872e21d2d",
+    "commitId": "9c8b40cc808212e1c53f158e2d6e78875382af59",
     "match": "/",
     "js": [
-      "/static/tca-layout/runtime~tca-layout-7ee8a3c6.js",
-      "/static/tca-layout/vendors~tca-layout-d2bb73ce.js",
-      "/static/tca-layout/tca-layout-0e2de0db.js"
+      "/static/tca-layout/runtime~tca-layout-283c04f5.js",
+      "/static/tca-layout/vendors~tca-layout-a3495dfa.js",
+      "/static/tca-layout/tca-layout-31b8805f.js"
     ],
     "css": [
       "/static/tca-layout/vendors~tca-layout-9b6df0cb.css",
