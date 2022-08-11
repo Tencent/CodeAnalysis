@@ -171,6 +171,8 @@ class Collie(object):
         if not output or not os.path.exists(output):
             return
 
+        rules = self.params.get("rules", list())
+        
         f = open(output, "r", encoding="utf-8")
         fieldnames = (
             "checker",
@@ -187,6 +189,8 @@ class Collie(object):
             line = int(row["line"])
             column = int(row["column"])
             rule = row["checker"]
+            if rule not in rules:
+                continue
             msg = row["description"]
             yield {
                 "rule": rule,
