@@ -36,7 +36,7 @@ jobs:
 
       - name: Push to Gitee
         run: |
-          remote_repo="https://${GITEE_USERNAME}:${GITEE_PASSWORD}@gitee.com/${TGIT_REPOSITORY}.git"
+          remote_repo="https://${GITEE_USERNAME}:${GITEE_PASSWORD}@gitee.com/${GITEE_REPOSITORY}.git"
           git remote add gitee "${remote_repo}"
           git show-ref
           git branch --verbose
