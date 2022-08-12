@@ -1,7 +1,7 @@
 [
     {
         "name": "【PHP】强化PHP安全规则",
-        "description": "PHP安全规则，需要申请licesne使用",
+        "description": "PHP安全规则，需要申请license使用",
         "revision": null,
         "package_type": "official",
         "languages": [

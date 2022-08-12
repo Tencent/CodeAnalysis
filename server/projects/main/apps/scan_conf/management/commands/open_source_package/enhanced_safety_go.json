@@ -1,7 +1,7 @@
 [
     {
         "name": "【Go】强化Go安全规则",
-        "description": "Go安全规则，需要申请licesne使用",
+        "description": "Go安全规则，需要申请license使用",
         "revision": null,
         "package_type": "official",
         "languages": [
