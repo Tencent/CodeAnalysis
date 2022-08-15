@@ -51,8 +51,8 @@ class ResponseMiddleware:
             auth_type = settings.OAUTH_JWT['AUTH_HEADER_TYPES'][0]
             pub_key = settings.OAUTH_JWT['VERIFYING_KEY']
             life_time = settings.OAUTH_JWT['ACCESS_TOKEN_LIFETIME']
-
             now_time = datetime.now()
+
             if auth_type in authorization:
                 access_token = authorization.replace('%s ' % auth_type, '')
                 decoded_jwt = jwt.decode(access_token, pub_key, algorithm='RS256')
@@ -75,7 +75,8 @@ class ResponseMiddleware:
                 else:
                     request.oauth = None
             else:
+                logger.warning("[auth_type: %s] auth type not in authorization" % auth_type)
                 request.oauth = None
         except Exception as e:
             logger.exception(e)
-            raise e
+            return Response({"exception_message": "鉴权失败", "status": -1})
