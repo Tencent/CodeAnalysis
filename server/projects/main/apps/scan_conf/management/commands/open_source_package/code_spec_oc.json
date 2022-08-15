@@ -1,0 +1,67 @@
+[
+    {
+        "name": "【Objective-C】代码规范规则包",
+        "description": "【Objective-C】代码规范规则包，要求启用独立工具。",
+        "revision": null,
+        "package_type": "official",
+        "languages": [
+            "oc"
+        ],
+        "labels": [
+            "规范"
+        ],
+        "checkrule_set": [
+            {
+                "checktool": "collie",
+                "checkrule": "ObjectiveC/Copyright",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "collie",
+                "checkrule": "ObjectiveC/Indent",
+                "severity": "info",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "collie",
+                "checkrule": "ObjectiveC/MaxLinesPerFunction",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "collie",
+                "checkrule": "ObjectiveC/MissingDocInterface",
+                "severity": "info",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "collie",
+                "checkrule": "ObjectiveC/MissingDocProperty",
+                "severity": "info",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "collie",
+                "checkrule": "ObjectiveC/MissingDocProtocol",
+                "severity": "info",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "collie",
+                "checkrule": "ObjectiveC/ParameterCount",
+                "severity": "info",
+                "rule_params": null,
+                "state": "enabled"
+            }
+        ],
+        "open_saas": false,
+        "envs": null
+    }
+]

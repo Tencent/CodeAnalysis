@@ -1,7 +1,7 @@
 [
     {
-        "name": "【Android】动态权限调用扫描",
-        "description": "扫描Android动态权限调用。",
+        "name": "【Android】动态权限调用分析",
+        "description": "分析Android项目中的动态权限调用。",
         "revision": null,
         "package_type": "official",
         "languages": [
