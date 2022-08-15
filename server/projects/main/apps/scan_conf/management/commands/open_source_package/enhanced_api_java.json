@@ -1,0 +1,557 @@
+[
+    {
+        "name": "【Java】强化API分析",
+        "description": "危险权限分析规则包、动态权限调用分析规则包、隐私合规检查规则包的强化版，要求启用独立工具。",
+        "revision": null,
+        "package_type": "official",
+        "languages": [
+            "java"
+        ],
+        "labels": [
+            "其他"
+        ],
+        "checkrule_set": [
+            {
+                "checktool": "jaff",
+                "checkrule": "AudioRecordInit",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jaff",
+                "checkrule": "camera1API",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jafc",
+                "checkrule": "CheckCollectionsSortCopyOnWriteArrayList",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jaff",
+                "checkrule": "ContactsAPI",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jaaf",
+                "checkrule": "DeriveCheckIQConfigProcessorHandler",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jaaf",
+                "checkrule": "DeriveCheckIQConfigProcessorThread",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jaff",
+                "checkrule": "DynamicAPICameraManager",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jafc",
+                "checkrule": "DynamicAPICameraManager",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jaff",
+                "checkrule": "DynamicAPIGetExternalStorageDirectory",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jafc",
+                "checkrule": "DynamicAPIGetExternalStorageDirectory",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jaff",
+                "checkrule": "DynamicAPILocationManager",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jafc",
+                "checkrule": "DynamicAPILocationManager",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jaff",
+                "checkrule": "DynamicAPISubscriptionManager",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jafc",
+                "checkrule": "DynamicAPISubscriptionManager",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jaff",
+                "checkrule": "DynamicAPITelephonyManager",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jafc",
+                "checkrule": "DynamicAPITelephonyManager",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jaff",
+                "checkrule": "DynamicAPITwilightManager",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jafc",
+                "checkrule": "DynamicAPITwilightManager",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jaff",
+                "checkrule": "DynamicAPIWallpaperManager",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jafc",
+                "checkrule": "DynamicAPIWallpaperManager",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jaff",
+                "checkrule": "DynamicAPIWifiRttManager",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jafc",
+                "checkrule": "DynamicAPIWifiRttManager",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jaff",
+                "checkrule": "DynamicPermissionsActionImageCapture",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jaff",
+                "checkrule": "DynamicPermissionsCalendarContract",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jaff",
+                "checkrule": "DynamicPermissionsImageCapture",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jaff",
+                "checkrule": "FightImei",
+                "severity": "fatal",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jafc",
+                "checkrule": "FightImei",
+                "severity": "fatal",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jaff",
+                "checkrule": "FileRWModeReadable",
+                "severity": "info",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jaff",
+                "checkrule": "FileRWModeWriteable",
+                "severity": "info",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jaff",
+                "checkrule": "FileShareMediaStore",
+                "severity": "info",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jaff",
+                "checkrule": "FileSharePackageArchive",
+                "severity": "info",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jaff",
+                "checkrule": "FindAudioRecord",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jaff",
+                "checkrule": "FindClipboardInvoke",
+                "severity": "info",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jafc",
+                "checkrule": "FindClipboardInvoke",
+                "severity": "info",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jaff",
+                "checkrule": "FindClipboardInvoke2",
+                "severity": "info",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jafc",
+                "checkrule": "FindClipboardInvoke2",
+                "severity": "info",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jaff",
+                "checkrule": "FindConnectivityManager",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jafc",
+                "checkrule": "FindConnectivityManager",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jaff",
+                "checkrule": "FindCopyOnWriteArrayListSet",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jafc",
+                "checkrule": "FindCopyOnWriteArrayListSet",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jaff",
+                "checkrule": "FindLog4j",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jafc",
+                "checkrule": "FindLog4j",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jaff",
+                "checkrule": "FindMediaRecorder",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jaff",
+                "checkrule": "FindNetworkInfo",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jafc",
+                "checkrule": "FindNetworkInfo",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jaff",
+                "checkrule": "FindSmsManager",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jaff",
+                "checkrule": "FindSmsMessage",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jaff",
+                "checkrule": "FindZipFile",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jafc",
+                "checkrule": "FuncCallGraph",
+                "severity": "info",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jaff",
+                "checkrule": "LocationAPI",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jaff",
+                "checkrule": "Log4jLogManager",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jafc",
+                "checkrule": "Log4jLogManager",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jaff",
+                "checkrule": "NoBuildModel",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jafc",
+                "checkrule": "NoBuildModel",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jaff",
+                "checkrule": "NoDeviceId",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jafc",
+                "checkrule": "NoDeviceId",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jaff",
+                "checkrule": "NoImei",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jafc",
+                "checkrule": "NoImei",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jaff",
+                "checkrule": "NoIMSI",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jafc",
+                "checkrule": "NoIMSI",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jaff",
+                "checkrule": "NoInstalledAppList",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jafc",
+                "checkrule": "NoInstalledAppList",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jaff",
+                "checkrule": "NoMacAddressNetworkInterface",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jafc",
+                "checkrule": "NoMacAddressNetworkInterface",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jaff",
+                "checkrule": "NoMacAddressWifiInfo",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jafc",
+                "checkrule": "NoMacAddressWifiInfo",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jaff",
+                "checkrule": "NoSIM",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jafc",
+                "checkrule": "NoSIM",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jaff",
+                "checkrule": "PhoneInfoAPI",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jaff",
+                "checkrule": "SHA2CBC",
+                "severity": "info",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jafc",
+                "checkrule": "SHA2CBC",
+                "severity": "info",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jafc",
+                "checkrule": "StatBaseBuilderUpChain",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jafc",
+                "checkrule": "StatMLFeedbackReportBuilderUpChain",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jaff",
+                "checkrule": "UriFromFile",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jafc",
+                "checkrule": "UriFromFile",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jaff",
+                "checkrule": "WIFIAPI",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "jaff",
+                "checkrule": "ZipInputStream",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            }
+        ],
+        "open_saas": false,
+        "envs": null
+    }
+]

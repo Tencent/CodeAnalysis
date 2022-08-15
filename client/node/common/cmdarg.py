@@ -74,6 +74,7 @@ class CmdArgParser(object):
         # start命令
         start_parser = subparsers.add_parser('start', help="启动节点")
         start_parser.add_argument("-t", "--token", dest='token', type=str, help="个人token,在代码分析网站获取", required=True)
+        start_parser.add_argument("--org-sid", dest="org_sid", help="团队编号,在代码分析网站获取。指定注册为团队的节点，不指定则为公共节点")
 
         # quickscan命令
         quickscan_parser = subparsers.add_parser('quickscan', help="执行快速分析")

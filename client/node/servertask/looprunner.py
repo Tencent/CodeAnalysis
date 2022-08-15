@@ -34,17 +34,18 @@ from util.cleaner import Cleaner
 class LoopRunner(TaskRunner):
     """轮询任务执行器,通过轮询不断获取任务来执行
     """
-    def __init__(self, token):
+    def __init__(self, args):
         """构造函数
         """
         TaskRunner.__init__(self)
 
-        self._token = token
+        self._token = args.token
+        self._org_sid = args.org_sid
         self._server_url = LocalConfig.get_server_url()
         # 打印连接的sever地址
         LogPrinter.info("using server: %s" % self._server_url)
         # 初始化与codedog服务器通信的api server实例
-        self._server = RetryDogServer(self._server_url, token).get_api_server()
+        self._server = RetryDogServer(self._server_url, self._token).get_api_server()
         self._get_task_interval = 10  # sec,获取任务频率
 
         # 设置环境变量，标记是节点模式
@@ -139,7 +140,7 @@ class LoopRunner(TaskRunner):
     def run(self):
         """looprunner主函数"""
         # 向server注册节点
-        NodeMgr().register_node(self._server)
+        NodeMgr().register_node(self._server, self._org_sid)
 
         # 启动心跳上报线程
         HeartBeat(self._server).start()
