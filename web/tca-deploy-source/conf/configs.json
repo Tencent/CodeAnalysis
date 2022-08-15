@@ -40,12 +40,12 @@
   {
     "name": "tca-analysis",
     "description": "TCA Analysis 微前端",
-    "commitId": "d03249cebd75c840212f5ce278f66fc3d8091769",
+    "commitId": "966f5a36e9301c047e1a6410e27a613a0a41a082",
     "match": "^/t/[^/]+/p/[^/]+/(code-analysis|repos|template|profile|group)",
     "js": [
       "/static/tca-analysis/runtime~tca-analysis-749a7dad.js",
-      "/static/tca-analysis/vendors~tca-analysis-7f52f6b6.js",
-      "/static/tca-analysis/tca-analysis-b144763a.js"
+      "/static/tca-analysis/vendors~tca-analysis-706c96d6.js",
+      "/static/tca-analysis/tca-analysis-2cee678b.js"
     ],
     "css": [
       "/static/tca-analysis/vendors~tca-analysis-9b6df0cb.css",

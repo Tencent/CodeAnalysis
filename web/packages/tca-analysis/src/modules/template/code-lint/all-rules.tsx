@@ -24,7 +24,7 @@ import {
   getRuleDetail,
   getAllCheckPackages,
 } from '@src/services/template';
-import { getLabels, getLanguages } from '@src/services/schemes';
+import { getLanguages } from '@src/services/schemes';
 
 import RuleDetail from '../../projects/issues/rule-detail';
 import Search from './all-rules-search';
@@ -46,7 +46,6 @@ const AllRules = () => {
   const [ruleDetail, setRuleDetail] = useState({});
 
   const [allPkgs, setAllPkgs] = useState([]);
-  const [labels, setLabels] = useState([]);
   const [languages, setLanguages] = useState([]);
 
   const query = getQuery();
@@ -63,16 +62,14 @@ const AllRules = () => {
     getAllPkgs();
 
     (async () => {
-      const labels = await getLabels();
       const languages = await getLanguages();
-      setLabels(labels.results || []);
       setLanguages(languages.results || []);
     })();
   }, [pkgId]);
 
   const getAllPkgs = async () => {
     let pkgs = await getAllCheckPackages(orgSid, tmplId);
-    pkgs = (pkgs.results || []).filter((item: any) => !item.disable);
+    pkgs = (pkgs || []).filter((item: any) => !item.disable);
     setAllPkgs(pkgs);
   };
 
@@ -144,7 +141,6 @@ const AllRules = () => {
       <Search
         filters={{
           allPkgs,
-          labels,
           languages,
         }}
         searchParams={cloneDeep(searchParams)}
@@ -159,7 +155,7 @@ const AllRules = () => {
           <div className={style.operation}>
             <Button type="link" onClick={addRules} style={{ marginRight: 10 }}>
               批量添加 {difference(selectedRowKeys, selectedKeys).length} 条规则
-                        </Button>
+            </Button>
           </div>
         )}
         <Table
