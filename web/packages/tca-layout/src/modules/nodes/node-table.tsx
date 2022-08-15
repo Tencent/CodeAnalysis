@@ -66,6 +66,7 @@ const NodeTable = () => {
   useEffect(() => {
     getTags(orgSid).then((response) => {
       setTagOptions(response.results.map((item: any) => ({
+        ...item,
         text: item.display_name || item.name,
         value: item.name,
       })));

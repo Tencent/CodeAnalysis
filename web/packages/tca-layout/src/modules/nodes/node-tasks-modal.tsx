@@ -31,8 +31,7 @@ const NodeTaskModal = ({ visible, nodeId, onCancel }: NodeTaskModalProps) => {
 
 
   useEffect(() => {
-    console.log(nodeId);
-    if(visible && nodeId) {
+    if (visible && nodeId) {
       getTaskList(DEFAULT_PAGER.currentPage, DEFAULT_PAGER.pageSize);
     }
   }, [nodeId])
@@ -86,7 +85,7 @@ const NodeTaskModal = ({ visible, nodeId, onCancel }: NodeTaskModalProps) => {
           key="project"
           width={300}
           render={(
-            { scm_url, branch}: any,
+            { scm_url, branch }: any,
           ) => (
             <>
               <EllipsisTemplate maxWidth={300} className="text-weight-bold">

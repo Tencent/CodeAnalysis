@@ -69,7 +69,8 @@ const NodeModal = ({ nodeinfo, visible, onOk, onCancel, tagOptions, members }: I
           rules={[{ required: true, message: t('节点标签为必选项') }]}
         >
           <Select mode="multiple">
-            {tagOptions.map((item: any) => (
+            {/* 团队节点仅能使用团队标签 */}
+            {tagOptions.filter(item => item.org_sid === nodeinfo?.org_sid).map((item: any) => (
               <Option key={item.value} value={item.value}>
                 {item.text}
               </Option>
