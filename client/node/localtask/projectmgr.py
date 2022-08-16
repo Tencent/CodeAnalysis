@@ -118,6 +118,7 @@ class ProjectMgr(object):
         is_scheme_existed, scheme_params = SchemeManager.check_and_create_scheme(self._repo_id,
                                                                                  repo_schemes,
                                                                                  self._scan_plan,
+                                                                                 self._ref_scheme_id,
                                                                                  self._scheme_template_ids,
                                                                                  self._scheme_templates,
                                                                                  self._languages,

@@ -1,7 +1,7 @@
 [
     {
         "name": "【Android】隐私合规检查",
-        "description": "检查Android隐私API使用是否合规。",
+        "description": "检查Android项目中的隐私API使用是否合规。",
         "revision": null,
         "package_type": "official",
         "languages": [

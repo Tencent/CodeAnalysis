@@ -178,14 +178,14 @@ class ScmAccountSerializer(serializers.ModelSerializer):
         if models.ScmAccount.objects.filter(
                 user=current_user,
                 scm_username=validated_data.get("scm_username"),
-                auth_origin_id="Codedog",
+                auth_origin_id=settings.DEFAULT_ORIGIN_ID,
                 scm_platform=validated_data.get("scm_platform")):
             raise serializers.ValidationError({"scm_username": ["该账号已存在"]})
         scm_account = models.ScmAccount.objects.create(
             user=current_user,
             scm_username=validated_data.get("scm_username"),
             scm_password=validated_data.get("scm_password"),
-            auth_origin_id="Codedog",
+            auth_origin_id=settings.DEFAULT_ORIGIN_ID,
             scm_platform=validated_data.get("scm_platform")
         )
         # 用于补充平台信息，如针对其他平台增加说明，便于日后增加平台
@@ -249,7 +249,7 @@ class ScmSshInfoSerializer(serializers.ModelSerializer):
             git_token=validated_data.get("git_token"),
             ssh_private_key=validated_data.get("ssh_private_key"),
             password=validated_data.get("password"),
-            auth_origin_id="Codedog",
+            auth_origin_id=settings.DEFAULT_ORIGIN_ID,
             scm_platform=validated_data.get("scm_platform")
         )
         # 用于补充平台信息，如针对其他平台增加说明，便于日后增加平台

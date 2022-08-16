@@ -1,8 +1,8 @@
 # CLS使用文档
-CLS(Common License Server)是TCA自研工具的License鉴权服务。
+CLS(Common License Server), 是TCA独立工具的License鉴权微服务。
 
 ## 准备
-1. 一台CLS服务专属机器，CLS服务需要跟该机器绑定
+1. 一台CLS微服务专属机器，CLS微服务需要跟该机器绑定
 
 ## 部署
 1. 在CLS目录下执行以下命令，获取Server ID和client License
@@ -14,13 +14,13 @@ xxx
 2022-04-13 18:35:29.454552966 +0800 CST [INFO] License Server ID: xxx
 ```
 - Server ID: 机器码，用于跟TCA团队申请License授权
-- client License: 提供给TCA Client, 方便TCA Client进行工具鉴权
+- client License: 提供给TCA Client, 方便TCA Client进行工具鉴权（重要，建议备份留底）
 
-2. 在TCA Client的[config.ini](../../client/config.ini)中配置CLS服务，比如
+2. 在TCA Client的[config.ini](../../client/config.ini)中配置CLS微服务，比如
 ```ini
 [LICENSE_CONFIG]
-; [可选]使用自研工具时，需要填写，默认不需要
-; license服务器url, base_path, license
+; [可选]使用独立工具时，需要填写，默认不需要
+; License服务器url, base_path, license
 URL=http://<IP或者域名>:<port>
 BASE_PATH=
 LICENSE=<client License>
@@ -38,7 +38,7 @@ tommyzhang@tencent.com
 
 - 格式如下：
 
-TCA自研工具License申请邮件
+TCA独立工具License申请邮件
 
 | |  |
 |  :----:  | :----:  |
@@ -49,7 +49,9 @@ TCA自研工具License申请邮件
 | 首次登记的机器码 | xxx |
 | 体验申请用途 | xxx |
 
-4. 收到TCA团队回复邮件之后，在CLS目录下的[config.yaml](config.yaml)文件中填写License
+4. 收到TCA团队回复邮件之后，在CLS目录下的[config.yaml](config.yaml)文件中填写License <br>
+注意！请遵从yaml格式，比如：
+- 键值对中，冒号 `:` 后面一定要跟一个空白字符，示例 `key: value`.
 
 5. 执行以下命令启动
 ```shell
@@ -63,6 +65,6 @@ TCA自研工具License申请邮件
 ```shell
 # 查找CLS进程ID
 ps aux|grep cls
-# 重启服务
+# 重启微服务
 kill -USR2 <pid>
 ```

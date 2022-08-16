@@ -74,6 +74,7 @@ class CmdArgParser(object):
         # start命令
         start_parser = subparsers.add_parser('start', help="启动节点")
         start_parser.add_argument("-t", "--token", dest='token', type=str, help="个人token,在代码分析网站获取", required=True)
+        start_parser.add_argument("--org-sid", dest="org_sid", help="团队编号,在代码分析网站获取。指定注册为团队的节点，不指定则为公共节点")
 
         # quickscan命令
         quickscan_parser = subparsers.add_parser('quickscan', help="执行快速分析")
@@ -83,12 +84,24 @@ class CmdArgParser(object):
         quickscan_parser.add_argument("-l", "--label", dest="label", type=str,
                                       help="规则标签，可以指定多个标签,用英文逗号(,)分隔")
         quickscan_parser.add_argument("--language", dest="language", type=str, help="代码语言类型,可以指定多门语言,用英文逗号(,)分隔")
+        quickscan_parser.add_argument("-t", "--token", dest='token', type=str,
+                                      help="个人Token,在代码分析网站获取, 与--scheme-template-id,--org-sid配合使用")
+        quickscan_parser.add_argument("--scheme-template-id", dest="scheme_template_id", type=str,
+                                      help="分析方案模板id, 与--token,--org-sid配合使用")
+        quickscan_parser.add_argument("--org-sid", dest="org_sid", help="团队编号,在代码分析网站获取,"
+                                                                        "与--scheme-template-id,--token配合使用")
 
         # quickinit命令
         quickinit_parser = subparsers.add_parser('quickinit', help="初始化快速分析")
         quickinit_parser.add_argument("-l", "--label", dest="label", type=str,
                                       help="规则标签，可以指定多个标签,用英文逗号(,)分隔")
         quickinit_parser.add_argument("--language", dest="language", type=str, help="代码语言类型,可以指定多门语言,用英文逗号(,)分隔")
+        quickinit_parser.add_argument("-t", "--token", dest='token', type=str,
+                                      help="个人Token,在代码分析网站获取, 与--scheme-template-id,--org-sid配合使用")
+        quickinit_parser.add_argument("--scheme-template-id", dest="scheme_template_id", type=str,
+                                      help="分析方案模板id, 与--token,--org-sid配合使用")
+        quickinit_parser.add_argument("--org-sid", dest="org_sid", help="团队编号,在代码分析网站获取,"
+                                                                        "与--scheme-template-id,--token配合使用")
 
         # task命令
         task_parser = subparsers.add_parser('task', help="执行单个任务，本地调试用")

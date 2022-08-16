@@ -100,7 +100,7 @@ def monitor_closing_job():
     logger.info("[PeriodicTasks]开始查询入库中的任务，当前入库中的任务数: %s" % closing_job.count())
     for job in closing_job:
         job = Job.objects.get(id=job.id)
-        if job.save_time() < settings.CLOSING_JOB_TIMEOUT:
+        if job.save_time < settings.CLOSING_JOB_TIMEOUT:
             continue
         logger.info("[PeriodicTasks][Project: %s][Job: %s] job closing timeout" % (
             job.project_id, job.id))

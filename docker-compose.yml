@@ -226,3 +226,18 @@ services:
       - analysis-server
       - login-server
       - file-server
+
+  client:
+    env_file:
+      - ./server/dockerconfs/.env.local
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    command: 
+      - /bin/bash
+      - -c
+      - |
+        python3 codepuppy.py start -t $$CODEDOG_TOKEN
+    volumes:
+      - ./tools/:/workspace/tools/
+      - ./.docker_data/client/appdata:/workspace/client/.appdata
