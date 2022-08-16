@@ -12,6 +12,7 @@ import Group from 'coding-oa-uikit/lib/icon/Group';
 import Project from 'coding-oa-uikit/lib/icon/Project';
 import Package from 'coding-oa-uikit/lib/icon/Package';
 
+import Copy from '@src/components/copy'
 import { useStateStore } from '@src/context/store';
 import { t } from '@src/i18n/i18next';
 import { getTeamInfo, updateTeamInfo, disableTeam } from '@src/services/team';
@@ -130,7 +131,12 @@ const Profile = () => {
           onFinish={onFinish}
         >
           <Form.Item
-            label={t('团队名称')}
+            label={t('团队唯一标识')}
+          >
+            <div>{data.org_sid} <Copy text={data.org_sid} /></div>
+          </Form.Item>
+          <Form.Item
+            label={t('团队名称11')}
             name="name"
             rules={
               isEdit
