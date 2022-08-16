@@ -1,0 +1,206 @@
+[
+    {
+      "name": "tca_plugin_sqlcheck",
+      "display_name": "SQLCheck",
+      "description": "Automatically identify anti-patterns in SQL queries.",
+      "license": "Apache2.0",
+      "task_processes": [
+        "analyze",
+        "datahandle"
+      ],
+      "scan_app": "codelint",
+      "scm_url": "https://github.com/TCATools/tca_plugin_sqlcheck.git#main",
+      "run_cmd": "python src/main.py scan",
+      "envs": "python_version = 3",
+      "build_flag": false,
+      "checkrule_set": [
+        {
+          "real_name": "NullUsage",
+          "display_name": "NullUsage",
+          "severity": "info",
+          "category": "correctness",
+          "rule_title": "(HINTS) (QUERY ANTI-PATTERN) NOT NULL Usage",
+          "rule_params": null,
+          "custom": false,
+          "languages": [
+            "sql"
+          ],
+          "solution": null,
+          "owner": null,
+          "labels": [],
+          "description": "Use NOT NULL only if the column cannot have a missing value:\nWhen you declare a column as NOT NULL, it should be because it would make no\nsense for the row to exist without a value in that column. Use null to signify a\nmissing value for any data type.",
+          "disable": false
+        },
+        {
+          "real_name": "Select*",
+          "display_name": "Select*",
+          "severity": "error",
+          "category": "correctness",
+          "rule_title": "(HIGH RISK) (QUERY ANTI-PATTERN) SELECT *",
+          "rule_params": null,
+          "custom": false,
+          "languages": [
+            "sql"
+          ],
+          "solution": null,
+          "owner": null,
+          "labels": [],
+          "description": "● Inefficiency in moving data to the consumer:\nWhen you SELECT *, you're often retrieving more columns from the database than\nyour application really needs to function. This causes more data to move from\nthe database server to the client, slowing access and increasing load on your\nmachines, as well as taking more time to travel across the network. This is\nespecially true when someone adds new columns to underlying tables that didn't\nexist and weren't needed when the original consumers coded their data access.\n\n\n● Indexing issues:\nConsider a scenario where you want to tune a query to a high level of\nperformance. If you were to use *, and it returned more columns than you\nactually needed, the server would often have to perform more expensive methods\nto retrieve your data than it otherwise might. For example, you wouldn't be able\nto create an index which simply covered the columns in your SELECT list, and\neven if you did (including all columns [shudder]), the next guy who came around\nand added a column to the underlying table would cause the optimizer to ignore\nyour optimized covering index, and you'd likely find that the performance of\nyour query would drop substantially for no readily apparent reason.\n\n● Binding\nProblems:\nWhen you SELECT *, it's possible to retrieve two columns of the same name from\ntwo different tables. This can often crash your data consumer. Imagine a query\nthat joins two tables, both of which contain a column called \"ID\". How would a\nconsumer know which was which? SELECT * can also confuse views (at least in some\nversions SQL Server) when underlying table structures change -- the view is not\nrebuilt, and the data which comes back can be nonsense. And the worst part of it\nis that you can take care to name your columns whatever you want, but the next\nguy who comes along might have no way of knowing that he has to worry about\nadding a column which will collide with your already-developed names.",
+          "disable": false
+        },
+        {
+          "real_name": "GroupByUsage",
+          "display_name": "GroupByUsage",
+          "severity": "info",
+          "category": "correctness",
+          "rule_title": "(LOW RISK) (QUERY ANTI-PATTERN) GROUP BY Usage",
+          "rule_params": null,
+          "custom": false,
+          "languages": [
+            "sql"
+          ],
+          "solution": null,
+          "owner": null,
+          "labels": [],
+          "description": "● Do not reference non-grouped columns:\nEvery column in the select-list of a query must have a single value row per row\ngroup. This is called the Single-Value Rule. Columns named in the GROUP BY\nclause are guaranteed to be exactly one value per group, no matter how many rows\nthe group matches. Most DBMSs report an error if you try to run any query that\ntries to return a column other than those columns named in the GROUP BY clause\nor as arguments to aggregate functions. Every expression in the select list must\nbe contained in either an aggregate function or the GROUP BY clause. Follow the\nsingle-value rule to avoid ambiguous query results.",
+          "disable": false
+        },
+        {
+          "real_name": "GenericPrimaryKey",
+          "display_name": "GenericPrimaryKey",
+          "severity": "error",
+          "category": "correctness",
+          "rule_title": "(HIGH RISK) (LOGICAL_DATABASE_DESIGN ANTI-PATTERN) Generic Primary Key",
+          "rule_params": null,
+          "custom": false,
+          "languages": [
+            "sql"
+          ],
+          "solution": null,
+          "owner": null,
+          "labels": [],
+          "description": "● Skip using a generic primary key (id):\nAdding an id column to every table causes several effects that make its use seem\narbitrary. You might end up creating a redundant key or allow duplicate rows if\nyou add this column in a compound key. The name id is so generic that it holds\nno meaning. This is especially important when you join two tables and they have\nthe same primary key column name.",
+          "disable": false
+        },
+        {
+          "real_name": "NotNullUsage",
+          "display_name": "NotNullUsage",
+          "severity": "info",
+          "category": "correctness",
+          "rule_title": "(HINTS) (QUERY ANTI-PATTERN) NOT NULL Usage",
+          "rule_params": null,
+          "custom": false,
+          "languages": [
+            "sql"
+          ],
+          "solution": null,
+          "owner": null,
+          "labels": [],
+          "description": "● Use NOT NULL only if the column cannot have a missing value:\nWhen you declare a column as NOT NULL, it should be because it would make no\nsense for the row to exist without a value in that column. Use null to signify a\nmissing value for any data type.",
+          "disable": false
+        },
+        {
+          "real_name": "SpaghettiQueryAlert",
+          "display_name": "SpaghettiQueryAlert",
+          "severity": "info",
+          "category": "correctness",
+          "rule_title": "(LOW RISK) (QUERY ANTI-PATTERN) Spaghetti Query Alert",
+          "rule_params": null,
+          "custom": false,
+          "languages": [
+            "sql"
+          ],
+          "solution": null,
+          "owner": null,
+          "labels": [],
+          "description": "● Split up a complex spaghetti query into several simpler queries:\nSQL is a very expressive language—you can accomplish a lot in a single query\nor statement. But that doesn't mean it's mandatory or even a good idea to\napproach every task with the assumption it has to be done in one line of code.\nOne common unintended consequence of producing all your results in one query is\na Cartesian product. This happens when two of the tables in the query have no\ncondition restricting their relationship. Without such a restriction, the join\nof two tables pairs each row in the first table to every row in the other table.\nEach such pairing becomes a row of the result set, and you end up with many more\nrows than you expect. It's important to consider that these queries are simply\nhard to write, hard to modify, and hard to debug. You should expect to get\nregular requests for incremental enhancements to your database applications.\nManagers want more complex reports and more fields in a user interface. If you\ndesign intricate, monolithic SQL queries, it's more costly and time-consuming to\nmake enhancements to them. Your time is worth something, both to you and to your\nproject. Split up a complex spaghetti query into several simpler queries. When\nyou split up a complex SQL query, the result may be many similar queries,\nperhaps varying slightly depending on data values. Writing these queries is a\nchore, so it's a good application of SQL code generation. Although SQL makes it\nseem possible to solve a complex problem in a single line of code, don't be\ntempted to build a house of cards.",
+          "disable": false
+        },
+        {
+          "real_name": "ImpreciseDataType",
+          "display_name": "ImpreciseDataType",
+          "severity": "warning",
+          "category": "correctness",
+          "rule_title": "(MEDIUM RISK) (PHYSICAL_DATABASE_DESIGN ANTI-PATTERN) Imprecise Data Type",
+          "rule_params": null,
+          "custom": false,
+          "languages": [
+            "sql"
+          ],
+          "solution": null,
+          "owner": null,
+          "labels": [],
+          "description": "● Use precise data types:\nVirtually any use of FLOAT, REAL, or DOUBLE PRECISION data types is suspect.\nMost applications that use floating-point numbers don't require the range of\nvalues supported by IEEE 754 formats. The cumulative impact of inexact\nfloating-point numbers is severe when calculating aggregates. Instead of FLOAT\nor its siblings, use the NUMERIC or DECIMAL SQL data types for fixed-precision\nfractional numbers. These data types store numeric values exactly, up to the\nprecision you specify in the column definition. Do not use FLOAT if you can\navoid it.",
+          "disable": false
+        },
+        {
+          "real_name": "MetadataTribbles",
+          "display_name": "MetadataTribbles",
+          "severity": "warning",
+          "category": "correctness",
+          "rule_title": "(MEDIUM RISK) (LOGICAL_DATABASE_DESIGN ANTI-PATTERN) Metadata Tribbles",
+          "rule_params": null,
+          "custom": false,
+          "languages": [
+            "sql"
+          ],
+          "solution": null,
+          "owner": null,
+          "labels": [],
+          "description": "● Breaking down a table or column by year/user/etc.:\nYou might be trying to split a single column into multiple columns, using column\nnames based on distinct values in another attribute. For each year or user, you\nwill need to add one more column or table. You are mixing metadata with data.\nYou will now need to make sure that the primary key values are unique across all\nthe split columns or tables. The solution is to use a feature called sharding or\nhorizontal partitioning. (PARTITION BY HASH ( YEAR(...) ). With this feature,\nyou can gain the benefits of splitting a large table without the drawbacks.\nPartitioning is not defined in the SQL standard, so each brand of database\nimplements it in their own nonstandard way. Another remedy for metadata tribbles\nis to create a dependent table. Instead of one row per entity with multiple\ncolumns for each year, use multiple rows. Don't let data spawn metadata.\n\n●\nStore each value with the same meaning in a single column:\nCreating multiple columns in a table with the same prefix indicates that you are\ntrying to store a multivalued attribute. This design makes it hard to add or\nremove values, to ensure the uniqueness of values, and handling growing sets of\nvalues. The best solution is to create a dependent table with one column for the\nmultivalued attribute. Store the multiple values in multiple rows instead of\nmultiple columns and define a foreign key in the dependent table to associate\nthe values to its parent row.",
+          "disable": false
+        },
+        {
+          "real_name": "IndexAttributeOrder",
+          "display_name": "IndexAttributeOrder",
+          "severity": "info",
+          "category": "correctness",
+          "rule_title": "(LOW RISK) (PHYSICAL_DATABASE_DESIGN ANTI-PATTERN) Index Attribute Order",
+          "rule_params": null,
+          "custom": false,
+          "languages": [
+            "sql"
+          ],
+          "solution": null,
+          "owner": null,
+          "labels": [],
+          "description": "● Align the index attribute order with queries:\nIf you create a compound index for the columns, make sure that the query\nattributes are in the same order as the index attributes, so that the DBMS can\nuse the index while processing the query. If the query and index attribute\norders are not aligned, then the DBMS might be unable to use the index during\nquery processing. EX:\nCREATE INDEX TelephoneBook ON Accounts(last_name, first_name); SELECT * FROM\nAccounts ORDER BY first_name, last_name;",
+          "disable": false
+        },
+        {
+          "real_name": "EntityAttributeValuePattern",
+          "display_name": "EntityAttributeValuePattern",
+          "severity": "warning",
+          "category": "correctness",
+          "rule_title": "(MEDIUM RISK) (LOGICAL_DATABASE_DESIGN ANTI-PATTERN) Entity-Attribute-Value Pattern",
+          "rule_params": null,
+          "custom": false,
+          "languages": [
+            "sql"
+          ],
+          "solution": null,
+          "owner": null,
+          "labels": [],
+          "description": "● Dynamic schema with variable attributes:\nAre you trying to create a schema where you can define new attributes at\nruntime.? This involves storing attributes as rows in an attribute table. This\nis referred to as the Entity-Attribute-Value or schemaless pattern. When you use\nthis pattern, you sacrifice many advantages that a conventional database design\nwould have given you. You can't make mandatory attributes. You can't enforce\nreferential integrity. You might find that attributes are not being named\nconsistently. A solution is to store all related types in one table, with\ndistinct columns for every attribute that exists in any type (Single Table\nInheritance). Use one attribute to define the subtype of a given row. Many\nattributes are subtype-specific, and these columns must be given a null value on\nany row storing an object for which the attribute does not apply; the columns\nwith non-null values become sparse. Another solution is to create a separate\ntable for each subtype (Concrete Table Inheritance). A third solution mimics\ninheritance, as though tables were object-oriented classes (Class Table\nInheritance). Create a single table for the base type, containing attributes\ncommon to all subtypes. Then for each subtype, create another table, with a\nprimary key that also serves as a foreign key to the base table. If you have\nmany subtypes or if you must support new attributes frequently, you can add a\nBLOB column to store data in a format such as XML or JSON, which encodes both\nthe attribute names and their values. This design is best when you can’t limit\nyourself to a finite set of subtypes and when you need complete flexibility to\ndefine new attributes at any time.",
+          "disable": false
+        },
+        {
+          "real_name": "RecursiveDependency",
+          "display_name": "RecursiveDependency",
+          "severity": "error",
+          "category": "correctness",
+          "rule_title": "(HIGH RISK) (LOGICAL_DATABASE_DESIGN ANTI-PATTERN) Recursive Dependency",
+          "rule_params": null,
+          "custom": false,
+          "languages": [
+            "sql"
+          ],
+          "solution": null,
+          "owner": null,
+          "labels": [],
+          "description": "● Avoid recursive relationships:\nIt’s common for data to have recursive relationships. Data may be organized in\na treelike or hierarchical way. However, creating a foreign key constraint to\nenforce the relationship between two columns in the same table lends to awkward\nquerying. Each level of the tree corresponds to another join. You will need to\nissue recursive queries to get all descendants or all ancestors of a node. A\nsolution is to construct an additional closure table. It involves storing all\npaths through the tree, not just those with a direct parent-child relationship.\nYou might want to compare different hierarchical data designs -- closure table,\npath enumeration, nested sets -- and pick one based on your application's needs.",
+          "disable": false
+        }
+      ]
+    }
+  ]
