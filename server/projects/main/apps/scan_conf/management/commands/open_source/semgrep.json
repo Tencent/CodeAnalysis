@@ -15439,6 +15439,20 @@
                 "labels": []
             },
             {
+                "real_name": "owasp.java.xxe.org.xml.sax.XMLReader",
+                "display_name": "Owasp.java.xxe.org.xml.sax.xmlreader",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "contrib.owasp: owasp.java.xxe.org.xml.sax.XMLReader",
+                "description": "XMLReader being instantiated without calling the setFeature functions that are generally used for disabling entity processing\n",
+                "rule_params": null,
+                "solution": null,
+                "languages": [
+                    "java"
+                ],
+                "labels": []
+            },
+            {
                 "real_name": "insecure-pickle-use",
                 "display_name": "InsecurePickleUse",
                 "severity": "warning",
