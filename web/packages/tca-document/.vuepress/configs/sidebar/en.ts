@@ -26,13 +26,13 @@ export const en: SidebarConfig = {
     {
       text: '分析方案',
       children: [
-        '/en/guide/后台管理/用户管理.md',
-        '/en/guide/后台管理/团队管理.md',
-        '/en/guide/后台管理/项目管理.md',
-        '/en/guide/后台管理/分析记录管理.md',
-        '/en/guide/后台管理/节点管理.md',
-        '/en/guide/后台管理/工具管理.md',
-        '/en/guide/后台管理/OAuth管理.md',
+        '/en/guide/分析方案/基础属性配置.md',
+        '/en/guide/分析方案/代码检查配置.md',
+        '/en/guide/分析方案/代码检查规则配置.md',
+        '/en/guide/分析方案/代码检查编译配置.md',
+        '/en/guide/分析方案/代码度量配置.md',
+        '/en/guide/分析方案/过滤配置.md',
+        '/en/guide/分析方案/分析方案模板说明.md',
       ]
     },
     {
@@ -46,7 +46,13 @@ export const en: SidebarConfig = {
     {
       text: '后台管理',
       children: [
-        '/en/guide/后台管理/后台管理说明.md',
+        '/en/guide/后台管理/用户管理.md',
+        '/en/guide/后台管理/团队管理.md',
+        '/en/guide/后台管理/项目管理.md',
+        '/en/guide/后台管理/分析记录管理.md',
+        '/en/guide/后台管理/节点管理.md',
+        '/en/guide/后台管理/工具管理.md',
+        '/en/guide/后台管理/OAuth管理.md',
       ]
     },
     {
