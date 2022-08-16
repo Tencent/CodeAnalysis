@@ -29,7 +29,9 @@ class NodeFilter(filters.FilterSet):
                                           queryset=models.ExecTag.objects.all(), help_text="节点标签")
     state = filters.NumberFilter(help_text="节点运行状态, 0表示空闲，1表示忙碌中", lookup_expr="exact")
     enabled = filters.BaseInFilter(help_text="节点可用性，0表示失效，1表示活跃，2表示掉线，可多选，格式为1,2,3")
+    related_managers = filters.CharFilter(field_name="related_managers__username", help_text="节点相关责任人",
+                                          lookup_expr="icontains")
 
     class Meta:
         model = models.Node
-        fields = ["name", "manager", "exec_tags", "state", "enabled"]
+        fields = ["name", "manager", "exec_tags", "state", "enabled", "related_managers"]
