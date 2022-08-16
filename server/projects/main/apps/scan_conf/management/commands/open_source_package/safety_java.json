@@ -236,6 +236,153 @@
                 "state": "enabled"
             },
             {
+                "checktool": "semgrep",
+                "checkrule": "jjwt-none-alg",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "semgrep",
+                "checkrule": "formatted-sql-string",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "semgrep",
+                "checkrule": "cookie-missing-secure-flag",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "semgrep",
+                "checkrule": "tainted-session-from-http-request",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "semgrep",
+                "checkrule": "cookie-missing-httponly",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "semgrep",
+                "checkrule": "weak-random",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "semgrep",
+                "checkrule": "use-of-md5",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "semgrep",
+                "checkrule": "cve-2022-22965",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "semgrep",
+                "checkrule": "tainted-sql-string",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "semgrep",
+                "checkrule": "tainted-file-path",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "semgrep",
+                "checkrule": "tainted-html-string",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "semgrep",
+                "checkrule": "owasp.java.ssrf.java.net.url",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "semgrep",
+                "checkrule": "owasp.java.xxe.javax.xml.stream.XMLInputFactory",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "semgrep",
+                "checkrule": "owasp.java.ssrf.org.apache.commons.httpclient",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "semgrep",
+                "checkrule": "owasp.java.ssrf.org.apache.http.impl.client.CloseableHttpClient",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "semgrep",
+                "checkrule": "owasp.java.xxe.org.apache.commons.digester3.Digester",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "semgrep",
+                "checkrule": "owasp.java.xxe.javax.xml.parsers.DocumentBuilderFactory",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "semgrep",
+                "checkrule": "owasp.java.xxe.org.jdom2.input.SAXBuilder",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "semgrep",
+                "checkrule": "owasp.java.xxe.org.dom4j.io.SAXReader",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "semgrep",
+                "checkrule": "owasp.java.xxe.org.xml.sax.XMLReader",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "semgrep",
+                "checkrule": "owasp.java.xxe.javax.xml.parsers.SAXParserFactory",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
                 "checktool": "infer_java",
                 "checkrule": "BUFFER_OVERRUN_L1",
                 "severity": "error",
