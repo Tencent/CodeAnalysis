@@ -1,9 +1,3 @@
-// Copyright (c) 2021-2022 THL A29 Limited
-//
-// This source code file is made available under MIT License
-// See LICENSE for details
-// ==============================================================================
-
 import isEmpty from 'lodash/isEmpty';
 
 import Constant from '@src/constant';
@@ -146,4 +140,17 @@ export const error = (message?: any, ...optionalParams: any[]) => {
  */
 export const warn = (message?: any, ...optionalParams: any[]) => {
   console.warn(LOG_PREFIX + message, ...optionalParams);
+};
+
+/**
+ * 判断字段值是否为true
+ * @param value 字段值
+ * @param strict 是否严格模式，默认false，即如果value为true字符串也可
+ * @returns 返回boolean
+ */
+export const isTrue = (value: any, strict = false) => {
+  if (typeof value === 'string' && !strict) {
+    return value.toLowerCase() === 'true';
+  }
+  return value === true;
 };

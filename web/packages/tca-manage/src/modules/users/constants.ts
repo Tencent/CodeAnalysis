@@ -1,52 +1,51 @@
-import { t } from '@src/i18n/i18next';
+import { t } from '@tencent/micro-frontend-shared/i18n';
+import { generateOptions } from '@tencent/micro-frontend-shared/util';
 
-export const LEVEL_ENUM = {
-  NORMAL: 1,
-  VIP: 2,
-  SUPER_VIP: 3,
-};
+/** 用户等级 */
+export enum LevelEnum {
+  /** 普通用户 */
+  NORMAL = 1,
+  /** VIP 用户 */
+  VIP,
+  /** 超级VIP用户 */
+  SUPER_VIP
+}
 
+/** 用户等级 kv */
 export const LEVEL_CHOICES = {
-  [LEVEL_ENUM.NORMAL]: t('普通用户'),
-  [LEVEL_ENUM.VIP]: t('VIP用户'),
-  [LEVEL_ENUM.SUPER_VIP]: t('超级VIP用户'),
+  [LevelEnum.NORMAL]: t('普通用户'),
+  [LevelEnum.VIP]: t('VIP用户'),
+  [LevelEnum.SUPER_VIP]: t('超级VIP用户'),
 };
 
-export const LEVEL_OPTIONS = [{
-  label: LEVEL_CHOICES[LEVEL_ENUM.NORMAL],
-  value: LEVEL_ENUM.NORMAL,
-}, {
-  label: LEVEL_CHOICES[LEVEL_ENUM.VIP],
-  value: LEVEL_ENUM.VIP,
-}, {
-  label: LEVEL_CHOICES[LEVEL_ENUM.SUPER_VIP],
-  value: LEVEL_ENUM.SUPER_VIP,
-}];
+/** 用户等级 options */
+export const LEVEL_OPTIONS = generateOptions(LEVEL_CHOICES, true);
 
-export const LEVEL_TAG_CHOICES = {
-  [LEVEL_ENUM.NORMAL]: 'default',
-  [LEVEL_ENUM.VIP]: 'gold',
-  [LEVEL_ENUM.SUPER_VIP]: 'volcano',
-};
+/** 用户状态  */
+export enum StatusEnum {
+  /** 已激活 */
+  ACTIVE = 1,
+  /** 待激活 */
+  DISACTIVE,
+  /** 已过期 */
+  EXPIRED,
+  /** 禁止 */
+  FORBIDEN = 99,
+}
 
-export const STATUS_ENUM = {
-  ACTIVE: 1,
-  DISACTIVE: 2,
-  EXPIRED: 3,
-  FORBIDEN: 99,
-};
-
+/** 用户状态 kv */
 export const STATUS_CHOICES = {
-  [STATUS_ENUM.ACTIVE]: t('已激活'),
-  [STATUS_ENUM.DISACTIVE]: t('待激活'),
-  [STATUS_ENUM.EXPIRED]: t('已过期'),
-  [STATUS_ENUM.FORBIDEN]: t('禁止'),
+  [StatusEnum.ACTIVE]: t('已激活'),
+  [StatusEnum.DISACTIVE]: t('待激活'),
+  [StatusEnum.EXPIRED]: t('已过期'),
+  [StatusEnum.FORBIDEN]: t('禁止'),
 };
 
+/** 用户状态 options */
 export const STATUS_OPTIONS = [{
-  label: STATUS_CHOICES[STATUS_ENUM.ACTIVE],
-  value: STATUS_ENUM.ACTIVE,
+  label: STATUS_CHOICES[StatusEnum.ACTIVE],
+  value: StatusEnum.ACTIVE,
 }, {
-  label: STATUS_CHOICES[STATUS_ENUM.DISACTIVE],
-  value: STATUS_ENUM.DISACTIVE,
+  label: STATUS_CHOICES[StatusEnum.DISACTIVE],
+  value: StatusEnum.DISACTIVE,
 }];

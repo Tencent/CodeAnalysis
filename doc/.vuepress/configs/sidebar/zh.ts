@@ -10,10 +10,11 @@ export const zh: SidebarConfig = {
       ],
     },
     {
-      text: '团队管理相关',
+      text: '团队管理',
       children: [
         '/zh/guide/团队管理/团队管理.md',
         '/zh/guide/团队管理/成员权限.md',
+        '/zh/guide/团队管理/节点管理.md',
       ]
     },
     {
@@ -23,7 +24,7 @@ export const zh: SidebarConfig = {
       ]
     },
     {
-      text: '分析方案 & 模板',
+      text: '分析方案',
       children: [
         '/zh/guide/分析方案/基础属性配置.md',
         '/zh/guide/分析方案/代码检查配置.md',
@@ -45,7 +46,13 @@ export const zh: SidebarConfig = {
     {
       text: '后台管理',
       children: [
-        '/zh/guide/后台管理/后台管理说明.md',
+        '/zh/guide/后台管理/用户管理.md',
+        '/zh/guide/后台管理/团队管理.md',
+        '/zh/guide/后台管理/项目管理.md',
+        '/zh/guide/后台管理/分析记录管理.md',
+        '/zh/guide/后台管理/节点管理.md',
+        '/zh/guide/后台管理/工具管理.md',
+        '/zh/guide/后台管理/OAuth管理.md',
       ]
     },
     {

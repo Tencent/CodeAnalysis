@@ -1,13 +1,9 @@
-// Copyright (c) 2021-2022 THL A29 Limited
-//
-// This source code file is made available under MIT License
-// See LICENSE for details
-// ==============================================================================
-
 // https://github.com/Hermanya/use-interval
 import { useEffect, useRef } from 'react';
 
-const noop = () => {};
+const noop = () => {
+  // ...
+};
 
 export function useInterval(callback: () => void, delay: number | null | false, immediate = false) {
   const savedCallback = useRef(noop);

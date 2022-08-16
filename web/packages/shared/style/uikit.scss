@@ -1,0 +1,90 @@
+@import "./color.scss";
+
+:global(.ant-tabs-nav) {
+  margin-bottom: 0 !important;
+
+  &::before {
+    border-bottom-color: $grey-3  !important;
+  }
+}
+
+:global(.ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn) {
+  font-weight: 600;
+  color: $grey-8;
+}
+
+:global(.ant-tabs-tab) {
+  padding: 10px;
+  margin-right: 24px;
+  font-size: 16px;
+  transition: all 0.3s;
+
+  &:hover {
+    color: $grey-8;
+    font-weight: 600;
+  }
+}
+
+:global(.ant-tabs-tab-btn) {
+
+  &:active,
+  &:focus {
+    color: $grey-8;
+    font-weight: 600;
+  }
+}
+
+:global(.ant-avatar) {
+  background: $grey-5;
+}
+
+:global(.ant-table-tbody) {
+  &>tr {
+    td>a.link-name {
+      color: $grey-8;
+
+      .path {
+        font-size: 12px;
+        color: $grey-7;
+        max-width: 400px;
+        word-break: break-all;
+      }
+    }
+
+    &:hover {
+      td>a.link-name {
+        color: $blue-5  !important;
+      }
+    }
+  }
+}
+
+:global(.ant-tag) {
+  padding: 0px 8px;
+
+  &.warning {
+    color: $warging-color;
+    background-color: $warging-bg;
+  }
+
+  &.success {
+    color: $success-color;
+    background-color: $success-bg;
+  }
+
+  &.fatal {
+    color: $fatal-color;
+    background-color: $fatal-bg;
+  }
+
+  &.error {
+    color: $error-color;
+    background-color: $error-bg;
+  }
+
+  &.processing,
+  &.info {
+    color: $tip-color;
+    background-color: $tip-bg;
+  }
+}

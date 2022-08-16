@@ -41,7 +41,7 @@ const create = (rootDom: HTMLElement) => {
   }
 };
 
-function bootstrap() { }
+function bootstrap() { console.log(''); }
 
 const mount = (props: any) => {
   const { rootDom, injectAsyncReducer, store } = props;
@@ -53,7 +53,6 @@ const mount = (props: any) => {
         <ConfigProvider
           autoInsertSpaceInButton={false}
           locale={locale ? locale.default : undefined}
-          // @ts-ignore
           getPopupContainer={node => (node ? node.parentNode : document.body)}
         >
           <Root />

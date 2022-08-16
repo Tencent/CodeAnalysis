@@ -1,125 +1,140 @@
-import React, { useEffect } from 'react';
-import { Modal, Form, Input, message, Switch, Select, notification, Button } from 'coding-oa-uikit';
-import Copy from 'coding-oa-uikit/lib/icon/Copy';
+import React, { useRef } from 'react';
+import { useTranslation } from 'react-i18next';
+import { Dialog, Form, Input, message, Switch, Select, notification, Button, FormInstanceFunctions } from 'tdesign-react';
+import { FileCopyIcon } from 'tdesign-icons-react';
 import CopyToClipboard from 'react-copy-to-clipboard';
 
 // 项目内
-import { t } from '@src/i18n/i18next';
-import { postUsers, putUser } from '@src/services/users';
+import { userAPI } from '@plat/api';
 
 // 模块内
 import { LEVEL_OPTIONS, STATUS_OPTIONS } from './constants';
+import { UserData } from './types';
 
-interface IProps {
-  visible: boolean;
-  onOk: () => void;
-  onCancel: () => void;
-  userinfo: any;
-}
+const { FormItem } = Form;
 
-const openNotificationWithIcon = (users: Array<any>) => {
+/** 提醒 */
+const openUserAccountNotification = (users: Array<any>) => {
   notification.success({
-    message: '账户创建/变更提醒',
+    title: '账户创建/变更提醒',
     duration: null,
-    description: (
+    closeBtn: true,
+    content: (
       <>
         {users.map((user: any, index) => (
-          <div key={index} className="mb-sm">
+          <div key={index} style={{ paddingTop: '10px' }}>
             <span>账户：{user.username}</span>{' '}
-            <span className="ml-sm">密码：{user.password}</span>
+            <span>密码：{user.password}</span>
           </div>
         ))}
-        <CopyToClipboard
-          text={users
-            .map(user => `账户：${user.username}, 密码：${user.password}`)
-            .toString()}
-          onCopy={() => message.success('已复制全部账户信息')}
-        >
-          <Button className="mt-md" type="secondary" icon={<Copy />}>
-            复制账户信息
-          </Button>
-        </CopyToClipboard>
       </>
+    ),
+    footer: (
+      <CopyToClipboard
+        text={users
+          .map(user => `账户：${user.username}, 密码：${user.password}`)
+          .toString()}
+        onCopy={() => {
+          message.success('已复制全部账户信息');
+        }}
+      >
+        <Button variant="text" icon={<FileCopyIcon />}>
+          复制账户信息
+        </Button>
+      </CopyToClipboard>
     ),
   });
 };
 
-const UserModal = ({ userinfo, visible, onOk, onCancel }: IProps) => {
-  const [form] = Form.useForm();
+interface UserModalProps {
+  visible: boolean;
+  onOk: () => void;
+  onCancel: () => void;
+  userinfo?: UserData;
+}
 
-  useEffect(() => {
-    if (visible) {
-      form.resetFields();
-    }
-  }, [visible]);
+const UserModal = ({ userinfo, visible, onOk, onCancel }: UserModalProps) => {
+  const formRef = useRef<FormInstanceFunctions>(null);
+  const { t } = useTranslation();
 
+  /** 用户创建/更新请求操作 */
   const onSaveRequest = (formData: any) => {
     if (userinfo) {
-      return putUser(userinfo.username, {
+      return userAPI.update(userinfo.username, {
         password: formData.password,
         is_superuser: formData.is_superuser,
         codedog_user: formData,
-      }).then((response) => {
-        if (response.password) {
-          openNotificationWithIcon([response]);
-        }
+      }).then((response: any) => {
         message.success(t('已更新用户信息'));
-
+        if (response.password) {
+          openUserAccountNotification([response]);
+        }
         return response;
       });
     }
-    return postUsers({
+    return userAPI.create({
       is_superuser: formData.is_superuser,
       codedog_users: [formData],
-    }).then((response) => {
+    }).then((response: any) => {
       message.success(t('已创建用户'));
       const loginUsers = response.filter((item: any) => item.password);
       if (loginUsers.length > 0) {
-        openNotificationWithIcon(loginUsers);
+        openUserAccountNotification(loginUsers);
       }
       return response;
     });
   };
 
-  /**
-     * 表单保存操作
-     * @param formData 参数
-     */
-  const onSubmitHandle = () => {
-    form.validateFields().then((formData) => {
-      onSaveRequest(formData).then(() => {
-        onOk();
-      });
+  /** 表单保存操作 */
+  const onConfirm = () => {
+    formRef.current?.validate().then((result) => {
+      if (result === true) {
+        const fieldsValue = formRef.current?.getFieldsValue(true);
+        onSaveRequest(fieldsValue).then(() => {
+          onOk();
+        });
+      }
     });
   };
 
+  /** 重置表单操作 */
+  const onReset = () => {
+    formRef.current?.reset();
+  };
+
   return (
-    <Modal
-      forceRender
-      title={userinfo ? t('更新用户') : t('创建用户')}
+    <Dialog
+      header={userinfo ? t('更新用户') : t('创建用户')}
       visible={visible}
-      onOk={onSubmitHandle}
-      onCancel={onCancel}
-      afterClose={form.resetFields}
+      onConfirm={onConfirm}
+      onClose={onCancel}
+      onOpened={onReset}
+      onClosed={onReset}
     >
-      <Form layout={'vertical'} form={form} initialValues={userinfo || {}}>
+      <Form
+        layout='vertical'
+        ref={formRef}
+        resetType='initial'
+      >
         {userinfo && (
-          <Form.Item
+          <FormItem
             name="username"
             label={t('账户')}
+            initialData={userinfo.username}
             rules={[{ required: true, message: t('账户为必填项') }]}
           >
             <Input disabled />
-          </Form.Item>
+          </FormItem>
         )}
         {userinfo && (
-          <Form.Item name="password" label={t('更新密码')}>
-            <Input.Password />
-          </Form.Item>
+          <FormItem name="password" label={t('更新密码')}>
+            <Input type='password' />
+          </FormItem>
         )}
-        <Form.Item
+        <FormItem
           name="nickname"
           label={userinfo ? t('昵称') : t('账户')}
+          initialData={userinfo?.nickname}
           rules={
             userinfo
               ? [
@@ -141,18 +156,18 @@ const UserModal = ({ userinfo, visible, onOk, onCancel }: IProps) => {
           }
         >
           <Input />
-        </Form.Item>
-        <Form.Item name="level" label="等级">
+        </FormItem>
+        <FormItem name="level" label="等级" initialData={userinfo?.level}>
           <Select options={LEVEL_OPTIONS} />
-        </Form.Item>
-        <Form.Item name="status" label="状态">
+        </FormItem>
+        <FormItem name="status" label="状态" initialData={userinfo?.status}>
           <Select options={STATUS_OPTIONS} />
-        </Form.Item>
-        <Form.Item name="is_superuser" label="超级管理员" valuePropName="checked">
+        </FormItem>
+        <FormItem name="is_superuser" label="超级管理员" initialData={userinfo?.is_superuser}>
           <Switch />
-        </Form.Item>
+        </FormItem>
       </Form>
-    </Modal>
+    </Dialog>
   );
 };
 
