@@ -73,6 +73,7 @@ export default defineUserConfig({
 
         // sidebar
         sidebar: sidebar.en,
+        sidebarDepth: 1,
 
         // page meta
         editLinkText: 'Edit this page on GitHub',
