@@ -58,7 +58,11 @@ const Authority = ({ curRepo, orgSid, teamName, repoId }: IProps) => {
         curAuth = scmAuth.scm_oauth;
         break;
     }
-    curAuth.auth_type = curRepo.scm_auth.auth_type;
+    if(curAuth) {
+      curAuth.auth_type = curRepo?.scm_auth?.auth_type;
+    } else {
+      curAuth = {};
+    }
   }
 
   const setCurAuth = (sshList = sshAuthList, httpList = httpAuthList, oauthList = oauthAuthList) => {
