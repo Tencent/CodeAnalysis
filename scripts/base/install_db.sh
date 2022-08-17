@@ -402,6 +402,10 @@ function quiet_install_mariadb() {
 #          交互式安装Redis          #
 ####################################
 function interactive_install_redis() {
+    if [ "$USE_EXTERNAL_REDIS" == "true" ]; then
+        LOG_INFO "Use external redis, host: $REDIS_HOST, port: $REDIS_PORT"
+        return 0
+    fi
     ret=$( check_redis )
     if [ "$ret" == "true" ]; then
         return 0
@@ -448,6 +452,10 @@ function interactive_install_mariadb() {
         esac
     fi
 
+    if [ "$USE_EXTERNAL_MYSQL" == "true" ]; then
+        LOG_INFO "Use external mysql, host: $MYSQL_HOST, port: $MYSQL_PORT"
+        return 0
+    fi
     ret=$( check_mysqld )
     if [ "$ret" == "true" ]; then
         return 0
