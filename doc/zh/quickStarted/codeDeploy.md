@@ -9,11 +9,11 @@
 - 环境准备
 > 目前TCA脚本已封装好Python、Mariadb、Redis与Nginx安装步骤，可以按“操作说明”内容进行操作
 
-  - **Python 3.7**，[安装指引](./references/install_python37_on_centos.md)
+  - **Python 3.7**
 
-  - **MySQL服务（MySQL5.7.8以上版本或Mariadb 10.5以上版本）**，[安装指引](./references/install_mysql_on_centos.md)
+  - **MySQL服务（MySQL5.7.8以上版本或Mariadb 10.5以上版本）**
 
-  - **Redis服务（4.0版本以上）**，[安装指引](./references/install_redis_on_centos.md)
+  - **Redis服务（4.0版本以上）**
 
   - **Nginx服务**
 
@@ -33,15 +33,15 @@
 ##### 首次启动操作
 
 1. 进入CodeAnalysis工作目录（例如``~/CodeAnalysis``)，以下路径均为目录内的相对路径
-2. 安装基础软件与部署TCA（可根据脚本选项确定是否要安装相关基础软件），执行
+2. 安装基础软件与部署TCA（可根据脚本选项确定是否要安装Python、MySQL、Redis、Nginx相关基础软件），执行
   ```bash
   $ bash ./quick_install.sh local deploy
   ```
-  执行该命令会做以下事情：
-  - 检测本地Python3.7、Mariadb/MySQL、Redis与Nginx，如果不存在会提示安装（install）
-  - 部署TCA Server、Web与Client，并进行初始化（install）
-  - 启动TCA Server、Web与Client（start）
-  - 检测TCA的运行状态（check）
+  执行该命令会做以下四个步骤：
+  - Install：检测本地Python3.7、Mariadb/MySQL、Redis与Nginx，如果不存在会提示安装
+  - Init：部署TCA Server、Web与Client，并进行初始化
+  - Start：启动TCA Server、Web与Client
+  - Check：检测TCA的运行状态
    
   >注：在运行过程中，脚本会检测本地是否安装了相关基础软件（Python3.7、MySQL/Mariadb、Redis、Nignx），如果未安装会输出以下类似提示语：
   >```

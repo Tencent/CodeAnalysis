@@ -57,6 +57,9 @@
 在`client`目录下，执行以下命令：`docker build -t tca-client .`
 
 ### 3. 执行docker容器，扫描代码，可选以下两种方式
+
+- 注意：因为以下步骤会将代码目录挂载到容器中，需要先将codedog.ini里面的source_dir修改为`/workspace/src`，其他参数保持不变。
+
 #### (1)直接使用docker运行
 - 在client目录下，执行以下命令：
 - (注意：按照实际情况填写`SOURCE_DIR`环境变量值)
