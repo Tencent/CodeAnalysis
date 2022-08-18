@@ -217,11 +217,13 @@ class ScmAuthManager(object):
         """
         auth_key = "%s_%s" % (ScmAuth.KeyEnum.TOOL, checktool.id)
         logger.debug("create checktool scm auth: %s" % auth_key)
+        # 兼容逻辑
+        if scm_auth_type == ScmAuth.ScmAuthTypeEnum.OAUTH and not scm_oauth:
+            scm_oauth = cls.get_scm_auth(user)
         scm_auth = cls.create_or_update_auth(
             auth_key=auth_key, auth_type=scm_auth_type,
             scm_account=scm_account, scm_ssh=scm_ssh_info,
-            scm_oauth=scm_oauth
-        )
+            scm_oauth=scm_oauth)
         checktool.scm_auth = scm_auth
         checktool.save(user=user)
 
@@ -239,6 +241,9 @@ class ScmAuthManager(object):
         """
         auth_key = "%s_%s" % (ScmAuth.KeyEnum.TOOLLIB, toollib.id)
         logger.debug("create toollib scm auth: %s" % auth_key)
+        # 兼容逻辑
+        if scm_auth_type == ScmAuth.ScmAuthTypeEnum.OAUTH and not scm_oauth:
+            scm_oauth = cls.get_scm_auth(user)
         scm_auth = cls.create_or_update_auth(
             auth_key=auth_key, auth_type=scm_auth_type,
             scm_account=scm_account, scm_ssh=scm_ssh_info,
