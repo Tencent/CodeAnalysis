@@ -21,6 +21,7 @@ export const en: SidebarConfig = {
       text: '代码检查',
       children: [
         '/en/guide/代码检查/分析结果查看.md',
+        '/en/guide/代码检查/添加规则配置.md', 
       ]
     },
     {
