@@ -1,7 +1,10 @@
-# TCA部署与使用常见问题
+# 常见问题
 
-> 该Q&A文档会持续更新，非常欢迎您的建议与共建！~
-> 如果您遇到任何未在此处列出的部署或使用问题，请在 GitHub issue 系统中进行搜索。如果仍未找到该错误消息，您可以通过[社区](../community/joingroup.md)提出问题，获得帮助。
+:::tip
+该Q&A文档会持续更新，非常欢迎您的建议与共建！
+
+如果您遇到任何未在此处列出的部署或使用问题，请在 GitHub issue 系统中进行搜索。如果仍未找到该错误消息，您可以通过[社区](../community/joingroup.md)提出问题，获得帮助。
+:::
 
 [[toc]]
 
@@ -140,13 +143,16 @@ RUN mv /etc/apt/sources.list /etc/apt/sources.list.bak && \
 - [Ubuntu安装Python3.7文档](https://github.com/Tencent/CodeAnalysis/blob/main/doc/references/install_python37_on_ubuntu.md)
 
 #### 1.6 执行``compose_init.sh``脚本的``pip install``提示``sha256``不匹配错误
+
 在构建镜像的``pip install``步骤提示以下报错时：
+
 ```
 ERROR: THESE PACKAGES DO NOT MATCH THE HASHES FROM THE REQUIREMENTS FILE. If you have updated the package versions, please update the hashes. Otherwise, examine the package contents carefully; someone may have tampered with them.
     setuptools from https://mirrors.cloud.tencent.com/pypi/packages/fb/58/9efbfe68482dab9557c49d433a60fff9efd7ed8835f829eba8297c2c124a/setuptools-62.1.0-py3-none-any.whl#sha256=26ead7d1f93efc0f8c804d9fafafbe4a44b179580a7105754b245155f9af05a8:
         Expected sha256 26ead7d1f93efc0f8c804d9fafafbe4a44b179580a7105754b245155f9af05a8
              Got        ddaacc49de5c08c09d744573240a9a49f24f65c5c72380e972433784caa68d98
 ```
+
 可以执行``export ORIGIN=normal``，然后再执行``./compose_init.sh``
 >注：执行``export``命令的作用是调整为``pypi``默认官方下载源进行``pip install``
 
@@ -186,7 +192,6 @@ ERROR: THESE PACKAGES DO NOT MATCH THE HASHES FROM THE REQUIREMENTS FILE. If you
 ln -s /usr/local/python3/bin/gunicorn /usr/local/bin/gunicorn
 ln -s /usr/local/python3/bin/celery /usr/local/bin/celery
 ```
-
 
 ### 2. 服务启动与初始化
 

@@ -14,8 +14,9 @@ import { useSelector } from 'react-redux';
 import { getProjectListRouter, getProjectOverviewRouter } from '@src/utils/getRoutePath';
 import { t } from '@src/i18n/i18next';
 import { formatDateTime, getUserName } from '@src/utils';
-import { getProjectTeam, putProjectTeam, disableProject} from '@src/services/common';
+import { getProjectTeam, putProjectTeam, disableProject } from '@src/services/common';
 import DeleteModal from '@src/components/delete-modal';
+import Copy from '@src/components/copy'
 
 const layout = {
   labelCol: { span: 6 },
@@ -70,7 +71,7 @@ const Overview = () => {
   }, [orgSid, teamName]);
 
   const handleDeleteTeam = () => {
-    disableProject(orgSid, teamName, {status: 2}).then(() => {
+    disableProject(orgSid, teamName, { status: 2 }).then(() => {
       message.success('项目已禁用');
       history.push(getProjectListRouter(orgSid));
     }).finally(() => setDeleteVisible(false));
@@ -103,7 +104,7 @@ const Overview = () => {
           label={t('项目唯一标识')}
           name="name"
         >
-          <span>{team.name}</span>
+          <div>{team.name} <Copy text={team.name} /></div>
         </Form.Item>
         <Form.Item
           label={t('项目名称')}

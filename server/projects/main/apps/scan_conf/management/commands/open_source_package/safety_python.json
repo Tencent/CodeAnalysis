@@ -318,6 +318,55 @@
                 "severity": "error",
                 "rule_params": null,
                 "state": "enabled"
+            },
+            {
+                "checktool": "semgrep",
+                "checkrule": "template-href-var",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "semgrep",
+                "checkrule": "render-template-string",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "semgrep",
+                "checkrule": "raw-html-format",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "semgrep",
+                "checkrule": "tainted-sql-string",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "semgrep",
+                "checkrule": "formatted-sql-query",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "semgrep",
+                "checkrule": "md5-used-as-password",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "semgrep",
+                "checkrule": "insecure-requests-use",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
             }
         ],
         "open_saas": true,

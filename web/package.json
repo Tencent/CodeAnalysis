@@ -16,12 +16,12 @@
     "build": "lerna run build --stream"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^4.33.0",
-    "@typescript-eslint/parser": "^4.33.0",
-    "eslint": "^7.32.0",
-    "eslint-plugin-react": "^7.26.1",
-    "lerna": "^4.0.0",
+    "@typescript-eslint/eslint-plugin": "^5.13.0",
+    "@typescript-eslint/parser": "^5.13.0",
+    "eslint": "^8.10.0",
+    "eslint-plugin-react": "^7.29.3",
+    "lerna": "^5.1.7",
     "lerna-update-wizard": "^1.1.2",
-    "typescript": "^4.4.2"
+    "typescript": "^4.5.5"
   }
 }

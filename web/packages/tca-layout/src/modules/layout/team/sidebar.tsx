@@ -14,6 +14,7 @@ import Project from 'coding-oa-uikit/lib/icon/Project';
 import Api from 'coding-oa-uikit/lib/icon/Api';
 import TeamOverview from 'coding-oa-uikit/lib/icon/TeamOverview';
 import Tiles from 'coding-oa-uikit/lib/icon/Tiles';
+import Sitemap from 'coding-oa-uikit/lib/icon/Sitemap';
 import MenuLayout from '@src/components/menu-layout';
 import { API_DOC_PATH } from '@src/utils/getRoutePath';
 
@@ -79,6 +80,12 @@ const SideBar = () => {
           regexMatch: /^\/t\/[^/]+\/toollibs/i,
         },
       ],
+    },
+    {
+      icon: <Sitemap />,
+      title: t('节点管理'),
+      link: `/t/${orgSid}/nodes/`,
+      key: 'nodes',
     },
     {
       icon: <Api />,

@@ -1,146 +1,130 @@
+/**
+ * OAuth配置页面
+ * biz-start
+ * 目前适用于全平台
+ * biz-end
+ */
 import React, { useState, useEffect } from 'react';
-import { Row, Col, Tabs, Tag, message } from 'coding-oa-uikit';
-import { unionBy, get } from 'lodash';
+import { useTranslation } from 'react-i18next';
+import { unionBy } from 'lodash';
+import { Row, Col, Tabs, MessagePlugin } from 'tdesign-react';
 
 // 项目内
-import { t } from '@src/i18n/i18next';
-import DangerModal from '@src/components/modal/danger-modal';
-import { getAllSettings, delOAuthSetting, postOAuthSetting } from '@src/services/oauth';
+import { DeleteModal } from '@tencent/micro-frontend-shared/tdesign-component/modal';
+import { oauthSettingAPI } from '@src/services/oauth';
+import { SCM_PLATFORM_CHOICES, ScmPlatformEnum, DEFAULT_SCM_PLATFORM } from '@plat/oauth';
 
 // 模块内
-import s from './style.scss';
-import { DEFAULT_SCM_PLATFORM, SCM_PLATFORM } from './constants';
 import OAuthTable from './oauth-table';
 import OAuthModal from './oauth-modal';
+import { OAuthSettingData } from './types';
+import s from '../style.scss';
 
-const { TabPane } = Tabs;
+const { TabPanel } = Tabs;
 
 const OAuth = () => {
-  const [listData, setListData] = useState<Array<any>>([]);
+  const { t } = useTranslation();
+  const [listData, setListData] = useState<OAuthSettingData[]>([]);
   const [visibleEdit, setVisibleEdit] = useState<boolean>(false);
   const [visibleDel, setVisibleDel] = useState<boolean>(false);
-  const [platformInfo, setPlatformInfo] = useState<any>(null);
+  const [platformInfo, setPlatformInfo] = useState<OAuthSettingData>(null);
   const [reload, setReload] = useState<boolean>(false);
   const [create, setCreate] = useState<boolean>(false);
 
-  /**
-   * 获取OAuth平台列表
-   */
-  const getListData = () => {
-    getAllSettings().then((response) => {
-      setListData(unionBy(response.results,DEFAULT_SCM_PLATFORM,'scm_platform'));
-    }).catch(()=>{
-      message.error('获取配置列表失败');
-    });
-  };
-
 
   useEffect(() => {
-    getListData();
+    /** 获取OAuth配置项列表 */
+    oauthSettingAPI.get({ limit: 100 })
+      .then(({ results = [] }: any) => {
+        setListData(unionBy(results, DEFAULT_SCM_PLATFORM, 'scm_platform'));
+      });
   }, [reload]);
 
   /**
-   * 编辑OAuth配置
-   * @param platform_info 选中平台的配置信息
+   * 点击编辑凭证配置
+   * @param platformInfo 凭证配置信息
+   * @param create 是否创建操作
    */
-  const onEditStart = ( platform_info:any, create:boolean ) => {
+  const onEditStart = (platformInfo: OAuthSettingData, create: boolean) => {
     setVisibleEdit(true);
-    setPlatformInfo(platform_info);
+    setPlatformInfo(platformInfo);
     setCreate(create);
   };
 
-  /**
-   * 上传OAuth配置
-   * @param platform_info 表单内容
-   */
-  const onEditFinish = ( platform_info:any ) => {
-
+  /** 完成编辑操作，发起请求 */
+  const onEditFinish = (platformInfo: OAuthSettingData, params: any) => {
     if (create) {
-      //初次创建配置
-      postOAuthSetting(platform_info).then(() => {
-        message.success('已创建配置');
+      // 初次创建配置
+      oauthSettingAPI.create(params).then(() => {
+        MessagePlugin.success(t('已创建配置'));
         setReload(!reload);
-      }).catch(()=>{
-        message.error('创建配置失败');
-      }).finally(()=>{
         onEditCancel();
       });
     } else {
-      //编辑已有配置
-      delOAuthSetting(platformInfo?.scm_platform_name).then(() => {
-        postOAuthSetting(platform_info).then(() => {
-          message.success('已更新配置');
+      // 编辑已有配置
+      oauthSettingAPI.delete(platformInfo.scm_platform_name).then(() => {
+        oauthSettingAPI.create(params).then(() => {
+          MessagePlugin.success(t('已更新配置'));
           setReload(!reload);
+          onEditCancel();
         });
-      }).catch(()=>{
-        message.error('更新配置失败');
-      }).finally(()=>{
-        onEditCancel();
       });
     }
-
-  }
-
-  const onEditCancel = () => {
-    setVisibleEdit(false);
-    setPlatformInfo(null);
   };
 
-  const onDeleteStart = ( platform_info:any ) => {
-    setPlatformInfo(platform_info);
+  /** 点击编辑操作取消 */
+  const onEditCancel = () => {
+    setVisibleEdit(false);
+  };
+
+  /** 点击删除凭证配置 */
+  const onDeleteStart = (platformInfo: OAuthSettingData) => {
+    setPlatformInfo(platformInfo);
     setVisibleDel(true);
-  }
+  };
 
   /**
    * 清除OAuth配置
    * @param platform_info 选中平台的配置信息
    */
-  const onDeleteFinish = ( platform_info:any ) => {
-    delOAuthSetting(platform_info?.scm_platform_name).then(() => {
-      message.success('已删除配置');
+  const onDeleteFinish = (platform_info: any) => {
+    oauthSettingAPI.delete(platform_info.scm_platform_name).then(() => {
+      MessagePlugin.success(t('已删除配置'));
       setReload(!reload);
-    }).catch(()=>{
-      message.error('删除配置失败');
-    }).finally(()=>{
       setVisibleDel(false);
     });
-  }
+  };
 
   return (
     <>
       <Row className={s.header} align="middle">
         <Col flex="auto">
-          <Tabs defaultActiveKey="apps" size="large">
-            <TabPane tab={t('OAuth配置列表')} key="apps" />
+          <Tabs defaultValue="oauths" size="large">
+            <TabPanel label={t('OAuth配置列表')} value="oauths" />
           </Tabs>
         </Col>
       </Row>
       <div className="px-lg">
         <OAuthTable
-        onDelete={onDeleteStart}
-        onEdit={onEditStart}
-        dataSource={listData}
+          onDelete={onDeleteStart}
+          onEdit={onEditStart}
+          dataSource={listData}
         />
-        <OAuthModal
+      </div>
+      <OAuthModal
         visible={visibleEdit}
         scminfo={platformInfo}
         onCancel={onEditCancel}
         onOk={onEditFinish}
-        />
-        <DangerModal
-        title={t('删除配置')}
+      />
+      <DeleteModal
+        actionType={t('删除')}
+        objectType={t('OAuth配置')}
+        confirmName={platformInfo && SCM_PLATFORM_CHOICES[platformInfo.scm_platform as ScmPlatformEnum]}
         visible={visibleDel}
         onCancel={() => setVisibleDel(false)}
         onOk={() => onDeleteFinish(platformInfo)}
-        content={
-          <div>
-            {t('确认删除 ')}
-            <Tag color="default">{get(SCM_PLATFORM, platformInfo?.scm_platform) || 'unknown'}</Tag>
-            {t('的OAuth应用配置？')}
-          </div>
-        }
-        />
-      </div>
+      />
     </>
   );
 };

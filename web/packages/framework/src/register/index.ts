@@ -1,19 +1,13 @@
-// Copyright (c) 2021-2022 THL A29 Limited
-//
-// This source code file is made available under MIT License
-// See LICENSE for details
-// ==============================================================================
-
 import { toPromise, info } from '@src/utils';
 
-export interface LifeCycle<T = {}> {
+export interface LifeCycle<T> {
   bootstrap: (config: T) => Promise<any>;
   mount: (config: T) => Promise<any>;
   unmount: (config: T) => Promise<any>;
   update?: (config: T) => Promise<any>;
 }
 
-export interface RegistrableApp<T extends object = {}> {
+export interface RegistrableApp<T extends object> {
   name: string;
   lifeCycles: LifeCycle<T>;
 }
@@ -21,7 +15,7 @@ export interface RegistrableApp<T extends object = {}> {
 /**
  *  微前端注册器
  */
-export class MicroRegistration<T extends object = {}> {
+export class MicroRegistration<T extends object> {
   private microApp: Map<string, RegistrableApp<T>> = new Map();
 
   // 注册微前端

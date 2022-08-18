@@ -1,64 +1,85 @@
 import React from 'react';
-import { Table, Tag, Button } from 'coding-oa-uikit';
-import Success from 'coding-oa-uikit/lib/icon/Success';
-import Unstable from 'coding-oa-uikit/lib/icon/Unstable';
-
-// 项目内
-import { t } from '@src/i18n/i18next';
+import { useTranslation } from 'react-i18next';
+import cn from 'classnames';
+import { Tag, PaginationProps, PrimaryTableCol } from 'tdesign-react';
+import Table from '@tencent/micro-frontend-shared/tdesign-component/table';
+import { formatDateTime } from '@tencent/micro-frontend-shared/util';
 
 // 模块内
-import { LEVEL_CHOICES, LEVEL_TAG_CHOICES, STATUS_ENUM } from './constants';
+import { LEVEL_CHOICES, LevelEnum, StatusEnum } from './constants';
+import { UserData } from './types';
+import s from '../style.scss';
 
-const { Column } = Table;
-
-interface IProps {
-  dataSource: Array<any>;
-  pagination: any;
-  onEdit: (user: any) => void;
+interface UserTableProps {
+  dataSource: UserData[];
+  pagination: PaginationProps;
+  onEdit: (user: UserData) => void;
 }
 
-const UserTable = ({ dataSource, pagination, onEdit }: IProps) => (
-  <>
+const UserTable = ({ dataSource, pagination, onEdit }: UserTableProps) => {
+  const { t } = useTranslation();
+
+  return (
     <Table
+      rowKey='username'
+      data={dataSource}
+      columns={[
+        {
+          colKey: 'username',
+          title: t('账户'),
+          width: 120,
+        },
+        {
+          colKey: 'nickname',
+          title: t('昵称'),
+          width: 120,
+        },
+        {
+          colKey: 'is_superuser',
+          title: t('超级管理员'),
+          width: 80,
+          cell: ({ row }) => (row.is_superuser
+            ? <Tag theme="success" variant='light'>是{ }</Tag>
+            : <Tag>否</Tag>),
+        },
+        {
+          colKey: 'level',
+          title: t('级别'),
+          width: 100,
+          cell: ({ row }) => <Tag className={cn(s.userTag, s[`level-${row.level}`])}>
+            {LEVEL_CHOICES[row.level as LevelEnum]}
+          </Tag>,
+        },
+        {
+          colKey: 'status',
+          title: t('状态'),
+          width: 80,
+          cell: ({ row }) => (row.status > StatusEnum.ACTIVE ? (
+            <Tag>待激活</Tag>
+          ) : (
+            <Tag theme="success" variant='light'>已激活</Tag>
+          )),
+        },
+        {
+          colKey: 'latest_login_time',
+          title: t('最近访问时间'),
+          width: 150,
+          cell: ({ row }) => formatDateTime(row.latest_login_time),
+        },
+        {
+          colKey: 'op',
+          title: t('操作'),
+          width: 80,
+          fixed: 'right',
+          cell: ({ row }) => (
+            <a onClick={() => onEdit(row)}>{t('编辑')}</a>
+          ),
+        },
+      ] as PrimaryTableCol<UserData>[]}
       pagination={pagination}
-      rowKey={(item: any) => item.username}
-      dataSource={dataSource}
-    >
-      <Column title={t('账户')} dataIndex="username" />
-      <Column title={t('昵称')} dataIndex="nickname" />
-      <Column
-        title={t('超级管理员')}
-        dataIndex="is_superuser"
-        render={(is_supeuser: boolean) => (is_supeuser ? <Success /> : <Unstable />)}
-      />
-      <Column
-        title={t('级别')}
-        dataIndex="level"
-        render={(level: number) => (
-          <Tag color={LEVEL_TAG_CHOICES[level]}>{LEVEL_CHOICES[level]}</Tag>
-        )}
-      />
-      <Column
-        title={t('状态')}
-        dataIndex="status"
-        render={(status: number) => (status > STATUS_ENUM.ACTIVE ? (
-          <Tag>待激活</Tag>
-        ) : (
-          <Tag color="success">已激活</Tag>
-        ))
-        }
-      />
-      <Column
-        title={t('操作')}
-        dataIndex="op"
-        render={(_: any, user: any) => (
-          <>
-            <Button onClick={() => onEdit(user)}>{t('编辑')}</Button>
-          </>
-        )}
-      />
-    </Table>
-  </>
-);
+    />
+  );
+};
+
 
 export default UserTable;

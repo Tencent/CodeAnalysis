@@ -58,8 +58,8 @@ const MENUS: MenuItem[] = [
   {
     icon: <Key />,
     title: t('OAuth管理'),
-    link: '/manage/oauth',
-    key: 'oauth',
+    link: '/manage/oauths',
+    key: 'oauths',
   },
 ];
 

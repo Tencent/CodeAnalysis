@@ -16,11 +16,17 @@ from apps.nodemgr.apis import v2
 
 # 前缀 /api/v2/
 urlpatterns = [
-    path("tags/", v2.ExecTagListView.as_view(), name="apiv2_tag_list"),
-    path("tags/<int:tag_id>/", v2.ExecTagDetailView.as_view(), name="apiv1_tag_detail"),
-    path("nodes/", v2.NodeListView.as_view(), name="apiv2_node_list"),
-    path("nodes/options/", v2.NodeOptionApiView.as_view(), name="apiv2_node_option_list"),
-    path("nodes/<int:node_id>/", v2.NodeApiView.as_view(), name="apiv2_node_detail"),
-    path("nodes/<int:node_id>/processes/", v2.NodeProcessesApiView.as_view(), name="apiv2_node_processes"),
-    path("nodes/<int:node_id>/tasks/", v2.NodeTaskListApiView.as_view(), name="apiv2_node_task_list"),
+    path("tags/", v2.ExecTagListAPIView.as_view(), name="apiv2_tag_list"),
+    path("tags/<int:tag_id>/", v2.ExecTagDetailAPIView.as_view(), name="apiv1_tag_detail"),
+    path("nodes/", v2.NodeListAPIView.as_view(), name="apiv2_node_list"),
+    path("nodes/options/", v2.NodeOptionAPIView.as_view(), name="apiv2_node_option_list"),
+    path("nodes/<int:node_id>/", v2.NodeDetailAPIView.as_view(), name="apiv2_node_detail"),
+    path("nodes/<int:node_id>/processes/", v2.NodeProcessesAPIView.as_view(), name="apiv2_node_processes"),
+    path("nodes/<int:node_id>/tasks/", v2.NodeTaskListAPIView.as_view(), name="apiv2_node_task_list"),
+    path("nodes/processes/", v2.AllProcessesAPIView.as_view(),
+         name="apiv2_all_processes"),
+    path("nodes/processes/batchupdate/", v2.NodeProcessesBatchUpdateAPIView.as_view(),
+         name="apiv2_node_process_batchupdate"),
+    path("nodes/batchupdate/", v2.NodeBatchUpdateAPIView.as_view(),
+         name="apiv2_node_info_batchupdate"),
 ]

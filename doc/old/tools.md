@@ -44,3 +44,4 @@
 || [sonarqube](https://github.com/GabrielLegend/tca_plugin_sonarqube/blob/main/src/sq.py) |
 || [sonarqube_java](https://github.com/GabrielLegend/tca_plugin_sonarqube/blob/main/src/sq_java.py) |
 || [sonarqube_cs](https://github.com/GabrielLegend/tca_plugin_sonarqube/blob/main/src/sq_cs.py) |
+|| [tca_plugin_sqlcheck](https://github.com/TCATools/tca_plugin_sqlcheck) |

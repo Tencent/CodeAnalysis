@@ -2,6 +2,11 @@
 
 登录微前端。
 
+- 支持账号密码登录
+
+
+展望：未来需实现一码登录功能。
+
 ## 本地启动脚本
 
 ```bash
@@ -72,7 +77,6 @@ PUBLIC_PATH=http://127.0.0.1:5055/ yarn run dev
 |                   GIT_REVISION | git 版本号                             |
 |                    PUBLIC_PATH | 资源路径前缀     |
 |                   PLATFORM_ENV | 平台类型                      |
-|                  ENABLE_MANAGE | 开启后台版                      |
 |               ENABLE_EXTERNALS | 开启排除额外依赖（用于具有全局依赖时）           |
 |                 CONFIG_ENABLED | 开启config-webpack-plugin              |
 |                   PRODUCT_NAME | 产品名称                      |

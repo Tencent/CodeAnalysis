@@ -21,6 +21,7 @@ from rest_framework.generics import get_object_or_404
 from rest_framework.permissions import IsAdminUser
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.exceptions import PermissionDenied, ParseError
 
 # 项目内 import
 from apps.authen.backends import TCANodeTokenBackend
@@ -109,8 +110,13 @@ class NodeRegisterApiView(generics.GenericAPIView):
 
     def post(self, request):
         slz = self.get_serializer(data=request.data)
-        if slz.is_valid():
-            data = NodeManager.register_node(request, slz.validated_data)
-            return Response(data)
-        else:
-            return Response(slz.errors, status=status.HTTP_400_BAD_REQUEST)
+        slz.is_valid(raise_exception=True)
+        org_sid = slz.validated_data.get("org_sid")
+        if not NodeManager.validate_node_org(request.user, org_sid):
+            if org_sid:
+                raise PermissionDenied("用户%s不是团队%s的成员，无法注册节点" % (
+                    request.user, org_sid))
+            else:
+                raise ParseError("未指定团队org_sid，无法注册节点")
+        data = NodeManager.register_node(request, slz.validated_data)
+        return Response(data)

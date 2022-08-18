@@ -68,16 +68,15 @@ const UpdateModal = (props: IProps) => {
           <Radio.Group>
             <Radio value={2}>
               正则表达式
-                            <Tooltip
+              <Tooltip
                 overlayClassName={style.descTooltip}
-                // @ts-ignore
                 getPopupContainer={() => document.getElementById('container')}
                 title={
                   <ul>
                     <li>请填写相对路径(基于代码库根目录)，要求匹配到文件</li>
                     <li>
                       使用Unix通配符格式，示例如下：
-                                            <ul className={style.example}>
+                      <ul className={style.example}>
                         <li>代码根目录</li>
                         <li>|-src</li>
                         <li style={{ paddingLeft: 20 }}>|- test</li>
@@ -100,16 +99,15 @@ const UpdateModal = (props: IProps) => {
             </Radio>
             <Radio value={1}>
               通配符
-                            <Tooltip
+              <Tooltip
                 overlayClassName={style.descTooltip}
-                // @ts-ignore
                 getPopupContainer={() => document.getElementById('container')}
                 title={
                   <ul className={style.descContent}>
                     <li>请填写相对路径(基于代码库根目录)，要求匹配到文件</li>
                     <li>
                       使用Unix通配符格式，示例如下：
-                                            <ul className={style.example}>
+                      <ul className={style.example}>
                         <li>代码根目录</li>
                         <li>|-src</li>
                         <li style={{ paddingLeft: 20 }}>|- test</li>
@@ -155,9 +153,8 @@ const UpdateModal = (props: IProps) => {
                 <Radio.Group>
                   <Radio value={1}>
                     include（包含）
-                                            <Tooltip
+                    <Tooltip
                       overlayClassName={style.descTooltip}
-                      // @ts-ignore
                       getPopupContainer={() => document.getElementById('container')}
                       title={`表示只分析，如只分析 src/ 目录：src/${getFieldValue('path_type') === 1 ? '' : '.'}*`}
                     >
@@ -166,9 +163,8 @@ const UpdateModal = (props: IProps) => {
                   </Radio>
                   <Radio value={2}>
                     exclude（过滤）
-                                            <Tooltip
+                    <Tooltip
                       overlayClassName={style.descTooltip}
-                      // @ts-ignore
                       getPopupContainer={() => document.getElementById('container')}
                       title={`表示只屏蔽，如要屏蔽 src/lib/ 目录：src/lib/${getFieldValue('path_type') === 1 ? '' : '.'}*`}
                     >

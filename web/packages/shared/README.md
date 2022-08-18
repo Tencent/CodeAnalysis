@@ -1,3 +1,11 @@
-# `@micro-frontend/shared`
+# `@tencent/micro-frontend-shared`
 
-> 公共模块
+> TODO: description
+
+## Usage
+
+```
+const shared = require('@tencent/micro-frontend-shared');
+
+// TODO: DEMONSTRATE API
+```

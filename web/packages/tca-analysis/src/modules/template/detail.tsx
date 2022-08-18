@@ -45,7 +45,7 @@ const Schemes = () => {
 
   useEffect(() => {
     (async () => {
-      setTags(get(await getTags(), 'results', []));
+      setTags(get(await getTags(orgSid), 'results', []));
       setLanguages(get(await getLanguages(), 'results', []));
     })();
   }, []);

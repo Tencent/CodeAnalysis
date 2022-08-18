@@ -38,8 +38,7 @@ class CirclePacking extends Component<IProps, IState> {
     .padding(3)
     (d3.hierarchy(data)
       .sum((d: any) => Number(d.size))
-    // @ts-ignore
-      .sort((a, b) => Number(b.size) - Number(a.size)));
+      .sort((a: any, b: any) => Number(b.size) - Number(a.size)));
 
 
   getCircle = (data: any) => {
@@ -56,9 +55,9 @@ class CirclePacking extends Component<IProps, IState> {
       .attr('viewBox', `-${width / 2} -${height / 2} ${width} ${height}`)
       .style('display', 'block')
       .style('margin', '-14px')
-    // .style("background", color(0))
+      // .style("background", color(0))
       .style('cursor', 'pointer')
-    // .attr("transform", "translate(" + 10 + "," + 10 + ")")
+      // .attr("transform", "translate(" + 10 + "," + 10 + ")")
       .on('click', () => zoom(root));
 
     const node = svg.append('g')
@@ -68,11 +67,9 @@ class CirclePacking extends Component<IProps, IState> {
       .attr('fill', (d: any) => (d.children ? color(d.depth) : '#3D98FF'))
       .style('fill-opacity', (d: any) => get(d, 'data.weight', 1))
       .attr('pointer-events', (d: any) => (!d.children ? 'none' : null))
-    // @ts-ignore
       .on('mouseover', function () {
         d3.select(this).attr('stroke', '#6FA2A9');
       })
-    // @ts-ignore
       .on('mouseout', function () {
         d3.select(this).attr('stroke', null);
       })
@@ -102,7 +99,6 @@ class CirclePacking extends Component<IProps, IState> {
     }
 
     const zoom = (d: any) => {
-      // @ts-ignore
       const focus0 = focus;
 
       focus = d;
@@ -115,18 +111,15 @@ class CirclePacking extends Component<IProps, IState> {
         });
 
       label
-      // @ts-ignore
         .filter(function (d: any) {
           return d.parent === focus || this.style.display === 'inline';
         })
         .transition(transition)
         .style('fill-opacity', (d: any) => (d.parent === focus ? 1 : 0))
-      // @ts-ignore
-        .on('start', function (d) {
+        .on('start', function (d: any) {
           if (d.parent === focus) this.style.display = 'inline';
         })
-      // @ts-ignore
-        .on('end', function (d) {
+        .on('end', function (d: any) {
           if (d.parent !== focus) this.style.display = 'none';
         });
     };
@@ -188,12 +181,12 @@ class CirclePacking extends Component<IProps, IState> {
 
   render() {
     return (
-            <div>
-                <Dragger className={style.dragger} beforeUpload={this.beforeUpload} onRemove={this.onRemoveFile}>
-                    请点击上传或者拖拽原始数据文件到这里
-                </Dragger>
-                <div className={style.dropBox} id='dropBox'></div>
-            </div>
+      <div>
+        <Dragger className={style.dragger} beforeUpload={this.beforeUpload} onRemove={this.onRemoveFile}>
+          请点击上传或者拖拽原始数据文件到这里
+        </Dragger>
+        <div className={style.dropBox} id='dropBox'></div>
+      </div>
     );
   }
 }
