@@ -392,14 +392,12 @@ class ScmAuthInfoCheckApiView(generics.GenericAPIView):
         return Response(result)
 
     def delete(self, request):
-        scm_platform_name = request.data.get("scm_platform_name", None)
+        scm_platform_name = request.data.get("scm_platform_name")
         if not scm_platform_name:
             scm_platform_name = scm.SCM_PLATFORM_NUM_AS_KEY[scm.ScmPlatformEnum.GIT_OA]
         scm_auth_info = ScmAuthManager.get_scm_auth(user=request.user, scm_platform=scm_platform_name)
         if scm_auth_info:
-            scm_auth_info.gitoa_access_token = None
-            scm_auth_info.gitoa_refresh_token = None
-            scm_auth_info.save()
+            scm_auth_info.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
