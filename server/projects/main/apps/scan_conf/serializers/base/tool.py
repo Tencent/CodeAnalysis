@@ -15,13 +15,14 @@ from rest_framework import serializers
 
 # 项目内
 from apps.scan_conf import models
-from apps.scan_conf.core import ToolLibMapManager, ToolLibSchemeManager, CheckToolManager, ToolLibManager
+from apps.scan_conf.core import CommonManager, ToolLibMapManager, ToolLibSchemeManager, \
+                                CheckToolManager, ToolLibManager
+from apps.scan_conf.serializers.base.rule import CheckRuleSerializer
 from apps.base.serializers import CDBaseModelSerializer
 from apps.authen.models import Organization
 from apps.authen.serializers.base import ScmAuthCreateSerializer, ScmAuthSerializer
 from apps.authen.serializers.base_org import OrganizationSimpleSerializer
 from apps.codeproj.core import ScmAuthManager
-from .rule import CheckRuleSerializer
 
 logger = logging.getLogger(__name__)
 
@@ -215,25 +216,8 @@ class ToolLibEditSerializer(CDBaseModelSerializer):
         if not scm_auth:
             # raise serializers.ValidationError({"scm_auth": "凭证为必填项"})
             return super().validate(attrs)
-        auth_type = scm_auth.get("auth_type")
-        if auth_type == models.ScmAuth.ScmAuthTypeEnum.OAUTH:
-            scm_oauth = scm_auth.get("scm_oauth")
-            if not scm_oauth or scm_oauth.user != user:
-                raise serializers.ValidationError({"scm_auth": "请选择有效OAuth凭证"})
-            credential_info = scm_oauth.credential_info
-        elif auth_type == models.ScmAuth.ScmAuthTypeEnum.PASSWORD:
-            scm_account = scm_auth.get("scm_account")
-            if not scm_account or scm_account.user != user:
-                raise serializers.ValidationError({"scm_auth": "请选择有效HTTP凭证"})
-            credential_info = scm_account.credential_info
-        elif auth_type == models.ScmAuth.ScmAuthTypeEnum.SSHTOKEN:
-            scm_ssh = scm_auth.get("scm_ssh")
-            if not scm_ssh or scm_ssh.user != user:
-                raise serializers.ValidationError({"scm_auth": "请选择有效SSH凭证"})
-            credential_info = scm_ssh.credential_info
-        else:
-            raise serializers.ValidationError({"auth_type": ["不支持%s鉴权方式" % auth_type]})
-        # 校验
+        # 校验凭证有效性
+        credential_info = CommonManager.get_and_check_scm_auth(scm_auth, user, instance=self.instance)
         ScmAuthManager.check_scm_url_credential(scm_type, scm_url, credential_info)
         return super().validate(attrs)
 
@@ -243,13 +227,18 @@ class ToolLibEditSerializer(CDBaseModelSerializer):
         scm_auth = validated_data.pop("scm_auth", None)
         instance, _ = ToolLibManager.create_or_update(name, user, instance=instance, **validated_data)
         # 保存凭证信息
-        if validated_data.get("scm_type") != models.ToolLib.ScmTypeEnum.LINK and scm_auth:
-            ScmAuthManager.create_toollib_auth(
-                instance, user, scm_auth_type=scm_auth.get("auth_type"),
-                scm_account=scm_auth.get("scm_account"),
-                scm_ssh_info=scm_auth.get("scm_ssh"),
-                scm_oauth=scm_auth.get("scm_oauth"),
-            )
+        if validated_data.get("scm_type") != models.ToolLib.ScmTypeEnum.LINK:
+            if scm_auth:
+                ScmAuthManager.create_toollib_auth(
+                    instance, user, scm_auth_type=scm_auth.get("auth_type"),
+                    scm_account=scm_auth.get("scm_account"),
+                    scm_ssh_info=scm_auth.get("scm_ssh"),
+                    scm_oauth=scm_auth.get("scm_oauth"),
+                )
+            elif instance:
+                # 更新时允许移除scm_auth
+                instance.scm_auth = None
+                instance.save(user=user)
         return instance
 
     def create(self, validated_data):
