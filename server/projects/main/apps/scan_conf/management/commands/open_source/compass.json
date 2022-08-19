@@ -1,7 +1,7 @@
 [
     {
         "name": "compass",
-        "display_name": "Compass",
+        "display_name": "TCA-Armory-C2",
         "description": "依赖分析工具",
         "license": "自研",
         "libscheme_set": [],

@@ -1,7 +1,7 @@
 [
     {
         "name": "tca_ql_python",
-        "display_name": "TCA_QL_Python",
+        "display_name": "TCA-Armory-Q4",
         "description": "基于QL的代码静态分析工具，目前处于试用中, 非完整版",
         "license": "自研",
         "libscheme_set": [],
