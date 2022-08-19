@@ -37,7 +37,7 @@ function init_directory() {
     mkdir -p /var/opt/tca/tools
     mkdir -p /var/opt/tca/client
     mkdir -p /run/mysqld/
-    mkdir -p /etc/tca/
+    mkdir -p /etc/tca/client
     chown -R mysql:mysql /var/log/tca/mariadb /var/opt/tca/mariadb /run/mysqld
 
     if [ -d "/CodeAnalysis/tools" ]; then
@@ -52,6 +52,13 @@ function init_directory() {
     else
         mv /CodeAnalysis/scripts/config.sh /CodeAnalysis/scripts/config.sh.bak
         ln -s /etc/tca/config.sh /CodeAnalysis/scripts/config.sh
+    fi
+
+    if [ ! -f "/etc/tca/client/config.ini" ]; then
+        cp /CodeAnalysis/client/config.ini /etc/tca/client/config.ini
+    else
+        mv /CodeAnalysis/client/config.ini /CodeAnalysis/client/config.ini.bak
+        ln -s /etc/tca/client/config.ini /CodeAnalysis/client/config.ini
     fi
 }
 

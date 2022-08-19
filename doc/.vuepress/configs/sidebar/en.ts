@@ -21,6 +21,14 @@ export const en: SidebarConfig = {
       text: '代码检查',
       children: [
         '/en/guide/代码检查/分析结果查看.md',
+        '/en/guide/代码检查/添加规则配置.md',
+        {
+          text: '典型工具接入指引',
+          children: [
+            '/en/guide/代码检查/工具/eslint.md',
+            '/en/guide/代码检查/工具/golangcilint.md',
+          ],
+        },
       ]
     },
     {
