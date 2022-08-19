@@ -1,7 +1,7 @@
 [
     {
         "name": "tca_ql_cpp",
-        "display_name": "TCA_QL_CPP",
+        "display_name": "TCA-Armory-Q1",
         "description": "基于QL的代码静态分析工具，目前处于试用中, 非完整版",
         "license": "自研",
         "libscheme_set": [],
