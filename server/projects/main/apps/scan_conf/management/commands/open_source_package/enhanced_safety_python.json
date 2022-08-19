@@ -1,0 +1,95 @@
+[
+    {
+        "name": "【Python】强化Python安全规则",
+        "description": "Python安全规则，需要申请license使用",
+        "revision": null,
+        "package_type": "official",
+        "languages": [
+            "python"
+        ],
+        "labels": [
+            "安全"
+        ],
+        "checkrule_set": [
+            {
+                "checktool": "tca_ql_python",
+                "checkrule": "cmd",
+                "severity": "fatal",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "tca_ql_python",
+                "checkrule": "code",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "tca_ql_python",
+                "checkrule": "deser",
+                "severity": "fatal",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "tca_ql_python",
+                "checkrule": "url",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "tca_ql_python",
+                "checkrule": "http",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "tca_ql_python",
+                "checkrule": "ldap_injection",
+                "severity": "fatal",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "tca_ql_python",
+                "checkrule": "reflectioni",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "tca_ql_python",
+                "checkrule": "xml",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "tca_ql_python",
+                "checkrule": "sql",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "tca_ql_python",
+                "checkrule": "ssrf",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "tca_ql_python",
+                "checkrule": "xss",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            }
+        ],
+        "open_saas": true,
+        "envs": null
+    }
+]

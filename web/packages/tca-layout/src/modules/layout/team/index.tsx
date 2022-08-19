@@ -20,11 +20,11 @@ import Analysis from '@src/modules/layout/project/index';
 import Tools from '@src/modules/tools';
 import ToolDetail from '@src/modules/tools/detail';
 import Toollibs from '@src/modules/tool-libs';
-
+import Nodes from '@src/modules/nodes';
+import NodeProcess from '@src/modules/nodes/process'
 
 // 项目内
 import { getTeamInfo } from '@src/services/team';
-
 import Header from '@src/modules/layout/header';
 import Constant from '@src/reducer/constant';
 
@@ -97,6 +97,8 @@ const TeamLayout = () => {
         <Route key='detail' exact path="/t/:orgSid/tools/:toolId/:tab?" render={() => getComponent(ToolDetail)} />,
         <Route key='tools' exact path="/t/:orgSid/tools" render={() => getComponent(Tools)} />,
         <Route key='toollibs' exact path="/t/:orgSid/toollibs" render={() => getComponent(Toollibs)} />,
+        <Route path="/t/:orgSid/nodes/:nodeId/process" render={() =>  getComponent(NodeProcess)} />
+        <Route path="/t/:orgSid/nodes/" render={() =>  getComponent(Nodes)} />
         <Route path="/t/:orgSid/p/:name/" render={() => <Analysis />} />
         <Redirect to="/" />
       </Switch>

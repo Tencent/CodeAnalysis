@@ -65,7 +65,7 @@ const Team = () => {
     offset = pageStart,
     limit = DEFAULT_PAGER.pageSize,
     searchParams = {},
-    callback?: Function,
+    callback?: (...args: any[]) => any,
   ) => {
     const res = (await getTeams({ offset, limit, ...searchParams })) || {};
     setScrollLoading(false);
@@ -92,7 +92,7 @@ const Team = () => {
   // 滚动加载更多团队
   const loadMoreTeam = () => {
     const teamWrapper = document.getElementById('team-wrapper');
-    if (teamWrapper.scrollTop + teamWrapper.clientHeight > teamWrapper.scrollHeight*0.8 && !allLoaded && !scrollLoading) {
+    if (teamWrapper.scrollTop + teamWrapper.clientHeight > teamWrapper.scrollHeight * 0.8 && !allLoaded && !scrollLoading) {
       setScrollLoading(true);
       getTeamList(true);
     }
@@ -160,21 +160,21 @@ const Team = () => {
             }
           >
             <Tabs.TabPane tab={t('所有团队')} key="all">
-              <div 
-                className={style.teamWrapper} 
+              <div
+                className={style.teamWrapper}
                 id='team-wrapper'
                 onScroll={loadMoreTeam}
               >
-                  {list.map((item: any) => (
-                    <div
-                      key={item.id}
-                      className={style.team}
-                      onClick={() => onClickTeam(item)}
-                    >
-                      <TeamItem data={item} />
-                    </div>
-                  ))}
-                  <div style={{textAlign:'center'}}><Spin spinning={scrollLoading} /></div>
+                {list.map((item: any) => (
+                  <div
+                    key={item.id}
+                    className={style.team}
+                    onClick={() => onClickTeam(item)}
+                  >
+                    <TeamItem data={item} />
+                  </div>
+                ))}
+                <div style={{ textAlign: 'center' }}><Spin spinning={scrollLoading} /></div>
               </div>
               {!allLoaded && <Divider plain>滚动加载更多团队</Divider>}
             </Tabs.TabPane>

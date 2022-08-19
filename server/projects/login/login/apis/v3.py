@@ -8,8 +8,8 @@
 """
 login - v3 apis
 """
-import logging
 # 原生
+import logging
 import os
 
 # 第三方
@@ -218,7 +218,7 @@ class OAInfoAPIView(TokenObtainPairView):
                 raise NotAuthenticated("账号或密码不正确")
         except Exception as e:
             logger.exception("OAInfo登录失败: %s" % e)
-            raise ParseError("登录失败，请稍后再试")
+            raise ParseError("登录失败，账户或密码错误或账户未注册")
         return Response(params)
 
 

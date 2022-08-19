@@ -1,0 +1,11 @@
+@import "@tencent/micro-frontend-shared/style/color.scss";
+
+.private-tag {
+  color: $cyan-6;
+  background-color: $cyan-1;
+}
+
+.public-tag {
+  color: $blue-6;
+  background-color: $blue-1;
+}

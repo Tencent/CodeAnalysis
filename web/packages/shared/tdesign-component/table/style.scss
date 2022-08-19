@@ -1,0 +1,6 @@
+.route-table {
+  :global(.t-table__header > tr > th) {
+    white-space: nowrap;
+    background-color: white;
+  }
+}

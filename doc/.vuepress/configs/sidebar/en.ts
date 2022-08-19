@@ -10,20 +10,29 @@ export const en: SidebarConfig = {
       ],
     },
     {
-      text: '团队管理相关',
+      text: '团队管理',
       children: [
         '/en/guide/团队管理/团队管理.md',
         '/en/guide/团队管理/成员权限.md',
+        '/en/guide/团队管理/节点管理.md',
       ]
     },
     {
       text: '代码检查',
       children: [
         '/en/guide/代码检查/分析结果查看.md',
+        '/en/guide/代码检查/添加规则配置.md',
+        {
+          text: '典型工具接入指引',
+          children: [
+            '/en/guide/代码检查/工具/eslint.md',
+            '/en/guide/代码检查/工具/golangcilint.md',
+          ],
+        },
       ]
     },
     {
-      text: '分析方案 & 模板',
+      text: '分析方案',
       children: [
         '/en/guide/分析方案/基础属性配置.md',
         '/en/guide/分析方案/代码检查配置.md',
@@ -45,7 +54,13 @@ export const en: SidebarConfig = {
     {
       text: '后台管理',
       children: [
-        '/en/guide/后台管理/后台管理说明.md',
+        '/en/guide/后台管理/用户管理.md',
+        '/en/guide/后台管理/团队管理.md',
+        '/en/guide/后台管理/项目管理.md',
+        '/en/guide/后台管理/分析记录管理.md',
+        '/en/guide/后台管理/节点管理.md',
+        '/en/guide/后台管理/工具管理.md',
+        '/en/guide/后台管理/OAuth管理.md',
       ]
     },
     {
@@ -108,11 +123,11 @@ export const en: SidebarConfig = {
   '/en/quickStarted/': [
     {
       text: '快速入门',
-      link: '/zh/quickStarted/deploySever.md',
+      link: '/en/quickStarted/deploySever.md',
       // children: [
       //   {
       //     text: '快速入门',
-      //     link: '/zh/quickStarted/deploySever.md',
+      //     link: '/en/quickStarted/deploySever.md',
       //   },
       // ],
     },

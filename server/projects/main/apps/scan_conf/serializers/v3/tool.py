@@ -17,7 +17,7 @@ from rest_framework.exceptions import ParseError
 # 项目内
 from apps.scan_conf import models
 from apps.scan_conf.serializers import base
-from apps.scan_conf.core import CheckToolManager
+from apps.scan_conf.core import CommonManager, CheckToolManager
 from apps.authen.models import Organization
 from apps.authen.serializers.base import ScmAuthCreateSerializer, ScmAuthSerializer
 from apps.codeproj.core import ScmAuthManager
@@ -82,6 +82,7 @@ class CheckToolEditSeriaizer(CheckToolSerializer):
     def validate(self, attrs):
         attrs["org"] = get_and_check_view_org(self)
         user = self.get_user()
+        scm_type = attrs.get("scm_type")
         scm_auth = attrs.get("scm_auth")
         scm_url = attrs.get('scm_url')
         run_cmd = attrs.get('run_cmd')
@@ -93,26 +94,8 @@ class CheckToolEditSeriaizer(CheckToolSerializer):
                 raise serializers.ValidationError({"run_cmd": "工具执行命令必填"})
         # 存在时则进行凭证校验
         if scm_url and scm_auth:
-            scm_type = attrs.get("scm_type")
-            auth_type = scm_auth.get("auth_type")
-            if auth_type == models.ScmAuth.ScmAuthTypeEnum.OAUTH:
-                scm_oauth = scm_auth.get("scm_oauth")
-                if not scm_oauth or scm_oauth.user != user:
-                    raise serializers.ValidationError({"scm_auth": "请选择有效OAuth凭证"})
-                credential_info = scm_oauth.credential_info
-            elif auth_type == models.ScmAuth.ScmAuthTypeEnum.PASSWORD:
-                scm_account = scm_auth.get("scm_account")
-                if not scm_account or scm_account.user != user:
-                    raise serializers.ValidationError({"scm_auth": "请选择有效HTTP凭证"})
-                credential_info = scm_account.credential_info
-            elif auth_type == models.ScmAuth.ScmAuthTypeEnum.SSHTOKEN:
-                scm_ssh = scm_auth.get("scm_ssh")
-                if not scm_ssh or scm_ssh.user != user:
-                    raise serializers.ValidationError({"scm_auth": "请选择有效SSH凭证"})
-                credential_info = scm_ssh.credential_info
-            else:
-                raise serializers.ValidationError({"auth_type": ["不支持%s鉴权方式" % auth_type]})
-            # 校验
+            # 校验凭证有效性
+            credential_info = CommonManager.get_and_check_scm_auth(scm_auth, user, instance=self.instance)
             ScmAuthManager.check_scm_url_credential(scm_type, scm_url, credential_info)
         return super().validate(attrs)
 
@@ -129,6 +112,10 @@ class CheckToolEditSeriaizer(CheckToolSerializer):
                 scm_ssh_info=scm_auth.get("scm_ssh"),
                 scm_oauth=scm_auth.get("scm_oauth"),
             )
+        elif instance:
+            # 更新时允许移除scm_auth
+            checktool.scm_auth = None
+            checktool.save(user=user)
         return checktool
 
     def create(self, validated_data):

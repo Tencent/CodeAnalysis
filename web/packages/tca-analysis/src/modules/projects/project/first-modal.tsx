@@ -17,6 +17,7 @@ import { Modal, Form, Input, Select, Radio, Row, Col, Checkbox, message, Tag } f
 import { getProjectRouter } from '@src/utils/getRoutePath';
 import { getLanguages, getTags } from '@src/services/schemes';
 import { initRepos } from '@src/services/projects';
+import NodeTag from '@src/components/node-tag';
 
 import { SCAN_LIST } from '../../schemes/constants';
 import style from '../style.scss';
@@ -49,15 +50,13 @@ const FirstModal = (props: FirstModalProps) => {
 
   useEffect(() => {
     (async () => {
-      setTags(get(await getTags(), 'results', []));
+      setTags(get(await getTags(orgSid), 'results', []));
       setLanguages(get(await getLanguages(), 'results', []));
     })();
   }, []);
 
   const onFinish = (data: any) => {
     const { funcList = [] } = data;
-    // 开源版需要隐藏tag，默认赋予tag Codedog_Linux
-    const tag = tags.filter(item => item.public && item.name === 'Codedog_Linux').pop() || tags.pop();
     data = data.type === 'create' ? {
       branch: data.branch,
       scan_scheme: {
@@ -71,7 +70,6 @@ const FirstModal = (props: FirstModalProps) => {
         envs: null,
         pre_cmd: null,
         build_flag: false,
-        tag: tag.name || 'Codedog_Linux',
       },
     } : {
       branch: data.branch,
@@ -165,27 +163,12 @@ const FirstModal = (props: FirstModalProps) => {
                     ))}
                   </Select>
                 </Form.Item>
-                <Form.Item
+                <NodeTag
                   name="tag"
                   label="运行环境"
                   rules={[{ required: true, message: '请选择运行环境' }]}
-                >
-                  <Radio.Group>
-                    <Row>
-                      {tags.map((item: any) => item.public && (
-                        <Col
-                          span={8}
-                          key={item.name}
-                          style={{ marginBottom: 8 }}
-                        >
-                          <Radio value={item.name}>
-                            {item.name}
-                          </Radio>
-                        </Col>
-                      ))}
-                    </Row>
-                  </Radio.Group>
-                </Form.Item>
+                  tags={tags}
+                />
                 <Form.Item
                   name="funcList"
                   label="功能开启"

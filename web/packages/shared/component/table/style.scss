@@ -1,0 +1,5 @@
+.route-table {
+  :global(.ant-table-thead > tr > th) {
+    white-space: nowrap;
+  }
+}

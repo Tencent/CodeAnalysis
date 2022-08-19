@@ -1,7 +1,7 @@
 [
     {
-        "name": "【Android】危险权限扫描",
-        "description": "扫描Android危险权限使用。",
+        "name": "【Android】危险权限分析",
+        "description": "分析Android项目中的危险权限使用。",
         "revision": null,
         "package_type": "official",
         "languages": [

@@ -1,7 +1,7 @@
 [
     {
         "name": "collie",
-        "display_name": "Collie",
+        "display_name": "TCA-Armory-C1",
         "description": "多语言非编译型静态代码分析工具。",
         "license": "自研",
         "libscheme_set": [],

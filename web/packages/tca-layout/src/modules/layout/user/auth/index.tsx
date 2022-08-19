@@ -146,7 +146,7 @@ const Auth = () => {
      * @param oauthInfo 选中OAuth平台信息
      */
   const onOAuthStart = (oauthInfo: any) => {
-    var winRef = window.open('',"oauthWindow",getWindowSize());
+    const winRef = window.open('',"oauthWindow",getWindowSize());
     getOAuthStatus({scm_platform_name: oauthInfo?.scm_platform_name}).then((res)=>{
       winRef.location = res?.git_auth_url;
     }).catch(()=>{
@@ -160,7 +160,7 @@ const Auth = () => {
    * @param oauthInfo 选中OAuth平台信息
    */
   const onOAuthUpdate = (oauthInfo: any) => {
-    var winRef = window.open('',"oauthWindow",getWindowSize());
+    const winRef = window.open('',"oauthWindow",getWindowSize());
     getOAuthStatus({scm_platform_name: oauthInfo?.scm_platform_name}).then((res)=>{
       winRef.location = res?.git_auth_url;
     }).catch(()=>{

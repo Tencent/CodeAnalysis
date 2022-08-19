@@ -25,6 +25,7 @@ Server、Web 与 Client
 1. 更新代码
 2. 执行以下命令：
     - `bash ./quick_install.sh docker-compose build`：重新构建TCA相关镜像
+    - `bash ./quick_install.sh docker-compose stop`：停止运行中的TCA容器
     - `bash ./quick_install.sh docker-compose deploy`: 重新部署TCA相关容器与初始化（或刷新数据）
 
 ##### 运行操作

@@ -16,6 +16,7 @@ import logging
 from django.utils.timezone import now
 
 # 项目内 import
+from apps.authen.core import OrganizationManager
 from apps.job.models import Task, TaskProcessRelation
 from apps.nodemgr import models
 from apps.scan_conf import models as scan_conf_models
@@ -63,6 +64,14 @@ class NodeManager(object):
         return models.Node.objects.filter(enabled=models.Node.EnabledEnum.ACTIVE).count()
 
     @classmethod
+    def validate_node_org(cls, user, org_sid):
+        """校验节点指定的团队信息
+        """
+        if not org_sid and user.is_superuser:
+            return True
+        return OrganizationManager.check_user_org_perm(user, org_sid=org_sid)
+
+    @classmethod
     def register_node(cls, request, data):
         """注册节点
         """
@@ -71,7 +80,10 @@ class NodeManager(object):
             NodeManager.restore_existed_node(request, node, data)
         except models.Node.DoesNotExist:
             node = NodeManager.create_new_node(request, data)
-            NodeManager.init_node_config(node, data.get("os_info"))
+            if data.get("org_sid"):
+                logger.info("[Node: %s] 团队节点需手动初始化" % node)
+            else:
+                NodeManager.init_node_config(node, data.get("os_info"))
         return {'id': node.id}
 
     @classmethod
@@ -103,7 +115,7 @@ class NodeManager(object):
         """创建新的节点
         """
         ip = cls.get_node_ip(request)
-        logger.info("[Node] create new node, ip: %s" % ip)
+        logger.info("[Node] create new node, ip: %s, data: %s" % (ip, data))
         if request.user.is_superuser is True:
             enabled = models.Node.EnabledEnum.ACTIVE
         else:
@@ -114,8 +126,8 @@ class NodeManager(object):
             enabled=enabled,
             last_beat_time=now(),
             uuid=data['uuid'],
-            tag=data.get("tag"),
             manager=request.user,
+            org_sid=data.get("org_sid")
         )
         node.save(user=request.user)
         return node
@@ -172,3 +184,21 @@ class NodeManager(object):
                             delete_ids.append(relations.id)
         models.NodeToolProcessRelation.objects.filter(
             id__in=delete_ids).delete()
+
+    @classmethod
+    def batch_update_node_processes(cls, nodes, data):
+        """批量更新节点进程
+        """
+        for node in nodes:
+            cls.update_node_processes(node, data)
+
+    @classmethod
+    def batch_update_node_detail(cls, nodes, data):
+        """批量更新节点信息
+        包含相关责任人、节点标签等
+        """
+        for node in nodes:
+            if data.get("related_managers"):
+                node.related_managers.set(data.get("related_managers"))
+            if data.get("exec_tags"):
+                node.exec_tags.set(data.get("exec_tags"))

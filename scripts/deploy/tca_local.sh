@@ -16,6 +16,7 @@ source $TCA_SCRIPT_ROOT/server/start.sh
 source $TCA_SCRIPT_ROOT/server/stop.sh
 source $TCA_SCRIPT_ROOT/server/healthcheck.sh
 source $TCA_SCRIPT_ROOT/client/init.sh
+source $TCA_SCRIPT_ROOT/client/check.sh
 source $TCA_SCRIPT_ROOT/client/start.sh
 source $TCA_SCRIPT_ROOT/client/stop.sh
 
@@ -170,6 +171,7 @@ function tca_local_main() {
             tca_local_start
             sleep 2
             check_tca_local_status
+            check_tca_client_status
         ;;
         install)
             tca_local_install $service
@@ -182,6 +184,7 @@ function tca_local_main() {
         ;;
         check)
             check_tca_local_status
+            check_tca_client_status
         ;;
         log)
             get_tca_local_log

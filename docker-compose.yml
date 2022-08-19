@@ -240,4 +240,5 @@ services:
         python3 codepuppy.py start -t $$CODEDOG_TOKEN
     volumes:
       - ./tools/:/workspace/tools/
+      - ./client/config.ini:/workspace/client/config.ini
       - ./.docker_data/client/appdata:/workspace/client/.appdata
