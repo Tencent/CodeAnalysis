@@ -20,7 +20,6 @@ from rest_framework.exceptions import ParseError
 # 项目内
 from apps.scan_conf import models
 from apps.scan_conf.api_filters import base as base_filters
-from apps.codeproj.core.scmmgr import ScmAuthManager
 from apps.base.basemodel import CDBaseModel
 
 logger = logging.getLogger(__name__)
@@ -239,6 +238,7 @@ class CommonManager(object):
         scm_ssh = scm_auth.get("scm_ssh")
         if auth_type == models.ScmAuth.ScmAuthTypeEnum.OAUTH:
             if not scm_oauth:
+                from apps.codeproj.core.scmmgr import ScmAuthManager
                 # 如果没有传递scm_oauth
                 scm_oauth = ScmAuthManager.get_scm_auth(user)
             if not scm_oauth or scm_oauth.user != user:
