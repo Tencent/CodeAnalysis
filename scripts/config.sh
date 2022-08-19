@@ -1,12 +1,14 @@
 #!/bin/bash
 # -*-*-*- 需要关注的配置内容 -*-*-*-
 # 数据库配置，默认MySQL端口号为3306
+export USE_EXTERNAL_MYSQL=${USE_EXTERNAL_MYSQL:-false}
 export MYSQL_HOST=${MYSQL_HOST:-127.0.0.1}
 export MYSQL_PORT=${MYSQL_PORT:-3306}
 export MYSQL_USER=${MYSQL_USER:-tca}
 export MYSQL_PASSWORD=${MYSQL_PASSWORD:-"TCA!@#2021"}
 
 # Redis配置，默认Redis端口号为6379
+export USE_EXTERNAL_REDIS=${USE_EXTERNAL_REDIS:-false}
 export REDIS_HOST=${REDIS_HOST:-127.0.0.1}
 export REDIS_PORT=${REDIS_PORT:-6379}
 export REDIS_PASSWD=${REDIS_PASSWD:-"tca2022"}
