@@ -50,7 +50,7 @@ export const useURLParams = (FILTER_FIELDS: Array<string> = []) => {
  * @param fn
  * @param deps
  */
-export const useDeepEffect = (fn: Function, deps: any) => {
+export const useDeepEffect = (fn: (...args: any[]) => any, deps: any) => {
   const isFirst = useRef(true);
   const prevDeps = useRef(deps);
 

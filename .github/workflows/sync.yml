@@ -33,3 +33,17 @@ jobs:
           TGIT_REPOSITORY: Tencent_Open_Source/CodeAnalysis
           TGIT_USERNAME: ${{ secrets.USERNAME }}
           TGIT_PASSWORD: ${{ secrets.PASSWORD }}
+
+      - name: Push to Gitee
+        run: |
+          remote_repo="https://${GITEE_USERNAME}:${GITEE_PASSWORD}@gitee.com/${GITEE_REPOSITORY}.git"
+          git remote add gitee "${remote_repo}"
+          git show-ref
+          git branch --verbose
+          git push --all --force gitee
+          git push --tags --force gitee
+        env:
+          GITEE_REPOSITORY: zhang9w0v5/CodeAnalysis
+          GITEE_USERNAME: ${{ secrets.GITEE_USERNAME }}
+          GITEE_PASSWORD: ${{ secrets.GITEE_PASSWORD }}
+          

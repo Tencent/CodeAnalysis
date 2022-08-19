@@ -1,7 +1,7 @@
 [
     {
         "name": "jaff",
-        "display_name": "JAFF",
+        "display_name": "TCA-Armory-J3",
         "description": "扫描项目使用的JAR包中的API调用",
         "license": "自研",
         "libscheme_set": [],

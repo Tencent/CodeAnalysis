@@ -67,7 +67,7 @@ const Schemes = () => {
   }, [curRepo.id]);
 
   const getCommonData = async () => {
-    setTags(get(await getTags(), 'results', []));
+    setTags(get(await getTags(orgSid), 'results', []));
     setLanguages(get(await getLanguages(), 'results', []));
     setTemplates(get(await getTmplList(orgSid, { limit: 100 }), 'results', []));
   };

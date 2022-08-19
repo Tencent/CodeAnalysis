@@ -42,7 +42,7 @@ const create = (rootDom: HTMLElement) => {
   }
 };
 
-const bootstrap = () => { };
+const bootstrap = () => { console.log('') };
 
 const mount = (props: any) => {
   const { rootDom, store } = props;
@@ -54,7 +54,6 @@ const mount = (props: any) => {
         <ConfigProvider
           autoInsertSpaceInButton={false}
           locale={locale.default}
-          // @ts-ignore
           getPopupContainer={node => (node ? node.parentNode : document.body)}
         >
           <MicroLayout value="projectCompleted">

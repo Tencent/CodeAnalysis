@@ -67,7 +67,7 @@
 
 2. 选择其中一台机器 工具进程配置，勾选其工具进程
 
-![工具进程](https://tencent.github.io/CodeAnalysis/doc/images/node_mange2.png)
+![工具进程](https://tencent.github.io/CodeAnalysis/media/ProcessConfiguration2.png)
 
 ## client下载/找到工具所在目录及需要的环境
 1. 找到puppy-tool-config若没有额外配置则为默认代码库https://github.com/TCATools/puppy-tools-config.git

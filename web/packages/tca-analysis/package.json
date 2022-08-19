@@ -11,7 +11,9 @@
   "scripts": {
     "dev": "NODE_ENV=development webpack server --config ./scripts/webpack.dev.js --progress --color",
     "build": "NODE_ENV=production webpack --config ./scripts/webpack.prod.js --progress --color",
-    "analyzer": "webpack-bundle-analyzer --port 8888 ./dist/stats.json"
+    "analyzer": "webpack-bundle-analyzer --port 8888 ./dist/stats.json",
+    "lint": "eslint --ext .js,.jsx,.ts,.tsx src/",
+    "lint:fix": "eslint --ext .js,.jsx,.ts,.tsx src/ --fix"
   },
   "dependencies": {
     "@ant-design/plots": "^1.0.9",

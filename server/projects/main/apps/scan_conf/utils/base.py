@@ -68,7 +68,7 @@ class ToolLibLoadManager(object):
             scm_auth = slz.validated_data.pop("scm_auth", None)
             toollib_name = slz.validated_data.pop("name")
             toollib, _ = ToolLibManager.create_or_update(toollib_name, user, instance=toollib,
-                                                          lib_key=lib_key, **slz.validated_data)
+                                                        lib_key=lib_key, **slz.validated_data)
             return True, cls.postload_handler(toollib, scm_auth=scm_auth, user=user)
         except Exception as e:
             logger.error(e)
@@ -122,7 +122,7 @@ class CheckToolLoadManager(object):
         :return: checktool_name
         """
         if admins and not checktool.owners.exists():
-            # 如果工具owners为农历了
+            # 如果工具owners不存在
             checktool.owners.add(*admins)
         return checktool.name
 
@@ -136,15 +136,17 @@ class CheckToolLoadManager(object):
         checktool_name = checktool_json["name"]
         try:
             data = cls.preload_handler(checktool_json)
-            checktool = models.CheckTool.objects.filter(name=checktool_name).first()
-            slz = CheckerSerializer(instance=checktool, data=data, context={"is_local_script": True})
-            slz.is_valid(raise_exception=True)
-            logger.info("开始保存工具%s数据。。。" % checktool_name)
-            checktool_name = slz.validated_data.pop("name")
-            tool_key = data.get('tool_key')
-            checktool = CheckToolManager.load_by_script(checktool_name, None, checktool=checktool,
-                                              tool_key=tool_key, **slz.validated_data)
-            return True, cls.postload_handler(checktool, admins=admins)
+            if data:
+                checktool = models.CheckTool.objects.filter(name=checktool_name).first()
+                slz = CheckerSerializer(instance=checktool, data=data, context={"is_local_script": True})
+                slz.is_valid(raise_exception=True)
+                logger.info("开始保存工具%s数据。。。" % checktool_name)
+                checktool_name = slz.validated_data.pop("name")
+                tool_key = data.get('tool_key')
+                checktool = CheckToolManager.load_by_script(checktool_name, None, checktool=checktool,
+                                                tool_key=tool_key, **slz.validated_data)
+                return True, cls.postload_handler(checktool, admins=admins)
+            return True, checktool_name
         except Exception as e:
             logger.error(e)
             return False, checktool_name
@@ -221,14 +223,16 @@ class CheckPackageLoadManager(object):
         checkpackage_name = checkpackage_json["name"]
         try:
             data = cls.preload_handler(checkpackage_json)
-            checkpackage = models.CheckPackage.objects.filter(name=checkpackage_name).first()
-            slz = CheckPackageJsonSerializer(instance=checkpackage, data=data)
-            slz.is_valid(raise_exception=True)
-            logger.info("开始保存规则包[%s]数据。。。" % checkpackage_name)
-            checkpackage_name = slz.validated_data.pop("name")
-            checkpackage = CheckPackageManager.load_by_script(checkpackage_name, None,
-                                              checkpackage=checkpackage, **slz.validated_data)
-            return True, cls.postload_handler(checkpackage)
+            if data:
+                checkpackage = models.CheckPackage.objects.filter(name=checkpackage_name).first()
+                slz = CheckPackageJsonSerializer(instance=checkpackage, data=data)
+                slz.is_valid(raise_exception=True)
+                logger.info("开始保存规则包[%s]数据。。。" % checkpackage_name)
+                checkpackage_name = slz.validated_data.pop("name")
+                checkpackage = CheckPackageManager.load_by_script(checkpackage_name, None,
+                                                checkpackage=checkpackage, **slz.validated_data)
+                return True, cls.postload_handler(checkpackage)
+            return True, checkpackage_name
         except Exception as e:
             logger.error(e)
             return False, checkpackage_name
@@ -252,7 +256,7 @@ class CheckPackageLoadManager(object):
                         break
                     checkpackage_json = checkpackage_json_list[i_idx+j_idx]
                     logger.info('--> [%s/%s], checkpackage name: %s' % (
-                        index+1, checkpackage_count, checkpackage_json["name"]))
+                        checkpackage_count, index+1, checkpackage_json["name"]))
                     task = t_thread.submit(cls.loadpkg, checkpackage_json)
                     all_task.append(task)
                 for future in as_completed(all_task):

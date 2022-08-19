@@ -43,7 +43,6 @@ export default function fetch(url: string, options: any, absolutePath = false) {
     };
   }
 
-  // @ts-ignore
   options.headers = appendXSRFTokenHeader(headers);
 
   return window.fetch(`${absolutePath ? '' : window.location.origin}${url}`, options);

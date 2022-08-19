@@ -6,13 +6,15 @@ export const zh: SidebarConfig = {
       text: '介绍',
       children: [
         '/zh/guide/README.md',
+        '/zh/guide/快速入门/快速启动一次代码分析.md'
       ],
     },
     {
-      text: '团队管理相关',
+      text: '团队管理',
       children: [
         '/zh/guide/团队管理/团队管理.md',
         '/zh/guide/团队管理/成员权限.md',
+        '/zh/guide/团队管理/节点管理.md',
       ]
     },
     {
@@ -22,7 +24,7 @@ export const zh: SidebarConfig = {
       ]
     },
     {
-      text: '分析方案 & 模板',
+      text: '分析方案',
       children: [
         '/zh/guide/分析方案/基础属性配置.md',
         '/zh/guide/分析方案/代码检查配置.md',
@@ -37,7 +39,6 @@ export const zh: SidebarConfig = {
       text: '工具管理',
       children: [
         '/zh/guide/工具管理/工具管理说明.md',
-        '/zh/guide/工具管理/工具列表.md',
         '/zh/guide/工具管理/自定义规则.md',
         '/zh/guide/工具管理/自定义工具.md',
       ]
@@ -45,7 +46,13 @@ export const zh: SidebarConfig = {
     {
       text: '后台管理',
       children: [
-        '/zh/guide/后台管理/后台管理说明.md',
+        '/zh/guide/后台管理/用户管理.md',
+        '/zh/guide/后台管理/团队管理.md',
+        '/zh/guide/后台管理/项目管理.md',
+        '/zh/guide/后台管理/分析记录管理.md',
+        '/zh/guide/后台管理/节点管理.md',
+        '/zh/guide/后台管理/工具管理.md',
+        '/zh/guide/后台管理/OAuth管理.md',
       ]
     },
     {
@@ -59,8 +66,8 @@ export const zh: SidebarConfig = {
     {
       text: '服务端',
       children: [
-        '/zh/guide/服务器/server.md',
-        '/zh/guide/服务器/deploy_with_minio.md',
+        '/zh/guide/服务端/server.md',
+        '/zh/guide/服务端/deploy_with_minio.md',
       ]
     },
     {
@@ -70,6 +77,15 @@ export const zh: SidebarConfig = {
         '/zh/guide/web/deploySource.md',
       ]
     },
+  ],
+  '/zh/advanced/': [
+    {
+      text: '深入',
+      children: [
+        '/zh/advanced/任务分布式执行.md',
+        '/zh/advanced/集成代码分析工具.md',
+      ],
+    }
   ],
   '/zh/community/': [
     {
@@ -99,15 +115,35 @@ export const zh: SidebarConfig = {
   '/zh/quickStarted/': [
     {
       text: '快速入门',
-      children: [ 
-        {
-          text: '概述',
-          link: '/zh/quickStarted/intro.md',
-        },
-        '/zh/quickStarted/deploySever.md',
-        '/zh/quickStarted/setup.md',
-        '/zh/quickStarted/deployClient.md',
+      link: '/zh/quickStarted/deploySever.md',
+      // children: [
+      //   {
+      //     text: '快速入门',
+      //     link: '/zh/quickStarted/deploySever.md',
+      //   },
+      // ],
+    },
+    {
+      text: '依赖安装参考',
+      // collapsible: true,
+      children: [
+        '/zh/quickStarted/references/install_python37_on_centos.md',
+        '/zh/quickStarted/references/install_python37_on_ubuntu.md',
+        '/zh/quickStarted/references/install_mysql_on_centos.md',
+        '/zh/quickStarted/references/install_redis_on_centos.md',
+        '/zh/quickStarted/references/install_redis_from_source.md',
+        '/zh/quickStarted/references/install_nginx_from_source.md',
+      ],
+    },
+    {
+      text: '其他',
+      // collapsible: true,
+      children: [
+        '/zh/quickStarted/intro.md',
+        '/zh/quickStarted/tools.md',
         '/zh/quickStarted/FAQ.md',
+        '/zh/quickStarted/codeDeploy.md',
+        '/zh/quickStarted/dockercomposeDeploy.md',
       ],
     },
   ],

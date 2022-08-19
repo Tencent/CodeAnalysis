@@ -325,19 +325,12 @@ class CodeDogApiServer(object):
     # 格式: server task api
     # ------------------------------------------------------------------------------------- #
 
-    def register(self, node_uuid, tag):
+    def register(self, data):
         """
         用本地node_uuid向server注册，获取server给的node_id
-        :param node_uuid: server的node rpc接口
-        :param tag: 机器标签
         :return: node_id
         """
         rel_url = "api/nodes/register/"
-        data = {
-            "uuid": node_uuid,
-            "tag": tag,
-            "os_info": settings.PLATFORMS[sys.platform]
-        }
         rsp = CodeDogHttpClient(self._server_url, rel_url, headers=self._headers, json_data=data).post()
         rsp_dict = self.get_data_from_result(rsp)
         return rsp_dict['id']

@@ -89,13 +89,12 @@ const reducer = (state: StateProps, action: ActionProps) => {
 };
 
 const StoreProvider = ({ children }: { children: any }) => {
-  // @ts-ignore
   const [state, dispatch] = useReducer(reducer, initialState);
 
   return (
-        <StateContext.Provider value={state}>
-            <DispatchContext.Provider value={dispatch}>{children}</DispatchContext.Provider>
-        </StateContext.Provider>
+    <StateContext.Provider value={state}>
+      <DispatchContext.Provider value={dispatch}>{children}</DispatchContext.Provider>
+    </StateContext.Provider>
   );
 };
 

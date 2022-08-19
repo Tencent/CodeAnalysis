@@ -19,7 +19,7 @@ ECHO install pylint
 pip3 install pylint==2.6.0
 
 ECHO install semgrep
-pip3 install semgrep==0.54.0
+pip3 install semgrep==0.100.0
 @REM SET SEMGREP_HOME="%TOOLS_DIR%/semgrep"
 @REM SET SEMGREP_RULES_HOME="%SEMGREP_HOME%/rules"
 @REM cd %SEMGREP_HOME%

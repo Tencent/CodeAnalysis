@@ -118,27 +118,6 @@
             },
             {
                 "checktool": "semgrep",
-                "checkrule": "handler-assignment-from-multiple-sources",
-                "severity": "warning",
-                "rule_params": null,
-                "state": "enabled"
-            },
-            {
-                "checktool": "semgrep",
-                "checkrule": "handler-attribute-read-from-multiple-sources",
-                "severity": "warning",
-                "rule_params": null,
-                "state": "enabled"
-            },
-            {
-                "checktool": "semgrep",
-                "checkrule": "handler-attribute-read-from-multiple-sources-dict",
-                "severity": "warning",
-                "rule_params": null,
-                "state": "enabled"
-            },
-            {
-                "checktool": "semgrep",
                 "checkrule": "hardcoded-jwt-key",
                 "severity": "warning",
                 "rule_params": null,
@@ -357,6 +336,20 @@
             {
                 "checktool": "semgrep",
                 "checkrule": "wip-xss-using-responsewriter-and-printf",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "semgrep",
+                "checkrule": "use-of-md5",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "semgrep",
+                "checkrule": "raw-html-format",
                 "severity": "warning",
                 "rule_params": null,
                 "state": "enabled"

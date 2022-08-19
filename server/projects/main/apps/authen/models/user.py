@@ -15,6 +15,7 @@ from django.contrib.auth.models import Group, User
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.utils import timezone
 from guardian.shortcuts import assign_perm
 
 # 项目内 import
@@ -26,6 +27,7 @@ logger = logging.getLogger(__name__)
 class ActiveOrganizationManager(models.Manager):
     """活跃团队筛选器
     """
+
     def get_queryset(self):
         return super().get_queryset().filter(status=Organization.StatusEnum.ACTIVE)
 
@@ -221,6 +223,12 @@ class CodeDogUser(models.Model):
             return False
         else:
             return True
+
+    def refresh_login_time(self):
+        """刷新最近一次登录时间
+        """
+        self.latest_login_time = timezone.now()
+        self.save()
 
     def __str__(self):
         return self.nickname

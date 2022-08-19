@@ -4,9 +4,11 @@
 
 TCA Web 采用 [Lerna](https://www.lernajs.cn/) 进行 `monorepo` 管理。
 
-> [Lerna GitHub地址](https://github.com/lerna/lerna)
->
-> [Lerna 中文命令文档](http://www.febeacon.com/lerna-docs-zh-cn/)
+:::tip
+[Lerna GitHub地址](https://github.com/lerna/lerna)
+
+[Lerna 中文命令文档](http://www.febeacon.com/lerna-docs-zh-cn/)
+:::
 
 由 `framework`、`login`、`tca-layout`、`tca-analysis`、`tca-manage`微前端以及`tca-document`前端帮助文档组成。
 

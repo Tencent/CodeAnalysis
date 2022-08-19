@@ -28,6 +28,22 @@ export const formatDate = (time: any, format = 'YYYY-MM-DD') => Moment(time, for
 export const formatDateTime = (time: any) => (time ? formatDate(time, 'YYYY-MM-DD HH:mm:ss') : null);
 
 /**
+ * 格式化文件大小
+ * @param bytes 文件大小
+ */
+const sizes = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+
+export const bytesToSize = (bytes: number) => {
+  if (typeof bytes !== 'number') {
+    return '-'
+  }
+  if (bytes === 0) return '0 B';
+  const k = 1024;
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+  return (bytes / Math.pow(k, i)).toPrecision(3) + ' ' + sizes[i];
+}
+
+/**
  * 根据loading状态设置layout加载class，用于控制container显示/隐藏
  * @param loading 加载状态
  */

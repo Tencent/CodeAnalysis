@@ -17,6 +17,8 @@ from util import errcode
 from util.httpclient import HttpClient
 from util.exceptions import CDErrorBase
 from util.authticket import ServerInternalTicket
+from util.exceptions import CDErrorBase
+from util.httpclient import HttpClient
 
 logger = logging.getLogger(__name__)
 
@@ -76,6 +78,10 @@ class BaseClient(object):
     def put(self, path, data):
         return self._session.put(self._get_url(path), json_data=data, headers=self._headers)
 
+    @ActionWarpper
+    def delete(self, path, data):
+        return self._session.delete(self._get_url(path), json_data=data, headers=self._headers)
+
     def api(self, name, data, path_params=None):
         api_def = self._apis.get(name)
         if not api_def:
@@ -92,6 +98,8 @@ class BaseClient(object):
             return self.put(path, data=data)
         elif api_def["method"] == "patch":
             return self.patch(path, data=data)
+        elif api_def["method"] == "delete":
+            return self.delete(path, data=data)
 
 
 class AnalyseClient(BaseClient):
@@ -120,6 +128,14 @@ class AnalyseClient(BaseClient):
             "get_overview": {
                 "path": "api/projects/%d/overview/",
                 "method": "get",
+            },
+            'scan_check': {
+                'path': 'api/projects/%d/scans/%d/check/',
+                'method': 'get',
+            },
+            'update_scan': {
+                'path': 'api/projects/%d/scans/%d/info/',
+                'method': 'patch',
             },
             "get_scans": {
                 "path": "api/projects/%d/scans/",
@@ -169,6 +185,8 @@ class AnalyseClient(BaseClient):
             result = self.put(path, data=data)
         elif api_def["method"] == "patch":
             result = self.patch(path, data=data)
+        elif api_def["method"] == "delete":
+            return self.delete(path, data=data)
         else:
             return None
         return self.get_data_from_result(result)

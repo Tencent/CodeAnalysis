@@ -58,9 +58,13 @@ class PersistData(object):
         self._data = {}
         
     def _get_data_file(self):
-        data_dir = os.path.join(settings.BASE_DIR, '.appdata')
+        data_dir = os.getenv("TCA_APP_DATA_DIR")  # 支持通过环境变量指定app数据目录，存放节点NODE_UUID唯一值
+        if data_dir:
+            data_dir = os.path.abspath(data_dir)
+        else:
+            data_dir = os.path.join(settings.BASE_DIR, '.appdata')
         if not os.path.exists(data_dir):
-            os.mkdir(data_dir)
+            os.makedirs(data_dir)
         return os.path.join(data_dir, 'appdata.json')
     
     def _load_data(self):

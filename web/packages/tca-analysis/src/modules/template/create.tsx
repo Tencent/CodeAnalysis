@@ -11,10 +11,11 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { pick, trim } from 'lodash';
-import { Form, Input, Checkbox, Row, Col, Select, message, Modal, Radio } from 'coding-oa-uikit';
+import { Form, Input, Checkbox, Row, Col, Select, message, Modal } from 'coding-oa-uikit';
 
 import { SCAN_LIST } from '../schemes/constants';
 import { createTmpl } from '@src/services/template';
+import NodeTag from '@src/components/node-tag';
 
 import style from './style.scss';
 
@@ -36,8 +37,6 @@ const CreatSchemeModal = (props: IProps) => {
 
   const onFinish = (data: any) => {
     const { funcList = [] } = data;
-    // 开源版需要隐藏tag，默认赋予tag Codedog_Linux
-    const tag = tags.filter(item => item.public && item.name === 'Codedog_Linux').pop() || tags.pop();
     createTmpl(orgSid, {
       ...pick(data, ['name', 'languages', 'tag', 'description']),
       ...SCAN_LIST.map(item => ({ [item.value]: funcList.includes(item.value) })).reduce(
@@ -48,8 +47,6 @@ const CreatSchemeModal = (props: IProps) => {
       envs: null,
       pre_cmd: null,
       name: trim(data.name),
-      // 开源版需要隐藏tag，默认赋予tag Codedog_Linux
-      tag: tag.name || 'Codedog_Linux',
     }).then((res: any) => {
       message.success('创建成功');
       onReset();
@@ -100,27 +97,12 @@ const CreatSchemeModal = (props: IProps) => {
             ))}
           </Select>
         </Form.Item>
-        <Form.Item
+        <NodeTag
           name="tag"
           label="运行环境"
           rules={[{ required: true, message: '请选择运行环境' }]}
-        >
-          <Radio.Group>
-            <Row>
-              {tags.map(item => item.public && (
-                <Col
-                  span={8}
-                  key={item.name}
-                >
-                  <Radio value={item.name}>
-                    {item.name}
-                  </Radio>
-                </Col>
-              ))}
-
-            </Row>
-          </Radio.Group>
-        </Form.Item>
+          tags={tags}
+        />
         <Form.Item
           name="description"
           label="模板描述"

@@ -14,6 +14,7 @@ from django.db import models
 
 # 项目内 import
 from apps.base.models import CDBaseModel
+from apps.authen.models import Organization
 from apps.nodemgr.models.tag import ExecTag
 from apps.scan_conf.models import CheckTool, Process
 
@@ -55,16 +56,28 @@ class Node(CDBaseModel):
                                            help_text="（可多选）节点可执行标签的最小集合。")
     # 废弃字段，待移除
     tag = models.ForeignKey(ExecTag, on_delete=models.SET_NULL, verbose_name="唯一执行标签", null=True, blank=True,
-                            related_name="nodes")  # 执行标签
-    executor_num = models.IntegerField(verbose_name="执行器数", default=1)  # 旧rpc判断是否忙碌的标准
+                            related_name="nodes")
+    executor_num = models.IntegerField(verbose_name="执行器数", default=1)
     executor_used_num = models.IntegerField(verbose_name="已被使用的执行器数", default=0)
-    state = models.IntegerField(verbose_name="状态", choices=State_CHOICES, default=0)  # 新api判断是否忙碌的标准
+    state = models.IntegerField(verbose_name="状态", choices=State_CHOICES, default=0)
     uuid = models.CharField(verbose_name="节点唯一标志", max_length=64, unique=True)
     manager = models.ForeignKey("auth.User", verbose_name="节点管理员", blank=True, null=True, related_name="+",
                                 on_delete=models.SET_NULL)
+    related_managers = models.ManyToManyField("auth.User", blank=True, related_name="related_managers",
+                                              verbose_name="节点关注人员列表")
+    org_sid = models.CharField(verbose_name="组织编号", max_length=64, null=True, blank=True)
 
     def __str__(self):
         return self.name
+
+    @property
+    def org_info(self):
+        """团队信息
+        """
+        if self.org_sid:
+            return Organization.objects.filter(org_sid=self.org_sid).first()
+        else:
+            return None
 
     def query_executor(self, occupy=False):
         if self.enabled != self.EnabledEnum.ACTIVE or self.executor_used_num >= self.executor_num:
@@ -78,6 +91,14 @@ class Node(CDBaseModel):
     def free_executor(self):
         self.executor_used_num = self.executor_used_num - 1 if self.executor_used_num > 0 else 0
         self.save()
+
+    def check_user_admin_permission(self, user):
+        """检查指定用户是否有节点管理权限
+        """
+        if user == self.manager or user in self.related_managers.all():
+            return True
+        else:
+            return False
 
 
 class NodeToolProcessRelation(models.Model):

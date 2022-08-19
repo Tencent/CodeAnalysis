@@ -35,7 +35,7 @@ export const getLabels = () => get(`${MAIN_SERVER_API}/labels/?limit=100`);
 /**
  * 获取运行环境列表
  */
-export const getTags = () => get(`${MAIN_SERVER_API}/tags/?limit=50`);
+export const getTags = (orgId: string, params: any = null) => get(`${MAIN_SERVER_API}/orgs/${orgId}/nodes/tags/`, params);
 
 /**
  * 拉取模板配置

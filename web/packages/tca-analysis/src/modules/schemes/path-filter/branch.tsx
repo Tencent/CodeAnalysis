@@ -49,7 +49,6 @@ const Branch = (props: IProps) => {
           <span>
             过滤对比分支引入的问题
             <Tooltip
-              // @ts-ignore
               getPopupContainer={() => document.body}
               title='常用于合流场景，对比MR目标分支的增量分析'
             >

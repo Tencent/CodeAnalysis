@@ -30,10 +30,11 @@ Server、Web 与 Client
     bash ./quick_install.sh docker deploy
     ```
 ::: tip
-通过Docker部署默认会在当前根目录下的挂载三个路径：
-- `.docker_temp/logs`：容器内的`/var/log/tca/`，存放TCA平台的日输出文件；
-- `.docker_temp/data`：容器内的`/var/opt/tca/`, 存放TCA平台的服务数据，主要是Mariadb、Redis；
-- `.docker_temp/configs`：容器内的``/etc/tca``，存放TCA平台的配置文件，主要是`config.sh`
+1. 通过Docker部署默认会从DockerHub上拉取 ``tencenttca/tca:latest ``镜像
+2. 通过Docker部署默认会在当前根目录下的挂载三个路径：
+   - `.docker_temp/logs`：容器内的`/var/log/tca/`，存放TCA平台的日输出文件；
+   - `.docker_temp/data`：容器内的`/var/opt/tca/`, 存放TCA平台的服务数据，主要是Mariadb、Redis；
+   - `.docker_temp/configs`：容器内的``/etc/tca``，存放TCA平台的配置文件，主要是`config.sh`
 :::
 
 #### 更新操作
@@ -60,6 +61,7 @@ bash ./quick_install.sh docker stop
 
 # 使用TCA
 成功部署TCA后，请开始您的代码分析。
+
 ## 进入平台页面
 
 在浏览器输入`http://部署机器IP/`，点击立即体验，完成登录后即可跳转到团队列表页

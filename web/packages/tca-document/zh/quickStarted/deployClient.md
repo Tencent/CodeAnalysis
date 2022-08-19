@@ -4,86 +4,115 @@
 
 ### 依赖环境
 
-- 系统要求
+- 系统环境
 
-    - Linux，Windows或macOS
-    - [Python 3.7](https://docs.python.org/zh-cn/3.7/using/unix.html)
+  - Linux，Windows或macOS
 
+- 环境准备
 
-### 部署步骤
+  - **Python 3.7**，[安装指引](./references/install_python37_on_centos.md)
 
-#### 部署客户端
+### 使用步骤
 
-1. 安装Python环境和第三方库
+#### 安装第三方库
 
-    - 安装[Python3.7](https://docs.python.org/zh-cn/3.7/using/unix.html)、[pip3](https://pip.pypa.io/en/stable/installation/)
-      > 通过``python3 --version``和``pip3 --version``检查是否正确配置环境。
-    - 在本地源码目录下安装依赖
-    ```bash
-    pip3 install -r client/requirements/app_reqs.pip
-    ```
+```bash
+# 源码根目录下执行
+pip3 install -r client/requirements/app_reqs.pip
+```
 
-2. 安装第三方工具
+#### 安装第三方工具
 
-    - 进入到`client/requirements`目录  
-    - 在命令行中执行安装脚本
-    ```bash
-    #Linux/macOS环境
-    ./install.sh
-    #Windows环境
-    ./install.bat
-    ```
+```bash
+# 源码根目录
+cd client/requirements
+
+# 执行安装脚本
+# Linux/macOS环境
+./install.sh
+# Windows环境
+./install.bat
+```
 
 #### 配置客户端
 
-- 配置client/config.ini文件
-将`<Server IP地址>`替换成实际的serve ip（可包含端口号）。
-<img src="../../images/clientConfigIni.png" width = "80%" />
+- 配置 `client/config.ini` 文件
 
-- 配置client/codedog.ini文件
-    - 填写以下必填项：`token`,`org_sid`,`team_name`,`source_dir`
-        - `token`: 从tca页面获取，前往[个人中心]-[个人令牌]-复制Token
-        ![personalToken](../../images/personalToken.png)
-        - `org_sid`(团队编号),`team_name`(项目名称): 从tca项目概览页面URL中获取，项目概览URL格式：http://{域名}/t/{org_sid}/p/{team_name}/profile
-        ![orgsid](../../images/orgsid.png)
-        - `source_dir`: 本地代码目录路径
-- 按需填写其他可选项，也可以不填，按默认配置执行
+  将 `<Server IP地址>` 替换成实际的serve ip（可包含端口号）。  
 
+  ![客户端执行环境配置](https://tencent.github.io/CodeAnalysis/media/clientConfigIni.png)
+
+- 配置 `client/codedog.ini` 文件
+
+  必填项：`token`、`org_sid`、`team_name`、`source_dir`
+
+  - **个人令牌** - `token`：从 TCA 页面获取，前往[个人中心]-[个人令牌]-复制Token
+
+    ![personalToken](../../images/personalToken.png)
+
+  - **团队编号** - `org_sid`：进入 TCA 项目概览页，从 URL 中获取
+
+  - **项目名称** - `team_name`：：进入 TCA 项目概览页，从 URL 中获取
+
+      :::tip
+      项目概览URL格式：`http://{域名}/t/{org_sid}/p/{team_name}/profile`
+      :::
+
+  - **分析路径** - `source_dir`: 本地代码目录路径
+
+  :::tip
+  - 如果项目代码为编译型语言（比如：C/C++，C#，Go，Java，Kotlin，Objective-C等），且使用的分析方案中配置了编译型工具（如图，使用了OC推荐规则包），需要填写`build_cmd`编译命令。
+
+  - 其他可选项按需填写，不填写时按默认配置执行
+  :::
+  
 #### 启动客户端
 
-进入到`client`目录下，执行客户端脚本
 ```bash
+# 源码根目录
+cd client
+
+# 执行客户端脚本
 python3 codepuppy.py localscan
 ```
-> 使用`localscan`命令启动本地单次的代码分析，如需启动分布式并行分析任务，请参考[常驻节点分析](../guide/%E5%AE%A2%E6%88%B7%E7%AB%AF/%E5%B8%B8%E9%A9%BB%E8%8A%82%E7%82%B9%E5%88%86%E6%9E%90.md)进行配置。
+
+:::warning
+Client 的实现及启动脚本均依赖 Python3 版本为 3.7，可执行 ``python3 --version`` 查看版本。若版本有误，可安装版本为3.7的python并软链接到python3命令。
+:::
+
+:::tip
+
+- `codedog.ini` 各项参数可由命令行传入，获取详细参数说明可运行 `python3 codepuppy.py localscan -h`
+
+- 使用`localscan`命令启动本地单次的代码分析，如需启动分布式并行分析任务，请参考[使用分布式节点模式](../client/README.md#五使用分布式节点模式执行客户端)进行配置。
+:::
 
 ## 通过Docker-Compose
 
-> 适用于快速上手体验。使用docker运行，可以免去客户端环境依赖的安装，避免环境兼容性问题。
-> 但是由于环境受限于docker，会无法复用本地的编译环境，部分需要编译的工具无法使用。
+:::tip
+适用于快速上手体验。使用docker运行，可以免去客户端环境依赖的安装，避免环境兼容性问题。
 
+但是由于环境受限于docker，会无法复用本地的编译环境，部分需要编译的工具无法使用。
+:::
 
-### 部署步骤
+### 使用步骤
 
 #### 配置客户端
 
-- 配置client/config.ini文件
-将`<Server IP地址>`替换成实际的serve ip（可包含端口号）。
-<img src="../../images/clientConfigIni.png" width = "80%" />
+- 配置 `client/config.ini` 文件
 
-- 配置client/codedog.ini文件
-    - 填写以下必填项：`token`,`org_sid`,`team_name`,`source_dir`
-        - `token`: 从tca页面获取，前往[个人中心]-[个人令牌]-复制Token
-        ![personalToken](../../images/personalToken.png)
-        - `org_sid`(团队编号),`team_name`(项目名称): 从tca项目概览页面URL中获取，项目概览URL格式：http://{域名}/t/{org_sid}/p/{team_name}/profile
-        ![orgsid](../../images/orgsid.png)
-        - `source_dir`: 本地代码目录路径
-- 按需填写其他可选项，也可以不填，按默认配置执行
+- 配置 `client/codedog.ini` 文件
 
-#### 构建客户端镜像
+:::tip
+同通过源代码使用-[配置客户端](./deployClient.md#配置客户端)
+:::
+
+#### 构建镜像
 
 1. 安装Docker，安装教程：[官方文档](https://docs.docker.com/engine/install/)
+
 2. 安装Docker-Compose，安装教程：[官方文档](https://docs.docker.com/compose/install/)
+
 3. 进入`client`目录，构建docker镜像
 
 ```bash
@@ -94,7 +123,8 @@ docker build -t tca-client .
 
 ##### 方案一：直接使用docker运行
 
-1. 进入`client`目录，执行以下命令
+进入`client`目录，执行以下命令
+
 ```bash
 # 按照实际情况填写`SOURCE_DIR`环境变量值
 export SOURCE_DIR=需要扫描的代码目录绝对路径
@@ -104,26 +134,28 @@ docker run -it --rm  -v $PWD:/workspace/client -v $SOURCE_DIR:/workspace/src  --
 ##### 方案二：使用docker内bash终端运行
 
 1. 进入docker容器内的bash终端
-```bash
-# 按照实际情况填写`SOURCE_DIR`环境变量值
-export SOURCE_DIR=需要扫描的代码目录绝对路径
-docker run -it --rm  -v $PWD:/workspace/client -v $SOURCE_DIR:/workspace/src  --name tca-client tca-client bash
-```
+
+    ```bash
+    # 按照实际情况填写`SOURCE_DIR`环境变量值
+    export SOURCE_DIR=需要扫描的代码目录绝对路径
+    docker run -it --rm  -v $PWD:/workspace/client -v $SOURCE_DIR:/workspace/src --name tca-client tca-client bash
+    ```
+
 2. 通过命令行启动client代码
-```bash
-python3 codepuppy.py localscan
-```
+
+    ```bash
+    python3 codepuppy.py localscan
+    ```
 
 ## 通过可执行文件
 
 ### 依赖环境
 
-- 系统要求
+- 系统环境
 
-    - Linux，Windows或macOS
+  - Linux，Windows或macOS
 
-
-### 部署步骤
+### 使用步骤
 
 #### 下载客户端
 
@@ -133,23 +165,18 @@ python3 codepuppy.py localscan
 
 #### 配置客户端
 
-- 配置client/config.ini文件
-将`<Server IP地址>`替换成实际的serve ip（可包含端口号）。
-<img src="../../images/clientConfigIni.png" width = "80%" />
+- 配置 `client/config.ini` 文件
 
-- 配置client/codedog.ini文件
-    - 填写以下必填项：`token`,`org_sid`,`team_name`,`source_dir`
-        - `token`: 从tca页面获取，前往[个人中心]-[个人令牌]-复制Token
-        ![personalToken](../../images/personalToken.png)
-        - `org_sid`(团队编号),`team_name`(项目名称): 从tca项目概览页面URL中获取，项目概览URL格式：http://{域名}/t/{org_sid}/p/{team_name}/profile
-        ![orgsid](../../images/orgsid.png)
-        - `source_dir`: 本地代码目录路径
-- 按需填写其他可选项，也可以不填，按默认配置执行
+- 配置 `client/codedog.ini` 文件
+
+:::tip
+同通过源代码使用-[配置客户端](./deployClient.md#配置客户端)
+:::
 
 #### 启动客户端
 
 进入到`client`目录下，执行客户端
+
 ```bash
 ./codepuppy localscan
 ```
-> 使用`localscan`命令启动本地单次的代码分析，如需启动分布式并行分析任务，请参考[常驻节点分析](../guide/%E5%AE%A2%E6%88%B7%E7%AB%AF/%E5%B8%B8%E9%A9%BB%E8%8A%82%E7%82%B9%E5%88%86%E6%9E%90.md)进行配置。

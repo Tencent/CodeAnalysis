@@ -1,9 +1,3 @@
-// Copyright (c) 2021-2022 THL A29 Limited
-//
-// This source code file is made available under MIT License
-// See LICENSE for details
-// ==============================================================================
-
 import isEmpty from 'lodash/isEmpty';
 import { message } from 'coding-oa-uikit';
 // 项目内
@@ -55,10 +49,6 @@ class CombineLoader implements MicroApplicationLoader {
     message.error('微前端启动失败', 0);
     throw new Error('微前端启动失败');
   }
-
-  public renderUI() { }
-
-  public exit() { }
 }
 
 const loader = new CombineLoader(apiLoader, developmentLoader, settingLoader);
