@@ -37,8 +37,6 @@ const CreatSchemeModal = (props: IProps) => {
 
   const onFinish = (data: any) => {
     const { funcList = [] } = data;
-    // 开源版需要隐藏tag，默认赋予tag Codedog_Linux
-    const tag = tags.filter(item => item.public && item.name === 'Codedog_Linux').pop() || tags.pop();
     createTmpl(orgSid, {
       ...pick(data, ['name', 'languages', 'tag', 'description']),
       ...SCAN_LIST.map(item => ({ [item.value]: funcList.includes(item.value) })).reduce(
@@ -49,8 +47,6 @@ const CreatSchemeModal = (props: IProps) => {
       envs: null,
       pre_cmd: null,
       name: trim(data.name),
-      // 开源版需要隐藏tag，默认赋予tag Codedog_Linux
-      tag: tag.name || 'Codedog_Linux',
     }).then((res: any) => {
       message.success('创建成功');
       onReset();
