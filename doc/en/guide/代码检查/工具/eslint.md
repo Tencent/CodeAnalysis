@@ -28,12 +28,12 @@
 由于 JavaScript 语法、 Vue 语法和 TypeScript 语法之间的区别，三者使用的语法解析器也是不一样的，这里基于其使用的语法解析器的不同，从 Eslint 中拆分出来了 Eslint_vue 和 Eslint_typescript 工具。可以根据需要选择对应工具下的规则进行分析。而配置也会基于类型的不同匹配到对应的工具中。
 目前代码分析上 Eslint 类型有：
 
-- JAVASCRIPT
-  分析 JavaScript 以及基于 JavaScript 写的 React 代码，默认分析文件后缀名为.js,.jsx
-- VUE
-  分析 Vue 框架的代码，默认分析文件后缀名为.vue
-- TYPESCRIPT
-  分析 TypeScript 以及基于 TypeScript 写的 React 代码，默认分析文件后缀名为.ts,tsx
+- JAVASCRIPT  
+分析 JavaScript 以及基于 JavaScript 写的 React 代码，默认分析文件后缀名为.js,.jsx
+- VUE  
+分析 Vue 框架的代码，默认分析文件后缀名为.vue
+- TYPESCRIPT  
+分析 TypeScript 以及基于 TypeScript 写的 React 代码，默认分析文件后缀名为.ts,tsx
 
 ### 设置 Globals
 
