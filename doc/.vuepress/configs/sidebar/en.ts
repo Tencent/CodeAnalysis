@@ -152,6 +152,7 @@ export const en: SidebarConfig = {
         '/en/quickStarted/FAQ.md',
         '/en/quickStarted/codeDeploy.md',
         '/en/quickStarted/dockercomposeDeploy.md',
+        '/en/quickStarted/enhanceDeploy.md',
       ],
     },
   ],
