@@ -123,7 +123,7 @@ class NodeManager(object):
         node = models.Node(
             name=data['uuid'],
             addr=ip,
-            enabled=models.Node.EnabledEnum.DISABLED,  # 暂时不生效
+            enabled=enabled,
             last_beat_time=now(),
             uuid=data['uuid'],
             manager=request.user,
