@@ -86,3 +86,7 @@ ps aux|grep cls
 # 重启微服务
 kill -USR2 <pid>
 ```
+
+## 使用
+
+在 TCA 对应项目的分析方案里面勾选名称以 `TCA-Armory` 开头的工具的规则。
