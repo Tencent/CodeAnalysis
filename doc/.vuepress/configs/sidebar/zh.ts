@@ -152,6 +152,7 @@ export const zh: SidebarConfig = {
         '/zh/quickStarted/FAQ.md',
         '/zh/quickStarted/codeDeploy.md',
         '/zh/quickStarted/dockercomposeDeploy.md',
+        '/zh/quickStarted/enhanceDeploy.md',
       ],
     },
   ],
