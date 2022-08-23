@@ -49,7 +49,7 @@ class AddFilterPath(object):
         if filter_type == 1:  # 扫描测试代码和业务代码
             LogPrinter.info("Codelint only scans main and test code.")
         elif filter_type is None or filter_type == 2:  # 只扫描业务代码
-            LogPrinter.info("Codelint only cans main code.")
+            LogPrinter.info("Codelint only scans main code.")
             path_filters["exclusion"].extend(test_source)
             path_filters["yaml_filters"]["lint_exclusion"].extend(test_source)
         elif filter_type == 3:  # 只扫描测试代码
