@@ -15,6 +15,7 @@ import { SET_USERINFO } from '@src/context/constant';
 import Constant from '@src/reducer/constant';
 import { gUserInfo } from '@src/services/user';
 import { setLayoutCompletedClass, info } from '@src/utils';
+import { useNotification } from '@src/components/notification'
 
 /**
  * 初始化页面时的一些请求
@@ -23,6 +24,18 @@ const LoadInitService: FC = ({ children }: any) => {
   const [loading, setLoading] = useState<boolean>(true);
   const dispatch = useDispatchStore();
   const storeDispatch = useDispatch();
+
+  useNotification({
+    key: 'notify-license-trial',
+    type: 'info',
+    useExpireOper: true,
+    notifyArgs: {
+      message: '免费体验增强分析模块',
+      description: <>
+        TCA为开源社区免费提供更多功能精度更高的增强分析模块，欢迎免费申请License体验。详情请参考<a className='text-weight-medium' href="https://tencent.github.io/CodeAnalysis/zh/quickStarted/enhanceDeploy.html" target='_blank' rel="noreferrer" >增强分析模块文档</a>
+      </>
+    }
+  })
 
   useEffect(() => {
     storeDispatch({
