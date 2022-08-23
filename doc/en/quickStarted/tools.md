@@ -4,7 +4,7 @@
 
 |   官方工具    |   第三方工具    |
 | :--------: | :-------: |
-|[0daychecker](https://github.com/Tencent/CodeAnalysis/tree/main/tools/codedog_0Day_checker)| androidlint |
+|[TCA-0Day_Checker(测试版)](https://github.com/TCATools/codedog_0Day_checker)| androidlint |
 |clangwarning| checkstyle |
 |codecount| clang |
 |customfilescan| cobra |
@@ -13,11 +13,11 @@
 |javawarning| cpplint |
 |regexfilescan| dart_code_metrics |
 |regexscan| dartanalyzer |
-|[tca_ql_php_beta](https://github.com/Tencent/CodeAnalysis/tree/main/tools/Hades_Beta)| detekt |
-|unusedresource| eslint |
-|[collie](https://github.com/Tencent/CodeAnalysis/tree/main/tools/collie/)| eslint_typescript |
-|[compass](https://github.com/Tencent/CodeAnalysis/tree/main/tools/compass)| eslint_vue |
-|| findbugs |
+|[TCA-Armory(测试版)](https://github.com/TCATools/TCA-Armory.git)| detekt |
+|[TCA-Loong_Beta龙(测试版)](https://github.com/TCATools/loong_beta)| eslint |
+|[TCA-Zeus_Beta(测试版)](https://github.com/TCATools/Zeus_Beta)| eslint_typescript |
+|[TCA-Hades_Beta(测试版)](https://github.com/TCATools/Hades_Beta)| eslint_vue |
+|unusedresource| findbugs |
 || flake8 |
 || [flawfinder](https://github.com/TCATools/flawfinder) |
 || flow |
@@ -45,3 +45,4 @@
 || [sonarqube](https://github.com/GabrielLegend/tca_plugin_sonarqube/blob/main/src/sq.py) |
 || [sonarqube_java](https://github.com/GabrielLegend/tca_plugin_sonarqube/blob/main/src/sq_java.py) |
 || [sonarqube_cs](https://github.com/GabrielLegend/tca_plugin_sonarqube/blob/main/src/sq_cs.py) |
+|| [tca_plugin_sqlcheck](https://github.com/TCATools/tca_plugin_sqlcheck) |
