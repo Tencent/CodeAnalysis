@@ -222,7 +222,6 @@ export const getCyCLineChartData = (scans: any, standard: string) => {
         : scan.default_summary;
       if (summary) {
         const date = formatChartDate(scan.scan_time);
-        console.log(scan.scan_time)
 
         rowsTotal.push({
           date,
