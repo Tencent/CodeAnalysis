@@ -1,7 +1,7 @@
 用于统一存放工具（可外链仓库）
 
 ## **注意**
-以下部分独立工具需要申请授权，具体操作可以参考[CLS使用文档](../server/cls/README.md).
+以下部分独立工具需要申请授权，具体操作可以参考[CLS使用文档](https://tencent.github.io/CodeAnalysis/zh/quickStarted/enhanceDeploy.html).
 
 ## [TCA-Armory(测试版)](https://github.com/TCATools/TCA-Armory)
 一款多功能的多语言静态代码分析工具，需申请License。
