@@ -1,82 +1,96 @@
-// Copyright (c) 2021-2022 THL A29 Limited
-//
-// This source code file is made available under MIT License
-// See LICENSE for details
-// ==============================================================================
-
 import React from 'react';
-import { Table, Button, Tooltip } from 'coding-oa-uikit';
+import { useTranslation } from 'react-i18next';
+import { Table, Button, Tag, Tooltip } from 'coding-oa-uikit';
 import Edit from 'coding-oa-uikit/lib/icon/Edit';
 import Trash from 'coding-oa-uikit/lib/icon/Trash';
-import { get } from 'lodash';
+import LinkIcon from 'coding-oa-uikit/lib/icon/Link';
+import RefreshIcon from 'coding-oa-uikit/lib/icon/Refresh';
+import Close2Icon from 'coding-oa-uikit/lib/icon/Close2';
+import { useStateStore } from '@tencent/micro-frontend-shared/hook-store';
 
 // 项目内
-import { t } from '@src/i18n/i18next';
-import { AUTH_TYPE_CHOICES, AUTH_TYPE, SCM_PLATFORM } from '@src/utils/constant';
+import { getNickName } from '@src/utils';
+import { NAMESPACE, UserState } from '@src/store/user';
+import { AUTH_TYPE_CHOICES, AuthTypeEnum, SCM_PLATFORM_CHOICES, ScmPlatformEnum } from '@src/constant';
 
-interface IProps {
+const { Column } = Table;
+
+interface AuthTableProps {
+  /** 数据源 */
   dataSource: Array<any>;
-  onEdit?: (authinfo: any) => void;
-  onDel?: (authinfo: any) => void;
+  /** 编辑操作 */
+  onEdit: (authinfo: any) => void;
+  /** 删除操作 */
+  onDel: (authinfo: any) => void;
+  /** 是否展示平台，默认展示 */
+  showPlatform?: boolean;
+  /** 是否展示凭证创建渠道，默认不展示 */
+  showOrigin?: boolean;
 }
-const AuthTable = (props: IProps) => {
-  const { dataSource, onEdit, onDel } = props;
 
-  const columns = [
-    {
-      title: t('平台'),
-      dataIndex: 'scm_platform',
-      key: 'scm_platform',
-      width: 200,
-      render: (scm_platform: string, recode: any) => (
-        <>
-          <span>{get(SCM_PLATFORM, scm_platform) || scm_platform}</span>
-          <p className="text-grey-7 fs-12">{recode.scm_platform_desc}</p>
-        </>
-      ),
-    },
-    {
-      title: t('凭证'),
-      dataIndex: 'scm_username',
-      key: 'scm_username',
-      width: 200,
-      render: (scm_username: string, authinfo: any) => (
-        <div className=" text-weight-medium">
-          {AUTH_TYPE_CHOICES[authinfo.auth_type]} {t('：')}
-          {authinfo.auth_type === AUTH_TYPE.HTTP ? scm_username : authinfo.name}
-        </div>
-      ),
-    },
-    {
-      title: t('操作'),
-      dataIndex: 'op',
-      key: 'op',
-      width: 200,
-      render: (_: string, authinfo: any) => (
-        <>
-          <Tooltip title="编辑凭证">
-            <Button
-              type="text"
-              icon={<Edit />}
-              onClick={() => onEdit?.(authinfo)}
-            />
-          </Tooltip>
-          <Tooltip title="删除凭证">
-            <Button type="text" icon={<Trash />} onClick={() => onDel?.(authinfo)} />
-          </Tooltip>
-        </>
-      ),
-    },
-  ];
+const AuthTable = ({ dataSource, onEdit, onDel, showPlatform = true, showOrigin = false }: AuthTableProps) => {
+  const { t } = useTranslation();
+  const { userinfo } = useStateStore<UserState>(NAMESPACE);
+
   return (
     <Table
+      rowKey={(item: any) => `${item.auth_type}#${item.id}`}
+      dataSource={dataSource}
       pagination={{
         showTotal: (total: number, range: [number, number]) => `${range[0]} - ${range[1]} 条，共 ${total} 条`,
       }}
-      rowKey={(item: any) => `${item.auth_type}#${item.id}`}
-      dataSource={dataSource}
-      columns={columns}
-    />
+    >
+      {showPlatform && <Column
+        title={t('平台')}
+        dataIndex='scm_platform'
+        render={(value: ScmPlatformEnum) => SCM_PLATFORM_CHOICES[value]}
+      />}
+      <Column
+        title={t('凭证')}
+        dataIndex='scm_username'
+        render={(value: string, record: any) => {
+          const authType = AUTH_TYPE_CHOICES[record.auth_type as AuthTypeEnum];
+          let txt = value;
+          if (record.auth_type === AuthTypeEnum.OAUTH) {
+            txt = record.oauth_status ? getNickName(userinfo) : '未认证';
+          }
+          if (record.auth_type === AuthTypeEnum.SSH) {
+            txt = record.name;
+          }
+          return <Tag className='text-weight-medium'>{authType}: {txt}</Tag>;
+        }
+        }
+      />
+      {showOrigin && <Column
+        title={t('创建渠道')}
+        dataIndex='auth_origin'
+        render={(value: string) => value || 'CodeDog'}
+      />}
+      <Column
+        title={t('操作')}
+        dataIndex='op'
+        render={(_, record: any) => {
+          if (record.auth_type === AuthTypeEnum.OAUTH) {
+            return !record.oauth_status ? <Tooltip title="去授权"><Button type="text" icon={<LinkIcon />} onClick={() => onEdit(record)} /></Tooltip> : <>
+              <Tooltip title="重新授权"><Button type="text" icon={<RefreshIcon />} onClick={() => onEdit(record)} /></Tooltip>
+              <Tooltip title="取消授权"><Button type="text" icon={<Close2Icon />} onClick={() => onDel(record)} /></Tooltip>
+            </>;
+          }
+          return <>
+            <Tooltip title="编辑凭证">
+              <Button
+                type="text"
+                icon={<Edit />}
+                onClick={() => onEdit(record)}
+              />
+            </Tooltip>
+            <Tooltip title="移除凭证">
+              <Button type="text" icon={<Trash />} onClick={() => onDel(record)} />
+            </Tooltip>
+          </>;
+        }}
+      />
+    </Table>
   );
 };
 

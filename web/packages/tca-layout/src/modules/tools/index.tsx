@@ -1,65 +1,58 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import cn from 'classnames';
+import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import qs from 'qs';
-import { find, cloneDeep, get } from 'lodash';
-import { Typography, Tooltip, Tag } from 'coding-oa-uikit';
+import cn from 'classnames';
+import { get } from 'lodash';
+import { Typography, Tooltip, Tag, Button } from 'coding-oa-uikit';
 import LogIcon from 'coding-oa-uikit/lib/icon/Log';
 import GroupIcon from 'coding-oa-uikit/lib/icon/Group';
 import ClockIcon from 'coding-oa-uikit/lib/icon/Clock';
-
-import { useStateStore } from '@src/context/store';
-import { formatDateTime, getQuery } from '@src/utils';
+import Search from '@tencent/micro-frontend-shared/component/search';
+import { formatDateTime } from '@tencent/micro-frontend-shared/util';
+import { useURLSearch, useURLParams } from '@tencent/micro-frontend-shared/hooks';
+// 项目内
+import { TOOL_STATUS_CHOICES, ToolStatusEnum, DEFAULT_PAGER } from '@src/constant';
 import { getToolsRouter } from '@src/utils/getRoutePath';
 import { getTools } from '@src/services/tools';
-import { getTeamMember } from '@src/services/team';
-import { TOOL_STATUS, STATUSENUM } from './constants';
+import { TOOL_FILTER_FIELDS as filterFields, TOOL_SEARCH_FIELDS } from './constants';
 import CreateTool from './create-tool';
-import Search from './search';
-
 import style from './style.scss';
-
-const DEFAULT_PAGER = {
-  count: 0,
-  pageStart: 0,
-};
 
 const DEFAULT_SIZE = 50;
 
 const Tools = () => {
   const history = useHistory();
-  const { userinfo } = useStateStore();
+  const query = useURLSearch();
+  const { t } = useTranslation();
   const { orgSid }: any = useParams();
-  const query = getQuery();
+  const isOrgAdminUser = useSelector((state: any) => state.APP)?.isOrgAdminUser ?? false;
+
   const [visible, setVisible] = useState(false);
-  const [admins, setAdmins] = useState([]);
   const [data, setData] = useState<any>([]);
   const [loading, setLoading] = useState(false);
-  const [pager, setPager] = useState(DEFAULT_PAGER);
-  const { count, pageStart } = pager;
-  const isAdmin = !!find(admins, { username: userinfo.username });  // 当前用户是否是管理员
-  const isSuperuser = userinfo.is_superuser;  // 是否为超级管理员
-  const editable = isAdmin || isSuperuser;  // 编辑权限
+  const [pager, setPager] = useState({ ...DEFAULT_PAGER, pageSize: DEFAULT_SIZE });
+  const { count, pageSize, pageStart } = pager;
+  const { searchParams } = useURLParams(filterFields);
 
   useEffect(() => {
     getData(DEFAULT_PAGER.pageStart, query);
-    getTeamMember(orgSid).then((res) => {
-      setAdmins(res.admins || []);
-    });
   }, [orgSid]);
 
   const getData = (pageStart: number, params: any, isMore = false) => {
     setLoading(true);
     getTools(orgSid, {
       offset: pageStart,
-      limit: DEFAULT_SIZE,
+      limit: pageSize,
       ...params,
-    }).then((res) => {
+    }).then(({ results, count }: any) => {
       history.push(`${location.pathname}?${qs.stringify(params)}`);
-      const list = res.results || [];
+      const list = results || [];
       setData(isMore ? [...data, ...list] : list);
       setPager({
-        count: res.count,
+        count,
+        pageSize,
         pageStart,
       });
     })
@@ -78,19 +71,19 @@ const Tools = () => {
   return (
     <div className={style.tools}>
       <div className={style.header}>
-        <p className={style.title}>工具管理</p>
-        <p className={style.desc}>共 {count} 个工具，包含公开工具 + 团队可用工具，团队成员可使用工具规则，仅团队管理员能添加工具和规则</p>
+        <p className={style.title}>{t('工具管理')}</p>
+        <p className={style.desc}>{t(`共 ${count} 个工具，包含公开工具 + 团队可用工具，团队成员可使用工具规则，仅团队管理员能添加工具和规则`)}</p>
       </div>
-      <Search
-        orgSid={orgSid}
-        loading={loading}
-        searchParams={cloneDeep(query)}
-        editable={editable}
-        onAdd={() => setVisible(true)}
-        callback={(params: any) => {
+      <Search style={{ paddingLeft: 30, paddingRight: 30 }} fields={TOOL_SEARCH_FIELDS} extraContent={
+        isOrgAdminUser && (
+          <Button type='primary' onClick={() => {
+            setVisible(true);
+          }}>{t('创建工具')}</Button>
+        )
+      }
+        loading={loading} searchParams={searchParams} route={false} callback={(params: any) => {
           getData(DEFAULT_PAGER.pageStart, params);
-        }}
-      />
+        }} />
       <div
         className={style.contentWrapper}
         onScrollCapture={onScroll}
@@ -104,26 +97,26 @@ const Tools = () => {
                 <div className={style.toolHeader}>
                   <span className={style.title}>{item.display_name}</span>
                   {
-                    item.status !== STATUSENUM.NORMAL && (
-                      <Tag className={cn(style.tag, style[`status-${item.status}`])}>{get(TOOL_STATUS, item.status)}</Tag>
+                    item.status !== ToolStatusEnum.NORMAL && (
+                      <Tag className={cn(style.tag, style[`status-${item.status}`])}>{get(TOOL_STATUS_CHOICES, item.status)}</Tag>
                     )
                   }
                   {
                     item.build_flag && (
-                      <Tag className={cn(style.tag, style.build)}>需要编译</Tag>
+                      <Tag className={cn(style.tag, style.build)}>{t('需要编译')}</Tag>
                     )
                   }
                   {
-                    item?.open_maintain && (
-                      <Tooltip title='表示该工具可自定义规则'>
-                        <Tag className={cn(style.tag, style.maintain)}>协同</Tag>
+                    item.open_maintain && (
+                      <Tooltip title={t('表示该工具可自定义规则')}>
+                        <Tag className={cn(style.tag, style.maintain)}>{t('协同')}</Tag>
                       </Tooltip>
                     )
                   }
                   {
-                    orgSid === item?.org_detail?.org_sid && (
-                      <Tooltip title='由本团队创建的工具'>
-                        <Tag className={cn(style.tag, style.custom)}>自定义</Tag>
+                    orgSid === item.org_detail?.org_sid && (
+                      <Tooltip title={t('由本团队创建的工具')}>
+                        <Tag className={cn(style.tag, style.custom)}>{t('自定义')}</Tag>
                       </Tooltip>
                     )
                   }

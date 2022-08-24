@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import {
   Descriptions,
   Tag,
@@ -13,18 +14,11 @@ import {
 import { CheckboxChangeEvent } from 'coding-oa-uikit/lib/checkbox';
 import SaveIcon from 'coding-oa-uikit/lib/icon/Save';
 import { omit } from 'lodash';
-import Loading from 'coding-oa-uikit/lib/icon/Loading'
-import Stop from 'coding-oa-uikit/lib/icon/Stop'
-import ExclamationCircle from 'coding-oa-uikit/lib/icon/ExclamationCircle'
-import DotCircle from 'coding-oa-uikit/lib/icon/DotCircle'
 
 // 项目内
-import { bytesToSize, formatDateTime } from '@src/utils';
-import { t } from '@src/i18n/i18next';
+import { formatDateTime, bytesToSize } from '@tencent/micro-frontend-shared/util';
+import NodeStatus from '@tencent/micro-frontend-shared/component/node-status';
 import { getNodeProcess, getNode, putNodeProcess } from '@src/services/nodes';
-
-// 模块内
-import { STATUS_ENUM, STATE_ENUM } from '../constants';
 
 const { Column } = Table;
 
@@ -33,6 +27,7 @@ const Process = () => {
   const [nodeInfo, setNodeInfo] = useState<any>(null);
   const [processTableData, setProcessTableData] = useState<Array<any>>([]);
   const [loading, setLoading] = useState(false);
+  const { t } = useTranslation();
 
   const checkedAll = processTableData.every(item => item.checktool.supported);
   const uncheckedAll = processTableData.every(item => !item.checktool.supported);
@@ -40,7 +35,7 @@ const Process = () => {
 
   const getNodePorcessRequest = async (id: number) => {
     setLoading(true);
-    const process = await getNodeProcess(orgSid, id);
+    const process: { [key: string]: any }  = await getNodeProcess(orgSid, id);
     const data = Object.keys(process).map((key: string) => {
       const item = process[key];
       const supported = Object.keys(item).every((k: string) => item[k].supported);
@@ -121,24 +116,16 @@ const Process = () => {
   };
 
   if (nodeInfo) {
-    const { name, manager, related_managers, addr, enabled, state } = nodeInfo;
-    let nodeStatusRender = <Tag icon={<ExclamationCircle />} color='warning'>离线</Tag>
-    if (enabled === STATUS_ENUM.ACTIVE && state === STATE_ENUM.BUSY) {
-      nodeStatusRender = <Tag icon={<Loading />} color='processing'>运行中</Tag>
-    } else if (enabled === STATUS_ENUM.ACTIVE) {
-      nodeStatusRender = <Tag icon={<DotCircle />} color='success'>在线</Tag>
-    } else if (enabled === STATUS_ENUM.DISACTIVE) {
-      nodeStatusRender = <Tag icon={<Stop />}>失效</Tag>
-    }
+    const { name, manager, related_managers: relatedManagers, addr, nodestatus } = nodeInfo;
     return (
       <div className="px-lg">
         <Descriptions className="py-lg" title={t('节点信息')} bordered>
           <Descriptions.Item label={t('节点名称')}>{name}</Descriptions.Item>
           <Descriptions.Item label={t('负责人')}>{manager}</Descriptions.Item>
-          <Descriptions.Item label={t('关注人')}>{related_managers.join(', ')}</Descriptions.Item>
+          <Descriptions.Item label={t('关注人')}>{relatedManagers.join(', ')}</Descriptions.Item>
           <Descriptions.Item label={t('IP 地址')}>{addr}</Descriptions.Item>
           <Descriptions.Item label={t('节点状态')}>
-            {nodeStatusRender}
+            <NodeStatus node={nodeInfo} />
           </Descriptions.Item>
           <Descriptions.Item label={t('最近上报心跳')}>
             {formatDateTime(nodeInfo.last_beat_time) || '- -'}
@@ -149,9 +136,13 @@ const Process = () => {
             ))}
           </Descriptions.Item>
           <Descriptions.Item span={3} label={t('节点配置信息')}>
-            <Tag>CPU: {nodeInfo.nodestatus?.cpu_usage} % ({nodeInfo.nodestatus?.cpu_num}) 核</Tag>
-            <Tag>可用内存: {bytesToSize(nodeInfo.nodestatus?.mem_free_space)} / {bytesToSize(nodeInfo.nodestatus?.mem_space)} </Tag>
-            <Tag>可用硬盘: {bytesToSize(nodeInfo.nodestatus?.hdrive_free_space)} / {bytesToSize(nodeInfo.nodestatus?.hdrive_space)}</Tag>
+            <Tag>{t(`CPU: ${nodestatus?.cpu_usage} % (${nodestatus?.cpu_num}) 核`)}</Tag>
+            <Tag>
+              {t('可用内存:')} {bytesToSize(nodestatus?.mem_free_space)} / {bytesToSize(nodestatus?.mem_space)}
+            </Tag>
+            <Tag>
+              {t('可用硬盘:')} {bytesToSize(nodestatus?.hdrive_free_space)} / {bytesToSize(nodestatus?.hdrive_space)}
+            </Tag>
           </Descriptions.Item>
         </Descriptions>
         <Row>

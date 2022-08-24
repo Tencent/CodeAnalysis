@@ -1,22 +1,17 @@
-// Copyright (c) 2021-2022 THL A29 Limited
-//
-// This source code file is made available under MIT License
-// See LICENSE for details
-// ==============================================================================
-
 import React, { useState } from 'react';
-import { Layout, Row, Col, Form, Button, Input, Avatar, message } from 'coding-oa-uikit';
+import { useTranslation } from 'react-i18next';
 import classnames from 'classnames';
 import { pick } from 'lodash';
+import { Layout, Row, Col, Form, Button, Input, message } from 'coding-oa-uikit';
+import UserAvatar from '@tencent/micro-frontend-shared/component/user-avatar';
+import { useStateStore, useDispatchStore } from '@tencent/micro-frontend-shared/hook-store';
+import { formatDateTime } from '@tencent/micro-frontend-shared/util';
 
 // 项目内
-import { t } from '@src/i18n/i18next';
-import { useStateStore, useDispatchStore } from '@src/context/store';
-import { SET_USERINFO } from '@src/context/constant';
-import { putLoginUserInfo } from '@src/services/user';
-import { formatDateTime, gUserImgUrl } from '@src/utils';
-
+import { UserAction, UserState, NAMESPACE, SET_USERINFO } from '@src/store/user';
+import { getNickName } from '@src/utils';
 import s from '../style.scss';
+import { UserAPI } from '@plat/api';
 
 const { Content } = Layout;
 
@@ -25,10 +20,11 @@ const layout = {
 };
 
 const Profile = () => {
-  const { userinfo } = useStateStore();
+  const dispatch = useDispatchStore<UserAction>();
+  const { userinfo } = useStateStore<UserState>(NAMESPACE);
   const [form] = Form.useForm();
   const [edit, setEdit] = useState(false);
-  const dispatch = useDispatchStore();
+  const { t } = useTranslation();
 
   // 重置
   const onReset = () => {
@@ -41,7 +37,7 @@ const Profile = () => {
       ...userinfo,
       ...pick(values, ['nickname', 'tel_number']),
     };
-    putLoginUserInfo(params).then((res) => {
+    UserAPI.putLoginUserInfo(params).then((res) => {
       message.success('用户信息已更新');
       dispatch({
         type: SET_USERINFO,
@@ -79,15 +75,7 @@ const Profile = () => {
             {edit ? (
               <Input width={400} />
             ) : (
-              <>
-                <Avatar
-                  src={userinfo.avatar_url || gUserImgUrl(userinfo.uid)}
-                  size="small"
-                />{' '}
-                <span className=" ml-sm vertical-moddle inline-block">
-                  {userinfo.nickname}
-                </span>
-              </>
+              <UserAvatar size="small" url={userinfo.avatar_url} nickname={getNickName(userinfo)} />
             )}
           </Form.Item>
           {userinfo.country && (

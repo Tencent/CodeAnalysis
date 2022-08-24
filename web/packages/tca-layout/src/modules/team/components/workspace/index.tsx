@@ -1,22 +1,16 @@
-// Copyright (c) 2021-2022 THL A29 Limited
-//
-// This source code file is made available under MIT License
-// See LICENSE for details
-// ==============================================================================
-
 import React, { useEffect, useState } from 'react';
-import cn from 'classnames';
 import { useParams, Link } from 'react-router-dom';
+import { filter } from 'lodash';
+import cn from 'classnames';
 import { Tabs, Table } from 'coding-oa-uikit';
 import AlignLeft from 'coding-oa-uikit/lib/icon/AlignLeft';
 import Clock from 'coding-oa-uikit/lib/icon/Clock';
-import { filter } from 'lodash';
+import { formatDateTime } from '@tencent/micro-frontend-shared/util';
 
-import { DEFAULT_PAGER } from '@src/common/constants';
-import { formatDateTime } from '@src/utils/index';
+// 项目内
+import { DEFAULT_PAGER } from '@src/constant';
 import { getRepoRouter, getRepoProjectRouter } from '@src/utils/getRoutePath';
 import { getTeamRepos } from '@src/services/team';
-
 import style from './style.scss';
 
 const { Column } = Table;
@@ -33,16 +27,17 @@ const Workspace = () => {
     getListData(pageStart, pageSize);
   }, [orgSid]);
 
+  /** 获取团队代码库列表 */
   const getListData = (offset: number, limit: number) => {
     setLoading(true);
     getTeamRepos(orgSid, { offset, limit })
-      .then((response) => {
+      .then(({ count, results }: any) => {
         setPager({
           pageSize: limit,
           pageStart: offset,
-          count: response.count,
+          count,
         });
-        const activeTeamRepos = filter(response?.results, ['project_team.status',1]);
+        const activeTeamRepos = filter(results, ['project_team.status', 1]);
         setList(activeTeamRepos || []);
       })
       .finally(() => {
@@ -50,10 +45,12 @@ const Workspace = () => {
       });
   };
 
+  /** 翻页 */
   const onChangePageSize = (page: number, pageSize: number) => {
     getListData((page - 1) * pageSize, pageSize);
   };
 
+  /** 变更每页大小 */
   const onShowSizeChange = (current: number, size: number) => {
     getListData(DEFAULT_PAGER.pageStart, size);
   };
@@ -132,7 +129,7 @@ const Workspace = () => {
                     <div>
                       <Link
                         to={getRepoProjectRouter(
-                          record.project_team?.org_sid,
+                          record.project_team?.orgSid,
                           record.project_team?.name,
                           record.id,
                           id,

@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Modal, Form, Input, message, Select } from 'coding-oa-uikit';
 
 // 项目内
-import { t } from '@src/i18n/i18next';
 import { postTags, putTag } from '@src/services/nodes';
 
 // 模块内
-import { TAG_TYPE_OPTIONS } from './constants';
+import { TAG_TYPE_OPTIONS } from '@src/constant';
 
 const { Option } = Select;
 
@@ -20,6 +20,7 @@ interface IProps {
 
 const TagModal = ({ taginfo, visible, onOk, onCancel }: IProps) => {
   const [form] = Form.useForm();
+  const { t } = useTranslation();
   const { orgSid }: any = useParams();
 
   useEffect(() => {
@@ -78,18 +79,18 @@ const TagModal = ({ taginfo, visible, onOk, onCancel }: IProps) => {
         </Form.Item>
         {taginfo && <Form.Item
           name="tag_type"
-          label="类型"
+          label={t('类型')}
           rules={[{ required: true, message: t('标签类型为必选项') }]}
         >
           <Select>
-            {TAG_TYPE_OPTIONS.map((item: any) => (
+            {TAG_TYPE_OPTIONS.slice(1, 3).map((item: any) => (
               <Option key={item.value} value={item.value}>
-                {item.text}
+                {item.label}
               </Option>
             ))}
           </Select>
         </Form.Item>}
-        <Form.Item name="desc" label="标签描述">
+        <Form.Item name="desc" label={t('标签描述')}>
           <Input />
         </Form.Item>
       </Form>

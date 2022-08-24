@@ -6,46 +6,48 @@ import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import cn from 'classnames';
 import qs from 'qs';
-import { omitBy, toNumber, omit, isString, cloneDeep, find } from 'lodash';
+import { omitBy, toNumber, isString, find, get } from 'lodash';
 import { Table, Button, Tag } from 'coding-oa-uikit';
 import EditIcon from 'coding-oa-uikit/lib/icon/Edit';
+import { useURLSearch, useURLParams } from '@tencent/micro-frontend-shared/hooks';
+import { formatDateTime } from '@tencent/micro-frontend-shared/util';
+import Search from '@tencent/micro-frontend-shared/component/search';
 
-import { getQuery, formatDateTime } from '../../utils';
+import { NAMESPACE, UserState } from '@src/store/user';
 import { getToolLibs } from '@src/services/tools';
 import { getTeamMember } from '@src/services/team';
-import { DEFAULT_PAGER } from '@src/common/constants';
-import { useStateStore } from '@src/context/store';
+import { DEFAULT_PAGER, LIB_TYPE, LibTypeEnum, LIB_ENV } from '@src/constant';
+import { useStateStore } from '@tencent/micro-frontend-shared/hook-store';
 
-import { LIB_TYPE, LibTypeEnum, LIB_ENV } from './constants';
+import { TOOLLIB_FILTER_FIELDS as filterFields, TOOLLIB_SEARCH_FIELDS } from './constants';
 import CreateToollibs from './create-libs';
-import Search from './search';
 import style from './style.scss';
 
-const Column = Table.Column;
+const { Column } = Table;
 
 export const ToolLibs = () => {
   const history = useHistory();
   const { orgSid }: any = useParams();
-  const { userinfo } = useStateStore();
+  const { userinfo } = useStateStore<UserState>(NAMESPACE);
   const [admins, setAdmins] = useState([]);
   const [modalData, setModalData] = useState({
     visible: false,
-    libId: null
+    libId: null,
   });
   const [list, setList] = useState([]);
   const [loading, setLoading] = useState(false);
   const [count, setCount] = useState(DEFAULT_PAGER.count);
 
-  const query = getQuery();
+  const query = useURLSearch();
   const pageSize = toNumber(query.limit) || DEFAULT_PAGER.pageSize;
   const pageStart = toNumber(query.offset) || DEFAULT_PAGER.pageStart;
-  const searchParams: any = omit(query, ['offset', 'limit']);
-  const isAdmin = !!find(admins, { username: userinfo.username });  // 当前用户是否是管理员
-  const isSuperuser = userinfo.is_superuser;  // 是否为超级管理员
+  const { searchParams } = useURLParams(filterFields);
+  const isAdmin = !!find(admins, { username: userinfo?.username });  // 当前用户是否是管理员
+  const isSuperuser = userinfo?.is_superuser;  // 是否为超级管理员
   const editable = isAdmin || isSuperuser;  // 编辑权限
 
   useEffect(() => {
-    getTeamMember(orgSid).then((res) => {
+    getTeamMember(orgSid).then((res: any) => {
       setAdmins(res.admins || []);
     });
   }, [orgSid]);
@@ -63,15 +65,15 @@ export const ToolLibs = () => {
 
     setLoading(true);
     getToolLibs(orgSid, params)
-      .then(response => {
+      .then((response: any) => {
         history.replace(`${location.pathname}?${qs.stringify(params)}`);
         setCount(response.count);
         setList(response.results);
       })
       .finally(() => {
         setLoading(false);
-      })
-  }
+      });
+  };
 
   const onChangePageSize = (page: number, pageSize: number) => {
     getListData((page - 1) * pageSize, pageSize);
@@ -83,17 +85,27 @@ export const ToolLibs = () => {
         <span className={style.title}>工具依赖</span>
       </div>
       <Search
-        orgSid={orgSid}
         loading={loading}
-        editable={editable}
-        searchParams={cloneDeep(searchParams)}
-        onAdd={() => setModalData({
-          visible: true,
-          libId: null
-        })}
+        searchParams={searchParams}
+        route={false}
+        style={{ paddingLeft: 30, paddingRight: 30 }}
+        fields={TOOLLIB_SEARCH_FIELDS}
         callback={(params: any) => {
           getListData(DEFAULT_PAGER.pageStart, pageSize, params);
         }}
+        extraContent=      {
+          editable && (
+            <Button
+              type='primary'
+              onClick={() => setModalData({
+                visible: true,
+                libId: null,
+              })}
+            >
+              添加依赖
+            </Button>
+          )
+        }
       />
       <Table
         rowKey={(item: any) => item.id}
@@ -105,7 +117,7 @@ export const ToolLibs = () => {
           total: count,
           pageSize,
           showTotal: (total: any, range: any) => `${range[0]} - ${range[1]} 条数据，共 ${total} 条`,
-          onChange: onChangePageSize
+          onChange: onChangePageSize,
         }}
       >
         <Column
@@ -130,7 +142,7 @@ export const ToolLibs = () => {
           title='依赖系统'
           dataIndex='lib_os'
           render={(os: string) => os.split(';').map((item: string) => (
-            <Tag key={item}>{LIB_ENV[item] || item}</Tag>
+            <Tag key={item}>{get(LIB_ENV, item, item)}</Tag>
           ))}
         />
         <Column
@@ -163,7 +175,7 @@ export const ToolLibs = () => {
                   icon={<EditIcon />}
                   onClick={() => setModalData({
                     visible: true,
-                    libId: id
+                    libId: id,
                   })}
                 />
               )}
@@ -180,14 +192,14 @@ export const ToolLibs = () => {
             libId={modalData.libId}
             onClose={() => setModalData({
               visible: false,
-              libId: null
+              libId: null,
             })}
             callback={() => getListData()}
           />
         )
       }
     </div>
-  )
-}
+  );
+};
 
 export default ToolLibs;

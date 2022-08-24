@@ -2,17 +2,16 @@
  * 创建/编辑工具依赖
  */
 import React, { useState, useEffect } from 'react';
-import { isEmpty, fromPairs, toPairs } from 'lodash';
+import { isEmpty, fromPairs, toPairs, get } from 'lodash';
 import { Modal, Form, Input, Select, Tooltip, Button, message, Space } from 'coding-oa-uikit';
 import TrashIcon from 'coding-oa-uikit/lib/icon/Trash';
 import QuestionCircle from 'coding-oa-uikit/lib/icon/QuestionCircle';
+import Authority from '@tencent/micro-frontend-shared/component/authority';
+import { UserAPI } from '@plat/api';
 
 import { addToolLib, getLibDetail, updateToolLib } from '@src/services/tools';
-import { REPO_TYPE_OPTIONS, REPO_TYPE } from '@src/modules/tools/constants';
-import { SCM_MAP } from '@src/common/constants/authority';
-import { LIB_ENV, LIB_TYPE } from './constants';
+import { REPO_TYPE_OPTIONS, RepoTypeEnum, SCM_MAP, LIB_ENV, LIB_TYPE } from '@src/constant';
 
-import Authority from '@src/components/authority';
 import style from './style.scss';
 
 const { TextArea } = Input;
@@ -39,12 +38,11 @@ const CreateToollibs = (props: CreateToollibsProps) => {
   const isEdit = !!libId;
 
   useEffect(() => {
-
     if (visible && libId) {
       getLibDetail(orgSid, libId).then((res) => {
         setDetail(res);
         form.resetFields();
-      })
+      });
     }
 
     if (visible) {
@@ -58,31 +56,37 @@ const CreateToollibs = (props: CreateToollibsProps) => {
     if (formData.scm) {
       const [authType, id] = formData?.scm?.split('#') ?? [];
       data.scm_auth = { auth_type: authType };
-      if (SCM_MAP[authType]) {
-        data.scm_auth[SCM_MAP[authType]] = id;
+      if (get(SCM_MAP, authType)) {
+        data.scm_auth[get(SCM_MAP, authType)] = id;
       }
     } else {
-      data.scm_auth = null
+      data.scm_auth = null;
     }
     delete data.scm;
 
     data.lib_os = formData.lib_os?.join(';');
-    data.envs = !isEmpty(formData.envs) ? fromPairs(formData.envs?.map((item: { key: string, value: string }) => [item.key, item.value])) : {}
+    data.envs = !isEmpty(formData.envs)
+      ? fromPairs(formData.envs?.map((item: { key: string, value: string }) => [item.key, item.value])) : {};
 
     if (isEdit) {
       updateToolLib(orgSid, libId, data).then(() => {
         message.success('更新成功');
         callback?.();
         onClose();
-      })
+      });
     } else {
       addToolLib(orgSid, data).then(() => {
         message.success('创建成功');
         callback?.();
         onClose();
-      })
+      });
     }
-  }
+  };
+
+  /** 表单保存操作 */
+  const onSubmitHandle = () => {
+    form.validateFields().then(onFinish);
+  };
 
   return (
     <Modal
@@ -92,7 +96,7 @@ const CreateToollibs = (props: CreateToollibsProps) => {
       afterClose={form.resetFields}
       onCancel={onClose}
       className={style.createModal}
-      onOk={() => form.validateFields().then(onFinish)}
+      onOk={onSubmitHandle}
     >
       <Form
         {...layout}
@@ -100,9 +104,9 @@ const CreateToollibs = (props: CreateToollibsProps) => {
         initialValues={isEdit ? {
           ...detail,
           lib_os: detail?.lib_os?.split(';'),
-          envs: detail.envs ? toPairs(detail?.envs)?.map((item) => ({ key: item[0], value: item[1] })) : [],
+          envs: detail.envs ? toPairs(detail?.envs)?.map(item => ({ key: item[0], value: item[1] })) : [],
         } : {
-          scm_type: REPO_TYPE.GIT
+          scm_type: RepoTypeEnum.GIT,
         }}
       >
         <Form.Item
@@ -118,7 +122,7 @@ const CreateToollibs = (props: CreateToollibsProps) => {
           name="name"
           rules={[{
             required: true,
-            message: '请输入依赖名称'
+            message: '请输入依赖名称',
           }, {
             pattern: /^[A-Za-z0-9_-]+$/,
             message: '仅支持英文、数字、中划线或下划线',
@@ -184,9 +188,9 @@ const CreateToollibs = (props: CreateToollibsProps) => {
           <Input.Group compact>
             <Form.Item name='scm_type' noStyle>
               <Select style={{ width: 70 }}>
-                {REPO_TYPE_OPTIONS.map((item: string, index) => (
-                  <Option key={index} value={item}>
-                    {item.toUpperCase()}
+                {REPO_TYPE_OPTIONS.map((item: any, index: number) => (
+                  <Option key={index} value={item.value}>
+                    {item.label}
                   </Option>
                 ))}
               </Select>
@@ -214,6 +218,15 @@ const CreateToollibs = (props: CreateToollibsProps) => {
               ><QuestionCircle className={style.questionIcon} /></Tooltip>
             </span>
           )}
+          getAuthList={[
+            UserAPI.authSSH().get({ limit: 200 })
+              .then(({ results }: RestfulListAPIParams) => results || []),
+            UserAPI.authAccount().get({ limit: 200 })
+              .then(({ results }: RestfulListAPIParams) => results || []),
+            UserAPI.getOAuthInfos()
+              .then(({ results }: RestfulListAPIParams) => results || []),
+            UserAPI.getPlatformStatus().then(r => r || {}),
+          ]}
           initAuth={detail.scm_auth}
           selectStyle={{ width: 360 }}
           placeholder='github公开仓库可不提供凭证'
@@ -269,7 +282,7 @@ const CreateToollibs = (props: CreateToollibsProps) => {
         </Form.Item>
       </Form>
     </Modal>
-  )
-}
+  );
+};
 
 export default CreateToollibs;
