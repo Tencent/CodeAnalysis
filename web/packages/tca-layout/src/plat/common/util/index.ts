@@ -23,7 +23,7 @@ export const reLogin = throttle((content: string, href = `/login?redirect_uri=${
 export const isEnableManage = () => isTrue(getMetaContent('ENABLE_MANAGE', process.env.ENABLE_MANAGE));
 
 /** 获取帮助文档首页链接 */
-export const getDocURL = () => 'https://tencent.github.io/CodeAnalysis/';
+export const getDocURL = () => '/document/';
 
 /** 获取帮助文档开放API页链接 */
-export const getApiDocURL = () => 'https://tencent.github.io/CodeAnalysis/zh/api/';
+export const getApiDocURL = () => '/document/zh/api/';
