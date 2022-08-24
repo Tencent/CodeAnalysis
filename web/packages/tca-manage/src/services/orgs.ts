@@ -1,5 +1,4 @@
-import { get, post, put } from './index';
-import { MAIN_SERVER_API } from './common';
+import { MAIN_SERVER_API, get, post, put } from './common';
 
 /**
  * 获取团队列表
@@ -7,11 +6,13 @@ import { MAIN_SERVER_API } from './common';
  */
 export const getOrgs = (params: any = null) => get(`${MAIN_SERVER_API}/orgs/`, params);
 
+
 /**
  * 获取团队信息
  * @param orgSid 团队唯一标识
  */
 export const getOrg = (orgSid: string) => get(`${MAIN_SERVER_API}/orgs/${orgSid}/`);
+
 
 /**
  * 更新审批单
@@ -27,4 +28,4 @@ export const postOrgLelel = (orgSid: string, params: any) => post(`${MAIN_SERVER
  * @param orgSid 团队唯一标识
  * @param params 参数
  */
- export const putOrgStatus = (orgSid: string, params: any) => put(`${MAIN_SERVER_API}/orgs/${orgSid}/status/`, params);
+export const putOrgStatus = (orgSid: string, params: any) => put(`${MAIN_SERVER_API}/orgs/${orgSid}/status/`, params);

@@ -17,7 +17,7 @@ from apps.scan_conf.apis import base as scan_base_apis
 
 # 前缀：/api/v3
 urlpatterns = [
-    path("tags/", node_v2.ExecTagListView.as_view(), name="apiv3_tag_list"),
+    path("tags/", node_v2.ExecTagListAPIView.as_view(), name="apiv3_tag_list"),
     path("languages/", scan_base_apis.LanguageListAPIView.as_view(), name="apiv3_language_list"),
     path("labels/", scan_base_apis.LabelListAPIView.as_view(), name="apiv3_label_list"),
 ]

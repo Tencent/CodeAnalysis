@@ -1,25 +1,28 @@
-// Copyright (c) 2021-2022 THL A29 Limited
-//
-// This source code file is made available under MIT License
-// See LICENSE for details
-// ==============================================================================
+import { MessagePlugin } from 'tdesign-react';
+import { xssRedirectUri } from '@tencent/micro-frontend-shared/util';
+import { UKEY, ACCESS_TOEKN } from '@src/constant';
+
+/**
+ * 清空登录的storage
+ */
+export const clearLoginLocalStorage = () => {
+  localStorage.removeItem(UKEY);
+  localStorage.removeItem(ACCESS_TOEKN);
+};
 
 
 /**
- * 防止url调整漏洞，对回调地址进行校验
- * @param href 回调地址
- * @param validHostNames 域名白名单
- * @returns 回调链接
+ * 登录成功操作
+ * @param redirect 重定向地址
+ * @param token token
+ * @param msg 结果
  */
-export const xssRedirectUri = (
-  redirectUri: string,
-  validHostNames: Array<string> = [window.location.hostname],
-) => {
-  const a = document.createElement('a');
-  a.href = decodeURIComponent(redirectUri) || '';
-  // 接下来对hostname进行域名白名单的判断
-  if (validHostNames.includes(a.hostname)) {
-    return a.href;
-  }
-  return '';
+export const loginSuccessHandler = (redirect: string, token: string, msg = '登录成功') => {
+  localStorage.setItem(ACCESS_TOEKN, token);
+  localStorage.removeItem(UKEY);
+  const timer = setTimeout(() => {
+    MessagePlugin.success(msg);
+    window.location.href = redirect ? xssRedirectUri(redirect) : '/';
+    clearTimeout(timer);
+  }, 1000);
 };

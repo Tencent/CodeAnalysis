@@ -1,9 +1,8 @@
-import { get, put } from './index';
-import { MAIN_SERVER_API } from './common';
+import { MAIN_SERVER_API, get, put } from './common';
 
 /**
- * 获取项目组列表
- * @param params
+ *
+ * @param params 获取项目组列表
  */
 export const getTeams = (params: any = null) => get(`${MAIN_SERVER_API}/teams/`, params);
 
@@ -13,4 +12,4 @@ export const getTeams = (params: any = null) => get(`${MAIN_SERVER_API}/teams/`,
  * @param teamName 项目唯一标识
  * @param params 参数
  */
- export const putTeamStatus = (orgSid: string, teamName: string, params: any) => put(`${MAIN_SERVER_API}/orgs/${orgSid}/teams/${teamName}/status/`, params);
+export const putTeamStatus = (orgSid: string, teamName: string, params: any) => put(`${MAIN_SERVER_API}/orgs/${orgSid}/teams/${teamName}/status/`, params);

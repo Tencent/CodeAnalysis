@@ -15,11 +15,13 @@ import os
 import sys
 
 from node.localtask.runtask import ConcurrentTasksRuner
+from node.localtask.localconfig import LocalConfig
 from node.common.taskdirmgr import TaskDirCtl
 from node.common.taskrunner import TaskRunner
 from node.common.userinput import UserInput
 from node.quicktask.quickscan import QuickScan
 from util import errcode
+from util.api.dogserver import RetryDogServer
 from util.exceptions import NodeError
 from util.pathlib import PathMgr
 from util.scmurlmgr import BaseScmUrlMgr
@@ -67,6 +69,18 @@ class QuickRunner(TaskRunner):
             self._labels = StringMgr.str_to_list(args.label)
         else:
             self._labels = []
+        if args.token:
+            self._token = args.token
+        else:
+            self._token = None
+        if args.scheme_template_id:
+            self._scheme_template_id = args.scheme_template_id
+        else:
+            self._scheme_template_id = None
+        if args.org_sid:
+            self._org_sid = args.org_sid
+        else:
+            self._org_sid = None
 
         # 其他变量
         self._scm_type = None
@@ -195,6 +209,14 @@ class QuickRunner(TaskRunner):
             self._languages = list(language_types)
             LogPrinter.info(f"languages: {self._languages}")
 
+    def _merge_path_filters(self, default_filtered_paths, path_filters):
+        return {
+            "inclusion": path_filters["inclusion"] + default_filtered_paths["inclusion"],
+            "exclusion": path_filters["exclusion"] + default_filtered_paths["exclusion"],
+            "re_inclusion": path_filters["re_inclusion"] + default_filtered_paths["re_inclusion"],
+            "re_exclusion": path_filters["re_exclusion"] + default_filtered_paths["re_exclusion"]
+        }
+
     def _generate_request(self, proj_conf, path_filters):
         """
         根据项目配置信息生成任务参数列表
@@ -204,9 +226,8 @@ class QuickRunner(TaskRunner):
         job_context = proj_conf["job_context"]
         # 全量分析
         job_context["incr_scan"] = False
-
-        # # 检查代码库的账号密码权限
-        # self._check_scm_authority()
+        # 合并过滤路径
+        new_path_filters = self._merge_path_filters(job_context["path_filters"], path_filters)
 
         task_list = proj_conf["tasks"]
 
@@ -214,10 +235,10 @@ class QuickRunner(TaskRunner):
             task_params = task_request.get("task_params")
             task_params["incr_scan"] = False
             task_params["scm_last_revision"] = ""
-            task_params["path_filters"] = path_filters
+            task_params["path_filters"] = new_path_filters
             task_params["scm_url"] = self._scm_url
             task_params["scm_type"] = self._scm_type
-            task_params["project_id"] = job_context["project_id"]
+            task_params["project_id"] = job_context.get("project_id")
 
             task_request["execute_processes"] = task_request["processes"]
             task_request["private_processes"] = []
@@ -272,7 +293,18 @@ class QuickRunner(TaskRunner):
             self._scan_rel_paths, self._path_info = QuickScan.get_scan_paths(input_params, self._source_dir)
             self.check_language(input_params)
             # LogPrinter.info(f">>> input_params: {json.dumps(input_params, indent=2)}")
-            proj_conf = QuickScan.get_proj_config(self._scm_url, self._languages, self._labels, input_params)
+            if self._scheme_template_id:
+                if self._token and self._org_sid:  # 通过server获取指定的分析方案模板的任务参数
+                    LogPrinter.info(f"token and scheme_template_id are set, get task config from server ...")
+                    server_url = LocalConfig.get_server_url()
+                    dog_server = RetryDogServer(server_url, self._token).get_api_server(retry_times=2)
+                    proj_conf = dog_server.get_jobconfs_by_scheme_template(self._scheme_template_id, self._org_sid)
+                else:
+                    raise NodeError(code=errcode.E_NODE_TASK_CONFIG, msg="已输入scheme_template_id, "
+                                                                         "但缺少--token和--org-sid参数, "
+                                                                         "无法获取到分析方案模板, 请补充参数!")
+            else:
+                proj_conf = QuickScan.get_proj_config(self._scm_url, self._languages, self._labels, input_params)
 
             # debug打印调试
             # with open("quickscan_proj_config.json", "w") as wf:

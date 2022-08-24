@@ -50,7 +50,7 @@ class Command(BaseCommand):
             if item.isupper():
                 conf_models.Language.objects.get_or_create(name=getattr(conf_models.Language.LanguageEnum, item))
         self.stdout.write("初始化来源数据...")
-        Origin.objects.get_or_create(name="codedog")
+        Origin.objects.get_or_create(name=settings.DEFAULT_ORIGIN_ID)
         self.stdout.write("初始化/更新Process...")
         processes = [("compile", 0), ("analyze", 1), ("datahandle", 2)]
         for name, priority in processes:
@@ -79,7 +79,7 @@ class Command(BaseCommand):
                 conf_models.ScanApp.objects.create(
                     name=scan_app["name"], label=scan_app["label"], desc=scan_app["desc"])
         self.stdout.write("创建CodeDog并使用默认token")
-        codedog, _ = User.objects.get_or_create(username="CodeDog")
+        codedog, _ = User.objects.get_or_create(username=settings.DEFAULT_USERNAME)
         codedog.is_staff = True
         codedog.is_superuser = True
         codedog.save()

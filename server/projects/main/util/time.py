@@ -5,9 +5,18 @@
 # See LICENSE for details
 # ==============================================================================
 
+
+import time
+
 import pytz
 from django.conf import settings
 from django.utils import timezone
+
+
+def time_second():
+    """获取当前时间戳（精确到秒）
+    """
+    return int(time.time())
 
 
 def utcnow(date=False):

@@ -1,9 +1,3 @@
-// Copyright (c) 2021-2022 THL A29 Limited
-//
-// This source code file is made available under MIT License
-// See LICENSE for details
-// ==============================================================================
-
 import Cookies from 'universal-cookie';
 import { isEmpty, uniqBy } from 'lodash';
 import { message } from 'coding-oa-uikit';
@@ -77,7 +71,7 @@ export class MicroApplicationDevelopmentLoader implements MicroApplicationLoader
     // cookies中移除开发模式微前端资源配置
     cookies.remove(Constant.MICRO_FRONTEND_API_LIST, {
       path: '/',
-      domain: window.location.hostname
+      domain: window.location.hostname,
     });
     if (reload) {
       debug('Exit development success and reload page');

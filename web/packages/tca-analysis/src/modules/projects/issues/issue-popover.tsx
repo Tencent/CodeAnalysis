@@ -54,7 +54,6 @@ export const Operation = ({
   };
 
   const updateSeverity = () => {
-    // @ts-ignore
     updateIssueSeverity(...params, detail.id, severity).then(() => {
       message.success('严重级别修改成功');
       successCallback({ severity });
@@ -200,36 +199,36 @@ export const Operation = ({
             isHandled ? (
               <p className={style.nowrap}>将问题重新标记为【未处理】状态</p>
             ) : (
-                <>
-                  <p className={style.nowrap}>请选择处理问题方式，提交后问题状态将置为已处理</p>
-                  <Radio.Group
-                    value={ignoreType}
-                    onChange={(e) => {
-                      if (e.target.value === 1) {
-                        setScope(1);
-                      }
-                      setType(e.target.value);
-                    }}
-                  >
-                    <Radio value={1}>已修复</Radio>
-                    <Radio value={2}>无需修复</Radio>
-                    <Radio value={3}>误报</Radio>
-                  </Radio.Group>
-                  {
-                    (ignoreType === 2 || ignoreType === 3) && (
-                      <p style={{ marginTop: 10 }}>
-                        <Switch
-                          checked={scope === 2}
-                          onChange={(checked) => {
-                            setScope(checked ? 2 : 1);
-                          }}
-                        />&nbsp;全局忽略
-                        <Tips title='开启全局忽略后，代码库内其他分支项目扫出相同问题会直接复用当前忽略方式，请谨慎操作！' />
-                      </p>
-                    )
-                  }
+              <>
+                <p className={style.nowrap}>请选择处理问题方式，提交后问题状态将置为已处理</p>
+                <Radio.Group
+                  value={ignoreType}
+                  onChange={(e) => {
+                    if (e.target.value === 1) {
+                      setScope(1);
+                    }
+                    setType(e.target.value);
+                  }}
+                >
+                  <Radio value={1}>已修复</Radio>
+                  <Radio value={2}>无需修复</Radio>
+                  <Radio value={3}>误报</Radio>
+                </Radio.Group>
+                {
+                  (ignoreType === 2 || ignoreType === 3) && (
+                    <p style={{ marginTop: 10 }}>
+                      <Switch
+                        checked={scope === 2}
+                        onChange={(checked) => {
+                          setScope(checked ? 2 : 1);
+                        }}
+                      />&nbsp;全局忽略
+                      <Tips title='开启全局忽略后，代码库内其他分支项目扫出相同问题会直接复用当前忽略方式，请谨慎操作！' />
+                    </p>
+                  )
+                }
 
-                </>
+              </>
             )
           }
         >
@@ -247,30 +246,30 @@ export const Operation = ({
  * 简单封装 Popover 组件
  */
 const IssuePopover = ({ title, visible, children, content, onOk, onCancel, onCancelText, showFooter = true }: any) => (
-    <Popover
-      title={title}
-      visible={visible}
-      placement='bottom'
-      mouseEnterDelay={0}
-      overlayClassName={style.statusPopover}
-      content={
-        <div>
-          {content}
-          {
-            showFooter && (
-              <div className={style.footer}>
-                {
-                  onOk && <Button size='small' type='primary' onClick={onOk}>确认</Button>
-                }
-                {
-                  onCancel && <Button size='small' onClick={onCancel}>{onCancelText || '取消'}</Button>
-                }
-              </div>
-            )
-          }
-        </div>
-      }
-    >
-      {children}
-    </Popover>
+  <Popover
+    title={title}
+    visible={visible}
+    placement='bottom'
+    mouseEnterDelay={0}
+    overlayClassName={style.statusPopover}
+    content={
+      <div>
+        {content}
+        {
+          showFooter && (
+            <div className={style.footer}>
+              {
+                onOk && <Button size='small' type='primary' onClick={onOk}>确认</Button>
+              }
+              {
+                onCancel && <Button size='small' onClick={onCancel}>{onCancelText || '取消'}</Button>
+              }
+            </div>
+          )
+        }
+      </div>
+    }
+  >
+    {children}
+  </Popover>
 );

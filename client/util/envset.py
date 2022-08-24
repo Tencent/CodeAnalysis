@@ -14,8 +14,6 @@ import sys
 import logging
 import platform
 
-from node.app import settings
-from node.toolloader.loadconfig import ConfigLoader
 from util.textutil import StringMgr
 
 logger = logging.getLogger(__name__)
@@ -67,6 +65,7 @@ class EnvSet(object):
                 os.environ.update(new_envs)
         else:
             for env_name, env_value in envs.items():
+                logger.debug(f">>> set env {env_name}={os.path.expandvars(env_value)}")
                 os.environ.update({env_name: os.path.expandvars(env_value)})
 
     def set_tool_env(self, tool_config):
@@ -88,17 +87,13 @@ class EnvSet(object):
         """
         tool_envs = {}
 
-        path_evn = []
+        path_env = []
         for tool_name, tool_params in tool_config.items():
             # 添加路径类型的环境变量
-            for env_name, rel_path in tool_params["env_path"].items():
+            for env_name, full_path in tool_params["env_path"].items():
                 if "PATH" == env_name:  # PATH应该单独放在path字段中，如果放在env_path中，忽略，避免影响和覆盖原有PATH变量
                     continue
                 if env_name not in tool_envs:
-                    full_path = os.path.join(settings.TOOL_BASE_DIR, rel_path)
-                    # 如果工具目录不存在，重定向到默认的工具目录下
-                    if not os.path.exists(full_path):
-                        full_path = os.path.join(settings.DEFAULT_TOOL_BASE_DIR, rel_path)
                     tool_envs[env_name] = full_path
 
             # 添加值类型的环境变量
@@ -108,21 +103,17 @@ class EnvSet(object):
 
             # 将PATH的环境变量放到一个list中
             for rel_path in tool_params["path"]:
-                if rel_path not in path_evn:
-                    path_evn.append(rel_path)
+                if rel_path not in path_env:
+                    path_env.append(rel_path)
 
         # 添加PATH环境变量
-        path_str = os.environ["PATH"]   # 先读取系统PATH环境变量
-        path_list = path_str.split(os.pathsep)
-        for rel_path in path_evn:
-            if "$" in rel_path or "%" in rel_path:  # 带变量的环境变量，已经是全路径
-                full_path = rel_path
-            else:
-                full_path = os.path.join(settings.TOOL_BASE_DIR, rel_path)
-                # 如果工具目录不存在，重定向到默认的工具目录下
-                if not os.path.exists(full_path):
-                    full_path = os.path.join(settings.DEFAULT_TOOL_BASE_DIR, rel_path)
-            # if absolute_path not in path_list:  # path不要去重,会影响加载顺序
+        path_str = os.getenv("PATH")    # 先读取系统PATH环境变量
+        if path_str:
+            path_list = path_str.split(os.pathsep)
+        else:  # 增加判空，防止读取不到的情况
+            path_list = []
+        for full_path in path_env:
+            # path不要去重,会影响加载顺序
             path_list = [full_path] + path_list  # 后添加的放在前面,优先搜索
         tool_envs["PATH"] = os.pathsep.join(path_list)
 
@@ -156,6 +147,7 @@ class EnvSet(object):
             if task_envs:
                 # 设置到进程环境变量中
                 self.__update_os_environ(task_envs, True)
+                # logger.debug('设置任务环境变量::\n%s' % '\n'.join(['%s=%s' % (key, value) for key, value in task_envs.items()]))
         EnvSetting.env_setting_init()
 
     def get_origin_env(self, os_env=None):
@@ -175,17 +167,31 @@ class EnvSet(object):
             env = os_env
         else:
             env = dict(os.environ)
+
         # 判断是否是pyinstaller包状态, 若是源码状态，则不处理
         if len(sys.argv) > 0 and sys.argv[0].endswith(".py"):
             return env
+
         # Linux
         if sys.platform == "linux" or sys.platform == "linux2":
             lp_key = 'LD_LIBRARY_PATH'
-            lp_orig = env.get(lp_key + '_ORIG')
-            if lp_orig is not None:
-                env[lp_key] = lp_orig
-            else:
-                env.pop(lp_key, None)
+            # 收集需要的lp环境变量
+            wanted_env_list = []
+            # 收集现有进程的lp环境变量，剔除掉pyinstaller添加的临时运行目录，则为需要传递给子进程的环境变量
+            cur_lp_value = env.get(lp_key)
+            if cur_lp_value:
+                cur_lp_list = cur_lp_value.split(os.pathsep)
+                for lp_value in cur_lp_list:
+                    # 当前进程的lp环境变量，剔除掉pyinstaller添加的临时运行目录，其他的为需要的
+                    if not lp_value.startswith("/tmp/_MEI"):
+                        wanted_env_list.append(lp_value)
+                if wanted_env_list:  # 现有的lp已经包含_ORIG
+                    env[lp_key] = os.pathsep.join(wanted_env_list)
+                    logger.debug(f"{lp_key}={cur_lp_value}, change to {env[lp_key]}")
+                else:
+                    env.pop(lp_key, None)
+                    logger.debug(f"{lp_key}={cur_lp_value}, delete it.")
+
         # Mac:
         # 由于Mac下二进制包无法检测环境中环境变量原来是否有DYLD_LIBRARY_PATH，加上目前没有发现有项目遇到类似问题
         # 这里暂不做处理，继续观察

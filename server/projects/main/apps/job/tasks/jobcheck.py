@@ -22,6 +22,7 @@ from codedog.celery import celery_app
 from util import errcode
 from util.time import localnow
 
+
 logger = logging.getLogger(__name__)
 
 

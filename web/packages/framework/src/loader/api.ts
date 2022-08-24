@@ -1,9 +1,3 @@
-// Copyright (c) 2021-2022 THL A29 Limited
-//
-// This source code file is made available under MIT License
-// See LICENSE for details
-// ==============================================================================
-
 import isEmpty from 'lodash/isEmpty';
 import { message } from 'coding-oa-uikit';
 
@@ -20,9 +14,6 @@ const MICRO_FRONTEND_API = getMetaEnv(Constant.MICRO_FRONTEND_API, DEFAULT_MICRO
  * 从 API 中加载，需要接口返回 MicroApplicationProps 的数据
  */
 export class MicroApplicationAPILoader implements MicroApplicationLoader {
-  public renderUI: (production?: MicroApplication[]) => null;
-  public exit: () => {};
-
   private url: string;
   constructor() {
     this.url = MICRO_FRONTEND_API;

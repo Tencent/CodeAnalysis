@@ -105,7 +105,7 @@ class CodePuppy(object):
             '''启动任务执行端,持续获取并执行任务'''
             from node.servertask.looprunner import LoopRunner
             if args.token:
-                LoopRunner(args.token).run()
+                LoopRunner(args).run()
             else:
                 LogPrinter.error("缺少token参数,请通过-t <token>启动start命令.")
 

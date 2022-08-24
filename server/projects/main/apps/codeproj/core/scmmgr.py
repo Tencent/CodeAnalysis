@@ -217,11 +217,13 @@ class ScmAuthManager(object):
         """
         auth_key = "%s_%s" % (ScmAuth.KeyEnum.TOOL, checktool.id)
         logger.debug("create checktool scm auth: %s" % auth_key)
+        # 兼容逻辑
+        if scm_auth_type == ScmAuth.ScmAuthTypeEnum.OAUTH and not scm_oauth:
+            scm_oauth = cls.get_scm_auth(user)
         scm_auth = cls.create_or_update_auth(
             auth_key=auth_key, auth_type=scm_auth_type,
             scm_account=scm_account, scm_ssh=scm_ssh_info,
-            scm_oauth=scm_oauth
-        )
+            scm_oauth=scm_oauth)
         checktool.scm_auth = scm_auth
         checktool.save(user=user)
 
@@ -239,6 +241,9 @@ class ScmAuthManager(object):
         """
         auth_key = "%s_%s" % (ScmAuth.KeyEnum.TOOLLIB, toollib.id)
         logger.debug("create toollib scm auth: %s" % auth_key)
+        # 兼容逻辑
+        if scm_auth_type == ScmAuth.ScmAuthTypeEnum.OAUTH and not scm_oauth:
+            scm_oauth = cls.get_scm_auth(user)
         scm_auth = cls.create_or_update_auth(
             auth_key=auth_key, auth_type=scm_auth_type,
             scm_account=scm_account, scm_ssh=scm_ssh_info,
@@ -256,7 +261,7 @@ class ScmAuthManager(object):
         return origin
 
     @classmethod
-    def create_or_update_scm_account(cls, user, scm_username, scm_password, auth_origin="Codedog", **kwargs):
+    def create_or_update_scm_account(cls, user, scm_username, scm_password, auth_origin=settings.DEFAULT_ORIGIN_ID, **kwargs):
         """创建或更新用户名密码授权信息
 
         :param user: User, 授权用户
@@ -296,7 +301,7 @@ class ScmAuthManager(object):
 
     @classmethod
     def create_or_update_scm_ssh(cls, user, credential_id, credential_name, ssh_private_key, password,
-                                 auth_origin="Codedog"):
+                                 auth_origin=settings.DEFAULT_ORIGIN_ID):
         """创建SSH信息
         :param user: User
         :param credential_id: str，凭证ID
@@ -326,7 +331,7 @@ class ScmAuthManager(object):
         return scm_ssh_info
 
     @classmethod
-    def create_or_update_scm_auth(cls, user, access_token, refresh_token, auth_origin="Codedog", **kwargs):
+    def create_or_update_scm_auth(cls, user, access_token, refresh_token, auth_origin=settings.DEFAULT_ORIGIN_ID, **kwargs):
         """创建OAuth授权信息
         :param user: User，授权用户
         :param access_token: str，OAuth授权token
@@ -359,7 +364,7 @@ class ScmAuthManager(object):
         return scm_auth_info
 
     @classmethod
-    def get_scm_auth(cls, user, scm_platform=None, auth_origin="Codedog"):
+    def get_scm_auth(cls, user, scm_platform=None, auth_origin=settings.DEFAULT_ORIGIN_ID):
         """获取指定渠道的授权信息
         :param user: User，授权用户
         :param scm_platform: str, scm授权平台

@@ -1,7 +1,7 @@
 [
     {
         "name": "jaaf",
-        "display_name": "JAAF",
+        "display_name": "TCA-Armory-J1",
         "description": "复杂场景下的JavaAPI检查",
         "license": "自研",
         "libscheme_set": [],

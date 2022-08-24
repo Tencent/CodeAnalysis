@@ -26,6 +26,9 @@ import { getRuleDetail } from '@src/services/schemes';
 import { Operation } from './issue-popover';
 import style from './style.scss';
 
+/** 定义每行显示最长长度，避免渲染问题 */
+const CODE_MAX_CHAR_LENGTH = 1000
+
 interface IssueModalProps {
   curSchemeId: number;
   params: any;
@@ -101,7 +104,7 @@ const IssueModal = (props: IssueModalProps) => {
   };
 
   const rowRenderer = ({ index, style: rowStyle }: any) => {
-    const { lineNum: line, content } = codeFile?.codeContents[index];
+    const { lineNum: line, content = '' } = codeFile?.codeContents[index] || {};
     const rowRef: any = useRef({});
     const language = detail.language ?? codeFile.suffix?.split('.')[1] ?? 'plaintext';
 
@@ -145,7 +148,7 @@ const IssueModal = (props: IssueModalProps) => {
             )
           }
           <Highlight className={language}>
-            {content}
+            {content.length > CODE_MAX_CHAR_LENGTH ? `${content.substring(0, CODE_MAX_CHAR_LENGTH)}...` : content}
           </Highlight>
         </div>
       </div>
@@ -230,19 +233,19 @@ const IssueModal = (props: IssueModalProps) => {
           {loading ? (
             <Loading />
           ) : (
-              <AutoSizer>
-                {({ height, width }: any) => (
-                  <List
-                    ref={listRef}
-                    height={height}
-                    itemCount={codeFile.codeContents?.length || 0}
-                    itemSize={getRowHeight}
-                    width={width}
-                  >
-                    {rowRenderer}
-                  </List>
-                )}
-              </AutoSizer>
+            <AutoSizer>
+              {({ height, width }: any) => (
+                <List
+                  ref={listRef}
+                  height={height}
+                  itemCount={codeFile.codeContents?.length || 0}
+                  itemSize={getRowHeight}
+                  width={width}
+                >
+                  {rowRenderer}
+                </List>
+              )}
+            </AutoSizer>
           )}
         </div>
       </div>

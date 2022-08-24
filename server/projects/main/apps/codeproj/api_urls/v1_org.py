@@ -17,9 +17,10 @@ from django.urls import path, include
 # 项目内 import
 from apps.codeproj.apis import v1
 from apps.codeproj.apis import v1_pt
+from apps.codeproj.apis import v1_scheme
 
 # 前缀 /api/orgs/<org_sid>/teams/<team_name>/repos/
-repos_url_patterns = [
+repo_url_patterns = [
     # 节点使用
     path("defaultpaths/", v1.DefaultScanPathListApiView.as_view(),
          name="apiv1_pt_repo_defaultpath_list"),
@@ -92,13 +93,29 @@ repos_url_patterns = [
 ]
 
 # 前缀 /api/orgs/<org_sid>/teams/<team_name>/projects/
-projects_url_patterns = [
+project_url_patterns = [
     path("", v1_pt.PTProjectListCreateView.as_view(),
          name="apiv1_pt_project_list"),
 ]
 
-# 前缀 /api/orgs/<org_sid>/teams/
+# 前缀 /api/orgs/<org_sid>/schemes/
+# 分析方案模板路由
+global_scheme_urlpatterns = [
+    path("",
+         v1_scheme.OrgScanSchemeListAPIView.as_view(),
+         name="apiv1_org_scheme_list"),
+    path("<int:scheme_id>/",
+         v1_scheme.OrgScanSchemeDetailAPIView.as_view(),
+         name="apiv1_org_scheme_detail"),
+    path("<int:scheme_id>/jobconfs/",
+         v1_scheme.OrgScanSchemeScanJobConfAPIView.as_view(),
+         name="apiv1_org_scheme_scan_jobconfs"),
+
+]
+
+# 前缀 /api/orgs/<org_sid>/
 urlpatterns = [
-    path("<str:team_name>/repos/", include(repos_url_patterns)),
-    path("<str:team_name>/projects/", include(projects_url_patterns))
+    path("schemes/", include(global_scheme_urlpatterns)),
+    path("teams/<str:team_name>/repos/", include(repo_url_patterns)),
+    path("teams/<str:team_name>/projects/", include(project_url_patterns)),
 ]

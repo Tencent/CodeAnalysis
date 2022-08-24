@@ -19,7 +19,7 @@ from util import errcode
 class CDErrorBase(Exception):
     """
     CodeDog Server异常错误类型。遇到异常时，需要抛出ServerError，指定code和msg::
-    
+
         raise ServerError(100, "server error msg")
     """
 

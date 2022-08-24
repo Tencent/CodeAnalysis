@@ -325,19 +325,12 @@ class CodeDogApiServer(object):
     # 格式: server task api
     # ------------------------------------------------------------------------------------- #
 
-    def register(self, node_uuid, tag):
+    def register(self, data):
         """
         用本地node_uuid向server注册，获取server给的node_id
-        :param node_uuid: server的node rpc接口
-        :param tag: 机器标签
         :return: node_id
         """
         rel_url = "api/nodes/register/"
-        data = {
-            "uuid": node_uuid,
-            "tag": tag,
-            "os_info": settings.PLATFORMS[sys.platform]
-        }
         rsp = CodeDogHttpClient(self._server_url, rel_url, headers=self._headers, json_data=data).post()
         rsp_dict = self.get_data_from_result(rsp)
         return rsp_dict['id']
@@ -453,3 +446,22 @@ class CodeDogApiServer(object):
         rel_url = f"api/orgs/{org_sid}/teams/{team_name}/repos/{repo_id}/projects/{proj_id}/confs/"
         rsp = CodeDogHttpClient(self._server_url, rel_url, headers=self._headers).get()
         return self.get_data_from_result(rsp)
+
+    def get_scheme_by_id(self, scheme_id, org_sid):
+        """根据分析方案模板id，获取方案模板的名称"""
+        rel_url = f"api/orgs/{org_sid}/schemes/{scheme_id}/"
+        rsp = CodeDogHttpClient(self._server_url, rel_url, headers=self._headers).get()
+        data = self.get_data_from_result(rsp)
+        return data
+
+    def get_jobconfs_by_scheme_template(self, scheme_id, org_sid):
+        """
+        获取分析方案模板的任务执行参数
+        :param scheme_id:分析方案模板id
+        :param org_sid: 团队编号
+        :return:
+        """
+        rel_url = f"api/orgs/{org_sid}/schemes/{scheme_id}/jobconfs/"
+        rsp = CodeDogHttpClient(self._server_url, rel_url, headers=self._headers).get()
+        data = self.get_data_from_result(rsp)
+        return data
