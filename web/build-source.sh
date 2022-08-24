@@ -31,6 +31,20 @@ function default_frontend() {
   status "打包完成 $1"
 }
 
+# 文档构建资源打包
+function document_frontend() {
+  cd ${ROOT_PATH}
+  if [ -d "packages/tca-document" ]; then
+    rm -r packages/tca-document
+  fi
+  cp -r ../doc packages/tca-document
+  rm -r packages/tca-document/old
+  sed -i 's/CodeAnalysis/document/' packages/tca-document/package.json
+  default_frontend 'tca-document'
+  rm -r packages/tca-document
+}
+
+
 # 子微前端的构建资源打包
 function sub_microfrontend() {
   status "开始构建 $1 ..."
@@ -48,7 +62,7 @@ function run() {
     if [ "$pkg_name" = "framework" ]; then
       default_frontend $pkg_name
     elif [ "$pkg_name" = "tca-document" ]; then
-      default_frontend $pkg_name
+      document_frontend $pkg_name
     else
       sub_microfrontend $pkg_name
     fi
