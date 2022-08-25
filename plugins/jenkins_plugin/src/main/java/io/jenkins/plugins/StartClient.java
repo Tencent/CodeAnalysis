@@ -47,13 +47,11 @@ public class StartClient {
                     + " --org-sid " + teamId
                     + " --team-name " + projectName
                     + " -s " + localCodePath
-                    + " --branch " + branchName
-                    + " --language " + languageType
+                    + branchName
+                    + languageType
                     + constant_refSchemeID
                     + constant_scanPlan
                     + isTotal;
-
-
 
             Process p = Runtime.getRuntime().exec(
                     startCommand,
