@@ -55,7 +55,7 @@ class RegexScanner(CodeLintModel):
             rel_path = single_file[relpos:]
             file_path = os.path.join(config_rules_path, rel_path)
             with open(single_file,'r') as fp:
-                data = yaml.load(fp, Loader=yaml.FullLoader)
+                data = yaml.safe_load(fp)
             if data:
                 if data.__contains__('rules'):
                     for rule_data in data['rules']:
