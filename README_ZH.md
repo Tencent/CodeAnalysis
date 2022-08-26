@@ -43,12 +43,9 @@
 
 ## 快速入门
 
-- [快速入门](https://tencent.github.io/CodeAnalysis/)
+- [快速部署](https://tencent.github.io/CodeAnalysis/zh/quickStarted/)
 - [如何使用TCA Action快速体验](https://github.com/TCATools/TCA-action/blob/main/README.md)
-- [如何在本地部署Server与Web](https://tencent.github.io/CodeAnalysis/zh/quickStarted/deploySever.html#通过源代码)
-- [如何通过Docker-Compose部署Server与Web](https://tencent.github.io/CodeAnalysis/zh/quickStarted/deploySever.html#通过docker-compose)
-- [如何使用客户端](https://tencent.github.io/CodeAnalysis/zh/quickStarted/deployClient.html)
-- [部署常见问题与解决方式](https://tencent.github.io/CodeAnalysis/zh/quickStarted/FAQ.html)
+- [如何使用客户端](https://tencent.github.io/CodeAnalysis/zh/guide/客户端/本地分析.html)
 
 ## 社区
 
