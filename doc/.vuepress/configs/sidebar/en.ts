@@ -97,11 +97,11 @@ export const en: SidebarConfig = {
     {
       text: '依赖安装参考',
       children: [
-        '/zh/advanced/install_python37_on_centos.md',
-        '/zh/advanced/install_python37_on_ubuntu.md',
-        '/zh/advanced/install_mysql_on_centos.md',
-        '/zh/advanced/install_redis_from_source.md',
-        '/zh/advanced/install_redis_on_centos.md',
+        '/en/advanced/install_python37_on_centos.md',
+        '/en/advanced/install_python37_on_ubuntu.md',
+        '/en/advanced/install_mysql_on_centos.md',
+        '/en/advanced/install_redis_from_source.md',
+        '/en/advanced/install_redis_on_centos.md',
       ],
     }
   ],
