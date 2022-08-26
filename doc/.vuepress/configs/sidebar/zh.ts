@@ -93,6 +93,16 @@ export const zh: SidebarConfig = {
         '/zh/advanced/任务分布式执行.md',
         '/zh/advanced/集成代码分析工具.md',
       ],
+    },
+    {
+      text: '依赖安装参考',
+      children: [
+        '/zh/advanced/install_python37_on_centos.md',
+        '/zh/advanced/install_python37_on_ubuntu.md',
+        '/zh/advanced/install_mysql_on_centos.md',
+        '/zh/advanced/install_redis_from_source.md',
+        '/zh/advanced/install_redis_on_centos.md',
+      ],
     }
   ],
   '/zh/community/': [

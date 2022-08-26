@@ -19,6 +19,7 @@ export const zh: NavbarConfig = [
       {
         text: '深入',
         children: [
+          '/zh/advanced/任务分布式执行.md',
           '/zh/advanced/集成代码分析工具.md',
         ],
       },
