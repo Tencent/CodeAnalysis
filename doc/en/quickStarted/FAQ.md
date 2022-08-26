@@ -1,4 +1,4 @@
-# 常见问题
+# FAQ
 
 :::tip
 该Q&A文档会持续更新，非常欢迎您的建议与共建！
@@ -195,19 +195,7 @@ ln -s /usr/local/python3/bin/celery /usr/local/bin/celery
 
 ### 2. 服务启动与初始化
 
-#### 2.1 ``compose_init.sh``脚本需要填写的密码是什么？
-
-执行``compose_init.sh``提示需要输入的密码是数据库的初始化密码，默认为``TCA!@#2021``
-
-```bash
-$ ./compose_init.sh
-Recreating tca_open_source_mysql_1 ... done
-Recreating tca_open_source_redis_1 ... done
-wait db [DB default password: TCA!@#2021]
-Enter password: <此处输入'TCA!@#2021'>
-```
-
-#### 2.2 服务占用端口异常
+#### 2.1 服务占用端口异常
 
 TCA 本地部署启动后，会监听多个端口：
 
@@ -227,7 +215,7 @@ TCA 本地部署启动后，会监听多个端口：
 
 不推荐调整TCA指定服务的端口号，需要调整多处配置，以及可能会影响到后续服务的升级
 
-#### 2.3 服务输出日志找不到
+#### 2.2 服务输出日志找不到
 
 本地部署输出的日志位置：
 
