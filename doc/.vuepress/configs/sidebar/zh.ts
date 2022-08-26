@@ -18,7 +18,7 @@ export const zh: SidebarConfig = {
       ]
     },
     {
-      text: '分析结果',
+      text: '代码检查',
       children: [
         '/zh/guide/代码检查/分析结果查看.md',
         '/zh/guide/代码检查/添加规则配置.md',
@@ -135,7 +135,6 @@ export const zh: SidebarConfig = {
       // collapsible: true,
       children: [
         '/zh/quickStarted/enhanceDeploy.md',
-        '/zh/quickStarted/tools.md',
         '/zh/quickStarted/FAQ.md',
       ],
     },
