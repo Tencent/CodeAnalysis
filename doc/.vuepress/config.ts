@@ -43,7 +43,7 @@ export default defineUserConfig({
     },
     '/en': {
       lang: 'en-US',
-      title: 'Tencent Code Analysis',
+      title: 'Tencent Cloud Code Analysis',
       description: '用心关注每行代码迭代、助力传承卓越代码文化！',
     },
   },

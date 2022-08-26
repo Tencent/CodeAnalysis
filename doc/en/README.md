@@ -3,8 +3,8 @@ home: true
 title: 腾讯云代码分析文档
 heroImage: /images/Logo.svg
 actions:
-  - text: 快速入门
-    link: /zh/quickStarted/deploySever.html
+  - text: 快速部署
+    link: /en/quickStarted/
     type: primary
   - text: 帮助文档
     link: /zh/guide/
@@ -34,49 +34,3 @@ footer: MIT Licensed | Copyright © 1998-present Tencent. All Rights Reserved.
 ### Repo Mirror
 
 [https://git.code.tencent.com/Tencent_Open_Source/CodeAnalysis.git](https://git.code.tencent.com/Tencent_Open_Source/CodeAnalysis.git)
-
-### What is TCA
-
-Tencent Cloud Code Analysis (TCA for short, code-named **CodeDog** inside the company early) is a comprehensive platform for code analysis and issue tracking. TCA consist of three components, server, web and client. It integrates of a number of self-developed tools, and also supports dynamic integration of code analysis tools in various programming languages.
-
-Code analysis is a technology, using lexical analysis, syntax analysis, control-flow analysis, data-flow analysis to make a comprehensive analysis of the code, so as to verify whether the code meets the requirements of normative, security, reliability, maintainability and other indicators.
-
-Using TCA can help team find normative, structural, security vulnerabilities and other issues in the code, continuously monitor the quality of the project code and issue alerts. At the same time, TCA opens up APIs to support connection with upstream and downstream systems, so as to integrate code analysis capabilities, ensure code quality, and be more conducive to inheriting an excellent team code culture.
-
-![组件图](https://tencent.github.io/CodeAnalysis/media/Components.png)
-
-![流程图](https://tencent.github.io/CodeAnalysis/media/Flow.png)
-
-### Experience
-
-[Experience Link](http://tca.tencent.com)
-
-### Getting Started
-
-- [How to get start](./quickStarted/intro.md)
-- [How to deploy server and web](./quickStarted/deploySever.md#通过源代码)
-- [How to deploy server and web with docker-compose](./quickStarted/deploySever.md#通过docker-compose)
-- [How to use client](./quickStarted/deployClient.md)
-- [Deploy Q&A](./quickStarted/FAQ.md)
-
-### Community
-
-- WeChat official account:腾讯云静态分析
-- QQ Group: 361791391
-- [Discussion](https://github.com/Tencent/CodeAnalysis/discussions)
-- [Wiki](https://github.com/Tencent/CodeAnalysis/wiki)
-- [White Paper](https://github.com/Tencent/CodeAnalysis/tree/main/腾讯云代码分析白皮书.pdf)
-
-### Changelogs
-
-- Check our [Changelog](https://github.com/Tencent/CodeAnalysis/tree/main/CHANGELOG.md)
-
-### Contributing
-
-- Check out [CONTRIBUTING](https://github.com/Tencent/CodeAnalysis/tree/main/CONTRIBUTING.md) to see how to develop with TCA.
-- [Tencent WeOpen Star Project](https://github.com/weopenprojects/WeOpen-Star/issues/19#issue-1228583868)（From May 2022 to September 2022）
-- [Tencent Open Source Incentive Program](https://opensource.tencent.com/contribution) encourages the participation and contribution of developers. We look forward to your active participation.
-
-### License
-
-TCA is [MIT licensed](https://github.com/Tencent/CodeAnalysis/tree/main/LICENSE)
