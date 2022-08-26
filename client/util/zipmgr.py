@@ -120,7 +120,7 @@ class Zip(object):
     def decompress(self, zip_file, path):
         logger.info("zip模块执行解压操作...")
         # 20190927 bug-fixed, 防止在当前目录下删除当前目录，出现权限异常情况
-        os.chdir("..")
+        os.chdir("../task")
         if os.path.exists(path):
             PathMgr().rmpath(path)
 
@@ -142,7 +142,7 @@ class Zip(object):
         zp = zipfile.ZipFile(zip_file, "w", zipfile.ZIP_DEFLATED)
         for dirpath, dirnames, filenames in os.walk(path):
             fpath = dirpath.replace(path, "")  # 这一句很重要，不replace的话，就从根目录开始复制
-            fpath = fpath and fpath + os.sep or ""  # 这句话理解我也点郁闷，实现当前文件夹以及包含的所有文件的压缩
+            fpath = fpath and fpath + os.sep or ""
             for filename in filenames:
                 zp.write(os.path.join(dirpath, filename), fpath + filename)
         zp.close()

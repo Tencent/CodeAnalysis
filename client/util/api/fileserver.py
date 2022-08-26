@@ -12,11 +12,13 @@
 import logging
 import hashlib
 import os
+import ssl
 
 from urllib.parse import urljoin
 from util import wrapper
 from node.app import settings
 from util.api.httpclient import HttpClient
+from urllib.request import urlopen
 
 logger = logging.getLogger(__name__)
 
@@ -46,15 +48,20 @@ class FlieHash(object):
 
 
 class FileServer(object):
-    def __init__(self):
+    def __init__(self, server_url=None, headers=None):
         """
         构造函数
         :return:
         """
-        # 优先从环境变量读取文件服务器url和token，没有再使用默认值
-        self._server_url = os.getenv("FILE_SERVER_URL", settings.FILE_SERVER['URL'])
-        file_server_token = os.getenv("FILE_SERVER_TOKEN", settings.FILE_SERVER['TOKEN'])
-        self._headers = {'Authorization': 'Token %s' % file_server_token}
+        if server_url:
+            self._server_url = server_url
+            self._headers = headers if headers else {}
+        else:
+            # 优先从环境变量读取文件服务器url和token，没有再使用默认值
+            self._server_url = os.getenv("FILE_SERVER_URL", settings.FILE_SERVER['URL'])
+            file_server_token = os.getenv("FILE_SERVER_TOKEN", settings.FILE_SERVER['TOKEN'])
+            self._headers = {'Authorization': 'Token %s' % file_server_token}
+
         self._proxies = None
 
     def modify_save_time(self, rel_dir, days):
@@ -117,6 +124,20 @@ class FileServer(object):
             wf.write(data)
         return filepath
 
+    def download_big_file(self, rel_url, filepath):
+        """大文件下载"""
+        context = ssl._create_unverified_context()
+        download_url = urljoin(self._server_url, rel_url)
+        resp = urlopen(download_url, context=context)
+        chunk_size = 16 * 1024
+        with open(filepath, 'wb') as wf:
+            while True:
+                trunk = resp.read(chunk_size)
+                if not trunk:
+                    break
+                wf.write(trunk)
+        return filepath
+
 
 class RetryFileServer(object):
     def __init__(self, retry_times=-1):
@@ -136,10 +157,10 @@ class RetryFileServer(object):
         """
         return
 
-    def get_server(self):
+    def get_server(self, server_url=None):
         """
         获取一个server实例
         :return:
         """
-        file_server = FileServer()
+        file_server = FileServer(server_url=server_url)
         return wrapper.Retry(server=file_server, on_error=self.retry_on_error, total=self._retry_times)
