@@ -16,6 +16,78 @@
         "build_flag": false,
         "checkrule_set": [
             {
+                "real_name": "DetectAntd",
+                "display_name": "DetectAntd",
+                "severity": "info",
+                "category": "usability",
+                "rule_title": "检测项目是否使用到了 Antd 框架。",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "js",
+                    "ts"
+                ],
+                "solution": "无",
+                "owner": null,
+                "labels": [],
+                "description": "检测项目是否使用到了 Antd 框架。",
+                "disable": false
+            },
+            {
+                "real_name": "DetectReact",
+                "display_name": "DetectReact",
+                "severity": "info",
+                "category": "usability",
+                "rule_title": "检测项目是否使用到了 React 框架。",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "js",
+                    "ts"
+                ],
+                "solution": "无",
+                "owner": null,
+                "labels": [],
+                "description": "检测项目是否使用到了 React 框架。",
+                "disable": false
+            },
+            {
+                "real_name": "DetectTDesign",
+                "display_name": "DetectTDesign",
+                "severity": "info",
+                "category": "usability",
+                "rule_title": "检测项目是否使用到了 TDesign 框架。",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "js",
+                    "ts"
+                ],
+                "solution": "无",
+                "owner": null,
+                "labels": [],
+                "description": "检测项目是否使用到了 TDesign 框架。",
+                "disable": false
+            },
+            {
+                "real_name": "DetectVue",
+                "display_name": "DetectVue",
+                "severity": "info",
+                "category": "usability",
+                "rule_title": "检测项目是否使用到了 Vue 框架。",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "js",
+                    "ts"
+                ],
+                "solution": "无",
+                "owner": null,
+                "labels": [],
+                "description": "检测项目是否使用到了 Vue 框架。",
+                "disable": false
+            },
+            {
                 "real_name": "VUL_ERROR",
                 "display_name": "高危漏洞",
                 "severity": "error",
