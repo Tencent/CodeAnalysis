@@ -29,7 +29,7 @@
                 "labels": [
                     "安全"
                 ],
-                "description": "Apache Log4j存在潜在JNDI注入安全漏洞，可导致服务器被入侵。\n高危版本：Apache Log4j 1.x版本；2.x < 2.15.0-rc2\n安全版本：Apache Log4j 2.15.0及以上",
+                "description": "Apache Log4j存在潜在JNDI注入安全漏洞，可导致服务器被入侵。\n高危版本：Apache Log4j 1.x版本；2.x < 2.17.0-rc2\n安全版本：Apache Log4j 2.17.0及以上",
                 "disable": false
             }
         ],
