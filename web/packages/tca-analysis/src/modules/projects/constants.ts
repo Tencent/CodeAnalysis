@@ -1,12 +1,4 @@
-// Copyright (c) 2021-2022 THL A29 Limited
-//
-// This source code file is made available under MIT License
-// See LICENSE for details
-// ==============================================================================
-
 /* eslint-disable */
-
-import { t } from '@src/i18n/i18next';
 
 export const ISSUE_STATUS = {
   1: '已修复',
@@ -308,13 +300,13 @@ export const SCAN_TYPE = {
 };
 
 export const SCAN_TYPE_TXT = {
-  INCR: t('增量分析'),
-  FULL: t('全量分析'),
-  MR: t('合流任务'),
-  COV: t('覆盖率'),
-  EXPAND: t('扩展功能'),
-  CR_FULL: t('CR 全量分析'),
-  CR_INCR: t('CR 增量分析'),
+  INCR: '增量分析',
+  FULL: '全量分析',
+  MR: '合流任务',
+  COV: '覆盖率',
+  EXPAND: '扩展功能',
+  CR_FULL: 'CR 全量分析',
+  CR_INCR: 'CR 增量分析',
 };
 
 export const SCAN_TYPE_CHOICES = {
@@ -332,22 +324,22 @@ export const SCAN_TYPE_CHOICES = {
  */
 export const SEVERITY_OPTIONS = [
   {
-    label: t('致命'),
+    label: '致命',
     en_label: 'fatal',
     value: 1,
   },
   {
-    label: t('错误'),
+    label: '错误',
     en_label: 'error',
     value: 2,
   },
   {
-    label: t('警告'),
+    label: '警告',
     en_label: 'warning',
     value: 3,
   },
   {
-    label: t('提示'),
+    label: '提示',
     en_label: 'info',
     value: 4,
   },
@@ -361,10 +353,10 @@ export const SEVERITY_TYPE = {
 };
 
 export const SEVERITY_TYPE_TXT = {
-  FATAL: t('致命'),
-  ERROR: t('错误'),
-  WARNING: t('警告'),
-  INFO: t('提示'),
+  FATAL: '致命',
+  ERROR: '错误',
+  WARNING: '警告',
+  INFO: '提示',
 };
 
 /**
@@ -372,14 +364,14 @@ export const SEVERITY_TYPE_TXT = {
  */
 export const CATEGORY_TYPE_TXT = {
   NULL: '-',
-  CORRECTNESS: t('功能'),
-  SECURITY: t('安全'),
-  PERFORMANCE: t('性能'),
-  USABILITY: t('可用性'),
-  ACCESSIBILITY: t('无障碍化'),
-  I18N: t('国际化'),
-  CONVENTION: t('代码风格'),
-  OTHER: t('其他'),
+  CORRECTNESS: '功能',
+  SECURITY: '安全',
+  PERFORMANCE: '性能',
+  USABILITY: '可用性',
+  ACCESSIBILITY: '无障碍化',
+  I18N: '国际化',
+  CONVENTION: '代码风格',
+  OTHER: '其他',
 };
 
 export const CATEGORY_TYPE = {
@@ -438,9 +430,9 @@ export const LINT_STATE_TYPE = {
 };
 
 export const LINT_STATE_TYPE_TXT = {
-  ACTIVE: t('未处理'),
-  RESOLVED: t('已处理'),
-  CLOSED: t('已关闭'),
+  ACTIVE: '未处理',
+  RESOLVED: '已处理',
+  CLOSED: '已关闭',
 };
 
 export const LINT_STATE_OPTIONS = [
@@ -467,8 +459,8 @@ export const STANDARD_TYPE = {
 };
 
 export const STANDARD_TYPE_TXT = {
-  DEFAULT: t('默认标准'),
-  CUSTOM: t('自定义标准'),
+  DEFAULT: '默认标准',
+  CUSTOM: '自定义标准',
 };
 
 export const STANDARD_OPTIONS = [
@@ -493,10 +485,10 @@ export const RISK_TYPE = {
 };
 
 export const RISK_TYPE_TXT = {
-  EXHI: t('极高风险'),
-  HIGH: t('高风险'),
-  MIDD: t('中风险'),
-  LOW: t('低风险'),
+  EXHI: '极高风险',
+  HIGH: '高风险',
+  MIDD: '中风险',
+  LOW: '低风险',
 };
 
 export const RISK_OPTIONS = [

@@ -51,7 +51,7 @@ const PROCESS = {
 const ScanDetail = () => {
   const intervalRef = useRef();
   const history = useHistory();
-  const { org_sid: orgSid, team_name: teamName, repoId, projectId, jobId, scanTab } = useParams() as any;
+  const { orgSid, teamName, repoId, projectId, jobId, scanTab } = useParams() as any;
   const [data, setData] = useState<any>({});
   const [curTask, setCurTask] = useState<any>({});
   const taskRef = useRef() as any; // 存储当前任务的id，解决定时器中的闭包问题 - 获取不到最新的 curTask 值
@@ -105,9 +105,9 @@ const ScanDetail = () => {
     const a = document.createElement('a');
     a.href = decodeURIComponent(url) || '';
     // 替换为前端域名地址
-    let pathname = a.pathname
+    let { pathname } = a;
     if (!pathname.startsWith('/server')) {
-      pathname = `/server${pathname}`
+      pathname = `/server${pathname}`;
     }
     url = `${window.location.origin}${pathname}`;
     const filename = url.substr(url.lastIndexOf('/') + 1);
@@ -275,7 +275,7 @@ const ScanDetail = () => {
                 orgSid,
                 teamName,
                 repoId,
-                data?.project?.scan_scheme
+                data?.project?.scan_scheme,
               )}/basic`} rel="noreferrer"
             >查看分析方案</a>
           </h2>
@@ -287,13 +287,12 @@ const ScanDetail = () => {
       </div>
       <Tabs
         activeKey={scanTab || 'detail'}
-        onChange={(tab: string) =>
-          history.push(`${getProjectRouter(
-            orgSid,
-            teamName,
-            repoId,
-            projectId
-          )}/scan-history/${jobId}/${tab}`)
+        onChange={(tab: string) => history.push(`${getProjectRouter(
+          orgSid,
+          teamName,
+          repoId,
+          projectId,
+        )}/scan-history/${jobId}/${tab}`)
         }
       >
         <Tabs.TabPane tab="执行详情" key="detail">
@@ -418,7 +417,7 @@ const ScanDetail = () => {
                                         ))}
                                       </ul>
                                     </div>
-                                  )}
+                                )}
                                 {item.node?.name && (
                                   <p>执行机器: {item.node.name}</p>
                                 )}

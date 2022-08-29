@@ -6,6 +6,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Button, Avatar, Row, Col, Modal, Select, message } from 'coding-oa-uikit';
 import PlusCircleIcon from 'coding-oa-uikit/lib/icon/PlusCircle';
 import UserIcon from 'coding-oa-uikit/lib/icon/User';
@@ -13,7 +14,6 @@ import CloseCircleIcon from 'coding-oa-uikit/lib/icon/CloseCircle';
 import { unionWith, isEqual } from 'lodash';
 
 // 项目内
-import { t } from '@src/i18n/i18next';
 import { getUserImgUrl } from '@src/utils';
 import { getTeamMemberRouter } from '@src/utils/getRoutePath';
 
@@ -33,12 +33,12 @@ const PERM_ENUM = {
 
 const PERM_CHOICES = {
   [PERM_ENUM.ADMIN]: {
-    tit: t('管理员'),
-    desc: t('（具备项目内全部查看、操作权限）'),
+    tit: '管理员',
+    desc: '（具备项目内全部查看、操作权限）',
   },
   [PERM_ENUM.USER]: {
-    tit: t('普通成员'),
-    desc: t('（具备项目内查看、登记代码库、启动分析任务等相关权限）'),
+    tit: '普通成员',
+    desc: '（具备项目内查看、登记代码库、启动分析任务等相关权限）',
   },
 };
 
@@ -62,7 +62,7 @@ const MemberItem = ({ list, role, onAddMemberClick, onRemoveMemberClick }: IMemb
                     icon={<PlusCircleIcon />}
                     onClick={() => onAddMemberClick(role)}
                 >
-                    {t('添加成员')}
+                    添加成员
                 </Button>
             </Col>
             {list.map((userinfo: any) => (
@@ -87,8 +87,10 @@ const MemberItem = ({ list, role, onAddMemberClick, onRemoveMemberClick }: IMemb
 );
 
 const Group = () => {
-  const { org_sid: orgSid, team_name: teamName }: any = useParams();
+  const { orgSid, teamName }: any = useParams();
   const [allUsers, setAllUsers] = useState<Array<any>>([]);
+  const { t } = useTranslation();
+
   const [members, setMembers] = useState<any>({
     admins: [],
     users: [],

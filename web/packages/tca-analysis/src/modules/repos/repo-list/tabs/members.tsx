@@ -5,13 +5,13 @@
 // ==============================================================================
 
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { unionWith, isEqual } from 'lodash';
 import { Row, Col, Button, Avatar, Modal, Select, message } from 'coding-oa-uikit';
 import PlusCircleIcon from 'coding-oa-uikit/lib/icon/PlusCircle';
 import UserIcon from 'coding-oa-uikit/lib/icon/User';
 
 // 项目内
-import { t } from '@src/i18n/i18next';
 import { useStateStore, useDispatchStore } from '@src/context/store';
 import { SET_CUR_REPO_MEMBER } from '@src/context/constant';
 import { getUserImgUrl } from '@src/utils';
@@ -38,7 +38,7 @@ const MemberItem = ({ list, title, onAddMemberClick }: IMemberItem) => (
         <Row gutter={[16, 16]} align="middle" className={s.group}>
             <Col xl={6} lg={8} md={12} sm={24} key="add-member">
                 <Button type="link" icon={<PlusCircleIcon />} onClick={onAddMemberClick}>
-                    {t('添加成员')}
+                    添加成员
                 </Button>
             </Col>
             {list.map((userinfo: any) => (
@@ -66,6 +66,7 @@ interface IProps {
 
 const Members = ({ orgSid, teamName, repoId, admins }: IProps) => {
   const dispatch = useDispatchStore();
+  const { t } = useTranslation();
   const [inviteVisb, setInviteVisb] = useState(false);
   const { projectMembers } = useStateStore();
   const userOptions = unionWith(projectMembers.admins, projectMembers.users, isEqual).map(user => ({

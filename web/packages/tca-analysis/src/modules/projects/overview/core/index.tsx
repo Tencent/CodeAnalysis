@@ -9,12 +9,12 @@
  */
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Row, Col, Tooltip } from 'coding-oa-uikit';
 import QuestionCircle from 'coding-oa-uikit/lib/icon/QuestionCircle';
 import classnames from 'classnames';
 import { toNumber } from 'lodash';
 // 项目内
-import { t } from '@src/i18n/i18next';
 import CodeLintSVG from '@src/images/codelint.svg';
 import CodeLintDisableSVG from '@src/images/codelint-disable.svg';
 import CodeCcSVG from '@src/images/codecc.svg';
@@ -45,10 +45,11 @@ interface IProps {
 }
 
 const Core = (props: IProps) => {
+  const { t } = useTranslation();
   const { latestLintData, briefCycData, briefDupData, conf } = props;
   const [ccUndealCount, setCcUndealCount] = useState(0);
   const params: any = useParams();
-  const { org_sid: orgSid, team_name: teamName } = params;
+  const { orgSid, teamName } = params;
   const repoId = toNumber(params.repoId);
   const projectId = toNumber(params.projectId);
 
