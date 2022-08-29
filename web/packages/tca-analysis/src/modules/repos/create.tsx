@@ -6,6 +6,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Form, Select, Input, Button, message } from 'coding-oa-uikit';
 // Radio
 import { get, isEmpty, filter } from 'lodash';
@@ -14,12 +15,10 @@ import RefreshIcon from 'coding-oa-uikit/lib/icon/Refresh';
 
 // 项目内
 import { useStateStore, useDispatchStore } from '@src/context/store';
-import { SCM_PLATFORM } from '@src/common/constants';
 import { SET_CUR_REPO, SET_REPOS } from '@src/context/constant';
 import { getScmAccounts, postRepo, getSSHInfo, getOAuthInfo, getPlatformStatus } from '@src/services/repos';
-import { t } from '@src/i18n/i18next';
 import { getPCAuthRouter, getRepoRouter } from '@src/modules/repos/routes';
-import { AUTH_TYPE, AUTH_TYPE_TXT, REPO_TYPE, REPO_TYPE_OPTIONS } from './constants';
+import { AUTH_TYPE, AUTH_TYPE_TXT, REPO_TYPE, REPO_TYPE_OPTIONS, SCM_PLATFORM } from './constants';
 import s from './style.scss';
 
 const { Option, OptGroup } = Select;
@@ -50,8 +49,9 @@ const Create = () => {
   const history = useHistory();
   const { repos } = useStateStore();
   const dispatch = useDispatchStore();
+  const { t } = useTranslation();
 
-  const { org_sid: orgSid, team_name: teamName }: any = useParams();
+  const { orgSid, teamName }: any = useParams();
   // const [allAuthList, setAllAuthList] = useState<Array<any>>([]);
   const [sshAuthList, setSshAuthList] = useState<any>([]);
   const [httpAuthList, setHttpAuthList] = useState<any>([]);
@@ -74,11 +74,11 @@ const Create = () => {
     ])
       .then((result) => {
         const activeOauth = filter(
-          result[2].map((item:any)=>({ 
-            ...item, 
+          result[2].map((item: any) => ({
+            ...item,
             platform_status: get(result[3], item.scm_platform_name, [false]),
           })),
-          'platform_status'
+          'platform_status',
         );
         // HTTP 和 SSH ID可能重复
         setSshAuthList(result[0]?.map((item: any) => ({
@@ -89,9 +89,9 @@ const Create = () => {
           ...item,
           authId: `${AUTH_TYPE.HTTP}#${item.id}`,
         })));
-        setOauthAuthList(activeOauth.map((item:any)=>({ 
-            ...item, 
-            authId: `${AUTH_TYPE.OAUTH}#${item.id}`,
+        setOauthAuthList(activeOauth.map((item: any) => ({
+          ...item,
+          authId: `${AUTH_TYPE.OAUTH}#${item.id}`,
         })));
       })
       .finally(() => {
@@ -209,8 +209,8 @@ const Create = () => {
               rules={[
                 { required: true, message: t('请输入代码库地址') },
                 {
-                    pattern: /(https?):\/\/[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]/,
-                    message: t('请输入合法的http代码库地址'),
+                  pattern: /(https?):\/\/[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]/,
+                  message: t('请输入合法的http代码库地址'),
                 },
               ]}
             >
@@ -226,8 +226,8 @@ const Create = () => {
           shouldUpdate={(prevValues, curValues) => prevValues.scm_auth_id !== curValues.scm_auth_id}
         >
           {({ getFieldValue }) => {
-              const scmAuth = getFieldValue('scm_auth_id');
-              return scmAuth?.startsWith('ssh_token') && (
+            const scmAuth = getFieldValue('scm_auth_id');
+            return scmAuth?.startsWith('ssh_token') && (
                 <>
                   <Form.Item
                     name={['address', 'ssh_url']}
@@ -239,7 +239,7 @@ const Create = () => {
                     <Input style={{ width: 500 }} />
                   </Form.Item>
                 </>
-              );
+            );
           }}
         </Form.Item>
         <Form.Item

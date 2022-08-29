@@ -27,7 +27,7 @@ import { Operation } from './issue-popover';
 import style from './style.scss';
 
 /** 定义每行显示最长长度，避免渲染问题 */
-const CODE_MAX_CHAR_LENGTH = 1000
+const CODE_MAX_CHAR_LENGTH = 1000;
 
 interface IssueModalProps {
   curSchemeId: number;
@@ -44,13 +44,21 @@ interface IssueModalProps {
 
 const IssueModal = (props: IssueModalProps) => {
   const {
-    params, curSchemeId, issueId, visible, isFirstIssue, isLastIssue,
-    prevIssue, nextIssue, onClose, callback,
+    params,
+    curSchemeId,
+    issueId,
+    visible,
+    isFirstIssue,
+    isLastIssue,
+    prevIssue,
+    nextIssue,
+    onClose,
+    callback,
   } = props;
   const [orgSid, teamName, repoId, projectId] = params;
   const listRef: any = useRef({});
   const rowHeights = useRef({});
-  const [reloadList, setReloadList] = useState(false);  // 弹框关闭后是否需要重新请求列表数据
+  const [reloadList, setReloadList] = useState(false); // 弹框关闭后是否需要重新请求列表数据
   const [detail, setDetail] = useState<any>({});
   const [loading, setLoading] = useState(false);
   const [codeFile, setCode] = useState<any>({});
@@ -72,15 +80,17 @@ const IssueModal = (props: IssueModalProps) => {
           path: res.file_path,
           revision: get(res, 'issue_details[0].scan_revision'),
         };
-        if (res.is_external) { // 外部代码库需要传url
+        if (res.is_external) {
+          // 外部代码库需要传url
           params.scm_url = res.scm_url;
           params.path = res.real_file_path;
         }
         setDetail(res);
         setLoading(true);
-        getCodeFile(orgSid, teamName, repoId, projectId, params).then((file) => {
-          setCode(file);
-        })
+        getCodeFile(orgSid, teamName, repoId, projectId, params)
+          .then((file) => {
+            setCode(file);
+          })
           .finally(() => {
             setLoading(false);
             scrollToItem(res?.issue_details[0].line);
@@ -106,7 +116,7 @@ const IssueModal = (props: IssueModalProps) => {
   const rowRenderer = ({ index, style: rowStyle }: any) => {
     const { lineNum: line, content = '' } = codeFile?.codeContents[index] || {};
     const rowRef: any = useRef({});
-    const language = detail.language ?? codeFile.suffix?.split('.')[1] ?? 'plaintext';
+    const language =      detail.language ?? codeFile.suffix?.split('.')[1] ?? 'plaintext';
 
     useEffect(() => {
       if (rowRef.current) {
@@ -121,34 +131,35 @@ const IssueModal = (props: IssueModalProps) => {
           ref={rowRef}
           id={line}
           className={cn(style.codeContent, {
-            [style[`status-${detail.severity}`]]: (line === 1 && issueLines[0] === 0) || issueLines.includes(line),
+            [style[`status-${detail.severity}`]]:
+              (line === 1 && issueLines[0] === 0) || issueLines.includes(line),
           })}
         >
-          {
-            (
-              // 本行有问题 || 问题行为0，即文件问题显示在第一行之前
-              (line === 1 && issueLines[0] === 0) || issueLines.includes(line)
-            ) && (
-              <div className={style.ruleWrapper}>
-                <div>
-                  <InfoCircle />&nbsp;
-                  【{detail.checkrule_real_name}】规则描述：{detail.checkrule_rule_title}
-                  {
-                    false && (
-                      <Button
-                        type='link'
-                        className={style.ruleDetail}
-                        onClick={() => getRuleDetailInfo()}
-                      >查看规则</Button>
-                    )
-                  }
-                </div>
-                <div className={style.ruleDesc}>{detail.msg}</div>
+          {// 本行有问题 || 问题行为0，即文件问题显示在第一行之前
+          ((line === 1 && issueLines[0] === 0)
+            || issueLines.includes(line)) && (
+            <div className={style.ruleWrapper}>
+              <div>
+                <InfoCircle />
+                &nbsp; 【{detail.checkrule_real_name}】规则描述：
+                {detail.checkrule_rule_title}
+                {false && (
+                  <Button
+                    type="link"
+                    className={style.ruleDetail}
+                    onClick={() => getRuleDetailInfo()}
+                  >
+                    查看规则
+                  </Button>
+                )}
               </div>
-            )
-          }
+              <div className={style.ruleDesc}>{detail.msg}</div>
+            </div>
+          )}
           <Highlight className={language}>
-            {content.length > CODE_MAX_CHAR_LENGTH ? `${content.substring(0, CODE_MAX_CHAR_LENGTH)}...` : content}
+            {content.length > CODE_MAX_CHAR_LENGTH
+              ? `${content.substring(0, CODE_MAX_CHAR_LENGTH)}...`
+              : content}
           </Highlight>
         </div>
       </div>
@@ -169,7 +180,13 @@ const IssueModal = (props: IssueModalProps) => {
 
   const getRuleDetailInfo = () => {
     if (isEmpty(ruleDetail)) {
-      getRuleDetail(orgSid, teamName, repoId, curSchemeId, detail.checkrule_gid).then((res: any) => {
+      getRuleDetail(
+        orgSid,
+        teamName,
+        repoId,
+        curSchemeId,
+        detail.checkrule_gid,
+      ).then((res: any) => {
         setRuleDetail(res);
       });
     }
@@ -194,8 +211,14 @@ const IssueModal = (props: IssueModalProps) => {
       title={
         <div className={style.modalTitle}>
           <p>{detail.file_path?.split('/').pop()}</p>
-          <Tooltip title='点击跳转新窗口打开详情页'>
-            <Link className={style.link} target='_blank' to={`${location.pathname}/${issueId}`}><LinkIcon /></Link>
+          <Tooltip title="点击跳转新窗口打开详情页">
+            <Link
+              className={style.link}
+              target="_blank"
+              to={`${location.pathname}/${issueId}`}
+            >
+              <LinkIcon />
+            </Link>
           </Tooltip>
         </div>
       }
@@ -250,12 +273,15 @@ const IssueModal = (props: IssueModalProps) => {
         </div>
       </div>
       <div className={style.issueFooter}>
-        <Button onClick={prevIssue} disabled={isFirstIssue}>上一个问题</Button>
-        <Button onClick={nextIssue} disabled={isLastIssue}>下一个问题</Button>
+        <Button onClick={prevIssue} disabled={isFirstIssue}>
+          上一个问题
+        </Button>
+        <Button onClick={nextIssue} disabled={isLastIssue}>
+          下一个问题
+        </Button>
       </div>
     </Modal>
   );
 };
 
 export default IssueModal;
-

@@ -18,7 +18,7 @@ import ArrowLeft from 'coding-oa-uikit/lib/icon/ArrowLeft';
 
 import { getTmplRouter } from '@src/utils/getRoutePath';
 import { getQuery } from '@src/utils';
-import { DEFAULT_PAGER } from '@src/common/constants';
+import { DEFAULT_PAGER } from '@src/constant';
 import {
   getTmplInfo,
   getPackagesRule,
@@ -40,7 +40,11 @@ import style from './style.scss';
 const { Column } = Table;
 
 const PkgRules = () => {
-  const { org_sid: orgSid, team_name: teamName, id: tmplId } = useParams() as any;
+  const {
+    orgSid,
+    teamName,
+    id: tmplId,
+  } = useParams() as any;
   let { checkProfileId, pkgId } = useParams() as any;
   const history = useHistory();
   const location = useLocation();
@@ -90,7 +94,11 @@ const PkgRules = () => {
     setFilters(res);
   };
 
-  const getListData = (offset = pageStart, limit = pageSize, otherParams = searchParams) => {
+  const getListData = (
+    offset = pageStart,
+    limit = pageSize,
+    otherParams = searchParams,
+  ) => {
     const params = {
       offset,
       limit,
@@ -141,7 +149,10 @@ const PkgRules = () => {
 
     Modal.confirm({
       title: `${text}规则`,
-      content: `您正在${text} ${keys.length} 条规则，${text}后， 在代码分析过程中将${state === 2 ? '忽略' : '启用'
+      content: `您正在${text} ${
+        keys.length
+      } 条规则，${text}后， 在代码分析过程中将${
+        state === 2 ? '忽略' : '启用'
       }这些规则，确定${text}？`,
       onOk: () => {
         modifyRuleState(orgSid, tmplId, {
@@ -197,12 +208,15 @@ const PkgRules = () => {
       <div className={style.header}>
         <span
           className={style.backIcon}
-          onClick={() => history.push(`${getTmplRouter(orgSid, teamName)}/${tmplId}/codelint`)}
+          onClick={() => history.push(`${getTmplRouter(orgSid, teamName)}/${tmplId}/codelint`)
+          }
         >
           <ArrowLeft />
         </span>
         <div style={{ flex: 1 }}>
-          <h3 className={style.title}>{isCustomPkg ? '自定义规则包' : pkgDetail.name}</h3>
+          <h3 className={style.title}>
+            {isCustomPkg ? '自定义规则包' : pkgDetail.name}
+          </h3>
           <p className={style.desc}>
             {isCustomPkg
               ? '自定义规则包中规则配置会默认覆盖其他官方包中相同规则的配置'
@@ -238,7 +252,7 @@ const PkgRules = () => {
               style={{ marginRight: 10 }}
             >
               修改严重级别
-                        </Button>
+            </Button>
             {isCustomPkg ? (
               <Button
                 type="link"
@@ -248,18 +262,18 @@ const PkgRules = () => {
                 移除规则
               </Button>
             ) : (
-                <>
-                  <Button
-                    type="link"
-                    style={{ marginRight: 10 }}
-                    onClick={() => ruleStateHandle(2)}
-                  >
-                    屏蔽规则
-                                </Button>
-                  <Button type="link" onClick={() => ruleStateHandle(1)}>
-                    启用规则
-                                </Button>
-                </>
+              <>
+                <Button
+                  type="link"
+                  style={{ marginRight: 10 }}
+                  onClick={() => ruleStateHandle(2)}
+                >
+                  屏蔽规则
+                </Button>
+                <Button type="link" onClick={() => ruleStateHandle(1)}>
+                  启用规则
+                </Button>
+              </>
             )}
           </div>
         )}
@@ -294,7 +308,9 @@ const PkgRules = () => {
             render={(name, data: any) => (
               <p
                 className={style.ruleName}
-                onClick={() => openRuleDetail(get(data, 'checkrule.id'))}
+                onClick={() => {
+                  openRuleDetail(get(data, 'checkrule.id'));
+                }}
               >
                 {data.state === 2 && (
                   <span className={style.disabledRule}>（已屏蔽）</span>
@@ -303,7 +319,11 @@ const PkgRules = () => {
               </p>
             )}
           />
-          <Column title="规则概要" width="36%" dataIndex={['checkrule', 'rule_title']} />
+          <Column
+            title="规则概要"
+            width="36%"
+            dataIndex={['checkrule', 'rule_title']}
+          />
           <Column
             title="规则参数"
             dataIndex={['checkrule', 'rule_params']}
@@ -318,12 +338,17 @@ const PkgRules = () => {
               );
             }}
           />
-          <Column title="分类" width={100} dataIndex={['checkrule', 'category_name']} />
+          <Column
+            title="分类"
+            width={100}
+            dataIndex={['checkrule', 'category_name']}
+          />
           <Column
             title="问题级别"
             width={80}
             dataIndex={['checkrule', 'severity_name']}
-            render={(severity, data: any) => SEVERITY[data.severity || severity]}
+            render={(severity, data: any) => SEVERITY[data.severity || severity]
+            }
           />
           {!isSysTmpl && (
             <Column
@@ -342,7 +367,7 @@ const PkgRules = () => {
                     }}
                   >
                     编辑
-                                    </a>
+                  </a>
                   {isCustomPkg ? (
                     <a
                       className={style.errorTip}
@@ -354,15 +379,15 @@ const PkgRules = () => {
                       移除
                     </a>
                   ) : (
-                      <a
-                        className={cn({ [style.errorTip]: item.state === 1 })}
-                        onClick={() => {
-                          setSelectedRowKeys([id]);
-                          ruleStateHandle(item.state === 2 ? 1 : 2, [id]);
-                        }}
-                      >
-                        {item.state === 2 ? '取消屏蔽' : '屏蔽'}
-                      </a>
+                    <a
+                      className={cn({ [style.errorTip]: item.state === 1 })}
+                      onClick={() => {
+                        setSelectedRowKeys([id]);
+                        ruleStateHandle(item.state === 2 ? 1 : 2, [id]);
+                      }}
+                    >
+                      {item.state === 2 ? '取消屏蔽' : '屏蔽'}
+                    </a>
                   )}
                 </>
               )}
@@ -378,7 +403,7 @@ const PkgRules = () => {
       >
         <p style={{ marginBottom: 10 }}>
           已选定 {selectedRowKeys.length} 个规则，将其严重级别统一修改为：
-                </p>
+        </p>
         <Radio.Group onChange={e => setSeverity(e.target.value)}>
           {Object.keys(SEVERITY).map((key: any) => (
             <Radio value={key} key={key}>
@@ -393,7 +418,7 @@ const PkgRules = () => {
         data={ruleDetail}
       />
       <EditRuleModal
-        org_sid={orgSid}
+        orgSid={orgSid}
         tmplId={tmplId}
         checkProfileId={checkProfileId}
         visible={editRule.visible}

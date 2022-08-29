@@ -7,30 +7,30 @@
 
 /**
  * 获取项目列表路由地址
- * @param org_sid
+ * @param orgSid
  */
- export const getProjectListRouter = (org_sid: string) => `/t/${org_sid}/projects`;
+export const getProjectListRouter = (orgSid: string) => `/t/${orgSid}/projects`;
 
- /**
+/**
  * 获取项目概览路由地址
- * @param org_sid
+ * @param orgSid
  * @param name
  */
-  export const getProjectOverviewRouter = (org_sid: string, name: string) => `/t/${org_sid}/p/${name}/profile`;
+export const getProjectOverviewRouter = (orgSid: string, name: string) => `/t/${orgSid}/p/${name}/profile`;
 
 /**
  * 获取基础路由前缀
- * @param org_sid
+ * @param orgSid
  * @param name
  */
-export const getBaseRouter = (org_sid: string, name: string) => `/t/${org_sid}/p/${name}`;
+export const getBaseRouter = (orgSid: string, name: string) => `/t/${orgSid}/p/${name}`;
 
 /**
  * 获取代码库路由前缀
- * @param org_sid
+ * @param orgSid
  * @param name
  */
-export const getReposRouter = (org_sid: string, name: string) => `/t/${org_sid}/p/${name}/repos`;
+export const getReposRouter = (orgSid: string, name: string) => `/t/${orgSid}/p/${name}/repos`;
 
 /**
  * 获取分支项目路由前缀
@@ -38,7 +38,7 @@ export const getReposRouter = (org_sid: string, name: string) => `/t/${org_sid}/
  * @param {string | number} repoId - 仓库ID
  * @param {string | number} [projectId] - 项目ID
  */
-export const getProjectRouter = (org_sid: string, name: string, repoId: string | number, projectId?: string | number) => `${getBaseRouter(org_sid, name)}/code-analysis/repos/${repoId}/projects${projectId ? `/${projectId}` : ''}`;
+export const getProjectRouter = (orgSid: string, name: string, repoId: string | number, projectId?: string | number) => `${getBaseRouter(orgSid, name)}/code-analysis/repos/${repoId}/projects${projectId ? `/${projectId}` : ''}`;
 
 /**
  * 获取分析方案路由前缀
@@ -47,12 +47,12 @@ export const getProjectRouter = (org_sid: string, name: string, repoId: string |
  * @param {string | number} [schemeId] - 分析方案ID
  */
 export const getSchemeRouter = (
-  org_sid: string,
+  orgSid: string,
   name: string,
   repoId: string | number,
   schemeId?: string | number,
-) => `${getBaseRouter(org_sid, name)}/code-analysis/repos/${repoId}/schemes${schemeId ? `/${schemeId}` : ''}`;
+) => `${getBaseRouter(orgSid, name)}/code-analysis/repos/${repoId}/schemes${schemeId ? `/${schemeId}` : ''}`;
 
 export const getTmplRouter = (orgSid: string, teamName: string) => `${getBaseRouter(orgSid, teamName)}/template`;
 
-export const getTeamMemberRouter = (org_sid: string) => `/t/${org_sid}/members`;
+export const getTeamMemberRouter = (orgSid: string) => `/t/${orgSid}/members`;

@@ -17,7 +17,7 @@ import ArrowLeft from 'coding-oa-uikit/lib/icon/ArrowLeft';
 
 import { getSchemeRouter } from '@src/utils/getRoutePath';
 import { getQuery } from '@src/utils';
-import { DEFAULT_PAGER } from '@src/common/constants';
+import { DEFAULT_PAGER } from '@src/constant';
 import {
   getAllRules,
   addRule,
@@ -36,7 +36,7 @@ const { Column } = Table;
 const AllRules = () => {
   const params: any = useParams();
   const history = useHistory();
-  const { org_sid: orgSid, team_name: teamName, repoId, schemeId } = params;
+  const { orgSid, teamName, repoId, schemeId } = params;
 
   const [list, setList] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -80,8 +80,12 @@ const AllRules = () => {
         const list = res.results || [];
         history.push(`${window.location.pathname}?${qs.stringify(params)}`);
 
-        setSelectedKeys(list.filter((item: any) => item.select_state === 1).map((item: any) => item.id));
-        setSelectedRowKeys(list.filter((item: any) => item.select_state === 1).map((item: any) => item.id));
+        setSelectedKeys(list
+          .filter((item: any) => item.select_state === 1)
+          .map((item: any) => item.id));
+        setSelectedRowKeys(list
+          .filter((item: any) => item.select_state === 1)
+          .map((item: any) => item.id));
         setCount(res.count);
         setList(list);
       })
@@ -124,85 +128,90 @@ const AllRules = () => {
   };
 
   return (
-        <div className={style.packageRules}>
-            <div className={style.header}>
-                <span
-                    className={style.backIcon}
-                    onClick={() => history.push(`${getSchemeRouter(
-                      orgSid,
-                      teamName,
-                      repoId,
-                      schemeId,
-                    )}/check-profiles/${checkProfileId}/pkg/${pkgId}`)
-                    }
-                >
-                    <ArrowLeft />
-                </span>
-                <div style={{ flex: 1 }}>
-                    <h3 className={style.title}>批量添加规则</h3>
-                </div>
-            </div>
-
-            <Search
-                filters={{
-                  allPkgs,
-                  languages,
-                }}
-                searchParams={cloneDeep(searchParams)}
-                loading={loading}
-                callback={(params: any) => {
-                  getListData(DEFAULT_PAGER.pageStart, pageSize, params);
-                }}
-            />
-
-            <div className={style.rules}>
-                {!isEmpty(difference(selectedRowKeys, selectedKeys)) && (
-                    <div className={style.operation}>
-                        <Button type="link" onClick={addRules} style={{ marginRight: 10 }}>
-                            批量添加 {difference(selectedRowKeys, selectedKeys).length} 条规则
-                        </Button>
-                    </div>
-                )}
-                <Table
-                    dataSource={list}
-                    className={style.ruleTable}
-                    rowKey={(item: any) => item.id}
-                    rowSelection={{
-                      selectedRowKeys,
-                      onChange: keys => setSelectedRowKeys(keys),
-                      getCheckboxProps: item => ({ disabled: item.select_state === 1 }),
-                    }}
-                    pagination={{
-                      current: Math.floor(pageStart / pageSize) + 1,
-                      total: count,
-                      pageSize,
-                      showSizeChanger: true,
-                      showTotal: (total, range) => `${range[0]} - ${range[1]} 条，共 ${total} 条`,
-                      onChange: onChangePageSize,
-                      onShowSizeChange,
-                    }}
-                >
-                    <Column
-                        title="规则名称"
-                        dataIndex="display_name"
-                        render={(name, data: any) => (
-                            <p className={style.ruleName} onClick={() => openRuleDetail(data.id)}>
-                                {name}
-                            </p>
-                        )}
-                    />
-                    <Column title="规则概要" dataIndex="rule_title" />
-
-                    <Column title="分类" dataIndex="category_name" />
-                    <Column title="问题级别" dataIndex="severity_name" />
-                </Table>
-            </div>
-            <RuleDetail
-                visible={ruleDetailVsb}
-                onClose={() => setRuleDetailVsb(false)}
-                data={ruleDetail}
-            />
+    <div className={style.packageRules}>
+      <div className={style.header}>
+        <span
+          className={style.backIcon}
+          onClick={() => history.push(`${getSchemeRouter(
+            orgSid,
+            teamName,
+            repoId,
+            schemeId,
+          )}/check-profiles/${checkProfileId}/pkg/${pkgId}`)
+          }
+        >
+          <ArrowLeft />
+        </span>
+        <div style={{ flex: 1 }}>
+          <h3 className={style.title}>批量添加规则</h3>
         </div>
+      </div>
+
+      <Search
+        filters={{
+          allPkgs,
+          languages,
+        }}
+        searchParams={cloneDeep(searchParams)}
+        loading={loading}
+        callback={(params: any) => {
+          getListData(DEFAULT_PAGER.pageStart, pageSize, params);
+        }}
+      />
+
+      <div className={style.rules}>
+        {!isEmpty(difference(selectedRowKeys, selectedKeys)) && (
+          <div className={style.operation}>
+            <Button type="link" onClick={addRules} style={{ marginRight: 10 }}>
+              批量添加 {difference(selectedRowKeys, selectedKeys).length} 条规则
+            </Button>
+          </div>
+        )}
+        <Table
+          dataSource={list}
+          className={style.ruleTable}
+          rowKey={(item: any) => item.id}
+          rowSelection={{
+            selectedRowKeys,
+            onChange: keys => setSelectedRowKeys(keys),
+            getCheckboxProps: item => ({ disabled: item.select_state === 1 }),
+          }}
+          pagination={{
+            current: Math.floor(pageStart / pageSize) + 1,
+            total: count,
+            pageSize,
+            showSizeChanger: true,
+            showTotal: (total, range) => `${range[0]} - ${range[1]} 条，共 ${total} 条`,
+            onChange: onChangePageSize,
+            onShowSizeChange,
+          }}
+        >
+          <Column
+            title="规则名称"
+            dataIndex="display_name"
+            render={(name, data: any) => (
+              <p
+                className={style.ruleName}
+                onClick={() => {
+                  openRuleDetail(data.id);
+                }}
+              >
+                {name}
+              </p>
+            )}
+          />
+          <Column title="规则概要" dataIndex="rule_title" />
+
+          <Column title="分类" dataIndex="category_name" />
+          <Column title="问题级别" dataIndex="severity_name" />
+        </Table>
+      </div>
+      <RuleDetail
+        visible={ruleDetailVsb}
+        onClose={() => setRuleDetailVsb(false)}
+        data={ruleDetail}
+      />
+    </div>
   );
 };
 

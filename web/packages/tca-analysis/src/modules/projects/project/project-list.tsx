@@ -21,7 +21,7 @@ import SelectDropdown from '../../../components/select-dropdown';
 import QuestionCircle from 'coding-oa-uikit/lib/icon/QuestionCircle';
 
 import { useStateStore } from '@src/context/store';
-import { DEFAULT_PAGER } from '@src/common/constants';
+import { DEFAULT_PAGER } from '@src/constant';
 import { useQuery } from '@src/utils/hooks';
 import { getProjectRouter, getSchemeRouter } from '@src/utils/getRoutePath';
 import { getProjects, delProject } from '@src/services/projects';
@@ -47,7 +47,7 @@ const ProjectList = (props: ProjectListProps) => {
   const { curRepo } = useStateStore();
   const history = useHistory();
   const query = useQuery();
-  const { repoId = curRepo.id, org_sid: orgSid, team_name: teamName } = useParams() as any;
+  const { repoId = curRepo.id, orgSid, teamName } = useParams() as any;
 
   const [list, setList] = useState([]);
   const [pager, setPager] = useState(DEFAULT_PAGER);
@@ -57,14 +57,14 @@ const ProjectList = (props: ProjectListProps) => {
   const [curProjId, setCurProjId] = useState<number>(null);
   const [reload, setReload] = useState<boolean>(false);
 
-    // 判断是否有权限删除分支项目
-    const APP = useSelector((state: any) => state.APP);
-    const isSuperuser = get(APP, 'user.is_superuser', false); // 当前用户是否是超级管理员
-    const userName = get(APP, 'user.username', null);
-    const [admins, setAdmins] = useState<any>([]);
-    const isAdmin = !!find(admins, { username: userName });  // 当前用户是否是代码库管理员
-    const deletable = isAdmin || isSuperuser;  // 删除权限
-    const [deleteVisible, setDeleteVisible] = useState<boolean>(false);
+  // 判断是否有权限删除分支项目
+  const APP = useSelector((state: any) => state.APP);
+  const isSuperuser = get(APP, 'user.is_superuser', false); // 当前用户是否是超级管理员
+  const userName = get(APP, 'user.username', null);
+  const [admins, setAdmins] = useState<any>([]);
+  const isAdmin = !!find(admins, { username: userName });  // 当前用户是否是代码库管理员
+  const deletable = isAdmin || isSuperuser;  // 删除权限
+  const [deleteVisible, setDeleteVisible] = useState<boolean>(false);
 
   const [searchParams, setSearchParams] = useState({
     scan_scheme: query.get('scan_scheme') || '',
@@ -132,15 +132,16 @@ const ProjectList = (props: ProjectListProps) => {
     setCurProjId(id);
     setDeleteVisible(true);
   };
-  
+
   const handleDeleteProject = () => {
     delProject(orgSid, teamName, repoId, curProjId).then(() => {
       message.success('已删除分支项目');
       setReload(!reload);
-    }).finally(() => {
-      setDeleteVisible(false);
-      setCurProjId(null);
-    });
+    })
+      .finally(() => {
+        setDeleteVisible(false);
+        setCurProjId(null);
+      });
   };
 
   return (
@@ -223,7 +224,7 @@ const ProjectList = (props: ProjectListProps) => {
           title="操作"
           dataIndex="id"
           width={240}
-          render={ id => {
+          render={ (id) => {
             const menu = (
               <Menu>
                 <Menu.Item>
@@ -242,7 +243,7 @@ const ProjectList = (props: ProjectListProps) => {
                 </Menu.Item>
                 {deletable && <Menu.Item>
                   <a
-                    style={{color: 'red'}}
+                    style={{ color: 'red' }}
                     onClick={() => onDeleteProject(id)}
                   >
                     删除项目

@@ -20,7 +20,7 @@ import UserIcon from 'coding-oa-uikit/lib/icon/User';
 
 import { getQuery, getProjectMembers } from '@src/utils';
 import Copy from '@src/components/copy';
-import { DEFAULT_PAGER } from '@src/common/constants';
+import { DEFAULT_PAGER } from '@src/constant';
 // import { getProjectRouter } from '@src/utils/getRoutePath';
 import { getIssues, handleIssues, updateIssuesAuthor } from '@src/services/projects';
 import { getLintConfig, getCheckPackages } from '@src/services/schemes';
@@ -457,7 +457,9 @@ const Issues = (props: IssuesProps) => {
         title="批量修改责任人"
         onCancel={() => setUpdateAuthorVsb(false)}
         afterClose={() => form.resetFields()}
-        onOk={() => form.validateFields().then(updateAuthor)}
+        onOk={() => {
+          form.validateFields().then(updateAuthor);
+        }}
       >
         <Form
           form={form}
