@@ -49,6 +49,7 @@ class Language(models.Model):
         DART = 'dart'
         SHELL = 'shell'
         PB = 'protobuf'
+        RUST = "rust"
 
     LANGUAGE_CHOICES = (
         (LanguageEnum.CPP, 'C/C++'),
