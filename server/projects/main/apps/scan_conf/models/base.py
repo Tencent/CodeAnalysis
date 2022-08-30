@@ -49,6 +49,8 @@ class Language(models.Model):
         DART = 'dart'
         SHELL = 'shell'
         PB = 'protobuf'
+        SQL = 'sql'
+        WASM = "wasm"
         RUST = "rust"
 
     LANGUAGE_CHOICES = (
