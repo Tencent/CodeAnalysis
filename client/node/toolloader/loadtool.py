@@ -18,15 +18,24 @@ from tqdm import tqdm
 from node.app import settings
 from node.toolloader.gitload import GitLoader
 from node.toolloader.loadconfig import ConfigLoader, ToolConfig, LoadToolTypes
+from node.toolloader.httploadtool import HttpToolLoader
 from util.envset import EnvSet
 from util.scanlang.callback_queue import CallbackQueue
 from util.pathlib import PathMgr
 from util.logutil import LogPrinter
 from util.scmurlmgr import BaseScmUrlMgr
 from util.subprocc import SubProcController
+from util.textutil import ZIP_EXT
 
 
 class ToolCommonLoader(object):
+    @staticmethod
+    def is_zip_url(tool_url):
+        """判断是否是压缩包地址"""
+        if tool_url.lower().endswith(ZIP_EXT):
+            return True
+        else:
+            return False
     @staticmethod
     def load_tool_type(tool_dirpath, tool_dirname, tool_url=None):
         """
@@ -38,8 +47,10 @@ class ToolCommonLoader(object):
         """
         if settings.USE_LOCAL_TOOL == "True":
             if os.path.exists(tool_dirpath):
-                # LogPrinter.info(f"USE_LOCAL_TOOL=True, use local tool dir: {tool_dirpath}")
+                LogPrinter.info(f"USE_LOCAL_TOOL=True, use local tool dir: {tool_dirpath}")
                 return "Local", None
+            elif tool_url and ToolCommonLoader.is_zip_url(tool_url):
+                return "HTTP", None
             else:
                 return "Git", None
         else:
@@ -54,6 +65,8 @@ class ToolCommonLoader(object):
                         return "Copy", tool_dirpath_copy_from
                     else:  # 拷贝源目录不存在，从git拉取
                         return "Git", None
+            elif tool_url and ToolCommonLoader.is_zip_url(tool_url):
+                return "HTTP", None
             else:
                 return "Git", None
 
@@ -69,6 +82,8 @@ class ToolCommonLoader(object):
         :param print_enable:
         :return:
         """
+        if settings.DEBUG:
+            print_enable = True
         if load_type == "Local":
             if print_enable:
                 LogPrinter.info(f"Use local tool dir: {tool_dirpath}")
@@ -77,6 +92,11 @@ class ToolCommonLoader(object):
             if print_enable:
                 LogPrinter.info(f"Copy from {tool_dirpath_copy_from} to {tool_dirpath}")
             PathMgr().retry_copy(tool_dirpath_copy_from, tool_dirpath)
+            return tool_dirpath
+        elif load_type == "HTTP":
+            if print_enable:
+                LogPrinter.info(f"Load from {git_url} to {tool_dirpath}")
+            HttpToolLoader.download_tool(git_url, tool_dirpath)
             return tool_dirpath
         else:
             if print_enable:

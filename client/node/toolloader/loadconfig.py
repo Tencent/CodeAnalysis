@@ -310,7 +310,8 @@ class ConfigLoader(object):
                                 new_lib_envs = {}
 
                             scm_url = tool_lib.get("scm_url")
-                            lib_dir_name = scm_url.split('/')[-1].strip().replace(".git", "")
+                            # 支持git仓库地址和zip包地址两种格式
+                            lib_dir_name = BaseScmUrlMgr.get_last_dir_name_from_url(scm_url)
                             lib_dir_path = os.path.join(settings.TOOL_BASE_DIR, lib_dir_name)
 
                             # 将环境变量中的$ROOT_DIR替换为实际路径，重新保存到new_lib_envs

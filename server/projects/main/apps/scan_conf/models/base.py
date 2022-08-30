@@ -49,6 +49,9 @@ class Language(models.Model):
         DART = 'dart'
         SHELL = 'shell'
         PB = 'protobuf'
+        SQL = 'sql'
+        WASM = "wasm"
+        RUST = "rust"
 
     LANGUAGE_CHOICES = (
         (LanguageEnum.CPP, 'C/C++'),
@@ -80,6 +83,9 @@ class Language(models.Model):
         (LanguageEnum.DART, "Dart"),
         (LanguageEnum.SHELL, "Shell"),
         (LanguageEnum.PB, "Protocol Buffers"),
+        (LanguageEnum.SQL, "SQL"),
+        (LanguageEnum.WASM, "WebAssembly"),
+        (LanguageEnum.RUST, "Rust"),
     )
 
     name = models.CharField(max_length=32, help_text='程序语言', choices=LANGUAGE_CHOICES, null=True)
