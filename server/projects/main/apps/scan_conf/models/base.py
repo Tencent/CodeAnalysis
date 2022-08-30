@@ -83,6 +83,9 @@ class Language(models.Model):
         (LanguageEnum.DART, "Dart"),
         (LanguageEnum.SHELL, "Shell"),
         (LanguageEnum.PB, "Protocol Buffers"),
+        (LanguageEnum.SQL, "SQL"),
+        (LanguageEnum.WASM, "WebAssembly"),
+        (LanguageEnum.RUST, "Rust"),
     )
 
     name = models.CharField(max_length=32, help_text='程序语言', choices=LANGUAGE_CHOICES, null=True)
