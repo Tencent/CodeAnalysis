@@ -1,6 +1,6 @@
 FROM python:3.7.12-slim
 
-ARG EXTRA_TOOLS="curl wget python3-dev git git-lfs vim-tiny gcc locales subversion telnet procps"
+ARG EXTRA_TOOLS="curl wget python3-dev git git-lfs vim-tiny gcc locales subversion telnet procps openssh-client"
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends $EXTRA_TOOLS \
