@@ -22,6 +22,8 @@ export default defineUserConfig({
     ['meta', { name: 'theme-color', content: '#3eaf7c' }],
   ],
 
+  pagePatterns: ['**/*.md', '!.vuepress', '!node_modules', '!old'],
+
   plugins: [
     searchPlugin({
       // 配置项

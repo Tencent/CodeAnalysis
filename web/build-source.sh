@@ -34,16 +34,16 @@ function default_frontend() {
 # 文档构建资源打包
 function document_frontend() {
   cd ${ROOT_PATH}
-  if [ -d "packages/tca-document" ]; then
-    rm -r packages/tca-document
-  fi
-  cp -r ../doc packages/tca-document
-  rm -r packages/tca-document/old
-  sed -i 's/CodeAnalysis/document/' packages/tca-document/package.json
-  default_frontend 'tca-document'
-  rm -r packages/tca-document
+  cd "../doc"
+  status "开始构建 $1 ..."
+  yarn install && BASE=document yarn build
+  dist=${2:-dist}
+  status "构建完成，开始打包到 tca-deploy-source"
+  cd ${dist}
+  zip -r ${1}.zip * --exclude '*.map' --exclude 'stats.json' --exclude '*.txt'
+  mv ${1}.zip ${BUILD_ZIP_PATH} && cd ${ROOT_PATH}
+  status "打包完成 $1"
 }
-
 
 # 子微前端的构建资源打包
 function sub_microfrontend() {
