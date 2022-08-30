@@ -12,7 +12,6 @@
     "src"
   ],
   "scripts": {
-    "dev:comment": "开发模式，已配置默认环境变量，PLATFORM_ENV=open、ENABLE_MANAGE=false、PUBLIC_PATH=http://127.0.0.1:5056/、PORT=5056",
     "dev": "PLATFORM_ENV=${PLATFORM_ENV:-open} ENABLE_MANAGE=${ENABLE_MANAGE:-false} PUBLIC_PATH=${PUBLIC_PATH:-http://127.0.0.1:5056/} PORT=${PORT:-5056} NODE_ENV=development webpack server --config ./webpack.config.ts --progress --color",
     "build": "NODE_ENV=production webpack --config ./webpack.config.ts --progress --color",
     "analyzer": "webpack-bundle-analyzer --port 8888 ./dist/stats.json",

@@ -24,7 +24,7 @@
     "scanner": "i18next-scanner"
   },
   "dependencies": {
-    "@ant-design/charts": "1.2.14",
+    "@ant-design/charts": "^1.2.14",
     "@tencent/micro-frontend-shared": "^1.0.0",
     "@types/lodash": "^4.14.175",
     "@types/qs": "^6.9.7",
