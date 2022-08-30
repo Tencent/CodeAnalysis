@@ -35,7 +35,8 @@ interface BaseInfoProps {
 
 const BaseInfo = ({ orgSid, data, editable, getDetail }: BaseInfoProps) => {
   const [form] = Form.useForm();
-  const [isEdit, setIsEdit] = useState(false);
+  const [isEdit, setIsEdit] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const statusRef = useRef();
   const { t } = useTranslation();
 
@@ -45,6 +46,7 @@ const BaseInfo = ({ orgSid, data, editable, getDetail }: BaseInfoProps) => {
   }, [isEdit, data.id]);
 
   const onFinish = (formData: any) => {
+    setLoading(true);
     const newFormData = formData;
     if (newFormData.scm_auth_id) {
       const [authType, id] = newFormData?.scm_auth_id?.split('#') ?? [];
@@ -64,7 +66,8 @@ const BaseInfo = ({ orgSid, data, editable, getDetail }: BaseInfoProps) => {
       message.success(t('修改成功'));
       getDetail();
       setIsEdit(false);
-    });
+    })
+      .finally(() => setLoading(false));
   };
 
   const updateStatus = () => {
@@ -194,7 +197,7 @@ const BaseInfo = ({ orgSid, data, editable, getDetail }: BaseInfoProps) => {
                 getComponent(
                   <Input.Group compact>
                     <Form.Item name='scm_type' noStyle>
-                      <Select style={{ width: 70 }} options={REPO_TYPE_OPTIONS} />
+                      <Select style={{ width: '15%' }} options={REPO_TYPE_OPTIONS} />
                     </Form.Item>
                     <Form.Item
                       name='scm_url'
@@ -203,7 +206,7 @@ const BaseInfo = ({ orgSid, data, editable, getDetail }: BaseInfoProps) => {
                         { required: true, message: t('请输入工具仓库地址') },
                       ]}
                     >
-                      <Input style={{ width: 380 }} />
+                      <Input style={{ width: '85%' }} />
                     </Form.Item>
                   </Input.Group>,
                   data.scm_url,
@@ -220,13 +223,10 @@ const BaseInfo = ({ orgSid, data, editable, getDetail }: BaseInfoProps) => {
                 name='scm_auth_id'
                 label={t('凭证')}
                 getAuthList={[
-                  UserAPI.authSSH().get({ limit: 200 })
-                    .then(({ results }: RestfulListAPIParams) => results || []),
-                  UserAPI.authAccount().get({ limit: 200 })
-                    .then(({ results }: RestfulListAPIParams) => results || []),
-                  UserAPI.getOAuthInfos()
-                    .then(({ results }: RestfulListAPIParams) => results || []),
-                  UserAPI.getPlatformStatus().then(r => r || {}),
+                  UserAPI.authSSH().get,
+                  UserAPI.authAccount().get,
+                  UserAPI.getOAuthInfos,
+                  UserAPI.getPlatformStatus,
                 ]}
                 selectStyle={{ width: 360 }}
                 required={isEdit}
@@ -300,11 +300,12 @@ const BaseInfo = ({ orgSid, data, editable, getDetail }: BaseInfoProps) => {
                       type='primary'
                       htmlType='submit'
                       key='edit'
+                      loading={loading}
                     >{t('确认')}</Button>
                     <Button className="ml-12" onClick={() => setIsEdit(false)}>{t('取消')}</Button>
                   </>
                 ) : (
-                  <Button type='primary' onClick={() => {
+                  <Button type='primary' loading={loading} onClick={() => {
                     setIsEdit(true);
                   }}>{t('编辑')}</Button>
                 )

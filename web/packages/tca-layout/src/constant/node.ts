@@ -65,7 +65,6 @@ export const TASK_STATE_CHOICES = {
 
 export const getNodeSearchFields = (tagOptions: any[]): SearchFormField[] => [{
   name: 'name',
-  label: '名称',
   type: 'string',
   formType: 'input',
   placeholder: '节点名称',
@@ -77,7 +76,7 @@ export const getNodeSearchFields = (tagOptions: any[]): SearchFormField[] => [{
   placeholder: '负责人',
 }, {
   name: 'exec_tags',
-  label: '标签',
+  label: '所属标签',
   type: 'string',
   formType: 'select',
   placeholder: '全部',

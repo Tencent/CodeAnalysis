@@ -77,7 +77,12 @@ const NodeTable = ({ tagOptions }: NodeTableProps) => {
         onCancel={() => setNodeTaskVisible(false)}
         nodeId={selectNode?.id}
       />
-      <Search fields={filterFields} searchParams={searchParams} loading={false} />
+      <Search
+        style={{ padding: '1px 0px' }}
+        fields={filterFields}
+        searchParams={searchParams}
+        loading={false}
+      />
       <Table
         pagination={{
           current: currentPage,

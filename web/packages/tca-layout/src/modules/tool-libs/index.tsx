@@ -4,9 +4,10 @@
 
 import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import cn from 'classnames';
 import qs from 'qs';
-import { omitBy, toNumber, isString, find, get } from 'lodash';
+import { omitBy, toNumber, isString, get } from 'lodash';
 import { Table, Button, Tag } from 'coding-oa-uikit';
 import EditIcon from 'coding-oa-uikit/lib/icon/Edit';
 import { useURLSearch, useURLParams } from '@tencent/micro-frontend-shared/hooks';
@@ -15,7 +16,6 @@ import Search from '@tencent/micro-frontend-shared/component/search';
 
 import { NAMESPACE, UserState } from '@src/store/user';
 import { getToolLibs } from '@src/services/tools';
-import { getTeamMember } from '@src/services/team';
 import { DEFAULT_PAGER, LIB_TYPE, LibTypeEnum, LIB_ENV } from '@src/constant';
 import { useStateStore } from '@tencent/micro-frontend-shared/hook-store';
 
@@ -29,7 +29,6 @@ export const ToolLibs = () => {
   const history = useHistory();
   const { orgSid }: any = useParams();
   const { userinfo } = useStateStore<UserState>(NAMESPACE);
-  const [admins, setAdmins] = useState([]);
   const [modalData, setModalData] = useState({
     visible: false,
     libId: null,
@@ -42,15 +41,9 @@ export const ToolLibs = () => {
   const pageSize = toNumber(query.limit) || DEFAULT_PAGER.pageSize;
   const pageStart = toNumber(query.offset) || DEFAULT_PAGER.pageStart;
   const { searchParams } = useURLParams(filterFields);
-  const isAdmin = !!find(admins, { username: userinfo?.username });  // 当前用户是否是管理员
+  const isAdmin = useSelector((state: any) => state.APP)?.isOrgAdminUser ?? false;
   const isSuperuser = userinfo?.is_superuser;  // 是否为超级管理员
   const editable = isAdmin || isSuperuser;  // 编辑权限
-
-  useEffect(() => {
-    getTeamMember(orgSid).then((res: any) => {
-      setAdmins(res.admins || []);
-    });
-  }, [orgSid]);
 
   useEffect(() => {
     getListData();
@@ -88,7 +81,7 @@ export const ToolLibs = () => {
         loading={loading}
         searchParams={searchParams}
         route={false}
-        style={{ paddingLeft: 30, paddingRight: 30 }}
+        style={{ padding: '1px 24px' }}
         fields={TOOLLIB_SEARCH_FIELDS}
         callback={(params: any) => {
           getListData(DEFAULT_PAGER.pageStart, pageSize, params);

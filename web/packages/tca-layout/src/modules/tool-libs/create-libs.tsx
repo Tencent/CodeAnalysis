@@ -187,7 +187,7 @@ const CreateToollibs = (props: CreateToollibsProps) => {
         >
           <Input.Group compact>
             <Form.Item name='scm_type' noStyle>
-              <Select style={{ width: 70 }}>
+              <Select style={{ width: '15%' }}>
                 {REPO_TYPE_OPTIONS.map((item: any, index: number) => (
                   <Option key={index} value={item.value}>
                     {item.label}
@@ -202,7 +202,7 @@ const CreateToollibs = (props: CreateToollibsProps) => {
                 { required: true, message: '依赖仓库地址' },
               ]}
             >
-              <Input style={{ width: 357 }} />
+              <Input style={{ width: '85%' }} />
             </Form.Item>
           </Input.Group>
         </Form.Item>
@@ -219,13 +219,10 @@ const CreateToollibs = (props: CreateToollibsProps) => {
             </span>
           )}
           getAuthList={[
-            UserAPI.authSSH().get({ limit: 200 })
-              .then(({ results }: RestfulListAPIParams) => results || []),
-            UserAPI.authAccount().get({ limit: 200 })
-              .then(({ results }: RestfulListAPIParams) => results || []),
-            UserAPI.getOAuthInfos()
-              .then(({ results }: RestfulListAPIParams) => results || []),
-            UserAPI.getPlatformStatus().then(r => r || {}),
+            UserAPI.authSSH().get,
+            UserAPI.authAccount().get,
+            UserAPI.getOAuthInfos,
+            UserAPI.getPlatformStatus,
           ]}
           initAuth={detail.scm_auth}
           selectStyle={{ width: 360 }}

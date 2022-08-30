@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import qs from 'qs';
 import cn from 'classnames';
 import { get } from 'lodash';
 import { Typography, Tooltip, Tag, Button } from 'coding-oa-uikit';
@@ -11,8 +10,10 @@ import GroupIcon from 'coding-oa-uikit/lib/icon/Group';
 import ClockIcon from 'coding-oa-uikit/lib/icon/Clock';
 import Search from '@tencent/micro-frontend-shared/component/search';
 import { formatDateTime } from '@tencent/micro-frontend-shared/util';
-import { useURLSearch, useURLParams } from '@tencent/micro-frontend-shared/hooks';
+import { useURLParams } from '@tencent/micro-frontend-shared/hooks';
+import { useStateStore } from '@tencent/micro-frontend-shared/hook-store';
 // 项目内
+import { NAMESPACE, UserState } from '@src/store/user';
 import { TOOL_STATUS_CHOICES, ToolStatusEnum, DEFAULT_PAGER } from '@src/constant';
 import { getToolsRouter } from '@src/utils/getRoutePath';
 import { getTools } from '@src/services/tools';
@@ -24,10 +25,12 @@ const DEFAULT_SIZE = 50;
 
 const Tools = () => {
   const history = useHistory();
-  const query = useURLSearch();
   const { t } = useTranslation();
   const { orgSid }: any = useParams();
-  const isOrgAdminUser = useSelector((state: any) => state.APP)?.isOrgAdminUser ?? false;
+  const { userinfo } = useStateStore<UserState>(NAMESPACE);
+  const isAdmin = useSelector((state: any) => state.APP)?.isOrgAdminUser ?? false;
+  const isSuperuser = userinfo.is_superuser;  // 是否为超级管理员
+  const editable = isAdmin || isSuperuser;  // 创建工具权限
 
   const [visible, setVisible] = useState(false);
   const [data, setData] = useState<any>([]);
@@ -37,7 +40,7 @@ const Tools = () => {
   const { searchParams } = useURLParams(filterFields);
 
   useEffect(() => {
-    getData(DEFAULT_PAGER.pageStart, query);
+    getData(DEFAULT_PAGER.pageStart, searchParams);
   }, [orgSid]);
 
   const getData = (pageStart: number, params: any, isMore = false) => {
@@ -47,7 +50,6 @@ const Tools = () => {
       limit: pageSize,
       ...params,
     }).then(({ results, count }: any) => {
-      history.push(`${location.pathname}?${qs.stringify(params)}`);
       const list = results || [];
       setData(isMore ? [...data, ...list] : list);
       setPager({
@@ -63,7 +65,7 @@ const Tools = () => {
     // 滚动条触底加载更多数据
     if (e.target.scrollTop + e.target.clientHeight === e.target.scrollHeight) {
       if (data.length !== count) {
-        getData(pageStart + DEFAULT_SIZE, query, true);
+        getData(pageStart + DEFAULT_SIZE, searchParams, true);
       }
     }
   };
@@ -75,13 +77,13 @@ const Tools = () => {
         <p className={style.desc}>{t(`共 ${count} 个工具，包含公开工具 + 团队可用工具，团队成员可使用工具规则，仅团队管理员能添加工具和规则`)}</p>
       </div>
       <Search style={{ paddingLeft: 30, paddingRight: 30 }} fields={TOOL_SEARCH_FIELDS} extraContent={
-        isOrgAdminUser && (
+        editable && (
           <Button type='primary' onClick={() => {
             setVisible(true);
           }}>{t('创建工具')}</Button>
         )
       }
-        loading={loading} searchParams={searchParams} route={false} callback={(params: any) => {
+        loading={loading} searchParams={searchParams} callback={(params: any) => {
           getData(DEFAULT_PAGER.pageStart, params);
         }} />
       <div

@@ -109,6 +109,7 @@ const Team = () => {
   const onCreateFinish = () => {
     setPager(DEFAULT_TEAM_PAGER);
     getTeamList(false, DEFAULT_TEAM_PAGER.pageStart, INIT_LOAD_SIZE, {});
+    setVisible(false);
   };
 
   return (

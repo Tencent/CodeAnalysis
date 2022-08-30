@@ -12,11 +12,19 @@ import { AUTH_TYPE, AUTH_TYPE_TXT, SCM_MAP, SCM_PLATFORM_CHOICES } from './const
 import { FormInstance } from 'rc-field-form';
 const { Option, OptGroup } = Select;
 
+export interface RestfulListAPIParams {
+  results: any[];
+  count: number;
+  next: string;
+  previous: string
+}
+
 interface AuthorityProps {
   name: string; // 对应表单 name
   form: FormInstance; // form 对象
   label: string | React.ReactNode; // FormItem label
-  getAuthList: Array<Promise<any>>;
+  /* 接口顺序：获取ssh凭证，获取用户名密码凭证，获取各平台OAuth授权状态，获取各平台OAuth应用配置状态 **/
+  getAuthList: Array<(param?: any) => Promise<any>>;
   initAuth?: any;
   selectStyle?: any;
   placeholder?: string;
@@ -55,7 +63,15 @@ const Authority = (props: AuthorityProps) => {
 
   const getAuth = () => {
     setAuthLoading(true);
-    Promise.all(getAuthList).then((result: any) => {
+    Promise.all([
+      getAuthList[0]({ limit: 200 })
+        .then(({ results }: RestfulListAPIParams) => results || []),
+      getAuthList[1]({ limit: 200 })
+        .then(({ results }: RestfulListAPIParams) => results || []),
+      getAuthList[2]()
+        .then(({ results }: RestfulListAPIParams) => results || []),
+      getAuthList[3]().then(r => r || {}),
+    ]).then((result: any) => {
       const activeOauth = filter(
         result[2].map((item: any) => ({
           ...item,
@@ -134,7 +150,7 @@ const Authority = (props: AuthorityProps) => {
       </Form.Item>
       <div style={{
         position: 'absolute',
-        top: 5,
+        top: 0,
         right: 10,
       }}>
         <Tooltip title='新增凭证' placement='top' getPopupContainer={() => document.body}>

@@ -4,13 +4,12 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams, useHistory } from 'react-router-dom';
-import { find } from 'lodash';
+import { useSelector } from 'react-redux';
 import { Tabs } from 'coding-oa-uikit';
 import ArrowLeft from 'coding-oa-uikit/lib/icon/ArrowLeft';
 
 import { getToolsRouter } from '@src/utils/getRoutePath';
 import { getToolDetail } from '@src/services/tools';
-import { getTeamMember } from '@src/services/team';
 import { useStateStore } from '@tencent/micro-frontend-shared/hook-store';
 import { NAMESPACE, UserState } from '@src/store/user';
 import { isEnableManage } from '@plat/util';
@@ -30,18 +29,11 @@ const ToolDetail = () => {
   const { userinfo } = useStateStore<UserState>(NAMESPACE);
   const { orgSid, toolId, tab }: any = useParams();
   const [detail, setDetail] = useState<any>({});
-  const [admins, setAdmins] = useState([]);
-  const isAdmin = !!find(admins, { username: userinfo.username });  // 当前用户是否是管理员
+  const isAdmin = useSelector((state: any) => state.APP)?.isOrgAdminUser ?? false;
   const isCustom = orgSid === detail?.org_detail?.org_sid;   // 当前工具为自定义工具
   const isSuperuser = userinfo.is_superuser;  // 是否为超级管理员
   const isManage = /^\/manage/.test(window.location.pathname);  // 管理页面
   const editable = (isCustom && isAdmin) || isSuperuser || isEnableManage();  // 编辑权限
-
-  useEffect(() => {
-    getTeamMember(orgSid).then(({ admins }: any) => {
-      setAdmins(admins || []);
-    });
-  }, [orgSid]);
 
   useEffect(() => {
     getDetail();

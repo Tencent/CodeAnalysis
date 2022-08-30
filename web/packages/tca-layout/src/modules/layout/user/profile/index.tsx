@@ -33,15 +33,15 @@ const Profile = () => {
   };
 
   const onFinish = (values: any) => {
-    const params = {
-      ...userinfo,
-      ...pick(values, ['nickname', 'tel_number']),
-    };
-    UserAPI.putLoginUserInfo(params).then((res) => {
+    const params = pick(values, ['nickname', 'tel_number']);
+    UserAPI.putUserInfo(params).then(() => {
       message.success('用户信息已更新');
       dispatch({
         type: SET_USERINFO,
-        payload: res,
+        payload: {
+          ...userinfo,
+          ...params,
+        },
       });
       onReset();
     });

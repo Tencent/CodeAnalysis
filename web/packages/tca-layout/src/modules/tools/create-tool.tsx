@@ -93,7 +93,7 @@ const CreateToolModal = ({ orgId, visible, onClose }: CreateToolModalProps) => {
         >
           <Input.Group compact>
             <Form.Item name='scm_type' noStyle>
-              <Select style={{ width: 70 }} options={REPO_TYPE_OPTIONS} />
+              <Select style={{ width: '15%' }} options={REPO_TYPE_OPTIONS} />
             </Form.Item>
             <Form.Item
               name='scm_url'
@@ -102,7 +102,7 @@ const CreateToolModal = ({ orgId, visible, onClose }: CreateToolModalProps) => {
                 { required: true, message: t('请输入工具仓库地址') },
               ]}
             >
-              <Input style={{ width: 357 }} />
+              <Input style={{ width: '85%' }} />
             </Form.Item>
           </Input.Group>
         </Form.Item>
@@ -111,13 +111,10 @@ const CreateToolModal = ({ orgId, visible, onClose }: CreateToolModalProps) => {
           name='scm_auth_id'
           label={t('凭证')}
           getAuthList={[
-            UserAPI.authSSH().get({ limit: 200 })
-              .then(({ results }: RestfulListAPIParams) => results || []),
-            UserAPI.authAccount().get({ limit: 200 })
-              .then(({ results }: RestfulListAPIParams) => results || []),
-            UserAPI.getOAuthInfos()
-              .then(({ results }: RestfulListAPIParams) => results || []),
-            UserAPI.getPlatformStatus().then(r => r || {}),
+            UserAPI.authSSH().get,
+            UserAPI.authAccount().get,
+            UserAPI.getOAuthInfos,
+            UserAPI.getPlatformStatus,
           ]}
           selectStyle={{ width: 360 }}
           required
