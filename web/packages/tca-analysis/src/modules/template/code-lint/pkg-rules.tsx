@@ -304,7 +304,7 @@ const PkgRules = () => {
           <Column
             title="规则名称"
             width="12%"
-            dataIndex={['checkrule', 'display_name']}
+            dataIndex={['checkrule', 'real_name']}
             render={(name, data: any) => (
               <p
                 className={style.ruleName}
@@ -324,6 +324,7 @@ const PkgRules = () => {
             width="36%"
             dataIndex={['checkrule', 'rule_title']}
           />
+          <Column title="所属工具" dataIndex={['checktool', 'display_name']} />
           <Column
             title="规则参数"
             dataIndex={['checkrule', 'rule_params']}

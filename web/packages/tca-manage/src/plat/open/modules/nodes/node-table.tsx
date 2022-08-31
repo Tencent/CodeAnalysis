@@ -8,11 +8,12 @@ import Table from '@tencent/micro-frontend-shared/tdesign-component/table';
 import { useURLParams, useFetch } from '@tencent/micro-frontend-shared/hooks';
 import { formatDateTime } from '@tencent/micro-frontend-shared/util/time';
 import NodeStatus from '@tencent/micro-frontend-shared/tdesign-component/node-status';
-import NodeTag from '@src/modules/components/node-tag';
 
 // 项目内
 import OrgInfo from '../components/org-info';
 import { nodeAPI } from '@src/services/nodes';
+import NodeTag from '@src/modules/components/node-tag';
+import NodeTaskModal from '@src/modules/nodes/node-tasks-modal';
 import { userAPI } from '../../api';
 
 // 模块内
@@ -20,7 +21,6 @@ import { getNodeSearchFields } from './constants';
 import NodeModal from './node-modal';
 import MultiNodeModal from './multi-edit-node-modal';
 import MultiProcessModal from './multi-edit-process-modal';
-import NodeTaskModal from './node-tasks-modal';
 
 interface NodeTableProps {
   tagOptions: any[]

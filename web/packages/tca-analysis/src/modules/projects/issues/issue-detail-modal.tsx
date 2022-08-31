@@ -1,28 +1,25 @@
-// Copyright (c) 2021-2022 THL A29 Limited
-//
-// This source code file is made available under MIT License
-// See LICENSE for details
-// ==============================================================================
-
 /**
  * issue 弹框
  */
 
 import React, { useState, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
 import cn from 'classnames';
 import AutoSizer from 'react-virtualized-auto-sizer';
-import Highlight from 'react-highlight';
 import { VariableSizeList as List } from 'react-window';
-import { isEmpty, get } from 'lodash';
-import { Modal, Button, Tooltip } from 'coding-oa-uikit';
-import InfoCircle from 'coding-oa-uikit/lib/icon/InfoCircle';
-import LinkIcon from 'coding-oa-uikit/lib/icon/Link';
+import ReactMarkdown from 'react-markdown';
+import { isEmpty, findIndex, cloneDeep } from 'lodash';
+import { Modal, Button, Tooltip, Divider } from 'coding-oa-uikit';
+import CaretRight from 'coding-oa-uikit/lib/icon/CaretRight';
+import CaretDown from 'coding-oa-uikit/lib/icon/CaretDown';
+import AngleDown from 'coding-oa-uikit/lib/icon/AngleDown';
+import AngleUp from 'coding-oa-uikit/lib/icon/AngleUp';
 
+import Highlight from '@src/components/react-highlight';
+import Copy from '@src/components/copy';
 import Loading from '@src/components/loading';
 import { getIssueDetail, getCodeFile } from '@src/services/projects';
 import { getRuleDetail } from '@src/services/schemes';
-
+// import { getRuleDetailByName } from '@src/services/schemes';
 import { Operation } from './issue-popover';
 import style from './style.scss';
 
@@ -30,12 +27,11 @@ import style from './style.scss';
 const CODE_MAX_CHAR_LENGTH = 1000;
 
 interface IssueModalProps {
-  curSchemeId: number;
   params: any;
   visible: boolean;
   issueId: number | null;
-  isFirstIssue: boolean;
-  isLastIssue: boolean;
+  issuesData: any;
+  listLoading: boolean; // 列表数据加载状态
   prevIssue: () => void;
   nextIssue: () => void;
   onClose: () => void;
@@ -45,11 +41,10 @@ interface IssueModalProps {
 const IssueModal = (props: IssueModalProps) => {
   const {
     params,
-    curSchemeId,
     issueId,
     visible,
-    isFirstIssue,
-    isLastIssue,
+    issuesData,
+    listLoading,
     prevIssue,
     nextIssue,
     onClose,
@@ -62,23 +57,31 @@ const IssueModal = (props: IssueModalProps) => {
   const [detail, setDetail] = useState<any>({});
   const [loading, setLoading] = useState(false);
   const [codeFile, setCode] = useState<any>({});
+  const [isFirstIssue, setIsFirstIssue] = useState(false);
+  const [isLastIssue, setIsLastIssue] = useState(false);
   const [status, setStatus] = useState({
-    severityPopVsb: false,
-    authorPopVsb: false,
-    issuePopVsb: false,
-    rulePopVsb: false,
-    issueLinePopVsb: false,
+    severityPopVsb: false, // 修改严重级别 popover
+    authorPopVsb: false, // 修改责任人 popover
+    issuePopVsb: false, // 处理问题 popover
+    issueLinePopVsb: false, // 查看问题行 popover
+    historyPopVsb: false, // 操作记录 popover
   });
-  const [ruleDetail, setRuleDetail] = useState({});
-
+  const [expanded, setExpanded] = useState<any>([]); // 标记问题行规则是否展开
+  const [ruleDetail, setRuleDetail] = useState<any>({});
+  const { list, next, previous } = issuesData;
   const issueLines = detail.issue_details?.map((item: any) => item.line) ?? [];
+  const loadingStatus = loading || listLoading;
 
   useEffect(() => {
+    // 重置数据
+    setExpanded([]);
+    setRuleDetail({});
+
     if (visible && issueId) {
       getIssueDetail(orgSid, teamName, repoId, projectId, issueId).then((res) => {
         const params: any = {
           path: res.file_path,
-          revision: get(res, 'issue_details[0].scan_revision'),
+          revision: res?.issue_details[0]?.scan_revision,
         };
         if (res.is_external) {
           // 外部代码库需要传url
@@ -88,23 +91,60 @@ const IssueModal = (props: IssueModalProps) => {
         setDetail(res);
         setLoading(true);
         getCodeFile(orgSid, teamName, repoId, projectId, params)
-          .then((file) => {
-            setCode(file);
+          .then((response) => {
+            setCode(response);
           })
           .finally(() => {
             setLoading(false);
-            scrollToItem(res?.issue_details[0].line);
+            scrollToItem(res?.issue_details[0]?.line);
           });
+
+        getRuleDetailInfo(res);
       });
     }
   }, [visible, issueId]);
 
+  useEffect(() => {
+    if (visible) {
+      getIssueBoundary();
+    }
+  }, [visible, issueId, issuesData]);
+
+  useEffect(() => {
+    // 重置数据， 防止在【上/下一个问题】列表需要翻页时出现脏数据展示
+    if (listLoading) {
+      setCode({});
+      setDetail({});
+    }
+  }, [listLoading]);
+
+  // 判断当前 Issue 是否为第一个/最后一个问题
+  const getIssueBoundary = () => {
+    const index = findIndex(list, { id: issueId });
+    // 如果路由中存在issueId，则index可能为-1，也视作第一个问题
+    if (index <= 0 && !previous) {
+      // 第一个问题
+      setIsFirstIssue(true);
+    } else if (isFirstIssue) {
+      setIsFirstIssue(false);
+    }
+
+    if (index === list.length - 1 && !next) {
+      // 最后一个问题
+      setIsLastIssue(true);
+    } else if (isLastIssue) {
+      setIsLastIssue(false);
+    }
+  };
+
   const scrollToItem = (line: number) => {
-    listRef.current?.scrollToItem(line, 'center');
+    if (line && listRef.current && listRef.current.scrollToItem) {
+      listRef.current.scrollToItem(line, 'center');
+    }
   };
 
   const getRowHeight = (index: number) => {
-    const lineMinHeight = 30;
+    const lineMinHeight = 26;
     return rowHeights.current[index] || lineMinHeight;
   };
 
@@ -114,9 +154,11 @@ const IssueModal = (props: IssueModalProps) => {
   };
 
   const rowRenderer = ({ index, style: rowStyle }: any) => {
-    const { lineNum: line, content = '' } = codeFile?.codeContents[index] || {};
+    const { lineNum: line, content } = codeFile?.codeContents[index] ?? {};
     const rowRef: any = useRef({});
     const language =      detail.language ?? codeFile.suffix?.split('.')[1] ?? 'plaintext';
+    const issueIndex = issueLines.indexOf(line);
+    const fileError = line === 1 && issueLines[0] === 0; // 文件级警告
 
     useEffect(() => {
       if (rowRef.current) {
@@ -133,33 +175,84 @@ const IssueModal = (props: IssueModalProps) => {
           className={cn(style.codeContent, {
             [style[`status-${detail.severity}`]]:
               (line === 1 && issueLines[0] === 0) || issueLines.includes(line),
+            [style.fileError]: line === 1 && issueLines[0] === 0,
           })}
         >
           {// 本行有问题 || 问题行为0，即文件问题显示在第一行之前
-          ((line === 1 && issueLines[0] === 0)
-            || issueLines.includes(line)) && (
+          (fileError || issueLines.includes(line)) && (
             <div className={style.ruleWrapper}>
-              <div>
-                <InfoCircle />
-                &nbsp; 【{detail.checkrule_real_name}】规则描述：
-                {detail.checkrule_rule_title}
-                {false && (
-                  <Button
-                    type="link"
-                    className={style.ruleDetail}
-                    onClick={() => getRuleDetailInfo()}
-                  >
-                    查看规则
-                  </Button>
-                )}
+              <div
+                className={style.rule}
+                onClick={() => {
+                  if (issueIndex > -1) {
+                    const list = cloneDeep(expanded);
+                    list[issueIndex] = !expanded[issueIndex];
+                    setExpanded(list);
+                  }
+                }}
+              >
+                <span className={style.ruleContent}>
+                  {expanded[issueIndex] || fileError ? (
+                    <CaretDown />
+                  ) : (
+                    <CaretRight />
+                  )}
+                  【{detail.checkrule_real_name}】规则描述：
+                  {ruleDetail.rule_title}
+                </span>
+                <span>
+                  {issueIndex !== 0 && !fileError && (
+                    <Tooltip
+                      title="上一处问题"
+                      getPopupContainer={() => document.body}
+                    >
+                      <Button
+                        type="link"
+                        icon={<AngleUp />}
+                        onClick={(e: any) => {
+                          e.stopPropagation();
+                          if (issueIndex > -1) {
+                            scrollToItem(issueLines[issueIndex - 1]);
+                          }
+                        }}
+                      />
+                    </Tooltip>
+                  )}
+                  {issueIndex !== issueLines.length - 1 && !fileError && (
+                    <Tooltip
+                      title="下一处问题"
+                      getPopupContainer={() => document.body}
+                    >
+                      <Button
+                        type="link"
+                        icon={<AngleDown />}
+                        onClick={(e: any) => {
+                          e.stopPropagation();
+                          if (issueIndex > -1) {
+                            scrollToItem(issueLines[issueIndex + 1]);
+                          }
+                        }}
+                      />
+                    </Tooltip>
+                  )}
+                </span>
               </div>
-              <div className={style.ruleDesc}>{detail.msg}</div>
+              <div className={style.issueMsg}>错误原因：{detail.msg}</div>
+              {(expanded[issueIndex] || fileError)
+                && ruleDetail.checkruledesc?.desc && (
+                  <div className={style.ruleDesc}>
+                    <h4>规则详细说明</h4>
+                    <ReactMarkdown>
+                      {ruleDetail.checkruledesc?.desc}
+                    </ReactMarkdown>
+                  </div>
+              )}
             </div>
           )}
           <Highlight className={language}>
             {content.length > CODE_MAX_CHAR_LENGTH
               ? `${content.substring(0, CODE_MAX_CHAR_LENGTH)}...`
-              : content}
+              : content}&nbsp;
           </Highlight>
         </div>
       </div>
@@ -178,15 +271,9 @@ const IssueModal = (props: IssueModalProps) => {
     setStatus(obj);
   };
 
-  const getRuleDetailInfo = () => {
+  const getRuleDetailInfo = (issueDetail: any) => {
     if (isEmpty(ruleDetail)) {
-      getRuleDetail(
-        orgSid,
-        teamName,
-        repoId,
-        curSchemeId,
-        detail.checkrule_gid,
-      ).then((res: any) => {
+      getRuleDetail(orgSid, teamName, repoId, projectId, issueDetail.checkrule_gid).then((res: any) => {
         setRuleDetail(res);
       });
     }
@@ -210,16 +297,17 @@ const IssueModal = (props: IssueModalProps) => {
       centered
       title={
         <div className={style.modalTitle}>
-          <p>{detail.file_path?.split('/').pop()}</p>
-          <Tooltip title="点击跳转新窗口打开详情页">
-            <Link
-              className={style.link}
-              target="_blank"
-              to={`${location.pathname}/${issueId}`}
-            >
-              <LinkIcon />
-            </Link>
-          </Tooltip>
+          <p>
+            {detail.file_path?.split('/').pop()}
+            <span className={style.modalDesc}>
+              文件路径：{detail.file_path}
+            </span>
+            <Copy text={detail.file_path} className={style.copyIcon} />
+          </p>
+          {/* todo: 全屏查看issue */}
+          {/* <Tooltip title='点击跳转新窗口打开详情页'>
+             <Link className={style.link} target='_blank' to={`${location.pathname}/${issueId}`}><LinkIcon /></Link>
+           </Tooltip> */}
         </div>
       }
       width={1000}
@@ -231,8 +319,6 @@ const IssueModal = (props: IssueModalProps) => {
     >
       <link
         rel="stylesheet"
-        // href={`https://highlightjs.org/static/demo/styles/monokai-sublime.css`}
-        // href={`https://highlightjs.org/static/demo/styles/stackoverflow-light.css`}
         href={'https://highlightjs.org/static/demo/styles/github.css'}
       />
       <div className={style.wrapper}>
@@ -253,9 +339,8 @@ const IssueModal = (props: IssueModalProps) => {
           }}
         />
         <div className={style.codeWrapper}>
-          {loading ? (
-            <Loading />
-          ) : (
+          {loadingStatus && <Loading className={style.loading} />}
+          {!loadingStatus && codeFile.codeContents && (
             <AutoSizer>
               {({ height, width }: any) => (
                 <List
@@ -269,6 +354,34 @@ const IssueModal = (props: IssueModalProps) => {
                 </List>
               )}
             </AutoSizer>
+          )}
+          {!loadingStatus && codeFile.code === -1 && codeFile.cd_error && (
+            <div className={style.codeError}>
+              <h4>问题所在行</h4>
+              {issueLines?.map((line: number) => (
+                <a
+                  key={line}
+                  style={{ display: 'inline-block', minWidth: '88px' }}
+                >
+                  第 {line} 行
+                </a>
+              ))}
+              <Divider />
+              <h4>错误原因</h4>
+              <p>{detail.msg}</p>
+              <Divider />
+              <p>
+                代码拉取失败，
+                <span className={style.errorDesc}>{codeFile.cd_error}</span>
+              </p>
+              <p>处理建议</p>
+              <p>1. 代码库帐号密码问题。 </p>
+              <p>2. 文件格式无法展示 —— 不支持展示.jar等二进制文件。 </p>
+              <p>
+                3. 代码文件不存在 ——
+                可能为本地分析中间代码，请在本地环境下查看代码或者联系管理员定位问题。{' '}
+              </p>
+            </div>
           )}
         </div>
       </div>
