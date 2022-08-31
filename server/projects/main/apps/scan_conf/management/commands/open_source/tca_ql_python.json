@@ -15,7 +15,58 @@
         "run_cmd": "",
         "envs": null,
         "build_flag": false,
-        "checkrule_set": [
+        "checkrule_set":  [
+            {
+                "real_name": "bottle_rce",
+                "display_name": "BottleRce",
+                "severity": "fatal",
+                "category": "security",
+                "rule_title": "Bottle框架的远程命令执行漏洞检查",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "python"
+                ],
+                "solution": "修复建议：\n\n尽量少用执行命令的函数.\n净化用户可控数据, 过滤或者转义.",
+                "owner": "",
+                "labels": [],
+                "description": "如果程序根据用户输入的参数动态生成系统命令并执行，黑客可通过传入恶意参数值注入自己定义的命令，从而控制服务器\n\nhttps://blog.csdn.net/sdb5858874/article/details/80788934\nhttps://www.cnblogs.com/Fluorescence-tjy/p/5889251.html\n修复建议：\n\n尽量少用执行命令的函数.\n净化用户可控数据, 过滤或者转义.",
+                "disable": false
+            },
+            {
+                "real_name": "bottle_sqli",
+                "display_name": "BottleSqlInject",
+                "severity": "fatal",
+                "category": "security",
+                "rule_title": "Bottle框架的sql注入检查",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "python"
+                ],
+                "solution": "SQL查询语句使用标准化的数据库API接口, 设定语句的参数进行过滤一些非法的字符, 防止用户输入恶意的字符传入到数据库中执行SQL语句\\n2. 对用户提交的的参数安全过滤, 像一些特殊的字符[,()*&%#] 进行字符转义操作, 以及编码的安全转换\\n3. 网站的代码层编码尽量统一, 建议使用utf8编码, 如果代码里的编码都不一样, 会导致一些过滤被直接绕过\\n",
+                "owner": "",
+                "labels": [],
+                "description": "如果程序根据用户输入参数动态生成SQL语句并执行，那么攻击者可以拼接SQL语句，使数据库执行任意需要执行的指令从而实现数据窃取或者入侵破坏\\n\\nhttps://www.cnblogs.com/Eleven-Liu/p/9712576.html\\n修复建议：\\n1. SQL查询语句使用标准化的数据库API接口, 设定语句的参数进行过滤一些非法的字符, 防止用户输入恶意的字符传入到数据库中执行SQL语句\\n2. 对用户提交的的参数安全过滤, 像一些特殊的字符[,()*&%#] 进行字符转义操作, 以及编码的安全转换\\n3. 网站的代码层编码尽量统一, 建议使用utf8编码, 如果代码里的编码都不一样, 会导致一些过滤被直接绕过\\n",
+                "disable": false
+            },
+            {
+                "real_name": "bottle_xss",
+                "display_name": "BottleXss",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "Bottle框架的xss漏洞检查",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "python"
+                ],
+                "solution": "https://www.cnblogs.com/Hydraxx/p/8530906.html\n修复建议：\n在输出所有用户可控的数据时, 对数据做转义或者编码",
+                "owner": "",
+                "labels": [],
+                "description": "跨站脚本攻击（Cross-site scripting，XSS）是一种安全漏洞，攻击者可以利用这种漏洞在网站上注入恶意的客户端代码。当被攻击者登陆网站时就会自动运行这些恶意代码，从而，攻击者可以突破网站的访问权限，冒充受害者。",
+                "disable": false
+            },
             {
                 "real_name": "cmd",
                 "display_name": "命令行注入",
@@ -99,6 +150,74 @@
                 "owner": "",
                 "labels": [],
                 "description": "反序列化漏洞",
+                "disable": false
+            },
+            {
+                "real_name": "django_json_xss",
+                "display_name": "DjangoJsonXSS",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "Django框架返回Json数据时可能产生XSS漏洞",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "python"
+                ],
+                "solution": "https://www.cnblogs.com/Hydraxx/p/8530906.html\n修复建议：\n在输出所有用户可控的数据时, 对数据做转义或者编码",
+                "owner": "",
+                "labels": [],
+                "description": "跨站脚本攻击（Cross-site scripting，XSS）是一种安全漏洞，攻击者可以利用这种漏洞在网站上注入恶意的客户端代码。当被攻击者登陆网站时就会自动运行这些恶意代码，从而，攻击者可以突破网站的访问权限，冒充受害者。",
+                "disable": false
+            },
+            {
+                "real_name": "django_rce",
+                "display_name": "DjangoRCE",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "Django框架下的远程代码执行漏洞检查",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "python"
+                ],
+                "solution": "修复建议：\n\n尽量少用执行命令的函数.\n净化用户可控数据, 过滤或者转义.",
+                "owner": "",
+                "labels": [],
+                "description": "如果程序根据用户输入的参数动态生成系统命令并执行，黑客可通过传入恶意参数值注入自己定义的命令，从而控制服务器\n\nhttps://blog.csdn.net/sdb5858874/article/details/80788934\nhttps://www.cnblogs.com/Fluorescence-tjy/p/5889251.html\n修复建议：\n\n尽量少用执行命令的函数.\n净化用户可控数据, 过滤或者转义.",
+                "disable": false
+            },
+            {
+                "real_name": "django_sqli",
+                "display_name": "DjangoSqli",
+                "severity": "fatal",
+                "category": "security",
+                "rule_title": "Django框架下的sql注入漏洞检查",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "python"
+                ],
+                "solution": "SQL查询语句使用标准化的数据库API接口, 设定语句的参数进行过滤一些非法的字符, 防止用户输入恶意的字符传入到数据库中执行SQL语句\\n2. 对用户提交的的参数安全过滤, 像一些特殊的字符[,()*&%#] 进行字符转义操作, 以及编码的安全转换\\n3. 网站的代码层编码尽量统一, 建议使用utf8编码, 如果代码里的编码都不一样, 会导致一些过滤被直接绕过\\n",
+                "owner": "",
+                "labels": [],
+                "description": "如果程序根据用户输入参数动态生成SQL语句并执行，那么攻击者可以拼接SQL语句，使数据库执行任意需要执行的指令从而实现数据窃取或者入侵破坏\nhttps://www.cnblogs.com/Eleven-Liu/p/9712576.html\n修复建议：\n1. SQL查询语句使用标准化的数据库API接口, 设定语句的参数进行过滤一些非法的字符, 防止用户输入恶意的字符传入到数据库中执行SQL语句\n2. 对用户提交的的参数安全过滤, 像一些特殊的字符[,()*&%#] 进行字符转义操作, 以及编码的安全转换\n3. 网站的代码层编码尽量统一, 建议使用utf8编码, 如果代码里的编码都不一样, 会导致一些过滤被直接绕过\\n",
+                "disable": false
+            },
+            {
+                "real_name": "django_xss",
+                "display_name": "DjangoXss",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "Django框架下的Xss漏洞检查",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "python"
+                ],
+                "solution": "修复建议：\n在输出所有用户可控的数据时, 对数据做转义或者编码",
+                "owner": "",
+                "labels": [],
+                "description": "跨站脚本攻击（Cross-site scripting，XSS）是一种安全漏洞，攻击者可以利用这种漏洞在网站上注入恶意的客户端代码。当被攻击者登陆网站时就会自动运行这些恶意代码，从而，攻击者可以突破网站的访问权限，冒充受害者。",
                 "disable": false
             },
             {
@@ -204,6 +323,23 @@
                 "disable": true
             },
             {
+                "real_name": "resource_leak",
+                "display_name": "ResourceLeak",
+                "severity": "error",
+                "category": "correctness",
+                "rule_title": "资源泄漏",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "python"
+                ],
+                "solution": "关闭文件或使用with语句",
+                "owner": "",
+                "labels": [],
+                "description": "resource_leak 在程序申请了资源但并未按时释放时上报错误\n目前场景包括：句柄打开时未关闭，指针分配内存后没有及时释放\n\n##### 代码示例\n以下将提供一个或多个resource_leak案例\n\n```\n\ndef test():\n    f = open(\"a.txt\", 'r')  # defect：file f leak, better use with open\n    lines = f.readlines()\n\n```",
+                "disable": false
+            },
+            {
                 "real_name": "sql",
                 "display_name": "sql注入",
                 "severity": "fatal",
@@ -305,40 +441,6 @@
                 "owner": "",
                 "labels": [],
                 "description": "跨站脚本攻击（Cross-site scripting，XSS）是一种安全漏洞，攻击者可以利用这种漏洞在网站上注入恶意的客户端代码。当被攻击者登陆网站时就会自动运行这些恶意代码，从而，攻击者可以突破网站的访问权限，冒充受害者。",
-                "disable": false
-            },
-            {
-                "real_name": "django_xss",
-                "display_name": "Django_XSS",
-                "severity": "error",
-                "category": "security",
-                "rule_title": "跨站脚本攻击",
-                "rule_params": null,
-                "custom": false,
-                "languages": [
-                    "python"
-                ],
-                "solution": "",
-                "owner": "",
-                "labels": [],
-                "description": "跨站脚本攻击（Cross-site scripting，XSS）是一种安全漏洞，攻击者可以利用这种漏洞在网站上注入恶意的客户端代码。当被攻击者登陆网站时就会自动运行这些恶意代码，从而，攻击者可以突破网站的访问权限，冒充受害者。",
-                "disable": false
-            },
-            {
-                "real_name": "django_rce",
-                "display_name": "Django_RCE",
-                "severity": "error",
-                "category": "security",
-                "rule_title": "远程命令注入",
-                "rule_params": null,
-                "custom": false,
-                "languages": [
-                    "python"
-                ],
-                "solution": "",
-                "owner": "",
-                "labels": [],
-                "description": "如果程序根据用户输入的参数动态生成系统命令并执行，黑客可通过传入恶意参数值注入自己定义的命令，从而控制服务器\n修复建议：\n1. 尽量少用执行命令的函数.\n2. 净化用户可控数据, 过滤或者转义.",
                 "disable": false
             }
         ],
