@@ -24,6 +24,7 @@ import {
   getRuleDetail,
   getAllCheckPackages,
   getLanguages,
+  getCheckTools,
 } from '@src/services/schemes';
 
 import RuleDetail from '../../projects/issues/rule-detail';
@@ -45,6 +46,7 @@ const AllRules = () => {
   const [selectedKeys, setSelectedKeys] = useState([]);
   const [ruleDetailVsb, setRuleDetailVsb] = useState(false);
   const [ruleDetail, setRuleDetail] = useState({});
+  const [checkTools, setCheckTools] = useState([]);
 
   const [allPkgs, setAllPkgs] = useState([]);
   const [languages, setLanguages] = useState([]);
@@ -97,6 +99,12 @@ const AllRules = () => {
   useEffect(() => {
     getListData();
     getAllPkgs();
+    getCheckTools(orgSid, {
+      limit: 1000,
+      checkprofile_id: checkProfileId,
+    }).then((res: any) => {
+      setCheckTools(res.results || []);
+    });
 
     (async () => {
       const resLanguages = await getLanguages();
@@ -151,6 +159,7 @@ const AllRules = () => {
         filters={{
           allPkgs,
           languages,
+          checkTools,
         }}
         searchParams={cloneDeep(searchParams)}
         loading={loading}
@@ -188,7 +197,7 @@ const AllRules = () => {
         >
           <Column
             title="规则名称"
-            dataIndex="display_name"
+            dataIndex="real_name"
             render={(name, data: any) => (
               <p
                 className={style.ruleName}
@@ -201,7 +210,7 @@ const AllRules = () => {
             )}
           />
           <Column title="规则概要" dataIndex="rule_title" />
-
+          <Column title="所属工具" dataIndex={['checktool', 'display_name']} />
           <Column title="分类" dataIndex="category_name" />
           <Column title="问题级别" dataIndex="severity_name" />
         </Table>

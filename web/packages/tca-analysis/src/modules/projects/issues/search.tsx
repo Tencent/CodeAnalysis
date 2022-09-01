@@ -156,12 +156,12 @@ const Search = (props: SearchProps) => {
                 onChange={(value: any) => value && onChange('checkpackage', value)}
               />
             </Filter.Item>
-            <Filter.Item name='checkrule_display_name' >
+            <Filter.Item name='checkrule_real_name' >
               <Input.Search
                 size='middle'
                 style={{ width: '160px' }}
                 placeholder='规则名称'
-                onSearch={(value: string) => onChange('checkrule_display_name', value)}
+                onSearch={(value: string) => onChange('checkrule_real_name', value)}
               />
             </Filter.Item>
 

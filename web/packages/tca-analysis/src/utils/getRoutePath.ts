@@ -55,4 +55,13 @@ export const getSchemeRouter = (
 
 export const getTmplRouter = (orgSid: string, teamName: string) => `${getBaseRouter(orgSid, teamName)}/template`;
 
+/**
+ * 工具管理路由
+ * @param orgSid
+ * @param teamName
+ * @param tab
+ * @returns
+ */
+export const getToolsRouter = (orgSid: string, toolId: number, tab: string) => `/t/${orgSid}/tools/${toolId}/${tab}`;
+
 export const getTeamMemberRouter = (orgSid: string) => `/t/${orgSid}/members`;

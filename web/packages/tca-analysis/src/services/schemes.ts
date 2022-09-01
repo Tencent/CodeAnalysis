@@ -274,6 +274,17 @@ export const addRule = (orgSid: string, teamName: string, repoId: string | numbe
  */
 export const getRuleDetail = (orgSid: string, teamName: string, repoId: string | number, schemeId: string | number, ruleId: number) => get(`${getMainBaseURL(orgSid, teamName)}/repos/${repoId}/schemes/${schemeId}/allrules/${ruleId}/`);
 
+/**
+ * 代码检查 - 获取指定规则的详细信息
+ * @param {*} toolName - 工具名称
+ * @param {*} ruleRealName - 规则真实名称
+ * @returns
+ */
+export const getRuleDetailByName = (toolName: string, ruleRealName: string) => get(`${MAIN_SERVER_API}/conf/checkrules/byname/}`, {
+  checktool_name: toolName,
+  checkrule_real_name: ruleRealName,
+});
+
 // ============================================ 分析方案 - 代码度量 ============================================
 
 /**
@@ -412,3 +423,9 @@ export const importScanDir = (orgSid: string, teamName: string, repoId: number, 
  * @returns
  */
 export const getBranchs = (orgSid: string, teamName: string, repoId: number, schemeId: number, query: any) => get(`${getMainBaseURL(orgSid, teamName)}/repos/${repoId}/schemes/${schemeId}/branchs/`, query);
+
+/**
+ * 获取工具列表
+ * @param {*} query
+ */
+export const getCheckTools = (orgId: string, query: any) => get(`${MAIN_SERVER_API}/orgs/${orgId}/checktools/`, query);
