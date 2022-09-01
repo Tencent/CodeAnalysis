@@ -14,6 +14,16 @@ import { get, post, put, del } from './index';
 import { MAIN_SERVER_API, getMainBaseURL } from './common';
 
 /**
+ * 分析方案前缀
+ * @param orgSid
+ * @param teamName
+ * @param repoId
+ * @param schemeId
+ * @returns
+ */
+const getSchemePrefix = (orgSid: string, teamName: string, repoId: string | number, schemeId: string | number) => `${getMainBaseURL(orgSid, teamName)}/repos/${repoId}/schemes/${schemeId}`;
+
+/**
  * 获取分析方案列表
  * @param orgSid 团队唯一标识
  * @param teamName 项目唯一标识
@@ -280,7 +290,7 @@ export const getRuleDetail = (orgSid: string, teamName: string, repoId: string |
  * @param {*} ruleRealName - 规则真实名称
  * @returns
  */
-export const getRuleDetailByName = (toolName: string, ruleRealName: string) => get(`${MAIN_SERVER_API}/conf/checkrules/byname/}`, {
+export const getRuleDetailByName = (orgSid: string, teamName: string, repoId: string | number, schemeId: string | number, toolName: string, ruleRealName: string) => get(`${getSchemePrefix(orgSid, teamName, repoId, schemeId)}/allrules/byname/`, {
   checktool_name: toolName,
   checkrule_real_name: ruleRealName,
 });

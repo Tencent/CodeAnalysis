@@ -7,7 +7,7 @@ import cn from 'classnames';
 import AutoSizer from 'react-virtualized-auto-sizer';
 import { VariableSizeList as List } from 'react-window';
 import ReactMarkdown from 'react-markdown';
-import { isEmpty, findIndex, cloneDeep } from 'lodash';
+import { findIndex, cloneDeep } from 'lodash';
 import { Modal, Button, Tooltip, Divider } from 'coding-oa-uikit';
 import CaretRight from 'coding-oa-uikit/lib/icon/CaretRight';
 import CaretDown from 'coding-oa-uikit/lib/icon/CaretDown';
@@ -18,8 +18,7 @@ import Highlight from '@src/components/react-highlight';
 import Copy from '@src/components/copy';
 import Loading from '@src/components/loading';
 import { getIssueDetail, getCodeFile } from '@src/services/projects';
-import { getRuleDetail } from '@src/services/schemes';
-// import { getRuleDetailByName } from '@src/services/schemes';
+import { getRuleDetailByName } from '@src/services/schemes';
 import { Operation } from './issue-popover';
 import style from './style.scss';
 
@@ -50,7 +49,7 @@ const IssueModal = (props: IssueModalProps) => {
     onClose,
     callback,
   } = props;
-  const [orgSid, teamName, repoId, projectId] = params;
+  const [orgSid, teamName, repoId, projectId, schemeId] = params;
   const listRef: any = useRef({});
   const rowHeights = useRef({});
   const [reloadList, setReloadList] = useState(false); // 弹框关闭后是否需要重新请求列表数据
@@ -272,11 +271,16 @@ const IssueModal = (props: IssueModalProps) => {
   };
 
   const getRuleDetailInfo = (issueDetail: any) => {
-    if (isEmpty(ruleDetail)) {
-      getRuleDetail(orgSid, teamName, repoId, projectId, issueDetail.checkrule_gid).then((res: any) => {
-        setRuleDetail(res);
-      });
-    }
+    getRuleDetailByName(
+      orgSid,
+      teamName,
+      repoId,
+      schemeId,
+      issueDetail.checktool_name,
+      issueDetail.checkrule_real_name,
+    ).then((res: any) => {
+      setRuleDetail(res);
+    });
   };
 
   // 关闭弹框之后重置状态

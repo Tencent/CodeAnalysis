@@ -444,7 +444,7 @@ const Issues = (props: IssuesProps) => {
         issueId={issueModal.issueId}
         issuesData={data}
         listLoading={loading}
-        params={[orgSid, teamName, repoId, projectId]}
+        params={[orgSid, teamName, repoId, projectId, curScheme]}
         prevIssue={prevIssue}
         nextIssue={nextIssue}
         onClose={onCloseIssueModal}
