@@ -13,7 +13,7 @@ import NodeStatus from '@tencent/micro-frontend-shared/tdesign-component/node-st
 import OrgInfo from '../components/org-info';
 import { nodeAPI } from '@src/services/nodes';
 import NodeTag from '@src/modules/components/node-tag';
-import NodeTaskModal from '@src/modules/nodes/node-tasks-modal';
+import NodeTaskModal from '@src/modules/components/node-tasks-modal';
 import { userAPI } from '../../api';
 
 // 模块内
