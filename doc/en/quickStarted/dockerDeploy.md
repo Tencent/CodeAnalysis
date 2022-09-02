@@ -62,7 +62,7 @@ bash ./quick_install.sh docker stop
 
 #### Use your TCA
 Now, you have done the deployment of your first TCA. Please type `http://<Deploy server IP>` in your browser. click "立即体验", after login you can start your Tencent Code Analysis trip.  
-More operation instructions please check：[快速启动一次代码分析](../guide/快速入门/快速启动一次代码分析.md)
+More operation instructions please check：[Quick start a code analysis](../guide/快速入门/快速启动一次代码分析.md)
 :::tip
 Default account/Password：CodeDog/admin
 
