@@ -24,8 +24,8 @@ features:
     details: Report with graphics, easy to monitor quality trend.
   - title: Standardized API
     details: Standardized API make a fast docking to DevOps tools.
-  - title: Independent client
-    details: Independent clients on Linux, Mac and Windows, meet local high-frequency analysis scenario.
+  - title: Distributed client
+    details: Distributed clients on Linux, Mac and Windows, meet local high-frequency analysis scenario.
 footer: MIT Licensed | Copyright © 1998-present Tencent. All Rights Reserved.
 ---
 
