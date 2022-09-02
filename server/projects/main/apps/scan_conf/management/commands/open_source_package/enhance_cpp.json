@@ -1,7 +1,7 @@
 [
     {
         "name": "【C/C++】代码质量缺陷规则包",
-        "description": "代码质量缺陷检查，工具规则均为团队自研，需要配合license使用，申请license: https://tencent.github.io/CodeAnalysis/zh/quickStarted/enhanceDeploy.html#%E6%A8%A1%E5%9D%97%E5%8A%9F%E8%83%BD。若有其他相关需求或疑问可提issue。",
+        "description": "代码质量缺陷检查，需要配合license使用，申请license: https://tencent.github.io/CodeAnalysis/zh/quickStarted/enhanceDeploy.html#%E6%A8%A1%E5%9D%97%E5%8A%9F%E8%83%BD。若有其他相关需求或疑问可提issue。",
         "revision": null,
         "package_type": "official",
         "languages": [
