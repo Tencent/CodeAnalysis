@@ -1,33 +1,31 @@
 ---
 home: true
-title: 腾讯云代码分析文档
+title: Tencent Cloud Code Analysis Doc
 heroImage: /images/Logo.svg
 actions:
-  - text: 快速部署
+  - text: Quick start
     link: /en/quickStarted/
     type: primary
-  - text: 帮助文档
-    link: /zh/guide/
+  - text: Guide
+    link: /en/guide/
     type: secondary
 features:
-  - title: 稳定可靠的架构
-    details: 支持分布式云原生计算架构，支持灵活扩缩容，执行更快更稳定。
-  - title: 多工具支持
-    details: 已集成众多自研、知名开源工具等，采用分层分离架构，可满足团队快速自助管理工具。
-  - title: 多语言覆盖
-    details: 支持 Java/C++/Objective-C/C#/JavaScript/Python/Go/PHP 等数29种语言，覆盖常用编程语言。
-  - title: 增量全量分析
-    details: 增量分析快速发现问题，全量分析保证问题全覆盖。
-  - title: 自定义指标
-    details: 自定义代码标准，逐步优化代码。
-  - title: 全方位质量报告
-    details: 图形化可视报告，轻松监管代码综合质量趋势。
-  - title: 全方位质量报告
-    details: 图形化可视报告，轻松监管代码综合质量趋势。
-  - title: 标准化 API 接口
-    details: 提供标准化 API 接口，支持快速对接 DevOps 平台。
-  - title: 分布式客户端
-    details: 支持分布式客户端，包含 Linux、Mac、Windows，满足用户本地高频分析场景。
+  - title: Stable and reliable architecture
+    details: Support distributed architecture and cloud native architecture; flexible scaling; run faster with more stability.
+  - title: Multi-tool support
+    details: Integrated many self-developed and well-known open-source tools; adopted a layered separation architecture, can meet the needs of the team's rapid self-service management tools.
+  - title: Multi-language support
+    details: Support Java/C++/Objective-C/C#/JavaScript/Python/Go/PHP and other 29 languages, cover frequently-used programming languages.
+  - title: Incremental/Full analysis scan
+    details: Incremental analysis can quickly locate defects, while a full analysis ensure total coverage of your code.
+  - title: Customize rules
+    details: Customize your rules, gradually optimize your code.
+  - title: Full range quality report
+    details: Report with graphics, easy to monitor quality trend.
+  - title: Standardized API
+    details: Standardized API make a fast docking to DevOps tools.
+  - title: Distributed client
+    details: Distributed clients on Linux, Mac and Windows, meet local high-frequency analysis scenario.
 footer: MIT Licensed | Copyright © 1998-present Tencent. All Rights Reserved.
 ---
 
