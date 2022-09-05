@@ -133,6 +133,96 @@
                 "labels": [],
                 "description": "检查方法的参数个数。默认阈值是6.",
                 "disable": false
+            },
+            {
+                "real_name": "CmdInject",
+                "display_name": "CmdInject",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "命令行注入漏洞",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "cpp",
+                    "java"
+                ],
+                "solution": "需要评估childprocess等模块执行命令的使用，应限定或校验命令和参数的内容。",
+                "owner": null,
+                "labels": [],
+                "description": "当使用childprocess等模块执行命令时，拼接了用户可控的输入，会导致命令执行漏洞。攻击者利用漏洞可以控制目标主机或者容器。",
+                "disable": false
+            },
+            {
+                "real_name": "PathTraversal",
+                "display_name": "PathTraversal",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "路径穿越漏洞",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "cpp",
+                    "java"
+                ],
+                "solution": "按业务需求，使用白名单限定后缀范围，校验并限定文件路径范围",
+                "owner": null,
+                "labels": [],
+                "description": "操作文件时，应该限定文件的路径范围，如果拼接用户输入到文件路径，可能导致路径穿越漏洞。攻击者利用漏洞可以访问到文件系统上的任意文件，这可能导致信息泄漏等问题。",
+                "disable": false
+            },
+            {
+                "real_name": "SQLInject",
+                "display_name": "SQLInject",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "SQL注入",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "cpp",
+                    "java"
+                ],
+                "solution": "SQL语句默认使用预编译并绑定变量，使用安全的ORM操作。",
+                "owner": null,
+                "labels": [],
+                "description": "错误的拼接用户可控的值到sql语句，可能导致sql注入漏洞。攻击者可以修改sql语法来更改查询的目标或结果，泄露数据库敏感信息，也可以使用SQL文件操作攻击底层Web服务器。如果使用该SQL查询进行授权认证，攻击者还可以用于提权。",
+                "disable": false
+            },
+            {
+                "real_name": "SSRF",
+                "display_name": "SSRF",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "服务端请求伪造漏洞",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "cpp",
+                    "java"
+                ],
+                "solution": "限定访问网络资源地址范围，请求网络资源应加密传输。",
+                "owner": null,
+                "labels": [],
+                "description": "攻击者在未能取得服务器所有权限时，利用服务器漏洞以服务器的身份发送一条构造好的请求给服务器所在内网。",
+                "disable": false
+            },
+            {
+                "real_name": "XSS",
+                "display_name": "XSS",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "跨站脚本攻击漏洞",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "cpp",
+                    "java"
+                ],
+                "solution": "在输出所有用户可控的数据时, 对数据做转义或者编码。",
+                "owner": null,
+                "labels": [],
+                "description": "如果web页面在动态展示数据时使用了用户的输入内容，没有对输入的内容过滤或者进行转义，黑客可以通过参数传入恶意代码，当用户浏览该页面时恶意代码会被执行。",
+                "disable": false
             }
         ],
         "open_user": true,
