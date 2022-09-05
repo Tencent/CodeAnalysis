@@ -8,8 +8,7 @@
             "cpp"
         ],
         "labels": [
-            "通用",
-            "代码质量类"
+            "通用"
         ],
         "checkrule_set": [
             {
