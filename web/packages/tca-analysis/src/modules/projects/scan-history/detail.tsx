@@ -266,7 +266,7 @@ const ScanDetail = () => {
         <div className={style.right}>
           <h2 className={style.title}>
             任务执行情况
-            <Tag className='ml-sm'>Job ID: {jobId}</Tag>
+            <Tag style={{ marginLeft: 10 }}>Job ID: {jobId}</Tag>
             <Tag>Scan ID: {data?.scan_id}</Tag>
             <a
               className={style.detailBtn}

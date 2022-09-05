@@ -1,27 +1,5 @@
 import { t } from '@tencent/micro-frontend-shared/i18n';
-import { SearchFormField } from '@tencent/micro-frontend-shared/tdesign-component/search';
 import { generateOptions } from '@tencent/micro-frontend-shared/util';
-
-export const getNodeSearchFields = (tagOptions: any[]): SearchFormField[] => [{
-  name: 'name',
-  label: '名称',
-  type: 'string',
-  formType: 'input',
-  placeholder: '节点名称',
-}, {
-  name: 'manager',
-  label: '负责人',
-  type: 'string',
-  formType: 'input',
-  placeholder: '负责人',
-}, {
-  name: 'exec_tags',
-  label: '标签',
-  type: 'string',
-  formType: 'select',
-  placeholder: '全部',
-  options: tagOptions,
-}];
 
 /** 节点工作状态 */
 export enum NodeStateEnum {
@@ -83,3 +61,15 @@ export const TAG_TYPE_COLOR = {
   [TagTypeEnum.PRIVATE]: 'cyan',
   [TagTypeEnum.DISABLED]: 'default',
 };
+
+/** 节点批量编辑表单项 */
+export interface NodeMultiEditFormItem {
+  /** 字段名称，唯一标识 */
+  name: string;
+  /** 表单项标签 */
+  label: string;
+  /** 表单项下拉选项 */
+  options: Array<any>;
+  /** 是否多选 */
+  multiSelect?: boolean;
+}
