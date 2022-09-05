@@ -104,6 +104,7 @@ const Search = ({
     const params = {
       ...searchParams,
       [key]: value,
+      offset: null,
     };
     onRouteHandle(params);
     callback?.(params);
@@ -114,6 +115,7 @@ const Search = ({
       ...searchParams,
       [`${key}_gte`]: range[0],
       [`${key}_lte`]: range[1],
+      offset: null,
     };
     onRouteHandle(params);
     callback?.(params);

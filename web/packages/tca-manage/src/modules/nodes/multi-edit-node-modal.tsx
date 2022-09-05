@@ -2,26 +2,26 @@
  * 批量编辑节点信息弹框
  */
 import React, { useRef, useState } from 'react';
+import { some, get } from 'lodash';
 import { Dialog, Form, Select, Loading, MessagePlugin, FormInstanceFunctions } from 'tdesign-react';
 import { useTranslation } from 'react-i18next';
 
 import { putMultiNode } from '@src/services/nodes';
+import { NodeMultiEditFormItem } from '@src/constant/node';
 import s from './style.scss';
 
 const { FormItem } = Form;
-const { Option } = Select;
 
 interface MultiEditNodeModalProps {
   visible: boolean;
   onOk: () => void;
   onCancel: () => void;
   selectedNodes: any;
-  tagOptions: Array<any>;
-  members: Array<any>;
+  editItems: Array<NodeMultiEditFormItem>;
 }
 
 const MultiEditNodeModal = ({
-  visible, onOk, onCancel, selectedNodes, tagOptions, members,
+  visible, onOk, onCancel, selectedNodes, editItems,
 }: MultiEditNodeModalProps) => {
   const { t } = useTranslation();
   const [loading, setLoading] = useState<boolean>(false);
@@ -35,7 +35,7 @@ const MultiEditNodeModal = ({
     formRef.current?.validate().then((result: any) => {
       if (result === true) {
         const formData = formRef.current?.getFieldsValue(true);
-        if (formData.related_managers || formData.exec_tags) {
+        if (some(editItems, (item: NodeMultiEditFormItem) => (get(formData, item.name)))) {
           setLoading(true);
           putMultiNode({ node_ids: selectedNodes, ...formData })
             .then(() => {
@@ -78,30 +78,15 @@ const MultiEditNodeModal = ({
           labelWidth={120}
           resetType='initial'
         >
-          <FormItem
-            label={<>{t('标签')}<span className={s.optionalMark}>{t('（可选）')}</span></>}
-            name="exec_tags"
-          >
-            <Select multiple>
-              {tagOptions.map((item: any) => (
-                <Option key={item.value} value={item.value}>
-                  {item.text}
-                </Option>
-              ))}
-            </Select>
-          </FormItem>
-          <FormItem
-            label={<>{t('关注人')}<span className={s.optionalMark}>{t('（可选）')}</span></>}
-            name="related_managers"
-          >
-            <Select multiple>
-              {members.map((item: any) => (
-                <Option key={item.username} value={item.username}>
-                  {item.nickname}
-                </Option>
-              ))}
-            </Select>
-          </FormItem>
+          {editItems.map((formItem: NodeMultiEditFormItem) => (
+            <FormItem
+              key={`multi_edit_node_${formItem.name}`}
+              name={formItem.name}
+              label={<>{formItem.label}<span className={s.optionalMark}>{t('（可选）')}</span></>}
+            >
+              <Select options={formItem.options} multiple={formItem.multiSelect}/>
+            </FormItem>
+          ))}
         </Form>
       </Loading>
     </Dialog>

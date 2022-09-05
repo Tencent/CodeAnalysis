@@ -247,7 +247,7 @@ hr {
 
 .dup-file-container {
   min-width: 1220px;
-  height: 100%;
+  height: calc(100vh - 48px);
 
   .left-container,
   .right-container {
