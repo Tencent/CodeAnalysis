@@ -1,0 +1,67 @@
+[
+    {
+        "name": "【C/C++】代码质量缺陷规则包",
+        "description": "代码质量缺陷检查，需要配合license使用，申请license: https://tencent.github.io/CodeAnalysis/zh/quickStarted/enhanceDeploy.html#%E6%A8%A1%E5%9D%97%E5%8A%9F%E8%83%BD。若有其他相关需求或疑问可提issue。",
+        "revision": null,
+        "package_type": "official",
+        "languages": [
+            "cpp"
+        ],
+        "labels": [
+            "通用"
+        ],
+        "checkrule_set": [
+            {
+                "checktool": "tca_ql_cpp",
+                "checkrule": "array_overflow",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "tca_ql_cpp",
+                "checkrule": "buff_overflow",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "tca_ql_cpp",
+                "checkrule": "dead_lock",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "tca_ql_cpp",
+                "checkrule": "func_ret_null",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "tca_ql_cpp",
+                "checkrule": "missing_lock",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "tca_ql_cpp",
+                "checkrule": "resource_leak",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "tca_ql_cpp",
+                "checkrule": "unused_value",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            }
+        ],
+        "open_saas": false,
+        "envs": null
+    }
+]
