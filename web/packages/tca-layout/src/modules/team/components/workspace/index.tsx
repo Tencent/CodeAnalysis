@@ -129,7 +129,7 @@ const Workspace = () => {
                     <div>
                       <Link
                         to={getRepoProjectRouter(
-                          record.project_team?.orgSid,
+                          record.project_team?.org_sid,
                           record.project_team?.name,
                           record.id,
                           id,
