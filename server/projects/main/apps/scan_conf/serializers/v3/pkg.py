@@ -16,8 +16,8 @@ from rest_framework import serializers
 # 项目内
 from apps.scan_conf import models
 from apps.scan_conf.serializers import base
+from apps.scan_conf.serializers.v3.rule import CheckRuleSimpleSerializer, CheckRuleToolSimpleSerializer
 from apps.base.serializers import CDBaseModelSerializer
-from .rule import CheckRuleSimpleSerializer
 
 logger = logging.getLogger(__name__)
 
@@ -28,11 +28,10 @@ class CheckProfilePackageAddSerializer(base.CheckProfilePackageAddSerializer):
     pass
 
 
-class CheckPackageRuleAddSerializer(serializers.Serializer):
+class CheckPackageRuleAddSerializer(base.CheckPackageRuleAddSerializer):
     """用于规则包批量添加规则序列化
     """
-    checkrules = serializers.ListField(child=serializers.PrimaryKeyRelatedField(
-        queryset=models.CheckRule.objects.all()), help_text="规则列表")
+    pass
 
 
 class CheckPackageRuleUpdateSerializer(base.CheckPackageRuleUpdateSerializer):
@@ -90,7 +89,8 @@ class ScanSchemePackageMapSerializer(serializers.ModelSerializer):
     """分析方案-规则配置-规则包与规则的映射序列化
     """
     checkrule = CheckRuleSimpleSerializer(read_only=True)
+    checktool = CheckRuleToolSimpleSerializer(read_only=True)
 
     class Meta:
         model = models.PackageMap
-        exclude = ["checktool"]
+        fields = "__all__"
