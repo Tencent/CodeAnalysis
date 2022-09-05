@@ -36,7 +36,7 @@
                 "severity": "info",
                 "category": "usability",
                 "rule_title": "检测import Antd引入",
-                "rule_params": "regex=(import [\\\"\\']antd.*)|(import [\\\"\\']ant-design.*)|(import Antd.*)\nmsg=发现antd引入:%s.\nignore_comment=True\ninclude=.*\\.js$;.*\\.mjs$;.*\\.jsx$;.*\\.vue;.*\\.ts$;.*\\.tsx$",
+                "rule_params": "regex=(import [\\\"\\']antd.*)|(import [\\\"\\']ant-design.*)|(import Antd.*)\nmsg=发现antd引入:%s.\nignore_comment=True\ninclude=*.js;*.mjs;*.jsx;*.vue;*.ts;*.tsx",
                 "custom": false,
                 "languages": [
                     "js",
@@ -54,7 +54,7 @@
                 "severity": "info",
                 "category": "usability",
                 "rule_title": "检测react核心库文件",
-                "rule_params": "regex=(react.js)|(react-dom.js)|(react.min.js)|(react-dom.min.js)\nmsg=发现react库文件:%s.\nfile_scan=True\ninclude=.*\\.js$",
+                "rule_params": "regex=(react.js)|(react-dom.js)|(react.min.js)|(react-dom.min.js)\nmsg=发现react库文件:%s.\nfile_scan=True\ninclude=*.js",
                 "custom": false,
                 "languages": [
                     "js",
@@ -72,7 +72,7 @@
                 "severity": "info",
                 "category": "usability",
                 "rule_title": "检测import react引入",
-                "rule_params": "regex=(import \\(?React\\)?.*)|(import [\\\"\\']react.*)\nmsg=发现react引入:%s.\nignore_comment=True\ninclude=.*\\.js$;.*\\.mjs$;.*\\.jsx$;.*\\.ts$;.*\\.tsx$",
+                "rule_params": "regex=(import \\(?React\\)?.*)|(import [\\\"\\']react.*)\nmsg=发现react引入:%s.\nignore_comment=True\ninclude=*.js;*.mjs;*.jsx;*.ts;*.tsx",
                 "custom": false,
                 "languages": [
                     "js",
@@ -90,7 +90,7 @@
                 "severity": "info",
                 "category": "usability",
                 "rule_title": "检测html中react引入",
-                "rule_params": "regex=(<script/s+src.*react.*></script>)|(<script/s+src.*react-dom.*></script>)\nmsg=发现react引入:%s.\nignore_comment=True\ninclude=.*\\.html;.*\\.htm",
+                "rule_params": "regex=(<script/s+src.*react.*></script>)|(<script/s+src.*react-dom.*></script>)\nmsg=发现react引入:%s.\nignore_comment=True\ninclude=*.html;*.htm",
                 "custom": false,
                 "languages": [
                     "html"
@@ -107,7 +107,7 @@
                 "severity": "info",
                 "category": "usability",
                 "rule_title": "检测import Tdesign引入",
-                "rule_params": "regex=(import [\\\"\\']tdesign.*)|(import TDesign.*)\nmsg=发现tdesign引入:%s.\nignore_comment=True\ninclude=.*\\.js$;.*\\.mjs$;.*\\.jsx$;.*\\.vue;.*\\.ts$;.*\\.tsx$",
+                "rule_params": "regex=(import [\\\"\\']tdesign.*)|(import TDesign.*)\nmsg=发现tdesign引入:%s.\nignore_comment=True\ninclude=*.js;*.mjs;*.jsx;*.vue;*.ts;*.tsx",
                 "custom": false,
                 "languages": [
                     "js",
@@ -125,7 +125,7 @@
                 "severity": "info",
                 "category": "usability",
                 "rule_title": "检测vue核心库文件",
-                "rule_params": "regex=(vue.js)|(vue.min.js)\nmsg=发现vue库文件:%s.\nfile_scan=true\ninclude=.*\\.js$",
+                "rule_params": "regex=(vue.js)|(vue.min.js)\nmsg=发现vue库文件:%s.\nfile_scan=true\ninclude=*.js",
                 "custom": false,
                 "languages": [
                     "js",
@@ -143,7 +143,7 @@
                 "severity": "info",
                 "category": "usability",
                 "rule_title": "检测import Vue引入",
-                "rule_params": "regex=(import Vue.*)|(import [\\\"\\']vue.*)\nmsg=发现vue引入:%s.\nignore_comment=True\ninclude=.*\\.vue;.*\\.html;.*\\.htm;.*\\.js$;.*\\.mjs$;.*\\.jsx$;.*\\.ts$;.*\\.tsx$",
+                "rule_params": "regex=(import Vue.*)|(import [\\\"\\']vue.*)\nmsg=发现vue引入:%s.\nignore_comment=True\ninclude=*.vue;*.html;*.htm;*.js;*.mjs;*.jsx;*.ts;*.tsx",
                 "custom": false,
                 "languages": [
                     "js",
@@ -161,7 +161,7 @@
                 "severity": "info",
                 "category": "usability",
                 "rule_title": "检测html中vue的引入",
-                "rule_params": "regex=<script/s+src.*vue.*></script>\nmsg=发现vue引入:%s.\nignore_comment=True\ninclude=.*\\.html;.*\\.htm",
+                "rule_params": "regex=<script/s+src.*vue.*></script>\nmsg=发现vue引入:%s.\nignore_comment=True\ninclude=*.html;*.htm",
                 "custom": false,
                 "languages": [
                     "html",
