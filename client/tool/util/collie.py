@@ -204,6 +204,7 @@ class Collie(object):
         if not output or not os.path.exists(output):
             return
 
+        relpos = len(self.params.source_dir) + 1
         rules = self.params.get("rules", list())
 
         f = open(output, "r", encoding="utf-8")
@@ -218,19 +219,31 @@ class Collie(object):
         reader = csv.DictReader(csv_f, fieldnames)
         next(reader)
         for row in reader:
-            path = row["path"]
+            path = row["path"][relpos:]
             line = int(row["line"])
             column = int(row["column"])
             rule = row["checker"]
             if rule not in rules:
                 continue
             msg = row["description"]
+
+            row_refs = row[None]
+            refs = list()
+            for ref in row_refs:
+                parts = ref.split(":")
+                refs.append({
+                    'line': parts[2],
+                    'column': parts[3],
+                    'msg': parts[0],
+                    'path': parts[1][relpos:],
+                })
             yield {
                 "rule": rule,
                 "msg": msg,
                 "path": path,
                 "line": line,
                 "column": column,
+                "refs": refs,
             }
 
         f.close()
