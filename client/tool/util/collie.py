@@ -231,12 +231,14 @@ class Collie(object):
             refs = list()
             for ref in row_refs:
                 parts = ref.split(":")
-                refs.append({
-                    'line': parts[2],
-                    'column': parts[3],
-                    'msg': parts[0],
-                    'path': parts[1][relpos:],
-                })
+                refs.append(
+                    {
+                        "line": parts[2],
+                        "column": parts[3],
+                        "msg": parts[0],
+                        "path": parts[1][relpos:],
+                    }
+                )
             yield {
                 "rule": rule,
                 "msg": msg,
