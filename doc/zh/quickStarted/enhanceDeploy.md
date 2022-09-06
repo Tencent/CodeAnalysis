@@ -42,8 +42,8 @@ xxx
 ```ini
 [LICENSE_CONFIG]
 ; [可选]使用独立工具时，需要填写，默认不需要
+; License服务的域名和端口
 URL=http://<IP或者域名>:<port>
-;License服务的域名和端口
 BASE_PATH=
 LICENSE=<Client License>
 ```
@@ -88,7 +88,7 @@ tommyzhang@tencent.com
 ```
 
 6. 启动 TCA 分析任务
-在 TCA 平台的分析方案里面勾选独立工具相关的规则包。
+在 TCA 平台的分析方案里面勾选独立工具相关的规则包，比如依赖组件分析规则包，然后启动一次分析任务，执行正常则表明设置生效。
 
 ### CLS 运维
 #### 自动重启
