@@ -8,7 +8,6 @@
     "micro-frontend",
     "tca-manage\""
   ],
-  "author": "nickctang <nickctang@tencent.com>",
   "homepage": "",
   "license": "MIT",
   "main": "src/index.tsx",
