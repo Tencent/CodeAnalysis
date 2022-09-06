@@ -8,7 +8,8 @@
             "java"
         ],
         "labels": [
-            "其他"
+            "其他",
+            "推荐"
         ],
         "checkrule_set": [
             {
