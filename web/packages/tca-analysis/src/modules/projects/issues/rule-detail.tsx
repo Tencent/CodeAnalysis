@@ -84,8 +84,7 @@ const RuleDetail = (props: RuleDetailProps) => {
       </div>
       {get(data, 'checkruledesc.desc') && (
         <div className={style.ruleDesc}>
-          {/* eslint-disable-next-line */}
-          <ReactMarkdown children={get(data, "checkruledesc.desc")} />
+          <ReactMarkdown>{get(data, 'checkruledesc.desc')}</ReactMarkdown>
         </div>
       )}
     </Drawer>
