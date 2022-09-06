@@ -6,6 +6,7 @@ import { HelpCircleIcon } from 'tdesign-icons-react';
 
 // 项目内
 import { SCM_PLATFORM_OPTIONS } from '@plat/oauth';
+import s from '../style.scss';
 
 // 模块内
 import { OAuthSettingData } from './types';
@@ -94,7 +95,7 @@ const OAuthModal = ({ scminfo, visible, onCancel, onOk }: OAuthModalProps) => {
                 content={<p>{t('请填入当前TCA平台配置的域名或IP地址')}<br />{t('（如当前页面非80端口，需要显式指定端口号）')}</p>}
                 placement="top"
               >
-                <HelpCircleIcon className='ml-xs' />
+                <HelpCircleIcon className={s.helpIcon} />
               </Tooltip>
             </>
           }

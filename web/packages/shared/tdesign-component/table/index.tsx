@@ -30,6 +30,7 @@ const RouteTable = (props: RouteTableProps) => {
       scroll={{ type: 'lazy' }}
       pagination={{
         onChange,
+        pageSizeOptions: [10, 20, 30, 50, 100],
         ...pagination,
       }} rowKey={rowKey} hover={hover}
       {...otherProps} />

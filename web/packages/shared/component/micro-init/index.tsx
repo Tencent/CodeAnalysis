@@ -4,10 +4,11 @@ import { legacy_createStore as createStore, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
 import { ConfigProvider } from 'coding-oa-uikit';
 import Cookie from 'universal-cookie';
-import 'coding-oa-uikit/dist/coding-oa-uikit.css';
+// import 'coding-oa-uikit/dist/coding-oa-uikit.css';
 import { StoreProvider } from '../../hook-store';
 import { Store, StateProps, ActionProps, Middleware } from '../../hook-store/types';
 import '../../style/index.scss';
+import '../../style/zhiyan.css';
 
 /**
  * 国际化资源加载
@@ -80,7 +81,7 @@ const MicroInit = <State extends StateProps = StateProps, Action extends ActionP
     const locale = await loadLocale();
     let renderContent = <ConfigProvider
       autoInsertSpaceInButton={false}
-      locale={locale}
+      locale={locale.default}
       getPopupContainer={node => (node ? node.parentNode as HTMLElement : document.body)}
     >
       {container}

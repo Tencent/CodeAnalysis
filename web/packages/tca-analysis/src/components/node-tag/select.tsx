@@ -24,7 +24,7 @@ const formatTypeTag = (tagType: number) => {
     default:
       return <Tag className={style.publicTag}>{TAG_TYPE_CHOICES[TAG_TYPE_ENUM.PUBLIC]}</Tag>;
   }
-}
+};
 
 /**
  * 运行环境选框
@@ -57,4 +57,3 @@ const TagSelect = (props: TagSelectProps) => {
 };
 
 export default TagSelect;
- 

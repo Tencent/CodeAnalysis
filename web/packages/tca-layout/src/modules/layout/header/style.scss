@@ -1,4 +1,4 @@
-@import "@src/common/style/color.scss";
+@import "@tencent/micro-frontend-shared/style/color.scss";
 
 $zindex-navbar: 1000 !default;
 $height: 48px;
@@ -25,15 +25,6 @@ $search-input-left: 12px;
   box-shadow: 0 1px $grey-3;
   background: $white;
   z-index: $zindex-navbar;
-
-  .beta {
-    display: inline-block;
-    margin-left: 12px;
-    color: $grey-8;
-    background-color: $grey-2;
-    border: none;
-    vertical-align: text-bottom;
-  }
 }
 
 .left-wrap {
@@ -85,20 +76,11 @@ $search-input-left: 12px;
   white-space: nowrap;
   font-weight: 500;
   max-width: 280px;
-  margin-left: 8px;
-  margin-right: 8px;
-  // color: $grey-8;
 }
 
 .right-wrap {
   position: relative;
   height: $height;
-  margin-left: auto; // float to right under flexbox
+  margin-left: auto;
   white-space: nowrap;
-  // z-index: 9;
-  // background: white;
-
-  // > * {
-  //   vertical-align: middle;
-  // }
 }

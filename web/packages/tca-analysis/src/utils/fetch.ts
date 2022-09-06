@@ -27,8 +27,6 @@ export default function fetch(url: string, options: any, absolutePath = false) {
   const contentType = get(options, 'headers.Content-Type');
 
   let headers: any = {
-    // 'API-TYPE': 'coding',
-    // 'CODING-PROJECT': get(window.reduxStore.getState(), 'APP.currentProject.id')
   };
 
   const tk = localStorage.getItem('accessToken');

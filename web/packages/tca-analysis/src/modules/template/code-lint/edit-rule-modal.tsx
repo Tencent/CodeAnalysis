@@ -16,7 +16,7 @@ import { SEVERITY } from '../../schemes/constants';
 import { modifyRule } from '@src/services/template';
 
 interface EditRuleModalProps {
-  org_sid: string;
+  orgSid: string;
   tmplId: number;
   checkProfileId: number;
   visible: boolean;
@@ -27,7 +27,7 @@ interface EditRuleModalProps {
 
 const EditRuleModal = (props: EditRuleModalProps) => {
   const [form] = Form.useForm();
-  const { org_sid: orgSid, tmplId, data, visible, onCancel, callback } = props;
+  const { orgSid, tmplId, data, visible, onCancel, callback } = props;
 
   useEffect(() => {
     visible && form.resetFields();
@@ -52,7 +52,9 @@ const EditRuleModal = (props: EditRuleModalProps) => {
       visible={visible}
       onCancel={onCancel}
       width={460}
-      onOk={() => form.validateFields().then(onFinish)}
+      onOk={() => {
+        form.validateFields().then(onFinish);
+      }}
     >
       <Form
         layout='vertical'

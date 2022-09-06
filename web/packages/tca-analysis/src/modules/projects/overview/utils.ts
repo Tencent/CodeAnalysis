@@ -5,7 +5,7 @@
 // ==============================================================================
 
 import get from 'lodash/get';
-import { t } from '@src/i18n/i18next';
+
 // 项目内
 import { SEVERITY_TYPE, SEVERITY_TYPE_TXT, STANDARD_TYPE, RISK_TYPE, RISK_TYPE_TXT, CATEGORY_TYPE_TXT, LINT_STATE_TYPE_TXT } from '@src/modules/projects/constants';
 import { formatDate } from '@src/utils';
@@ -161,7 +161,7 @@ const lintSummary2Chart = (summary: any) => {
   const rows: Array<any> = [];
   const stateChoices = {
     ...LINT_STATE_TYPE_TXT,
-    RULE_COUNT: t('涵盖规则数'),
+    RULE_COUNT: '涵盖规则数',
   };
   Object.keys(summary).forEach((key) => {
     const dict = summary[key];

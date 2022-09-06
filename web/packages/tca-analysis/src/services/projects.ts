@@ -12,119 +12,119 @@
 import { get, post, put, del, getFile, postFile } from './index';
 import { MAIN_SERVER, MAIN_SERVER_API, ANALYSIS_SERVER_API, getMainBaseURL, getAnalysisBaseURL } from './common';
 
-const getProjectBaseURL = (org_sid: string, team_name: string, repoId: string | number, projectId: number) => `${getMainBaseURL(org_sid, team_name)}/repos/${repoId}/projects/${projectId}`;
+const getProjectBaseURL = (orgSid: string, teamName: string, repoId: string | number, projectId: number) => `${getMainBaseURL(orgSid, teamName)}/repos/${repoId}/projects/${projectId}`;
 
 /**
  * 获取分支项目
  * @param repoId - 代码库ID
  * @param query - 查询参数
  */
-export const getProjects = (org_sid: string, team_name: string, repoId: string | number, query: any) => get(`${getMainBaseURL(org_sid, team_name)}/repos/${repoId}/projects/`, query);
+export const getProjects = (orgSid: string, teamName: string, repoId: string | number, query: any) => get(`${getMainBaseURL(orgSid, teamName)}/repos/${repoId}/projects/`, query);
 
 /**
  * 新建分支项目
  * @param repoId - 代码库ID
  * @param data
  */
-export const createProject = (org_sid: string, team_name: string, repoId: string | number, data: any) => post(`${getMainBaseURL(org_sid, team_name)}/repos/${repoId}/projects/`, data);
+export const createProject = (orgSid: string, teamName: string, repoId: string | number, data: any) => post(`${getMainBaseURL(orgSid, teamName)}/repos/${repoId}/projects/`, data);
 
 /**
  * 启动分析
- * @param org_sid 
- * @param team_name 
- * @param repoId 
- * @param projectId 
- * @param data 
+ * @param orgSid
+ * @param teamName
+ * @param repoId
+ * @param projectId
+ * @param data
  */
-export const createJob = (org_sid: string, team_name: string, repoId: string | number, projectId: string | number, data: any) => post(`${getMainBaseURL(org_sid, team_name)}/repos/${repoId}/projects/${projectId}/scans/`, data);
+export const createJob = (orgSid: string, teamName: string, repoId: string | number, projectId: string | number, data: any) => post(`${getMainBaseURL(orgSid, teamName)}/repos/${repoId}/projects/${projectId}/scans/`, data);
 
 /**
  * 获取分支项目信息
  * @param repoId - 代码库ID
  * @param projectId - 项目ID
  */
-export const getProjectDetail = (org_sid: string, team_name: string, repoId: string | number, projectId: string | number) => get(`${getMainBaseURL(org_sid, team_name)}/repos/${repoId}/projects/${projectId}/`);
+export const getProjectDetail = (orgSid: string, teamName: string, repoId: string | number, projectId: string | number) => get(`${getMainBaseURL(orgSid, teamName)}/repos/${repoId}/projects/${projectId}/`);
 
 /**
  * 获取分支项目信息
  * @param repoId - 代码库ID
  * @param projectId - 项目ID
  */
- export const delProject = (org_sid: string, team_name: string, repoId: string | number, projectId: string | number) => del(`${getMainBaseURL(org_sid, team_name)}/repos/${repoId}/projects/${projectId}/`);
+export const delProject = (orgSid: string, teamName: string, repoId: string | number, projectId: string | number) => del(`${getMainBaseURL(orgSid, teamName)}/repos/${repoId}/projects/${projectId}/`);
 
 /**
  * 获取指定代码库下与 CodeDog 关联的分支
  * @param repoId - 代码库ID
  */
-export const getBranchs = (org_sid: string, team_name: string, repoId: number) => get(`${getMainBaseURL(org_sid, team_name)}/repos/${repoId}/branchnames/`, { offset: 0, limit: 500 });
+export const getBranchs = (orgSid: string, teamName: string, repoId: number) => get(`${getMainBaseURL(orgSid, teamName)}/repos/${repoId}/branchnames/`, { offset: 0, limit: 500 });
 
 /**
  * 获取指定分支关联的分析方案
  * @param repoId - 代码库ID
  * @param branch - 分支名称
  */
-export const getSchemesByBranch = (org_sid: string, team_name: string, repoId: number, branch: string) => get(`${getMainBaseURL(org_sid, team_name)}/repos/${repoId}/branch/projects/`, { branch, scheme_status: 1 });
+export const getSchemesByBranch = (orgSid: string, teamName: string, repoId: number, branch: string) => get(`${getMainBaseURL(orgSid, teamName)}/repos/${repoId}/branch/projects/`, { branch, scheme_status: 1 });
 
 /**
  * 开启第一次代码分析
  * @param repoId
  * @param data
  */
-export const initRepos = (org_sid: string, team_name: string, repoId: number, data: any) => post(`${getMainBaseURL(org_sid, team_name)}/repos/${repoId}/init/`, data);
+export const initRepos = (orgSid: string, teamName: string, repoId: number, data: any) => post(`${getMainBaseURL(orgSid, teamName)}/repos/${repoId}/init/`, data);
 
 /**
  * 本地分析 - 下载配置文件
- * @param org_sid
- * @param team_name
+ * @param orgSid
+ * @param teamName
  * @param repoId
  * @param projectId
  * @param data: {source_dir: 本地代码绝对路径, total_scan: 是否全量分析}
  */
-export const downloadIniFile = (org_sid: string, team_name: string, repoId: number, projectId: number, data: any) => {
+export const downloadIniFile = (orgSid: string, teamName: string, repoId: number, projectId: number, data: any) => {
   const env = `${window.location.origin}${MAIN_SERVER}`;
-  return postFile(`${getMainBaseURL(org_sid, team_name)}/repos/${repoId}/projects/${projectId}/scans/puppyini/`, { codedog_env: env, ...data })
-}
+  return postFile(`${getMainBaseURL(orgSid, teamName)}/repos/${repoId}/projects/${projectId}/scans/puppyini/`, { codedog_env: env, ...data });
+};
 // ============================================ 分支概览 ============================================
 
 /**
  * 获取代码检查最近问题信息
  * @param projectId 分支项目ID
  */
-export const getLatestLintScans = (org_sid: string, team_name: string, repoId: number, projectId: number) => get(`${getAnalysisBaseURL(org_sid, team_name)}/repos/${repoId}/projects/${projectId}/overview/lintscans/latest/`);
+export const getLatestLintScans = (orgSid: string, teamName: string, repoId: number, projectId: number) => get(`${getAnalysisBaseURL(orgSid, teamName)}/repos/${repoId}/projects/${projectId}/overview/lintscans/latest/`);
 
 /**
  * 获取代码检查历史详情数据
  * @param projectId 分支项目ID
  * @param query 查询参数
  */
-export const getLintScans = (org_sid: string, team_name: string, repoId: number, projectId: number, query?: any) => get(`${getAnalysisBaseURL(org_sid, team_name)}/repos/${repoId}/projects/${projectId}/overview/lintscans/`, query);
+export const getLintScans = (orgSid: string, teamName: string, repoId: number, projectId: number, query?: any) => get(`${getAnalysisBaseURL(orgSid, teamName)}/repos/${repoId}/projects/${projectId}/overview/lintscans/`, query);
 
 /**
  * 获取圈复杂度历史详情数据
  * @param projectId 分支项目ID
  * @param query 查询参数
  */
-export const getCCScans = (org_sid: string, team_name: string, repoId: number, projectId: number, query?: any) => get(`${getAnalysisBaseURL(org_sid, team_name)}/repos/${repoId}/projects/${projectId}/overview/cycscans/`, query);
+export const getCCScans = (orgSid: string, teamName: string, repoId: number, projectId: number, query?: any) => get(`${getAnalysisBaseURL(orgSid, teamName)}/repos/${repoId}/projects/${projectId}/overview/cycscans/`, query);
 
 /**
  * 获取重复代码历史详情数据
  * @param projectId 分支项目ID
  * @param query 查询参数
  */
-export const getDupScans = (org_sid: string, team_name: string, repoId: number, projectId: number, query?: any) => get(`${getAnalysisBaseURL(org_sid, team_name)}/repos/${repoId}/projects/${projectId}/overview/dupscans/`, query);
+export const getDupScans = (orgSid: string, teamName: string, repoId: number, projectId: number, query?: any) => get(`${getAnalysisBaseURL(orgSid, teamName)}/repos/${repoId}/projects/${projectId}/overview/dupscans/`, query);
 
 /**
  * 获取代码统计历史详情数据
  * @param projectId 分支项目ID
  * @param query 查询参数
  */
-export const getClocScans = (org_sid: string, team_name: string, repoId: number, projectId: number, query?: any) => get(`${getAnalysisBaseURL(org_sid, team_name)}/repos/${repoId}/projects/${projectId}/overview/clocscans/`, query);
+export const getClocScans = (orgSid: string, teamName: string, repoId: number, projectId: number, query?: any) => get(`${getAnalysisBaseURL(orgSid, teamName)}/repos/${repoId}/projects/${projectId}/overview/clocscans/`, query);
 
 /**
  * 获取与我相关的数据
  * @param projectId 分支项目ID
  */
-export const getMineOverview = (org_sid: string, team_name: string, repoId: number, projectId: number) => get(`${getAnalysisBaseURL(org_sid, team_name)}/repos/${repoId}/projects/${projectId}/overview/mine/`);
+export const getMineOverview = (orgSid: string, teamName: string, repoId: number, projectId: number) => get(`${getAnalysisBaseURL(orgSid, teamName)}/repos/${repoId}/projects/${projectId}/overview/mine/`);
 
 // ============================================ 问题列表 ============================================
 
@@ -133,35 +133,35 @@ export const getMineOverview = (org_sid: string, team_name: string, repoId: numb
  * @param projectId
  * @param query
  */
-export const getIssues = (org_sid: string, team_name: string, repoId: number, projectId: number, query: any) => get(`${getAnalysisBaseURL(org_sid, team_name)}/repos/${repoId}/projects/${projectId}/codelint/issues/`, query);
+export const getIssues = (orgSid: string, teamName: string, repoId: number, projectId: number, query: any) => get(`${getAnalysisBaseURL(orgSid, teamName)}/repos/${repoId}/projects/${projectId}/codelint/issues/`, query);
 
 /**
  * 问题列表 - 批量处理问题
  * @param projectId
  * @param data
  */
-export const handleIssues = (org_sid: string, team_name: string, repoId: number, projectId: number, data: any) => put(`${getAnalysisBaseURL(org_sid, team_name)}/repos/${repoId}/projects/${projectId}/codelint/issues/resolution/`, data);
+export const handleIssues = (orgSid: string, teamName: string, repoId: number, projectId: number, data: any) => put(`${getAnalysisBaseURL(orgSid, teamName)}/repos/${repoId}/projects/${projectId}/codelint/issues/resolution/`, data);
 
 /**
  * 问题列表 - 获取问题详情
  * @param projectId
  * @param issueId
  */
-export const getIssueDetail = (org_sid: string, team_name: string, repoId: number, projectId: number, issueId: number) => get(`${getAnalysisBaseURL(org_sid, team_name)}/repos/${repoId}/projects/${projectId}/codelint/issues/${issueId}/`);
+export const getIssueDetail = (orgSid: string, teamName: string, repoId: number, projectId: number, issueId: number) => get(`${getAnalysisBaseURL(orgSid, teamName)}/repos/${repoId}/projects/${projectId}/codelint/issues/${issueId}/`);
 
 /**
  * 问题列表 - 文件代码
  * @param projectId
  * @param data
  */
-export const getCodeFile = (org_sid: string, team_name: string, repoId: number, projectId: number, data: any) => get(`${getMainBaseURL(org_sid, team_name)}/repos/${repoId}/projects/${projectId}/codefile/`, data);
+export const getCodeFile = (orgSid: string, teamName: string, repoId: number, projectId: number, data: any) => get(`${getMainBaseURL(orgSid, teamName)}/repos/${repoId}/projects/${projectId}/codefile/`, data);
 
 /**
  * 问题列表 - 获取指定 issue 操作记录
  * @param projectId
  * @param issueId
  */
-export const getIssueDetailComments = (org_sid: string, team_name: string, repoId: number, projectId: number, issueId: number) => get(`${getAnalysisBaseURL(org_sid, team_name)}/repos/${repoId}/projects/${projectId}/codelint/issues/${issueId}/comments/`);
+export const getIssueDetailComments = (orgSid: string, teamName: string, repoId: number, projectId: number, issueId: number) => get(`${getAnalysisBaseURL(orgSid, teamName)}/repos/${repoId}/projects/${projectId}/codelint/issues/${issueId}/comments/`);
 
 /**
  * 问题列表 - 更新指定 issue 的严重级别
@@ -169,7 +169,7 @@ export const getIssueDetailComments = (org_sid: string, team_name: string, repoI
  * @param issueId
  * @param severity - 严重级别
  */
-export const updateIssueSeverity = (org_sid: string, team_name: string, repoId: number, projectId: number, issueId: number, severity: number) => put(`${getAnalysisBaseURL(org_sid, team_name)}/repos/${repoId}/projects/${projectId}/codelint/issues/${issueId}/severity/`, {
+export const updateIssueSeverity = (orgSid: string, teamName: string, repoId: number, projectId: number, issueId: number, severity: number) => put(`${getAnalysisBaseURL(orgSid, teamName)}/repos/${repoId}/projects/${projectId}/codelint/issues/${issueId}/severity/`, {
   severity,
 });
 
@@ -179,19 +179,19 @@ export const updateIssueSeverity = (org_sid: string, team_name: string, repoId: 
  * @param issueId
  * @param author - 责任人
  */
-export const updateIssueAuthor = (org_sid: string, team_name: string, repoId: number, projectId: number, issueId: number, author: string) => put(`${getAnalysisBaseURL(org_sid, team_name)}/repos/${repoId}/projects/${projectId}/codelint/issues/${issueId}/author/`, {
+export const updateIssueAuthor = (orgSid: string, teamName: string, repoId: number, projectId: number, issueId: number, author: string) => put(`${getAnalysisBaseURL(orgSid, teamName)}/repos/${repoId}/projects/${projectId}/codelint/issues/${issueId}/author/`, {
   author,
 });
 
 /**
  * 问题列表 - 批量更新问题责任人
- * @param org_sid
- * @param team_name
+ * @param orgSid
+ * @param teamName
  * @param repoId
  * @param projectId
  * @param data
  */
-export const updateIssuesAuthor = (org_sid: string, team_name: string, repoId: number, projectId: number, data: any) => put(`${getAnalysisBaseURL(org_sid, team_name)}/repos/${repoId}/projects/${projectId}/codelint/issues/author/`, data);
+export const updateIssuesAuthor = (orgSid: string, teamName: string, repoId: number, projectId: number, data: any) => put(`${getAnalysisBaseURL(orgSid, teamName)}/repos/${repoId}/projects/${projectId}/codelint/issues/author/`, data);
 
 /**
  * 问题列表 - 忽略问题
@@ -200,14 +200,14 @@ export const updateIssuesAuthor = (org_sid: string, team_name: string, repoId: n
  * @param data
  */
 export const resoluteIssue = (
-  org_sid: string,
-  team_name: string,
+  orgSid: string,
+  teamName: string,
   repoId: number,
   projectId: number,
   issueId: number,
   data: any,
 ) => put(
-  `${getAnalysisBaseURL(org_sid, team_name)}/repos/${repoId}/projects/${projectId}/codelint/issues/${issueId}/resolution/`,
+  `${getAnalysisBaseURL(orgSid, teamName)}/repos/${repoId}/projects/${projectId}/codelint/issues/${issueId}/resolution/`,
   data,
 );
 
@@ -365,39 +365,39 @@ export const getDupFileIssueComments = (orgSid: string, teamName: string, repoId
  * @param projectId - 分支项目ID
  * @param query - 查询参数
  */
-export const getScans = (org_sid: string, team_name: string, repoId: number, projectId: number, query: any) => get(`${getAnalysisBaseURL(org_sid, team_name)}/repos/${repoId}/projects/${projectId}/scans/`, query);
+export const getScans = (orgSid: string, teamName: string, repoId: number, projectId: number, query: any) => get(`${getAnalysisBaseURL(orgSid, teamName)}/repos/${repoId}/projects/${projectId}/scans/`, query);
 
 /**
  * 获取分析历史结果
- * @param org_sid 
- * @param team_name 
- * @param repoId 
- * @param projectId 
- * @param scanId 
+ * @param orgSid
+ * @param teamName
+ * @param repoId
+ * @param projectId
+ * @param scanId
  */
-export const getScansResult = (org_sid: string, team_name: string, repoId: number, projectId: number, scanId: number) => get(`${getAnalysisBaseURL(org_sid, team_name)}/repos/${repoId}/projects/${projectId}/scans/${scanId}/`);
+export const getScansResult = (orgSid: string, teamName: string, repoId: number, projectId: number, scanId: number) => get(`${getAnalysisBaseURL(orgSid, teamName)}/repos/${repoId}/projects/${projectId}/scans/${scanId}/`);
 
 
 /**
  * 分析历史 - 获取分析历史详情
- * @param org_sid
- * @param team_name
+ * @param orgSid
+ * @param teamName
  * @param repoId
  * @param projectId
  * @param jobId
  */
-export const getScanDetail = (org_sid: string, team_name: string, repoId: number, projectId: number, jobId: number) => get(`${getProjectBaseURL(org_sid, team_name, repoId, projectId)}/jobs/${jobId}/`);
+export const getScanDetail = (orgSid: string, teamName: string, repoId: number, projectId: number, jobId: number) => get(`${getProjectBaseURL(orgSid, teamName, repoId, projectId)}/jobs/${jobId}/`);
 
 /**
  * 分析历史 - 获取分析历史详情 - 子任务详细信息
- * @param org_sid
- * @param team_name
+ * @param orgSid
+ * @param teamName
  * @param repoId
  * @param projectId
  * @param jobId
  * @param taskId
  */
-export const getTaskDetail = (org_sid: string, team_name: string, repoId: number, projectId: number, jobId: number, taskId: number) => get(`${getProjectBaseURL(org_sid, team_name, repoId, projectId)}/jobs/${jobId}/tasks/${taskId}/`);
+export const getTaskDetail = (orgSid: string, teamName: string, repoId: number, projectId: number, jobId: number, taskId: number) => get(`${getProjectBaseURL(orgSid, teamName, repoId, projectId)}/jobs/${jobId}/tasks/${taskId}/`);
 
 /**
  * 分析历史 - 取消分析

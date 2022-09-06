@@ -8,7 +8,17 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { get, isEmpty, toNumber } from 'lodash';
-import { Row, Col, Button, Dropdown, Menu, Select, message, Input, Popover } from 'coding-oa-uikit';
+import {
+  Row,
+  Col,
+  Button,
+  Dropdown,
+  Menu,
+  Select,
+  message,
+  Input,
+  Popover,
+} from 'coding-oa-uikit';
 import AngleDown from 'coding-oa-uikit/lib/icon/AngleDown';
 import AngleUp from 'coding-oa-uikit/lib/icon/AngleUp';
 import DotCircle from 'coding-oa-uikit/lib/icon/DotCircle';
@@ -59,14 +69,20 @@ const DupDetail = () => {
 
   const { curRepo } = useStateStore();
   const params: any = useParams();
-  const { org_sid: orgSid, team_name: teamName } = params;
+  const { orgSid, teamName } = params;
   const repoId = toNumber(params.repoId);
   const projectId = toNumber(params.projectId);
   const issueId = toNumber(params.issueId);
 
   // 获取重复代码issue信息
   const getIssueDetail = async () => {
-    const detail = await getDupIssuesDetail(orgSid, teamName, repoId, projectId, issueId);
+    const detail = await getDupIssuesDetail(
+      orgSid,
+      teamName,
+      repoId,
+      projectId,
+      issueId,
+    );
     setDupFileIssueDetail(detail);
     return detail;
   };
@@ -92,9 +108,16 @@ const DupDetail = () => {
 
   // 获取当前issue文件的重复块
   const getIssueCodeBlocks = async (blockNum: number) => {
-    const res = await getDupFileBlocks(orgSid, teamName, repoId, projectId, issueId, {
-      limit: blockNum,
-    });
+    const res = await getDupFileBlocks(
+      orgSid,
+      teamName,
+      repoId,
+      projectId,
+      issueId,
+      {
+        limit: blockNum,
+      },
+    );
     const blocks = res.results;
     setLeftFileBlocks(blocks);
     return blocks;
@@ -193,13 +216,11 @@ const DupDetail = () => {
       default:
         break;
     }
-    if (request) {
-      request.then(() => {
-        message.success('修改成功');
-        setAuthorPopVsb(false);
-        getIssueDetail();
-      });
-    }
+    request?.then(() => {
+      message.success('修改成功');
+      setAuthorPopVsb(false);
+      getIssueDetail();
+    });
   };
 
   const handleSelectBlockClick = (e: any) => {
@@ -212,8 +233,10 @@ const DupDetail = () => {
     if (
       !(
         relatedBlock
-        && relatedBlock.duplicate_file.file_path === block.duplicate_file.file_path
-        && relatedBlock.duplicate_file.scm_revision === block.duplicate_file.scm_revision
+        && relatedBlock.duplicate_file.file_path
+          === block.duplicate_file.file_path
+        && relatedBlock.duplicate_file.scm_revision
+          === block.duplicate_file.scm_revision
       )
     ) {
       getCodeFile(
@@ -230,7 +253,12 @@ const DupDetail = () => {
     selectRelateBlockClick(block);
   };
 
-  const selectPreOrNextClick = (index: number, blocks: Array<any>, block: any, type: string) => {
+  const selectPreOrNextClick = (
+    index: number,
+    blocks: Array<any>,
+    block: any,
+    type: string,
+  ) => {
     const findex = blocks.findIndex(item => item.id === block.id);
     const newBlock = blocks[findex + index];
     if (newBlock) {
@@ -306,46 +334,58 @@ const DupDetail = () => {
           <Col span={24}>
             <div className={style.headerDetailOp}>{blockNum} 块重复</div>{' '}
             <div className={style.headerDetailOp}>
-              <span className="mr-sm">责任人</span>{issue.owner}
-              {
-                issue.state === DUP_FILE_STATE_ENUM.ACTIVE && (
-                  <Popover
-                    title='修改责任人'
-                    placement='bottom'
-                    visible={authorPopVsb}
-                    overlayClassName={style.statusPopover}
-                    content={
-                      <div>
-                        <Input
-                          placeholder='请输入责任人'
-                          size='middle'
-                          value={author}
-                          onChange={e => setAuthor(e.target.value)}
-                        />
-                        <div className={style.footer}>
-                          <Button size='small' type='primary' onClick={() => {
+              <span className="mr-sm">责任人</span>
+              {issue.owner}
+              {issue.state === DUP_FILE_STATE_ENUM.ACTIVE && (
+                <Popover
+                  title="修改责任人"
+                  placement="bottom"
+                  visible={authorPopVsb}
+                  overlayClassName={style.statusPopover}
+                  content={
+                    <div>
+                      <Input
+                        placeholder="请输入责任人"
+                        size="middle"
+                        value={author}
+                        onChange={e => setAuthor(e.target.value)}
+                      />
+                      <div className={style.footer}>
+                        <Button
+                          size="small"
+                          type="primary"
+                          onClick={() => {
                             modifyIssueState(issue.id, 'owner', author);
-                          }}>确认</Button>
-                          <Button size='small' onClick={() => {
+                          }}
+                        >
+                          确认
+                        </Button>
+                        <Button
+                          size="small"
+                          onClick={() => {
                             setAuthorPopVsb(false);
                             setAuthor('');
-                          }}>取消</Button>
-                        </div>
+                          }}
+                        >
+                          取消
+                        </Button>
                       </div>
-
-                    }
-                  >
-                    <Tips
-                      icon={
-                        <Pencil className={style.editIcon} onClick={() => {
+                    </div>
+                  }
+                >
+                  <Tips
+                    icon={
+                      <Pencil
+                        className={style.editIcon}
+                        onClick={() => {
                           setAuthorPopVsb(!authorPopVsb);
-                        }} />
-                      }
-                      title='修改责任人'
-                    />
-                  </Popover>
-                )
-              }
+                        }}
+                      />
+                    }
+                    title="修改责任人"
+                  />
+                </Popover>
+              )}
             </div>
             <div className={style.headerDetailOp}>
               <span className="mr-sm">状态</span>
@@ -364,8 +404,8 @@ const DupDetail = () => {
           </Col>
           {blockDetail && (
             <Col className="fs-12 text-grey-6 ellipsis">
-              当前查看的{blockDetail.start_line_num} - {blockDetail.end_line_num}{' '}
-              行代码被 {lastModifier}最近修改过
+              当前查看的{blockDetail.start_line_num} -{' '}
+              {blockDetail.end_line_num} 行代码被 {lastModifier}最近修改过
             </Col>
           )}
         </Row>
@@ -399,8 +439,7 @@ const DupDetail = () => {
                     <h4>{item.duplicate_file.file_name}</h4>
                     <div className="fs-12 text-grey-6">
                       <div>
-                        对比行：{item.start_line_num} -{' '}
-                        {item.end_line_num}
+                        对比行：{item.start_line_num} - {item.end_line_num}
                       </div>
                       <div>文件路径：{item.duplicate_file.dir_path}</div>
                     </div>
@@ -415,8 +454,8 @@ const DupDetail = () => {
           </Col>
           <Col span={24}>
             <div className={style.headerDetailOp}>
-              代码块：{relatedBlock.start_line_num} - {relatedBlock.end_line_num}{' '}
-              行
+              代码块：{relatedBlock.start_line_num} -{' '}
+              {relatedBlock.end_line_num} 行
             </div>{' '}
             <div className={style.headerDetailOp}>
               {relatedBlock.last_modifier} 最近修改过
@@ -431,7 +470,11 @@ const DupDetail = () => {
   );
 
   // 渲染代码块
-  const renderCodeContainer = (codefile: any, block: any, resetScrollToLine = false) => (
+  const renderCodeContainer = (
+    codefile: any,
+    block: any,
+    resetScrollToLine = false,
+  ) => (
     <div className={style.container}>
       {codefile ? (
         <CodeHighlight
@@ -493,7 +536,8 @@ const DupDetail = () => {
               </Button>
               <Button
                 icon={<DotCircle />}
-                onClick={() => setRightResetScrollToLine(!rightResetScrollToLine)}
+                onClick={() => setRightResetScrollToLine(!rightResetScrollToLine)
+                }
               />
             </Col>
             <Col flex="none">
@@ -506,7 +550,11 @@ const DupDetail = () => {
               ></Select> */}
             </Col>
           </Row>
-          {renderCodeContainer(rightCodeFile, relatedBlock, rightResetScrollToLine)}
+          {renderCodeContainer(
+            rightCodeFile,
+            relatedBlock,
+            rightResetScrollToLine,
+          )}
         </>
       );
     }
@@ -600,7 +648,11 @@ const DupDetail = () => {
               ></Select> */}
             </Col>
           </Row>
-          {renderCodeContainer(leftCodeFile, blockDetail, leftResetScrollToLine)}
+          {renderCodeContainer(
+            leftCodeFile,
+            blockDetail,
+            leftResetScrollToLine,
+          )}
         </div>
       </Col>
       <Col span={12}>

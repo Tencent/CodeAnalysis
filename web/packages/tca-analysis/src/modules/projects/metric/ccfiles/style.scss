@@ -1,9 +1,9 @@
-@import '@src/common/style/color.scss';
+@import '@tencent/micro-frontend-shared/style/color.scss';
 @import '../common/common.scss';
 
 
 .file-detail {
-    height: calc(100% - 87px);
+    height: calc(100vh - 48px);
 
     .header {
         display: flex;

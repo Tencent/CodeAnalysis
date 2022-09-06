@@ -27,6 +27,26 @@ class CheckProfilePackageAddSerializer(serializers.Serializer):
         many=True)
 
 
+class CheckPackageRuleAddSerializer(serializers.Serializer):
+    """用于规则包批量添加规则序列化
+    """
+    checkrules = serializers.ListField(
+        child=serializers.PrimaryKeyRelatedField(queryset=models.CheckRule.objects.all()),
+        required=False, allow_null=True, help_text="规则列表"
+    )
+    checktool = serializers.PrimaryKeyRelatedField(
+        queryset=models.CheckTool.objects.all(), 
+        required=False, allow_null=True, help_text="工具"
+    )
+
+    def validate(self, attrs):
+        checkrules = attrs.get("checkrules")
+        checktool = attrs.get("checktool")
+        if not checktool and not checkrules:
+            raise serializers.ValidationError({"cd_error": "请传入checkrules或checktool"})
+        return attrs
+
+
 class CheckPackageRuleUpdateSerializer(serializers.Serializer):
     """用于规则包批量更新规则严重级别、规则参数、状态等序列化
     """

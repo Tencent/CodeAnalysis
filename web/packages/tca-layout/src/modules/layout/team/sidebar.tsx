@@ -1,12 +1,6 @@
-// Copyright (c) 2021-2022 THL A29 Limited
-//
-// This source code file is made available under MIT License
-// See LICENSE for details
-// ==============================================================================
-
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import { t } from '@src/i18n/i18next';
+import { useTranslation } from 'react-i18next';
 
 import Panel from 'coding-oa-uikit/lib/icon/Panel';
 import Group from 'coding-oa-uikit/lib/icon/Group';
@@ -15,13 +9,14 @@ import Api from 'coding-oa-uikit/lib/icon/Api';
 import TeamOverview from 'coding-oa-uikit/lib/icon/TeamOverview';
 import Tiles from 'coding-oa-uikit/lib/icon/Tiles';
 import Sitemap from 'coding-oa-uikit/lib/icon/Sitemap';
-import MenuLayout from '@src/components/menu-layout';
-import { API_DOC_PATH } from '@src/utils/getRoutePath';
+import LayoutMenu from '@src/component/layout-menu';
+import { getApiDocURL } from '@plat/util';
 
 const SideBar = () => {
   const { orgSid }: any = useParams();
+  const { t } = useTranslation();
 
-  const menus = [
+  return <LayoutMenu breakpoint="md" menus={[
     {
       icon: <Panel />,
       title: t('工作台'),
@@ -90,12 +85,11 @@ const SideBar = () => {
     {
       icon: <Api />,
       title: t('开放平台'),
-      link: API_DOC_PATH,
+      link: getApiDocURL(),
       key: 'docs',
       open: true,
     },
-  ];
-  return <MenuLayout breakpoint="md" menus={menus} />;
+  ]} />;
 };
 
 export default SideBar;
