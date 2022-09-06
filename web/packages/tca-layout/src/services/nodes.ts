@@ -1,5 +1,4 @@
-import { get, post, put, del } from './index';
-import { MAIN_SERVER_API } from './common';
+import { get, post, put, del, MAIN_SERVER_API } from '@plat/api';
 
 const getNodePrefix = (orgId: string) => `${MAIN_SERVER_API}/orgs/${orgId}/nodes/`;
 
@@ -53,7 +52,7 @@ export const putNodeProcess = (orgId: string, nodeId: number | string, data: any
  * @param nodeId
  * @param params 筛选项
  */
- export const getNodeTask = (orgId: string, nodeId: number | string, params: any) => get(`${getNodePrefix(orgId)}${nodeId}/tasks/`, params);
+export const getNodeTask = (orgId: string, nodeId: number | string, params: any) => get(`${getNodePrefix(orgId)}${nodeId}/tasks/`, params);
 
 /**
  * 获取标签列表

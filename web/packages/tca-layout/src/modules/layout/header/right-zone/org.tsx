@@ -1,27 +1,24 @@
-// Copyright (c) 2021-2022 THL A29 Limited
-//
-// This source code file is made available under MIT License
-// See LICENSE for details
-// ==============================================================================
-
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import classnames from 'classnames';
-import AngleRight from 'coding-oa-uikit/lib/icon/AngleRight';
 import { Popover, Avatar, message } from 'coding-oa-uikit';
-import { getTeamRouter } from '@src/utils/getRoutePath';
-import { t } from '@src/i18n/i18next';
+import AngleRight from 'coding-oa-uikit/lib/icon/AngleRight';
+
+// 项目内
 import { getTeams } from '@src/services/team';
-import { STATUS_ENUM } from '@src/constants/org';
+import { OrgStatusEnum } from '@src/constant/org';
+import { getTeamRouter } from '@src/utils/getRoutePath';
 import s from './style.scss';
 
 interface IProps {
-  org: any;
+  name: string
 }
 
-const OrgUI = ({ org }: IProps) => {
+const OrgUI = ({ name }: IProps) => {
   const [orgs, setOrgs] = useState<Array<any>>([]);
   const history = useHistory();
+  const { t } = useTranslation();
 
   const onChange = (item: any) => {
     message.loading(t('团队切换中...'), 0.3);
@@ -32,8 +29,8 @@ const OrgUI = ({ org }: IProps) => {
   };
 
   useEffect(() => {
-    getTeams({ limit: 100 }).then((response) => {
-      setOrgs(response.results.filter((item: any) => !(item.status > STATUS_ENUM.ACTIVE)));
+    getTeams({ limit: 100 }).then(({ results }) => {
+      setOrgs((results as any[]).filter((item: any) => !(item.status > OrgStatusEnum.ACTIVE)));
     });
   }, []);
 
@@ -57,9 +54,9 @@ const OrgUI = ({ org }: IProps) => {
     >
       <div>
         <Avatar size={24} style={{ marginRight: 8 }}>
-          {org.name}
+          {name[0].toUpperCase()}
         </Avatar>
-        <span className={s.curOrg}>{org.name}</span>
+        <span className={s.curOrg}>{name}</span>
         <span className={s.curLanguage}>
           <AngleRight />
         </span>

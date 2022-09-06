@@ -20,7 +20,7 @@ import UserIcon from 'coding-oa-uikit/lib/icon/User';
 
 import { getQuery, getProjectMembers } from '@src/utils';
 import Copy from '@src/components/copy';
-import { DEFAULT_PAGER } from '@src/common/constants';
+import { DEFAULT_PAGER } from '@src/constant';
 // import { getProjectRouter } from '@src/utils/getRoutePath';
 import { getIssues, handleIssues, updateIssuesAuthor } from '@src/services/projects';
 import { getLintConfig, getCheckPackages } from '@src/services/schemes';
@@ -355,10 +355,10 @@ const Issues = (props: IssuesProps) => {
           />
           <Column
             title="规则"
-            dataIndex="checkrule_display_name"
-            key="checkrule_display_name"
+            dataIndex="checkrule_real_name"
+            key="checkrule_real_name"
             sorter
-            sortOrder={sort.key === 'checkrule_display_name' ? sort.order : undefined}
+            sortOrder={sort.key === 'checkrule_real_name' ? sort.order : undefined}
             render={(name: any, item: any) => (
               <Tooltip title={item.msg}>
                 <span>{name}</span>
@@ -440,12 +440,11 @@ const Issues = (props: IssuesProps) => {
         </Table>
       </div>
       <IssueModal
-        curSchemeId={curScheme}
         visible={issueModal.visible}
         issueId={issueModal.issueId}
-        isFirstIssue={issueModal.isFirstIssue}
-        isLastIssue={issueModal.isLastIssue}
-        params={[orgSid, teamName, repoId, projectId]}
+        issuesData={data}
+        listLoading={loading}
+        params={[orgSid, teamName, repoId, projectId, curScheme]}
         prevIssue={prevIssue}
         nextIssue={nextIssue}
         onClose={onCloseIssueModal}
@@ -457,7 +456,9 @@ const Issues = (props: IssuesProps) => {
         title="批量修改责任人"
         onCancel={() => setUpdateAuthorVsb(false)}
         afterClose={() => form.resetFields()}
-        onOk={() => form.validateFields().then(updateAuthor)}
+        onOk={() => {
+          form.validateFields().then(updateAuthor);
+        }}
       >
         <Form
           form={form}

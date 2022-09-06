@@ -49,6 +49,8 @@ const CreatSchemeModal = (props: IProps) => {
 
     if (data.createType === 'create') {
       const { funcList = [] } = data;
+      // 开源版需要隐藏tag，默认赋予tag Codedog_Linux
+      const tag = tags.filter(item => item.public && item.name === 'Codedog_Linux').pop() || tags.pop();
       createScheme(orgSid, teamName, repoId, {
         ...pick(data, ['name', 'languages', 'tag']),
         ...SCAN_LIST.map(item => ({ [item.value]: funcList.includes(item.value) })).reduce(
@@ -59,6 +61,7 @@ const CreatSchemeModal = (props: IProps) => {
         envs: null,
         pre_cmd: null,
         name: trim(data.name),
+        tag: tag.name || 'Codedog_Linux',
       }).then((res) => {
         message.success('创建成功');
         callback(res.scan_scheme);
@@ -83,7 +86,9 @@ const CreatSchemeModal = (props: IProps) => {
       visible={visible}
       onCancel={onClose}
       afterClose={() => form.resetFields()}
-      onOk={() => form.validateFields().then(onFinish)}
+      onOk={() => {
+        form.validateFields().then(onFinish);
+      }}
     >
       <Form layout="vertical" form={form} onFinish={onFinish}>
         <Form.Item

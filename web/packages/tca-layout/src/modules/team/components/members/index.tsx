@@ -1,88 +1,67 @@
-// Copyright (c) 2021-2022 THL A29 Limited
-//
-// This source code file is made available under MIT License
-// See LICENSE for details
-// ==============================================================================
-
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import copy2Clipboard from 'copy-to-clipboard';
-
-import { Input, Button, Avatar, Modal, Row, Col, message, Tag } from 'coding-oa-uikit';
+import { get } from 'lodash';
+import { Input, Button, Modal, Row, Col, message, Tag } from 'coding-oa-uikit';
 import PlusCircleIcon from 'coding-oa-uikit/lib/icon/PlusCircle';
-import UserIcon from 'coding-oa-uikit/lib/icon/User';
 import CloseCircleIcon from 'coding-oa-uikit/lib/icon/CloseCircle';
+import { DangerModal } from '@tencent/micro-frontend-shared/component/modal';
+import UserAvatar from '@tencent/micro-frontend-shared/component/user-avatar';
 
-import { t } from '@src/i18n/i18next';
+import { OrgMemberRoleEnum, ORG_MEMBER_ROLE_INFO } from '@src/constant';
 import { getTeamMember, getInviteCode, removeMember } from '@src/services/team';
-import DangerModal from '@src/components/modal/danger-modal';
-import { gUserImgUrl, getUserName } from '@src/utils';
-
+import { getNickName, getUserAvatarURL } from '@src/utils';
 import style from './style.scss';
 
-const PERM_ENUM = {
-  ADMIN: 1,
-  USER: 2,
-};
-
-const PERM_CHOICES = {
-  [PERM_ENUM.ADMIN]: {
-    tit: t('管理员'),
-    desc: t('（具备团队内全部权限，请谨慎赋予管理员权限）'),
-  },
-  [PERM_ENUM.USER]: {
-    tit: t('普通成员'),
-    desc: t('（具备团队内部分查看、创建项目等相关权限）'),
-  },
-};
-
-interface IMemberItem {
+interface MemberItemProps {
   role: number;
   list: Array<any>;
   onAddMemberClick: (role: number) => void;
   onRemoveMemberClick: (role: number, userinfo: any) => void;
 }
 
-const MemberItem = ({ list, role, onAddMemberClick, onRemoveMemberClick }: IMemberItem) => (
-  <div className={style.memberItem}>
-    <div className={style.title}>
-      {PERM_CHOICES[role].tit}
-      <small className=" text-grey-7">{PERM_CHOICES[role].desc}</small>
-    </div>
-    <Row gutter={[16, 16]} align="middle" className={style.group}>
-      <Col xl={6} lg={8} md={12} sm={24}>
-        <Button
-          type="link"
-          icon={<PlusCircleIcon />}
-          onClick={() => onAddMemberClick(role)}
-        >
-          {t('邀请成员')}
-        </Button>
-      </Col>
-      {list.map((userinfo: any) => (
-        <Col xl={6} lg={8} md={12} sm={24} key={userinfo.username}>
-          <Avatar
-            size="small"
-            src={gUserImgUrl(userinfo.username)}
-            alt={userinfo.nickname}
-            icon={<UserIcon />}
-          />
-          <span className="ml-sm mr-xs">{userinfo.nickname}</span>
+const MemberItem = ({ list, role, onAddMemberClick, onRemoveMemberClick }: MemberItemProps) => {
+  const { t } = useTranslation();
+  const { tit, desc }: any = get(ORG_MEMBER_ROLE_INFO, role, {});
+  return (
+    <div className={style.memberItem}>
+      <div className={style.title}>
+        {tit}
+        <small className=" text-grey-7">{desc}</small>
+      </div>
+      <Row gutter={[16, 16]} align="middle" className={style.group}>
+        <Col xl={6} lg={8} md={12} sm={24}>
           <Button
-            disabled={role === PERM_ENUM.ADMIN && list.length <= 1}
-            type="text"
-            icon={<CloseCircleIcon />}
-            size="small"
-            onClick={() => onRemoveMemberClick(role, userinfo)}
-          />
+            type="link"
+            icon={<PlusCircleIcon />}
+            onClick={() => onAddMemberClick(role)}
+          >
+            {t('邀请成员')}
+          </Button>
         </Col>
-      ))}
-    </Row>
-  </div>
-);
+        {list.map((userinfo: any) => {
+          const { avatar, avatar_url: avatarUrl } = userinfo;
+          const url = avatar || avatarUrl || getUserAvatarURL(userinfo);
+          return (
+            <Col xl={6} lg={8} md={12} sm={24} key={userinfo.username}>
+              <UserAvatar size="small" url={url} nickname={getNickName(userinfo)} />
+              <Button
+                disabled={role === OrgMemberRoleEnum.ADMIN && list.length <= 1}
+                type="text"
+                icon={<CloseCircleIcon />}
+                size="small"
+                onClick={() => onRemoveMemberClick(role, userinfo)}
+              />
+            </Col>
+          );
+        })}
+      </Row>
+    </div>
+  );
+};
 
 const Members = () => {
-  const { orgSid }: any = useParams();
   const [members, setMembers] = useState<any>({
     admins: [],
     users: [],
@@ -92,6 +71,9 @@ const Members = () => {
   const [removeVisb, setRemoveVisb] = useState(false);
   const [removeUser, setRemoveUser] = useState<any>(null);
 
+  const { orgSid }: any = useParams();
+  const { t } = useTranslation();
+
   useEffect(() => {
     if (orgSid) {
       getTeamMember(orgSid).then((response: any) => {
@@ -100,16 +82,18 @@ const Members = () => {
     }
   }, [orgSid]);
 
+  /** 邀请成员，生成邀请链接 */
   const onAddMemberHandle = (role: number) => {
-    getInviteCode(orgSid, { role }).then((response) => {
-      const inviUrl = `${window.location.origin}/t/invite/${encodeURIComponent(response.invite_code)}`;
+    getInviteCode(orgSid, { role }).then(({ invite_code: inviteCode }) => {
+      const inviUrl = `${window.location.origin}/t/invite/${encodeURIComponent(inviteCode)}`;
       setInviteUrl(inviUrl);
       setInviteVisb(true);
     });
   };
 
+  /** 移除成员 */
   const onRemoveMemberRequest = (role: number, userinfo: any) => {
-    if (role === PERM_ENUM.ADMIN && members.admins && members.admins.length <= 1) {
+    if (role === OrgMemberRoleEnum.ADMIN && members.admins.length <= 1) {
       message.warning('团队不能没有任何管理员，禁止删除');
     } else if (userinfo) {
       removeMember(orgSid, role, userinfo.username).then(() => {
@@ -169,8 +153,8 @@ const Members = () => {
               确定移除{' '}
               <Tag color="default">
                 <b>
-                  {PERM_CHOICES[removeUser?.role]?.tit}:{' '}
-                  {getUserName(removeUser?.userinfo)}
+                  {get(ORG_MEMBER_ROLE_INFO, `${removeUser.role}.tit`, ' ')}
+                  {getNickName(removeUser.userinfo)}
                 </b>
               </Tag>{' '}
               {t('？')}
@@ -180,13 +164,13 @@ const Members = () => {
       />
       <MemberItem
         list={members.admins}
-        role={PERM_ENUM.ADMIN}
+        role={OrgMemberRoleEnum.ADMIN}
         onAddMemberClick={onAddMemberHandle}
         onRemoveMemberClick={onRemoveMemberHandle}
       />
       <MemberItem
         list={members.users}
-        role={PERM_ENUM.USER}
+        role={OrgMemberRoleEnum.USER}
         onAddMemberClick={onAddMemberHandle}
         onRemoveMemberClick={onRemoveMemberHandle}
       />

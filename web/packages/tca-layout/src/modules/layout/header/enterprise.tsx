@@ -1,23 +1,21 @@
-// Copyright (c) 2021-2022 THL A29 Limited
-//
-// This source code file is made available under MIT License
-// See LICENSE for details
-// ==============================================================================
-
 import React, { useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import classnames from 'classnames';
-import { Breadcrumb, Select } from 'coding-oa-uikit';
+import { Tag, Breadcrumb, Select, Space } from 'coding-oa-uikit';
 import AngleRight from 'coding-oa-uikit/lib/icon/AngleRight';
-import { filter } from 'lodash';
 
 // 项目内
-import { getHomeRouter, getTeamRouter, getTeamsRouter, getProjectRouter } from '@src/utils/getRoutePath';
-import { enterpriseInfo } from '@src/utils/config';
+import { getMetaContent } from '@tencent/micro-frontend-shared/util';
+import { getTeamRouter, getTeamsRouter, getProjectRouter, getHomeRouter } from '@src/utils/getRoutePath';
+import HomeSvg from '@src/images/home.svg';
+import LogoIco from '@src/images/favicon.ico';
 import { getProjects } from '@src/services/team';
 
 // 模块内
 import s from './style.scss';
+
+// 通过meta版本名称来定义是否显示Tag
+const VERSION_NAME = getMetaContent('VERSION_NAME');
 
 const { Option } = Select;
 
@@ -35,10 +33,8 @@ const Enterprise = ({ org, orgSid, teamName }: IProps) => {
   useEffect(() => {
     // 团队变更时重新获取项目列表
     if (org.org_sid && teamName) {
-      getProjects(org.org_sid, null).then((response) => {
-        // 只显示未禁用的项目
-        const activeProjects = filter(response, {status: 1});
-        setProjectOptions(activeProjects.map((item: any) => ({
+      getProjects(org.org_sid, null).then((response: any[]) => {
+        setProjectOptions(response.map((item: any) => ({
           ...item,
           label: item.display_name,
           value: item.name,
@@ -84,9 +80,10 @@ const Enterprise = ({ org, orgSid, teamName }: IProps) => {
     }
     return (
       <Breadcrumb.Item>
-        <div className={s.enterpriseName}>
-          {enterpriseInfo.name}
-        </div>
+        <Space>
+          <strong className='text-grey-8 inline-block vertical-middle'>腾讯云代码分析</strong>
+          {VERSION_NAME && <Tag>{VERSION_NAME}</Tag>}
+        </Space>
       </Breadcrumb.Item>
     );
   };
@@ -101,11 +98,11 @@ const Enterprise = ({ org, orgSid, teamName }: IProps) => {
         onMouseLeave={() => setHoveredLogo(false)}
       >
         <img
-          src={org.org_logo_url || enterpriseInfo.logo}
+          src={org.org_logo_url || LogoIco}
           className={classnames({ [s.hidden]: hoveredLogo })}
         />
         <img
-          src={enterpriseInfo.home_logo}
+          src={HomeSvg}
           className={classnames({ [s.hidden]: !hoveredLogo })}
         />
       </Link>

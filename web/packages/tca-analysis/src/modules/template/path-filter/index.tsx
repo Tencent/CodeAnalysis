@@ -27,7 +27,7 @@ import {
   syncScheme,
 } from '@src/services/template';
 
-import { DEFAULT_PAGER } from '@src/common/constants';
+import { DEFAULT_PAGER } from '@src/constant';
 
 import List from './list';
 import PathOperation from './path-operation';

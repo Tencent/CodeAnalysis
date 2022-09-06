@@ -48,7 +48,9 @@ const UpdateModal = (props: IProps) => {
       width={520}
       className={style.addPathModal}
       okText={isEditModal ? '确定' : '添加'}
-      onOk={() => form.validateFields().then(onFinish)}
+      onOk={() => {
+        form.validateFields().then(onFinish);
+      }}
     // afterClose={() => form.resetFields()}
     >
       <Form

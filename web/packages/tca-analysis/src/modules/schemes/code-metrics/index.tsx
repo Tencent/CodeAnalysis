@@ -21,56 +21,56 @@ import style from './style.scss';
 import formStyle from '../style.scss';
 
 const defaultValues = {
-    min_ccn: 20,
-    dup_block_length_min: 120,
-    dup_min_dup_times: 2,
-    dup_issue_limit: 1000,
+  min_ccn: 20,
+  dup_block_length_min: 120,
+  dup_min_dup_times: 2,
+  dup_issue_limit: 1000,
 };
 
 const layout = {
-    labelCol: { span: 5 },
-    wrapperCol: { span: 19 },
+  labelCol: { span: 5 },
+  wrapperCol: { span: 19 },
 };
 
 interface CodeMetricsProps {
-    repoId: number;
-    schemeId: number;
-    orgSid: string;
-    teamName: string;
+  repoId: number;
+  schemeId: number;
+  orgSid: string;
+  teamName: string;
 }
 
 const CodeMetrics = (props: CodeMetricsProps) => {
-    const { orgSid, teamName, repoId, schemeId } = props;
-    const [form] = Form.useForm();
-    const [data, setData] = useState<any>({});
+  const { orgSid, teamName, repoId, schemeId } = props;
+  const [form] = Form.useForm();
+  const [data, setData] = useState<any>({});
 
-    useEffect(() => {
-        getCodeMetrics(orgSid, teamName, repoId, schemeId).then((response: any) => {
-            setData(response);
-            form.resetFields();
-        });
-    }, [schemeId]);
+  useEffect(() => {
+    getCodeMetrics(orgSid, teamName, repoId, schemeId).then((response: any) => {
+      setData(response);
+      form.resetFields();
+    });
+  }, [schemeId]);
 
-    const update = (formData: any, info: string) => {
-        updateCodeMetrics(orgSid, teamName, repoId, schemeId, {
-            ...data,
-            ...formData,
-        }).then((response: any) => {
-            message.success(`${info}成功`);
-            setData(response);
-            form.resetFields();
-        });
-    };
+  const update = (formData: any, info: string) => {
+    updateCodeMetrics(orgSid, teamName, repoId, schemeId, {
+      ...data,
+      ...formData,
+    }).then((response: any) => {
+      message.success(`${info}成功`);
+      setData(response);
+      form.resetFields();
+    });
+  };
 
-    const onFinish = (formData: any) => {
-        update({
-            ...formData,
-            ...defaultValues,
-            ...pickBy(formData, key => isNumber(key)),
-        }, '更新');
-    };
+  const onFinish = (formData: any) => {
+    update({
+      ...formData,
+      ...defaultValues,
+      ...pickBy(formData, key => isNumber(key)),
+    }, '更新');
+  };
 
-    return (
+  return (
         <Form
             labelAlign="left"
             className={cn(style.codeMetrics, formStyle.schemeFormVertical)}
@@ -92,7 +92,7 @@ const CodeMetrics = (props: CodeMetricsProps) => {
                     size='small'
                     checked={data.cc_scan_enabled}
                     onChange={(checked: boolean) => update({
-                        cc_scan_enabled: checked,
+                      cc_scan_enabled: checked,
                     }, `圈复杂度${checked ? '开启' : '关闭'}`)}
                 />
             </Form.Item>
@@ -134,7 +134,7 @@ const CodeMetrics = (props: CodeMetricsProps) => {
                     size='small'
                     checked={data.dup_scan_enabled}
                     onChange={(checked: boolean) => update({
-                        dup_scan_enabled: checked,
+                      dup_scan_enabled: checked,
                     }, `重复代码${checked ? '开启' : '关闭'}`)}
                 />
             </Form.Item>
@@ -232,7 +232,7 @@ const CodeMetrics = (props: CodeMetricsProps) => {
                     size='small'
                     checked={data.cloc_scan_enabled}
                     onChange={(checked: boolean) => update({
-                        cloc_scan_enabled: checked,
+                      cloc_scan_enabled: checked,
                     }, `代码统计${checked ? '开启' : '关闭'}`)}
                 />
             </Form.Item>
@@ -242,7 +242,7 @@ const CodeMetrics = (props: CodeMetricsProps) => {
                 <Button onClick={() => form.resetFields()}>取消</Button>
             </Form.Item>
         </Form>
-    );
+  );
 };
 
 export default CodeMetrics;

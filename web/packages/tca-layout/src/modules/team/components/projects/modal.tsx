@@ -1,11 +1,5 @@
-// Copyright (c) 2021-2022 THL A29 Limited
-//
-// This source code file is made available under MIT License
-// See LICENSE for details
-// ==============================================================================
-
 import React from 'react';
-import { t } from '@src/i18n/i18next';
+import { useTranslation } from 'react-i18next';
 
 import { Modal, Form, Input, message } from 'coding-oa-uikit';
 import { createProject } from '@src/services/team';
@@ -19,11 +13,12 @@ interface CreateProjectProps {
 
 const CreateProject = (props: CreateProjectProps) => {
   const { orgSid, visible, onClose, callback } = props;
+  const { t } = useTranslation();
   const [form] = Form.useForm();
 
   const onFinish = (formData: any) => {
     createProject(orgSid, formData).then(() => {
-      message.success('创建成功');
+      message.success(t('创建成功'));
       onClose();
       callback();
     });
@@ -31,13 +26,15 @@ const CreateProject = (props: CreateProjectProps) => {
 
   return (
     <Modal
-      title='创建项目'
+      title={t('创建项目')}
       width={520}
       visible={visible}
       // okButtonProps={{ loading }}
       afterClose={form.resetFields}
       onCancel={onClose}
-      onOk={() => form.validateFields().then(onFinish)}
+      onOk={() => {
+        form.validateFields().then(onFinish);
+      }}
     >
       <Form layout={'vertical'} form={form}>
         <Form.Item
@@ -51,7 +48,7 @@ const CreateProject = (props: CreateProjectProps) => {
             message: t('仅支持英文、数字、中划线或下划线'),
           }]}
         >
-          <Input placeholder="仅支持英文、数字、中划线或下划线" />
+          <Input placeholder={t('仅支持英文、数字、中划线或下划线')} />
         </Form.Item>
         <Form.Item
           name="display_name"

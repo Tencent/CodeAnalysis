@@ -73,15 +73,21 @@ export const RULE_CATEGORY_CHOICES = {
 
 export const RULE_CATEGORY_OPTIONS = generateOptions(RULE_CATEGORY_CHOICES);
 
-export enum ToolLibTypeEnum {
-  PRIVATE = 'private',
-  PUBLIC = 'public'
+enum LibEnvEnum {
+  LINUX = 'linux',
+  MAC = 'mac',
+  WINDOWS = 'windows',
+  ARM64_LINUX = 'linux_arm64'
 }
 
-export const TOOLLIB_TYPE_CHOICES = {
-  [ToolLibTypeEnum.PRIVATE]: '私有',
-  [ToolLibTypeEnum.PUBLIC]: '公共',
+export const LIB_ENV = {
+  [LibEnvEnum.LINUX]: 'Linux',
+  [LibEnvEnum.MAC]: 'Mac',
+  [LibEnvEnum.WINDOWS]: 'Windows',
+  [LibEnvEnum.ARM64_LINUX]: 'Linux ARM64',
 };
+
+export const LIB_ENV_OPTIONS = generateOptions(LIB_ENV, false);
 
 export enum ToolStatusEnum {
   RUNNING = 0,

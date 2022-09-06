@@ -1,56 +1,45 @@
-// Copyright (c) 2021-2022 THL A29 Limited
-//
-// This source code file is made available under MIT License
-// See LICENSE for details
-// ==============================================================================
-
-/**
- * 凭证创建/更新弹框
- */
 import React, { useEffect } from 'react';
-import { toNumber } from 'lodash';
+import { useTranslation } from 'react-i18next';
 import { Modal, Form, Input, Select, message } from 'coding-oa-uikit';
 
 // 项目内
-import { t } from '@src/i18n/i18next';
-import { postScmAccounts, putScmAccount, addSSHInfo, updateSSHInfo } from '@src/services/user';
-import { AUTH_TYPE, AUTH_TYPE_OPTIONS, SCM_PLATFORM } from '@src/utils/constant';
+import { AuthTypeEnum, AUTH_TYPE_OPTIONS, ScmPlatformEnum, SCM_PLATFORM_OPTIONS } from '@src/constant';
+import { UserAPI } from '@plat/api';
 
-interface IProps {
+interface AuthModalProps {
   visible: boolean;
   onOk: () => void;
   onCancel: () => void;
   authinfo?: any;
 }
 
-const AuthModal = (props: IProps) => {
-  const { visible, onOk, authinfo, onCancel } = props;
+const AuthModal = ({ visible, onOk, authinfo, onCancel }: AuthModalProps) => {
   const [form] = Form.useForm();
   const isUpdate = !!authinfo;
+  const { t } = useTranslation();
 
   // 设置默认表单scm_username字段内容
   useEffect(() => {
     if (visible) {
       form.resetFields();
-      // form.setFieldsValue({ scm_username: authinfo ? authinfo.scm_username : null });
     }
   }, [visible]);
 
-  /**
-     * http凭证请求操作
-     * @param formData 参数
-     */
+  /** http凭证请求操作 */
   const onHttpAuthRequest = (formData: any) => {
     if (authinfo) {
-      return putScmAccount(authinfo.id, formData).then(() => {
-        message.success(t('已更新凭证'));
-      });
+      return UserAPI.authAccount().update(authinfo.id, formData)
+        .then(() => {
+          message.success(t('已更新凭证'));
+        });
     }
-    return postScmAccounts(formData).then(() => {
-      message.success(t('已录入一条新凭证'));
-    });
+    return UserAPI.authAccount().create(formData)
+      .then(() => {
+        message.success(t('已录入一条新凭证'));
+      });
   };
 
+  /** ssh凭证请求操作 */
   const onSSHAuthRequest = (formData: any) => {
     const data = {
       ...formData,
@@ -59,22 +48,21 @@ const AuthModal = (props: IProps) => {
     };
 
     if (authinfo) {
-      return updateSSHInfo(authinfo.id, data).then(() => {
-        message.success(t('已更新凭证'));
-      });
+      return UserAPI.authSSH().update(authinfo.id, data)
+        .then(() => {
+          message.success(t('已更新凭证'));
+        });
     }
-    return addSSHInfo(data).then(() => {
-      message.success(t('已录入一条新凭证'));
-    });
+    return UserAPI.authSSH().create(data)
+      .then(() => {
+        message.success(t('已录入一条新凭证'));
+      });
   };
 
-  /**
-     * 表单保存操作
-     * @param formData 参数
-     */
+  /** 表单保存操作 */
   const onSubmitHandle = () => {
     form.validateFields().then((formData) => {
-      const promise = formData.auth_type === AUTH_TYPE.HTTP
+      const promise = formData.auth_type === AuthTypeEnum.HTTP
         ? onHttpAuthRequest(formData)
         : onSSHAuthRequest(formData);
       promise.then(() => {
@@ -98,8 +86,8 @@ const AuthModal = (props: IProps) => {
         form={form}
         initialValues={
           authinfo || {
-            auth_type: AUTH_TYPE.HTTP,
-            scm_platform: 1,
+            auth_type: AuthTypeEnum.HTTP,
+            scm_platform: ScmPlatformEnum.TGIT,
           }
         }
       >
@@ -115,7 +103,7 @@ const AuthModal = (props: IProps) => {
           shouldUpdate={(prevValues, currentValues) => prevValues.auth_type !== currentValues.auth_type
           }
         >
-          {({ getFieldValue }) => (getFieldValue('auth_type') === AUTH_TYPE.SSH ? (
+          {({ getFieldValue }) => (getFieldValue('auth_type') === AuthTypeEnum.SSH ? (
             <>
               <Form.Item
                 name="name"
@@ -174,16 +162,14 @@ const AuthModal = (props: IProps) => {
                 name="scm_platform"
                 label={t('凭证来源平台')}
               >
-                <Select options={Object.entries(SCM_PLATFORM).map(([value, label]) => ({
-                  value: toNumber(value), label,
-                }))} />
+                <Select options={SCM_PLATFORM_OPTIONS} />
               </Form.Item>
               <Form.Item
                 noStyle
                 shouldUpdate={(prevValues, currentValues) => prevValues.scm_platform !== currentValues.scm_platform
                 }
               >
-                {({ getFieldValue }) => getFieldValue('scm_platform') === 1 && (
+                {({ getFieldValue }) => getFieldValue('scm_platform') === 7 && (
                   <Form.Item
                     name="scm_platform_desc"
                     label={t('其他凭证来源平台说明')}

@@ -16,7 +16,7 @@ import SyntaxHighlighter from 'react-syntax-highlighter';
 import Loading from '@src/components/loading';
 import SelectBorderless from '@src/components/select-borderless';
 import { getIssueDetail, getCodeFile, getProjectDetail } from '@src/services/projects';
-import themes from '@src/common/highlight-theme';
+import themes from '@src/constant/highlight-theme';
 
 import DetailRight from './detail-right';
 
@@ -30,7 +30,7 @@ const Detail = () => {
   const [project, setProject] = useState({}) as any;
   const [theme, setTheme] = useState('default-style');
   const [curLine, setCurLine] = useState(-1);
-  const { org_sid: orgSid, team_name: teamName } = params;
+  const { orgSid, teamName } = params;
 
   let highlightTheme = {};
   try {

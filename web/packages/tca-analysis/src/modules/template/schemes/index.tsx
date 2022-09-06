@@ -14,7 +14,7 @@ import { Table } from 'coding-oa-uikit';
 import { get } from 'lodash';
 
 import { getSchemeRouter } from '@src/utils/getRoutePath';
-import { DEFAULT_PAGER } from '@src/common/constants';
+import { DEFAULT_PAGER } from '@src/constant';
 import { getSchemeList } from '@src/services/template';
 
 import style from '../style.scss';
