@@ -56,6 +56,8 @@ urlpatterns = [
          apis.CheckRuleListAPIView.as_view()),
     path("allrules/<int:checkrule_id>/",
          apis.CheckRuleDetailAPIView.as_view()),
+    path("allrules/byname/",
+         apis.CheckRuleDetailByNameAPIView.as_view()),
     path("checkprofile/", include(checkprofile_urlpatterns)),
     path("checkprofile/checkpackages/", include(checkpackage_urlpatterns)),
 ]

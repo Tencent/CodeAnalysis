@@ -15,6 +15,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import generics, status
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.exceptions import ParseError, NotFound
 
 # 项目内
 from apps.scan_conf import models
@@ -202,6 +203,7 @@ class ScanSchemeCheckProfileRuleCreateAPIView(ScanSchemeCheckProfileRuleBatch):
     ```python
     {
       "checkrules": [x], # int, 规则id
+      "checktool": xx # int, 工具id，可选，如果存在checktool, 则一键添加该工具所有规则，忽略 checkrules
     }
     ```
     """
@@ -209,9 +211,15 @@ class ScanSchemeCheckProfileRuleCreateAPIView(ScanSchemeCheckProfileRuleBatch):
 
     def post(self, request, *args, **kwargs):
         serializer, checkpackage, tool_key = self.get_and_check_batch_data(request)
+        checktool = serializer.validated_data.get("checktool")
         checkrules = serializer.validated_data.get("checkrules")
-        err_message = CheckPackageManager.add_rules(checkpackage, checkrules, request.user, tool_key=tool_key)
-        message = "已成功添加规则"
+        if checktool:
+            CheckPackageManager.add_checktool_rules(checkpackage, checktool, request.user, tool_key=tool_key)
+            err_message = []
+            message = "已成功添加工具规则"
+        else:
+            err_message = CheckPackageManager.add_rules(checkpackage, checkrules, request.user, tool_key=tool_key)
+            message = "已成功添加规则"
         return Response({
             "detail": message,
             "err_message": err_message
@@ -390,3 +398,33 @@ class CheckRuleDetailAPIView(generics.RetrieveAPIView, V3GetModelMixinAPIView):
     def get_queryset(self):
         tool_key = CheckToolManager.get_tool_key(org=self.get_org())
         return CheckRuleManager.filter_pkg_usable(tool_keys=[tool_key])
+
+
+class CheckRuleDetailByNameAPIView(generics.RetrieveAPIView, V3GetModelMixinAPIView):
+    """分析方案-规则配置-有权限使用的规则详情接口，根据工具、规则名称获取规则详情
+
+    ### get
+    应用场景：根据工具name和规则real_name获取规则详情
+
+    ```python
+    {
+      checktool_name: '工具真实名称',
+      checkrule_real_name: '规则真实名称
+    }
+    ```
+    """
+    permission_classes = [SchemeDefaultPermission]
+    serializer_class = serializers.CheckRuleSerializer
+
+    def get_object(self):
+        query_params = self.request.query_params
+        checktool_name = query_params.get("checktool_name")
+        checkrule_real_name = query_params.get("checkrule_real_name")
+        if not checktool_name or not checkrule_real_name:
+            raise ParseError("checktool_name、checkrule_real_name参数必填")
+        tool_key = CheckToolManager.get_tool_key(org=self.get_org())
+        checkrule = CheckRuleManager.filter_pkg_usable(tool_keys=[tool_key]) \
+                                    .filter(checktool__name=checktool_name, real_name=checkrule_real_name).first()
+        if checkrule:
+            return checkrule
+        raise NotFound("没有找到该规则")
