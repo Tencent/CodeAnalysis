@@ -1,7 +1,7 @@
 [
     {
         "name": "tca_ql_cpp",
-        "display_name": "TCA_QL_CPP",
+        "display_name": "TCA-Armory-Q1",
         "description": "基于QL的代码静态分析工具，目前处于试用中, 非完整版",
         "license": "自研",
         "libscheme_set": [],
@@ -20,17 +20,17 @@
                 "real_name": "array_overflow",
                 "display_name": "ArrayOverFlow",
                 "severity": "error",
-                "category": "usability",
+                "category": "correctness",
                 "rule_title": "数组越界",
                 "rule_params": null,
                 "custom": false,
                 "languages": [
                     "cpp"
                 ],
-                "solution": "",
+                "solution": "检查index大小。",
                 "owner": "",
                 "labels": [],
-                "description": "数组长度只有10却访问第11个值",
+                "description": "#### array_overflow\narray_overflow 检查数组越界的情况。不正确的缓存区访问可能损坏内存，导致程序崩溃或读取到权限外的内存。\n\n##### 代码示例\n以下提供一个或多个array_overflow案例\n\n```\nvoid foo() {\n    int array[10];\n    int i = get();\n    // i = 9;\n    if (i > 8 && i <= length(array)) {  // Shoud be i < length(array)\n        array[i] = 1;  // defect: array[10] overflow\n    }\n    array[i] = 1;  // defect: array[10] overflow\n}\n\n\nvoid test(int i) {\n    int n= 10;\n    char *p = malloc(sizeof(int) * 10);\n    int y = n;\n    p[y] = 'a'; // defect: writing to buffer[y] overflow\n}\n```",
                 "disable": false
             },
             {
@@ -85,6 +85,74 @@
                 "disable": false
             },
             {
+                "real_name": "dead_lock",
+                "display_name": "DeadLock",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "死锁检查",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "使用lock_guard，规范锁顺序",
+                "owner": "",
+                "labels": [],
+                "description": "#### dead_lock\ndead_lock 如果发现文件内存在 mtx1 -> mtx2 的上锁顺序时，另存在mtx2 -> mtx1 的上锁顺序，视为死锁或存在死锁的可能，则会上报错误。\n死锁发生时程序将会卡死无法正常执行。\n\n##### 规则参数\n- better-lock: True or False 默认为 False\n\n##### 代码示例\n以下提供一个或多个 dead_lock 案例\n\n在下面代码中，函数 increase 以将 counter 加到 1000 为目的。但在线程 1 中第一次释放 mtx 后，线程 2 的 mtx 上锁，此时线程1等待线程2释放mtx，线程2等待线程1释放mtx2，形成死锁，程序卡死。\n```\nint counter = 0;\nstd::mutex mtx;\nstd::mutex mtx2;\nvoid increase() {\n    while (1) {\n        mtx.lock();\n        mtx2.lock();\n        mtx.unlock();\n        mtx.lock();  // defect: dead_lock\n        if (counter <= 1000)\n            counter++;\n        else\n            break;\n        mtx2.unlock();\n        mtx.unlock()\n    }\n}\n```\n\n在下面代码中 线程函数increase1存在mtx -> mtx2 的顺序，increase2顺序为 mtx2 -> mtx；视为出现死锁。\n```\nvoid increase1() {\n    while (1) {\n        mtx.lock();\n        mtx2.lock();\n        if (counter <= 1000)\n            counter++;\n        else\n            break;\n        mtx2.unlock();\n        mtx.unlock()\n    }\n}\nvoid increase2() {\n    while (1) {\n        mtx2.lock();\n        mtx.lock();  // defect: dead_lock; \n        if (counter <= 1000)\n            counter++;\n        else\n            break;\n        mtx2.unlock();\n        mtx.unlock()\n    }\n}\n```\n\n以下案例在`better-lock`参数为`True`时将会生效\n使用`better-lock`规则会检查在上锁期间若调用其他函数时将视为可能会出现预期之外的异常，且上锁期间应只做对全局变量操作以提升性能\n```\nvoid increase1() {\n    while (1) {\n        mtx.lock();\n        if (counter <= 1000)\n            counter++;\n        else\n            break;\n        read_counter(counter);  // defect: dead_lock\n        mtx.unlock()\n    }\n}\nvoid read_counter(counter){\n    std::cout << counter << std::endl;\n    do_something_more();\n}\nvoid increase1() {\n    while (1) {\n        std::lock_guard<std::mutex> lk(mtx);  // good: 使用lock_guard会自动上锁解锁将不会检查dead_lock\n        if (counter <= 1000)\n            counter++;\n        else\n            break;\n        read_counter(counter);\n    }\n}\n```",
+                "disable": false
+            },
+            {
+                "real_name": "function_override",
+                "display_name": "FunctionOverRide",
+                "severity": "warning",
+                "category": "correctness",
+                "rule_title": "非虚函数重写检查",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "确认重写是否时期望之内的，是否为误写",
+                "owner": "",
+                "labels": [],
+                "description": "期望只有虚函数可以进行重写操作，非虚函数禁止重写，非虚函数重写时可能为误写，需要确认。\n例如：\n```\nclass father{\n    public:\n\n        virtual void test(){ std::cout<<\"hello\";};\n\n        void test2(){ std::cout<<\"hello\";};\n};\n\nclass son: public father{\n    public:\n\n        void test(){ std::cout<<\"hi\";};    // good test 为虚函数\n\n        void test2(){ std::cout<<\"hi\";};    // bad test2 不是虚函数\n};\n```",
+                "disable": false
+            },
+            {
+                "real_name": "func_ret_null",
+                "display_name": "FuncRetNull",
+                "severity": "warning",
+                "category": "usability",
+                "rule_title": "函数返回值空指针检查",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "使用函数返回值前先判断是否为nullptr",
+                "owner": "",
+                "labels": [],
+                "description": "当函数存在nullptr返回值时，在调用该函数的地方必须判断指针是否为空。",
+                "disable": false
+            },
+            {
+                "real_name": "func_ret_null_full",
+                "display_name": "FuncRetNullFull",
+                "severity": "warning",
+                "category": "usability",
+                "rule_title": "函数返回值空指针全量检查",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "使用前检查指针是否为空",
+                "owner": "",
+                "labels": [],
+                "description": "当函数存在nullptr返回值时，在调用该函数的地方必须判断指针是否为空。该规则会全量检查项目内调用，耗时会较长，简化版规则func_ret_null",
+                "disable": false
+            },
+            {
                 "real_name": "magic_number",
                 "display_name": "MagicNumber",
                 "severity": "info",
@@ -119,6 +187,23 @@
                 "disable": true
             },
             {
+                "real_name": "missing_lock",
+                "display_name": "MissingLock",
+                "severity": "error",
+                "category": "correctness",
+                "rule_title": "线程锁检查",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "访问变量时添加变量锁",
+                "owner": "",
+                "labels": [],
+                "description": "线程内更新变量时需要使用线程锁，避免出现预期外的异常。目前支持C++ thread, pthread 库。\n以下为示例代码\n```\nusing namespace std;\nint counter = 0;\nmutex mtx; // 保护counter\n\nvoid increase(int time) {\n    for (int i = 0; i < time; i++) {\n        // mtx.lock();\n        // lock_guard<mutex> lk(mtx);\n        counter++;  // 没有使用线程锁，出现变量冲突\n        // mtx.unlock();\n    }\n}\n\nint main(int argc, char** argv) {\n    std::thread t1(increase, 10000);\n    thread t2(increase, 10000);\n    t1.join();\n    t2.join();\n    cout << \"counter:\" << counter << endl;\n    return 0;\n}\n```",
+                "disable": false
+            },
+            {
                 "real_name": "nest",
                 "display_name": "Nest",
                 "severity": "info",
@@ -133,6 +218,23 @@
                 "owner": "",
                 "labels": [],
                 "description": "函数嵌套尽量不要超过5层，\n多的话建议拆分出其他函数\n以Go代码为例\n```\n// AddArea 添加成功或出错\nfunc (s *BookingService) AddArea(areas ...string) error {\n    s.Lock()\n    defer s.Unlock()\n    \n    for _, area := range areas {\n        for _, has := range s.areas {\n            if area == has {\n                return srverr.ErrAreaConflict\n            }\n        }\n        s.areas = append(s.areas, area)\n        s.areaOrders[area] = new(order.AreaOrder)\n    }\n    return nil\n}\n// 建议调整为这样：\n\n// AddArea 添加成功或出错\nfunc (s *BookingService) AddArea(areas ...string) error {\n    s.Lock()\n    defer s.Unlock()\n    \n    for _, area := range areas {\n        if s.HasArea(area) {\n            return srverr.ErrAreaConflict\n        }\n        s.areas = append(s.areas, area)\n        s.areaOrders[area] = new(order.AreaOrder)\n    }\n    return nil\n}\n\n// HasArea ...\nfunc (s *BookingService) HasArea(area string) bool {\n    for _, has := range s.areas {\n        if area == has {\n            return true\n        }\n    }\n    return false\n}\n```",
+                "disable": false
+            },
+            {
+                "real_name": "resource_leak",
+                "display_name": "ResourceLeak",
+                "severity": "error",
+                "category": "performance",
+                "rule_title": "资源泄漏",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "",
+                "owner": "",
+                "labels": [],
+                "description": "ResourceLeak用于检查代码中没有释放的系统资源，包含打开后未关闭的文件，分配内存后未释放的指针。\n下面提供c++代码示例:\n```\nint leak_example(int c) {\n  void *p = malloc(10);\n  if(c)\n    return -1;  // bad p is leak\n  free(p);\n  return 0;\n}\n\n\nint wrong_error_check() {\n  void *p = malloc(10);\n  void *q = malloc(20);\n  if(!p || !q)\n    return -1;  // bad p, q is leak\n  free(q);\n  free(p);\n  return 0;\n}\n\nint test(int i) {\n  void *p = malloc(10);\n  void *q = malloc(4);\n  if(i > 0)\n    p = q;  // bad p is leak\nelse\n    free(q);\n  free(p);\n  return 0; \n}\n\nvoid test(int c) {\n  FILE *p = fopen(\"foo.c\", \"rb\");\n  if(c)\n    return;       // bad p leak\n  fclose(p);\n}\n\n```",
                 "disable": false
             },
             {
@@ -153,6 +255,23 @@
                 "disable": false
             },
             {
+                "real_name": "unused_value",
+                "display_name": "UnusedValue",
+                "severity": "warning",
+                "category": "correctness",
+                "rule_title": "无用值检查",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "",
+                "owner": "",
+                "labels": [],
+                "description": "#### unused_value\nunused_value 检查那些赋予给变量的值是否正确被使用，存在连续两次赋予变量值的情况，视为第一次赋予的值未被正确使用，报出错误。\n两次连续赋值可能存在条件控制语句出现错误、变量名拼写错误等情况。\n##### 代码示例\n以下提供一个或多个unused_value案例\n\n以下函数会因为key的不同去不一样的神明，但实际上 Zeus Hades却永远不会使用到。\n```\nconst char* key_value(const int key) {\n    const char * value = 0;\n    if (key != 0) {\n        value = \"Zeus\";\n    } else if (key != 1) {\n        value = \"Hades\";\n    } \n    if (key != 2) { // Should be 'else if' here.\n        value = \"Poseidon\";  // defect: unused_value Zeus Hades  never used\n    }\n    else {\n        value = \"Unknow\n    }\n    return result;\n}\n```\n以下继续提供几个unused_value代码\n```\nconst char* key_value1(const int key) {\n    const char * value = 0;\n    value = \"Zeus\";  // defect: Zeus never used\n    if (key == 1) {\n        value = \"Hades;\n    } else if (key == 2) {\n        value = \"Poseidon\";\n    } else {  // May else need not be here\n        value = \"Unknow\";\n    }\n    return value\n}\n\nconst char* key_value2(const int key) {\n    const char * value = 0;\n    value = \"Zeus\";  // better Zeus used\n    if (key == 1) {\n        value = \"Hades;\n    } else if (key == 2) {\n        value = \"Poseidon\";\n    }\n    return value\n}\n\nconst char* key_value3(const int key) {\n    const char * value = 0;\n    if (key == 1) {\n        value = \"Hades;\n    } else {\n        value = \"Poseidon\";\n    }\n    value = \"Zeus\";  // defect: Hades Poseidon never used\n    return value\n}\n```",
+                "disable": false
+            },
+            {
                 "real_name": "use_after_release",
                 "display_name": "UAR",
                 "severity": "error",
@@ -166,8 +285,8 @@
                 "solution": "释放后需要使用必须重新分配内存",
                 "owner": "",
                 "labels": [],
-                "description": "指针释放后再次使用会出现空指针问题",
-                "disable": true
+                "description": "use_after_free 检查当指针已经被释放但在后续仍然使用该指针的情况。\n\n##### 代码示例\n以下提供一个或多个use_after_free代码案例\n\n通常情况下已经释放的指针只允许置空或重新指向新的值，不允许存在读取或作为函数参数使用。\n```\n\nvoid UAR() {\n    int* p = new int[];\n    p = get_array();\n    dosomething(p);\n    delete p;\n    p = NULL;  // allow\n    p = get_array();  // allow: get array again\n    delete p;\n    dosomething(p);  // defect: use as param\n    std::cout << \"p[0] = \" << p[0] << std::endl;  // defect: read p\n}\n```",
+                "disable": false
             }
         ],
         "open_user": true,

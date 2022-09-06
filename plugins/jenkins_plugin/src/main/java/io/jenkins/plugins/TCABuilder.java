@@ -27,13 +27,15 @@ import java.util.Properties;
 
 public class TCABuilder extends Builder implements SimpleBuildStep {
     private final String token;
-    private final String branchName;
     private final String languageType;
     private final String teamId;
     private final String projectName;
+    private final String branchName;
     private String codeAnalysisPath;
     private boolean total;
     public String isTotal;
+    public String language;
+    public String branch;
     private String osName;
     private final String refSchemeID;
     private final String scanPlan;
@@ -122,6 +124,19 @@ public class TCABuilder extends Builder implements SimpleBuildStep {
                 codeAnalysisPath = codeAnalysisPath + "/";
             }
         }
+
+        if(StringUtils.isNotBlank(languageType)){
+            language = " --language " + languageType;
+        }else{
+            language = "";
+        }
+
+        if(StringUtils.isNotBlank(branchName)){
+            branch = " --branch " + branchName;
+        }else{
+            branch = "";
+        }
+
         if(total) {
             isTotal = " --total";
         }else{
@@ -149,8 +164,8 @@ public class TCABuilder extends Builder implements SimpleBuildStep {
                                 teamId,
                                 projectName,
                                 localCodePath,
-                                branchName,
-                                languageType,
+                                branch,
+                                language,
                                 isTotal,
                 constant_refSchemeID,
                 constant_scanPlan,
@@ -193,7 +208,7 @@ public class TCABuilder extends Builder implements SimpleBuildStep {
 
         public FormValidation doCheckBranchName(@QueryParameter String value) throws IOException, ServletException {
             if (StringUtils.isBlank(value)){
-                return FormValidation.error("必填，需要扫描的分支名");
+                return FormValidation.warning("选填，需要扫描的分支名；如拉取代码时未指定分支，则该选项为必填");
             }
             return FormValidation.ok();
         }

@@ -1,119 +1,107 @@
-@import '@src/common/style/color.scss';
+@import "@tencent/micro-frontend-shared/style/color.scss";
 
 .project-list {
+  :global(.ant-table-thead > tr > th) {
+    border-top: none;
+  }
+
+  :global(.ant-table-tbody) {
+    & > tr {
+      td > .link-name {
+        color: $grey-8;
+      }
+
+      &:hover {
+        td > .link-name {
+          color: $blue-5 !important;
+        }
+      }
+    }
+  }
+
+  .link {
+    color: $blue-5;
+  }
+
+  .project-search {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     padding: 0 30px;
+    min-height: 48px;
+    border-bottom: 1px solid #dadfe6;
+    background-color: #fcfcfa;
 
-    :global(.ant-table) {
-        font-size: 13px;
+    .title {
+      display: inline-block;
+      font-size: 14px;
+      color: $grey-8;
+      margin-right: 16px;
+      margin-bottom: 0;
+      padding-right: 16px;
+      border-right: 1px solid #f0f0f0;
     }
 
-    :global(.ant-table-tbody) {
-        &>tr {
-            td>.link-name {
-                color: $grey-8;
-            }
-
-            &:hover {
-                td>.link-name {
-                    color: $blue-5 !important;
-                }
-            }
-        }
+    .search-item {
+      margin-right: 16px;
     }
-
-    :global(.ant-pagination) {
-        width: 100%;
-    }
-
-
-
-    .link {
-        color: $blue-5;
-    }
-
-    .project-search {
-        margin: 20px 0;
-
-        .title {
-            display: inline-block;
-            font-size: 18px;
-            color: $grey-8;
-
-            margin-right: 20px;
-            margin-bottom: 0;
-            padding-right: 20px;
-            border-right: 1px solid #f0f0f0;
-
-            .icon {
-                color: $grey-6;
-                margin-left: 4px;
-                margin-bottom: 3px;
-
-                &:hover {
-                    color: $grey-8;
-                }
-
-                cursor: pointer;
-            }
-        }
-
-        .search-item {
-            margin-right: 15px;
-        }
-    }
+  }
 }
 
+.project-content {
+  padding: 0 30px;
+}
 
 .nav {
-    .search-bar {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 0 30px;
-        height: 48px;
-        background-color: rgba($color: #fcfcfc, $alpha: 0.98);
-        box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.1),
-            0px 0.5px 0px 0px rgba(0, 0, 0, 0.08);
+  .search-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 30px;
+    height: 48px;
+    background-color: rgba($color: #fcfcfc, $alpha: 0.98);
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.1),
+      0px 0.5px 0px 0px rgba(0, 0, 0, 0.08);
+  }
+
+  .dropdown {
+    margin-right: 16px;
+  }
+
+  .tabs {
+    padding: 0 30px;
+
+    :global(.ant-tabs-tab) {
+      font-size: 16px;
+      padding: 12px 10px;
     }
 
-    .dropdown {
-        margin-right: 16px;
+    :global(.ant-tabs-nav) {
+      margin: 0;
     }
 
-    .tabs {
-        padding: 0 30px;
-
-        :global(.ant-tabs-tab) {
-            font-size: 16px;
-            padding: 12px 10px;
-        }
-
-        :global(.ant-tabs-nav) {
-            margin: 0;
-        }
-
-        :global(.ant-tabs-tabpane) {
-            position: relative;
-            min-height: 500px;
-        }
+    :global(.ant-tabs-tabpane) {
+      position: relative;
+      min-height: 500px;
     }
+  }
 }
 
 .new-project-modal {
-    .tmpl {
-        display: flex;
-        justify-content: space-between;
+  .tmpl {
+    display: flex;
+    justify-content: space-between;
 
-        .tmpl-tag {
-            color: $cyan-6;
-            border-color: $cyan-6;
-            background-color: #fff;
-            border-radius: 2px;
+    .tmpl-tag {
+      color: $cyan-6;
+      border-color: $cyan-6;
+      background-color: #fff;
+      border-radius: 2px;
 
-            &.sys {
-                color: $grey-7;
-                border: 1px solid $grey-7;
-            }
-        }
+      &.sys {
+        color: $grey-7;
+        border: 1px solid $grey-7;
+      }
     }
+  }
 }

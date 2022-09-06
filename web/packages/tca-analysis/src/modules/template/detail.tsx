@@ -32,7 +32,7 @@ const { TabPane } = Tabs;
 const Schemes = () => {
   const history = useHistory();
   const params: any = useParams();
-  const { org_sid: orgSid, team_name: teamName }: any = params;
+  const { orgSid, teamName }: any = params;
 
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState({}) as any;
@@ -45,7 +45,7 @@ const Schemes = () => {
 
   useEffect(() => {
     (async () => {
-      setTags(get(await getTags(), 'results', []));
+      setTags(get(await getTags(orgSid), 'results', []));
       setLanguages(get(await getLanguages(), 'results', []));
     })();
   }, []);

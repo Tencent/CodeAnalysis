@@ -8,15 +8,14 @@ import qs from 'qs';
 import { values, isEmpty } from 'lodash';
 import { message } from 'coding-oa-uikit';
 
-import fetch from '../utils/fetch';
-import { t } from '@src/i18n/i18next';
+import fetch from '@src/utils/fetch';
 import { reLogin } from '../utils';
 
 export const ERROR_CODE = -1;
 
 function jsonInterceptor(res: any) {
   if (res.status === 401) {
-    reLogin(t('登录失效，请重新登录...'));
+    reLogin('登录失效，请重新登录...');
     return Promise.reject();
   }
 
@@ -104,17 +103,14 @@ export function postFile(url: string, data?: any) {
     },
     body: JSON.stringify(data),
   })
-    .then(res => {
+    .then((res) => {
       if (res.status === 200) {
-        return Promise.resolve(res)
-      }
-      else if (res.status === 401) {
-        reLogin(t('登录失效，请重新登录...'));
+        return Promise.resolve(res);
+      } if (res.status === 401) {
+        reLogin('登录失效，请重新登录...');
         return Promise.reject();
       }
-      else {
-        return Promise.reject(res.json().then(errorInterceptor))
-      }
+      return Promise.reject(res.json().then(errorInterceptor));
     })
     .catch((err: any) => Promise.reject(err));
 }

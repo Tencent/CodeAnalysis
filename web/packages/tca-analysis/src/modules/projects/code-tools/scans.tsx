@@ -4,7 +4,6 @@
 // See LICENSE for details
 // ==============================================================================
 
-
 /**
  * 工具分析详情
  */
@@ -19,11 +18,13 @@ import { Button, Table, Avatar } from 'coding-oa-uikit';
 import RunningIcon from '@src/components/running-icon';
 import UserIcon from 'coding-oa-uikit/lib/icon/User';
 
-
 // import { getProjectRouter } from '@src/utils/getRoutePath';
-import { DEFAULT_PAGER } from '@src/common/constants';
-import { getCodeToolDetail, getCodeToolScans, getCodeToolParams } from '@src/services/projects';
-
+import { DEFAULT_PAGER } from '@src/constant';
+import {
+  getCodeToolDetail,
+  getCodeToolScans,
+  getCodeToolParams,
+} from '@src/services/projects';
 
 import { TOOLS_STATUS } from '../constants';
 
@@ -60,7 +61,6 @@ const Scans = (props: ScansProps) => {
     getScansList();
   }, [toolName]);
 
-
   const onChangePageSize = (page: number, pageSize: number) => {
     getScansList((page - 1) * pageSize, pageSize);
   };
@@ -69,9 +69,11 @@ const Scans = (props: ScansProps) => {
     getScansList(DEFAULT_PAGER.pageStart, size);
   };
 
-
-  const getScansList = async (offset = DEFAULT_PAGER.pageStart, limit = DEFAULT_PAGER.pageSize) => {
-    const res = await getCodeToolScans(projectId, toolName, { offset, limit }) || {};
+  const getScansList = async (
+    offset = DEFAULT_PAGER.pageStart,
+    limit = DEFAULT_PAGER.pageSize,
+  ) => {
+    const res =      (await getCodeToolScans(projectId, toolName, { offset, limit })) || {};
 
     setPager({
       pageSize: limit,
@@ -82,19 +84,24 @@ const Scans = (props: ScansProps) => {
     // setList(mockList.results);
   };
 
-
   const getToolStatus = (code: any) => {
     if (code >= 0 && code <= 99) {
       return 'success';
-    } if (code >= 100 && code <= 299) {
+    }
+    if (code >= 100 && code <= 299) {
       return 'failed';
-    } if (code >= 300 && code <= 399) {
+    }
+    if (code >= 300 && code <= 399) {
       return 'aborted';
     }
     return '';
   };
 
-  const { display_name: displayName, status, description } = toolDetail.checktool || {};
+  const {
+    display_name: displayName,
+    status,
+    description,
+  } = toolDetail.checktool || {};
 
   return (
     <div className={cn(style.toolCommon, style.toolDetail)}>
@@ -105,7 +112,9 @@ const Scans = (props: ScansProps) => {
             {TOOLS_STATUS[status]}
           </span>
         </div>
-        <Button type='primary' onClick={() => setVisible(true)}>启动任务</Button>
+        <Button type="primary" onClick={() => setVisible(true)}>
+          启动任务
+        </Button>
       </div>
       <p className={style.subTitle}>工具介绍</p>
       <p className={style.toolDesc}>{description}</p>
@@ -122,7 +131,7 @@ const Scans = (props: ScansProps) => {
       } */}
 
       <Table
-        size='small'
+        size="small"
         dataSource={list}
         // scroll={{x: 1500}}
         rowKey={(item: any, index) => `${item.id}${index}`}
@@ -136,55 +145,60 @@ const Scans = (props: ScansProps) => {
           onShowSizeChange,
         }}
       >
+        <Column title="Job ID" dataIndex={['scan', 'job_gid']} />
         <Column
-          title='Job ID'
-          dataIndex={['scan', 'job_gid']}
-
-        />
-        <Column
-          title='启动时间'
+          title="启动时间"
           dataIndex={['scan', 'scan_time']}
-          render={time => time && moment(time, 'YYYY-MM-DD HH:mm:ss').format('YYYY-MM-DD HH:mm:ss')}
+          render={time => time
+            && moment(time, 'YYYY-MM-DD HH:mm:ss').format('YYYY-MM-DD HH:mm:ss')
+          }
         />
         <Column
-          title='耗时'
+          title="耗时"
           dataIndex={['scan', 'total_time']}
-        // render={time => time && formatTime(parseInt(time))}
+          // render={time => time && formatTime(parseInt(time))}
         />
         <Column
-          title='状态'
+          title="状态"
           dataIndex={['scan', 'result_code']}
           render={(code, item) => (code === null ? (
-            <RunningIcon />
+              <RunningIcon />
           ) : (
-            <div className={cn(style.status, {
-              [style[getToolStatus(code)]]: isNumber(code),
-            })}>{get(item, 'scan.result_code_msg')}</div>
+              <div
+                className={cn(style.status, {
+                  [style[getToolStatus(code)]]: isNumber(code),
+                })}
+              >
+                {get(item, 'scan.result_code_msg')}
+              </div>
           ))
           }
         />
         <Column
-          title='启动人'
+          title="启动人"
           dataIndex={['scan', 'creator']}
           render={creator => creator && (
-            <>
-              <Avatar size={24} icon={<UserIcon />} />
-              &nbsp;{creator}
-            </>
-          )}
+              <>
+                <Avatar size={24} icon={<UserIcon />} />
+                &nbsp;{creator}
+              </>
+          )
+          }
         />
         <Column
-          title='操作'
-          dataIndex='id'
+          title="操作"
+          dataIndex="id"
           width={280}
           render={(id, item: any) => (
             <>
-              {
-                item.result_data_url && <a href={item.result_data_url}>下载结果文件</a>
-              }
-              {
-                item.result_other_url && <a href={item.result_other_url} style={{ marginLeft: 12 }}>下载其他文件</a>
-              }
+              {item.result_data_url && (
+                <a href={item.result_data_url}>下载结果文件</a>
+              )}
+              {item.result_other_url && (
+                <a href={item.result_other_url} style={{ marginLeft: 12 }}>
+                  下载其他文件
+                </a>
+              )}
             </>
           )}
         />
@@ -194,7 +208,9 @@ const Scans = (props: ScansProps) => {
         params={{ repoId, projectId, toolName }}
         onHide={() => setVisible(false)}
         scanParams={scanParams}
-        callback={getScansList}
+        callback={() => {
+          getScansList();
+        }}
       />
     </div>
   );

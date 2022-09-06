@@ -4,8 +4,6 @@
 // See LICENSE for details
 // ==============================================================================
 
-
-
 /**
  * 启动任务
  */
@@ -37,7 +35,13 @@ const ScanModal = (props: IProps) => {
     const { component, component_options: options, helper } = item;
     switch (component) {
       case 'date': {
-        return <DatePicker className={style.dataPicker} size='middle' style={{ width: '100%' }} />;
+        return (
+          <DatePicker
+            className={style.dataPicker}
+            size="middle"
+            style={{ width: '100%' }}
+          />
+        );
       }
       case 'input': {
         return <Input placeholder={helper && helper} />;
@@ -45,11 +49,11 @@ const ScanModal = (props: IProps) => {
       case 'select': {
         return (
           <Select>
-            {
-              options?.split(';').map((value: string) => (
-                <Option key={value} value={value}>{value}</Option>
-              ))
-            }
+            {options?.split(';').map((value: string) => (
+              <Option key={value} value={value}>
+                {value}
+              </Option>
+            ))}
           </Select>
         );
       }
@@ -64,7 +68,12 @@ const ScanModal = (props: IProps) => {
     const data = mapValues(formData, item => (item instanceof moment ? moment(item).format('YYYY-MM-DD') : item));
 
     setLoading(true);
-    createToolScans(repoId, projectId, toolName, pickBy(data, value => value))
+    createToolScans(
+      repoId,
+      projectId,
+      toolName,
+      pickBy(data, value => value),
+    )
       .then(() => {
         callback();
         onReset();
@@ -81,7 +90,7 @@ const ScanModal = (props: IProps) => {
 
   return (
     <Modal
-      title='启动任务'
+      title="启动任务"
       width={480}
       className={style.scanModal}
       visible={visible}
@@ -89,26 +98,29 @@ const ScanModal = (props: IProps) => {
       okButtonProps={{
         loading,
       }}
-      onOk={() => form.validateFields().then(onFinish)}
+      onOk={() => {
+        form.validateFields().then(onFinish);
+      }}
     >
-      <Form
-        layout='vertical'
-        form={form}
-        onFinish={onFinish}
-      >
-        {
-          scanParams.map((item: any, index: number) => (
-            <Form.Item
-              key={item.name}
-              className={cn({ [style.lastFormItem]: index === scanParams.length - 1 })}
-              label={item.label}
-              name={item.name}
-              rules={[{ required: item.component_required, message: `请输入${item.label}` }]}
-            >
-              {getComponent(item)}
-            </Form.Item>
-          ))
-        }
+      <Form layout="vertical" form={form} onFinish={onFinish}>
+        {scanParams.map((item: any, index: number) => (
+          <Form.Item
+            key={item.name}
+            className={cn({
+              [style.lastFormItem]: index === scanParams.length - 1,
+            })}
+            label={item.label}
+            name={item.name}
+            rules={[
+              {
+                required: item.component_required,
+                message: `请输入${item.label}`,
+              },
+            ]}
+          >
+            {getComponent(item)}
+          </Form.Item>
+        ))}
       </Form>
     </Modal>
   );

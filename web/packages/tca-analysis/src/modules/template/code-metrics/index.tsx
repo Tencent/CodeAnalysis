@@ -30,7 +30,6 @@ const defaultValues = {
 const layout = {
   labelCol: { span: 5 },
   wrapperCol: { span: 19 },
-  colon: false,
 };
 
 interface CodeMetricsProps {
@@ -108,8 +107,7 @@ const CodeMetrics = (props: CodeMetricsProps) => {
             >
                 <h2 className={style.title}>
                     圈复杂度
-                <Tooltip
-                        // @ts-ignore
+                    <Tooltip
                         getPopupContainer={() => document.getElementById('container')}
                         title='可以发现执行路径较多的方法，降低代码的圈复杂度，可测性更高。支持C、C++、Java、C#、JavaScript、Python、Objective-C、Ruby、PHP、Swift、Scala、Go、Lua共13种语言'
                     >
@@ -135,8 +133,7 @@ const CodeMetrics = (props: CodeMetricsProps) => {
                             label={
                                 <span>
                                     检测阈值
-                                <Tooltip
-                                        // @ts-ignore
+                                    <Tooltip
                                         getPopupContainer={() => document.getElementById('container')}
                                         title='仅上报圈复杂度超过该阈值的方法，默认20'
                                     >
@@ -152,8 +149,7 @@ const CodeMetrics = (props: CodeMetricsProps) => {
 
                 <h2 className={style.title}>
                     重复代码
-                <Tooltip
-                        // @ts-ignore
+                    <Tooltip
                         getPopupContainer={() => document.getElementById('container')}
                         title='可以发现重复的代码，避免重复代码可以让代码更简洁，更易维护。支持C、C++、Java、JavaScript、Objective-C、PHP、Python、C#、Ruby、Kotlin、Go、Lua、Swift、Scala共14种语言'
                     >
@@ -179,8 +175,7 @@ const CodeMetrics = (props: CodeMetricsProps) => {
                                 label={
                                     <span>
                                         长度区间
-                                    <Tooltip
-                                            // @ts-ignore
+                                        <Tooltip
                                             getPopupContainer={() => document.getElementById('container')}
                                             title='一个单词（变量或操作符）记为1'
                                         >
@@ -210,8 +205,7 @@ const CodeMetrics = (props: CodeMetricsProps) => {
                                 label={
                                     <span>
                                         重复次数
-                                    <Tooltip
-                                            // @ts-ignore
+                                        <Tooltip
                                             getPopupContainer={() => document.getElementById('container')}
                                             title='当一段代码重复次数达到指定区间才认为是有风险的'
                                         >
@@ -242,8 +236,7 @@ const CodeMetrics = (props: CodeMetricsProps) => {
                                 label={
                                     <span>
                                         上报限制
-                                    <Tooltip
-                                            // @ts-ignore
+                                        <Tooltip
                                             getPopupContainer={() => document.getElementById('container')}
                                             title='限制上报的重复代码块数，可以减少开发的压力，提高修复积极性'
                                         >
@@ -260,8 +253,7 @@ const CodeMetrics = (props: CodeMetricsProps) => {
 
                 <h2 className={style.title}>
                     代码统计
-                <Tooltip
-                        // @ts-ignore
+                    <Tooltip
                         getPopupContainer={() => document.getElementById('container')}
                         title='从目录和业务纬度统计代码行数，也可以获取提交记录便于代码Review。'
                     >

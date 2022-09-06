@@ -196,3 +196,77 @@ class FilterManger(object):
             for field in filter_class.Meta.fields
         }
         return cls._get_filter(queryset, field_maps, models.PackageMap, user=user)
+
+
+class CommonManager(object):
+    """公共manager
+    """
+
+    @classmethod
+    def is_eq_instance_auth(cls, scm_auth, instance=None):
+        """用于更新凭证时判断，判断传入的scm_auth是否与实例原本的scm_auth相同，相同则返回该凭证的信息
+        :param scm_auth: ScmAuth
+        :param instance: ToolLib or CheckTool
+        :return is_eq, credential_info: bool, dict
+        """
+        if instance and instance.scm_auth:
+            auth_type = scm_auth.get("auth_type")
+            scm_oauth = scm_auth.get("scm_oauth")
+            scm_account = scm_auth.get("scm_account")
+            scm_ssh = scm_auth.get("scm_ssh")
+            if auth_type == models.ScmAuth.ScmAuthTypeEnum.OAUTH and \
+               instance.scm_auth.scm_oauth == scm_oauth:
+                return True, scm_oauth.credential_info
+            elif auth_type == models.ScmAuth.ScmAuthTypeEnum.PASSWORD and \
+                 instance.scm_auth.scm_account == scm_account:
+                return True, scm_account.credential_info
+            elif auth_type == models.ScmAuth.ScmAuthTypeEnum.SSHTOKEN and \
+                 instance.scm_auth.scm_ssh == scm_ssh:
+                return True, scm_ssh.credential_info
+        return False, None
+
+    @classmethod
+    def validate_scm_auth(cls, scm_auth, user):
+        """校验传入的scm_auth是否是当前用户创建的凭证，否则认为是无效凭证
+        :param scm_auth: ScmAuth
+        :param user: User
+        :return credential_info: dict
+        """
+        auth_type = scm_auth.get("auth_type")
+        scm_oauth = scm_auth.get("scm_oauth")
+        scm_account = scm_auth.get("scm_account")
+        scm_ssh = scm_auth.get("scm_ssh")
+        if auth_type == models.ScmAuth.ScmAuthTypeEnum.OAUTH:
+            if not scm_oauth:
+                from apps.codeproj.core.scmmgr import ScmAuthManager
+                # 如果没有传递scm_oauth
+                scm_oauth = ScmAuthManager.get_scm_auth(user)
+            if not scm_oauth or scm_oauth.user != user:
+                raise ParseError({"scm_auth": "请选择有效OAuth凭证"})
+            credential_info = scm_oauth.credential_info
+        elif auth_type == models.ScmAuth.ScmAuthTypeEnum.PASSWORD:
+            if not scm_account or scm_account.user != user:
+                raise ParseError({"scm_auth": "请选择有效HTTP凭证"})
+            credential_info = scm_account.credential_info
+        elif auth_type == models.ScmAuth.ScmAuthTypeEnum.SSHTOKEN:
+            if not scm_ssh or scm_ssh.user != user:
+                raise ParseError({"scm_auth": "请选择有效SSH凭证"})
+            credential_info = scm_ssh.credential_info
+        else:
+            raise ParseError({"auth_type": "不支持%s鉴权方式" % auth_type})
+        return credential_info
+
+    @classmethod
+    def get_and_check_scm_auth(cls, scm_auth, user, instance=None):
+        """获取并校验凭证，获取凭证信息
+        :param scm_auth: ScmAuth
+        :param user: User
+        :param instance: ToolLib or CheckTool
+        :return credential_info: dict
+        """
+        # 更新凭证时，用于判断凭证是否切换
+        is_eq, credential_info = cls.is_eq_instance_auth(scm_auth, instance)
+        if is_eq is False:
+            # 创建或凭证切换时，校验凭证并获取凭证信息
+            credential_info = cls.validate_scm_auth(scm_auth, user)
+        return credential_info

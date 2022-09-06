@@ -22,6 +22,8 @@ export default defineUserConfig({
     ['meta', { name: 'theme-color', content: '#3eaf7c' }],
   ],
 
+  pagePatterns: ['**/*.md', '!.vuepress', '!node_modules', '!old'],
+
   plugins: [
     searchPlugin({
       // 配置项
@@ -43,7 +45,7 @@ export default defineUserConfig({
     },
     '/en': {
       lang: 'en-US',
-      title: 'Tencent Code Analysis',
+      title: 'Tencent Cloud Code Analysis',
       description: '用心关注每行代码迭代、助力传承卓越代码文化！',
     },
   },
@@ -73,6 +75,7 @@ export default defineUserConfig({
 
         // sidebar
         sidebar: sidebar.en,
+        sidebarDepth: 1,
 
         // page meta
         editLinkText: 'Edit this page on GitHub',

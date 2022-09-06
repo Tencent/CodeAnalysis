@@ -1,11 +1,11 @@
 {
   "extends": "../../tsconfig",
   "compilerOptions": {
-    "baseUrl": ".", // baseUrl用于设置解析非相对模块名称的基本目录，相对模块不会受到baseUrl的影响
-    "paths": { // paths用于设置模块名到基于baseUrl的路径映射
+    "baseUrl": ".",
+    "paths": {
       "@src/*": ["src/*"],
+      "@plat/*": ["src/plat/open/*"]
     }
   },
   "include": ["src", "global.d.ts"],
-  "exclude": ["lib"]
 }

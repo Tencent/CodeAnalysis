@@ -14,6 +14,16 @@ import { get, post, put, del } from './index';
 import { MAIN_SERVER_API, getMainBaseURL } from './common';
 
 /**
+ * 分析方案前缀
+ * @param orgSid
+ * @param teamName
+ * @param repoId
+ * @param schemeId
+ * @returns
+ */
+const getSchemePrefix = (orgSid: string, teamName: string, repoId: string | number, schemeId: string | number) => `${getMainBaseURL(orgSid, teamName)}/repos/${repoId}/schemes/${schemeId}`;
+
+/**
  * 获取分析方案列表
  * @param orgSid 团队唯一标识
  * @param teamName 项目唯一标识
@@ -35,7 +45,7 @@ export const getLabels = () => get(`${MAIN_SERVER_API}/labels/?limit=100`);
 /**
  * 获取运行环境列表
  */
-export const getTags = () => get(`${MAIN_SERVER_API}/tags/?limit=50`);
+export const getTags = (orgId: string, params: any = null) => get(`${MAIN_SERVER_API}/orgs/${orgId}/nodes/tags/`, params);
 
 /**
  * 拉取模板配置
@@ -274,6 +284,17 @@ export const addRule = (orgSid: string, teamName: string, repoId: string | numbe
  */
 export const getRuleDetail = (orgSid: string, teamName: string, repoId: string | number, schemeId: string | number, ruleId: number) => get(`${getMainBaseURL(orgSid, teamName)}/repos/${repoId}/schemes/${schemeId}/allrules/${ruleId}/`);
 
+/**
+ * 代码检查 - 获取指定规则的详细信息
+ * @param {*} toolName - 工具名称
+ * @param {*} ruleRealName - 规则真实名称
+ * @returns
+ */
+export const getRuleDetailByName = (orgSid: string, teamName: string, repoId: string | number, schemeId: string | number, toolName: string, ruleRealName: string) => get(`${getSchemePrefix(orgSid, teamName, repoId, schemeId)}/allrules/byname/`, {
+  checktool_name: toolName,
+  checkrule_real_name: ruleRealName,
+});
+
 // ============================================ 分析方案 - 代码度量 ============================================
 
 /**
@@ -412,3 +433,9 @@ export const importScanDir = (orgSid: string, teamName: string, repoId: number, 
  * @returns
  */
 export const getBranchs = (orgSid: string, teamName: string, repoId: number, schemeId: number, query: any) => get(`${getMainBaseURL(orgSid, teamName)}/repos/${repoId}/schemes/${schemeId}/branchs/`, query);
+
+/**
+ * 获取工具列表
+ * @param {*} query
+ */
+export const getCheckTools = (orgId: string, query: any) => get(`${MAIN_SERVER_API}/orgs/${orgId}/checktools/`, query);

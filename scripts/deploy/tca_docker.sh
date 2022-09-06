@@ -28,7 +28,7 @@ function get_image() {
     if [ "$TCA_IMAGE_BUILD" == "true" ]; then
         LOG_INFO "Build TCA Image: $TCA_IMAGE_NAME:$TCA_IMAGE_TAG"
         cd $TCA_PROJECT_PATH
-        docker build -t $TCA_IMAGE_NAME:$TCA_IMAGE_TAG .
+        docker build -t $TCA_IMAGE_NAME:$TCA_IMAGE_TAG . || error_exit "Build image failed"
         return $?
     fi
     LOG_INFO "Pull TCA Image: $TCA_IMAGE_NAME:$TCA_IMAGE_TAG"

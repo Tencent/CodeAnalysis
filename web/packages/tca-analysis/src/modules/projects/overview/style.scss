@@ -1,4 +1,4 @@
-@import '@src/common/style/color.scss';
+@import '@tencent/micro-frontend-shared/style/color.scss';
 .overview {
     padding-bottom: 20px;
     .item {
@@ -28,6 +28,10 @@
     }
     &:hover {
         background-color: #f5f7fa;
+    }
+
+    .a-no-style {
+        color: #202d40;
     }
 }
 

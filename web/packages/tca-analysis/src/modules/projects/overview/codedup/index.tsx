@@ -10,6 +10,7 @@
 import React, { useState } from 'react';
 import { Radio, Row, Col } from 'coding-oa-uikit';
 import classnames from 'classnames';
+import { useTranslation } from 'react-i18next';
 import get from 'lodash/get';
 
 // 项目内
@@ -17,7 +18,6 @@ import NoData from '../no-data';
 import { Area, Column } from '@ant-design/plots';
 
 import s from '../style.scss';
-import { t } from '@src/i18n/i18next';
 import {
   STANDARD_TYPE,
   STANDARD_OPTIONS,
@@ -31,6 +31,7 @@ interface IProps {
 }
 
 const CodeDup = ({ dupScans }: IProps) => {
+  const { t } = useTranslation();
   const [standardValue, setStandardValue] = useState(STANDARD_TYPE.DEFAULT);
   const [riskValue, setRiskValue] = useState(RISK_TYPE.EXHI);
   // 获取重复代码历史趋势数据
@@ -86,10 +87,10 @@ const CodeDup = ({ dupScans }: IProps) => {
                     line: {
                       style: {
                         stroke: '#e6e9ed',
-                        lineDash: [3, 2]
-                      }
-                    }
-                  }
+                        lineDash: [3, 2],
+                      },
+                    },
+                  },
                 }}
               />
             ) : (
@@ -119,10 +120,10 @@ const CodeDup = ({ dupScans }: IProps) => {
                     line: {
                       style: {
                         stroke: '#e6e9ed',
-                        lineDash: [3, 2]
-                      }
-                    }
-                  }
+                        lineDash: [3, 2],
+                      },
+                    },
+                  },
                 }}
               />
             ) : (

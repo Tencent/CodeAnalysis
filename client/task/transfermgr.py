@@ -17,7 +17,7 @@ import logging
 
 from task.basic.downloader import Downloader
 from node.app import settings
-from task.basic.zipmgr import Zip
+from util.zipmgr import Zip
 from util.exceptions import TransferModuleError
 from util.api.fileserver import RetryFileServer
 from util.pathlib import PathMgr

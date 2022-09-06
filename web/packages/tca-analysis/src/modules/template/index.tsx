@@ -16,7 +16,7 @@ import qs from 'qs';
 import { Table, Tag } from 'coding-oa-uikit';
 
 import { getQuery } from '@src/utils';
-import { DEFAULT_PAGER } from '@src/common/constants';
+import { DEFAULT_PAGER } from '@src/constant';
 import { getTmplList } from '@src/services/template';
 import { getLanguages, getTags } from '@src/services/schemes';
 
@@ -28,7 +28,7 @@ const { Column } = Table;
 
 const Template = () => {
   const history = useHistory();
-  const { org_sid: orgSid } = useParams() as any;
+  const { orgSid } = useParams() as any;
   const [list, setList] = useState<any>([]);
   const [count, setCount] = useState(DEFAULT_PAGER.count);
   const [loading, setLoading] = useState(false);
@@ -45,7 +45,7 @@ const Template = () => {
     getListData();
 
     (async () => {
-      setTags(get(await getTags(), 'results', []));
+      setTags(get(await getTags(orgSid), 'results', []));
       setLanguages(get(await getLanguages(), 'results', []));
     })();
   }, []);

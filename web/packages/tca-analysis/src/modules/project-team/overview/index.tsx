@@ -6,15 +6,15 @@
 
 import React, { useState, useEffect } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Form, Button, Input, message } from 'coding-oa-uikit';
 import { pick, get, find } from 'lodash';
 import { useSelector } from 'react-redux';
 
 // 项目内
 import { getProjectListRouter, getProjectOverviewRouter } from '@src/utils/getRoutePath';
-import { t } from '@src/i18n/i18next';
 import { formatDateTime, getUserName } from '@src/utils';
-import { getProjectTeam, putProjectTeam, disableProject} from '@src/services/common';
+import { getProjectTeam, putProjectTeam, disableProject } from '@src/services/common';
 import DeleteModal from '@src/components/delete-modal';
 
 const layout = {
@@ -25,7 +25,7 @@ const Overview = () => {
   const [form] = Form.useForm();
   const [team, setTeam] = useState<any>({});
   const [edit, setEdit] = useState(false);
-  const { org_sid: orgSid, team_name: teamName }: any = useParams();
+  const { orgSid, teamName }: any = useParams();
   // 判断是否有权限删除团队项目
   const history: any = useHistory();
   const APP = useSelector((state: any) => state.APP);
@@ -34,6 +34,7 @@ const Overview = () => {
   const isAdmin = !!find(team?.admins, { username: userName });  // 当前用户是否是项目管理员
   const deletable = isAdmin || isSuperuser;  // 删除权限
   const [deleteVisible, setDeleteVisible] = useState<boolean>(false);
+  const { t } = useTranslation();
 
   // 重置
   const onReset = () => {
@@ -70,10 +71,11 @@ const Overview = () => {
   }, [orgSid, teamName]);
 
   const handleDeleteTeam = () => {
-    disableProject(orgSid, teamName, {status: 2}).then(() => {
+    disableProject(orgSid, teamName, { status: 2 }).then(() => {
       message.success('项目已禁用');
       history.push(getProjectListRouter(orgSid));
-    }).finally(() => setDeleteVisible(false));
+    })
+      .finally(() => setDeleteVisible(false));
   };
 
   const onDelete = () => {

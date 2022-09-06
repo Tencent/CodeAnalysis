@@ -5,11 +5,11 @@
 // ==============================================================================
 
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Form, Input, Button, message, Avatar } from 'coding-oa-uikit';
 import UserIcon from 'coding-oa-uikit/lib/icon/User';
 import { merge } from 'lodash';
 // 项目内
-import { t } from '@src/i18n/i18next';
 import { formatDateTime, getUserImgUrl } from '@src/utils';
 import { putRepo } from '@src/services/repos';
 import { useDispatchStore } from '@src/context/store';
@@ -30,6 +30,7 @@ const layout = {
 
 const Overview = ({ curRepo, orgSid, teamName, repoId, deletable, onDelete }: IProps) => {
   const [form] = Form.useForm();
+  const { t } = useTranslation();
   const [edit, setEdit] = useState(false);
   const dispatch = useDispatchStore();
   const creatorInfo = curRepo.creator || {};

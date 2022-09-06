@@ -111,6 +111,7 @@ function init_main() {
          python manage.py createcachetable; \
          python manage.py initializedb_open; \
          python manage.py initialize_exclude_paths; \
+         python manage.py loadlibs all --dirname open_source_toollib --ignore-auth; \
          python manage.py loadcheckers all --dirname open_source; \
          python manage.py loadpackages all --dirname open_source_package;
         "

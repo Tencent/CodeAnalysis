@@ -1,28 +1,50 @@
-import React from 'react';
-import { Tabs } from 'coding-oa-uikit';
-
-// 项目内
-import { t } from '@src/i18n/i18next';
+import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { Tabs } from 'tdesign-react';
 
 // 模块内
-import NodeTable from './node-table';
-import TagTable from './tag-table';
+import { tagAPI } from '@src/services/nodes';
 
-const { TabPane } = Tabs;
+// 项目内
+import NodeTable from '@plat/modules/nodes/node-table';
+import TagTable from '@plat/modules/nodes/tag-table';
+import s from './style.scss';
 
-const Nodes = () => (
-  <>
-    <div className="px-lg">
-      <Tabs defaultActiveKey="nodes" size="large">
-        <TabPane tab={t('节点列表')} key="nodes">
-          <NodeTable />
-        </TabPane>
-        <TabPane tab={t('标签列表')} key="tags">
-          <TagTable />
-        </TabPane>
+const { TabPanel } = Tabs;
+
+const Nodes = () => {
+  const [tags, setTags] = useState([]);
+  const [tagOptions, setTagOptions] = useState([]);
+  const { t } = useTranslation();
+
+  const getData = async () => {
+    const res: any = await tagAPI.get({ limit: 1000 });
+    const tags: any[] = res.results || [];
+    setTags(tags);
+    setTagOptions(tags.map(tag => ({
+      label: tag.display_name || tag.name,
+      value: tag.name,
+    })));
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
+
+  return (
+    <>
+      <Tabs defaultValue="nodes" size="large" className={s.header}>
+        <TabPanel label={t('节点列表')} value="nodes">
+          <NodeTable tagOptions={tagOptions} />
+        </TabPanel>
+        <TabPanel label={t('标签列表')} value="tags">
+          <TagTable tags={tags} reload={() => {
+            getData();
+          }} />
+        </TabPanel>
       </Tabs>
-    </div>
-  </>
-);
+    </>
+  );
+};
 
 export default Nodes;

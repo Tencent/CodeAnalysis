@@ -9,7 +9,7 @@ import React, { useEffect, useState } from 'react';
 import { Route, Switch, useParams, useHistory } from 'react-router-dom';
 import { toNumber, isEmpty, get, find } from 'lodash';
 
-import { useStateStore, useDispatchStore } from '@src/context/store';
+import { useDispatchStore } from '@src/context/store';
 import {
   SET_CUR_REPO,
   SET_PROJECT_MEMBER,
@@ -21,7 +21,7 @@ import {
   SCHEMES_ROUTE_PREFIX,
   BASE_ROUTE_PREFIX,
   REPOS_ROUTE_PREFIX,
-} from '@src/common/constants';
+} from '@src/constant';
 // import { getBaseRouter } from '@src/utils/getRoutePath';
 import { getRepos, getProjectTeamMembers } from '@src/services/common';
 
@@ -60,9 +60,10 @@ const PATH_NAME = ['/repos/create', '/template'];
 
 const Routers = () => {
   const history = useHistory();
-  const { org_sid: orgSid, team_name: teamName }: any = useParams();
+  const { orgSid, teamName }: any = useParams();
   let { repoId }: any = useParams();
-  const { repos } = useStateStore();
+  const [repos, setRepos] = useState([]);
+
   const dispatch = useDispatchStore();
   const [loading, setLoading] = useState(true);
   const [isWelcome, setIsWelcome] = useState(PATH_NAME.every((path: any) => !window.location.pathname.match(path)));
@@ -94,41 +95,26 @@ const Routers = () => {
       payload: true,
     });
     const list = (await getRepoList()) || [];
+
     if (!isEmpty(list)) {
+      setRepos(list);
       // 将获取的代码库列表存入SET_REPOS
       dispatch({
-        type: 'SET_REPOS',
+        type: SET_REPOS,
         payload: list,
       });
     }
-    setLoading(false);
     dispatch({
       type: SET_REPOS_LOADING,
       payload: false,
     });
-
+    setLoading(false);
     // 成员设置
     const members = await getProjectTeamMembers(orgSid, teamName);
     dispatch({
       type: SET_PROJECT_MEMBER,
       payload: members,
     });
-
-    // 如果没有curRepo，则获取链接中的代码库或列表中第一个代码库
-    // if (isEmpty(curRepo)) {
-    //     const repo = repoId ? find(list, { id: repoId }) : list[0];
-
-    //     // 存在repo，将其存入context
-    //     if (!isEmpty(repo)) {
-    //         dispatch({
-    //             type: SET_CUR_REPO,
-    //             payload: repo,
-    //         });
-    //     } else {
-    //         // history.replace(`${getBaseRouter(orgSid, teamName)}/repos`);
-    //     }
-    // }
-    // 由于切换项目时，curRepo存在，因此不用上述内容，切换项目重新set repo
     const repo = repoId ? find(list, { id: repoId }) : list[0];
 
     // 存在repo，将其存入context

@@ -1,15 +1,15 @@
 import React from 'react';
+import EllipsisTemplate from '@tencent/micro-frontend-shared/tdesign-component/ellipsis';
 
 // 项目内
-import EllipsisTemplate from '@src/components/ellipsis';
-import OrgInfo from '@src/modules/components/org-info';
+import OrgInfo from '@plat/modules/components/org-info';
 
-interface IProps {
+interface OrgAndTeamInfoProps {
   org: any;
   team: any;
   maxWidth?: number;
 }
-const OrgAndTeamInfo = ({ org, team, maxWidth }: IProps) => {
+const OrgAndTeamInfo = ({ org, team, maxWidth }: OrgAndTeamInfoProps) => {
   if (!org || !team) {
     return <>- -</>;
   }

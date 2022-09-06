@@ -60,6 +60,7 @@ function init_main_data() {
     python manage.py initializedb_open
     python manage.py initialize_exclude_paths
     LOG_INFO "[TCAServer] Init checker config..."
+    python manage.py loadlibs all --dirname open_source_toollib --ignore-auth  >/dev/null
     python manage.py loadcheckers all --dirname open_source >/dev/null
     python manage.py loadpackages all --dirname open_source_package >/dev/null
     LOG_INFO "Init checkertool and checkerpackage successfully"

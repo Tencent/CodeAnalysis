@@ -1,0 +1,212 @@
+[
+    {
+        "name": "tca_ql_js",
+        "display_name": "TCA-Armory-Q5",
+        "description": "基于QL的代码静态分析工具，目前处于试用中",
+        "license": "自研",
+        "libscheme_set": [],
+        "task_processes": [
+            "analyze",
+            "datahandle",
+            "compile"
+        ],
+        "scan_app": "codelint",
+        "scm_url": "",
+        "run_cmd": "",
+        "envs": null,
+        "build_flag": false,
+        "checkrule_set": [
+            {
+                "real_name": "cyclic_import",
+                "display_name": "CycImport",
+                "severity": "error",
+                "category": "usability",
+                "rule_title": "文件相互导入",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "js"
+                ],
+                "solution": "不要做循环import，出现这种情况多半是软件层次设计没做好，在Go,Cpp可能会编译失败，其他语言全局导入时也会出错，即使不报错对后续阅读和维护也不是很友好。需要重新设计。",
+                "owner": "",
+                "labels": [],
+                "description": "两个文件相互导入\n以js为例\n```\n# a.py\nimport b\n\nclass Model(object):\n    def do_something(self):\n        b.do_somthing()\n\n# b.py\nimport a\n\ndef do_somthing():\n    print(\"Hello CodeDog\")\n\n```",
+                "disable": false
+            },
+            {
+                "real_name": "dead_code",
+                "display_name": "DeadCode死代码检查",
+                "severity": "warning",
+                "category": "performance",
+                "rule_title": "死代码检查",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "js"
+                ],
+                "solution": "删除用不到的代码回收资源",
+                "owner": "",
+                "labels": [],
+                "description": "检查代码中永远不会被执行到的代码\n移除这类的代码有两种优点，不但可以减少程序的大小，还可以避免程序在执行中进行不相关的运算行为，减少它执行的时间\n\n下列的示例，以C语言写成：\n```\n int foo(void)\n {\n   int a = 24;\n   int b = 25; \n   int c;\n   c = a << 2;\n   return c;\n   b = 24;\n   return 0;\n }\n```\n分析上述程序对于数值的使用，将会发现b的数值在第一次被赋值之后，就不再使用，而且b是在foo函数内宣告，无法在函数外面使用，所以变量b是无用的，优化的过程可以回收他所使用的空间，并删除他的初始化。",
+                "disable": false
+            },
+            {
+                "real_name": "express_codeinject",
+                "display_name": "NodeExpressCodeInject",
+                "severity": "fatal",
+                "category": "security",
+                "rule_title": "nodeexpress框架的代码注入漏洞",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "js"
+                ],
+                "solution": "修复建议：\n净化用户可控数据, 过滤或者转义.",
+                "owner": "",
+                "labels": [],
+                "description": "如果程序根据用户输入的参数动态生成代码并执行，可通过传入参数值注入自己定义的恶意代码",
+                "disable": false
+            },
+            {
+                "real_name": "express_pathtraversal",
+                "display_name": "NodeExpressPathTraversal",
+                "severity": "fatal",
+                "category": "security",
+                "rule_title": "nodeexpress框架的目录穿越",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "js"
+                ],
+                "solution": "修复建议：\n净化用户可控数据, 过滤或者转义.",
+                "owner": "",
+                "labels": [],
+                "description": "在文件路径中使用未经过滤的用户输入进行读取时，会出现路径遍历漏洞。",
+                "disable": false
+            },
+            {
+                "real_name": "express_rce",
+                "display_name": "NodeExpressRce",
+                "severity": "fatal",
+                "category": "security",
+                "rule_title": "nodeexpress框架的远程命令执行漏洞检查",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "js"
+                ],
+                "solution": "修复建议：\n\n尽量少用执行命令的函数.\n净化用户可控数据, 过滤或者转义.",
+                "owner": "",
+                "labels": [],
+                "description": "如果程序根据用户输入的参数动态生成系统命令并执行，黑客可通过传入恶意参数值注入自己定义的命令，从而控制服务器\n\nhttps://blog.csdn.net/sdb5858874/article/details/80788934\nhttps://www.cnblogs.com/Fluorescence-tjy/p/5889251.html\n修复建议：\n\n尽量少用执行命令的函数.\n净化用户可控数据, 过滤或者转义.",
+                "disable": true
+            },
+            {
+                "real_name": "express_sqli",
+                "display_name": "NodeExpressSqlInject",
+                "severity": "fatal",
+                "category": "security",
+                "rule_title": "nodeexpress框架的sql注入检查",
+                "rule_params": "",
+                "custom": false,
+                "languages": [
+                    "js"
+                ],
+                "solution": "SQL查询语句使用标准化的数据库API接口, 设定语句的参数进行过滤一些非法的字符, 防止用户输入恶意的字符传入到数据库中执行SQL语句\\n2. 对用户提交的的参数安全过滤, 像一些特殊的字符[,()*&%#] 进行字符转义操作, 以及编码的安全转换\\n3. 网站的代码层编码尽量统一, 建议使用utf8编码, 如果代码里的编码都不一样, 会导致一些过滤被直接绕过\\n",
+                "owner": "",
+                "labels": [],
+                "description": "如果程序根据用户输入参数动态生成SQL语句并执行，那么攻击者可以拼接SQL语句，使数据库执行任意需要执行的指令从而实现数据窃取或者入侵破坏\\n\\nhttps://www.cnblogs.com/Eleven-Liu/p/9712576.html\\n修复建议：\\n1. SQL查询语句使用标准化的数据库API接口, 设定语句的参数进行过滤一些非法的字符, 防止用户输入恶意的字符传入到数据库中执行SQL语句\\n2. 对用户提交的的参数安全过滤, 像一些特殊的字符[,()*&%#] 进行字符转义操作, 以及编码的安全转换\\n3. 网站的代码层编码尽量统一, 建议使用utf8编码, 如果代码里的编码都不一样, 会导致一些过滤被直接绕过\\n",
+                "disable": true
+            },
+            {
+                "real_name": "express_urlrender",
+                "display_name": "NodeExpressUrlRender",
+                "severity": "fatal",
+                "category": "security",
+                "rule_title": "nodeexpress框架的url重定向漏洞检查",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "js"
+                ],
+                "solution": "修复建议：\n限制跳转的目标URL, 如白名单策略",
+                "owner": "",
+                "labels": [],
+                "description": "某些业务场景（例如登录跳转、导航前进后退）会接受不信任的用户输入，并返回一个302响应或者URL重定向。因此攻击者通过操控输入的URL，可以欺骗用户跳转到不安全的页面，造成钓鱼攻击",
+                "disable": false
+            },
+            {
+                "real_name": "express_xss",
+                "display_name": "NodeExpressXss",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "nodeexpress框架的xss漏洞检查",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "js"
+                ],
+                "solution": "https://www.cnblogs.com/Hydraxx/p/8530906.html\n修复建议：\n在输出所有用户可控的数据时, 对数据做转义或者编码",
+                "owner": "",
+                "labels": [],
+                "description": "跨站脚本攻击（Cross-site scripting，XSS）是一种安全漏洞，攻击者可以利用这种漏洞在网站上注入恶意的客户端代码。当被攻击者登陆网站时就会自动运行这些恶意代码，从而，攻击者可以突破网站的访问权限，冒充受害者。",
+                "disable": false
+            },
+            {
+                "real_name": "express_xxe",
+                "display_name": "NodeExpressXXE",
+                "severity": "fatal",
+                "category": "security",
+                "rule_title": "nodeexpress框架的XML外部实体注入漏洞",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "js"
+                ],
+                "solution": "修复建议：\n使用开发语言提供的禁用外部实体的方法\n过滤用户提交的XML数据",
+                "owner": "",
+                "labels": [],
+                "description": "XXE （XML External Entity injection）XML 外部实体注入漏洞，DTD实体是用于定义引用普通文本或特殊字符的快捷方式的变量，可以内部声明和外部引用，那么XXE攻击就是外部引用DTD实体，意思就是先写一个外部实体声明，然后引用服务器上面的资源，从而达到窃取文件，执行系统命令，扫描内部端口",
+                "disable": false
+            },
+            {
+                "real_name": "magic_number",
+                "display_name": "MagicNumber",
+                "severity": "info",
+                "category": "convention",
+                "rule_title": "魔法数字",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "js"
+                ],
+                "solution": "采用有意义的常量代替",
+                "owner": "",
+                "labels": [],
+                "description": "魔法数值使代码的可读性大大下降。而且，如果同样的数值多次出现时，到底这些数值是不是带有同样的含义呢，谁也说不清楚。另一方面，如果本来应该使用相同数值的地方，一旦用错了，也很难发现。\n例子：\n```\nint priceTable[] = new int[16]； //ERROR：这个16究竟有何含义呢？\n\n\nstatic final int PRICE_TABLE_MAX = 16； //OK：带名字\n\nint price Table[] = new int [PRICE_TABLE_MAX]； //OK：名字的含义是很清楚的\n\n\n```\n规则会检查同文件如果有超过三次使用同一个数字（0，1，-1除外）则视为魔法数字\n用于判断 true, false的0, 1，-1会被排除在外",
+                "disable": false
+            },
+            {
+                "real_name": "nest",
+                "display_name": "Nest",
+                "severity": "info",
+                "category": "convention",
+                "rule_title": "检查函数嵌套过深",
+                "rule_params": "max=5",
+                "custom": false,
+                "languages": [
+                    "js"
+                ],
+                "solution": "拆分函数",
+                "owner": "",
+                "labels": [],
+                "description": "函数嵌套尽量不要超过5层，\n多的话建议拆分出其他函数\n以Go代码为例\n```\n// AddArea 添加成功或出错\nfunc (s *BookingService) AddArea(areas ...string) error {\n    s.Lock()\n    defer s.Unlock()\n    \n    for _, area := range areas {\n        for _, has := range s.areas {\n            if area == has {\n                return srverr.ErrAreaConflict\n            }\n        }\n        s.areas = append(s.areas, area)\n        s.areaOrders[area] = new(order.AreaOrder)\n    }\n    return nil\n}\n// 建议调整为这样：\n\n// AddArea 添加成功或出错\nfunc (s *BookingService) AddArea(areas ...string) error {\n    s.Lock()\n    defer s.Unlock()\n    \n    for _, area := range areas {\n        if s.HasArea(area) {\n            return srverr.ErrAreaConflict\n        }\n        s.areas = append(s.areas, area)\n        s.areaOrders[area] = new(order.AreaOrder)\n    }\n    return nil\n}\n\n// HasArea ...\nfunc (s *BookingService) HasArea(area string) bool {\n    for _, has := range s.areas {\n        if area == has {\n            return true\n        }\n    }\n    return false\n}\n```",
+                "disable": false
+            }
+        ],
+        "open_user": true,
+        "open_saas": false,
+        "virtual_name": "内置4",
+        "show_display_name": false
+    }
+]

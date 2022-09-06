@@ -12,10 +12,10 @@ import { REPO_TAB_TYPE } from './constants';
  * @param repoId 代码库ID
  */
 export const getRepoRouter = (
-  org_sid: string,
-  team_name: string,
+  orgSid: string,
+  teamName: string,
   repoId: number | string,
   tabKey: string = REPO_TAB_TYPE.MEMBER,
-) => `${getBaseRouter(org_sid, team_name)}/repos/${repoId}/${tabKey}`;
+) => `${getBaseRouter(orgSid, teamName)}/repos/${repoId}/${tabKey}`;
 
 export const getPCAuthRouter = () => '/user/auth';

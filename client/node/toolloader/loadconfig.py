@@ -161,7 +161,8 @@ class ConfigLoader(object):
         tool_names.remove(c_name)
         return tool_names
 
-    def read_tool_config_from_ini_file(self, tool_names=None, custom_tools=None, task_list=None, config_all_tools=False, include_common=True):
+    def read_tool_config_from_ini_file(self, tool_names=None, custom_tools=None, task_list=None, config_all_tools=False,
+                                       include_common=True):
         """
         从ini文件中读取工具配置
         """
@@ -194,6 +195,7 @@ class ConfigLoader(object):
                 "env_path": env_path_section,  # env_path_section中现在已经没有key为"PATH"的元素,可以作为编译工具的env_path
                 "env_value": env_value_section
             }
+            self.__format_to_fullpath(compile_config)
             config_dict["compile_config"] = compile_config
             return config_dict
         else:
@@ -236,6 +238,25 @@ class ConfigLoader(object):
         tool_cfg["env_value"] = self.__str_to_dict(tool_cfg["env_value"], env_value_section)
         tool_cfg["tool_url"] = self.__str_to_list(tool_cfg["tool_url"])
         tool_cfg["path"] = self.__str_to_list(tool_cfg["path"], uniq=False)
+        self.__format_to_fullpath(tool_cfg)
+
+    def __format_to_fullpath(self, tool_cfg):
+        # 将路径类型的环境变量（env_path）中的相对路径转换成绝对路径
+        for env_name, rel_path in tool_cfg["env_path"].items():
+            if "PATH" == env_name:  # PATH应该单独放在path字段中，如果放在env_path中，忽略，避免影响和覆盖原有PATH变量
+                continue
+            full_path = os.path.join(settings.TOOL_BASE_DIR, rel_path)
+            tool_cfg["env_path"][env_name] = full_path
+
+        # 将PATH环境变量的相对路径转换成绝对路径
+        path_env = []
+        for rel_path in tool_cfg["path"]:
+            if "$" in rel_path or "%" in rel_path:  # 带变量的环境变量，已经是全路径
+                full_path = rel_path
+            else:
+                full_path = os.path.join(settings.TOOL_BASE_DIR, rel_path)
+            path_env.append(full_path)
+        tool_cfg["path"] = path_env
 
     def read_config_from_tool_schemes(self, tool_names=None, task_list=None):
         """
@@ -266,7 +287,7 @@ class ConfigLoader(object):
         config_dict = {}
         already_config_tools = []  # 记录已经读取到配置的工具
         for task_config in task_list:
-            task_name = task_config["task_name"]
+            task_name = task_config.get("task_name")
             if tool_names and task_name not in tool_names:
                 continue
             task_params = task_config.get("task_params", {})
@@ -282,29 +303,41 @@ class ConfigLoader(object):
                     for tool_lib in tool_libs:
                         lib_support_os = tool_lib.get("os", [])
                         if self._os_type in lib_support_os:
+                            # 使用新的结构存储环境变量，避免修改原有的任务参数
+                            new_lib_envs = {}
                             lib_envs = tool_lib.get("envs", {})
                             if not lib_envs:  # 可能会传空list，这里判空，避免后面格式出错
-                                lib_envs = {}
+                                new_lib_envs = {}
+
                             scm_url = tool_lib.get("scm_url")
-                            lib_dir_name = scm_url.split('/')[-1].strip().replace(".git", "")
-                            # 环境变量中的$ROOT_DIR替换为目录名，后续加载环境变量时会拼接为全路径
+                            # 支持git仓库地址和zip包地址两种格式
+                            lib_dir_name = BaseScmUrlMgr.get_last_dir_name_from_url(scm_url)
+                            lib_dir_path = os.path.join(settings.TOOL_BASE_DIR, lib_dir_name)
+
+                            # 将环境变量中的$ROOT_DIR替换为实际路径，重新保存到new_lib_envs
                             for key, value in lib_envs.items():
                                 if "$ROOT_DIR" in value:
-                                    lib_envs[key] = value.replace("$ROOT_DIR", lib_dir_name)
+                                    new_lib_envs[key] = value.replace("$ROOT_DIR", lib_dir_path)
+                                else:
+                                    new_lib_envs[key] = value
+
                             # PATH和其他环境变量分开处理
                             path_envs = []
                             other_envs = {}
-                            for env_name, env_value in lib_envs.items():
+                            for env_name, env_value in new_lib_envs.items():
                                 if env_name == "PATH":
                                     path_envs = self.__str_to_list(env_value)
                                 else:
-                                    other_envs[env_name] = env_value
+                                    # 根据英文分号拆分后，再环境变量分隔符拼接到一起
+                                    value_list = self.__str_to_list(env_value)
+                                    value_format = os.pathsep.join(value_list)
+                                    other_envs[env_name] = value_format
                             lib_config = {
                                 "tool_url": scm_url,
                                 "scm_type": tool_lib.get("scm_type"),
                                 "auth_info": tool_lib.get("auth_info"),
                                 "path": path_envs,
-                                "env_path": lib_envs,
+                                "env_path": other_envs,
                                 "env_value": {}
                             }
                             lib_name = tool_lib.get("name")

@@ -16,6 +16,7 @@ import zipfile
 
 logger = logging.getLogger(__name__)
 
+
 class ZipMgr(object):
     def zip_dir(self, dir_path, zip_filepath):
         """
@@ -43,7 +44,6 @@ class ZipMgr(object):
         zf.close()
         return zip_filepath
 
-
     def unzip_file(self, zip_filepath, unzip_to_dir):
         """
         加压缩到指定目录
@@ -70,6 +70,29 @@ class ZipMgr(object):
                 outfile.write(zfobj.read(name))
                 outfile.close()
         return unzip_to_dir
+
+    @staticmethod
+    def depress(zip_file, target_dir):
+        """
+        解压到指定目录下, 保留可执行文件权限（仅限UNIX系统创建的文件）
+        :param zip_file: 压缩文件
+        :param target_dir: 解压后的目标目录
+        :return:
+        """
+        ZIP_UNIX_SYSTEM = 3
+
+        def extract_all_with_permission(zf, target_dir):
+            for info in zf.infolist():
+                extracted_path = zf.extract(info, target_dir)
+
+                if info.create_system == ZIP_UNIX_SYSTEM:
+                    unix_attributes = info.external_attr >> 16
+                    if unix_attributes:
+                        os.chmod(extracted_path, unix_attributes)
+
+        with zipfile.ZipFile(zip_file, 'r') as zf:
+            extract_all_with_permission(zf, target_dir)
+
 
 if __name__ == '__main__':
     pass

@@ -18,14 +18,14 @@ import { getProjectRouter } from '@src/utils/getRoutePath';
 import { getSchemes } from '@src/services/schemes';
 import { getTmplList } from '@src/services/template';
 
-import { BASE_ROUTE_PREFIX, PROJECT_ROUTE_PREFIX } from '@src/common/constants';
+import { BASE_ROUTE_PREFIX, PROJECT_ROUTE_PREFIX } from '@src/constant';
 import Nav from './nav';
 import ProjectList from './project/project-list';
 import FirstModal from './project/first-modal';
 
 const Projects = () => {
   const history = useHistory();
-  const { org_sid: orgSid, team_name: teamName }: any = useParams();
+  const { orgSid, teamName }: any = useParams();
   const { curRepo } = useStateStore();
   const [schemes, setSchemes] = useState([]);
   const [templates, setTemplates] = useState([]);

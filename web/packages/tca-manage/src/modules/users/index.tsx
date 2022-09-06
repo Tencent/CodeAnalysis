@@ -1,95 +1,70 @@
+/**
+ * 用户管理功能
+ * biz-start
+ * 目前适用于体验、开源
+ * biz-end
+ */
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
-import { Row, Col, Tabs, Button } from 'coding-oa-uikit';
+import { useTranslation } from 'react-i18next';
+import { Row, Col, Tabs, Button } from 'tdesign-react';
+import { useURLParams, useFetch } from '@tencent/micro-frontend-shared/hooks';
 
 // 项目内
-import { t } from '@src/i18n/i18next';
-import { getPaginationParams, getFilterURLPath } from '@src/utils';
-import { DEFAULT_PAGER } from '@src/common/constants';
-import { useURLParams, useDeepEffect } from '@src/utils/hooks';
-import { getUsers } from '@src/services/users';
+import { userAPI } from '@plat/api';
 
 // 模块内
-import s from './style.scss';
 import UserTable from './user-table';
 import UserModal from './user-modal';
+import { UserData } from './types';
+import s from '../style.scss';
 
-const { TabPane } = Tabs;
+const { TabPanel } = Tabs;
 
-const FILTER_FIELDS: Array<string> = [];
-
-const customFilterURLPath = (params = {}) => getFilterURLPath(FILTER_FIELDS, params);
-
-const Jobs = () => {
-  const history = useHistory();
-  const [listData, setListData] = useState<Array<any>>([]);
-  const [count, setCount] = useState(DEFAULT_PAGER.count);
-  // const [loading, setLoading] = useState(false);
-  const { filter, currentPage } = useURLParams(FILTER_FIELDS);
+const Users = () => {
+  const { t } = useTranslation();
+  const { filter, currentPage, pageSize } = useURLParams();
+  const [{ data }, reload] = useFetch(userAPI.get, [filter]);
+  const { results: listData = [], count = 0 } = data || {};
 
   const [visible, setVisible] = useState(false);
-  const [selectUser, setSelectUser] = useState(null);
+  const [selectUser, setSelectUser] = useState<UserData>(null);
 
-  const onCreateOrUpdateHandle = (user: any = null) => {
+  const onCreateOrUpdateHandler = (user: UserData = null) => {
     setVisible(true);
     setSelectUser(user);
   };
 
-  /**
-     * 根据路由参数获取团队列表
-     */
-  const getListData = () => {
-    // setLoading(true);
-    getUsers(filter).then((response) => {
-      setCount(response.count);
-      setListData(response.results || []);
-      // setLoading(false);
-    });
-  };
-
-  // 当路由参数变化时触发
-  useDeepEffect(() => {
-    getListData();
-  }, [filter]);
-
-  // 翻页
-  const onChangePageSize = (page: number, pageSize: number) => {
-    const params = getPaginationParams(page, pageSize);
-    history.push(customFilterURLPath(params));
-  };
-
   return (
     <>
-      <Row className={s.header} align="middle">
+      <Row className={s.header} align='middle' >
         <Col flex="auto">
-          <Tabs defaultActiveKey="users" size="large">
-            <TabPane tab={t('用户管理列表')} key="users" />
+          <Tabs defaultValue="users" size='large'>
+            <TabPanel label={t('用户管理列表')} value="users" />
           </Tabs>
         </Col>
-        <Col flex="none">
-          <Button onClick={() => onCreateOrUpdateHandle()} type="primary">
+        <Col>
+          <Button onClick={() => onCreateOrUpdateHandler()} theme="primary">
             {t('创建用户')}
           </Button>
         </Col>
       </Row>
+      <UserModal
+        visible={visible}
+        onCancel={() => setVisible(false)}
+        onOk={() => {
+          reload();
+          setVisible(false);
+        }}
+        userinfo={selectUser}
+      />
       <div className="px-lg">
-        <UserModal
-          visible={visible}
-          onCancel={() => setVisible(false)}
-          onOk={() => {
-            getListData();
-            setVisible(false);
-          }}
-          userinfo={selectUser}
-        />
         <UserTable
-          onEdit={onCreateOrUpdateHandle}
+          onEdit={onCreateOrUpdateHandler}
           dataSource={listData}
           pagination={{
             current: currentPage,
             total: count,
-            showTotal: (total: any, range: any) => `${range[0]} - ${range[1]} 条数据，共 ${total} 条`,
-            onChange: onChangePageSize,
+            pageSize,
           }}
         />
       </div>
@@ -97,4 +72,4 @@ const Jobs = () => {
   );
 };
 
-export default Jobs;
+export default Users;

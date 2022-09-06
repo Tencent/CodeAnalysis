@@ -1,0 +1,21 @@
+@import "@tencent/micro-frontend-shared/style/color.scss";
+
+.tag-option {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .private-tag {
+    color: $cyan-6;
+    border: 1px solid $cyan-6;
+    background-color: #fff;
+    border-radius: 2px;
+  }
+
+  .public-tag {
+    color: $blue-6;
+    border: 1px solid $blue-6;
+    background-color: #fff;
+    border-radius: 2px;
+  }
+}

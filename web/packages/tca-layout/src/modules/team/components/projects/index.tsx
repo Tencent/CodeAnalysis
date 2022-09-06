@@ -1,13 +1,7 @@
-// Copyright (c) 2021-2022 THL A29 Limited
-//
-// This source code file is made available under MIT License
-// See LICENSE for details
-// ==============================================================================
-
 import React, { useEffect, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
-import { Tabs, Button, Input } from 'coding-oa-uikit';
 import { filter } from 'lodash';
+import { Tabs, Button, Input } from 'coding-oa-uikit';
 
 import { getProjects } from '@src/services/team';
 import List from './list';
@@ -19,12 +13,12 @@ const { TabPane } = Tabs;
 const Projects = () => {
   const { orgSid }: any = useParams();
   const history: any = useHistory();
-  const [loading, setLoading] = useState<boolean>(false);
-  const [data, setData] = useState<any>([]);
-  const [manageData, setManageData] = useState<any>([]);
-  const [tab, setTab] = useState<string>('all');
-  const [projectName, setProjectName] = useState<string>('');
-  const [visible, setVisible] = useState<boolean>(false);
+  const [loading, setLoading] = useState(false);
+  const [data, setData] = useState([]);
+  const [manageData, setManageData] = useState([]);
+  const [tab, setTab] = useState('all');
+  const [projectName, setProjectName] = useState('');
+  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
     getListData();
@@ -43,9 +37,9 @@ const Projects = () => {
     if (projectName) params.display_name = projectName;
 
     setLoading(true);
-    getProjects(orgSid, { ...params }).then((res) => {
+    getProjects(orgSid, { ...params }).then((res: any) => {
       // 只显示未禁用的项目
-      const activeProjects = filter(res, {status: 1});
+      const activeProjects = filter(res, { status: 1 });
       tab === 'manage' ? setManageData(activeProjects) : setData(activeProjects);
     })
       .finally(() => {

@@ -10,7 +10,7 @@
             "datahandle"
         ],
         "scan_app": "codelint",
-        "scm_url": "codedog_0Day_checker",
+        "scm_url": "http://github.com/TCATools/codedog_0Day_checker/releases/download/v20220830/0daychecker.zip",
         "run_cmd": "./main.bin",
         "envs": null,
         "build_flag": false,

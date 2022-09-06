@@ -17,6 +17,7 @@ import cn from 'classnames';
 
 import { SCAN_LIST } from './constants';
 import { createScheme, copyScheme } from '@src/services/schemes';
+import NodeTag from '@src/components/node-tag';
 
 import style from './style.scss';
 
@@ -85,7 +86,9 @@ const CreatSchemeModal = (props: IProps) => {
       visible={visible}
       onCancel={onClose}
       afterClose={() => form.resetFields()}
-      onOk={() => form.validateFields().then(onFinish)}
+      onOk={() => {
+        form.validateFields().then(onFinish);
+      }}
     >
       <Form layout="vertical" form={form} onFinish={onFinish}>
         <Form.Item
@@ -185,23 +188,12 @@ const CreatSchemeModal = (props: IProps) => {
                         ))}
                       </Select>
                     </Form.Item>
-                    <Form.Item
+                    <NodeTag
                       name="tag"
                       label="运行环境"
                       rules={[{ required: true, message: '请选择运行环境' }]}
-                    >
-                      <Radio.Group>
-                        <Row>
-                          {tags.map(item => item.public && (
-                            <Col span={8} key={item.name}>
-                              <Radio value={item.name}>
-                                {item.name}
-                              </Radio>
-                            </Col>
-                          ))}
-                        </Row>
-                      </Radio.Group>
-                    </Form.Item>
+                      tags={tags}
+                    />
                     <Form.Item
                       name="funcList"
                       label="功能开启"

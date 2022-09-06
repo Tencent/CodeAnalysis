@@ -1,20 +1,12 @@
-// Copyright (c) 2021-2022 THL A29 Limited
-//
-// This source code file is made available under MIT License
-// See LICENSE for details
-// ==============================================================================
-
-import { registerApplication, AppProps, start } from 'single-spa';
-import { Store } from 'redux';
+import { registerApplication, start } from 'single-spa';
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
 import 'coding-oa-uikit/dist/coding-oa-uikit.css';
-import { omit } from 'lodash';
 
 import MicroApplication from '@src/meta/application';
 import applicationLoader from '@src/loader';
 import { registration } from '@src/register';
-import { store, injectAsyncReducer, TInjectAsyncReducer } from '@src/store';
+import { store, injectAsyncReducer } from '@src/store';
 import createHook from '@src/hook';
 import { getOrCreateBodyContainer, info, debug, LOG_DEBUG } from '@src/utils';
 
@@ -26,16 +18,6 @@ const MAIN_CONTAINER = 'main-container';
 
 // 配置顶部加载进度条
 NProgress.configure({ showSpinner: false });
-
-interface ApplicationProps {
-  store: Store;
-  injectAsyncReducer: TInjectAsyncReducer;
-  rootDom: HTMLElement;
-}
-
-const getApplicationProps = (props: AppProps & ApplicationProps): ApplicationProps => {
-  return omit(props, ['name', 'singleSpa', 'mountParcel']);
-};
 
 /**
  * 在window上挂载一些全局参数
@@ -60,9 +42,9 @@ createHook(store, injectAsyncReducer);
     } else {
       info('加载App', name, '版本', commitId, '变更', changeAt);
     }
-    registerApplication<ApplicationProps>(
+    registerApplication(
       name,
-      async (props: AppProps & ApplicationProps) => {
+      async ({ name, singleSpa, mountParcel, ...customProps }) => {
         NProgress.start();
         // 获取微前端应用资源，并进行微前端应用注册
         await app.loadResources();
@@ -74,36 +56,35 @@ createHook(store, injectAsyncReducer);
         // 获取微前端应用生命周期
         const { bootstrap, mount, unmount, update = Promise.resolve } = register.lifeCycles;
         NProgress.done();
-        // 获取ApplicationProps
-        const applicationProps = getApplicationProps(props);
         return {
           bootstrap: [
             async () => {
               debug('Bootstrap app', name);
-              await bootstrap(applicationProps);
+              await bootstrap(customProps);
             },
           ],
           mount: [
             async () => {
               debug('Mount app', name);
-              await mount(applicationProps);
+              await mount(customProps);
             },
           ],
           update: [
             async () => {
               debug('Update app', name);
-              await update(applicationProps);
+              await update(customProps);
             },
           ],
           unmount: [
             async () => {
               debug('Unmount app', name);
-              await unmount(applicationProps);
+              await unmount(customProps);
               activedApps.delete(app);
             },
           ],
         };
-      }, (location: Location) => {
+      },
+      (location: Location) => {
         const shouldActive = app.path().test(location.pathname);
         if (shouldActive) {
           activedApps.add(app);

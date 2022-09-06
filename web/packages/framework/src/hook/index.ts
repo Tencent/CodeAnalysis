@@ -1,18 +1,15 @@
-// Copyright (c) 2021-2022 THL A29 Limited
-//
-// This source code file is made available under MIT License
-// See LICENSE for details
-// ==============================================================================
-
+/**
+ * 挂载数据到window上
+ */
 import { Store } from 'redux';
 
 import { registration } from '@src/register';
-import { TInjectAsyncReducer } from '@src/store';
+import { InjectAsyncReducer } from '@src/store';
 
 const HOOK_NAME = 'microHook';
 const DEV_API_LIST_NAME = 'microDevApiList';
 
-export default (store: Store, injectAsyncReducer: TInjectAsyncReducer) => {
+export default (store: Store, injectAsyncReducer: InjectAsyncReducer) => {
   /**
    * 挂载 window 注册函数，禁止复写
    */

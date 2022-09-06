@@ -50,7 +50,7 @@ const Schemes = () => {
 
   const tab = params.tabs || 'basic';
   const schemeId = toNumber(params.schemeId);
-  const { org_sid: orgSid, team_name: teamName } = params;
+  const { orgSid, teamName } = params;
 
   useEffect(() => {
     getCommonData();
@@ -67,7 +67,7 @@ const Schemes = () => {
   }, [curRepo.id]);
 
   const getCommonData = async () => {
-    setTags(get(await getTags(), 'results', []));
+    setTags(get(await getTags(orgSid), 'results', []));
     setLanguages(get(await getLanguages(), 'results', []));
     setTemplates(get(await getTmplList(orgSid, { limit: 100 }), 'results', []));
   };
@@ -120,7 +120,9 @@ const Schemes = () => {
                 addSchemeHandle={() => {
                   setVisible(true);
                 }}
-                changeSchemeHandle={item => getSchemeInfo(item.id)}
+                changeSchemeHandle={(item) => {
+                  getSchemeInfo(item.id);
+                }}
               />
               <div className={style.schemeRight}>
                 <div style={{ marginBottom: 20 }}>
@@ -252,7 +254,9 @@ const Schemes = () => {
         schemeId={schemeInfo.id}
         visible={pullModalVsb}
         onClose={() => setPullModalVsb(false)}
-        callback={(id: number | string) => getSchemeInfo(id)}
+        callback={(id: number | string) => {
+          getSchemeInfo(id);
+        }}
       />
     </div>
   );

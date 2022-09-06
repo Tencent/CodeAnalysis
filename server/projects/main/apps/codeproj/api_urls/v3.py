@@ -214,4 +214,5 @@ urlpatterns = [
     path("orgs/<str:org_sid>/schemes/", include(global_scheme_urlpatterns)),
     path("orgs/<str:org_sid>/checktools/", include("apps.scan_conf.api_urls.v3_checktool")),
     path("orgs/<str:org_sid>/toollibs/", include("apps.scan_conf.api_urls.v3_toollib")),
+    path("orgs/<str:org_sid>/nodes/", include("apps.nodemgr.api_urls.v3")),
 ]

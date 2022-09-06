@@ -8,15 +8,14 @@
  * 仓库登记入口文件
  */
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { find, isEmpty, get, filter } from 'lodash';
 import { Button, Form, Select, message } from 'coding-oa-uikit';
 import PlusIcon from 'coding-oa-uikit/lib/icon/Plus';
 import RefreshIcon from 'coding-oa-uikit/lib/icon/Refresh';
 
 // 项目内
-import { t } from '@src/i18n/i18next';
-import { SCM_PLATFORM } from '@src/common/constants';
-import { AUTH_TYPE, AUTH_TYPE_TXT } from '@src/modules/repos/constants';
+import { AUTH_TYPE, AUTH_TYPE_TXT, SCM_PLATFORM } from '@src/modules/repos/constants';
 import { getPCAuthRouter } from '@src/modules/repos/routes';
 import { getSSHInfo, getScmAccounts, putRepoAuth, getOAuthInfo, getPlatformStatus } from '@src/services/repos';
 
@@ -37,6 +36,7 @@ const layout = {
  * Todo: 目前仅存在http凭证，后续可能会添加各个oauth以及ssh等，后续再重新做其余认证模式处理
  */
 const Authority = ({ curRepo, orgSid, teamName, repoId }: IProps) => {
+  const { t } = useTranslation();
   const [selectedAuth, setSelectedAuth] = useState<any>({});
   const [sshAuthList, setSshAuthList] = useState<any>([]);
   const [httpAuthList, setHttpAuthList] = useState<any>([]);
@@ -58,7 +58,11 @@ const Authority = ({ curRepo, orgSid, teamName, repoId }: IProps) => {
         curAuth = scmAuth.scm_oauth;
         break;
     }
-    curAuth.auth_type = curRepo.scm_auth.auth_type;
+    if (curAuth) {
+      curAuth.auth_type = curRepo?.scm_auth?.auth_type;
+    } else {
+      curAuth = {};
+    }
   }
 
   const setCurAuth = (sshList = sshAuthList, httpList = httpAuthList, oauthList = oauthAuthList) => {
@@ -95,11 +99,11 @@ const Authority = ({ curRepo, orgSid, teamName, repoId }: IProps) => {
       getPlatformStatus().then(r => r || []),
     ]).then((result) => {
       const activeOauth = filter(
-        result[2].map((item:any)=>({ 
-          ...item, 
+        result[2].map((item: any) => ({
+          ...item,
           platform_status: get(result[3], item.scm_platform_name, [false]),
         })),
-        'platform_status'
+        'platform_status',
       );
       setSshAuthList(result[0]);
       setHttpAuthList(result[1]);

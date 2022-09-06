@@ -8,11 +8,17 @@
 
 [![license](https://img.shields.io/badge/License-MIT-brightgreen.svg?style=flat)](LICENSE) [![docs](https://img.shields.io/badge/docs-read-brightgreen.svg?style=flat)](https://tencent.github.io/CodeAnalysis/)
 
-## TCA Github Pages
+## TCA-官方网址
+
+[https://cloud.tencent.com/product/tcap](https://cloud.tencent.com/product/tcap)
+
+## TCA-Github代码库
 
 [https://tencent.github.io/CodeAnalysis/](https://tencent.github.io/CodeAnalysis/)
 
-## 工蜂代码库镜像
+[https://github.com/TCATools](https://github.com/TCATools)
+
+## TCA-国内镜像工蜂代码库
 
 [https://git.code.tencent.com/Tencent_Open_Source/CodeAnalysis.git](https://git.code.tencent.com/Tencent_Open_Source/CodeAnalysis.git)
 
@@ -41,12 +47,9 @@
 
 ## 快速入门
 
-- [快速入门](https://tencent.github.io/CodeAnalysis/)
+- [快速部署](https://tencent.github.io/CodeAnalysis/zh/quickStarted/)
 - [如何使用TCA Action快速体验](https://github.com/TCATools/TCA-action/blob/main/README.md)
-- [如何在本地部署Server与Web](https://tencent.github.io/CodeAnalysis/zh/quickStarted/deploySever.html#通过源代码)
-- [如何通过Docker-Compose部署Server与Web](https://tencent.github.io/CodeAnalysis/zh/quickStarted/deploySever.html#通过docker-compose)
-- [如何使用客户端](https://tencent.github.io/CodeAnalysis/zh/quickStarted/deployClient.html)
-- [部署常见问题与解决方式](https://tencent.github.io/CodeAnalysis/zh/quickStarted/FAQ.html)
+- [如何使用客户端](https://tencent.github.io/CodeAnalysis/zh/guide/客户端/本地分析.html)
 
 ## 社区
 

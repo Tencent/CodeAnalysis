@@ -9,7 +9,6 @@ interface PieChartsProps {
 }
 
 const PieCharts = ({ data, confs = {} }: PieChartsProps) => {
-
   const config: PieConfig = {
     data: data || [],
     angleField: 'value',
@@ -25,18 +24,18 @@ const PieCharts = ({ data, confs = {} }: PieChartsProps) => {
     legend: {
       layout: 'horizontal',
       position: 'bottom',
-      offsetY: -20
+      offsetY: -20,
     },
     statistic: {
       title: false,
-      content: false
+      content: false,
     },
-    ...confs
+    ...confs,
   };
 
   return (
     <Pie {...config} />
-  )
-}
+  );
+};
 
 export default PieCharts;

@@ -1,11 +1,13 @@
 # `tca-manage`
 
-腾讯云代码分析后台管理微前端。
+腾讯代码分析后台管理微前端。
+
+- 后台管理相关列表页，如团队管理、用户管理、仓库管理等
 
 ## 本地启动脚本
 
 ```bash
-PUBLIC_PATH=http://127.0.0.1:5058/ yarn run dev
+yarn run dev
 ```
 
 ## 开发模式启动方式
@@ -13,10 +15,7 @@ PUBLIC_PATH=http://127.0.0.1:5058/ yarn run dev
 使用如下命令启动：
 
   ```bash
-  xxx=xxx yarn run dev
-
-  # 如
-  PUBLIC_PATH=http://127.0.0.1:5058/ yarn run dev
+  yarn run dev
   ```
 
 启动后可通过以下进行开发：
@@ -70,10 +69,6 @@ PUBLIC_PATH=http://127.0.0.1:5058/ yarn run dev
 |                       KEYWORDS | 网页关键词                             |
 |                        FAVICON | 网页图标                               |
 |                   GIT_REVISION | git 版本号                             |
-|             MICRO_FRONTEND_API | 微前端资源配置地址                     |
-|         MICRO_VERSION_INTERVAL | 版本更新获取间隔时间，默认 5 分钟      |
-|          MICRO_VERSION_ENABLED | 开启版本更新功能                       |
-|     MICRO_FRONTEND_SETTING_API | 微前端动态setting资源配置地址     |
 |                    PUBLIC_PATH | 资源路径前缀     |
 |                   PLATFORM_ENV | 平台类型                      |
 |                  ENABLE_MANAGE | 开启后台版                      |
