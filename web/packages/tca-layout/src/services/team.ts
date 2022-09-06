@@ -1,12 +1,4 @@
-// Copyright (c) 2021-2022 THL A29 Limited
-//
-// This source code file is made available under MIT License
-// See LICENSE for details
-// ==============================================================================
-
-
-import { get, put, post, del } from './index';
-import { MAIN_SERVER_API } from './common';
+import { MAIN_SERVER_API, get, put, post, del } from '@plat/api';
 
 /**
  * 获取团队列表
@@ -25,7 +17,7 @@ export const createTeam = (params: any) => post(`${MAIN_SERVER_API}/orgs/`, para
  * @param orgSid 团队唯一标识
  * @param params 参数
  */
- export const disableTeam = (orgSid: string, params: any) => put(`${MAIN_SERVER_API}/orgs/${orgSid}/status/`, params);
+export const disableTeam = (orgSid: string, params: any) => put(`${MAIN_SERVER_API}/orgs/${orgSid}/status/`, params);
 
 /**
  * 获取团队详情

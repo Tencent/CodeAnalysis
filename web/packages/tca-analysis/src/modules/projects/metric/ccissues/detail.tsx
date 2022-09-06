@@ -49,7 +49,7 @@ const CcIssueDetail = () => {
   const offsetLine = 10;
 
   const params: any = useParams();
-  const { org_sid: orgSid, team_name: teamName } = params;
+  const { orgSid, teamName } = params;
   const repoId = toNumber(params.repoId);
   const projectId = toNumber(params.projectId);
 

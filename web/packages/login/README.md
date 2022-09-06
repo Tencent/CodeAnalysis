@@ -10,7 +10,7 @@
 ## 本地启动脚本
 
 ```bash
-PUBLIC_PATH=http://127.0.0.1:5055/ yarn run dev
+yarn run dev
 ```
 
 ## 开发模式启动方式
@@ -18,10 +18,7 @@ PUBLIC_PATH=http://127.0.0.1:5055/ yarn run dev
 使用如下命令启动：
 
   ```bash
-  xxx=xxx yarn run dev
-
-  # 如
-  PUBLIC_PATH=http://127.0.0.1:5055/ yarn run dev
+  yarn run dev
   ```
 
 启动后可通过以下进行开发：

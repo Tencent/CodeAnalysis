@@ -1,1 +1,7 @@
-[]
+[
+  {
+    "code": "GITHUB_URL",
+    "description": "腾讯云代码分析开源地址",
+    "value": "https://github.com/Tencent/CodeAnalysis"
+  }
+]

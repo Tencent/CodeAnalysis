@@ -6,6 +6,7 @@
 
 import React, { useState } from 'react';
 import { Link, useParams, useHistory } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import classnames from 'classnames';
 import { toNumber } from 'lodash';
 
@@ -16,7 +17,6 @@ import PlusIcon from 'coding-oa-uikit/lib/icon/Plus';
 import GitBranchIcon from 'coding-oa-uikit/lib/icon/GitBranch';
 import partnerIcon from '@src/images/partner.svg';
 // 项目内
-import { t } from '@src/i18n/i18next';
 import { getReposRouter } from '@src/utils/getRoutePath';
 // 模块内
 import s from './style.scss';
@@ -27,9 +27,10 @@ interface IProps {
 }
 
 const LeftList = ({ repos }: IProps) => {
+  const { t } = useTranslation();
   const [searchValue, setSearchValue] = useState('');
   const params: any = useParams();
-  const { org_sid: orgSid, team_name: teamName }: any = params;
+  const { orgSid, teamName }: any = params;
   const repoId = toNumber(params.repoId);
   const history = useHistory();
 

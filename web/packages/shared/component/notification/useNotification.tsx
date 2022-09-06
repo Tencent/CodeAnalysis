@@ -31,7 +31,7 @@ const setNotificationDataToLocalStorage = (key: string, notifyStorageData: Notif
 };
 
 /** 通知入参数数据结构 */
-interface NotificationProps {
+export interface NotificationProps {
   /** 唯一标识 */
   key: string,
   /** 通知类型 */

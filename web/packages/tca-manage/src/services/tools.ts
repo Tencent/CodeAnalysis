@@ -1,4 +1,4 @@
-import { MAIN_SERVER_API, get, put, ToolAPI } from './common';
+import { MAIN_SERVER_API, get, put, post, ToolAPI } from './common';
 
 /**
  * 获取工具列表
@@ -20,6 +20,31 @@ export const getRules = (params: any = null) => get(`${MAIN_SERVER_API}/conf/che
  * @returns 工具依赖列表 Promise
  */
 export const getToolLibs = (params: any = null) => get(`${MAIN_SERVER_API}/conf/toollibs/`, params);
+
+/**
+ * 添加工具依赖
+ * @param orgId
+ * @param data
+ * @returns
+ */
+export const addToolLib = (data: any) => post(`${MAIN_SERVER_API}/conf/toollibs/`, data);
+
+/**
+ * 获取工具依赖详情
+ * @param orgId
+ * @param libId
+ * @returns
+ */
+export const getLibDetail = (libId: number) => get(`${MAIN_SERVER_API}/conf/toollibs/${libId}/`);
+
+/**
+ * 更新工具依赖
+ * @param orgId
+ * @param libId
+ * @param data
+ * @returns
+ */
+export const updateToolLib = (libId: number, data: any) => put(`${MAIN_SERVER_API}/conf/toollibs/${libId}/`, data);
 
 export const putToolOpen = (toolId: number | string, params: any) => put(`${MAIN_SERVER_API}/checktools/${toolId}/open/`, params);
 

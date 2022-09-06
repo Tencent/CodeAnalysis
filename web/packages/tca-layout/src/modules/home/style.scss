@@ -1,4 +1,4 @@
-@import "@src/common/style/color.scss";
+@import "@tencent/micro-frontend-shared/style/color.scss";
 
 $content-max-width: 1180px;
 $foot-height: 150px;
@@ -58,6 +58,13 @@ $content-min-height: $foot-height + 48px;
   .right {
     float: right;
 
+    .github {
+      img {
+        vertical-align: middle;
+        height: 24px;
+      }
+    }
+
     .btn {
       width: 100px;
       height: 30px;
@@ -68,7 +75,6 @@ $content-min-height: $foot-height + 48px;
 }
 
 .home .content {
-  padding-top: 12px;
   min-height: calc(100vh - #{$content-min-height});
   overflow: hidden;
 

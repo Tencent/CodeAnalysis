@@ -18,32 +18,33 @@ import { getProjectRouter } from '@src/utils/getRoutePath';
 import style from './style.scss';
 
 interface ResultProps {
-    scanId: number;
+  scanId: number;
 }
 
 const Result = (props: ResultProps) => {
-    const { org_sid: orgSid, team_name: teamName, repoId, projectId } = useParams() as any;
-    const { scanId } = props;
-    const [data, setData] = useState<any>({});
-    const [loading, setLoading] = useState(true);
-    const { lintscan, cyclomaticcomplexityscan, duplicatescan, clocscan } = data;
+  const { orgSid, teamName, repoId, projectId } = useParams() as any;
+  const { scanId } = props;
+  const [data, setData] = useState<any>({});
+  const [loading, setLoading] = useState(true);
+  const { lintscan, cyclomaticcomplexityscan, duplicatescan, clocscan } = data;
 
-    useEffect(() => {
-        if (scanId) {
-            setLoading(true);
-            getScansResult(orgSid, teamName, repoId, projectId, scanId).then((response) => {
-                setData(response)
-            }).finally(() => {
-                setLoading(false);
-            })
-        }
-    }, [scanId]);
+  useEffect(() => {
+    if (scanId) {
+      setLoading(true);
+      getScansResult(orgSid, teamName, repoId, projectId, scanId).then((response) => {
+        setData(response);
+      })
+        .finally(() => {
+          setLoading(false);
+        });
+    }
+  }, [scanId]);
 
-    if (loading) {
-        return <Loading />;
-      }
+  if (loading) {
+    return <Loading />;
+  }
 
-    return (
+  return (
         <div className={style.result}>
             <div className={style.module}>
                 <h4>代码检查</h4>
@@ -52,10 +53,10 @@ const Result = (props: ResultProps) => {
                         <Col span={8}>
                             <Link
                                 to={`${getProjectRouter(
-                                    orgSid,
-                                    teamName,
-                                    repoId,
-                                    projectId,
+                                  orgSid,
+                                  teamName,
+                                  repoId,
+                                  projectId,
                                 )}/codelint-issues?state=1&scan_open=${data.id}`}
                             >
                                 新增问题 {lintscan.issue_open_num} 个（已聚合数据）
@@ -64,10 +65,10 @@ const Result = (props: ResultProps) => {
                         <Col span={8}>
                             <Link
                                 to={`${getProjectRouter(
-                                    orgSid,
-                                    teamName,
-                                    repoId,
-                                    projectId,
+                                  orgSid,
+                                  teamName,
+                                  repoId,
+                                  projectId,
                                 )}/codelint-issues?scan_fix=${data.id}`}
                             >
                                 关闭问题 {lintscan.issue_fix_num} 个{' '}
@@ -77,7 +78,7 @@ const Result = (props: ResultProps) => {
                     </Row>
                 ) : (
                         <p className={style.noData}>暂无数据</p>
-                    )}
+                )}
             </div>
             <div className={style.module}>
                 <h4>圈复杂度</h4>
@@ -89,10 +90,10 @@ const Result = (props: ResultProps) => {
                         <Col span={8}>
                             <Link
                                 to={`${getProjectRouter(
-                                    orgSid,
-                                    teamName,
-                                    repoId,
-                                    projectId,
+                                  orgSid,
+                                  teamName,
+                                  repoId,
+                                  projectId,
                                 )}/metric/ccfiles?change_type=1,3`}
                             >
                                 新增/变化 {cyclomaticcomplexityscan.diff_cc_num} 个高复杂度方法{' '}
@@ -104,7 +105,7 @@ const Result = (props: ResultProps) => {
                     </Row>
                 ) : (
                         <p className={style.noData}>暂无数据</p>
-                    )}
+                )}
             </div>
             <div className={style.module}>
                 <h4>重复代码</h4>
@@ -125,7 +126,7 @@ const Result = (props: ResultProps) => {
                     </>
                 ) : (
                         <p className={style.noData}>暂无数据</p>
-                    )}
+                )}
             </div>
             <div className={style.module}>
                 <h4>代码统计</h4>
@@ -166,10 +167,10 @@ const Result = (props: ResultProps) => {
                     </>
                 ) : (
                         <p className={style.noData}>暂无数据</p>
-                    )}
+                )}
             </div>
         </div>
-    );
+  );
 };
 
 export default Result;

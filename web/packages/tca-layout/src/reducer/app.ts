@@ -1,10 +1,6 @@
-// Copyright (c) 2021-2022 THL A29 Limited
-//
-// This source code file is made available under MIT License
-// See LICENSE for details
-// ==============================================================================
-
+import { find } from 'lodash';
 import Constant from './constant';
+
 
 const initialState = {
   enterprise: {
@@ -14,7 +10,9 @@ const initialState = {
     global_key: 'tca',
   },
   org: {},
-  user: null,
+  isOrgAdminUser: false,
+  user: {},
+  puppyInfo: {},
 };
 
 export interface IAction {
@@ -22,19 +20,26 @@ export interface IAction {
   payload: any;
 }
 
-export default (state = initialState, action: IAction) => {
+const appReducer = (state = initialState, action: IAction) => {
   switch (action.type) {
     case Constant.SET_USERINFO:
       return {
         ...state,
         user: action.payload,
       };
-    case Constant.SET_ORG:
+    case Constant.SET_PUPPYINFO:
+      return { ...state, puppyInfo: action.payload };
+    case Constant.SET_ORG: {
+      const isOrgAdminUser = !!find(action.payload?.admins || [], { username: state.user?.username });
       return {
         ...state,
+        isOrgAdminUser,
         org: action.payload,
       };
+    }
     default:
       return state;
   }
 };
+
+export default appReducer;

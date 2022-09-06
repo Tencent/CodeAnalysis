@@ -31,8 +31,12 @@ export interface SearchFormField extends FilterField {
   label?: string;
   /** 表单 placeholder */
   placeholder?: string;
+  /** 表单 加载状态 */
+  loading?: boolean;
   /** select options，仅type为select时生效 */
   options?: any[];
+  /** select 可选择，仅type为select时生效 */
+  filterable?: boolean;
   /** 表单样式 */
   style?: React.CSSProperties;
 }
@@ -100,6 +104,7 @@ const Search = ({
     const params = {
       ...searchParams,
       [key]: value,
+      offset: null,
     };
     onRouteHandle(params);
     callback?.(params);
@@ -110,6 +115,7 @@ const Search = ({
       ...searchParams,
       [`${key}_gte`]: range[0],
       [`${key}_lte`]: range[1],
+      offset: null,
     };
     onRouteHandle(params);
     callback?.(params);
@@ -119,7 +125,10 @@ const Search = ({
     const params: FilterParams = {};
     // 将筛选入参清空
     Object.keys(searchParams).forEach((key) => {
-      params[key] = '';
+      params[key] = [];
+      if (key.endsWith('_lte') || key.endsWith('_gte')) {
+        params[key.substring(0, key.length - 4)] = '';
+      }
     });
     onRouteHandle({ ...params, ...defaultValues });
     callback?.({ ...params, ...defaultValues });
@@ -138,6 +147,8 @@ const Search = ({
       case 'select':
         return <Select
           style={{ width: 150, ...field.style }}
+          filterable={field.filterable}
+          loading={field.loading}
           clearable={!field.defaultValue}
           placeholder={field.placeholder || '全部'}
           options={field.options}
@@ -146,6 +157,8 @@ const Search = ({
         return <Select
           multiple
           style={{ width: 150, ...field.style }}
+          filterable={field.filterable}
+          loading={field.loading}
           placeholder={field.placeholder || '全部'}
           options={field.options}
           onChange={value => onChange(field.name, value)} />;

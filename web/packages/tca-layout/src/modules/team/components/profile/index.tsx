@@ -1,24 +1,19 @@
-// Copyright (c) 2021-2022 THL A29 Limited
-//
-// This source code file is made available under MIT License
-// See LICENSE for details
-// ==============================================================================
-
 import React, { useEffect, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { find } from 'lodash';
+import { useTranslation } from 'react-i18next';
 import { Input, Form, Button, Row, Col, Statistic, Card, message } from 'coding-oa-uikit';
 import Group from 'coding-oa-uikit/lib/icon/Group';
 import Project from 'coding-oa-uikit/lib/icon/Project';
 import Package from 'coding-oa-uikit/lib/icon/Package';
+import { formatDateTime } from '@tencent/micro-frontend-shared/util';
+import { useStateStore } from '@tencent/micro-frontend-shared/hook-store';
+import DeleteModal from '@tencent/micro-frontend-shared/component/modal/delete-modal';
+import Copy from '@tencent/micro-frontend-shared/component/copy';
 
-import Copy from '@src/components/copy'
-import { useStateStore } from '@src/context/store';
-import { t } from '@src/i18n/i18next';
+import { NAMESPACE, UserState } from '@src/store/user';
 import { getTeamInfo, updateTeamInfo, disableTeam } from '@src/services/team';
-import { formatDateTime } from '@src/utils/index';
-import DeleteModal from '@src/components/delete-modal';
-
+import { getExtraTeamInfos } from '@plat/modules/team';
 import style from './style.scss';
 
 const layout = {
@@ -28,11 +23,13 @@ const layout = {
 const Profile = () => {
   const [form] = Form.useForm();
   const { orgSid }: any = useParams();
-  const [data, setData] = useState<any>({});
-  const [isEdit, setIsEdit] = useState<boolean>(false);
+  const [data, setData] = useState({}) as any;
+  const [isEdit, setIsEdit] = useState(false);
   const history = useHistory();
+  const { t } = useTranslation();
+
   // 判断用户是否有权限删除团队，仅超级管理员和团队管理员可以删除
-  const { userinfo } = useStateStore();
+  const { userinfo } = useStateStore<UserState>(NAMESPACE);
   const isAdmin = !!find(data?.admins, { username: userinfo.username });  // 当前用户是否是管理员
   const [deleteVisible, setDeleteVisible] = useState<boolean>(false);
   const isSuperuser = userinfo.is_superuser;  // 是否为超级管理员
@@ -48,7 +45,7 @@ const Profile = () => {
 
   const onFinish = (formData: any) => {
     updateTeamInfo(orgSid, formData).then((res) => {
-      message.success(t('团队信息更新成功'));
+      message.success('团队信息更新成功');
       reset();
       setData(res);
     });
@@ -61,17 +58,19 @@ const Profile = () => {
 
   const onDelete = () => {
     setDeleteVisible(true);
-  }
+  };
 
   const handleDeleteTeam = () => {
     disableTeam(orgSid, {
-      status: 99
+      status: 99,
     }).then(() => {
       message.success(t('团队已禁用！'));
       history.push('/teams');
-    }).catch((e: any) => {
-      console.error(e);
-    }).finally(() => setDeleteVisible(false));
+    })
+      .catch((e: any) => {
+        console.error(e);
+      })
+      .finally(() => setDeleteVisible(false));
   };
 
   return (
@@ -136,7 +135,7 @@ const Profile = () => {
             <div>{data.org_sid} <Copy text={data.org_sid} /></div>
           </Form.Item>
           <Form.Item
-            label={t('团队名称11')}
+            label={t('团队名称')}
             name="name"
             rules={
               isEdit
@@ -160,17 +159,7 @@ const Profile = () => {
           >
             {isEdit ? <Input width={400} /> : <>{data.owner}</>}
           </Form.Item>
-          <Form.Item
-            label={t('团队联系方式')}
-            name="tel_number"
-            rules={
-              isEdit
-                ? [{ required: true, message: t('团队联系方式为必填项') }]
-                : undefined
-            }
-          >
-            {isEdit ? <Input width={400} /> : <>{data.tel_number}</>}
-          </Form.Item>
+          {getExtraTeamInfos?.(isEdit, data)}
           <Form.Item label={t('创建人')} name="creator">
             <span>{data.creator?.nickname ?? ''}</span>
           </Form.Item>

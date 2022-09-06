@@ -1,48 +1,43 @@
-// Copyright (c) 2021-2022 THL A29 Limited
-//
-// This source code file is made available under MIT License
-// See LICENSE for details
-// ==============================================================================
-
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import { Layout, Row, Col, Input, Button, message, Divider, Tooltip, Tag } from 'coding-oa-uikit';
 import Copy from 'coding-oa-uikit/lib/icon/Copy';
 import Sync from 'coding-oa-uikit/lib/icon/Sync';
+import { useStateStore } from '@tencent/micro-frontend-shared/hook-store';
 
 // 项目内
-import { t } from '@src/i18n/i18next';
-import { getUserToken, putUserToken } from '@src/services/user';
-import { useStateStore } from '@src/context/store';
-import { API_DOC_PATH } from '@src/utils/getRoutePath';
+import { UserState, NAMESPACE } from '@src/store/user';
+import { LevelEnum } from '@src/constant';
+import { userTokenAPI } from '@src/services/user';
+import { getApiDocURL } from '@plat/util';
 
 // 模块内
 import s from '../style.scss';
 
 const { Content } = Layout;
 
-const LEVEL_ENUM = {
-  NORMAL: 1,
-  VIP: 2,
-  SUPER_VIP: 3,
-};
+const { get: getUserToken, put: putUserToken } = userTokenAPI();
 
 const Token = () => {
-  const { userinfo } = useStateStore();
   const [token, setToken] = useState('');
+  const { userinfo } = useStateStore<UserState>(NAMESPACE);
+  const { level, username } = userinfo;
+  const { t } = useTranslation();
 
   useEffect(() => {
-    if (userinfo.level === LEVEL_ENUM.SUPER_VIP) {
-      getUserToken().then((response) => {
-        setToken(response.token);
+    if (level === LevelEnum.SUPER_VIP) {
+      getUserToken().then(({ token }: any) => {
+        setToken(token);
       });
     }
-  }, [userinfo.level]);
+  }, []);
 
-  const onUpdateTokenHandle = () => {
-    putUserToken().then((response) => {
+  /** 刷新个人token */
+  const onUpdateTokenHandler = () => {
+    putUserToken(null).then(({ token }: any) => {
       message.success('已刷新令牌');
-      setToken(response.token);
+      setToken(token);
     });
   };
 
@@ -58,22 +53,23 @@ const Token = () => {
       </div>
       <div className="my-md">
         个人访问令牌可用于访问{' '}
-        <a href={API_DOC_PATH} target="_blank" rel="noreferrer">
+        <a href={getApiDocURL()} target="_blank" rel="noreferrer">
           腾讯云代码分析 API
         </a>
-        ，仅<Tag className="ml-sm">超级 VIP 用户</Tag>可获取令牌
+        ，仅<Tag className="ml-sm" color='volcano'>超级 VIP 用户</Tag>可获取令牌
       </div>
-      {userinfo.level === LEVEL_ENUM.SUPER_VIP && (
+      {level === LevelEnum.SUPER_VIP && (
         <div className="mb-md" style={{ maxWidth: '500px' }}>
           <Input
             className="mb-md"
             addonBefore={'用户名'}
-            value={userinfo.username}
+            value={username}
             addonAfter={
               <CopyToClipboard
-                text={userinfo.username}
-                onCopy={() => message.success(`已复制令牌用户名：${userinfo.username}`)
-                }
+                text={username}
+                onCopy={() => {
+                  message.success(`已复制令牌用户名：${username}`);
+                }}
               >
                 <Button size="small" type="text" shape="circle" icon={<Copy />} />
               </CopyToClipboard>
@@ -86,7 +82,9 @@ const Token = () => {
                 <>
                   <CopyToClipboard
                     text={token}
-                    onCopy={() => message.success(`已复制令牌：${token}`)}
+                    onCopy={() => {
+                      message.success(`已复制令牌：${token}`);
+                    }}
                   >
                     <Button
                       size="small"
@@ -98,7 +96,7 @@ const Token = () => {
                   <Divider type="vertical" />
                   <Tooltip title="刷新令牌">
                     <Button
-                      onClick={onUpdateTokenHandle}
+                      onClick={onUpdateTokenHandler}
                       size="small"
                       type="text"
                       shape="circle"

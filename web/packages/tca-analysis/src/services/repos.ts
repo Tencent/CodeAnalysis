@@ -23,10 +23,10 @@ export const getScmAccounts = () => get(`${MAIN_SERVER_API}/authen/scmaccounts/`
  */
 export const getSSHInfo = () => get(`${MAIN_SERVER_API}/authen/scmsshinfos/`, { limit: 200 });
 
- /**
+/**
  * 查询所有OAuth授权状况
  */
-  export const getOAuthInfo = () => get(`${MAIN_SERVER_API}/authen/scmauthinfos/`);
+export const getOAuthInfo = () => get(`${MAIN_SERVER_API}/authen/scmauthinfos/`);
 
 /**
  * 查询OAuth授权配置状况
@@ -38,7 +38,7 @@ export const getPlatformStatus = (param: any = null) => get(`${MAIN_SERVER_API}/
  * 登记代码库
  * @param data: { name: 代码库名称, scm_type: 代码库来源 git/svn, scm_url: 代码库地址 }
  */
-export const postRepo = (org_sid: string, name: string, data: any) => post(`${getMainBaseURL(org_sid, name)}/repos/`, data);
+export const postRepo = (orgSid: string, name: string, data: any) => post(`${getMainBaseURL(orgSid, name)}/repos/`, data);
 
 /**
  * 认证方式
@@ -72,4 +72,4 @@ export const postRepoMembers = (orgSid: string, teamName: string, repoId: any, d
  * 删除代码库
  * @param repoId: 代码库id
  */
- export const delRepo = (orgSid: string, teamName: string, repoId: any) => del(`${getMainBaseURL(orgSid, teamName)}/repos/${repoId}/`);
+export const delRepo = (orgSid: string, teamName: string, repoId: any) => del(`${getMainBaseURL(orgSid, teamName)}/repos/${repoId}/`);
