@@ -27,7 +27,6 @@ interface RuleDetailProps {
 const RuleDetail = (props: RuleDetailProps) => {
   const { data, visible, onClose } = props;
   const { orgSid } = useParams<any>();
-  console.log(data);
 
   return (
     <Drawer

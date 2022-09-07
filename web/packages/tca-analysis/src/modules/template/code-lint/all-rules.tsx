@@ -131,6 +131,19 @@ const AllRules = () => {
     });
   };
 
+  /**
+   * 一键添加指定工具所有规则
+   * @param toolId
+   */
+  const addToolsRules = (toolId: number) => {
+    addRule(orgSid, tmplId, {
+      checktool: toolId,
+    }).then(() => {
+      message.success('批量添加成功');
+      getListData(pageStart, pageSize);
+    });
+  };
+
   const openRuleDetail = async (ruleId: number) => {
     setRuleDetailVsb(true);
     const res = await getRuleDetail(orgSid, tmplId, ruleId);
@@ -163,6 +176,7 @@ const AllRules = () => {
         }}
         searchParams={cloneDeep(searchParams)}
         loading={loading}
+        addToolsRules={addToolsRules}
         callback={(params: any) => {
           getListData(DEFAULT_PAGER.pageStart, pageSize, params);
         }}
