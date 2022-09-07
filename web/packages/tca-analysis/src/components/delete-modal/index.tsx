@@ -10,7 +10,8 @@
 
 import React, { useEffect, useState } from 'react';
 import { Modal, Form, Input, message, Button } from 'coding-oa-uikit';
-import { t } from '@src/i18n/i18next';
+import { useTranslation } from 'react-i18next';
+
 
 import s from './style.scss';
 
@@ -24,9 +25,11 @@ interface DeleteModalProps {
   onOk: () => void;
 }
 
-const DeleteModal = ({ actionType, objectType, confirmName, addtionInfo='', visible, onCancel, onOk }: DeleteModalProps) => {
+const DeleteModal = ({ actionType, objectType, confirmName, addtionInfo = '', visible, onCancel, onOk }: DeleteModalProps) => {
   const [form] = Form.useForm();
   const [confirmed, setConfirmed] = useState<boolean>(true);
+  const { t } = useTranslation();
+
 
   useEffect(() => {
     visible && form.resetFields();

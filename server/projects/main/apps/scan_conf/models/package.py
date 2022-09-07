@@ -135,13 +135,6 @@ class PackageMap(models.Model):
         return "packagemap-%s-%s" % (self.checkpackage_id, self.checkrule_id)
 
 
-
-def get_checkprofile_admins(checkprofile):
-    """获取规则集admins，开源版规则集无单独权限
-    """
-    return []
-
-
 class CheckProfile(CDBaseModel):
     """规则集表
     """
@@ -216,10 +209,9 @@ class CheckProfile(CDBaseModel):
         return (official_pms | custom_pms).distinct()
 
     def get_admins(self):
-        """由于规则集依附代码库admin权限，因此该方法获取规则集+对应代码库的admins
-        开源版规则集无单独的权限
+        """获取规则集admins，开源版规则集无单独权限
         """
-        return get_checkprofile_admins(self)
+        return []
 
     def get_custom_checkpackage_content(self):
         """自定义规则包内容

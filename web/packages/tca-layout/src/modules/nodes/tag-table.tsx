@@ -1,54 +1,39 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Table, Button, Tag } from 'coding-oa-uikit';
 
-// 项目内
-import { t } from '@src/i18n/i18next';
-import { getTags } from '@src/services/nodes';
-
 // 模块内
-import { TAG_TYPE_ENUM, TAG_TYPE_CHOICES, TAG_TYPE_COLOR } from './constants';
+import { TAG_TYPE_ENUM, TAG_TYPE_CHOICES, TAG_TYPE_COLOR } from '@src/constant';
 import TagModal from './tag-modal';
-import { filter } from 'lodash';
 
 const { Column } = Table;
 
-const formatTypeTag = (tagType: number) => {
-  switch (tagType) {
-    case TAG_TYPE_ENUM.PUBLIC:
-      return <Tag color={TAG_TYPE_COLOR[tagType]}>{TAG_TYPE_CHOICES[tagType]}</Tag>;
-    case TAG_TYPE_ENUM.PRIVATE:
-      return <Tag color={TAG_TYPE_COLOR[tagType]}>{TAG_TYPE_CHOICES[tagType]}</Tag>;
-    case TAG_TYPE_ENUM.DISABLED:
-      return <Tag>{TAG_TYPE_CHOICES[tagType]}</Tag>;
-    default:
-      return <Tag color={TAG_TYPE_COLOR[TAG_TYPE_ENUM.PUBLIC]}>{TAG_TYPE_CHOICES[TAG_TYPE_ENUM.PUBLIC]}</Tag>;
-  }
+interface TagTableProps {
+  tags: any[];
+  reload: () => void
 }
 
-const TagTable = () => {
-  const [listData, setListData] = useState<Array<any>>([]);
+const TagTable = ({ tags: listData, reload }: TagTableProps) => {
   const [visible, setVisible] = useState(false);
   const [selectTag, setSelectTag] = useState(null);
-  const { orgSid }: any = useParams();
-  const orgTagList = useMemo(() => filter(listData, (tag: any) => (tag.org_sid === orgSid)), [listData]);
-
-  /**
-   * 获取标签列表
-   */
-  const getListData = () => {
-    getTags(orgSid).then((response) => {
-      setListData(response.results || []);
-    });
-  };
-
-  useEffect(() => {
-    getListData();
-  }, []);
+  const { t } = useTranslation();
 
   const onCreateOrUpdateHandle = (tag: any = null) => {
     setVisible(true);
     setSelectTag(tag);
+  };
+
+  const formatTypeTag = (tagType: number) => {
+    switch (tagType) {
+      case TAG_TYPE_ENUM.PUBLIC:
+        return <Tag color={TAG_TYPE_COLOR[tagType]}>{TAG_TYPE_CHOICES[tagType]}</Tag>;
+      case TAG_TYPE_ENUM.PRIVATE:
+        return <Tag color={TAG_TYPE_COLOR[tagType]}>{TAG_TYPE_CHOICES[tagType]}</Tag>;
+      case TAG_TYPE_ENUM.DISABLED:
+        return <Tag>{TAG_TYPE_CHOICES[tagType]}</Tag>;
+      default:
+        return <Tag color={TAG_TYPE_COLOR[TAG_TYPE_ENUM.PUBLIC]}>{TAG_TYPE_CHOICES[TAG_TYPE_ENUM.PUBLIC]}</Tag>;
+    }
   };
 
   return (
@@ -62,12 +47,12 @@ const TagTable = () => {
         visible={visible}
         onCancel={() => setVisible(false)}
         onOk={() => {
-          getListData();
+          reload();
           setVisible(false);
         }}
         taginfo={selectTag}
       />
-      <Table rowKey={(item: any) => item.id} dataSource={orgTagList}>
+      <Table rowKey={(item: any) => item.id} dataSource={listData}>
         <Column
           title={t('标签名称')}
           dataIndex="name"

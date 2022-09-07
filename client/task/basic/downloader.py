@@ -14,7 +14,7 @@ import logging
 import tempfile
 
 from node.app import settings
-from task.basic.zipmgr import Zip
+from util.zipmgr import Zip
 from util.exceptions import TransferModuleError
 from util.pathlib import PathMgr
 from util.api.fileserver import RetryFileServer

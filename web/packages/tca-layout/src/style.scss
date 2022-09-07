@@ -1,0 +1,19 @@
+:global {
+  #container {
+    position: relative;
+    padding-top: 48px;
+    min-width: 1080px;
+    height: 100vh;
+  }
+  .layout-uncompleted #container {
+    display: none;
+  }
+
+  .menu-layout-expanded #container {
+    margin-left: 220px;
+  }
+
+  .mini-menu-layout-expanded #container {
+    margin-left: 56px;
+  }
+}

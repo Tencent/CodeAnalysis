@@ -1,131 +1,84 @@
-import { t } from '@src/i18n/i18next';
+import { SearchFormField } from '@tencent/micro-frontend-shared/component/search';
+import { t } from '@tencent/micro-frontend-shared/i18n';
+import { TOOL_STATUS_OPTIONS, ToolScopeEnum } from '@src/constant';
 
-export enum STATUSENUM {
-  NORMAL,
-  SUSPENSION,
-  DOWN,
-  EXPERIENCE
+/** 定义筛选字段结构 */
+export const TOOL_SEARCH_FIELDS: SearchFormField[] = [{
+  name: 'display_name',
+  type: 'string',
+  formType: 'input',
+  placeholder: t('工具名称'),
+}, {
+  name: 'status',
+  type: 'number',
+  formType: 'select',
+  label: t('工具状态'),
+  options: TOOL_STATUS_OPTIONS,
+}, {
+  name: 'scope',
+  type: 'number',
+  formType: 'checkbox',
+  formValue: ToolScopeEnum.CUSTOM,
+  placeholder: t('仅查看自定义工具'),
+}];
+
+/** 高级搜索的筛选字段 */
+export const TOOL_MORE_SEARCH_FIELDS: SearchFormField[] = [];
+
+/** 整体的筛选字段 */
+export const TOOL_FILTER_FIELDS = TOOL_SEARCH_FIELDS.concat(TOOL_MORE_SEARCH_FIELDS);
+
+interface Filter {
+  count: number;
+  display_name: number;
+  value: number;
+}
+interface Filters {
+  [key: string]: Filter[]
 }
 
-enum TYPEENUM {
-  PUBLIC,
-  PRIVATE
-}
+const generateFilterOptions = (filter: Filter[]) => filter.map(item => ({ ...item, label: `${item.display_name} (${item.count})` }));
 
-export const TOOL_STATUS = {
-  [STATUSENUM.NORMAL]: '正常使用',
-  [STATUSENUM.SUSPENSION]: '暂停使用',
-  [STATUSENUM.DOWN]: '已下架',
-  [STATUSENUM.EXPERIENCE]: '体验运营',
+export const getRuleSearchFields = ({
+  severity = [], category = [], language_name: languageName = [],
+}: Filters): SearchFormField[] => {
+  const severityOptions = generateFilterOptions(severity);
+  const categoryOptions = generateFilterOptions(category);
+  const languageOptions = generateFilterOptions(languageName);
+  return [{
+    name: 'severity',
+    type: 'number',
+    formType: 'select',
+    label: t('严重级别'),
+    options: severityOptions,
+    style: { width: 100 },
+  }, {
+    name: 'category',
+    type: 'number',
+    formType: 'select',
+    label: t('规则类别'),
+    options: categoryOptions,
+    style: { width: 100 },
+  }, {
+    name: 'language_name',
+    type: 'string',
+    formType: 'select',
+    label: t('适用语言'),
+    options: languageOptions,
+    style: { width: 100 },
+  }, {
+    name: 'disable',
+    type: 'string',
+    formType: 'select',
+    label: t('规则状态'),
+    options: [{ value: 'false', label: t('可用') }, { value: 'true', label: t('不可用') }],
+    style: { width: 100 },
+  }, {
+    name: 'display_name',
+    type: 'string',
+    formType: 'input',
+    placeholder: t('规则名称'),
+  }];
 };
 
-export const TOOL_TYPE = {
-  [TYPEENUM.PUBLIC]: '公开',
-  [TYPEENUM.PRIVATE]: '私有',
-};
-
-/**
- * 凭证类型
- */
-export const AUTH_TYPE = {
-  HTTP: 'password',
-  SSH: 'ssh_token',
-  OAUTH: 'oauth',
-};
-
-export const AUTH_TYPE_TXT = {
-  HTTP: t('用户名 + 密码'),
-  SSH: t('ssh'),
-  OAUTH: t('OAuth'),
-};
-
-export const AUTH_DICT = {
-  [AUTH_TYPE.HTTP]: AUTH_TYPE_TXT.HTTP,
-  [AUTH_TYPE.SSH]: AUTH_TYPE_TXT.SSH,
-  [AUTH_TYPE.OAUTH]: AUTH_TYPE_TXT.OAUTH,
-};
-
-/**
- * 仓库类型
- */
-export const REPO_TYPE = {
-  GIT: 'git',
-  SVN: 'svn',
-};
-
-export const REPO_TYPE_OPTIONS = [REPO_TYPE.GIT, REPO_TYPE.SVN];
-
-// 规则严重级别
-export enum SEVERITYENUM {
-  fatal = 1,
-  error,
-  warning,
-  info
-}
-
-export const SEVERITY = {
-  [SEVERITYENUM.fatal]: '致命',
-  [SEVERITYENUM.error]: '错误',
-  [SEVERITYENUM.warning]: '警告',
-  [SEVERITYENUM.info]: '提示',
-};
-
-
-// 规则类别
-export const CATEGORY = [
-  {
-    label: '功能',
-    value: 1,
-    name: 'correctness',
-  },
-  {
-    label: '安全',
-    value: 2,
-    name: 'security',
-  },
-  {
-    label: '性能',
-    value: 3,
-    name: 'performance',
-  },
-  {
-    label: '可用性',
-    value: 4,
-    name: 'usability',
-  },
-  {
-    label: '无障碍化',
-    value: 5,
-    name: 'accessibility',
-  },
-  {
-    label: '国际化',
-    value: 6,
-    name: 'i18n',
-  },
-  {
-    label: '代码风格',
-    value: 7,
-    name: 'convention',
-  },
-  {
-    label: '其他',
-    value: 8,
-    name: 'other',
-  },
-];
-
-export const SCM_PLATFORM = {
-  1: '其他',
-  2: '腾讯工蜂',
-  3: 'CODING',
-  4: 'GitHub',
-  5: 'Gitee',
-  6: 'GitLab',
-};
-
-export const AUTH_ID_PATH = {
-  [AUTH_TYPE.HTTP]: 'scm_account',
-  [AUTH_TYPE.SSH]: 'scm_ssh',
-  [AUTH_TYPE.OAUTH]: 'scm_oauth',
-}
+export const getRuleFilterFields = (filters: Filters) => getRuleSearchFields(filters);

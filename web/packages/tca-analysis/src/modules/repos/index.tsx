@@ -18,7 +18,7 @@ import { getRepoRouter } from './routes';
 
 const Repos = () => {
   const history = useHistory();
-  const { org_sid: orgSid, team_name: teamName }: any = useParams();
+  const { orgSid, teamName }: any = useParams();
   const { url } = useRouteMatch();
   const { curRepo, repos } = useStateStore();
 
@@ -32,9 +32,9 @@ const Repos = () => {
   //         // 存在登记的代码库，且repoId不存在或不在repos内则重定向到第一项
   //         if (!repoId || !repos.some((item: any) => item.id === repoId)) {
   //             if (!repos.some((item: any) => item.id === curRepo.id)) {
-  //                 history.replace(getRepoRouter(org_sid, team_name, repos[0].id));
+  //                 history.replace(getRepoRouter(orgSid, teamName, repos[0].id));
   //             } else {
-  //                 history.replace(getRepoRouter(org_sid, team_name, curRepo.id));
+  //                 history.replace(getRepoRouter(orgSid, teamName, curRepo.id));
   //             }
   //         } else {
   //             // 存在repoId则直接采用该路由
@@ -42,14 +42,14 @@ const Repos = () => {
   //     } else {
   //         // 待移除
   //         // 未登记代码库，则重定向到欢迎页
-  //         history.replace(`${getReposRouter(org_sid, team_name)}/welcome`);
+  //         history.replace(`${getReposRouter(orgSid, teamName)}/welcome`);
   //     }
   //     }
   // };
 
   // useEffect(() => {
   //     // 当处于xxx/repos路由时，进行重定向到对应代码库
-  //     if (!reposLoading && url === getReposRouter(org_sid, team_name)) {
+  //     if (!reposLoading && url === getReposRouter(orgSid, teamName)) {
   //         replaceToRepo();
   //     }
   // });

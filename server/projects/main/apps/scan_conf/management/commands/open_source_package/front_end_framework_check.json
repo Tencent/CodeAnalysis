@@ -1,0 +1,103 @@
+[
+    {
+        "name": "前端框架检查",
+        "description": "检查项目是否使用了指定前端框架，方便进行统计和依赖迁移。",
+        "revision": null,
+        "package_type": "official",
+        "languages": [
+            "js",
+            "ts"
+        ],
+        "labels": [
+            "通用"
+        ],
+        "checkrule_set": [
+            {
+                "checktool": "compass",
+                "checkrule": "DetectAntd",
+                "severity": "info",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "compass",
+                "checkrule": "DetectReact",
+                "severity": "info",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "compass",
+                "checkrule": "DetectTDesign",
+                "severity": "info",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "compass",
+                "checkrule": "DetectVue",
+                "severity": "info",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "regexscanner",
+                "checkrule": "detect-antd-import",
+                "severity": "info",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "regexscanner",
+                "checkrule": "detect-react-file",
+                "severity": "info",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "regexscanner",
+                "checkrule": "detect-react-import",
+                "severity": "info",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "regexscanner",
+                "checkrule": "detect-react-script",
+                "severity": "info",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "regexscanner",
+                "checkrule": "detect-tdesign-import",
+                "severity": "info",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "regexscanner",
+                "checkrule": "detect-vue-file",
+                "severity": "info",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "regexscanner",
+                "checkrule": "detect-vue-import",
+                "severity": "info",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "regexscanner",
+                "checkrule": "detect-vue-script",
+                "severity": "info",
+                "rule_params": null,
+                "state": "enabled"
+            }
+        ],
+        "open_saas": false,
+        "envs": null
+    }
+]

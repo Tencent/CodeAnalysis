@@ -40,7 +40,7 @@ class TaskDirCtl(object):
                     suffix_no += 1
                 task_dir = os.path.join(self._task_dirs_root, f"{dirname_prefix}{task_id}_{suffix_no}")
         else:  # 没有传task_id，根据本地task dir名称排序，创建一个新的
-            task_id = 0
+            task_id = 1
             while True:
                 if not os.path.exists(os.path.join(self._task_dirs_root, f"{dirname_prefix}{task_id}")):
                     break

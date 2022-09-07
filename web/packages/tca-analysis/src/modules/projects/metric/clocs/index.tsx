@@ -9,12 +9,12 @@
  */
 import React, { useEffect, useState } from 'react';
 import { Tree, Row, Col, Descriptions, Tooltip, Tag, Button } from 'coding-oa-uikit';
+import { useTranslation } from 'react-i18next';
 import QuestionCircleIcon from 'coding-oa-uikit/lib/icon/QuestionCircle';
 import ArrowLeftIcon from 'coding-oa-uikit/lib/icon/ArrowLeft';
 import { forEach, get } from 'lodash';
 
 // 项目内
-import { t } from '@src/i18n/i18next';
 import NoDataSVG from '@src/images/no-data.svg';
 import { getClocFiles } from '@src/services/projects';
 import s from '../style.scss';
@@ -34,75 +34,6 @@ interface DataNode {
   children?: DataNode[];
 }
 
-/**
- * 将请求数据格式化为tree所需数据
- * @param data getClocFiles返回数据
- */
-const formatData = (data: any) => {
-  const nodes: Array<any> = [];
-  forEach(data, (value, key) => {
-    switch (key) {
-      case 'dirs':
-        forEach(value.results, (info) => {
-          const dict: any = {
-            info,
-          };
-          if (info.dir_path) {
-            if (info.parent_path) {
-              // 父目录不为根目录
-              // eslint-disable-next-line
-              dict.title = info.dir_path.split(`${info.parent_path}/`)[1];
-            } else {
-              // 父目录为根目录
-              dict.title = info.dir_path;
-            }
-            dict.key = info.dir_path;
-            nodes.push(dict);
-          }
-        });
-        break;
-      case 'files':
-        forEach(value.results, (info) => {
-          let title = info.file_name;
-          switch (info.change_type) {
-            case CHANGE_TYPE.ADD:
-              title = (
-                <>
-                  <Tag className={s.clocTagBlue} color="blue">{t('新增')}</Tag> {title}
-                </>
-              );
-              break;
-            case CHANGE_TYPE.MOD:
-              title = (
-                <>
-                  <Tag className={s.clocTagGreen} color="green">{t('修改')}</Tag> {title}
-                </>
-              );
-              break;
-            case CHANGE_TYPE.DEL:
-              title = (
-                <>
-                  <Tag className={s.clocTagRed} color="red">{t('修改')}</Tag> {title}
-                </>
-              );
-              break;
-            default:
-              break;
-          }
-          nodes.push({
-            info,
-            title,
-            isLeaf: true,
-            key: info.dir_path ? `${info.dir_path}/${info.file_name}` : info.file_name,
-          });
-        });
-        break;
-      default:
-        break;
-    }
-  });
-  return nodes;
-};
 
 interface IProps {
   orgSid: string;
@@ -115,6 +46,7 @@ const Clocs = ({ orgSid, teamName, repoId, projectId }: IProps) => {
   const [treeData, setTreeData] = useState<Array<any>>([]);
   const [rootNodeInfo, setRootNodeInfo] = useState<any>({});
   const [selectNodeInfo, setSelectNodeInfo] = useState<any>({});
+  const { t } = useTranslation();
 
   useEffect(() => {
     // 初始化获取根节点数据
@@ -130,6 +62,76 @@ const Clocs = ({ orgSid, teamName, repoId, projectId }: IProps) => {
       setSelectNodeInfo(tempRootNodeInfo);
     });
   }, [projectId]);
+
+  /**
+ * 将请求数据格式化为tree所需数据
+ * @param data getClocFiles返回数据
+ */
+  const formatData = (data: any) => {
+    const nodes: Array<any> = [];
+    forEach(data, (value, key) => {
+      switch (key) {
+        case 'dirs':
+          forEach(value.results, (info) => {
+            const dict: any = {
+              info,
+            };
+            if (info.dir_path) {
+              if (info.parent_path) {
+              // 父目录不为根目录
+              // eslint-disable-next-line
+              dict.title = info.dir_path.split(`${info.parent_path}/`)[1];
+              } else {
+              // 父目录为根目录
+                dict.title = info.dir_path;
+              }
+              dict.key = info.dir_path;
+              nodes.push(dict);
+            }
+          });
+          break;
+        case 'files':
+          forEach(value.results, (info) => {
+            let title = info.file_name;
+            switch (info.change_type) {
+              case CHANGE_TYPE.ADD:
+                title = (
+                <>
+                  <Tag className={s.clocTagBlue} color="blue">{t('新增')}</Tag> {title}
+                </>
+                );
+                break;
+              case CHANGE_TYPE.MOD:
+                title = (
+                <>
+                  <Tag className={s.clocTagGreen} color="green">{t('修改')}</Tag> {title}
+                </>
+                );
+                break;
+              case CHANGE_TYPE.DEL:
+                title = (
+                <>
+                  <Tag className={s.clocTagRed} color="red">{t('修改')}</Tag> {title}
+                </>
+                );
+                break;
+              default:
+                break;
+            }
+            nodes.push({
+              info,
+              title,
+              isLeaf: true,
+              key: info.dir_path ? `${info.dir_path}/${info.file_name}` : info.file_name,
+            });
+          });
+          break;
+        default:
+          break;
+      }
+    });
+    return nodes;
+  };
 
   /**
      * 切换时，选中节点信息

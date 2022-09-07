@@ -16,7 +16,7 @@ import UserIcon from 'coding-oa-uikit/lib/icon/User';
 
 import { getQuery } from '@src/utils';
 import { getDupIssues } from '@src/services/projects';
-import { DEFAULT_PAGER } from '@src/common/constants';
+import { DEFAULT_PAGER } from '@src/constant';
 import { getProjectRouter } from '@src/utils/getRoutePath';
 import { DUP_FILE_STATE_OPTIONS } from '../../constants';
 

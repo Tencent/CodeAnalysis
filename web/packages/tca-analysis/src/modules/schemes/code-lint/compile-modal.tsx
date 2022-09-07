@@ -29,7 +29,9 @@ const CompileConfig = ({ visible, data, onOk, onClose }: CompileConfigProps) => 
       visible={visible}
       onCancel={onClose}
       afterClose={() => form.resetFields()}
-      onOk={() => form.validateFields().then(onFinish)}
+      onOk={() => {
+        form.validateFields().then(onFinish);
+      }}
     >
       <Form
         layout="vertical"

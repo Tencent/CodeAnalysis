@@ -2,8 +2,8 @@ import type { NavbarConfig } from '@vuepress/theme-default'
 
 export const en: NavbarConfig = [
   {
-    text: '快速入门',
-    link: '/en/quickStarted/deploySever.md',
+    text: '快速部署',
+    link: '/en/quickStarted/',
   },
   {
     text: '帮助文档',
@@ -24,9 +24,13 @@ export const en: NavbarConfig = [
         ],
       },
       {
-        text: '文章',
+        text: '依赖安装参考',
         children: [
-
+          '/en/advanced/install_python37_on_centos.md',
+          '/en/advanced/install_python37_on_ubuntu.md',
+          '/en/advanced/install_mysql_on_centos.md',
+          '/en/advanced/install_redis_from_source.md',
+          '/en/advanced/install_redis_on_centos.md',
         ],
       },
     ]

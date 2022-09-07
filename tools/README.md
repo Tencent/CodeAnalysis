@@ -1,30 +1,19 @@
 用于统一存放工具（可外链仓库）
 
 ## **注意**
-以下部分独立工具需要申请授权，具体操作可以参考[CLS使用文档](../server/cls/README.md).
+以下部分独立工具需要申请授权，具体操作可以参考[CLS使用文档](https://tencent.github.io/CodeAnalysis/zh/quickStarted/enhanceDeploy.html).
 
-## [TCA-Collie(测试版)](https://github.com/TCATools/collie)
-一款多语言非编译型静态代码分析工具，支持C/C++/ObjectiveC/C#/CSS/Dart/Java/JavaScript/TypeScript/Kotlin/Lua/PHP/Python/Go/Ruby/Scala/Swift等17门语言，需要申请License。
-
-## [TCA-Compass罗盘(测试版)](https://github.com/TCATools/compass)
-一款依赖组件分析工具，支持：
-- 分析项目的依赖组件；
-- 分析依赖组件是否存在漏洞等问题。
-
-需要申请License。
-
-## TCA-Loong龙(测试版)
-Java/Kotlin API和函数调用链分析工具，需要申请License。
+## [TCA-Armory(测试版)](https://github.com/TCATools/TCA-Armory)
+一款多功能的多语言静态代码分析工具，需申请License。
+## 功能
+- 支持Objective-C/C++代码规范检查；
+- 支持分析项目的依赖组件；
+- 支持分析依赖组件是否存在漏洞等问题；
+- 支持Java/Kotlin API和函数调用链分析；
+- 支持代码安全、空指针检查、内存泄漏等规则。
 
 ### 如何在TCA上使用
-在TCA上勾选以下工具规则：
-- [JAAF](../server/projects/main/apps/scan_conf/management/commands/open_source/jaaf.json#L4)
-- [JAFC](../server/projects/main/apps/scan_conf/management/commands/open_source/jafc.json#L4)
-- [JAFF](../server/projects/main/apps/scan_conf/management/commands/open_source/jaff.json#L4)
-
-### 底层命令行工具
-涉及到的底层命令行工具有：
-- [TCA-Loong龙(测试版)](https://github.com/TCATools/loong)
+在TCA上勾选名称以 `TCA-Armory` 开头的工具的规则。
 
 ## TCA-Loong_Beta龙(测试版)
 Java/Kotlin API和函数调用链分析工具，无需申请License。
@@ -37,21 +26,6 @@ Java/Kotlin API和函数调用链分析工具，无需申请License。
 ### 底层命令行工具
 涉及到的底层命令行工具有：
 - [TCA-Loong_Beta龙(测试版)](https://github.com/TCATools/loong_beta)
-
-## TCA-QL(测试版)
-一款静态代码分析的解析端，开源测试版仅开放在linux上运行，需要申请License。
-
-### 如何在TCA上使用
-在TCA上勾选以下工具规则：
-- [TCA_QL_CPP](../server/projects/main/apps/scan_conf/management/commands/open_source/tca_ql_cpp.json#L4)
-- [TCA_QL_Go](../server/projects/main/apps/scan_conf/management/commands/open_source/tca_ql_go.json#L4)
-- [TCA_QL_PHP](../server/projects/main/apps/scan_conf/management/commands/open_source/tca_ql_php.json#L4)
-- [TCA_QL_Python](../server/projects/main/apps/scan_conf/management/commands/open_source/tca_ql_python.json#L4)
-
-### 底层命令行工具
-涉及到的底层命令行工具有：
-- [TCA-Zeus(测试版)](https://github.com/TCATools/TCA-Zeus-linux)
-- [TCA-Hades(测试版)](https://github.com/TCATools/TCA-Hades-linux)
 
 ## TCA-QL_Beta(测试版)
 一款静态代码分析的解析端，开源测试版仅支持PHP语言，开源测试版仅开放在linux上运行，无需申请License。

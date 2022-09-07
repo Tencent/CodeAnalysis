@@ -6,6 +6,7 @@
 
 import React, { useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import classnames from 'classnames';
 import { Row, Col, Tabs, Button, message } from 'coding-oa-uikit';
 import LoadingIcon from 'coding-oa-uikit/lib/icon/Loading';
@@ -19,7 +20,6 @@ import { SET_REPOS } from '@src/context/constant';
 import { useDispatchStore } from '@src/context/store';
 import { getProjectRouter, getReposRouter } from '@src/utils/getRoutePath';
 import { delRepo } from '@src/services/repos';
-import { t } from '@src/i18n/i18next';
 import { useInitRepo } from '@src/modules/repos/hooks';
 import LeftList from './left-list';
 import Members from './tabs/members';
@@ -53,8 +53,9 @@ const getTabValue = () => {
 
 const RepoList = ({ repos }: IProps) => {
   const params: any = useParams();
+  const { t } = useTranslation();
   const repoId = toNumber(params.repoId);
-  const { org_sid: orgSid, team_name: teamName }: any = params;
+  const { orgSid, teamName }: any = params;
   const history = useHistory();
   const dispatch = useDispatchStore();
   const { curRepo, curRepoMember } = useInitRepo(orgSid, teamName, repoId);
@@ -76,7 +77,7 @@ const RepoList = ({ repos }: IProps) => {
   const onDeleteRepo = () => {
     setDeleteVisible(true);
   };
-  
+
   const handleDeleteRepo = () => {
     delRepo(orgSid, teamName, repoId).then(() => {
       message.success('已删除代码库');
@@ -91,9 +92,10 @@ const RepoList = ({ repos }: IProps) => {
       } else {
         history.push(getReposRouter(orgSid, teamName));
       }
-    }).finally(() => {
-      setDeleteVisible(false);
-    });
+    })
+      .finally(() => {
+        setDeleteVisible(false);
+      });
   };
 
   return (

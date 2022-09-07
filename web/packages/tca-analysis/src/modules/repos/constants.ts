@@ -4,7 +4,6 @@
 // See LICENSE for details
 // ==============================================================================
 
-import { t } from '@src/i18n/i18next';
 
 /**
  * 代码库页面的tab 切换
@@ -16,9 +15,9 @@ export const REPO_TAB_TYPE = {
 };
 
 export const REPO_TAB_TYPE_TXT = {
-  MEMBER: t('成员权限'),
-  AUTH: t('认证方式'),
-  OVERVIEW: t('仓库信息'),
+  MEMBER: '成员权限',
+  AUTH: '认证方式',
+  OVERVIEW: '仓库信息',
 };
 
 export const REPO_TAB_OPTIONS = [
@@ -46,9 +45,9 @@ export const AUTH_TYPE = {
 };
 
 export const AUTH_TYPE_TXT = {
-  HTTP: t('用户名 + 密码'),
-  SSH: t('ssh'),
-  OAUTH: t('OAuth'),
+  HTTP: '用户名 + 密码',
+  SSH: 'ssh',
+  OAUTH: 'OAuth',
 };
 
 export const AUTH_TYPE_OPTIONS = [
@@ -96,10 +95,10 @@ export const DEFAULT_SCM_PLATFORM = [
 ];
 
 export const SCM_PLATFORM = {
-  1: t('其他'),
-  2: t('腾讯工蜂'),
-  3: t('CODING'),
-  4: t('GitHub'),
-  5: t('Gitee'),
-  6: t('GitLab'),
+  1: '其他',
+  2: '腾讯工蜂',
+  3: 'CODING',
+  4: 'GitHub',
+  5: 'Gitee',
+  6: 'GitLab',
 };

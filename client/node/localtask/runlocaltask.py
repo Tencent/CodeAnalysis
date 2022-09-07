@@ -75,6 +75,7 @@ class RunTaskMgr(object):
         if execute_request_list and not self._remote_task_names:
             if self._source_dir:
                 task_request = copy.deepcopy(execute_request_list[0])  # 深度copy,以免影响原字典数据
+                task_request["task_name"] = "linecount"
                 RequestModify.modify_local_task_request(task_request, self._task_name_id_maps, self._job_id,
                                                         self._scm_auth_info.ssh_file,
                                                         self._token, self._server_url, self._source_dir, self._scm_info,

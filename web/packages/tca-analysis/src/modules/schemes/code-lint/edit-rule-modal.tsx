@@ -56,7 +56,9 @@ const EditRuleModal = (props: EditRuleModalProps) => {
             visible={visible}
             onCancel={onCancel}
             width={460}
-            onOk={() => form.validateFields().then(onFinish)}
+            onOk={() => {
+              form.validateFields().then(onFinish);
+            }}
         >
             <Form
                 layout="vertical"
