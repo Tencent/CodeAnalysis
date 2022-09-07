@@ -43,7 +43,7 @@
                 "languages": [
                     "oc"
                 ],
-                "solution": "检查代码文件的缩进，请修复对应的异常缩进。",
+                "solution": "检查代码文件的缩进，请修复对应的异常缩进。\n## 规则参数\nIndentStyle: 可选 spaces 空格 和 tabs `\t` ，默认是 spaces\nIndentSize: 缩进长度，默认是4\n## 参数示例\nIndentStyle=spaces\nIndentSize=4\n",
                 "owner": null,
                 "labels": [],
                 "description": "检查代码文件的缩进",
@@ -63,7 +63,7 @@
                 "solution": "检查超出行数长度阈值的函数。",
                 "owner": null,
                 "labels": [],
-                "description": "检查超出行数长度阈值的函数。默认阈值是100",
+                "description": "检查超出行数长度阈值的函数。\n## 规则参数\nLineThreshold: 方法长度阈值，默认是100 \n## 参数示例\nLineThreshold=100\n",
                 "disable": false
             },
             {
@@ -131,7 +131,143 @@
                 "solution": "检查方法的参数个数。",
                 "owner": null,
                 "labels": [],
-                "description": "检查方法的参数个数。默认阈值是6.",
+                "description": "检查方法的参数个数。\n## 规则参数\nMax: 参数个数阈值，默认是6\n## 参数示例\nMax=6\n",
+                "disable": false
+            },
+            {
+                "real_name": "ObjectiveC/ClassNaming",
+                "display_name": "ClassNaming",
+                "severity": "info",
+                "category": "convention",
+                "rule_title": "检查class命名格式",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "oc"
+                ],
+                "solution": "检查class命名格式",
+                "owner": null,
+                "labels": [],
+                "description": "检查class命名格式。\n## 规则参数\nClassCase: 命名格式，可选 CamelCase 首字母小写驼峰式、UPPER_CASE 全部大写、LOWER_CASE 全部小写、camelBack 首字母大写驼峰式，默认是 CamelCase\n## 参数示例\nClassCase=CamelCase\n",
+                "disable": false
+            },
+            {
+                "real_name": "ObjectiveC/FunctionNaming",
+                "display_name": "FunctionNaming",
+                "severity": "info",
+                "category": "convention",
+                "rule_title": "检查函数命名格式",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "oc"
+                ],
+                "solution": "检查函数命名格式",
+                "owner": null,
+                "labels": [],
+                "description": "检查函数命名格式。\n## 规则参数\nFunctionCase: 命名格式，可选 CamelCase 首字母小写驼峰式、UPPER_CASE 全部大写、LOWER_CASE 全部小写、camelBack 首字母大写驼峰式，默认是 camelBack\n## 参数示例\nFunctionCase=camelBack\n",
+                "disable": false
+            },
+            {
+                "real_name": "ObjectiveC/GlobalVariableNaming",
+                "display_name": "GlobalVariableNaming",
+                "severity": "info",
+                "category": "convention",
+                "rule_title": "检查全局变量的命名格式",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "oc"
+                ],
+                "solution": "检查全局变量的命名格式",
+                "owner": null,
+                "labels": [],
+                "description": "检查全局变量的命名格式。\n## 规则参数\nGlobalVariablePrefix: 全局变量前缀，默认是`g`\n GlobalVariableCase: 命名格式，可选 CamelCase 首字母小写驼峰式、UPPER_CASE 全部大写、LOWER_CASE 全部小写、camelBack 首字母大写驼峰式，默认是 camelBack\n## 参数示例\nGlobalVariablePrefix=g\nGlobalVariableCase=camelBack\n",
+                "disable": false
+            },
+            {
+                "real_name": "ObjectiveC/LocalVariableNaming",
+                "display_name": "LocalVariableNaming",
+                "severity": "info",
+                "category": "convention",
+                "rule_title": "检查局部变量的命名格式",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "oc"
+                ],
+                "solution": "检查局部变量的命名格式",
+                "owner": null,
+                "labels": [],
+                "description": "检查局部变量的命名格式。\n## 规则参数\nLocalVariableCase: 命名格式，可选 CamelCase 首字母小写驼峰式、UPPER_CASE 全部大写、LOWER_CASE 全部小写、camelBack 首字母大写驼峰式，默认是 camelBack \n## 参数示例\nLocalVariableCase=camelBack\n",
+                "disable": false
+            },
+            {
+                "real_name": "ObjectiveC/MacroNaming",
+                "display_name": "MacroNaming",
+                "severity": "info",
+                "category": "convention",
+                "rule_title": "检查macro命名格式",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "oc"
+                ],
+                "solution": "检查macro命名格式",
+                "owner": null,
+                "labels": [],
+                "description": "检查macro命名格式。\n## 规则参数\nMacroCase: 命名格式，可选 CamelCase 首字母小写驼峰式、UPPER_CASE 全部大写、LOWER_CASE 全部小写、camelBack 首字母大写驼峰式，默认是 UPPER_CASE\n## 参数示例\nMacroCase=UPPER_CASE\n",
+                "disable": false
+            },
+            {
+                "real_name": "ObjectiveC/MaxLineLength",
+                "display_name": "MaxLineLength",
+                "severity": "info",
+                "category": "convention",
+                "rule_title": "检查文件长度",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "oc"
+                ],
+                "solution": "检查文件长度",
+                "owner": null,
+                "labels": [],
+                "description": "检查文件长度。\n## 规则参数\ntabWidth: 缩进宽度，默认是4\nMaxLineLength: 长度阈值，默认是150\n## 参数示例\ntabWidth=4\nMaxLineLength=150\n",
+                "disable": false
+            },
+            {
+                "real_name": "ObjectiveC/MethodNaming",
+                "display_name": "MethodNaming",
+                "severity": "info",
+                "category": "convention",
+                "rule_title": "检查方法命名格式",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "oc"
+                ],
+                "solution": "检查方法命名格式",
+                "owner": null,
+                "labels": [],
+                "description": "检查方法命名格式。\n## 规则参数\nMethodCase: 命名格式，可选 CamelCase 首字母小写驼峰式、UPPER_CASE 全部大写、LOWER_CASE 全部小写、camelBack 首字母大写驼峰式，默认是 camelBack\n## 参数示例\nMethodCase=camelBack\n",
+                "disable": false
+            },
+            {
+                "real_name": "ObjectiveC/ParameterNaming",
+                "display_name": "ParameterNaming",
+                "severity": "info",
+                "category": "convention",
+                "rule_title": "检查参数命名格式",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "oc"
+                ],
+                "solution": "检查参数命名格式",
+                "owner": null,
+                "labels": [],
+                "description": "检查参数命名格式。\n## 规则参数\nParameterCase: 命名格式，可选 CamelCase 首字母小写驼峰式、UPPER_CASE 全部大写、LOWER_CASE 全部小写、camelBack 首字母大写驼峰式，默认是 camelBack\n## 参数示例\nParameterCase=camelBack\n",
                 "disable": false
             },
             {
