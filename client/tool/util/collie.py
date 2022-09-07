@@ -158,7 +158,6 @@ class Collie(object):
 
         scan_cmd = self.get_cmd(options)
 
-        # logger.info(f"cmd : {' '.join(scan_cmd)}")
         spc = SubProcController(
             scan_cmd,
             cwd=self.tool_home,
