@@ -24,8 +24,12 @@ TCA 增强分析模块，需要用户额外部署 License 鉴权微服务，并�
 ### 准备
 - 一台 CLS 微服务专属机器，CLS 微服务需要跟该机器绑定
 
+**注意：不能随意删除CLS目录**
+
 ### 步骤
 1. 在 TCA 源码中[`server/cls`](https://github.com/Tencent/CodeAnalysis/tree/main/server/cls) 目录下执行以下命令，获取 `Server ID` 和 `Client License`
+
+**注意：需要在 CLS 目录下执行命令**
 
 ```shell
 $ ./cls server
