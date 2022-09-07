@@ -27,6 +27,7 @@ export const en: SidebarConfig = {
           children: [
             '/en/guide/代码检查/工具/eslint.md',
             '/en/guide/代码检查/工具/golangcilint.md',
+            '/eh/guide/代码检查/工具/regexscanner.md',
           ],
         },
       ]
@@ -92,6 +93,16 @@ export const en: SidebarConfig = {
       children: [
         '/en/advanced/任务分布式执行.md',
         '/en/advanced/集成代码分析工具.md',
+      ],
+    },
+    {
+      text: '依赖安装参考',
+      children: [
+        '/en/advanced/install_python37_on_centos.md',
+        '/en/advanced/install_python37_on_ubuntu.md',
+        '/en/advanced/install_mysql_on_centos.md',
+        '/en/advanced/install_redis_from_source.md',
+        '/en/advanced/install_redis_on_centos.md',
       ],
     }
   ],

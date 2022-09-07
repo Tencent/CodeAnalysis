@@ -57,6 +57,8 @@ const FirstModal = (props: FirstModalProps) => {
 
   const onFinish = (data: any) => {
     const { funcList = [] } = data;
+    // 开源版需要隐藏tag，默认赋予tag Codedog_Linux
+    const tag = tags.filter(item => item.public && item.name === 'Codedog_Linux').pop() || tags.pop();
     data = data.type === 'create' ? {
       branch: data.branch,
       scan_scheme: {
@@ -70,6 +72,7 @@ const FirstModal = (props: FirstModalProps) => {
         envs: null,
         pre_cmd: null,
         build_flag: false,
+        tag: tag.name || 'Codedog_Linux',
       },
     } : {
       branch: data.branch,
@@ -106,7 +109,9 @@ const FirstModal = (props: FirstModalProps) => {
         className={style.newProjectModal}
         okButtonProps={{ loading }}
         onCancel={onReset}
-        onOk={() => form.validateFields().then(onFinish)}
+        onOk={() => {
+          form.validateFields().then(onFinish);
+        }}
       >
         <Form
           layout='vertical'

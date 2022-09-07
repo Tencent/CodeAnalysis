@@ -1,21 +1,11 @@
-// Copyright (c) 2021-2022 THL A29 Limited
-//
-// This source code file is made available under MIT License
-// See LICENSE for details
-// ==============================================================================
-
-import GLOBAL_BREADCRUMB from '@src/components/global-breadcrumb/reducer';
-import INITIAL from './initial';
-import APP from './app';
+import breadcrumbReducer from '@src/component/global-breadcrumb/reducer';
+import initReducer from './initial';
+import appReducer from './app';
 
 const reducers = {
-  APP,
-  INITIAL,
-  GLOBAL_BREADCRUMB,
+  APP: appReducer,
+  INITIAL: initReducer,
+  GLOBAL_BREADCRUMB: breadcrumbReducer,
 };
 
-export const injectGlobalReducer = (injectAsyncReducer: TInjectAsyncReducer) => {
-  Object.keys(reducers).forEach((key: 'APP' | 'INITIAL' | 'GLOBAL_BREADCRUMB') => injectAsyncReducer(key, reducers[key]));
-};
-
-export default reducers
+export default reducers;

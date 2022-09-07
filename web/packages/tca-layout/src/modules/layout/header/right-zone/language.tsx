@@ -1,44 +1,36 @@
-// Copyright (c) 2021-2022 THL A29 Limited
-//
-// This source code file is made available under MIT License
-// See LICENSE for details
-// ==============================================================================
-
-import React, { useState } from 'react';
+import React from 'react';
+import { useTranslation } from 'react-i18next';
 import classnames from 'classnames';
 import Cookies from 'universal-cookie';
 import AngleRight from 'coding-oa-uikit/lib/icon/AngleRight';
-// import Dropdown from '@coding/coding-ui-kit/dropdown';
-// import Menu from '@coding/coding-ui-kit/menu';
 import { Popover, message } from 'coding-oa-uikit';
-import { t } from '@src/i18n/i18next';
-// import { getMainDomain } from '@framework/utils/domain';
+
+// 项目内
 import s from './style.scss';
 
-const COOKIE_NAME = 'language';
-const DEFAULT_LANG = 'zh_CN';
+const COOKIE_NAME = 'i18next';
+const DEFAULT_LANG = 'zh-CN';
 const LANG = [
-  { key: 'zh_CN', name: '中文（简体）' },
-  { key: 'zh_TW', name: '中文（繁体）' },
-  { key: 'en_US', name: 'English(US)' },
+  { key: 'zh-CN', name: '中文（简体）' },
+  { key: 'zh-TW', name: '中文（繁体）' },
+  { key: 'en-US', name: 'English(US)' },
 ];
 const cookies = new Cookies();
 
 const LanguageUI = () => {
-  const [lang, setLang] = useState(cookies.get(COOKIE_NAME) || DEFAULT_LANG);
+  const { t, i18n } = useTranslation();
+  const lang = cookies.get(COOKIE_NAME) ?? DEFAULT_LANG;
+  const { name: langText = '' } = LANG.find(({ key }) => lang === key) || {};
 
   const onChange = (key: string) => {
-    // cookies.set(COOKIE_NAME, key, { path: '/', domain: getMainDomain() });
-    cookies.set(COOKIE_NAME, key, { path: '/' });
-    setLang(key);
+    i18n.changeLanguage(key);
     message.loading(t('语言切换中...'));
     const timer = setTimeout(() => {
-      window.location.reload();
       clearTimeout(timer);
+      window.location.reload();
     }, 300);
   };
 
-  const { name: langText = '' } = LANG.find(({ key }) => lang === key) || {};
   return (
     <Popover
       placement="left"

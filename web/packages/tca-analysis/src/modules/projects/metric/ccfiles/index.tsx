@@ -17,7 +17,7 @@ import { Table, Avatar } from 'coding-oa-uikit';
 import UserIcon from 'coding-oa-uikit/lib/icon/User';
 
 import { getQuery } from '@src/utils';
-import { DEFAULT_PAGER } from '@src/common/constants';
+import { DEFAULT_PAGER } from '@src/constant';
 import { getProjectRouter } from '@src/utils/getRoutePath';
 import { getCCFilesIssues } from '@src/services/projects';
 import { CC_CHANGE_TYPE_CHOICES } from '../../constants';

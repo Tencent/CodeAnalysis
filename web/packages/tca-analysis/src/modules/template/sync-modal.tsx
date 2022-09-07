@@ -14,7 +14,7 @@ import { Table, Modal } from 'coding-oa-uikit';
 import { get } from 'lodash';
 
 import { getSchemeRouter } from '@src/utils/getRoutePath';
-import { DEFAULT_PAGER } from '@src/common/constants';
+import { DEFAULT_PAGER } from '@src/constant';
 import { getSchemeList } from '@src/services/template';
 
 const { Column } = Table;
@@ -28,7 +28,7 @@ interface SyncModalProps {
 }
 
 const SyncModal = (props: SyncModalProps) => {
-  const { org_sid: orgSid, team_name: teamName } = useParams() as any;
+  const { orgSid, teamName } = useParams() as any;
   const { onlySync, visible, tmplId, onClose, onOk } = props;
 
   const [list, setList] = useState<any>([]);

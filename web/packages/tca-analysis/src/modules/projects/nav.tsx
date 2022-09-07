@@ -17,8 +17,12 @@ import LinkIcon from 'coding-oa-uikit/lib/icon/Link';
 import SelectDropdown from '@src/components/select-dropdown';
 import { useStateStore } from '@src/context/store';
 import { getProjectRouter, getSchemeRouter } from '@src/utils/getRoutePath';
-import { PROJECT_ROUTE_PREFIX } from '@src/common/constants';
-import { getProjectDetail, getBranchs, getSchemesByBranch } from '@src/services/projects';
+import { PROJECT_ROUTE_PREFIX } from '@src/constant';
+import {
+  getProjectDetail,
+  getBranchs,
+  getSchemesByBranch,
+} from '@src/services/projects';
 
 import ScanModal from './project/scan-modal';
 import NewProjectModal from './project/new-project-modal';
@@ -49,7 +53,7 @@ const Nav = ({ allSchemes, templates }: NavProps) => {
 
   const repoId = toNumber(params.repoId);
   const projectId = toNumber(params.projectId);
-  const { org_sid: orgSid, team_name: teamName } = params;
+  const { orgSid, teamName } = params;
   let curTab = params.tabs;
 
   if (curTab === 'metric') {
@@ -65,7 +69,12 @@ const Nav = ({ allSchemes, templates }: NavProps) => {
   const getData = async () => {
     const project = await getProjectDetail(orgSid, teamName, repoId, projectId);
     const branch = await getBranchs(orgSid, teamName, repoId);
-    const scheme = await getSchemesByBranch(orgSid, teamName, repoId, project.branch);
+    const scheme = await getSchemesByBranch(
+      orgSid,
+      teamName,
+      repoId,
+      project.branch,
+    );
 
     setCurProject(project);
     setBranchs(branch.results || []);
@@ -80,7 +89,8 @@ const Nav = ({ allSchemes, templates }: NavProps) => {
   };
 
   const getSchemes = (branch: string) => {
-    branch && (async () => setSchemes(await getSchemesByBranch(orgSid, teamName, curRepo.id, branch)))();
+    branch
+      && (async () => setSchemes(await getSchemesByBranch(orgSid, teamName, curRepo.id, branch)))();
   };
 
   const onChangeBranch = async (branch: any) => {
@@ -97,20 +107,28 @@ const Nav = ({ allSchemes, templates }: NavProps) => {
         <div>
           <SelectDropdown
             showSearch
-            label='代码分支'
+            label="代码分支"
             selectedKeys={[get(curProject, 'branch', '')]}
             dropdownStyle={{ marginRight: 10 }}
             selectedTextStyle={{ fontSize: '16px', fontWeight: 600 }}
-            data={branchs.map((item: any) => ({ value: item.branch, text: item.branch }))}
-            onSelect={(item: any) => onChangeBranch(item.key)}
+            data={branchs.map((item: any) => ({
+              value: item.branch,
+              text: item.branch,
+            }))}
+            onSelect={(item: any) => {
+              onChangeBranch(item.key);
+            }}
           />
           <SelectDropdown
             showSearch
-            label='分析方案'
+            label="分析方案"
             selectedKeys={[get(curProject, 'scan_scheme.name', '')]}
             dropdownStyle={{ marginRight: 10 }}
             selectedTextStyle={{ fontSize: '16px', fontWeight: 600 }}
-            data={schemes.map((item: any) => ({ value: item.scan_scheme__name, text: item.scan_scheme__name }))}
+            data={schemes.map((item: any) => ({
+              value: item.scan_scheme__name,
+              text: item.scan_scheme__name,
+            }))}
             onSelect={(item: any) => {
               const id = find(schemes, { scan_scheme__name: item.key })?.id;
               history.push(`${getProjectRouter(orgSid, teamName, repoId, id)}/overview`);
@@ -130,7 +148,10 @@ const Nav = ({ allSchemes, templates }: NavProps) => {
         </div>
 
         <div className={style.operations}>
-          <Button style={{ marginRight: 10 }} onClick={() => setCreateProjectVsb(true)}>
+          <Button
+            style={{ marginRight: 10 }}
+            onClick={() => setCreateProjectVsb(true)}
+          >
             新建分支项目
           </Button>
           <Button type="primary" onClick={() => setVisible(true)}>
@@ -142,7 +163,12 @@ const Nav = ({ allSchemes, templates }: NavProps) => {
         activeKey={curTab || 'overview'}
         className={style.tabs}
         onChange={(key) => {
-          history.push(`${getProjectRouter(orgSid, teamName, curRepo.id, projectId)}/${key}`);
+          history.push(`${getProjectRouter(
+            orgSid,
+            teamName,
+            curRepo.id,
+            projectId,
+          )}/${key}`);
         }}
       >
         <TabPane forceRender={false} tab="分支概览" key="overview">

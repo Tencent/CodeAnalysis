@@ -19,7 +19,7 @@ import {
   getScanDir,
 } from '@src/services/schemes';
 
-import { DEFAULT_PAGER } from '@src/common/constants';
+import { DEFAULT_PAGER } from '@src/constant';
 
 import Branch from './branch';
 import Path from './path';

@@ -36,7 +36,16 @@ const NewProjectModal = (props: NewProjectModalProps) => {
   const [form] = Form.useForm();
   const history = useHistory();
   const [loading, setLoading] = useState(false);
-  const { orgSid, teamName, visible, repoId, schemes, templates, onClose, callback } = props;
+  const {
+    orgSid,
+    teamName,
+    visible,
+    repoId,
+    schemes,
+    templates,
+    onClose,
+    callback,
+  } = props;
 
   const onFinish = async (data: any) => {
     setLoading(true);
@@ -53,7 +62,12 @@ const NewProjectModal = (props: NewProjectModalProps) => {
           title: '分支项目已存在',
           content: '是否跳转到该分支项目？',
           onOk() {
-            history.push(`${getProjectRouter(orgSid, teamName, repoId, project.id)}/overview`);
+            history.push(`${getProjectRouter(
+              orgSid,
+              teamName,
+              repoId,
+              project.id,
+            )}/overview`);
             onReset();
           },
         });
@@ -70,7 +84,12 @@ const NewProjectModal = (props: NewProjectModalProps) => {
             title: '分支项目已创建',
             content: '是否跳转到该分支项目？',
             onOk() {
-              history.push(`${getProjectRouter(orgSid, teamName, repoId, project.id)}/overview`);
+              history.push(`${getProjectRouter(
+                orgSid,
+                teamName,
+                repoId,
+                project.id,
+              )}/overview`);
               onReset();
               callback?.(project.branch);
             },
@@ -95,14 +114,18 @@ const NewProjectModal = (props: NewProjectModalProps) => {
       className={style.newProjectModal}
       visible={visible}
       onCancel={onReset}
-      okText='新建分支项目'
+      okText="新建分支项目"
       confirmLoading={loading}
-      onOk={() => form.validateFields().then(onFinish)}
+      onOk={() => {
+        form.validateFields().then(onFinish);
+      }}
     >
       <Form
         layout="vertical"
         form={form}
-        onFinish={onFinish}
+        onFinish={(data) => {
+          onFinish(data);
+        }}
         initialValues={{ type: 'scheme' }}
       >
         <Form.Item
@@ -124,29 +147,34 @@ const NewProjectModal = (props: NewProjectModalProps) => {
           }
         >
           {({ getFieldValue }) => (getFieldValue('type') === 'template' ? (
-            <Form.Item
-              name="global_scheme_id"
-              label="分析方案模板"
-              style={{ marginBottom: 0 }}
-              rules={[{ required: true, message: '请选择方案模板' }]}
-            >
-              <Select
-                showSearch
-                placeholder="请选择分析方案模板"
-                optionLabelProp="label"
-                optionFilterProp="label"
+              <Form.Item
+                name="global_scheme_id"
+                label="分析方案模板"
+                style={{ marginBottom: 0 }}
+                rules={[{ required: true, message: '请选择方案模板' }]}
               >
-                {templates.map((item: any) => (
-                  <Option key={item.id} value={item.id} label={item.name}>
-                    <div className={style.tmpl}>
-                      <span>{item.name}</span>
-                      <Tag className={cn(style.tmplTag, { [style.sys]: item.scheme_key === 'public' })}
-                      >{item.scheme_key === 'public' ? '系统' : '自定义'}</Tag>
-                    </div>
-                  </Option>
-                ))}
-              </Select>
-            </Form.Item>
+                <Select
+                  showSearch
+                  placeholder="请选择分析方案模板"
+                  optionLabelProp="label"
+                  optionFilterProp="label"
+                >
+                  {templates.map((item: any) => (
+                    <Option key={item.id} value={item.id} label={item.name}>
+                      <div className={style.tmpl}>
+                        <span>{item.name}</span>
+                        <Tag
+                          className={cn(style.tmplTag, {
+                            [style.sys]: item.scheme_key === 'public',
+                          })}
+                        >
+                          {item.scheme_key === 'public' ? '系统' : '自定义'}
+                        </Tag>
+                      </div>
+                    </Option>
+                  ))}
+                </Select>
+              </Form.Item>
           ) : (
               <Form.Item
                 name="scan_scheme_id"
@@ -160,7 +188,7 @@ const NewProjectModal = (props: NewProjectModalProps) => {
                     <p style={{ color: '#606c80' }}>
                       暂无分析方案，请
                       <Link to={`${getSchemeRouter(orgSid, teamName, repoId)}`}>
-                      新建分析方案
+                        新建分析方案
                       </Link>
                     </p>
                   }

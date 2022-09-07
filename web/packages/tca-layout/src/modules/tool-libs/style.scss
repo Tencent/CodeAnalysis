@@ -1,4 +1,4 @@
-@import "@src/common/style/color.scss";
+@import "@tencent/micro-frontend-shared/style/color.scss";
 
 .toollibs {
   .header {
@@ -24,8 +24,6 @@
       border: 1px solid $green-6;
     }
   }
-
-
 }
 
 .filter {

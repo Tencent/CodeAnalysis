@@ -1,40 +1,36 @@
-// Copyright (c) 2021-2022 THL A29 Limited
-//
-// This source code file is made available under MIT License
-// See LICENSE for details
-// ==============================================================================
-
 import React, { Suspense } from 'react';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import { hot } from 'react-hot-loader';
+import Loading from '@tencent/micro-frontend-shared/component/loading';
 
-import User from '@src/modules/layout/user';
-import Teams from '@src/modules/team';
-import Invite from '@src/modules/team/components/invite';
-import Team from '@src/modules/layout/team';
+// import { isEnableManage } from '@src/utils';
+// import Manage from '@src/modules/layout/manage';
+// import User from '@src/modules/layout/user';
+// import Teams from '@src/modules/team';
+// import Invite from '@src/modules/team/components/invite';
+// import Team from '@src/modules/layout/team';
 import Home from '@src/modules/home';
-import Manage from '@src/modules/layout/manage';
-import GitOAuth from '@src/modules/git-oauth';
 import LoadInitService from './load-init-service';
+import InitMatomo from './init-matomo';
+
+// 项目内
+import routes from '@plat/routes';
 
 const Root = () => (
   <Router>
-    <Suspense fallback={null}>
-      <Switch>
-        <Route path="/" exact component={Home} />
-        <Route path="/login" render={() => ''} />
-        <LoadInitService>
-          <Switch>
-            <Route path="/manage" component={Manage} />
-            <Route path="/user" component={User} />
-            <Route path="/teams" component={Teams} />
-            <Route path="/cb_git_auth/:scm_platform_name" component={GitOAuth} />
-            <Route path="/t/invite/:code" component={Invite} />
-            <Route path="/t/:orgSid" component={Team} />
-            <Redirect to="/" />
-          </Switch>
-        </LoadInitService>
-      </Switch>
+    <Suspense fallback={<Loading />}>
+      <InitMatomo>
+        <Switch>
+          <Route path="/" exact component={Home} />
+          <Route path="/login" render={() => ''} />
+          <LoadInitService>
+            <Switch>
+              {routes.map(item => <Route key={`${item.path}`} {...item} />)}
+              <Redirect from="/" to={routes[0].path instanceof Array ? routes[0].path[0] : routes[0].path} />,
+            </Switch>
+          </LoadInitService>
+        </Switch>
+      </InitMatomo>
     </Suspense>
   </Router>
 );

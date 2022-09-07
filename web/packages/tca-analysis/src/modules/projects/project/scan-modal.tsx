@@ -41,7 +41,7 @@ const ScanModal = (props: ScanModalProps) => {
 
   const onReset = () => {
     onClose();
-    setScan('web')
+    setScan('web');
     form.resetFields();
   };
 
@@ -92,11 +92,15 @@ const ScanModal = (props: ScanModalProps) => {
 
   const handleOk = (isDownload: boolean) => {
     if (isDownload) {
-      form.validateFields().then((data: any) => { onFinish(data, true) });
+      form.validateFields().then((data: any) => {
+        onFinish(data, true);
+      });
     } else {
-      form.validateFields().then((data: any) => { onFinish(data, false) });
+      form.validateFields().then((data: any) => {
+        onFinish(data, false);
+      });
     }
-  }
+  };
 
 
   return (
@@ -107,14 +111,18 @@ const ScanModal = (props: ScanModalProps) => {
       visible={visible}
       onCancel={onReset}
       footer={[
-        <Button key="submit" type="primary" loading={loading} onClick={() => { handleOk(true) }}>
+        <Button key="submit" type="primary" loading={loading} onClick={() => {
+          handleOk(true);
+        }}>
           {scan === 'client' ? '下载配置文件' : '启动分析'}
         </Button>,
         scan === 'client' && <Button
           className={style.btn}
           key="copy"
           loading={loading}
-          onClick={() => { handleOk(false) }}
+          onClick={() => {
+            handleOk(false);
+          }}
         >
           复制配置文件
         </Button>,
@@ -128,7 +136,7 @@ const ScanModal = (props: ScanModalProps) => {
         form={form}
         initialValues={{
           scan: 'web',
-          total_scan: false
+          total_scan: false,
         }}
       >
         <Form.Item

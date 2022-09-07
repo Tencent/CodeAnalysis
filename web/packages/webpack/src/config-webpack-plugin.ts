@@ -166,15 +166,15 @@ class ConfigWebpackPlugin {
 
   /** 生成cofing.json资源文件 */
   private generateConfig(assets: string[]) {
-    const { productName, publicPath, assetKeys, ...other } = this.config;
+    const { productName, publicPath, assetKeys, enable, enableLog, ...other } = this.config;
     const config: ConfigJson = {
       name: productName,
       ...other,
       js: [],
       css: [],
     };
-    assets.forEach((asset) => {
-      assetKeys.forEach((assetKey) => {
+    assetKeys.forEach((assetKey) => {
+      assets.forEach((asset) => {
         if (asset.startsWith(assetKey)) {
           const file = `${publicPath}${asset}`;
           if (asset.endsWith('.js')) {

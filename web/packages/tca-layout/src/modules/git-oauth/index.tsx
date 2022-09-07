@@ -1,58 +1,40 @@
-// Copyright (c) 2021-2022 THL A29 Limited
-//
-// This source code file is made available under MIT License
-// See LICENSE for details
-// ==============================================================================
-
-/**
- * 所有团队
- */
-
 import React, { useEffect } from 'react';
-import ReactDOM from 'react-dom';
-import { getQuery } from '@src/utils';
 import { useParams } from 'react-router-dom';
- 
-import { Spin, message, Layout } from 'coding-oa-uikit';
-//  import { t } from '@src/i18n/i18next';
+import { useTranslation } from 'react-i18next';
+import Loading from '@tencent/micro-frontend-shared/component/loading';
+import { getURLSearch } from '@tencent/micro-frontend-shared/util/route';
+import { PostMessageType, PostMessageCode, postMessageToTarget } from '@tencent/micro-frontend-shared/util/window';
 
-import { getOAuthCallBack } from '@src/services/user';
- 
-const { Content } = Layout;
- 
+import { message } from 'coding-oa-uikit';
+
+import Container from '@src/component/container';
+import { UserAPI } from '@plat/api';
+
 const GitOAuth = () => {
-  const containerNode = document.getElementById('container');
-  const query = getQuery();
-  const { scm_platform_name }: any = useParams();
+  const query = getURLSearch();
+  const { scmPlatformName }: any = useParams();
+  const { t } = useTranslation();
 
   useEffect(() => {
-    const opener = window.opener;
-    getOAuthCallBack(scm_platform_name,query).then(()=>{
-      message.success('授权成功');
-      opener.postMessage('oauth succeeded',opener.location.origin);
-    }).catch(()=>{
-      message.error('授权失败');
-      opener.postMessage('oauth failed',opener.location.origin);
-    }).finally(()=>{
-      window.close();
-    });
+    const { opener } = window;
+    UserAPI.getOAuthCallback(scmPlatformName, query).then(() => {
+      message.success(t('OAuth授权成功'));
+      postMessageToTarget(opener, { code: PostMessageCode.SUCCESS, type: PostMessageType.GIT_OAUTH });
+    })
+      .catch(() => {
+        message.error(t('OAuth授权失败'));
+        postMessageToTarget(opener, { code: PostMessageCode.FAIL, type: PostMessageType.GIT_OAUTH });
+      })
+      .finally(() => {
+        window.close();
+      });
   }, []);
 
   return (
-    <>
-      {containerNode
-        && ReactDOM.createPortal(
-          <Content className="pa-lg" style={{textAlign:'center'}}>
-            <Spin 
-            size='large' 
-            tip='OAuth授权中'
-            />
-          </Content>,
-          containerNode,
-        )}
-    </>
+    <Container>
+      <Loading msg={t('OAuth授权中')} />
+    </Container>
   );
 };
 
 export default GitOAuth;
- 

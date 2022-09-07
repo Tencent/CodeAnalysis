@@ -17,14 +17,14 @@ import ArrowLeft from 'coding-oa-uikit/lib/icon/ArrowLeft';
 
 import { getTmplRouter } from '@src/utils/getRoutePath';
 import { getQuery } from '@src/utils';
-import { DEFAULT_PAGER } from '@src/common/constants';
+import { DEFAULT_PAGER } from '@src/constant';
 import {
   getAllRules,
   addRule,
   getRuleDetail,
   getAllCheckPackages,
 } from '@src/services/template';
-import { getLanguages } from '@src/services/schemes';
+import { getLabels, getLanguages, getCheckTools } from '@src/services/schemes';
 
 import RuleDetail from '../../projects/issues/rule-detail';
 import Search from './all-rules-search';
@@ -44,8 +44,10 @@ const AllRules = () => {
   const [selectedKeys, setSelectedKeys] = useState([]);
   const [ruleDetailVsb, setRuleDetailVsb] = useState(false);
   const [ruleDetail, setRuleDetail] = useState({});
+  const [checkTools, setCheckTools] = useState([]);
 
   const [allPkgs, setAllPkgs] = useState([]);
+  const [labels, setLabels] = useState([]);
   const [languages, setLanguages] = useState([]);
 
   const query = getQuery();
@@ -55,21 +57,29 @@ const AllRules = () => {
 
   const checkProfileId = toNumber(params.checkProfileId);
   const pkgId = toNumber(params.pkgId);
-  const { org_sid: orgSid, team_name: teamName, id: tmplId } = params;
+  const { orgSid, teamName, id: tmplId } = params;
 
   useEffect(() => {
     getListData();
     getAllPkgs();
+    getCheckTools(orgSid, {
+      limit: 1000,
+      checkprofile_id: checkProfileId,
+    }).then((res: any) => {
+      setCheckTools(res.results || []);
+    });
 
     (async () => {
+      const labels = await getLabels();
       const languages = await getLanguages();
+      setLabels(labels.results || []);
       setLanguages(languages.results || []);
     })();
   }, [pkgId]);
 
   const getAllPkgs = async () => {
     let pkgs = await getAllCheckPackages(orgSid, tmplId);
-    pkgs = (pkgs || []).filter((item: any) => !item.disable);
+    pkgs = (pkgs.results || []).filter((item: any) => !item.disable);
     setAllPkgs(pkgs);
   };
 
@@ -90,8 +100,12 @@ const AllRules = () => {
         const list = res.results || [];
         history.push(`${location.pathname}?${qs.stringify(params)}`);
 
-        setSelectedKeys(list.filter((item: any) => item.select_state === 1).map((item: any) => item.id));
-        setSelectedRowKeys(list.filter((item: any) => item.select_state === 1).map((item: any) => item.id));
+        setSelectedKeys(list
+          .filter((item: any) => item.select_state === 1)
+          .map((item: any) => item.id));
+        setSelectedRowKeys(list
+          .filter((item: any) => item.select_state === 1)
+          .map((item: any) => item.id));
         setCount(res.count);
         setList(list);
       })
@@ -128,7 +142,9 @@ const AllRules = () => {
       <div className={style.header}>
         <span
           className={style.backIcon}
-          onClick={() => history.push(`${getTmplRouter(orgSid, teamName)}/${params.id}/check-profiles/${checkProfileId}/pkg/${pkgId}`)
+          onClick={() => history.push(`${getTmplRouter(orgSid, teamName)}/${
+            params.id
+          }/check-profiles/${checkProfileId}/pkg/${pkgId}`)
           }
         >
           <ArrowLeft />
@@ -141,7 +157,9 @@ const AllRules = () => {
       <Search
         filters={{
           allPkgs,
+          labels,
           languages,
+          checkTools,
         }}
         searchParams={cloneDeep(searchParams)}
         loading={loading}
@@ -179,15 +197,20 @@ const AllRules = () => {
         >
           <Column
             title="规则名称"
-            dataIndex="display_name"
+            dataIndex="real_name"
             render={(name, data: any) => (
-              <p className={style.ruleName} onClick={() => openRuleDetail(data.id)}>
+              <p
+                className={style.ruleName}
+                onClick={() => {
+                  openRuleDetail(data.id);
+                }}
+              >
                 {name}
               </p>
             )}
           />
           <Column title="规则概要" dataIndex="rule_title" />
-
+          <Column title="所属工具" dataIndex={['checktool', 'display_name']} />
           <Column title="分类" dataIndex="category_name" />
           <Column title="问题级别" dataIndex="severity_name" />
         </Table>

@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { Table, Modal, Tag } from 'coding-oa-uikit';
 
 // 项目内
-import { t } from '@src/i18n/i18next';
-import EllipsisTemplate from '@src/components/ellipsis';
-import { getNodeTask } from '@src/services/nodes'
-import { TASK_STATE_CHOICES } from './constants';
+import EllipsisTemplate from '@tencent/micro-frontend-shared/component/ellipsis';
+import { getNodeTask } from '@src/services/nodes';
+import { TASK_STATE_CHOICES } from '@src/constant';
 
 const { Column } = Table;
 
@@ -24,6 +24,7 @@ interface NodeTaskModalProps {
 
 const NodeTaskModal = ({ visible, nodeId, onCancel }: NodeTaskModalProps) => {
   const { orgSid }: any = useParams();
+  const { t } = useTranslation();
   const [listData, setListData] = useState<Array<any>>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [pager, setPager] = useState<any>(DEFAULT_PAGER);
@@ -34,7 +35,7 @@ const NodeTaskModal = ({ visible, nodeId, onCancel }: NodeTaskModalProps) => {
     if (visible && nodeId) {
       getTaskList(DEFAULT_PAGER.currentPage, DEFAULT_PAGER.pageSize);
     }
-  }, [nodeId])
+  }, [nodeId]);
 
   const getTaskList = (page: number, pageSize: number) => {
     setLoading(true);
@@ -84,9 +85,7 @@ const NodeTaskModal = ({ visible, nodeId, onCancel }: NodeTaskModalProps) => {
           dataIndex="project"
           key="project"
           width={300}
-          render={(
-            { scm_url, branch }: any,
-          ) => (
+          render={({ scm_url, branch }: any) => (
             <>
               <EllipsisTemplate maxWidth={300} className="text-weight-bold">
                 {scm_url}
