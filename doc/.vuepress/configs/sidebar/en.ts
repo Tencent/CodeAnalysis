@@ -27,7 +27,7 @@ export const en: SidebarConfig = {
           children: [
             '/en/guide/代码检查/工具/eslint.md',
             '/en/guide/代码检查/工具/golangcilint.md',
-            '/eh/guide/代码检查/工具/regexscanner.md',
+            '/eh/guide/代码检查/工具/TCA-Armory-R.md',
           ],
         },
       ]
