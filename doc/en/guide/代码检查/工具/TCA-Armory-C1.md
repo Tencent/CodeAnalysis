@@ -20,10 +20,15 @@ TCA-Armory-C1 属于 TCA 的增强分析模块。
 | ObjectiveC/MissingDocProtocol | 检查protocol是否有注释 | 无 | 无 |
 | ObjectiveC/ParameterCount | 检查方法的参数个数 | Max: 参数个数阈值，默认是6 | Max=6 |
 | ObjectiveC/ClassNaming | 检查class命名格式 | ClassCase: 命名格式，可选 CamelCase 首字母小写驼峰式、UPPER_CASE 全部大写、LOWER_CASE 全部小写、camelBack 首字母大写驼峰式，默认是 CamelCase ｜ ClassCase=CamelCase |
-| ObjectiveC/FunctionNaming | 检查函数命名格式 | 检查class命名格式 | FunctionCase: 命名格式，可选 CamelCase 首字母小写驼峰式、UPPER_CASE 全部大写、LOWER_CASE 全部小写、camelBack 首字母大写驼峰式，默认是 camelBack | FunctionCase=camelBack |
+| ObjectiveC/FunctionNaming | 检查函数命名格式 | FunctionCase: 命名格式，可选 CamelCase 首字母小写驼峰式、UPPER_CASE 全部大写、LOWER_CASE 全部小写、camelBack 首字母大写驼峰式，默认是 camelBack | FunctionCase=camelBack |
 | ObjectiveC/GlobalVariableNaming | 检查全局变量的命名格式 | GlobalVariablePrefix: 全局变量前缀，默认是`g` <br> GlobalVariableCase: 命名格式，可选 CamelCase 首字母小写驼峰式、UPPER_CASE 全部大写、LOWER_CASE 全部小写、camelBack 首字母大写驼峰式，默认是 camelBack | GlobalVariablePrefix=g <br> GlobalVariableCase=camelBack |
 | ObjectiveC/LocalVariableNaming | 检查局部变量的命名格式 | LocalVariableCase: 命名格式，可选 CamelCase 首字母小写驼峰式、UPPER_CASE 全部大写、LOWER_CASE 全部小写、camelBack 首字母大写驼峰式，默认是 camelBack | LocalVariableCase=camelBack |
 | ObjectiveC/MacroNaming | 检查macro命名格式 | MacroCase: 命名格式，可选 CamelCase 首字母小写驼峰式、UPPER_CASE 全部大写、LOWER_CASE 全部小写、camelBack 首字母大写驼峰式，默认是 UPPER_CASE | MacroCase=UPPER_CASE |
 | ObjectiveC/MaxLineLength | 检查文件长度 | tabWidth: 缩进宽度，默认是4 <br> MaxLineLength: 长度阈值，默认是150 |  tabWidth=4 <br> MaxLineLength=150 |
 | ObjectiveC/MethodNaming | 检查方法命名格式 | MethodCase: 命名格式，可选 CamelCase 首字母小写驼峰式、UPPER_CASE 全部大写、LOWER_CASE 全部小写、camelBack 首字母大写驼峰式，默认是 camelBack | MethodCase=camelBack |
 | ObjectiveC/ParameterNaming | 检查参数命名格式 | ParameterCase: 命名格式，可选 CamelCase 首字母小写驼峰式、UPPER_CASE 全部大写、LOWER_CASE 全部小写、camelBack 首字母大写驼峰式，默认是 camelBack | ParameterCase=camelBack |
+| CmdInject | 命令行注入漏洞 | 无 | 无 |
+| PathTraversal | 路径穿越漏洞 | 无 | 无 |
+| SQLInject | SQL注入 | 无 | 无 |
+| SSRF | 服务端请求伪造漏洞 | 无 | 无 |
+| XSS | 跨站脚本攻击漏洞 | 无 | 无 |
