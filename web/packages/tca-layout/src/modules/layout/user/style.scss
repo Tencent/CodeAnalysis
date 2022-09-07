@@ -1,4 +1,4 @@
-@import "@src/common/style/color.scss";
+@import "@tencent/micro-frontend-shared/style/color.scss";
 .form-content {
   max-width: 540px;
   .item {
@@ -10,10 +10,5 @@
 }
 
 .header {
-  margin-bottom: 20px;
-}
-
-.oauth-table {
-  min-height: 100px;
   margin-bottom: 20px;
 }

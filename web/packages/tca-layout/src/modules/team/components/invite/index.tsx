@@ -1,12 +1,6 @@
-// Copyright (c) 2021-2022 THL A29 Limited
-//
-// This source code file is made available under MIT License
-// See LICENSE for details
-// ==============================================================================
-
 import React, { useEffect } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
-import Loading from '@src/components/loading';
+import Loading from '@tencent/micro-frontend-shared/component/loading';
 
 import { addMemberByInvite } from '@src/services/team';
 

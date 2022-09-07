@@ -1,0 +1,47 @@
+@import "@tencent/micro-frontend-shared/style/color.scss";
+
+.update-scheme-modal {
+  .lib {
+    display: flex;
+    justify-content: space-between;
+
+    .lib-tag {
+      color: $blue-5;
+      border: 1px solid $blue-5;
+      background-color: #fff;
+      border-radius: 2px;
+
+      &.privite {
+        color: $cyan-6;
+        border: 1px solid $cyan-6;
+      }
+    }
+  }
+
+  .add-icon {
+    color: $grey-7;
+    padding-left: 12px;
+    cursor: pointer;
+    transition: all 0.3s;
+
+    &:hover {
+      color: $grey-8;
+    }
+  }
+
+  .del-icon {
+    color: $red-4;
+    padding-left: 12px;
+    cursor: pointer;
+    transition: all 0.3s;
+
+    &:hover {
+      color: $red-5;
+    }
+  }
+
+  .default-desc {
+    font-size: 13px;
+    color: $grey-7;
+  }
+}

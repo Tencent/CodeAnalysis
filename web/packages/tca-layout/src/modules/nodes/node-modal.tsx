@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { Modal, Form, Input, message, Select } from 'coding-oa-uikit';
 
 // 项目内
-import { t } from '@src/i18n/i18next';
 import { putNode } from '@src/services/nodes';
 
 // 模块内
-import { STATUS_OPTIONS } from './constants';
+import { STATUS_OPTIONS } from '@src/constant';
 
 const { Option } = Select;
 
@@ -23,6 +23,7 @@ interface IProps {
 const NodeModal = ({ nodeinfo, visible, onOk, onCancel, tagOptions, members }: IProps) => {
   const [form] = Form.useForm();
   const { orgSid }: any = useParams();
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (visible) {
@@ -69,10 +70,9 @@ const NodeModal = ({ nodeinfo, visible, onOk, onCancel, tagOptions, members }: I
           rules={[{ required: true, message: t('节点标签为必选项') }]}
         >
           <Select mode="multiple">
-            {/* 团队节点仅能使用团队标签 */}
-            {tagOptions.filter(item => item.org_sid === nodeinfo?.org_sid).map((item: any) => (
+            {tagOptions.map((item: any) => (
               <Option key={item.value} value={item.value}>
-                {item.text}
+                {item.label}
               </Option>
             ))}
           </Select>
@@ -85,7 +85,7 @@ const NodeModal = ({ nodeinfo, visible, onOk, onCancel, tagOptions, members }: I
           <Select>
             {STATUS_OPTIONS.map((item: any) => (
               <Option key={item.value} value={item.value}>
-                {item.text}
+                {item.label}
               </Option>
             ))}
           </Select>

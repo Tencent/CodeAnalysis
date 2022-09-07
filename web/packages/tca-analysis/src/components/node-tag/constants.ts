@@ -1,7 +1,7 @@
 export const TAG_TYPE_ENUM = {
   PUBLIC: 1,
   PRIVATE: 2,
-  DISABLED: 99
+  DISABLED: 99,
 };
 
 export const TAG_TYPE_CHOICES = {

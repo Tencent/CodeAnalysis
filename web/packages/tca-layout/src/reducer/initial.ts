@@ -1,9 +1,3 @@
-// Copyright (c) 2021-2022 THL A29 Limited
-//
-// This source code file is made available under MIT License
-// See LICENSE for details
-// ==============================================================================
-
 import Constant from './constant';
 
 const initialState = {
@@ -16,7 +10,7 @@ export interface IAction {
   payload: any;
 }
 
-export default (state = initialState, action: IAction) => {
+const initReducer = (state = initialState, action: IAction) => {
   switch (action.type) {
     case Constant.SET_LAYOUT_COMPLETED:
       return {
@@ -32,3 +26,5 @@ export default (state = initialState, action: IAction) => {
       return state;
   }
 };
+
+export default initReducer;

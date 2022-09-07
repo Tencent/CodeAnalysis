@@ -8,6 +8,7 @@
  * 分支概览代码检查详情
  */
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Radio, Row, Col } from 'coding-oa-uikit';
 import { get, minBy } from 'lodash';
 
@@ -18,7 +19,6 @@ import PieCharts from '@src/components/charts/pie';
 import { Area } from '@ant-design/plots';
 
 import s from '../style.scss';
-import { t } from '@src/i18n/i18next';
 import { getLintPieChartData, getLintLineChartData } from '../utils';
 
 export const LINT_TYPE = {
@@ -28,9 +28,9 @@ export const LINT_TYPE = {
 };
 
 export const LINT_TYPE_TXT = {
-  SEVERITY: t('问题级别'),
-  CATEGORY: t('问题类型'),
-  TABLE: t('详细数据'),
+  SEVERITY: '问题级别',
+  CATEGORY: '问题类型',
+  TABLE: '详细数据',
 };
 
 const LINT_TYPE_OPTIONS = [
@@ -54,8 +54,8 @@ export const LINT_HISTORY_TYPE = {
 };
 
 export const LINT_HISTORY_TYPE_TXT = {
-  TOTAL: t('总数'),
-  UNDEAL: t('未处理'),
+  TOTAL: '总数',
+  UNDEAL: '未处理',
 };
 
 const LINT_HISTORY_OPTIONS = [
@@ -70,14 +70,14 @@ const LINT_HISTORY_OPTIONS = [
 ];
 
 const colors: any = {
-  "致命": "#eb333f",
-  "错误": "#f76469",
-  "警告": "#fba337",
-  "提示": "#ffe0b3",
-  "功能": "#0066ff",
-  "安全": "#3d98ff",
-  "代码风格": "#8cc6ff",
-  "其他": "#cceaff",
+  致命: '#eb333f',
+  错误: '#f76469',
+  警告: '#fba337',
+  提示: '#ffe0b3',
+  功能: '#0066ff',
+  安全: '#3d98ff',
+  代码风格: '#8cc6ff',
+  其他: '#cceaff',
 };
 
 interface ITableProps {
@@ -88,17 +88,17 @@ const LintDetailTable = ({ data }: ITableProps) => (
   <table className={s.issueDetailTable}>
     <thead>
       <tr className={`${s.des} ${s.issueDetailTr}`}>
-        <th>{t('问题分类')}</th>
-        <th>{t('严重级别')}</th>
-        <th>{t('状态')}</th>
-        <th>{t('数量')}</th>
+        <th>问题分类</th>
+        <th>严重级别</th>
+        <th>状态</th>
+        <th>数量</th>
       </tr>
     </thead>
     <tbody className={s.detailTableBody}>
       {data.length === 0 ? (
         <tr className={s.issueDetailTr}>
           <td className={s.des} colSpan={4}>
-            {t('没有数据')}
+            没有数据
           </td>
         </tr>
       ) : (
@@ -144,9 +144,7 @@ const LintDetailChart = ({ type, data }: IChartProps) => {
       <PieCharts
       data={chanrtData}
       confs={{
-        color: ({ type }: { type: string }) => {
-          return colors[type] || "#0066ff";
-        }
+        color: ({ type }: { type: string }) => colors[type] || '#0066ff',
       }}
     />
     ) : (
@@ -161,6 +159,7 @@ interface IProps {
 }
 
 const CodeLint = ({ lintScans }: IProps) => {
+  const { t } = useTranslation();
   const [undealTypeValue, setUndealTypeValue] = useState(LINT_TYPE.SEVERITY);
   const [totalTypeValue, setTotalTypeValue] = useState(LINT_TYPE.SEVERITY);
   const [historyTypeValue, setHistoryTypeValue] = useState(LINT_HISTORY_TYPE.TOTAL);
@@ -231,10 +230,10 @@ const CodeLint = ({ lintScans }: IProps) => {
                     line: {
                       style: {
                         stroke: '#e6e9ed',
-                        lineDash: [3, 2]
-                      }
-                    }
-                  }
+                        lineDash: [3, 2],
+                      },
+                    },
+                  },
                 }}
               />
             ) : (

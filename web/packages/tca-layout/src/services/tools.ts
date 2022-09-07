@@ -1,5 +1,4 @@
-import { get, post, put, del } from './index';
-import { MAIN_SERVER_API } from './common';
+import { MAIN_SERVER_API, get, put, post, del } from '@plat/api';
 
 const getToolPrefix = (orgId: string) => `${MAIN_SERVER_API}/orgs/${orgId}/checktools/`;
 
@@ -38,8 +37,6 @@ export const updateToolStatus = (orgId: string, toolId: number, status: any) => 
  * @param toolId
  */
 export const getToolDetail = (orgId: string, toolId: number) => get(`${getToolPrefix(orgId)}${toolId}/`);
-
-
 
 /**
  * 获取语言
@@ -127,48 +124,44 @@ export const updateCustomRule = (orgId: string, toolId: number, ruleId: number, 
 export const deleteCustomRule = (orgId: string, toolId: number, ruleId: number) => del(`${getToolPrefix(orgId)}${toolId}/rules/custom/${ruleId}/`);
 
 
-
 /**
  * 获取指定工具白名单列表
- * @param orgId 
- * @param toolId 
- * @returns 
+ * @param orgId
+ * @param toolId
+ * @returns
  */
 export const getToolWhiteList = (orgId: string, toolId: number) => get(`${getToolPrefix(orgId)}${toolId}/whitelist/`);
 
 /**
  * 添加工具白名单
- * @param orgId 
- * @param toolId 
+ * @param orgId
+ * @param toolId
  * @param orgSids - 团队 org_sid
- * @returns 
+ * @returns
  */
-export const updateToolWhiteList = (orgId: string, toolId: number, string: string) =>
-  post(`${getToolPrefix(orgId)}${toolId}/whitelist/`, {
-    org_sid: string
-  });
+export const updateToolWhiteList = (orgId: string, toolId: number, string: string) => post(`${getToolPrefix(orgId)}${toolId}/whitelist/`, {
+  org_sid: string,
+});
 
 /**
   * 添加工具白名单
-  * @param orgId 
-  * @param toolId 
+  * @param orgId
+  * @param toolId
   * @param orgSids - 团队 org_sid
-  * @returns 
+  * @returns
   */
-export const addToolWhiteList = (orgId: string, toolId: number, orgSids: Array<string>) =>
-  post(`${getToolPrefix(orgId)}${toolId}/whitelist/create/`, {
-    organizations: orgSids
-  });
+export const addToolWhiteList = (orgId: string, toolId: number, orgSids: Array<string>) => post(`${getToolPrefix(orgId)}${toolId}/whitelist/create/`, {
+  organizations: orgSids,
+});
 
 /**
  * 删除工具白名单
  * @param orgId - 当前团队
- * @param toolId 
+ * @param toolId
  * @param id - 白名单id
- * @returns 
+ * @returns
  */
 export const delToolWhiteList = (orgId: string, toolId: number, id: number) => del(`${getToolPrefix(orgId)}${toolId}/whitelist/${id}/`);
-
 
 
 // ====================== 工具依赖 ======================
@@ -177,68 +170,68 @@ const getToollibsPrefix = (orgId: string) => `${MAIN_SERVER_API}/orgs/${orgId}/t
 
 /**
  * 获取工具依赖列表
- * @param orgId 
- * @param params 
- * @returns 
+ * @param orgId
+ * @param params
+ * @returns
  */
 export const getToolLibs = (orgId: string, params: any) => get(`${getToollibsPrefix(orgId)}`, params);
 
 /**
  * 添加工具依赖
- * @param orgId 
- * @param data 
- * @returns 
+ * @param orgId
+ * @param data
+ * @returns
  */
 export const addToolLib = (orgId: string, data: any) => post(`${getToollibsPrefix(orgId)}`, data);
 
 /**
  * 获取工具依赖详情
- * @param orgId 
- * @param libId 
- * @returns 
+ * @param orgId
+ * @param libId
+ * @returns
  */
 export const getLibDetail = (orgId: string, libId: number) => get(`${getToollibsPrefix(orgId)}${libId}/`);
 
 /**
  * 更新工具依赖
- * @param orgId 
- * @param libId 
- * @param data 
- * @returns 
+ * @param orgId
+ * @param libId
+ * @param data
+ * @returns
  */
 export const updateToolLib = (orgId: string, libId: number, data: any) => put(`${getToollibsPrefix(orgId)}${libId}/`, data);
 
 /**
  * 获取工具依赖方案列表
- * @param orgId 
- * @param toolId 
- * @returns 
+ * @param orgId
+ * @param toolId
+ * @returns
  */
 export const getToolSchemes = (orgId: string, toolId: number) => get(`${getToolPrefix(orgId)}${toolId}/schemes/`);
 
 /**
  * 创建工具依赖方案
- * @param orgId 
- * @param toolId 
- * @param data 
- * @returns 
+ * @param orgId
+ * @param toolId
+ * @param data
+ * @returns
  */
 export const addToolSchemes = (orgId: string, toolId: number, data: any) => post(`${getToolPrefix(orgId)}${toolId}/schemes/`, data);
 
 /**
  * 修改工具依赖方案
- * @param orgId 
- * @param toolId 
- * @param data 
- * @returns 
+ * @param orgId
+ * @param toolId
+ * @param data
+ * @returns
  */
- export const updateToolSchemes = (orgId: string, toolId: number, schemeId:number , data: any) => put(`${getToolPrefix(orgId)}${toolId}/schemes/${schemeId}/`, data);
+export const updateToolSchemes = (orgId: string, toolId: number, schemeId: number, data: any) => put(`${getToolPrefix(orgId)}${toolId}/schemes/${schemeId}/`, data);
 
 /**
  * 移除工具依赖
- * @param orgId 
- * @param toolId 
- * @param libSchemeId 
- * @returns 
+ * @param orgId
+ * @param toolId
+ * @param libSchemeId
+ * @returns
  */
 export const delToolScheme = (orgId: string, toolId: number, libSchemeId: number) => del(`${getToolPrefix(orgId)}${toolId}/schemes/${libSchemeId}/`);

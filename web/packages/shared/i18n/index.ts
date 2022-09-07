@@ -10,6 +10,14 @@ export interface InitI18next {
   modules?: any[]
 }
 
+/** 去除PUBLIC_PATH末尾斜杠 */
+const getPublicPath = (publicPath: string) => {
+  if (publicPath.endsWith('/')) {
+    return publicPath.substring(0, publicPath.length - 1);
+  }
+  return publicPath;
+};
+
 /**
  * 初始化i18n
  * @param param0 {options, modules} 参数配置
@@ -27,6 +35,7 @@ const initI18next = ({ options, modules = [] }: InitI18next) => {
     react: {
       useSuspense: false,
     },
+    load: 'currentOnly',
     fallbackLng: 'zh-CN', // 未找到最终匹配zh_CN
     interpolation: {
       escapeValue: false,
@@ -34,6 +43,9 @@ const initI18next = ({ options, modules = [] }: InitI18next) => {
     detection: {
       // caches: ['localStorage', 'cookie'],
       caches: ['cookie'],
+    },
+    backend: {
+      loadPath: `${getPublicPath(process.env.PUBLIC_PATH)}/locales/{{lng}}/{{ns}}.json`,
     },
     ...options,
   };

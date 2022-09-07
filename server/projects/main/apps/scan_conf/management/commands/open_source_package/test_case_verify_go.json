@@ -1,0 +1,25 @@
+[
+    {
+        "name": "【Go】单元测试有效性验证",
+        "description": "背景：开发同学编写的单元测试没有做断言，属于无效用例。\n目标：代码分析判断一个测试函数是否有断言。",
+        "revision": null,
+        "package_type": "official",
+        "languages": [
+            "Go"
+        ],
+        "labels": [
+            "推荐"
+        ],
+        "checkrule_set": [
+            {
+                "checktool": "amani",
+                "checkrule": "TestCaseValid",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            }
+        ],
+        "open_saas": false,
+        "envs": null
+    }
+]

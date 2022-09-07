@@ -27,7 +27,7 @@ const Detail = () => {
   const listRef: any = useRef({});
   const rowHeights = useRef({});
   // const rowRef: any = useRef({});
-  const { org_sid: orgSid, team_name: teamName, repoId, projectId, fileId } = useParams() as any;
+  const { orgSid, teamName, repoId, projectId, fileId } = useParams() as any;
   const [codeFile, setCodeFile] = useState({}) as any;
   const [fileInfo, setFileInfo] = useState({}) as any;
   const [issues, setIssues] = useState({

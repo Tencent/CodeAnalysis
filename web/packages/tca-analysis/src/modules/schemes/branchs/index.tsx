@@ -15,7 +15,7 @@ import { Table, Avatar } from 'coding-oa-uikit';
 import UserIcon from 'coding-oa-uikit/lib/icon/User';
 
 import { getBranchs } from '@src/services/schemes';
-import { DEFAULT_PAGER } from '@src/common/constants';
+import { DEFAULT_PAGER } from '@src/constant';
 
 import commonStyle from '../style.scss';
 import style from './style.scss';
