@@ -193,6 +193,8 @@ class LoopRunner(TaskRunner):
                     kill_task_id = task_params['task_id']
                     # kill task时进程如果已不存在,会报异常: ProcessLookupError: [Errno 3] No such process
                     self._terminate_task(kill_task_id)
+                    # 等待一段时间后再接下一个任务
+                    time.sleep(self._get_task_interval)
                     continue
 
                 # 获取到分析任务，向server发送确认信息(kill_task不需要确认)
@@ -229,6 +231,8 @@ class LoopRunner(TaskRunner):
                 task = Task(task_id, task_name, request_file, response_file, task_log, env=self._origin_os_env)
                 task.start()
                 self._running_task.append(task)
+                # 等待一段时间后再接下一个任务
+                time.sleep(self._get_task_interval)
             except:
                 # 遇到异常,输出异常信息
                 LogPrinter.exception("task loop encounter error.")
