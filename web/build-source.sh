@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 # 用于管道命令 只要一个子命令失败，整个管道命令就失败，脚本就会终止执行
 set -eo pipefail
@@ -13,9 +13,19 @@ function warning() {
   echo -e "\033[33m >>> $*\033[0;39m"
 }
 
+# 当前脚本执行目录
+CURRENT_PATH=$(
+  cd "$(dirname "${BASH_SOURCE[0]}")"
+  pwd
+)
+
+# web目录
+ROOT_PATH=$CURRENT_PATH
+
+cd "$ROOT_PATH"
+
 # git 版本
 GIT_REVISION=$(git rev-parse HEAD)
-ROOT_PATH=$(pwd)
 CONF_PATH="${ROOT_PATH}/tca-deploy-source/conf/"
 BUILD_ZIP_PATH="${ROOT_PATH}/tca-deploy-source/build_zip/"
 
