@@ -43,7 +43,7 @@
                 "languages": [
                     "oc"
                 ],
-                "solution": "检查代码文件的缩进，请修复对应的异常缩进。",
+                "solution": "检查代码文件的缩进，请修复对应的异常缩进。\n## 规则参数\nIndentStyle: 可选 spaces 空格 和 tabs `\t` ，默认是 spaces\nIndentSize: 缩进长度，默认是4\n## 参数示例\nIndentStyle=spaces\nIndentSize=4\n",
                 "owner": null,
                 "labels": [],
                 "description": "检查代码文件的缩进",
@@ -63,7 +63,7 @@
                 "solution": "检查超出行数长度阈值的函数。",
                 "owner": null,
                 "labels": [],
-                "description": "检查超出行数长度阈值的函数。默认阈值是100",
+                "description": "检查超出行数长度阈值的函数。\n## 规则参数\nLineThreshold: 方法长度阈值，默认是100 \n## 参数示例\nLineThreshold=100\n",
                 "disable": false
             },
             {
@@ -131,7 +131,233 @@
                 "solution": "检查方法的参数个数。",
                 "owner": null,
                 "labels": [],
-                "description": "检查方法的参数个数。默认阈值是6.",
+                "description": "检查方法的参数个数。\n## 规则参数\nMax: 参数个数阈值，默认是6\n## 参数示例\nMax=6\n",
+                "disable": false
+            },
+            {
+                "real_name": "ObjectiveC/ClassNaming",
+                "display_name": "ClassNaming",
+                "severity": "info",
+                "category": "convention",
+                "rule_title": "检查class命名格式",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "oc"
+                ],
+                "solution": "检查class命名格式",
+                "owner": null,
+                "labels": [],
+                "description": "检查class命名格式。\n## 规则参数\nClassCase: 命名格式，可选 CamelCase 首字母小写驼峰式、UPPER_CASE 全部大写、LOWER_CASE 全部小写、camelBack 首字母大写驼峰式，默认是 CamelCase\n## 参数示例\nClassCase=CamelCase\n",
+                "disable": false
+            },
+            {
+                "real_name": "ObjectiveC/FunctionNaming",
+                "display_name": "FunctionNaming",
+                "severity": "info",
+                "category": "convention",
+                "rule_title": "检查函数命名格式",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "oc"
+                ],
+                "solution": "检查函数命名格式",
+                "owner": null,
+                "labels": [],
+                "description": "检查函数命名格式。\n## 规则参数\nFunctionCase: 命名格式，可选 CamelCase 首字母小写驼峰式、UPPER_CASE 全部大写、LOWER_CASE 全部小写、camelBack 首字母大写驼峰式，默认是 camelBack\n## 参数示例\nFunctionCase=camelBack\n",
+                "disable": false
+            },
+            {
+                "real_name": "ObjectiveC/GlobalVariableNaming",
+                "display_name": "GlobalVariableNaming",
+                "severity": "info",
+                "category": "convention",
+                "rule_title": "检查全局变量的命名格式",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "oc"
+                ],
+                "solution": "检查全局变量的命名格式",
+                "owner": null,
+                "labels": [],
+                "description": "检查全局变量的命名格式。\n## 规则参数\nGlobalVariablePrefix: 全局变量前缀，默认是`g`\n GlobalVariableCase: 命名格式，可选 CamelCase 首字母小写驼峰式、UPPER_CASE 全部大写、LOWER_CASE 全部小写、camelBack 首字母大写驼峰式，默认是 camelBack\n## 参数示例\nGlobalVariablePrefix=g\nGlobalVariableCase=camelBack\n",
+                "disable": false
+            },
+            {
+                "real_name": "ObjectiveC/LocalVariableNaming",
+                "display_name": "LocalVariableNaming",
+                "severity": "info",
+                "category": "convention",
+                "rule_title": "检查局部变量的命名格式",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "oc"
+                ],
+                "solution": "检查局部变量的命名格式",
+                "owner": null,
+                "labels": [],
+                "description": "检查局部变量的命名格式。\n## 规则参数\nLocalVariableCase: 命名格式，可选 CamelCase 首字母小写驼峰式、UPPER_CASE 全部大写、LOWER_CASE 全部小写、camelBack 首字母大写驼峰式，默认是 camelBack \n## 参数示例\nLocalVariableCase=camelBack\n",
+                "disable": false
+            },
+            {
+                "real_name": "ObjectiveC/MacroNaming",
+                "display_name": "MacroNaming",
+                "severity": "info",
+                "category": "convention",
+                "rule_title": "检查macro命名格式",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "oc"
+                ],
+                "solution": "检查macro命名格式",
+                "owner": null,
+                "labels": [],
+                "description": "检查macro命名格式。\n## 规则参数\nMacroCase: 命名格式，可选 CamelCase 首字母小写驼峰式、UPPER_CASE 全部大写、LOWER_CASE 全部小写、camelBack 首字母大写驼峰式，默认是 UPPER_CASE\n## 参数示例\nMacroCase=UPPER_CASE\n",
+                "disable": false
+            },
+            {
+                "real_name": "ObjectiveC/MaxLineLength",
+                "display_name": "MaxLineLength",
+                "severity": "info",
+                "category": "convention",
+                "rule_title": "检查文件长度",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "oc"
+                ],
+                "solution": "检查文件长度",
+                "owner": null,
+                "labels": [],
+                "description": "检查文件长度。\n## 规则参数\ntabWidth: 缩进宽度，默认是4\nMaxLineLength: 长度阈值，默认是150\n## 参数示例\ntabWidth=4\nMaxLineLength=150\n",
+                "disable": false
+            },
+            {
+                "real_name": "ObjectiveC/MethodNaming",
+                "display_name": "MethodNaming",
+                "severity": "info",
+                "category": "convention",
+                "rule_title": "检查方法命名格式",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "oc"
+                ],
+                "solution": "检查方法命名格式",
+                "owner": null,
+                "labels": [],
+                "description": "检查方法命名格式。\n## 规则参数\nMethodCase: 命名格式，可选 CamelCase 首字母小写驼峰式、UPPER_CASE 全部大写、LOWER_CASE 全部小写、camelBack 首字母大写驼峰式，默认是 camelBack\n## 参数示例\nMethodCase=camelBack\n",
+                "disable": false
+            },
+            {
+                "real_name": "ObjectiveC/ParameterNaming",
+                "display_name": "ParameterNaming",
+                "severity": "info",
+                "category": "convention",
+                "rule_title": "检查参数命名格式",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "oc"
+                ],
+                "solution": "检查参数命名格式",
+                "owner": null,
+                "labels": [],
+                "description": "检查参数命名格式。\n## 规则参数\nParameterCase: 命名格式，可选 CamelCase 首字母小写驼峰式、UPPER_CASE 全部大写、LOWER_CASE 全部小写、camelBack 首字母大写驼峰式，默认是 camelBack\n## 参数示例\nParameterCase=camelBack\n",
+                "disable": false
+            },
+            {
+                "real_name": "CmdInject",
+                "display_name": "CmdInject",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "命令行注入漏洞",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "cpp",
+                    "java"
+                ],
+                "solution": "需要评估childprocess等模块执行命令的使用，应限定或校验命令和参数的内容。",
+                "owner": null,
+                "labels": [],
+                "description": "当使用childprocess等模块执行命令时，拼接了用户可控的输入，会导致命令执行漏洞。攻击者利用漏洞可以控制目标主机或者容器。",
+                "disable": false
+            },
+            {
+                "real_name": "PathTraversal",
+                "display_name": "PathTraversal",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "路径穿越漏洞",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "cpp",
+                    "java"
+                ],
+                "solution": "按业务需求，使用白名单限定后缀范围，校验并限定文件路径范围",
+                "owner": null,
+                "labels": [],
+                "description": "操作文件时，应该限定文件的路径范围，如果拼接用户输入到文件路径，可能导致路径穿越漏洞。攻击者利用漏洞可以访问到文件系统上的任意文件，这可能导致信息泄漏等问题。",
+                "disable": false
+            },
+            {
+                "real_name": "SQLInject",
+                "display_name": "SQLInject",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "SQL注入",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "cpp",
+                    "java"
+                ],
+                "solution": "SQL语句默认使用预编译并绑定变量，使用安全的ORM操作。",
+                "owner": null,
+                "labels": [],
+                "description": "错误的拼接用户可控的值到sql语句，可能导致sql注入漏洞。攻击者可以修改sql语法来更改查询的目标或结果，泄露数据库敏感信息，也可以使用SQL文件操作攻击底层Web服务器。如果使用该SQL查询进行授权认证，攻击者还可以用于提权。",
+                "disable": false
+            },
+            {
+                "real_name": "SSRF",
+                "display_name": "SSRF",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "服务端请求伪造漏洞",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "cpp",
+                    "java"
+                ],
+                "solution": "限定访问网络资源地址范围，请求网络资源应加密传输。",
+                "owner": null,
+                "labels": [],
+                "description": "攻击者在未能取得服务器所有权限时，利用服务器漏洞以服务器的身份发送一条构造好的请求给服务器所在内网。",
+                "disable": false
+            },
+            {
+                "real_name": "XSS",
+                "display_name": "XSS",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "跨站脚本攻击漏洞",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "cpp",
+                    "java"
+                ],
+                "solution": "在输出所有用户可控的数据时, 对数据做转义或者编码。",
+                "owner": null,
+                "labels": [],
+                "description": "如果web页面在动态展示数据时使用了用户的输入内容，没有对输入的内容过滤或者进行转义，黑客可以通过参数传入恶意代码，当用户浏览该页面时恶意代码会被执行。",
                 "disable": false
             }
         ],

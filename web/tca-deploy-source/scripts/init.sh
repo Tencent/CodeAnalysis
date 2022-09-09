@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 # Customizable environment variables:
 # +---------------------+----------------------+----------------------------------------------+
@@ -19,20 +19,33 @@
 ### 方式二：查阅上述环境变量，先export对应环境变量，再 bash init.sh
 ###########################
 
-# 获取工作目录路径，绝对路径
-WORK_PATH=$(cd $(dirname $0) && pwd)
-# 获取上层目录，即tca-deploy-source根目录
-ROOT_PATH=$(cd $(dirname $0) && cd ../ && pwd)
+set -eo pipefail
 
-source $WORK_PATH/_log.sh
+# 当前脚本执行目录
+CURRENT_PATH=$(
+  cd "$(dirname "${BASH_SOURCE[0]}")"
+  pwd
+)
+
+# 获取工作目录路径，绝对路径
+WORK_PATH=$CURRENT_PATH
+
+# 获取上层目录，即tca-deploy-source根目录
+ROOT_PATH=$(dirname "${WORK_PATH}")
+
+cd "$ROOT_PATH"
+
+# shellcheck disable=SC1091
+source "$WORK_PATH"/_log.sh
 
 # 默认使用config.sh内的环境变量配置
-if [ "$1" == "default" -o "$1" == "-d" ]; then
-  source $WORK_PATH/config.sh
+if [ "$1" == "default" ] || [ "$1" == "-d" ]; then
+  # shellcheck disable=SC1091
+  source "$WORK_PATH"/config.sh
 fi
 
 # 校验必传项
-if [ ! -n "$SERVER_ENV" ]; then
+if [ -z "$SERVER_ENV" ]; then
   LOG_WARN "SERVER_ENV: 请指定前端访问后端的服务地址"
   exit 1
 fi
@@ -73,33 +86,33 @@ function clear_old_nginx_conf() {
   # 清除各个应用的nginx conf文件
   MICRO_FRONTEND="$MICRO_FRONTEND_FRAMEWORK $MICRO_FRONTEND_APPS $MICRO_FRONTEND_DOCUMENT"
   for app in $MICRO_FRONTEND; do
-    rm -f $NGINX_CONF_PATH/$app.conf
+    rm -f "$NGINX_CONF_PATH"/"$app".conf
   done
 }
 
 # 清理资源文件
 function clear_assets() {
   LOG_WARN "将路径下的资源文件和前端nginx配置备份到 ${WEB_DEPLOY_PATH}_bak 下..."
-  cp -r $WEB_DEPLOY_PATH/ ${WEB_DEPLOY_PATH}_bak/
-  cp -r $NGINX_CONF_PATH/tca_ingress.conf ${WEB_DEPLOY_PATH}_bak/
+  cp -r "$WEB_DEPLOY_PATH"/ "${WEB_DEPLOY_PATH}"_bak/
+  cp -r "$NGINX_CONF_PATH"/tca_ingress.conf "${WEB_DEPLOY_PATH}"_bak/
   LOG_INFO "开始清理路径下的资源文件 $WEB_DEPLOY_PATH ..."
-  rm -rf $WEB_DEPLOY_PATH/
+  rm -rf "${WEB_DEPLOY_PATH:?}"/
   LOG_INFO "开始清理前端nginx配置 ..."
-  rm -f $NGINX_CONF_PATH/tca_ingress.conf
+  rm -f "$NGINX_CONF_PATH"/tca_ingress.conf
 }
 
 # 解压编译后文件
 function init_unzip_build() {
   LOG_INFO "解压编译后文件到 $WEB_DEPLOY_PATH ..."
-  rm -rf $WEB_DEPLOY_PATH/
-  mkdir -p $WEB_DEPLOY_PATH
-  cd $ROOT_PATH/build_zip/
+  rm -rf "${WEB_DEPLOY_PATH:?}"/
+  mkdir -p "$WEB_DEPLOY_PATH"
+  cd "$ROOT_PATH"/build_zip/
   # 遍历并解压
   MICRO_FRONTEND="$MICRO_FRONTEND_FRAMEWORK $MICRO_FRONTEND_APPS $MICRO_FRONTEND_DOCUMENT"
   for app in $MICRO_FRONTEND; do
-    unzip -q -o $app.zip -d $WEB_DEPLOY_PATH/$app
+    unzip -q -o "$app".zip -d "$WEB_DEPLOY_PATH"/"$app"
   done
-  cd $ROOT_PATH
+  cd "$ROOT_PATH"
 }
 
 # 初始化配置 framework
@@ -123,8 +136,8 @@ function init_framework_web() {
   "
   LOG_INFO "[INFO]:index.html RUNTIME is enabled"
   LOG_INFO "[INFO]: change 404.html, unsupported-browser.html"
-  sed -i "$replace_content" $FRAMEWORK_DEPLOY_PATH/404.html
-  sed -i "$replace_content" $FRAMEWORK_DEPLOY_PATH/unsupported-browser.html
+  sed -i "$replace_content" "$FRAMEWORK_DEPLOY_PATH"/404.html
+  sed -i "$replace_content" "$FRAMEWORK_DEPLOY_PATH"/unsupported-browser.html
 
   LOG_INFO "[INFO]: change index.html"
   sed \
@@ -133,12 +146,12 @@ function init_framework_web() {
     s|__MICRO_FRONTEND_API__|$MICRO_FRONTEND_API|g; \
     s|__MICRO_FRONTEND_SETTING_API__|$MICRO_FRONTEND_SETTING_API|g; \
     " \
-    $FRAMEWORK_DEPLOY_PATH/index.runtime.html >$FRAMEWORK_DEPLOY_PATH/index.html
+    "$FRAMEWORK_DEPLOY_PATH"/index.runtime.html >"$FRAMEWORK_DEPLOY_PATH"/index.html
 
   LOG_INFO "conf 配置迁移 ..."
   # 将conf目录中的配置文件拷贝到 $MICRO_FRONTEND_FRAMEWORK static目录下
-  cp $ROOT_PATH/conf/settings.json $FRAMEWORK_DEPLOY_PATH/static/settings.json
-  cp $ROOT_PATH/conf/configs.json $FRAMEWORK_DEPLOY_PATH/static/configs.json
+  cp "$ROOT_PATH"/conf/settings.json "$FRAMEWORK_DEPLOY_PATH"/static/settings.json
+  cp "$ROOT_PATH"/conf/configs.json "$FRAMEWORK_DEPLOY_PATH"/static/configs.json
   LOG_INFO "$MICRO_FRONTEND_FRAMEWORK 配置完毕"
 }
 
@@ -149,7 +162,7 @@ function init_web_nginx() {
   if [ "$IS_DOCKER" == "TRUE" ]; then
     SET_DEFAULT_SERVER="default_server"
   fi
-  apps=$(echo $MICRO_FRONTEND_APPS | sed 's/[ ]/\\|/g')
+  apps=$(echo "$MICRO_FRONTEND_APPS" | sed 's/[ ]/\\|/g')
   sed \
     "
     s|SERVER_NAME|$INGRESS_SERVER_NAME|g; \
@@ -162,7 +175,7 @@ function init_web_nginx() {
     s|MICRO_FRONTEND_DOCUMENT|$MICRO_FRONTEND_DOCUMENT|g; \
     s|MICRO_FRONTEND_APPS|$apps|g; \
     " \
-    $ROOT_PATH/nginx/ingress.conf >$NGINX_CONF_PATH/tca_ingress.conf
+    "$ROOT_PATH"/nginx/ingress.conf >"$NGINX_CONF_PATH"/tca_ingress.conf
 }
 
 # 启动nginx
@@ -170,7 +183,7 @@ function start() {
   LOG_INFO "启动 nginx ..."
   # wc -l 行数计算。当nginx无进程时，启动nginx，否则reload nginx
   nginx_is_start=$(ps -C nginx --no-header | wc -l)
-  if [ $nginx_is_start -eq 0 ]; then
+  if [ "$nginx_is_start" -eq 0 ]; then
     nginx -t
     if [ "$IS_DOCKER" == "TRUE" ]; then
       nginx -g "daemon off;"

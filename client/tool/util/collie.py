@@ -8,6 +8,7 @@
 
 import os
 import csv
+import json
 import sys
 import psutil
 
@@ -19,6 +20,7 @@ from util.textutil import CodecClient
 from util.pathfilter import PathMgr, FilterPathUtil
 from util.textutil import CommentsManager
 from util.logutil import LogPrinter
+from util.configlib import ConfigReader
 from node.app import settings
 from task.authcheck.check_license import __lu__
 
@@ -125,10 +127,40 @@ class Collie(object):
         ]
         if method_mode:
             options.append("-m")
+
+        # 默认开启所有规则
+        # 支持指定规则，使用配置文件的方式，以下是demo
+        # {
+        #     "enableCheckers": {
+        #         "GoFuncVisitor": {},
+        #         "JavaScriptFuncVisitor": {
+        #             "ignoreNestingMethods": true
+        #         }
+        #     }
+        # }
+        config = dict()
+        enable_rules = dict()
+        rule_list = self.params.get("rule_list", list())
+        for rule in rule_list:
+            # 因为有这个字段但本身就是None，所以返回None
+            rule_params = rule.get("params")
+            if rule_params is None:
+                rule_params = ""
+            if f"[{self.tool_name.lower()}]" not in rule_params:
+                rule_params = f"[{self.tool_name.lower()}]\r\n" + rule_params
+            rule_params_dict = ConfigReader(cfg_string=rule_params).read(self.tool_name.lower())
+            enable_rules[rule["name"]] = rule_params_dict
+        config["enableCheckers"] = enable_rules
+        config_path = os.path.join(self.work_dir, f"{self.tool_name}_config.json")
+        with open(config_path, "w") as f:
+            json.dump(config, f, indent=2)
+        options.extend(["-c", config_path])
+
         scan_cmd = self.get_cmd(options)
 
         spc = SubProcController(
             scan_cmd,
+            cwd=self.tool_home,
             stdout_line_callback=subprocc_log,
             stderr_line_callback=subprocc_log,
         )
@@ -171,8 +203,9 @@ class Collie(object):
         if not output or not os.path.exists(output):
             return
 
+        relpos = len(self.params.source_dir) + 1
         rules = self.params.get("rules", list())
-        
+
         f = open(output, "r", encoding="utf-8")
         fieldnames = (
             "checker",
@@ -185,19 +218,33 @@ class Collie(object):
         reader = csv.DictReader(csv_f, fieldnames)
         next(reader)
         for row in reader:
-            path = row["path"]
+            path = row["path"][relpos:]
             line = int(row["line"])
             column = int(row["column"])
             rule = row["checker"]
             if rule not in rules:
                 continue
             msg = row["description"]
+
+            row_refs = row[None]
+            refs = list()
+            for ref in row_refs:
+                parts = ref.split(":")
+                refs.append(
+                    {
+                        "line": parts[2],
+                        "column": parts[3],
+                        "msg": parts[0],
+                        "path": parts[1][relpos:],
+                    }
+                )
             yield {
                 "rule": rule,
                 "msg": msg,
                 "path": path,
                 "line": line,
                 "column": column,
+                "refs": refs,
             }
 
         f.close()

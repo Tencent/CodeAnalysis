@@ -59,6 +59,62 @@
                 "severity": "info",
                 "rule_params": null,
                 "state": "enabled"
+            },
+            {
+                "checktool": "collie",
+                "checkrule": "ObjectiveC/ClassNaming",
+                "severity": "info",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "collie",
+                "checkrule": "ObjectiveC/FunctionNaming",
+                "severity": "info",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "collie",
+                "checkrule": "ObjectiveC/GlobalVariableNaming",
+                "severity": "info",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "collie",
+                "checkrule": "ObjectiveC/LocalVariableNaming",
+                "severity": "info",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "collie",
+                "checkrule": "ObjectiveC/MacroNaming",
+                "severity": "info",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "collie",
+                "checkrule": "ObjectiveC/MaxLineLength",
+                "severity": "info",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "collie",
+                "checkrule": "ObjectiveC/MethodNaming",
+                "severity": "info",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "collie",
+                "checkrule": "ObjectiveC/ParameterNaming",
+                "severity": "info",
+                "rule_params": null,
+                "state": "enabled"
             }
         ],
         "open_saas": false,

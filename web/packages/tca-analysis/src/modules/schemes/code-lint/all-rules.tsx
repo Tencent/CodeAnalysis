@@ -129,6 +129,19 @@ const AllRules = () => {
     });
   };
 
+  /**
+   * 一键添加指定工具所有规则
+   * @param toolId
+   */
+  const addToolsRules = (toolId: number) => {
+    addRule(orgSid, teamName, repoId, schemeId, {
+      checktool: toolId,
+    }).then(() => {
+      message.success('批量添加成功');
+      getListData(pageStart, pageSize);
+    });
+  };
+
   const openRuleDetail = async (ruleId: number) => {
     setRuleDetailVsb(true);
     const res = await getRuleDetail(orgSid, teamName, repoId, schemeId, ruleId);
@@ -163,6 +176,7 @@ const AllRules = () => {
         }}
         searchParams={cloneDeep(searchParams)}
         loading={loading}
+        addToolsRules={addToolsRules}
         callback={(params: any) => {
           getListData(DEFAULT_PAGER.pageStart, pageSize, params);
         }}
@@ -212,7 +226,7 @@ const AllRules = () => {
           <Column title="规则概要" dataIndex="rule_title" />
           <Column title="所属工具" dataIndex={['checktool', 'display_name']} />
           <Column title="分类" dataIndex="category_name" />
-          <Column title="问题级别" dataIndex="severity_name" />
+          <Column title="问题级别" dataIndex="severity_name" width={80}/>
         </Table>
       </div>
       <RuleDetail
