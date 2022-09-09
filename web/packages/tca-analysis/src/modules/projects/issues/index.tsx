@@ -360,9 +360,17 @@ const Issues = (props: IssuesProps) => {
             sorter
             sortOrder={sort.key === 'checkrule_real_name' ? sort.order : undefined}
             render={(name: any, item: any) => (
-              <Tooltip title={item.msg}>
-                <span>{name}</span>
-              </Tooltip>
+              <>
+              <p>{name}</p>
+              {
+                item.msg && item.msg?.length > 120
+                  ? (
+                    <Tooltip title={item.msg}>
+                      <p className={style.path}>错误信息：{item?.msg?.substring(0, 120)}...</p>
+                    </Tooltip>
+                  ) : <p className={style.path}>错误信息：{item.msg}</p>
+              }
+            </>
             )}
           />
           <Column

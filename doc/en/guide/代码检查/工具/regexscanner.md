@@ -69,9 +69,15 @@ TCA独立工具TCA-Armory-R，别名RegexScanner，正则匹配工具，支持�
 
 - (5) [可选] `file_scan` 参数，用于指定是否扫描文件名称，可选值：True、true、False、false 。例如: `file_scan=True`, 默认是False
 
-- (6) [可选] `include` 参数，用于指定扫描文件匹配范围，基于相对路径，使用正则匹配格式，多项使用英文分号（;）隔开。例如: `include=path/to/dir;path/to/.*\\.cpp`
+- (6) [可选] `include` 参数，用于指定只扫描的文件匹配范围，基于相对路径，使用通配符格式，多项使用英文分号（;）隔开。例如: `include=src/test;src/main.*;*.cpp`
 
-- (7) [可选] `exclude` 参数，用于指定不扫描的文件匹配范围。格式参考include参数。
+- (7) [可选] `exclude` 参数，用于指定不扫描的文件匹配范围，格式同include参数，例如: `exclude=tests;*.json`
+
+  > 路径过滤（`exclude`, `include`）采用Glob-Style的匹配模式，详见 [Go-filepath-Match](https://pkg.go.dev/path/filepath#Match)， 除了 `**` 用来匹配零或多个目录，本工具会**默认匹配前后目录**。举例: 
+  > > 1. `exclude=*.py` 会忽略以下文件: main.py, src/main.py, main.py/install.sh
+  > > 2. `exclude=tests` 会忽略以下文件: tests/test.py, a/tests/b/test.py
+  > > 3. `include=main.*` 会只扫描以下文件: src/main.py, app/main.go
+  > > 4. `include=src`且`exclude=src/lib` 会只扫描以下文件: src/main.py, src/project/proj.py; 忽略以下文件: src/lib/lib.py, src/lib/package/pack.js
 
 ### 4. 将自定义规则添加到项目分析方案中
 进入 代码分析 - 分析方案 - 代码检查 - 自定义规则包 - 查看详细规则，添加规则。

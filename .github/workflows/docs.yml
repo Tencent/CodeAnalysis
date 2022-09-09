@@ -24,11 +24,11 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@v3
 
-      - name: Setup Node 14
+      - name: Setup Node 16
         uses: actions/setup-node@v3
         with:
           # 选择要使用的 node 版本
-          node-version: "14"
+          node-version: "16"
           cache: "yarn"
           cache-dependency-path: "doc/yarn.lock"
 
@@ -39,8 +39,8 @@ jobs:
         with:
           path: doc/node_modules
           key: ${{ runner.os }}-yarn-${{ hashFiles('doc/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
+          # restore-keys: |
+          #   ${{ runner.os }}-yarn-
 
       # 如果缓存没有命中，安装依赖
       - if: ${{ steps.yarn-cache.outputs.cache-hit == false }}

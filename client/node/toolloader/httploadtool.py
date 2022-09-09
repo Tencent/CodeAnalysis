@@ -14,7 +14,8 @@ import os
 from util.logutil import LogPrinter
 from util.api.fileserver import RetryFileServer
 from util.exceptions import FileServerError
-from util.ziplib import ZipMgr
+from util.pathlib import PathMgr
+from util.zipmgr import Zip
 
 
 class HttpToolLoader(object):
@@ -37,8 +38,10 @@ class HttpToolLoader(object):
 
         if os.path.exists(dest_zip_file_path):
             LogPrinter.debug(f"download {tool_url} to {dest_zip_file_path}")
-            ZipMgr.depress(dest_zip_file_path, tool_root_dir)
+            # 使用7z解压
+            Zip().decompress_by_7z(dest_zip_file_path, tool_root_dir)
             LogPrinter.debug(f"unzip {dest_zip_file_path} to {dest_dir}")
+            PathMgr().safe_rmpath(dest_zip_file_path)
         else:
             raise FileServerError(f"download {tool_url} failed!")
 
