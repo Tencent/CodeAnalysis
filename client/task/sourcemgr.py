@@ -262,12 +262,6 @@ class SourceDirLoader(object):
             self.enable_lfs = True
 
     def load_source_dir(self):
-        """
-        1. 普通项目，正常拉代码正常使用缓存
-        2. 本地项目，传入本地代码路径
-        3. qci项目，传入本地项目，coverity等工具需要scm.clean
-        4. 本地项目，传项目ID的情况，没有传sourecedir，也是要拉代码的
-        """
         logger.info("start __checkout_source_dir.")
         if self.params["task_scene"] == TaskScene.LOCAL:
             if "source_dir" in self.params:
