@@ -1,0 +1,53 @@
+[
+    {
+        "name": "【NodeJs】强化安全规则包",
+        "description": "针对Nodejs express的安全规则",
+        "revision": null,
+        "package_type": "official",
+        "languages": [
+            "js"
+        ],
+        "labels": [
+            "安全"
+        ],
+        "checkrule_set": [
+            {
+                "checktool": "tca_ql_js",
+                "checkrule": "express_codeinject",
+                "severity": "fatal",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "tca_ql_js",
+                "checkrule": "express_pathtraversal",
+                "severity": "fatal",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "tca_ql_js",
+                "checkrule": "express_urlrender",
+                "severity": "fatal",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "tca_ql_js",
+                "checkrule": "express_xss",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "tca_ql_js",
+                "checkrule": "express_xxe",
+                "severity": "fatal",
+                "rule_params": null,
+                "state": "enabled"
+            }
+        ],
+        "open_saas": false,
+        "envs": null
+    }
+]
