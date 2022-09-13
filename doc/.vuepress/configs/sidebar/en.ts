@@ -28,6 +28,7 @@ export const en: SidebarConfig = {
             '/en/guide/代码检查/工具/eslint.md',
             '/en/guide/代码检查/工具/golangcilint.md',
             '/eh/guide/代码检查/工具/TCA-Armory-R.md',
+            '/eh/guide/代码检查/工具/TCA-Armory-C1.md',
           ],
         },
       ]

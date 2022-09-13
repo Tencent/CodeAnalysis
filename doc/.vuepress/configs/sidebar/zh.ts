@@ -28,6 +28,7 @@ export const zh: SidebarConfig = {
             '/zh/guide/代码检查/工具/eslint.md',
             '/zh/guide/代码检查/工具/golangcilint.md',
             '/zh/guide/代码检查/工具/TCA-Armory-R.md',
+            '/zh/guide/代码检查/工具/TCA-Armory-C1.md',
           ],
         },
       ]
