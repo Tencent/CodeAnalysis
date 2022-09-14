@@ -5,6 +5,7 @@
 // ==============================================================================
 
 package io.jenkins.plugins;
+
 import edu.umd.cs.findbugs.annotations.NonNull;
 import hudson.EnvVars;
 import hudson.Extension;
@@ -18,11 +19,16 @@ import hudson.tasks.Builder;
 import hudson.util.FormValidation;
 import jenkins.tasks.SimpleBuildStep;
 import org.apache.commons.lang.StringUtils;
+import org.json.JSONObject;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.DataBoundSetter;
 import org.kohsuke.stapler.QueryParameter;
+
 import javax.servlet.ServletException;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Objects;
 import java.util.Properties;
 
 public class TCABuilder extends Builder implements SimpleBuildStep {
@@ -40,6 +46,8 @@ public class TCABuilder extends Builder implements SimpleBuildStep {
     private final String refSchemeID;
     private final String scanPlan;
 
+    private final String  threshold;
+
     @DataBoundConstructor
     public TCABuilder(String codeAnalysisPath,
                       String token,
@@ -48,7 +56,8 @@ public class TCABuilder extends Builder implements SimpleBuildStep {
                       String teamId,
                       String projectName,
                       String refSchemeID,
-                      String scanPlan) {
+                      String scanPlan,
+                      String threshold) {
         this.codeAnalysisPath = codeAnalysisPath;
         this.token = token;
         this.branchName = branchName;
@@ -57,6 +66,7 @@ public class TCABuilder extends Builder implements SimpleBuildStep {
         this.projectName = projectName;
         this.refSchemeID = refSchemeID;
         this.scanPlan = scanPlan;
+        this.threshold = threshold;
     }
     public String getCodeAnalysisPath() {
         return codeAnalysisPath;
@@ -99,9 +109,11 @@ public class TCABuilder extends Builder implements SimpleBuildStep {
         this.total = total;
     }
 
+    public String getThreshold() { return threshold; }
+
     @Override
     public void perform(@NonNull Run<?, ?> run, @NonNull FilePath workspace, @NonNull EnvVars env,
-                        @NonNull Launcher launcher, @NonNull TaskListener listener) {
+                        @NonNull Launcher launcher, @NonNull TaskListener listener) throws IOException {
         try {
             Properties props = System.getProperties();
             String[] osNameArray = props.getProperty("os.name").split(" ");
@@ -167,12 +179,53 @@ public class TCABuilder extends Builder implements SimpleBuildStep {
                                 branch,
                                 language,
                                 isTotal,
-                constant_refSchemeID,
-                constant_scanPlan,
+                                constant_refSchemeID,
+                                constant_scanPlan,
                                 listener,
                                 env);
         String fileName = clientPath + "/scan_status.json";
         String jsonStr = ReadJsonFile.readJsonFile(fileName);
+
+        // 如果设置了质量门禁，判断结果是否符合
+        if (StringUtils.isNotBlank(threshold)){
+            String tca_status = "success";
+            assert jsonStr != null;
+            JSONObject jsonObj = new JSONObject(jsonStr);
+            String status = jsonObj.getString("status");
+            if(Objects.equals(status, "success")){
+                JSONObject scan_report = jsonObj.getJSONObject("scan_report");
+                JSONObject lintscan = scan_report.getJSONObject("lintscan");
+                JSONObject total = lintscan.getJSONObject("total");
+                JSONObject state_detail = total.getJSONObject("state_detail");
+                int total_active_issues = state_detail.getInt("active");
+                if (total_active_issues > Integer.parseInt(threshold)){
+                    tca_status = "failure";
+                    jsonObj.put("status", tca_status);
+                    int error_code = 255;
+                    jsonObj.put("error_code", error_code);
+                    String msg = "扫描不通过! 问题量: " + total_active_issues + " , 超过质量门禁限制(" + threshold + ")";
+                    jsonObj.put("text", msg);
+                    jsonStr = jsonObj.toString(2);
+                    listener.getLogger().println("质量红线: " + msg);
+                }else{
+                    String msg = "扫描通过! 问题量: " + total_active_issues + " , 满足质量门禁限制(" + threshold + ")";
+                    jsonObj.put("text", msg);
+                    jsonStr = jsonObj.toString(2);
+                    listener.getLogger().println("质量红线: " + msg);
+                }
+            }
+            // 将门禁结果状态（success|failure）写入到工作空间目录下的txt文件中，方便后续步骤进行门禁判断
+            try {
+                String filepath = localCodePath + "/tca_threshold.txt";
+                BufferedWriter out = new BufferedWriter(new FileWriter(filepath));
+                out.write(tca_status);
+                out.close();
+                listener.getLogger().println("质量门禁结果已写入文件: " + filepath);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
         run.addAction(new ViewReportAction(jsonStr));
     }
 
@@ -241,10 +294,18 @@ public class TCABuilder extends Builder implements SimpleBuildStep {
             return FormValidation.ok();
         }
 
+        public FormValidation doCheckThreshold(@QueryParameter String value) throws IOException, ServletException {
+            if (StringUtils.isBlank(value)){
+                return FormValidation.warning("选填，质量门禁，填一个整数，问题量大于该值时，结果状态设置为失败，可在后续增加判断步骤终止流水线");
+            }
+            return FormValidation.ok();
+        }
+
         @Override
         public String getDisplayName() {
             return "TCA";
         }
+
         @Override
         public boolean isApplicable(Class<? extends AbstractProject> aClass) {
             return true;
