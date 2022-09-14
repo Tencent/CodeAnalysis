@@ -2,7 +2,7 @@
     {
         "name": "regexscanner",
         "display_name": "TCA-Armory-R",
-        "description": "正则匹配工具，支持go正则表达式(https://pkg.go.dev/regexp/syntax)\n支持自定义添加新规则：新建规则 - 填写正则表达式等规则参数 - 创建成功，即可在项目分析方案中选择规则来扫描。",
+        "description": "正则匹配工具，支持go正则表达式(https://pkg.go.dev/regexp/syntax)\n支持自定义添加新规则：新建规则 - 填写正则表达式等规则参数 - 创建成功，即可在项目分析方案中选择规则来扫描。详见: https://tencent.github.io/CodeAnalysis/zh/guide/代码检查/工具/TCA-Armory-R.html ",
         "license": "自研",
         "libscheme_set": [],
         "task_processes": [
