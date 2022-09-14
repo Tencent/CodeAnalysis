@@ -36,7 +36,7 @@ services:
   main-server:
     env_file:
       - ./server/dockerconfs/.env.local
-    image: tca-main:latest
+    image: tencenttca/tca-main:latest
     build:
       context: ./server/projects/main
       dockerfile: ../../dockerconfs/Dockerfile-common-${ORIGIN:-mirror}
@@ -59,7 +59,7 @@ services:
   main-worker:
     env_file:
       - ./server/dockerconfs/.env.local
-    image: tca-main:latest
+    image: tencenttca/tca-main:latest
     command:
       [
         "celery",
@@ -80,7 +80,7 @@ services:
   main-beat:
     env_file:
       - ./server/dockerconfs/.env.local
-    image: tca-main:latest
+    image: tencenttca/tca-main:latest
     command:
       [
         "celery",
@@ -102,7 +102,7 @@ services:
   analysis-server:
     env_file:
       - ./server/dockerconfs/.env.local
-    image: tca-analysis:latest
+    image: tencenttca/tca-analysis:latest
     build:
       context: ./server/projects/analysis
       dockerfile: ../../dockerconfs/Dockerfile-common-${ORIGIN:-mirror}
@@ -125,7 +125,7 @@ services:
   analysis-worker:
     env_file:
       - ./server/dockerconfs/.env.local
-    image: tca-analysis:latest
+    image: tencenttca/tca-analysis:latest
     command:
       [
         "celery",
@@ -149,6 +149,7 @@ services:
     build:
       context: ./server/projects/login
       dockerfile: ../../dockerconfs/Dockerfile-common-${ORIGIN:-mirror}
+    image: tencenttca/tca-login:latest
     command:
       [
         "gunicorn",
@@ -170,6 +171,7 @@ services:
     build:
       context: ./server/projects/file
       dockerfile: ../../dockerconfs/Dockerfile-common-${ORIGIN:-mirror}
+    image: tencenttca/tca-file:latest
     command:
       [
         "gunicorn",
@@ -202,6 +204,7 @@ services:
     build:
       context: ./server/projects/scmproxy
       dockerfile: ../../dockerconfs/Dockerfile-common-${ORIGIN:-mirror}
+    image: tencenttca/tca-scmproxy:latest
     command: [ "python", "proxyserver.py" ]
     volumes:
       - ./.docker_data/logs/scmproxy:/var/www/django/codedog/logs
@@ -233,6 +236,7 @@ services:
     build:
       context: ./client
       dockerfile: Dockerfile
+    image: tencenttca/tca-client:latest
     command: 
       - /bin/bash
       - -c
