@@ -109,7 +109,7 @@ class IToolModel(object):
         '''
         用于设置该工具使用增量资源的缓存目录
         默认只增量缓存'source_dir'
-        coverity会需要缓存'source_dir','work_dir'
+        部分工具会需要缓存'source_dir','work_dir'
         :return: 需要缓存的目录名
         '''
         return ['source_dir']  # 考虑试用setting里面的字段
@@ -118,7 +118,7 @@ class IToolModel(object):
         '''
         用于设置增量资源的类型，当不同工具需要使用同一个增量资源时直接默认使用Normal
         例如androidlint与findbugs可以复用
-        coverity会需要单独使用一个增量资源，因此单独创建一个类型出来
+        部分工具会需要单独使用一个增量资源，因此单独创建一个类型出来
         :return: 增量资源类型，一般直接使用工具名即可
         '''
         return 'normal'
@@ -156,7 +156,7 @@ class IToolModel(object):
     def set_mid_source_path_list(self):
         '''
         区别于增量资源的管理，编译与分析task之间的数据传递也需要控制
-        例如：coverity编译后传递的是idir中的中间文件，但不排除某些工具需要编译过后的项目代码文件
+        例如：编译后传递的是idir中的中间文件，但不排除某些工具需要编译过后的项目代码文件
         因此这里暂时默认将workdir作为需要传递的中间文件
         :return:
         '''
@@ -173,7 +173,7 @@ class IToolModel(object):
     def set_tool_skip_condition(self, params):
         '''
         用于实现判断条件，跳过本次工具扫描。
-        适用场景：例如当coverity扫描前，判断项目变更内容中无代码文件
+        适用场景：例如当工具扫描前，判断项目变更内容中无代码文件
         :return:
         '''
         return False
@@ -196,9 +196,6 @@ class IToolModel(object):
     def check_tool_usable(self, tool_params):
         '''
         检查工具是否可以用，具体检查内容：
-        1. 工具执行所需哪些环节
-        2. 各环节中对环境变量的依赖与本地工具的依赖
-        3. 工具执行的必要条件，如coverity执行分析需要license文件
         注意：此部分只检查compile与analyze等工具所属的步骤，datahandle不属于此部分
         :return:支持该工具的task类型数组，若不支持返回空数组
         '''
