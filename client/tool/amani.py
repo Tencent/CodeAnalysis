@@ -37,10 +37,10 @@ class Amani(CodeLintModel):
         return issues
 
     def check_tool_usable(self, tool_params):
-        cmds = Tool().get_cmd(["--version"])
         if settings.PLATFORMS[sys.platform] == "mac":
             return []
-        elif SubProcController(cmds).wait() != 0:
+        cmds = Tool().get_cmd(["--version"])
+        if SubProcController(cmds).wait() != 0:
             return []
         return ["analyze"]
 
