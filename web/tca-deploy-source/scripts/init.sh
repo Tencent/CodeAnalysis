@@ -118,15 +118,6 @@ function log_env() {
   LOG_INFO "========================end 前端配置说明 end========================"
 }
 
-# 校验是否存在unzip命令
-function check_unzip_command() {
-  if command_exists unzip; then
-    return 0
-  else
-    return 1
-  fi
-}
-
 # 清理资源文件
 function clear_assets() {
   LOG_WARN "将路径下的资源文件和前端nginx配置备份到 ${WEB_DEPLOY_PATH}_bak 下..."
@@ -220,7 +211,8 @@ function init_web_nginx() {
     "$ROOT_PATH"/nginx/ingress.conf >"$NGINX_CONF_PATH"/tca_ingress.conf
 }
 
-check_unzip_command || error_exit "unzip command not installed"
+# 校验是否存在unzip命令
+command_exists unzip || error_exit "unzip command not installed"
 clear_assets
 init_unzip_build
 init_framework_web

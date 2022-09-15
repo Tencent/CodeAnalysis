@@ -26,15 +26,6 @@ MICRO_FRONTEND_DOCUMENT="tca-document"
 # 子微前端
 MICRO_FRONTEND_APPS="login tca-layout tca-analysis tca-manage"
 
-# 校验是否存在unzip命令
-function check_unzip_command() {
-  if command_exists unzip; then
-    return 0
-  else
-    return 1
-  fi
-}
-
 # 清理资源文件
 function clear_assets() {
   LOG_WARN "将路径下的资源文件和前端nginx配置备份到 ${TCA_WEB_DEPLOY_PATH}_bak 下..."
@@ -142,7 +133,8 @@ function log_env() {
 }
 
 function init_web_config() {
-  check_unzip_command || error_exit "unzip command not installed"
+  # 校验是否存在unzip命令
+  command_exists unzip || error_exit "unzip command not installed"
   clear_assets
   init_unzip_build
   init_framework_web
