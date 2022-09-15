@@ -57,10 +57,48 @@ INGRESS_PORT=${INGRESS_PORT:-80}
 # 微前端静态资源存放位置
 WEB_DEPLOY_PATH=${WEB_DEPLOY_PATH:-"/usr/share/nginx/www"}
 # nginx 配置地址，默认/etc/nginx/conf.d
-NGINX_CONF_PATH=${NGINX_CONF_PATH:-"/etc/nginx/conf.d"}
+export NGINX_CONF_PATH=${NGINX_CONF_PATH:-"/etc/nginx/conf.d"}
 # nginx 日志文件地址，默认/var/log/nginx
-NGINX_LOG_PATH=${NGINX_LOG_PATH:-"/var/log/nginx"}
+export NGINX_LOG_PATH=${NGINX_LOG_PATH:-"/var/log/nginx"}
 
+# 启动nginx
+function start_nginx() {
+  LOG_INFO "启动 nginx ..."
+  # wc -l 行数计算。当nginx无进程时，启动nginx，否则reload nginx
+  nginx_is_start=$(ps -C nginx --no-header | wc -l)
+  if [ "$nginx_is_start" -eq 0 ]; then
+    nginx -t || error_exit "nginx test failed"
+    if [ "$IS_DOCKER" == "TRUE" ]; then
+      nginx -g "daemon off;"
+    else
+      nginx
+    fi
+  else
+    nginx -s reload
+  fi
+}
+
+# ============== start 使用scripts/web/init.sh ==============
+# # Web配置
+# export TCA_WEB_HOST=$INGRESS_SERVER_NAME
+# export TCA_WEB_PORT=$INGRESS_PORT
+# export TCA_SERVER_ADDR=$SERVER_ENV
+# export TCA_WEB_DEPLOY_PATH=$WEB_DEPLOY_PATH
+
+# TCA_SCRIPT_ROOT=$(
+#   cd "$(dirname "${CURRENT_PATH}")"
+#   cd ../../
+#   cd scripts
+#   pwd
+# )
+# # shellcheck disable=SC1091
+# source "$TCA_SCRIPT_ROOT"/web/init.sh
+# LOG_INFO "Init tca web config"
+# init_web_config
+# start_nginx
+# ============== end 使用scripts/web/init.sh ==============
+
+# ============== start 原有逻辑 ==============
 # 微前端基座
 MICRO_FRONTEND_FRAMEWORK="framework"
 # 微前端帮助文档
@@ -71,30 +109,34 @@ MICRO_FRONTEND_APPS="login tca-layout tca-analysis tca-manage"
 # 打印环境变量配置
 function log_env() {
   LOG_INFO "============================前端配置说明============================"
+  LOG_INFO "| 前端服务SERVER_NAME: TCA_WEB_HOST --- $INGRESS_SERVER_NAME"
+  LOG_INFO "| 前端服务端口: TCA_WEB_PORT --- $INGRESS_PORT"
   LOG_INFO "| 前端服务访问的后端地址: SERVER_ENV --- $SERVER_ENV"
-  LOG_INFO "| 前端服务端口: INGRESS_PORT --- $INGRESS_PORT"
-  LOG_INFO "| 前端服务SERVER_NAME: INGRESS_SERVER_NAME --- $INGRESS_SERVER_NAME"
-  LOG_WARN "| 注意: 前端服务SERVER_NAME默认通过命令 curl ifconfig.me 获取，用户可自行根据需要在config配置中进行调整"
   LOG_INFO "| 前端服务NGINX配置地址: NGINX_CONF_PATH --- $NGINX_CONF_PATH"
   LOG_INFO "| 前端服务资源部署地址: WEB_DEPLOY_PATH --- $WEB_DEPLOY_PATH"
   LOG_INFO "| 前端服务日志地址: NGINX_LOG_PATH --- $NGINX_LOG_PATH"
   LOG_INFO "========================end 前端配置说明 end========================"
 }
 
-# 由于原来各个微前端采用了不同的nginx conf，后为简化开源版前端部署已重新调整配置，为兼容旧版此处默认使用清楚逻辑
-function clear_old_nginx_conf() {
-  # 清除各个应用的nginx conf文件
-  MICRO_FRONTEND="$MICRO_FRONTEND_FRAMEWORK $MICRO_FRONTEND_APPS $MICRO_FRONTEND_DOCUMENT"
-  for app in $MICRO_FRONTEND; do
-    rm -f "$NGINX_CONF_PATH"/"$app".conf
-  done
+# 校验是否存在unzip命令
+function check_unzip_command() {
+  if command_exists unzip; then
+    return 0
+  else
+    return 1
+  fi
 }
 
 # 清理资源文件
 function clear_assets() {
   LOG_WARN "将路径下的资源文件和前端nginx配置备份到 ${WEB_DEPLOY_PATH}_bak 下..."
-  cp -r "$WEB_DEPLOY_PATH"/ "${WEB_DEPLOY_PATH}"_bak/
-  cp -r "$NGINX_CONF_PATH"/tca_ingress.conf "${WEB_DEPLOY_PATH}"_bak/
+  if [ -d "$WEB_DEPLOY_PATH" ]; then
+    cp -r "$WEB_DEPLOY_PATH"/ "${WEB_DEPLOY_PATH}"_bak/
+  fi
+  if [ -d "$NGINX_CONF_PATH/tca_ingress.conf" ]; then
+    cp -r "$NGINX_CONF_PATH"/tca_ingress.conf "${WEB_DEPLOY_PATH}"_bak/
+  fi
+
   LOG_INFO "开始清理路径下的资源文件 $WEB_DEPLOY_PATH ..."
   rm -rf "${WEB_DEPLOY_PATH:?}"/
   LOG_INFO "开始清理前端nginx配置 ..."
@@ -178,27 +220,11 @@ function init_web_nginx() {
     "$ROOT_PATH"/nginx/ingress.conf >"$NGINX_CONF_PATH"/tca_ingress.conf
 }
 
-# 启动nginx
-function start() {
-  LOG_INFO "启动 nginx ..."
-  # wc -l 行数计算。当nginx无进程时，启动nginx，否则reload nginx
-  nginx_is_start=$(ps -C nginx --no-header | wc -l)
-  if [ "$nginx_is_start" -eq 0 ]; then
-    nginx -t
-    if [ "$IS_DOCKER" == "TRUE" ]; then
-      nginx -g "daemon off;"
-    else
-      nginx
-    fi
-  else
-    nginx -s reload
-  fi
-}
-
-log_env
-clear_old_nginx_conf
+check_unzip_command || error_exit "unzip command not installed"
 clear_assets
 init_unzip_build
 init_framework_web
 init_web_nginx
-start
+log_env
+start_nginx
+# ============== end 原有逻辑 ==============
