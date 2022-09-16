@@ -134,7 +134,7 @@ export const ToolLibs = () => {
         <Column
           title='依赖系统'
           dataIndex='lib_os'
-          render={(os: string) => os.split(';').map((item: string) => (
+          render={(os: string) => os?.split(';').map((item: string) => (
             <Tag key={item}>{get(LIB_ENV, item, item)}</Tag>
           ))}
         />
