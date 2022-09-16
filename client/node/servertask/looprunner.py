@@ -40,7 +40,9 @@ class LoopRunner(TaskRunner):
         TaskRunner.__init__(self)
 
         self._token = args.token
+        self._tag = args.tag
         self._org_sid = args.org_sid
+        self._create_from = args.create_from
         self._server_url = LocalConfig.get_server_url()
         # 打印连接的sever地址
         LogPrinter.info("using server: %s" % self._server_url)
@@ -140,7 +142,7 @@ class LoopRunner(TaskRunner):
     def run(self):
         """looprunner主函数"""
         # 向server注册节点
-        NodeMgr().register_node(self._server, self._org_sid)
+        NodeMgr().register_node(self._server, self._tag, self._org_sid, self._create_from)
 
         # 启动心跳上报线程
         HeartBeat(self._server).start()
