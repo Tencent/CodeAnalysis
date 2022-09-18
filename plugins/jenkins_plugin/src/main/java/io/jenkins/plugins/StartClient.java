@@ -53,6 +53,8 @@ public class StartClient {
                     + constant_scanPlan
                     + isTotal;
 
+            listener.getLogger().println("run command: " + startCommand);
+
             Process p = Runtime.getRuntime().exec(
                     startCommand,
                     new String[]{"PATH=" + env.get("PATH")},
