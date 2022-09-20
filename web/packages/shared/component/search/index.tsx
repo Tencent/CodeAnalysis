@@ -103,6 +103,7 @@ const Search = ({
     Object.keys(searchParams).forEach((key) => {
       params[key] = '';
     });
+    form.setFieldsValue(params);
     onRouteHandle(params);
     callback?.(params);
   };

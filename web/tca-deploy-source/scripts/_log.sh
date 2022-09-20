@@ -14,3 +14,12 @@ function LOG_WARN() {
 function LOG_ERROR() {
   echo -e "\033[31m >>> $*\033[0;39m"
 }
+
+function error_exit() {
+  LOG_ERROR "$1" 1>&2
+  exit 1
+}
+
+function command_exists() {
+  command -v "$@" >/dev/null 2>&1
+}

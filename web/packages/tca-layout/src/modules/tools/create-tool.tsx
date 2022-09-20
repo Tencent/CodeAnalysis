@@ -93,7 +93,7 @@ const CreateToolModal = ({ orgId, visible, onClose }: CreateToolModalProps) => {
         >
           <Input.Group compact>
             <Form.Item name='scm_type' noStyle>
-              <Select style={{ width: '15%' }} options={REPO_TYPE_OPTIONS} />
+              <Select style={{ width: '16%' }} options={REPO_TYPE_OPTIONS} />
             </Form.Item>
             <Form.Item
               name='scm_url'
@@ -102,7 +102,7 @@ const CreateToolModal = ({ orgId, visible, onClose }: CreateToolModalProps) => {
                 { required: true, message: t('请输入工具仓库地址') },
               ]}
             >
-              <Input style={{ width: '85%' }} />
+              <Input style={{ width: '84%' }} />
             </Form.Item>
           </Input.Group>
         </Form.Item>
