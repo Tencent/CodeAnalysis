@@ -95,8 +95,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   protected void configure(HttpSecurity http) throws Exception {
     http
       .csrf(csrf ->
-        // 触发规则
-        csrf.disable() 
+        csrf.disable() // 触发规则
       );
   }
 }
@@ -124,7 +123,7 @@ void bad(HttpServletRequest req, HttpServletResponse resp){
         String disHeader = "Attachment;Filename=" + doc.getName();
         response.setHeader("Content-Disposition", disHeader);
         ServletOutputStream out = response.getOutputStream();
-        out.print(b);
+        out.print(b); // 触发规则
     }
 }
 ```
