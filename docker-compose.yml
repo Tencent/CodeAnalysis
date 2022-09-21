@@ -73,6 +73,10 @@ services:
     volumes:
       - ./server/configs/django/local_main.py:/var/www/django/codedog/codedog/settings/local.py
       - ./.docker_data/logs/main_worker:/var/www/django/codedog/log
+    healthcheck:
+        test: ["CMD-SHELL", "bash bin/healthy_check.sh"]
+        interval: 60s
+    restart: always
     depends_on:
       - mysql
       - redis
@@ -98,6 +102,7 @@ services:
     depends_on:
       - mysql
       - redis
+    restart: on-failure
 
   analysis-server:
     env_file:
@@ -139,6 +144,9 @@ services:
     volumes:
       - ./server/configs/django/local_analysis.py:/var/www/django/codedog/codedog/settings/local.py
       - ./.docker_data/logs/analysis_worker:/var/www/django/codedog/log
+    healthcheck:
+      test: ["CMD-SHELL", "bash bin/healthy_check.sh"]
+      interval: 60s
     depends_on:
       - mysql
       - redis
