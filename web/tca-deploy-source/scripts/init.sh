@@ -65,7 +65,7 @@ export NGINX_LOG_PATH=${NGINX_LOG_PATH:-"/var/log/nginx"}
 function start_nginx() {
   LOG_INFO "启动 nginx ..."
   # wc -l 行数计算。当nginx无进程时，启动nginx，否则reload nginx
-  nginx_is_start=$(ps -C nginx --no-header | wc -l)
+  nginx_is_start=$(ps -C nginx --no-header | wc -l || true)
   if [ "$nginx_is_start" -eq 0 ]; then
     nginx -t || error_exit "nginx test failed"
     if [ "$IS_DOCKER" == "TRUE" ]; then
