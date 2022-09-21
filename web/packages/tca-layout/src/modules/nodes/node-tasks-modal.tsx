@@ -100,6 +100,11 @@ const NodeTaskModal = ({ visible, nodeId, onCancel }: NodeTaskModalProps) => {
           title={t('子任务')}
           dataIndex="task_name"
           width={100}
+          render={(taskName: string) => (
+            <EllipsisTemplate maxWidth={100}>
+              {taskName}
+            </EllipsisTemplate>
+          )}
         />
         <Column
           title={t('执行状态')}

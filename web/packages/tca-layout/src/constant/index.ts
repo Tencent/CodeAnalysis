@@ -20,7 +20,8 @@ export const DEFAULT_TEAM_PAGER = {
 
 export enum RepoTypeEnum {
   GIT = 'git',
-  SVN = 'svn'
+  SVN = 'svn',
+  ZIP = 'link'
 }
 
 export const REPO_TYPE_CHOICES = {
@@ -29,3 +30,11 @@ export const REPO_TYPE_CHOICES = {
 };
 
 export const REPO_TYPE_OPTIONS = generateOptions(REPO_TYPE_CHOICES);
+
+export const TOOLLIB_REPO_TYPE_CHOICES = {
+  [RepoTypeEnum.GIT]: 'GIT',
+  [RepoTypeEnum.SVN]: 'SVN',
+  [RepoTypeEnum.ZIP]: 'ZIP',
+};
+
+export const TOOLLIB_REPO_TYPE_OPTIONS = generateOptions(TOOLLIB_REPO_TYPE_CHOICES);

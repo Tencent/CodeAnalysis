@@ -4,6 +4,23 @@
       "display_name": "SQLCheck",
       "description": "Automatically identify anti-patterns in SQL queries.",
       "license": "Apache2.0",
+      "libscheme_set": [
+        {
+            "condition": null,
+            "tool_libs": [
+                {
+                    "name": "LINUX_GCC_5_4",
+                    "source": "system"
+                },
+                {
+                    "name": "LINUX_PYTHON37",
+                    "source": "system"
+                }
+            ],
+            "scheme_os": "linux",
+            "default_flag": true
+        }
+    ],
       "task_processes": [
         "analyze",
         "datahandle"

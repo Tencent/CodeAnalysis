@@ -1,0 +1,10 @@
+{
+  "name": "LINUX_GCC_5_4",
+  "scm_url": "https://git.code.tencent.com/TCA/tca-tools/linux-gcc-v5.4.0.git",
+  "scm_type": "git",
+  "envs": {
+    "LD_LIBRARY_PATH": "$ROOT_DIR/lib64;$LD_LIBRARY_PATH"
+  },
+  "lib_os": "linux",
+  "lib_type": "public"
+}

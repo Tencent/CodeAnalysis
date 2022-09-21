@@ -1,0 +1,10 @@
+{
+  "name": "LINUX_GCC_5_4",
+  "scm_url": "https://github.com/TCATools/linux-gcc-v5.4.0/releases/download/v20220906.1/gcc-v5.4.0.zip",
+  "scm_type": "link",
+  "envs": {
+    "LD_LIBRARY_PATH": "$ROOT_DIR/lib64;$LD_LIBRARY_PATH"
+  },
+  "lib_os": "linux",
+  "lib_type": "public"
+}
