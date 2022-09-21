@@ -7,7 +7,7 @@
 支持的语言：Java
 
 CmdInject 规则用于检查代码中是否存在[`命令行注入漏洞`](https://owasp.org/www-community/attacks/Command_Injection)。
-当使用childprocess等模块执行命令时，拼接了用户可控的输入，会导致命令执行漏洞。攻击者利用漏洞可以控制目标主机或者容器。
+当使用 childprocess 等模块执行命令时，拼接了用户可控的输入，会导致命令执行漏洞。攻击者利用漏洞可以控制目标主机或者容器。
 
 ### 示例
 ```java
@@ -19,7 +19,7 @@ void bad(HttpServletRequest req, HttpServletResponse resp){
 ```
 
 ### 修复建议
-需要评估childprocess等模块执行命令的使用，应限定或校验命令和参数的内容。
+需要评估 childprocess 等模块执行命令的使用，应限定或校验命令和参数的内容。
 
 ## PathTraversal
 
@@ -71,7 +71,7 @@ void bad(HttpServletRequest req, HttpServletResponse resp){
 ```
 
 ### 修复建议
-SQL语句默认使用预编译并绑定变量，使用安全的ORM操作。
+SQL 语句默认使用预编译并绑定变量，使用安全的ORM操作。
 
 ## SSRF
 
