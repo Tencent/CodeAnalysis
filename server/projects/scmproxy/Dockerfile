@@ -1,6 +1,4 @@
 FROM python:3.7.12-slim
-# For ARM
-# FROM arm64v8/python:3.7.12-slim
 
 RUN mv /etc/apt/sources.list /etc/apt/sources.list.bak && \
     echo 'deb http://mirrors.tencent.com/debian/ bullseye main non-free contrib' > /etc/apt/sources.list && \
