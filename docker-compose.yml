@@ -36,7 +36,7 @@ services:
   main-server:
     env_file:
       - ./server/dockerconfs/.env.local
-    image: tca-main:latest
+    image: tencenttca/tca-main:latest
     build:
       context: ./server/projects/main
       dockerfile: ../../dockerconfs/Dockerfile-common-${ORIGIN:-mirror}
@@ -59,7 +59,7 @@ services:
   main-worker:
     env_file:
       - ./server/dockerconfs/.env.local
-    image: tca-main:latest
+    image: tencenttca/tca-main:latest
     command:
       [
         "celery",
@@ -73,6 +73,10 @@ services:
     volumes:
       - ./server/configs/django/local_main.py:/var/www/django/codedog/codedog/settings/local.py
       - ./.docker_data/logs/main_worker:/var/www/django/codedog/log
+    healthcheck:
+        test: ["CMD-SHELL", "bash bin/healthy_check.sh"]
+        interval: 60s
+    restart: always
     depends_on:
       - mysql
       - redis
@@ -80,7 +84,7 @@ services:
   main-beat:
     env_file:
       - ./server/dockerconfs/.env.local
-    image: tca-main:latest
+    image: tencenttca/tca-main:latest
     command:
       [
         "celery",
@@ -98,11 +102,12 @@ services:
     depends_on:
       - mysql
       - redis
+    restart: on-failure
 
   analysis-server:
     env_file:
       - ./server/dockerconfs/.env.local
-    image: tca-analysis:latest
+    image: tencenttca/tca-analysis:latest
     build:
       context: ./server/projects/analysis
       dockerfile: ../../dockerconfs/Dockerfile-common-${ORIGIN:-mirror}
@@ -125,7 +130,7 @@ services:
   analysis-worker:
     env_file:
       - ./server/dockerconfs/.env.local
-    image: tca-analysis:latest
+    image: tencenttca/tca-analysis:latest
     command:
       [
         "celery",
@@ -139,6 +144,9 @@ services:
     volumes:
       - ./server/configs/django/local_analysis.py:/var/www/django/codedog/codedog/settings/local.py
       - ./.docker_data/logs/analysis_worker:/var/www/django/codedog/log
+    healthcheck:
+      test: ["CMD-SHELL", "bash bin/healthy_check.sh"]
+      interval: 60s
     depends_on:
       - mysql
       - redis
@@ -149,6 +157,7 @@ services:
     build:
       context: ./server/projects/login
       dockerfile: ../../dockerconfs/Dockerfile-common-${ORIGIN:-mirror}
+    image: tencenttca/tca-login:latest
     command:
       [
         "gunicorn",
@@ -170,6 +179,7 @@ services:
     build:
       context: ./server/projects/file
       dockerfile: ../../dockerconfs/Dockerfile-common-${ORIGIN:-mirror}
+    image: tencenttca/tca-file:latest
     command:
       [
         "gunicorn",
@@ -202,6 +212,7 @@ services:
     build:
       context: ./server/projects/scmproxy
       dockerfile: ../../dockerconfs/Dockerfile-common-${ORIGIN:-mirror}
+    image: tencenttca/tca-scmproxy:latest
     command: [ "python", "proxyserver.py" ]
     volumes:
       - ./.docker_data/logs/scmproxy:/var/www/django/codedog/logs
@@ -233,6 +244,7 @@ services:
     build:
       context: ./client
       dockerfile: Dockerfile
+    image: tencenttca/tca-client:latest
     command: 
       - /bin/bash
       - -c
