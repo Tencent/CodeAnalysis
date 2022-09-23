@@ -22,9 +22,6 @@ from codedog.settings.open_base import *
 # Debug模式
 DEBUG = True if os.environ.get("MAIN_DEBUG_MODE") == "true" else False
 
-# 代码库默认使用https
-HTTPS_CLONE_FLAG = True if os.environ.get("HTTPS_CLONE_FLAG") == "true" else False
-
 ALLOWED_HOSTS = ["*"]
 
 # 管理员列表
@@ -66,6 +63,11 @@ if SENTRY_DSN:
         dsn=SENTRY_DSN,
         integrations=[DjangoIntegration(), CeleryIntegration()]
     )
+
+# -*-*-*-*-*-*-*-*-*-*-*-*-*-*-
+# CodeDog运行环境配置
+# -*-*-*-*-*-*-*-*-*-*-*-*-*-*-
+HTTPS_CLONE_FLAG = True if os.environ.get("HTTPS_CLONE_FLAG") == "true" else False
 
 # -*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-
 # -*-*-*-*-*-*-*-*-*-*-*-   服务交互配置    -*-*-*-*-*-*-*-*-*-*-*-
