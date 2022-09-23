@@ -234,7 +234,7 @@ CODEDOG_USER_CHECK = False
 DEFAULT_USERNAME = "CodeDog"
 DEFAULT_ORIGIN_ID = "CodeDog"
 # HTTPS克隆开关
-HTTPS_CLONE_FLAG = False
+HTTPS_CLONE_FLAG = True
 
 # 时间配置
 CLOSING_JOB_TIMEOUT = timedelta(hours=12)          # 入库超时时间
