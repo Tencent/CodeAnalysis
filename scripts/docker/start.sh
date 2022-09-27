@@ -41,7 +41,9 @@ function init_directory() {
     chown -R mysql:mysql /var/log/tca/mariadb /var/opt/tca/mariadb /run/mysqld
 
     if [ -d "/CodeAnalysis/tools" ]; then
-        mv /CodeAnalysis/tools /var/opt/tca/
+        rsync -a /CodeAnalysis/tools/ /var/opt/tca/tools/
+        rm -rf /CodeAnalysis/tools
+        # mv -f /CodeAnalysis/tools /var/opt/tca/tools/
         ln -s /var/opt/tca/tools /CodeAnalysis/tools
     else
         ln -s /var/opt/tca/tools /CodeAnalysis/tools
@@ -52,6 +54,7 @@ function init_directory() {
     else
         mv /CodeAnalysis/scripts/config.sh /CodeAnalysis/scripts/config.sh.bak
         ln -s /etc/tca/config.sh /CodeAnalysis/scripts/config.sh
+        source /etc/tca/config.sh
     fi
 
     if [ ! -f "/etc/tca/client/config.ini" ]; then
