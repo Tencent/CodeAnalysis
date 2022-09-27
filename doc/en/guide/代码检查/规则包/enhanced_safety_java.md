@@ -117,7 +117,7 @@ XSS 规则用于检查代码中是否存在[`跨站脚本攻击漏洞 XSS(Cross-
 void bad(HttpServletRequest req, HttpServletResponse resp){
     String id = request.getParameter("id") != null ? request.getParameter("id") : "0";
     Doc doc = getdetailsById(id);    
-    byte b[] = doc.getUploaded();        
+    byte[] b = doc.getUploaded();        
     try {
         response.setContentType("APPLICATION/OCTET-STREAM");
         String disHeader = "Attachment;Filename=" + doc.getName();
