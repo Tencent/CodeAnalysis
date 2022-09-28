@@ -213,9 +213,10 @@ class Cpplint(CodeLintModel):
         if file_extensions:
             cmd_args.append("--extensions=" + file_extensions)
             logger.info("扫描文件为 %s" % file_extensions)
-        if project_name.find(".git") != -1:
-            project_name = project_name.replace(".git", "")
-        cmd_args.append("--root=%s" % project_name)
+        if project_name:
+            if project_name.find(".git") != -1:
+                project_name = project_name.replace(".git", "")
+            cmd_args.append("--root=%s" % project_name)
         if rules:
             filter_arg = "--filter=-,+" + ",+".join(rules)
             cmd_args.append(filter_arg)
@@ -288,13 +289,15 @@ class Cpplint(CodeLintModel):
         reg_client = re.compile(r"^(.+?):(\d+):\s+(.+?)\s+\[([\S]+)\]\s+\[(\d+)\]$")
         max_linelength = self.__get_linelength_param(params)
         # 获取项目名称
-        if "git" == params.get("scm_type"):  # git仓库
+        project_name = None
+        scm_type = params.get("scm_type")
+        if "git" == scm_type:  # git仓库
             project_name = params.get("scm_url")
             if project_name.find("#") != -1:
                 project_name = project_name.split("#")[0]
             project_name = project_name.split("/")[-1]
             project_name = project_name.replace(".git", "")
-        else:  # svn项目
+        elif "svn" == scm_type:  # svn项目
             project_name = params.get("scm_url").split("/")[-1].split("_proj")[0]
         cmd_args = self.__prepare_cpplint_args(source_dir, rules, max_linelength, project_name)
 
