@@ -476,7 +476,6 @@ class CodeCount(CodeMetricModel):
         # 1. 基本信息读取
         # 需要server 提供：scm路径、scm版本号区间、黑白名单路径配置、业务模块配置信息
         work_dir = os.getcwd()
-        scm_client = SCMMgr(params).get_scm_client()
         last_dir = os.path.join(work_dir, "last_files")
         curr_dir = os.path.join(work_dir, "curr_files")
         incr_scan = params.get("incr_scan", False)
@@ -508,6 +507,7 @@ class CodeCount(CodeMetricModel):
         if incr_scan:
             file_change_type = {}
             get_file_time = time.time()
+            scm_client = SCMMgr(params).get_scm_client()
             self.create_diff_files(scm_client, params, file_change_type, curr_dir, last_dir)
             get_file_time_end = time.time()
             logger.info("Get file time by scm client: %s" % (get_file_time_end - get_file_time))
