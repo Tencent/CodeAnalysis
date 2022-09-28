@@ -57,14 +57,7 @@ class TaskProcessMgr(object):
         # 加载工具执行需要的环境变量
         task_params["tool_name"] = task_name
         task_list = ConfigUtil.generate_task_list(task_params)
-        if ConfigUtil.use_new_tool_lib_config(task_params):  # 使用依赖库配置
-            tool_names = [task_name]
-        else:  # 使用ini配置
-            if task_name in custom_tools:
-                tool_names = ["customtool"]
-            else:
-                tool_names = [task_name]
-        ToolLoader(tool_names=tool_names, task_list=task_list, custom_tools=custom_tools,
+        ToolLoader(tool_names=[task_name], task_list=task_list, custom_tools=custom_tools,
                    include_common=True).set_tool_env()
 
         # 加载任务环境变量
