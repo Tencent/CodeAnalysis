@@ -29,11 +29,13 @@ export const zh: SidebarConfig = {
             '/zh/guide/代码检查/工具/golangcilint.md',
             '/zh/guide/代码检查/工具/TCA-Armory-R.md',
             '/zh/guide/代码检查/工具/TCA-Armory-C1.md',
+            '/zh/guide/代码检查/工具/TCA-Armory-Q1.md',
           ],
         },
         {
           text: '典型规则包使用手册',
           children: [
+            '/zh/guide/代码检查/规则包/cpp_doc.md',
             '/zh/guide/代码检查/规则包/enhanced_safety_java.md',
           ],
         },
