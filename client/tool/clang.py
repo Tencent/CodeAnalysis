@@ -18,7 +18,7 @@ from tool.util.clangutil import PlistParser
 from tool.util.compile import BasicCompile
 from tool.util.xcodeswitch import XcodeSwitch
 from util.errcode import E_NODE_TASK_CONFIG
-from util.exceptions import TaskError
+from util.exceptions import TaskError, CompileTaskError
 from util.logutil import LogPrinter
 from util.subprocc import SubProcController
 
@@ -62,16 +62,12 @@ class Clang(CodeLintModel):
         if not build_args:
             build_args = ['xcodebuild']
 
-        build_args.extend(['-UseNewBuildSystem=NO'])
-
         # get compild cwd from env var
         build_cwd = os.environ.get('BUILD_CWD', None)
         compile_cwd = os.path.join(source_dir, build_cwd) if build_cwd else source_dir
 
         # 执行前置命令
         if pre_cmd:
-            if 'xcodebuild' in pre_cmd:
-                pre_cmd = '%s -UseNewBuildSystem=NO' % pre_cmd  # pre_cmd也不使用新的xcode构建系统,与编译命令保持一致
             LogPrinter.info('run pre command ...')
             pre_cmd = BasicCompile.generate_shell_file(pre_cmd, shell_name="tca_pre_cmd")
             LogPrinter.info('run pre cmd shell file: %s' % pre_cmd)
@@ -86,6 +82,7 @@ class Clang(CodeLintModel):
             sp.wait()
             if sp.returncode != 0:
                 LogPrinter.info("Pre command run error!")
+                raise CompileTaskError(msg=f"前置命令执行失败，请确认命令能否在代码根目录下成功执行: {pre_cmd}")
 
         # 执行xcodebuild analyze
         LogPrinter.info('analyze project ...')
@@ -104,6 +101,7 @@ class Clang(CodeLintModel):
         sp.wait()
         if sp.returncode != 0:
             LogPrinter.info("Analyze Failed!")
+            raise CompileTaskError(msg=f"编译命令执行失败，请确认编译命令能否在代码根目录下成功执行: {' '.join(build_cmd)}")
 
         plist_paths = PlistParser().collect_plist_paths(build_log)
 
