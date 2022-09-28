@@ -1,40 +1,5 @@
 
-- [TCA-Armory-Q1工具介绍](#tca-armory-q1工具介绍)
-- [规则详情](#规则详情)
-  - [线程锁检查](#线程锁检查)
-      - [missing_lock](#missing_lock)
-        - [代码示例](#代码示例)
-      - [dead_lock](#dead_lock)
-        - [规则参数](#规则参数)
-        - [代码示例](#代码示例-1)
-  - [资源泄漏检查](#资源泄漏检查)
-      - [resource_leak](#resource_leak)
-        - [代码示例](#代码示例-2)
-        - [TODO](#todo)
-  - [无效值检查](#无效值检查)
-      - [unused_value](#unused_value)
-        - [代码示例](#代码示例-3)
-  - [数组溢出检查](#数组溢出检查)
-      - [array_overflow](#array_overflow)
-        - [代码示例](#代码示例-4)
-        - [TODO](#todo-1)
-      - [buff_overflow](#buff_overflow)
-        - [代码示例](#代码示例-5)
-  - [指针检查](#指针检查)
-      - [func_ret_null](#func_ret_null)
-      - [代码示例](#代码示例-6)
-      - [use_after_free](#use_after_free)
-        - [代码示例](#代码示例-7)
-      - [forward_null](#forward_null)
-        - [规则参数](#规则参数-1)
-        - [代码示例](#代码示例-8)
-      - [reverse_null](#reverse_null)
-        - [代码示例](#代码示例-9)
-      - [glob_null_pointer](#glob_null_pointer)
-        - [代码示例](#代码示例-10)
-  - [函数重写](#函数重写)
-      - [function_override](#function_override)
-        - [代码示例](#代码示例-11)
+
 # TCA-Armory-Q1工具介绍
 TCA-Armory-Q1, 又名 tca_ql_cpp 主要用于分析Cpp质量问题。
 
@@ -210,8 +175,6 @@ void leak_example3(int c) {
 }
 ```
 
-##### TODO
-指针为返回值目前不会进行上报与检查，需要后期增加对返回值是否释放的检查
 
 ## 无效值检查
 包含规则
@@ -310,8 +273,6 @@ void test(int i) {
 }
 ```
 
-##### TODO
-- 提供规则参数支持函数参数作为数组或索引的情况检查
 
 #### buff_overflow
 buff_overflow 检查`strcpy`,`strcat`字符串复制/拼接过程中长度不当导致的溢出， 同样`gets` `scanf`函数也视为不安全
