@@ -40,8 +40,6 @@ class TaskMain(object):
         time_format = "%Y-%m-%d %H:%M:%S"
         task_start_time = time.strftime(time_format,time.localtime(time.time()))
 
-        # 初始化task_params
-        task_params = None
         try:
             if settings.DEBUG:
                 level = logging.DEBUG
@@ -83,9 +81,11 @@ class TaskMain(object):
             if response.message:
                 logger.warning('task messsage: %s', response.message)
             if response.result:
-                # 不是敏感工具，才打印出堆栈（避免泄露工具信息）
+                with open(request_file, "r") as rf:
+                    task_request = json.load(rf)
+                    task_params = task_request.get("task_params")
                 if not ToolDisplay.is_sensitive_tool(task_params):
-                    logger.warning('task result: %s', response.result)
+                    logger.warning('task result: \n%s', response.result)
 
         # 记录结束时间
         task_end_time = time.strftime(time_format,time.localtime(time.time()))
