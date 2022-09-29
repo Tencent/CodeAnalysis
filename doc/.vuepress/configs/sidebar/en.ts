@@ -78,6 +78,7 @@ export const en: SidebarConfig = {
       children: [
         '/en/guide/客户端/本地分析.md',
         '/en/guide/客户端/常驻节点分析.md',
+        '/en/guide/客户端/快速扫描模式.md',
         '/en/guide/客户端/其他配置.md',
       ]
     },
