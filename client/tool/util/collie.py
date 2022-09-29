@@ -226,7 +226,8 @@ class Collie(object):
                 continue
             msg = row["description"]
 
-            row_refs = row[None]
+            # 剩下的内容
+            row_refs = row.get(None, [])
             refs = list()
             for ref in row_refs:
                 parts = ref.split(":")
