@@ -57,6 +57,7 @@ export const zh: SidebarConfig = {
       text: '工具管理',
       children: [
         '/zh/guide/工具管理/工具管理说明.md',
+        '/zh/guide/工具管理/工具列表.md',
         '/zh/guide/工具管理/自定义规则.md',
         '/zh/guide/工具管理/自定义工具.md',
       ]
