@@ -57,6 +57,7 @@ export const en: SidebarConfig = {
       text: '工具管理',
       children: [
         '/en/guide/工具管理/工具管理说明.md',
+        '/en/guide/工具管理/工具列表.md',
         '/en/guide/工具管理/自定义规则.md',
         '/en/guide/工具管理/自定义工具.md',
       ]
