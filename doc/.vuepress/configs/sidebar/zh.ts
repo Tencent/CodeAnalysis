@@ -79,6 +79,7 @@ export const zh: SidebarConfig = {
       children: [
         '/zh/guide/客户端/本地分析.md',
         '/zh/guide/客户端/常驻节点分析.md',
+        '/zh/guide/客户端/快速扫描模式.md',
         '/zh/guide/客户端/其他配置.md',
       ]
     },
