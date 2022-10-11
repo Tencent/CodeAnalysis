@@ -226,7 +226,6 @@ class Collie(object):
                 continue
             msg = row["description"]
 
-            # 剩下的内容
             row_refs = row.get(None, [])
             refs = list()
             for ref in row_refs:
