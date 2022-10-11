@@ -27,9 +27,9 @@ export const en: SidebarConfig = {
           children: [
             '/en/guide/代码检查/工具/eslint.md',
             '/en/guide/代码检查/工具/golangcilint.md',
-            '/eh/guide/代码检查/工具/TCA-Armory-R.md',
-            '/eh/guide/代码检查/工具/TCA-Armory-C1.md',
-            '/eh/guide/代码检查/工具/TCA-Armory-Q1.md',
+            '/en/guide/代码检查/工具/TCA-Armory-R.md',
+            '/en/guide/代码检查/工具/TCA-Armory-C1.md',
+            '/en/guide/代码检查/工具/TCA-Armory-Q1.md',
           ],
         },
         {
@@ -79,6 +79,7 @@ export const en: SidebarConfig = {
       children: [
         '/en/guide/客户端/本地分析.md',
         '/en/guide/客户端/常驻节点分析.md',
+        '/en/guide/客户端/快速扫描模式.md',
         '/en/guide/客户端/其他配置.md',
       ]
     },
