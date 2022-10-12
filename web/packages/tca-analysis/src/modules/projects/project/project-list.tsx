@@ -11,18 +11,18 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import { Table, Button, Input, message } from 'coding-oa-uikit';
-import { pickBy, isNumber, get, toNumber, find } from 'lodash';
+import { pickBy, isNumber, get, toNumber } from 'lodash';
 import qs from 'qs';
-import { useSelector } from 'react-redux';
 
+import { useLoginUserIsAdmin } from '@plat/hooks';
 import SelectDropdown from '../../../components/select-dropdown';
 import Tips from '@src/components/tips';
 import { useStateStore } from '@src/context/store';
 import { DEFAULT_PAGER } from '@src/constant';
 import { useQuery } from '@src/utils/hooks';
-import { getProjectRouter, getSchemeRouter } from '@src/utils/getRoutePath';
+import { getProjectRouter, getSchemeBlankRouter } from '@src/utils/getRoutePath';
 import { getProjects, delProject } from '@src/services/projects';
-import { getMembers } from '@src/services/common';
+import { getRepoMembers } from '@src/services/repos';
 
 import ScanModal from './scan-modal';
 import NewProjectModal from './new-project-modal';
@@ -54,14 +54,6 @@ const ProjectList = (props: ProjectListProps) => {
   const [curProjId, setCurProjId] = useState<number>(null);
   const [reload, setReload] = useState<boolean>(false);
   const [hoverRowId, setHoverRowId] = useState(undefined);
-
-  // 判断是否有权限删除分支项目
-  const APP = useSelector((state: any) => state.APP);
-  const isSuperuser = get(APP, 'user.is_superuser', false); // 当前用户是否是超级管理员
-  const userName = get(APP, 'user.username', null);
-  const [admins, setAdmins] = useState<any>([]);
-  const isAdmin = !!find(admins, { username: userName }); // 当前用户是否是代码库管理员
-  const deletable = isAdmin || isSuperuser; // 删除权限
   const [deleteVisible, setDeleteVisible] = useState<boolean>(false);
 
   const [searchParams, setSearchParams] = useState({
@@ -70,6 +62,8 @@ const ProjectList = (props: ProjectListProps) => {
   });
 
   const { pageSize, pageStart, count } = pager;
+  const [admins, setAdmins] = useState<any>([]);
+  const isAdmin = useLoginUserIsAdmin(admins);
 
   useEffect(() => {
     repoId && getListData();
@@ -85,8 +79,8 @@ const ProjectList = (props: ProjectListProps) => {
   useEffect(() => {
     // 获取代码库成员
     if (repoId) {
-      getMembers(orgSid, teamName, repoId).then((response) => {
-        setAdmins(response.admins);
+      getRepoMembers(orgSid, teamName, repoId).then((res: any) => {
+        setAdmins(res.admins?.map((userinfo: any) => userinfo.username) || []);
       });
     }
   }, [repoId]);
@@ -107,7 +101,7 @@ const ProjectList = (props: ProjectListProps) => {
       ...params,
       scan_scheme__status: 1,
     }).then((response) => {
-      history.push(`${location.pathname}?${qs.stringify(params)}`);
+      history.replace(`${location.pathname}?${qs.stringify(params)}`);
       setList(response.results);
       setPager({ ...pager, count: response.count });
     });
@@ -229,18 +223,18 @@ const ProjectList = (props: ProjectListProps) => {
             title="分析方案"
             dataIndex={['scan_scheme', 'name']}
             render={(name, data: any) => (
-              <Link
+              <a
                 className={style.linkName}
                 target="_blank"
-                to={`${getSchemeRouter(
+                href={`${getSchemeBlankRouter(
                   orgSid,
                   teamName,
                   repoId,
                   get(data, 'scan_scheme.id'),
-                )}`}
+                )}`} rel="noreferrer"
               >
                 {name}
-              </Link>
+              </a>
             )}
           />
 
@@ -282,7 +276,7 @@ const ProjectList = (props: ProjectListProps) => {
                 >
                   分析历史
                 </Link>
-                {hoverRowId === id && deletable && (
+                {hoverRowId === id && isAdmin && (
                   <a
                     style={{ color: 'red' }}
                     onClick={() => onDeleteProject(id)}

@@ -8,7 +8,7 @@ import Invite from '@src/modules/team/components/invite';
 const Manage = lazy(() => import('@src/modules/layout/manage'));
 const User = lazy(() => import('@src/modules/layout/user'));
 const Team = lazy(() => import('@src/modules/layout/team'));
-const GitOAuth = lazy(() => import('@src/modules/git-oauth'));
+const GitOAuth = lazy(() => import('@src/modules/layout/user/auth/git-oauth'));
 
 
 const ROUTERS: RouteProps[] = [{

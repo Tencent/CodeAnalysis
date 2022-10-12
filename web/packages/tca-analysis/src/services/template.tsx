@@ -10,8 +10,7 @@
  * create at        2021-01-04
  */
 
-import { get, post, put, del } from './index';
-import { MAIN_SERVER_API } from './common';
+import { MAIN_SERVER_API, get, post, put, del } from '@plat/api';
 
 export const getTmplBaseURL = (orgSid: string) => `${MAIN_SERVER_API}/orgs/${orgSid}/schemes`;
 

@@ -10,8 +10,8 @@
  * create at        2020-10-23
  */
 
-import { get, post, put, del } from './index';
-import { MAIN_SERVER_API, getMainBaseURL } from './common';
+import { MAIN_SERVER_API, get, post, put, del } from '@plat/api';
+import { getMainBaseURL } from './common';
 
 /**
  * 分析方案前缀

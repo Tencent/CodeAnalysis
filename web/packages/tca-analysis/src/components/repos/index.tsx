@@ -8,19 +8,23 @@
  * 代码库列表组件
  */
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import cn from 'classnames';
+import { useParams, Link } from 'react-router-dom';
+
 import { isEmpty, find, toNumber } from 'lodash';
 
-import { Dropdown, Menu, Input } from 'coding-oa-uikit';
+import { Dropdown, Menu, Input, Tooltip } from 'coding-oa-uikit';
 import RepoIcon from 'coding-oa-uikit/lib/icon/Repos';
 import CaretDown from 'coding-oa-uikit/lib/icon/CaretDown';
-import Link from 'coding-oa-uikit/lib/icon/Link';
+import LinkIcon from 'coding-oa-uikit/lib/icon/Link';
+import ConfigIcon from 'coding-oa-uikit/lib/icon/Cog';
 
-
-import Copy from '@src/components/copy';
+import { getRepos } from '@src/services/common';
+import { getRepoName } from '@src/utils';
+import { getReposRouter } from '@src/utils/getRoutePath';
 import { useStateStore, useDispatchStore } from '@src/context/store';
-
+import { SET_CUR_REPO } from '@src/context/constant';
 import style from './style.scss';
 
 interface IProps {
@@ -30,12 +34,28 @@ interface IProps {
 }
 
 const Repos = (props: IProps) => {
-  const { callback } = props;
+  const { repoId } = useParams<any>();
+  const { orgSid, teamName, callback } = props;
   const { curRepo, repos } = useStateStore();
   const dispatch = useDispatchStore();
 
   const [visible, setVisible] = useState(false);
   const [searchValue, onChangeSearchValue] = useState('');
+  const [searchRepos, setSearchRepos] = useState([]);
+
+  useEffect(() => {
+    if (repoId && toNumber(repoId) !== curRepo.id) {
+      const repo = find(repos, { id: toNumber(repoId) });
+      if (repo) {
+        dispatch({
+          type: SET_CUR_REPO,
+          payload: repo,
+        });
+      } else {
+        // message.error('代码库不存在');
+      }
+    }
+  }, [repoId]);
 
   const handleVisibleChange = (flag: boolean) => {
     setVisible(flag);
@@ -46,12 +66,24 @@ const Repos = (props: IProps) => {
       setVisible(false);
     }
 
-    const repo = find(repos, { id: toNumber(e.key) });
+    let repo = find(repos, { id: toNumber(e.key) });
+
+    if (!repo) {
+      repo = find(searchRepos, { id: toNumber(e.key) });
+    }
     onChangeRepo(repo);
   };
 
   const onSearch = (value: string) => {
     onChangeSearchValue(value);
+    getRepos(orgSid, teamName, {
+      scope: 'related_me',
+      scm_url_or_name: value,
+      limit: 10,
+      offset: 0,
+    }).then((res) => {
+      setSearchRepos(res.results || []);
+    });
   };
 
   const onChangeRepo = (repo: any) => {
@@ -62,6 +94,16 @@ const Repos = (props: IProps) => {
       });
       callback(repo);
     }
+  };
+
+  const renderRepoItem = () => {
+    const repoList = searchValue ? searchRepos : repos;
+    return repoList.map(item => (
+      <Menu.Item key={item.id}>
+        <RepoIcon className={cn(style.gitMark, style.repoListIcon)} />
+        {item.name || getRepoName(item.scm_url)}
+      </Menu.Item>
+    ));
   };
 
   return (
@@ -80,21 +122,12 @@ const Repos = (props: IProps) => {
                   size='middle'
                   allowClear
                   placeholder='代码库筛选'
-                  onChange={(e: any) => {
-                    onSearch(e.target.value);
+                  onSearch={(value: string) => {
+                    onSearch(value);
                   }}
                 />
               </Menu.Item>
-              {
-                repos
-                  .filter((item: any) => item.name?.toLowerCase().includes(searchValue.toLowerCase()))
-                  .map((item: any) => (
-                    <Menu.Item key={item.id}>
-                      <RepoIcon className={cn(style.gitMark, style.repoListIcon)} />
-                      {item.name}
-                    </Menu.Item>
-                  ))
-              }
+              {renderRepoItem()}
             </Menu>
           }>
           <div className={style.curRepo}>
@@ -103,10 +136,17 @@ const Repos = (props: IProps) => {
             <CaretDown className={style.icon} />
           </div>
         </Dropdown>
-        <Copy text={curRepo.scm_url} className={style.copyIcon} />
-        <a className={style.repoLink} target="_blank" href={curRepo.scm_url} rel="noreferrer">
-          <Link />
-        </a>
+        {/* <Copy text={curRepo.scm_url} className={style.copyIcon} /> */}
+        <Tooltip title='跳转代码库'>
+          <a className={style.repoLink} target="_blank" href={curRepo.scm_url} rel="noreferrer">
+            <LinkIcon />
+          </a>
+        </Tooltip>
+        <Tooltip title='仓库设置'>
+          <Link className={style.repoLink} to={`${getReposRouter(orgSid, teamName)}/${curRepo.id}`}>
+            <ConfigIcon />
+          </Link>
+        </Tooltip>
       </div>
     </div>
   );
