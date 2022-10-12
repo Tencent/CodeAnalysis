@@ -8,7 +8,7 @@
  * 分析方案 - 代码检查
  */
 import React, { useState, useEffect } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import cn from 'classnames';
 import { intersection, isEmpty, concat } from 'lodash';
 
@@ -28,7 +28,7 @@ import {
   addCheckPackages,
   delCheckPackage,
 } from '@src/services/schemes';
-import { getSchemeRouter } from '@src/utils/getRoutePath';
+import { getSchemeRouter, getSchemeBlankRouter } from '@src/utils/getRoutePath';
 
 import Filter from '@src/components/filter';
 import SelectBorderless from '@src/components/select-borderless';
@@ -254,23 +254,23 @@ const CodeLint = (props: CodeLintProps) => {
                 <p>自定义规则 {customPackage.checkrule_count} 条</p>
               </div>
               <div className={style.footer}>
-                <Link
+                <a
                   target="_blank"
-                  to={`${getSchemeRouter(
+                  href={`${getSchemeBlankRouter(
                     orgSid,
                     teamName,
                     repoId,
                     schemeId,
-                  )}/check-profiles/${checkprofile.id}/pkg/${customPackage.id}`}
+                  )}/check-profiles/${checkprofile.id}/pkg/${customPackage.id}`} rel="noreferrer"
                 >
                   查看详细规则 <AngleRight />
-                </Link>
+                </a>
               </div>
             </div>
 
             {allPkgs
               .filter((item: any) => (filter(item.labels, label) && filter(item.languages, lang))
-                  || selectedPkgs.includes(item.id))
+                || selectedPkgs.includes(item.id))
               .map((item: any) => (
                 <Item
                   orgSid={orgSid}
@@ -312,7 +312,7 @@ const Item = (props: any) => {
             <span className={style.name}>{item.name}</span>
           </Tooltip>
         ) : (
-            <span className={style.name}>{item.name}</span>
+          <span className={style.name}>{item.name}</span>
         )}
 
         <Switch checked={checked} onChange={value => onChange(value, item.id)} />
@@ -333,9 +333,9 @@ const Item = (props: any) => {
             </Typography.Paragraph>
           </Tooltip>
         ) : (
-            <Typography.Paragraph className={style.paragraph} ellipsis={{ rows: 2 }}>
-              {item.description}
-            </Typography.Paragraph>
+          <Typography.Paragraph className={style.paragraph} ellipsis={{ rows: 2 }}>
+            {item.description}
+          </Typography.Paragraph>
         )}
       </div>
       <div className={cn(style.language, style.common)}>
@@ -347,22 +347,22 @@ const Item = (props: any) => {
               <p className={style.languages}>{item.languages.join('、')}</p>
             </Tooltip>
           ) : (
-              <p className={style.languages}>{item.languages.join('、')}</p>
+            <p className={style.languages}>{item.languages.join('、')}</p>
           )}
         </div>
       </div>
       <div className={style.footer}>
-        <Link
+        <a
           target="_blank"
-          to={`${getSchemeRouter(
+          href={`${getSchemeBlankRouter(
             orgSid,
             teamName,
             repoId,
             schemeId,
-          )}/check-profiles/${checkprofileId}/pkg/${item.id}`}
+          )}/check-profiles/${checkprofileId}/pkg/${item.id}`} rel="noreferrer"
         >
           查看详细规则 <AngleRight />{' '}
-        </Link>
+        </a>
       </div>
     </div>
   );

@@ -10,7 +10,7 @@ import { Input, Form, Button, Select } from 'coding-oa-uikit';
 
 import SelectBorderless from '@src/components/select-borderless';
 import Filter from '@src/components/filter';
-import { SEVERITY } from '../../schemes/constants';
+import { SEVERITY, CATEGORY } from '../../schemes/constants';
 
 const numberParams = ['checkpackage', 'severity', 'category'];
 const arrayParams = ['language_name'];
@@ -26,7 +26,7 @@ interface SearchProps {
 const Search = (props: SearchProps) => {
   const [form] = Form.useForm();
   const { searchParams, loading, filters, addToolsRules, callback } = props;
-  const { allPkgs = [], labels = [], languages = [], checkTools = [] } = filters as any;
+  const { allPkgs = [], languages = [], checkTools = [] }: any = filters;
 
   const initialValues = cloneDeep(searchParams);
 
@@ -101,21 +101,23 @@ const Search = (props: SearchProps) => {
           multiple
           allowClear
           placeholder="全部"
-          data={getData(labels)}
+          data={Object.entries(CATEGORY).map(([key, value]: [string, string]) => ({
+            value: toNumber(key),
+            text: value,
+          }))}
           onChange={(value: any) => value && onChange('category', value.join(','))
           }
         />
       </Filter.Item>
       <Filter.Item label="适用语言" name="language_name">
         <SelectBorderless
-          multiple
           allowClear
           placeholder="全部"
           data={languages?.map((item: any) => ({
             value: item.name,
             text: item.display_name,
           }))}
-          onChange={(value: any) => value && onChange('language_name', value.join(','))
+          onChange={(value: any) => onChange('language_name', value)
           }
         />
       </Filter.Item>
@@ -137,7 +139,6 @@ const Search = (props: SearchProps) => {
           }
         </Select>
         {/* <SelectBorderless
-          multiple
           allowClear
           placeholder="全部"
           data={checkTools?.map((item: any) => ({
@@ -152,15 +153,16 @@ const Search = (props: SearchProps) => {
         <Input.Search
           size="middle"
           placeholder="规则名称"
+          style={{ minWidth: '150px' }}
           onSearch={value => onChange('real_name', value)}
         />
       </Filter.Item>
       {Object.keys(searchParams).some((key: string) => (isArray(searchParams[key])
         ? !isEmpty(searchParams[key])
         : searchParams[key])) && (
-        <Button type="link" onClick={onClear} style={{ height: '36px', marginRight: 10 }}>
-          清空过滤
-        </Button>
+          <Button type="link" onClick={onClear} style={{ height: '36px', marginRight: 10 }}>
+            清空过滤
+          </Button>
       )}
       {
         find(checkTools, { id: initialValues.checktool }) && (

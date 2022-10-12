@@ -3,7 +3,21 @@
 .header {
   padding: 0 24px;
   border-bottom: 1px solid #dadfe6;
-  :global(.t-tabs__nav-container.t-is-top::after){
+  :global(.t-tabs__nav-container.t-is-top::after) {
+    height: 0;
+  }
+}
+
+.report-tab {
+  :global(.t-tabs__header) {
+    padding: 0 24px;
+  }
+
+  :global(.t-tabs__content) {
+    border-top: 1px solid #dadfe6;
+  }
+
+  :global(.t-tabs__nav-container.t-is-top::after) {
     height: 0;
   }
 }

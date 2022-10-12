@@ -7,11 +7,20 @@
 import get from 'lodash/get';
 
 // 项目内
-import { SEVERITY_TYPE, SEVERITY_TYPE_TXT, STANDARD_TYPE, RISK_TYPE, RISK_TYPE_TXT, CATEGORY_TYPE_TXT, LINT_STATE_TYPE_TXT } from '@src/modules/projects/constants';
+import {
+  SEVERITY_TYPE,
+  SEVERITY_TYPE_TXT,
+  STANDARD_TYPE,
+  RISK_TYPE,
+  RISK_TYPE_TXT,
+  CATEGORY_TYPE_TXT,
+  LINT_STATE_TYPE_TXT,
+} from '@src/modules/projects/constants';
 import { formatDate } from '@src/utils';
 import { CLOC_TYPE, CLOC_TYPE_TXT } from './codecloc';
 import { CYC_TYPE, CYC_TYPE_TXT } from './codecc';
 import { LINT_HISTORY_TYPE, LINT_HISTORY_TYPE_TXT } from './codelint';
+import { isEmpty } from 'lodash';
 
 /**
  * 格式化时间，获取表格时间格式
@@ -60,10 +69,9 @@ export const formatLatestLintData = (latestLintData: any) => {
  * 获取圈复杂度简要数据，用于分支概览
  * @param cycScans 圈复杂度历史详情数据
  */
-export const getBriefCycData = (cycScans: any) => (
-  cycScans.length > 0
-    ? cycScans[0].custom_summary || cycScans[0].default_summary
-    : null);
+export const getBriefCycData = (cycScans: any) => (cycScans.length > 0
+  ? cycScans[0].custom_summary || cycScans[0].default_summary
+  : null);
 
 /**
  * 获取重复代码简要数据，用于分支概览
@@ -115,7 +123,10 @@ export const getLintLineChartData = (scans: any) => {
         });
       }
     });
-    return { [LINT_HISTORY_TYPE.TOTAL]: rowsTotal.reverse(), [LINT_HISTORY_TYPE.UNDEAL]: rowsPending };
+    return {
+      [LINT_HISTORY_TYPE.TOTAL]: rowsTotal.reverse(),
+      [LINT_HISTORY_TYPE.UNDEAL]: rowsPending,
+    };
   }
   return { [LINT_HISTORY_TYPE.TOTAL]: [], [LINT_HISTORY_TYPE.UNDEAL]: [] };
 };
@@ -130,15 +141,26 @@ export const getLintPieChartData = (scans: any) => {
     totalData: {},
   };
   if (scans && scans.length > 0) {
-    let scanFlag = false; let totalFlag = false;
+    let scanFlag = false;
+    let totalFlag = false;
     Object.values(scans).forEach((value: any) => {
-      const { scan_summary: scanSummary, total_summary: totalSummary, status } = value;
+      const {
+        scan_summary: scanSummary,
+        total_summary: totalSummary,
+        status,
+      } = value;
       // 如果成功，则取成功那次结果，否则取最近一次成功有数据的
-      if (!scanFlag && ((status >= 0 && status < 100) || JSON.stringify(scanSummary) !== '{}')) {
+      if (
+        !scanFlag
+        && ((status >= 0 && status < 100) || JSON.stringify(scanSummary) !== '{}')
+      ) {
         summaryDict.undealData = scanSummary;
         scanFlag = true;
       }
-      if (!totalFlag && ((status >= 0 && status < 100) || JSON.stringify(totalSummary) !== '{}')) {
+      if (
+        !totalFlag
+        && ((status >= 0 && status < 100) || JSON.stringify(totalSummary) !== '{}')
+      ) {
         summaryDict.totalData = totalSummary;
         totalFlag = true;
       }
@@ -217,7 +239,7 @@ export const getCyCLineChartData = (scans: any, standard: string) => {
     const rowsTotal: Array<any> = [];
     const rowsExcess: Array<any> = [];
     scans.forEach((scan: any) => {
-      const summary = standard === STANDARD_TYPE.CUSTOM && scan.custom_summary
+      const summary =        standard === STANDARD_TYPE.CUSTOM && scan.custom_summary
         ? scan.custom_summary
         : scan.default_summary;
       if (summary) {
@@ -228,10 +250,17 @@ export const getCyCLineChartData = (scans: any, standard: string) => {
           num: summary.under_cc_func_count + summary.over_cc_func_count,
           type: CYC_TYPE_TXT.TOTAL,
         });
-        rowsExcess.push({ date, num: summary.over_cc_func_count, type: CYC_TYPE_TXT.OVER });
+        rowsExcess.push({
+          date,
+          num: summary.over_cc_func_count,
+          type: CYC_TYPE_TXT.OVER,
+        });
       }
     });
-    return { [CYC_TYPE.TOTAL]: rowsTotal.reverse(), [CYC_TYPE.OVER]: rowsExcess };
+    return {
+      [CYC_TYPE.TOTAL]: rowsTotal.reverse(),
+      [CYC_TYPE.OVER]: rowsExcess,
+    };
   }
   return { [CYC_TYPE.TOTAL]: [], [CYC_TYPE.OVER]: [] };
 };
@@ -242,7 +271,7 @@ export const getCyCLineChartData = (scans: any, standard: string) => {
  * @param standard 标准
  */
 export const getCycPieChartData = (scans: any, standard: string) => {
-  Object.values(scans).forEach((data: any) => {
+  for (const data of scans) {
     if (data.default_summary) {
       const summary = standard === STANDARD_TYPE.CUSTOM && data.custom_summary
         ? data.custom_summary
@@ -252,7 +281,7 @@ export const getCycPieChartData = (scans: any, standard: string) => {
         { type: CYC_TYPE_TXT.EXCESS, value: summary.under_cc_func_count },
       ];
     }
-  });
+  }
   return [];
 };
 
@@ -273,10 +302,26 @@ export const getDupLineChartData = (scans: any, standard: string) => {
         : scan.default_summary;
       if (summary) {
         const date = formatChartDate(scan.scan_time);
-        rowsExhi.push({ date, num: get(summary, 'exhi_risk.file_count', 0), type: RISK_TYPE_TXT.EXHI });
-        rowsHigh.push({ date, num: get(summary, 'high_risk.file_count', 0), type: RISK_TYPE_TXT.HIGH });
-        rowsMidd.push({ date, num: get(summary, 'midd_risk.file_count', 0), type: RISK_TYPE_TXT.MIDD });
-        rowsLow.push({ date, num: get(summary, 'low_risk.file_count', 0), type: RISK_TYPE_TXT.LOW });
+        rowsExhi.push({
+          date,
+          num: get(summary, 'exhi_risk.file_count', 0),
+          type: RISK_TYPE_TXT.EXHI,
+        });
+        rowsHigh.push({
+          date,
+          num: get(summary, 'high_risk.file_count', 0),
+          type: RISK_TYPE_TXT.HIGH,
+        });
+        rowsMidd.push({
+          date,
+          num: get(summary, 'midd_risk.file_count', 0),
+          type: RISK_TYPE_TXT.MIDD,
+        });
+        rowsLow.push({
+          date,
+          num: get(summary, 'low_risk.file_count', 0),
+          type: RISK_TYPE_TXT.LOW,
+        });
       }
     });
     return {
@@ -286,7 +331,12 @@ export const getDupLineChartData = (scans: any, standard: string) => {
       [RISK_TYPE.LOW]: rowsLow.reverse(),
     };
   }
-  return { [RISK_TYPE.EXHI]: [], [RISK_TYPE.HIGH]: [], [RISK_TYPE.MIDD]: [], [RISK_TYPE.LOW]: [] };
+  return {
+    [RISK_TYPE.EXHI]: [],
+    [RISK_TYPE.HIGH]: [],
+    [RISK_TYPE.MIDD]: [],
+    [RISK_TYPE.LOW]: [],
+  };
 };
 
 /**
@@ -295,7 +345,12 @@ export const getDupLineChartData = (scans: any, standard: string) => {
  * @param standard 标准
  */
 export const getDupBarChartData = (scans: any, standard: string) => {
-  Object.values(scans).forEach((data: any) => {
+  if (isEmpty(scans)) {
+    return [];
+  }
+
+  // for (const data of scans) {
+  for (const data of scans) {
     if (data.default_summary) {
       const summary = standard === STANDARD_TYPE.CUSTOM && data.custom_summary
         ? data.custom_summary
@@ -319,10 +374,10 @@ export const getDupBarChartData = (scans: any, standard: string) => {
         },
       ];
     }
-  });
-  return [];
+    return [];
+  }
+  // });
 };
-
 
 /**
  * 获取代码统计表格数据
@@ -337,10 +392,26 @@ export const getClocLineChartData = (scans: any) => {
     scans.forEach((item: any) => {
       if (item) {
         const date = formatChartDate(item.scan_time);
-        rowsTotal.push({ date, num: item.total_line_num, type: CLOC_TYPE_TXT.TOTAL });
-        rowsCode.push({ date, num: item.code_line_num, type: CLOC_TYPE_TXT.CODE });
-        rowsComment.push({ date, num: item.comment_line_num, type: CLOC_TYPE_TXT.COMMENT });
-        rowsBlank.push({ date, num: item.blank_line_num, type: CLOC_TYPE_TXT.BLANK });
+        rowsTotal.push({
+          date,
+          num: item.total_line_num,
+          type: CLOC_TYPE_TXT.TOTAL,
+        });
+        rowsCode.push({
+          date,
+          num: item.code_line_num,
+          type: CLOC_TYPE_TXT.CODE,
+        });
+        rowsComment.push({
+          date,
+          num: item.comment_line_num,
+          type: CLOC_TYPE_TXT.COMMENT,
+        });
+        rowsBlank.push({
+          date,
+          num: item.blank_line_num,
+          type: CLOC_TYPE_TXT.BLANK,
+        });
       }
     });
     return {
@@ -350,7 +421,12 @@ export const getClocLineChartData = (scans: any) => {
       [CLOC_TYPE.BLANK]: rowsBlank.reverse(),
     };
   }
-  return { [CLOC_TYPE.TOTAL]: [], [CLOC_TYPE.CODE]: [], [CLOC_TYPE.COMMENT]: [], [CLOC_TYPE.BLANK]: [] };
+  return {
+    [CLOC_TYPE.TOTAL]: [],
+    [CLOC_TYPE.CODE]: [],
+    [CLOC_TYPE.COMMENT]: [],
+    [CLOC_TYPE.BLANK]: [],
+  };
 };
 
 /**
@@ -359,16 +435,20 @@ export const getClocLineChartData = (scans: any) => {
  */
 export const getClocPieChartData = (scans: any) => {
   if (scans && scans.length > 0) {
-    return [{
-      type: CLOC_TYPE_TXT.CODE,
-      value: scans[0].code_line_num,
-    }, {
-      type: CLOC_TYPE_TXT.COMMENT,
-      value: scans[0].comment_line_num,
-    }, {
-      type: CLOC_TYPE_TXT.BLANK,
-      value: scans[0].blank_line_num,
-    }];
+    return [
+      {
+        type: CLOC_TYPE_TXT.CODE,
+        value: scans[0].code_line_num,
+      },
+      {
+        type: CLOC_TYPE_TXT.COMMENT,
+        value: scans[0].comment_line_num,
+      },
+      {
+        type: CLOC_TYPE_TXT.BLANK,
+        value: scans[0].blank_line_num,
+      },
+    ];
   }
   return [];
 };
@@ -380,7 +460,7 @@ export const getClocPieChartData = (scans: any) => {
  */
 export const getMineFormatData = (count: any, total: any) => {
   let progress = 0;
-  if (typeof (count) === 'number' && typeof (total) === 'number') {
+  if (typeof count === 'number' && typeof total === 'number') {
     progress = total === 0 ? 0 : count / total;
   } else {
     count = '-';

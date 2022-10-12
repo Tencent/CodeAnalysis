@@ -50,10 +50,12 @@ const FirstModal = (props: FirstModalProps) => {
 
   useEffect(() => {
     (async () => {
-      setTags(get(await getTags(orgSid), 'results', []));
-      setLanguages(get(await getLanguages(), 'results', []));
+      if (visible) {
+        setTags(get(await getTags(orgSid), 'results', []));
+        setLanguages(get(await getLanguages(), 'results', []));
+      }
     })();
-  }, []);
+  }, [visible]);
 
   const onFinish = (data: any) => {
     const { funcList = [] } = data;

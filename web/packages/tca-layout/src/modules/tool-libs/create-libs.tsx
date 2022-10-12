@@ -7,8 +7,8 @@ import { Modal, Form, Input, Select, Tooltip, Button, message, Space } from 'cod
 import TrashIcon from 'coding-oa-uikit/lib/icon/Trash';
 import QuestionCircle from 'coding-oa-uikit/lib/icon/QuestionCircle';
 import AttentionIcon from 'coding-oa-uikit/lib/icon/AttentionRed';
-import Authority from '@tencent/micro-frontend-shared/component/authority';
-import { UserAPI } from '@plat/api';
+import AuthFormItem from '@tencent/micro-frontend-shared/tca/user-auth/auth-form-item';
+import { userAuthAPI } from '@plat/api';
 
 import { addToolLib, getLibDetail, updateToolLib } from '@src/services/tools';
 import { TOOLLIB_REPO_TYPE_OPTIONS, RepoTypeEnum, SCM_MAP, LIB_ENV, LIB_TYPE } from '@src/constant';
@@ -214,8 +214,7 @@ const CreateToollibs = (props: CreateToollibsProps) => {
           }
         >
           {({ getFieldValue }: { getFieldValue: any }) => (getFieldValue('scm_type') !== RepoTypeEnum.ZIP && (
-            <Authority
-              form={form}
+            <AuthFormItem form={form}
               name='scm'
               label={(
                 <span>
@@ -226,16 +225,11 @@ const CreateToollibs = (props: CreateToollibsProps) => {
                   ><QuestionCircle className={style.questionIcon} /></Tooltip>
                 </span>
               )}
-              getAuthList={[
-                UserAPI.authSSH().get,
-                UserAPI.authAccount().get,
-                UserAPI.getOAuthInfos,
-                UserAPI.getPlatformStatus,
-              ]}
-              initAuth={detail.scm_auth}
+              userAuthAPI={userAuthAPI}
+              authinfo={detail.scm_auth}
               selectStyle={{ width: 360 }}
               placeholder='github公开仓库可不提供凭证'
-            />
+              allowClear />
           ))}
         </Form.Item>
         <Form.Item

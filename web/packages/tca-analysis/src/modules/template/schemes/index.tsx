@@ -9,11 +9,10 @@
  */
 
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import { Table } from 'coding-oa-uikit';
 import { get } from 'lodash';
 
-import { getSchemeRouter } from '@src/utils/getRoutePath';
+import { getSchemeBlankRouter } from '@src/utils/getRoutePath';
 import { DEFAULT_PAGER } from '@src/constant';
 import { getSchemeList } from '@src/services/template';
 
@@ -64,36 +63,36 @@ const SchemeList = (props: SchemeListProps) => {
   };
 
   return (
-        <Table
-            dataSource={list}
-            rowKey={(item: any) => item.id}
-            loading={loading}
-            className={style.schemeList}
-            pagination={{
-              size: 'default',
-              current: Math.floor(pageStart / pageSize) + 1,
-              total: count,
-              pageSize,
-              showSizeChanger: true,
-              showTotal: (total, range) => `${range[0]} - ${range[1]} 条，共 ${total} 条`,
-              onChange: onChangePageSize,
-              onShowSizeChange,
-            }}
-        >
-            <Column
-                title="分析方案名称"
-                dataIndex="name"
-                key="name"
-                render={(name: string, data: any) => (
-                    <Link className='link-name' target='_blank' to={`${getSchemeRouter(orgSid, teamName, get(data, 'repo.id'), data.id)}/basic`}>{name}</Link>
-                )}
-            />
-            <Column
-                title="所属代码库"
-                dataIndex={['repo', 'scm_url']}
-                key="repo"
-            />
-        </Table>
+    <Table
+      dataSource={list}
+      rowKey={(item: any) => item.id}
+      loading={loading}
+      className={style.schemeList}
+      pagination={{
+        size: 'default',
+        current: Math.floor(pageStart / pageSize) + 1,
+        total: count,
+        pageSize,
+        showSizeChanger: true,
+        showTotal: (total, range) => `${range[0]} - ${range[1]} 条，共 ${total} 条`,
+        onChange: onChangePageSize,
+        onShowSizeChange,
+      }}
+    >
+      <Column
+        title="分析方案名称"
+        dataIndex="name"
+        key="name"
+        render={(name: string, data: any) => (
+          <a className='link-name' target='_blank' href={`${getSchemeBlankRouter(orgSid, teamName, get(data, 'repo.id'), data.id)}/basic`} rel="noreferrer">{name}</a>
+        )}
+      />
+      <Column
+        title="所属代码库"
+        dataIndex={['repo', 'scm_url']}
+        key="repo"
+      />
+    </Table>
   );
 };
 

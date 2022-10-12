@@ -34,7 +34,7 @@ const Welcome = () => {
         <Button
           type="primary"
           icon={<PlusIcon />}
-          onClick={() => history.push(`${getReposRouter(orgSid, teamName)}/create`)
+          onClick={() => history.push(`${getReposRouter(orgSid, teamName)}`)
           }
         >
           {t('登记代码库')}

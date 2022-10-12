@@ -152,3 +152,20 @@ export const xssRedirectUri = (redirectUri: string, validHostNames = [window.loc
   }
   return '';
 };
+
+/**
+ * 打开链接窗口
+ * @param url 地址
+ */
+export const openURL = (url: string, target: '_self' | '_blank' | '_parent' | '_top' = '_blank') => {
+  const id = 'a-open-url';
+  const aEle = document.createElement('a');
+  aEle.setAttribute('href', url);
+  aEle.setAttribute('target', target);
+  aEle.setAttribute('id', id);
+  // 防止反复添加
+  if (!document.getElementById(id)) {
+    document.body.appendChild(aEle);
+  }
+  aEle.click();
+};
