@@ -104,6 +104,7 @@ export const zh: SidebarConfig = {
       children: [
         '/zh/advanced/任务分布式执行.md',
         '/zh/advanced/集成代码分析工具.md',
+        '/zh/advanced/使用自建工具库.md'
       ],
     },
     {
