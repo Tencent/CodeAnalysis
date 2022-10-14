@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
+import { filter } from 'lodash';
 import classnames from 'classnames';
 import { Tag, Breadcrumb, Select, Space } from 'coding-oa-uikit';
 import AngleRight from 'coding-oa-uikit/lib/icon/AngleRight';
@@ -34,7 +35,9 @@ const Enterprise = ({ org, orgSid, teamName }: IProps) => {
     // 团队变更时重新获取项目列表
     if (org.org_sid && teamName) {
       getProjects(org.org_sid, null).then((response: any[]) => {
-        setProjectOptions(response.map((item: any) => ({
+        // 只显示未禁用的项目
+        const activeProjects = filter(response, { status: 1 });
+        setProjectOptions(activeProjects.map((item: any) => ({
           ...item,
           label: item.display_name,
           value: item.name,
