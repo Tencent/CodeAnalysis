@@ -3,8 +3,8 @@
 
 ## 规则列表
 
-- [CmdInject](https://tencent.github.io/CodeAnalysis/en/guide/代码检查/工具/TCA-Armory-C1.html#CmdInject)
-- [PathTraversal](https://tencent.github.io/CodeAnalysis/en/guide/代码检查/工具/TCA-Armory-C1.html#PathTraversal)
-- [SQLInject](https://tencent.github.io/CodeAnalysis/en/guide/代码检查/工具/TCA-Armory-C1.html#SQLInject)
-- [SSRF](https://tencent.github.io/CodeAnalysis/en/guide/代码检查/工具/TCA-Armory-C1.html#SSRF)
-- [XSS](https://tencent.github.io/CodeAnalysis/en/guide/代码检查/工具/TCA-Armory-C1.html#XSS)
+- [CmdInject](https://tencent.github.io/CodeAnalysis/zh/guide/代码检查/工具/TCA-Armory-C1.html#CmdInject)
+- [PathTraversal](https://tencent.github.io/CodeAnalysis/zh/guide/代码检查/工具/TCA-Armory-C1.html#PathTraversal)
+- [SQLInject](https://tencent.github.io/CodeAnalysis/zh/guide/代码检查/工具/TCA-Armory-C1.html#SQLInject)
+- [SSRF](https://tencent.github.io/CodeAnalysis/zh/guide/代码检查/工具/TCA-Armory-C1.html#SSRF)
+- [XSS](https://tencent.github.io/CodeAnalysis/zh/guide/代码检查/工具/TCA-Armory-C1.html#XSS)
