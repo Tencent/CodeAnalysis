@@ -37,6 +37,7 @@ export const zh: SidebarConfig = {
           children: [
             '/zh/guide/代码检查/规则包/cpp_doc.md',
             '/zh/guide/代码检查/规则包/enhanced_safety_java.md',
+            '/zh/guide/代码检查/规则包/test_case_verify_go.md',
           ],
         },
       ]
@@ -104,6 +105,7 @@ export const zh: SidebarConfig = {
       children: [
         '/zh/advanced/任务分布式执行.md',
         '/zh/advanced/集成代码分析工具.md',
+        '/zh/advanced/使用自建工具库.md'
       ],
     },
     {
