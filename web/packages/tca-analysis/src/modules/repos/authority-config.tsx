@@ -18,10 +18,9 @@ interface RepoAuthInfoProps {
 /** 用于渲染代码库凭证信息 */
 const RepoAuthInfo = ({ scmAuth }: RepoAuthInfoProps) => {
   const { auth_type: authType, scm_oauth: scmOAuth, scm_ssh: scmSSH, scm_account: scmAccount } = scmAuth;
-
   let txt = '';
   if (authType === AuthTypeEnum.OAUTH && scmOAuth) {
-    txt = `${AuthTypeTxtEnum.OAUTH}: ${scmOAuth.user} (由 ${scmOAuth.user?.nickname} 在 ${scmOAuth.auth_origin} 创建)`;
+    txt = `${AuthTypeTxtEnum.OAUTH}: ${scmOAuth.user?.nickname} (由 ${scmOAuth.user?.nickname} 在 ${scmOAuth.auth_origin} 创建)`;
   } else if (authType === AuthTypeEnum.SSH && scmSSH) {
     txt = `${AuthTypeTxtEnum.SSH}: ${scmSSH.name} (由 ${scmSSH.user?.nickname} 在 ${scmSSH.auth_origin} 创建)`;
   } else if (authType === AuthTypeEnum.HTTP && scmAccount) {

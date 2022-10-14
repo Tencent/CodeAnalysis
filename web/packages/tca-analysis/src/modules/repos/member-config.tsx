@@ -2,11 +2,11 @@
  * 项目成员设置
  */
 import React, { useEffect, useState } from 'react';
-import { uniqBy } from 'lodash';
+import { isEmpty, uniqBy } from 'lodash';
 import { Modal, Select, message, Button, Tag } from 'coding-oa-uikit';
 
 import { getRepoMembers, postRepoMembers, delRepoMembers } from '@src/services/repos';
-import { getProjectMembers } from '@src/utils';
+import { getProjectTeamMembers } from '@src/services/common';
 
 import style from './style.module.scss';
 
@@ -21,9 +21,21 @@ interface MemberConfigProps {
 
 const MemberConfig = (props: MemberConfigProps) => {
   const { orgSid, teamName, repoId, visible, onCancel } = props;
-  const projectMembers = getProjectMembers();
+  const [projectMembers, setProjectMembers] = useState([]);
   const [selectMembers, setSelectMembers] = useState([]);
   const [members, setMembers] = useState([]);
+
+  const uniqMembers = (members: any) => {
+    if (isEmpty(members)) return [];
+    const { admins = [], users = [] } = members;
+    return uniqBy([...admins, ...users], 'username');
+  };
+
+  useEffect(() => {
+    getProjectTeamMembers(orgSid, teamName).then((res: any) => {
+      setProjectMembers(uniqMembers(res));
+    });
+  }, []);
 
   useEffect(() => {
     if (visible) {
@@ -32,10 +44,8 @@ const MemberConfig = (props: MemberConfigProps) => {
   }, [visible, repoId]);
 
   const getMembers = () => {
-    getRepoMembers(orgSid, teamName, repoId).then((res) => {
-      const { admins = [], users = [] } = res;
-      const arrs = uniqBy([...admins, ...users], 'username');
-      setMembers(arrs);
+    getRepoMembers(orgSid, teamName, repoId).then((res: any) => {
+      setMembers(uniqMembers(res));
     });
   };
 

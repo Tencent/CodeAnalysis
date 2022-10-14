@@ -17,6 +17,8 @@ export interface FetchCustomParams {
   failResultHandler?: (data: any) => any;
   /** fetch 请求状态处理 */
   statusHandler?: (response: Response) => void;
+  /** fetch 文件下载处理 */
+  fileHandler?: (response: Response) => any;
 }
 
 interface RequestCustom extends FetchCustomParams {
@@ -73,6 +75,10 @@ export const fetch = (input: RequestInfo, init?: RequestInit, customParams?: Fet
       // if (response.status === 404) {
       //   return reject(failResultHandler({ msg: '接口不存在' }, custom));
       // }
+      // 文件下载自定义结果处理
+      if (custom.fileHandler) {
+        return resolve(custom.fileHandler(response));
+      }
       response.json().then((jsonData) => {
         if (response.ok) {
           return resolve(resultHandler(jsonData, custom));
@@ -163,6 +169,24 @@ export const getFailMessage: any = (msg: any) => {
   return '接口请求失败';
 };
 
+/**
+ * GET 方法下载文件结果处理
+ * @param response
+ * @returns
+ */
+const getFileResultHandler = (response: Response) => response;
+
+/**
+ * POST 方法下载文件结果处理
+ * @param response
+ */
+const postFileResultHandler = (response: Response) => {
+  if (response.ok) {
+    return Promise.resolve(response);
+  }
+  return Promise.reject();
+};
+
 /** fetch 请求管理模块 */
 export class FetchManager {
   private custom?: FetchCustomParams;
@@ -197,11 +221,24 @@ export class FetchManager {
   getFile = (url: string, data?: any, custom?: FetchCustomParams) => fetch(url, {
     method: 'GET',
     body: data ? JSON.stringify(data) : null,
-  }, { ...this.custom, ...custom });
+  }, {
+    fileHandler: getFileResultHandler,
+    ...this.custom,
+    ...custom,
+  });
 
   postFile = (url: string, data: any, custom?: FetchCustomParams) => fetch(url, {
     method: 'POST',
     body: JSON.stringify(data),
+  }, {
+    fileHandler: postFileResultHandler,
+    ...this.custom,
+    ...custom,
+  });
+
+  upload = (url: string, data: any, custom?: FetchCustomParams) => fetch(url, {
+    method: 'POST',
+    body: data,
   }, { ...this.custom, ...custom });
 }
 
