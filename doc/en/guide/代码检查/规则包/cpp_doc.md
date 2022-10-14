@@ -3,10 +3,10 @@
 
 ## 规则列表
 
-- [array_overflow](https://tencent.github.io/CodeAnalysis/zh/guide/代码检查/工具/TCA-Armory-Q1.html#array_overflow)
-- [buff_overflow](https://tencent.github.io/CodeAnalysis/zh/guide/代码检查/工具/TCA-Armory-Q1.html#buff_overflow)
-- [dead_lock](https://tencent.github.io/CodeAnalysis/zh/guide/代码检查/工具/TCA-Armory-Q1.html#dead_lock)
-- [func_ret_null](https://tencent.github.io/CodeAnalysis/zh/guide/代码检查/工具/TCA-Armory-Q1.html#func_ret_null)
-- [missing_lock](https://tencent.github.io/CodeAnalysis/zh/guide/代码检查/工具/TCA-Armory-Q1.html#missing_lock)
-- [resource_leak](https://tencent.github.io/CodeAnalysis/zh/guide/代码检查/工具/TCA-Armory-Q1.html#resource_leak)
-- [unused_value](https://tencent.github.io/CodeAnalysis/zh/guide/代码检查/工具/TCA-Armory-Q1.html#unused_value)
+- [array_overflow](https://tencent.github.io/CodeAnalysis/en/guide/代码检查/工具/TCA-Armory-Q1.html#array_overflow)
+- [buff_overflow](https://tencent.github.io/CodeAnalysis/en/guide/代码检查/工具/TCA-Armory-Q1.html#buff_overflow)
+- [dead_lock](https://tencent.github.io/CodeAnalysis/en/guide/代码检查/工具/TCA-Armory-Q1.html#dead_lock)
+- [func_ret_null](https://tencent.github.io/CodeAnalysis/en/guide/代码检查/工具/TCA-Armory-Q1.html#func_ret_null)
+- [missing_lock](https://tencent.github.io/CodeAnalysis/en/guide/代码检查/工具/TCA-Armory-Q1.html#missing_lock)
+- [resource_leak](https://tencent.github.io/CodeAnalysis/en/guide/代码检查/工具/TCA-Armory-Q1.html#resource_leak)
+- [unused_value](https://tencent.github.io/CodeAnalysis/en/guide/代码检查/工具/TCA-Armory-Q1.html#unused_value)
