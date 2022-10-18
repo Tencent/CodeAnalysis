@@ -38,6 +38,7 @@ export const en: SidebarConfig = {
             '/en/guide/代码检查/规则包/cpp_doc.md',
             '/en/guide/代码检查/规则包/enhanced_safety_java.md',
             '/en/guide/代码检查/规则包/test_case_verify_go.md',
+            '/en/guide/代码检查/规则包/code_spec_oc.md',
           ],
         },
       ]
