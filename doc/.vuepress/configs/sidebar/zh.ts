@@ -39,6 +39,7 @@ export const zh: SidebarConfig = {
             '/zh/guide/代码检查/规则包/enhanced_safety_java.md',
             '/zh/guide/代码检查/规则包/test_case_verify_go.md',
             '/zh/guide/代码检查/规则包/code_spec_oc.md',
+            '/zh/guide/代码检查/规则包/front_end_framework_check.md',
           ],
         },
       ]
