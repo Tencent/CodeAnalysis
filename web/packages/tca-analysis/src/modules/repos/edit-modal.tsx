@@ -3,8 +3,8 @@
  */
 import React, { useEffect, useState } from 'react';
 import { Modal, Form, Input, Space, Button, message } from 'coding-oa-uikit';
+import { getRepoName } from '@tencent/micro-frontend-shared/tca/util';
 import { useLoginUserIsAdmin } from '@plat/hooks';
-import { getRepoName } from '@src/utils';
 import { putRepo, getRepoMembers, delRepo } from '@src/services/repos';
 
 interface EditModalProps {
@@ -46,7 +46,7 @@ const EditModal = (props: EditModalProps) => {
 
   const onDel = () => {
     Modal.confirm({
-      title: `是否确认删除代码库【${repoInfo.name || getRepoName(repoInfo.scm_url)}】？`,
+      title: `是否确认删除代码库【${getRepoName(repoInfo)}】？`,
       onOk() {
         delRepo(orgSid, teamName, repoInfo.id).then(() => {
           message.success('已删除代码库');
@@ -79,7 +79,7 @@ const EditModal = (props: EditModalProps) => {
         layout="vertical"
         initialValues={repoInfo && {
           ...repoInfo,
-          name: repoInfo.name || getRepoName(repoInfo.scm_url),
+          name: getRepoName(repoInfo),
         }}
       >
         <Form.Item

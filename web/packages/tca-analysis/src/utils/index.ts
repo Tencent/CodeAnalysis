@@ -7,7 +7,7 @@
 import Moment from 'moment';
 import qs from 'qs';
 import { message } from 'coding-oa-uikit';
-import { get, uniqBy, throttle, isEmpty } from 'lodash';
+import { get, uniqBy, throttle } from 'lodash';
 import { LOGIN_SERVER_API } from '@plat/api';
 import { useStateStore } from '@src/context/store';
 import { getMetaContent } from '@tencent/micro-frontend-shared/util';
@@ -93,16 +93,3 @@ export const reLogin = throttle((content?: string) => {
 }, 1000);
 
 export const isEnableManage = () => getMetaContent('ENABLE_MANAGE', process.env.ENABLE_MANAGE) === 'TRUE';
-
-/**
- * 根据代码库地址获取代码库名称
- * @param url - 代码库地址
- * @returns
- */
-export const getRepoName = (url: string) => {
-  if (isEmpty(url)) {
-    return '';
-  }
-  const urls = url.split('/');
-  return urls?.[urls.length - 1];
-};

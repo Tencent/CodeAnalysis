@@ -20,8 +20,8 @@ import CaretDown from 'coding-oa-uikit/lib/icon/CaretDown';
 import LinkIcon from 'coding-oa-uikit/lib/icon/Link';
 import ConfigIcon from 'coding-oa-uikit/lib/icon/Cog';
 
+import { getRepoName } from '@tencent/micro-frontend-shared/tca/util';
 import { getRepos } from '@src/services/common';
-import { getRepoName } from '@src/utils';
 import { getReposRouter } from '@src/utils/getRoutePath';
 import { useStateStore, useDispatchStore } from '@src/context/store';
 import { SET_CUR_REPO } from '@src/context/constant';
@@ -101,7 +101,7 @@ const Repos = (props: IProps) => {
     return repoList.map(item => (
       <Menu.Item key={item.id}>
         <RepoIcon className={cn(style.gitMark, style.repoListIcon)} />
-        {item.name || getRepoName(item.scm_url)}
+        {getRepoName(item)}
       </Menu.Item>
     ));
   };
@@ -132,12 +132,12 @@ const Repos = (props: IProps) => {
           }>
           <div className={style.curRepo}>
             <RepoIcon className={style.gitMark} />
-            <span className={style.repoUrl}>{curRepo.scm_url}</span>
+            <span className={style.repoUrl}>{getRepoName(curRepo)}</span>
             <CaretDown className={style.icon} />
           </div>
         </Dropdown>
         {/* <Copy text={curRepo.scm_url} className={style.copyIcon} /> */}
-        <Tooltip title='跳转代码库'>
+        <Tooltip title={<div style={{ wordBreak: 'break-all' }}>跳转代码库: {curRepo.scm_url}</div>}>
           <a className={style.repoLink} target="_blank" href={curRepo.scm_url} rel="noreferrer">
             <LinkIcon />
           </a>

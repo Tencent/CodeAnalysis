@@ -9,9 +9,10 @@ import ClockIcon from 'coding-oa-uikit/lib/icon/Clock';
 import AlignLeftIcon from 'coding-oa-uikit/lib/icon/AlignLeft';
 import MemberSettingsIcon from 'coding-oa-uikit/lib/icon/MemberSettings';
 
+import { formatDateTime } from '@tencent/micro-frontend-shared/util';
+import { getRepoName } from '@tencent/micro-frontend-shared/tca/util';
 import { getRepo, putRepo } from '@src/services/repos';
 import { getProjectRouter, getReposRouter } from '@src/utils/getRoutePath';
-import { formatDateTime, getRepoName } from '@src/utils';
 import { CLOSE_REPO_MEMBER_CONF } from '@plat/modules';
 
 import MemberConfig from '../member-config';
@@ -44,7 +45,7 @@ const Repo = () => {
       loading: false,
       repoInfo,
     });
-    setName(repoInfo.name || getRepoName(repoInfo.scm_url));
+    setName(getRepoName(repoInfo));
   }, [orgSid, teamName, repoId]);
 
   useEffect(() => {
