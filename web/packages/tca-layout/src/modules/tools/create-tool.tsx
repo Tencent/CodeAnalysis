@@ -7,8 +7,8 @@ import { Modal, Form, Input, Checkbox, Select, message } from 'coding-oa-uikit';
 import { createTool } from '@src/services/tools';
 import { getToolsRouter } from '@src/utils/getRoutePath';
 import { RepoTypeEnum, REPO_TYPE_OPTIONS, AuthTypeEnum, SCM_MAP } from '@src/constant';
-import Authority from '@tencent/micro-frontend-shared/component/authority';
-import { UserAPI } from '@plat/api';
+import AuthFormItem from '@tencent/micro-frontend-shared/tca/user-auth/auth-form-item';
+import { userAuthAPI } from '@plat/api';
 
 const { TextArea } = Input;
 
@@ -106,19 +106,14 @@ const CreateToolModal = ({ orgId, visible, onClose }: CreateToolModalProps) => {
             </Form.Item>
           </Input.Group>
         </Form.Item>
-        <Authority
+        <AuthFormItem
           form={form}
           name='scm_auth_id'
           label={t('凭证')}
-          getAuthList={[
-            UserAPI.authSSH().get,
-            UserAPI.authAccount().get,
-            UserAPI.getOAuthInfos,
-            UserAPI.getPlatformStatus,
-          ]}
+          userAuthAPI={userAuthAPI}
           selectStyle={{ width: 360 }}
           required
-        />
+          allowClear />
         <Form.Item
           label={t('执行命令')}
           name='run_cmd'

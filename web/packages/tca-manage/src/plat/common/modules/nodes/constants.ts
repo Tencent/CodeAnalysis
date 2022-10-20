@@ -1,5 +1,6 @@
 import { t } from '@tencent/micro-frontend-shared/i18n';
 import { SearchFormField } from '@tencent/micro-frontend-shared/tdesign-component/search';
+import { NODE_ENABLED_OPTIONS, NODE_STATE_OPTIONS } from '@src/constant/node';
 
 export const getNodeSearchFields = (tagOptions: any[]): SearchFormField[] => [{
   name: 'name',
@@ -13,6 +14,18 @@ export const getNodeSearchFields = (tagOptions: any[]): SearchFormField[] => [{
   type: 'string',
   formType: 'input',
   placeholder: t('负责人'),
+}, {
+  name: 'state',
+  label: t('状态'),
+  type: 'string',
+  formType: 'select',
+  options: NODE_STATE_OPTIONS,
+}, {
+  name: 'enabled',
+  label: t('可用性'),
+  type: 'string',
+  formType: 'select',
+  options: NODE_ENABLED_OPTIONS,
 }, {
   name: 'exec_tags',
   label: t('标签'),

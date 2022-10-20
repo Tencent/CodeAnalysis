@@ -1,16 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import Table from '@tencent/micro-frontend-shared/tdesign-component/table';
 import { Tag } from 'tdesign-react';
-
-import { useURLParams } from '@tencent/micro-frontend-shared/hooks';
 import { get, concat } from 'lodash';
+import Table from '@tencent/micro-frontend-shared/tdesign-component/table';
+import { useURLParams } from '@tencent/micro-frontend-shared/hooks';
 
 // 项目内
 import { getToolRouter } from '@plat/util';
 import { RuleSeverityEnum, RuleSeverityInvertEnum, RULE_SEVERITY_CHOICES } from '@src/constant';
-
-// const { Column } = Table;
+import RuleDetailDrawer from './rule-detail-drawer';
 
 interface RuleTableProps {
   /** 表格数据 */
@@ -45,6 +43,8 @@ const RuleTable = ({
   editRule = null }: RuleTableProps) => {
   const { t } = useTranslation();
   const { currentPage, pageSize } = useURLParams();
+  const [ruleDetailVisible, setRuleDetailVisible] = useState<boolean>(false);
+  const [ruleDetail, setRuleDetail] = useState<any>({});
 
   const onSelectChange = (selectedKeys: any) => {
     setSelectedRowKeys(selectedKeys);
@@ -79,7 +79,10 @@ const RuleTable = ({
       title: t('规则名称'),
       width: 300,
       cell: ({ row }: any) => (<>
-          <span className="link-name text-weight-bold">{get(row, indexs.rule_display_name)}</span>
+          <a className="text-weight-bold" onClick={() => {
+            setRuleDetail(row);
+            setRuleDetailVisible(true);
+          }}>{get(row, indexs.rule_display_name)}</a>
           {get(row, indexs.rule_title) && <p className='mt-sm fs-12 text-grey-6'>{get(row, indexs.rule_title)}</p>}
         </>),
     },
@@ -114,7 +117,7 @@ const RuleTable = ({
       colKey: indexs.rule_support_language,
       title: t('语言'),
       width: 100,
-      cell: ({ row }: any) => (get(row, indexs.rule_support_language).join() || '通用'),
+      cell: ({ row }: any) => (get(row, indexs.rule_support_language)?.join() || '通用'),
     },
     {
       colKey: 'status',
@@ -150,19 +153,26 @@ const RuleTable = ({
   };
 
   return (
-    <Table
-      rowKey='id'
-      data={tableData}
-      columns={getColumns()}
-      selectedRowKeys={selectedRowKeys}
-      onSelectChange={onSelectChange}
-      loading={loading}
-      pagination={{
-        current: currentPage,
-        total: count,
-        pageSize,
-      }}
-    />
+    <>
+      <RuleDetailDrawer
+        visible={ruleDetailVisible}
+        ruleDetail={ruleDetail}
+        handleClose={() => setRuleDetailVisible(false)}
+      />
+      <Table
+        rowKey='id'
+        data={tableData}
+        columns={getColumns()}
+        selectedRowKeys={selectedRowKeys}
+        onSelectChange={onSelectChange}
+        loading={loading}
+        pagination={{
+          current: currentPage,
+          total: count,
+          pageSize,
+        }}
+      />
+    </>
   );
 };
 

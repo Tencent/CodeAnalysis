@@ -1,70 +1,136 @@
-// Copyright (c) 2021-2022 THL A29 Limited
-//
-// This source code file is made available under MIT License
-// See LICENSE for details
-// ==============================================================================
+/**
+ * 仓库登记入口文件
+ */
+import React, { useState, useEffect } from 'react';
+import { useHistory, useParams } from 'react-router-dom';
+import qs from 'qs';
+import { toNumber, omit } from 'lodash';
 
-import React, { useEffect } from 'react';
-import { useParams, useHistory, useRouteMatch } from 'react-router-dom';
-import { get } from 'lodash';
+// import { Button, Form, Input, Checkbox } from 'coding-oa-uikit';
+import { Button, Form, Input } from 'coding-oa-uikit';
+import Filter from '@src/components/filter';
 
-// 项目内
-import { useStateStore } from '@src/context/store';
-import { getReposRouter } from '@src/utils/getRoutePath';
+import { getQuery } from '@src/utils';
+import { getRepos } from '@src/services/common';
+import { DEFAULT_PAGER } from '@src/constant';
+import { CLOSE_REPO_MEMBER_CONF } from '@plat/modules';
 
-// 模块内
-import ReposList from './repo-list';
-import { getRepoRouter } from './routes';
+import List from './list';
+import CreateRepoModal from './create-repo';
+import style from './style.module.scss';
 
 const Repos = () => {
+  const [form] = Form.useForm();
   const history = useHistory();
   const { orgSid, teamName }: any = useParams();
-  const { url } = useRouteMatch();
-  const { curRepo, repos } = useStateStore();
+  const query = getQuery() as any;
+  const [list, setList] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [count, setCount] = useState(DEFAULT_PAGER.count);
+  const [visible, setVisible] = useState(false);
 
-  /**
-     * 重定向到对应代码库。如果store中存在代码库且在代码库列表中，则跳转到对应代码库，否则选取第一个代码库跳转
-     * @param repoList 代码库列表
-     */
-  // const replaceToRepo = () => {
-  //     if (reposLoading) {
-  //     if (repos.length > 0) {
-  //         // 存在登记的代码库，且repoId不存在或不在repos内则重定向到第一项
-  //         if (!repoId || !repos.some((item: any) => item.id === repoId)) {
-  //             if (!repos.some((item: any) => item.id === curRepo.id)) {
-  //                 history.replace(getRepoRouter(orgSid, teamName, repos[0].id));
-  //             } else {
-  //                 history.replace(getRepoRouter(orgSid, teamName, curRepo.id));
-  //             }
-  //         } else {
-  //             // 存在repoId则直接采用该路由
-  //         }
-  //     } else {
-  //         // 待移除
-  //         // 未登记代码库，则重定向到欢迎页
-  //         history.replace(`${getReposRouter(orgSid, teamName)}/welcome`);
-  //     }
-  //     }
-  // };
-
-  // useEffect(() => {
-  //     // 当处于xxx/repos路由时，进行重定向到对应代码库
-  //     if (!reposLoading && url === getReposRouter(orgSid, teamName)) {
-  //         replaceToRepo();
-  //     }
-  // });
+  const pageSize = toNumber(query.limit) || DEFAULT_PAGER.pageSize;
+  const pageStart = toNumber(query.offset) || DEFAULT_PAGER.pageStart;
+  const searchParams: any = omit(query, ['offset', 'limit']);
 
   useEffect(() => {
-    // 当处于xxx/repos路由时，且当前repo存在repos中，且当前路由的项目标识与当前代码库项目标识相同，则进行重定向到对应代码库
-    if (
-      url === getReposRouter(orgSid, teamName)
-            && repos.some((item: any) => item.id === curRepo.id)
-            && get(curRepo, 'project_team.name') === teamName
-    ) {
-      history.replace(`${getRepoRouter(orgSid, teamName, curRepo.id)}`);
-    }
-  });
+    getListData();
+  }, [orgSid, teamName]);
 
-  return <ReposList repos={repos} />;
+  const getListData = (offset = pageStart, limit = pageSize, otherParams = searchParams) => {
+    const params = {
+      limit,
+      offset,
+      scope: 'related_me',  // 默认展示有权限的代码库
+      ...otherParams,
+    };
+    setLoading(true);
+    getRepos(orgSid, teamName, params).then((response) => {
+      history.replace(`?${qs.stringify(params)}`);
+      setCount(response.count);
+      setList(response.results || []);
+    })
+      .finally(() => {
+        setLoading(false);
+        form.resetFields();
+      });
+  };
+
+  const onChangePageSize = (page: number, pageSize: number) => {
+    getListData((page - 1) * pageSize, pageSize);
+  };
+
+  const onChangeSearchParams = (type: string, value: any) => {
+    getListData(DEFAULT_PAGER.pageStart, pageSize, {
+      ...searchParams,
+      [type]: value,
+    });
+  };
+
+  return (
+    <div className={style.repos}>
+      <header className={style.repoHeader}>
+        <span>仓库登记</span>
+        <div>
+          <Button type='primary' onClick={() => setVisible(true)}>代码库登记</Button>
+        </div>
+      </header>
+      <div className={style.search}>
+        <Filter
+          form={form}
+          initialValues={{
+            scm_url_or_name: query.scm_url_or_name,
+            scope: query.scope === 'subscribed',
+          }}
+        >
+          <Filter.Item label="" name="scm_url_or_name">
+            <Input.Search
+              size='middle'
+              style={{ width: 200 }}
+              placeholder="代码库别名/地址"
+              allowClear
+              onSearch={(value: string) => {
+                onChangeSearchParams('scm_url_or_name', value);
+              }}
+            />
+          </Filter.Item>
+          {/* <Filter.Item
+            label=""
+            name="scope"
+            valuePropName='checked'
+          >
+            <Checkbox
+              onChange={(e: any) => {
+                onChangeSearchParams('scope', e.target.checked ? 'subscribed' : 'related_me');
+              }}
+            >我关注的</Checkbox>
+          </Filter.Item> */}
+        </Filter>
+      </div>
+      <div className={style.list}>
+        <List
+          orgSid={orgSid}
+          teamName={teamName}
+          searchWords={query.scm_url_or_name}
+          loading={loading}
+          list={list}
+          count={count}
+          pageSize={pageSize}
+          pageStart={pageStart}
+          onChangePageSize={onChangePageSize}
+          callback={getListData}
+          closeMemberConf={CLOSE_REPO_MEMBER_CONF}
+        />
+      </div>
+      <CreateRepoModal
+        orgSid={orgSid}
+        teamName={teamName}
+        visible={visible}
+        onCancel={() => setVisible(false)}
+        callback={() => getListData(DEFAULT_PAGER.pageStart)}
+      />
+    </div>
+  );
 };
+
 export default Repos;

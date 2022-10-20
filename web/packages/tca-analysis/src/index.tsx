@@ -2,6 +2,7 @@ import React from 'react';
 import MicroInit from '@tencent/micro-frontend-shared/component/micro-init';
 import MicroLayout from '@tencent/micro-frontend-shared/component/micro-layout';
 import initI18next from '@tencent/micro-frontend-shared/i18n';
+import { isTrue } from '@tencent/micro-frontend-shared/util';
 import { initReactI18next } from 'react-i18next';
 // import { StoreProvider } from './context/store';
 
@@ -18,7 +19,7 @@ MicroInit<State, Action>({
   id: 'container',
   name: pkg.name,
   container: (
-    <MicroLayout value="projectCompleted">
+    <MicroLayout value="projectCompleted" disable={isTrue(process.env.DISABLE_MICRO_LAYOUT)}>
       <Root />
     </MicroLayout>
   ),

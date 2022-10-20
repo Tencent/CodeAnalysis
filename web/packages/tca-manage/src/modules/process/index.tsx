@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { omit, get } from 'lodash';
-import { Table, Button, Checkbox, MessagePlugin, Tag, Card } from 'tdesign-react';
+import { Table, Button, Checkbox, MessagePlugin, Tag, Card, Space } from 'tdesign-react';
 import { SaveIcon } from 'tdesign-icons-react';
 import NodeStatus from '@tencent/micro-frontend-shared/tdesign-component/node-status';
 import { formatDateTime, bytesToSize } from '@tencent/micro-frontend-shared/util';
@@ -174,42 +174,50 @@ const Process = () => {
         <Card title={t('节点信息')} className={s.infoCard}>
           <div className={s.infoBox}>
             <div className={s.infoBoxItem}>
-              <h1>{t('节点名称')}</h1>
-              <span>{name}</span>
+              <span className={s.title}>{t('节点名称')}</span>
+              <span className={s.info}>{name}</span>
             </div>
             <div className={s.infoBoxItem}>
-              <h1>{t('负责人')}</h1>
-              <span>{manager}</span>
+              <span className={s.title}>{t('负责人')}</span>
+              <span className={s.info}>{manager}</span>
             </div>
             <div className={s.infoBoxItem}>
-              <h1>{t('IP 地址')}</h1>
-              <span>{addr}</span>
+              <span className={s.title}>{t('IP 地址')}</span>
+              <span className={s.info}>{addr}</span>
             </div>
             <div className={s.infoBoxItem}>
-              <h1>{t('节点状态')}</h1>
-              <NodeStatus node={nodeInfo} />
+              <span className={s.title}>{t('节点状态')}</span>
+              <span className={s.info}><NodeStatus node={nodeInfo} /></span>
             </div>
           </div>
           <div className={s.singleInfoBox}>
             <div className={s.infoBoxItem}>
-              <h1>{t('最近上报心跳')}</h1>
-              <span>{formatDateTime(nodeInfo.last_beat_time) || '- -'}</span>
+              <span className={s.title}>{t('最近上报心跳')}</span>
+              <span className={s.info}>{formatDateTime(nodeInfo.last_beat_time) || '- -'}</span>
             </div>
             <div className={s.infoBoxItem}>
-              <h1>{t('所属标签')}</h1>
-              {nodeInfo.exec_tags.map((tag: string) => (
-                <Tag key={tag}>{tag}</Tag>
-              ))}
+              <span className={s.title}>{t('所属标签')}</span>
+              <span className={s.info}>
+                <Space size='small'>
+                  {nodeInfo.exec_tags.map((tag: string) => (
+                    <Tag key={tag}>{tag}</Tag>
+                  ))}
+                </Space>
+              </span>
             </div>
             <div className={s.infoBoxItem}>
-              <h1>{t('节点配置信息')}</h1>
-              <Tag>CPU: {nodestatus?.cpu_usage} % ({nodestatus?.cpu_num}) 核</Tag>
-              <Tag>
-                可用内存: {bytesToSize(nodestatus?.mem_free_space)} / {bytesToSize(nodestatus?.mem_space)}
-              </Tag>
-              <Tag>
-                可用硬盘: {bytesToSize(nodestatus?.hdrive_free_space)} / {bytesToSize(nodestatus?.hdrive_space)}
-              </Tag>
+              <span className={s.title}>{t('节点配置信息')}</span>
+              <span className={s.info}>
+                <Space size='small'>
+                  <Tag>CPU: {nodestatus?.cpu_usage} % ({nodestatus?.cpu_num}) 核</Tag>
+                  <Tag>
+                    可用内存: {bytesToSize(nodestatus?.mem_free_space)} / {bytesToSize(nodestatus?.mem_space)}
+                  </Tag>
+                  <Tag>
+                    可用硬盘: {bytesToSize(nodestatus?.hdrive_free_space)} / {bytesToSize(nodestatus?.hdrive_space)}
+                  </Tag>
+                </Space>
+              </span>
             </div>
           </div>
         </Card>

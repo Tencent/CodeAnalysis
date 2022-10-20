@@ -1,23 +1,27 @@
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import Loading from '@tencent/micro-frontend-shared/component/loading';
-import { getURLSearch } from '@tencent/micro-frontend-shared/util/route';
-import { PostMessageType, PostMessageCode, postMessageToTarget } from '@tencent/micro-frontend-shared/util/window';
-
 import { message } from 'coding-oa-uikit';
 
-import Container from '@src/component/container';
-import { UserAPI } from '@plat/api';
+// 项目内
+import Loading from '../../../component/loading';
+import { getURLSearch } from '../../../util/route';
+import { FetchAPIManager } from '../../../util/fetch';
+import { PostMessageType, PostMessageCode, postMessageToTarget } from '../../../util/window';
 
-const GitOAuth = () => {
+interface GitOAuthCallbackProps {
+  /** auth 接口模块 */
+  oauthCallback: FetchAPIManager
+}
+
+const GitOAuthCallback = ({ oauthCallback }: GitOAuthCallbackProps) => {
   const query = getURLSearch();
   const { scmPlatformName }: any = useParams();
   const { t } = useTranslation();
 
   useEffect(() => {
     const { opener } = window;
-    UserAPI.getOAuthCallback(scmPlatformName, query).then(() => {
+    oauthCallback.getDetail(scmPlatformName, query).then(() => {
       message.success(t('OAuth授权成功'));
       postMessageToTarget(opener, { code: PostMessageCode.SUCCESS, type: PostMessageType.GIT_OAUTH });
     })
@@ -31,10 +35,8 @@ const GitOAuth = () => {
   }, []);
 
   return (
-    <Container>
-      <Loading msg={t('OAuth授权中')} />
-    </Container>
+    <Loading msg={t('OAuth授权中')} />
   );
 };
 
-export default GitOAuth;
+export default GitOAuthCallback;

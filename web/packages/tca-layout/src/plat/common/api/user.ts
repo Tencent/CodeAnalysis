@@ -1,12 +1,12 @@
 import merge from 'lodash/merge';
+import { formatUserAuthAPI, UserAuthAPI } from '@tencent/micro-frontend-shared/tca/user-auth';
 
 // 项目内
 import {
   MAIN_SERVER_API,
   LOGIN_SERVER_API,
   fetchAPIManager,
-  get, put, del,
-} from './common';
+  get, put } from './common';
 
 /** 用户相关API接口 */
 export class UserAPI {
@@ -18,41 +18,6 @@ export class UserAPI {
   /** 更新用户信息 */
   static putUserInfo(data: any) {
     return UserAPI.putUserByLoginProxy(data);
-  }
-
-  /** 用户http凭证接口 */
-  static authAccount() {
-    return fetchAPIManager(`${MAIN_SERVER_API}/authen/scmaccounts/`);
-  }
-
-  /** 用户ssh凭证接口 */
-  static authSSH() {
-    return fetchAPIManager(`${MAIN_SERVER_API}/authen/scmsshinfos/`);
-  }
-
-  /** 查询OAuth授权配置状况 */
-  static getPlatformStatus(param: any = null) {
-    return get(`${MAIN_SERVER_API}/authen/oauthsettings/`, param);
-  }
-
-  /** 获取用户oauth凭证接口 */
-  static getOAuthStatus(param: any = null) {
-    return get(`${MAIN_SERVER_API}/authen/scmauthinfo/`, param);
-  }
-
-  /** 删除用户oauth凭证接口 */
-  static delOAuthStatus(param: any = null) {
-    return del(`${MAIN_SERVER_API}/authen/scmauthinfo/`, param);
-  }
-
-  /** 获取用户oauth凭证接口 */
-  static getOAuthInfos() {
-    return get(`${MAIN_SERVER_API}/authen/scmauthinfos/`);
-  }
-
-  /** 用户oauth授权接口 */
-  static getOAuthCallback(scm_platform_name: string, param: any = {}) {
-    return get(`${MAIN_SERVER_API}/authen/gitcallback/${scm_platform_name}/`, param);
   }
 
   /** 更新main服务用户信息 */
@@ -78,3 +43,13 @@ export class UserAPI {
       .catch(() => get(`${MAIN_SERVER_API}/authen/userinfo/`));
   }
 }
+
+/** 用户个人凭证接口 */
+export const userAuthAPI: UserAuthAPI = formatUserAuthAPI(
+  fetchAPIManager(`${MAIN_SERVER_API}/authen/scmsshinfos/`),
+  fetchAPIManager(`${MAIN_SERVER_API}/authen/scmaccounts/`),
+  fetchAPIManager(`${MAIN_SERVER_API}/authen/scmauthinfos/`),
+  fetchAPIManager(`${MAIN_SERVER_API}/authen/oauthsettings/`),
+  fetchAPIManager(`${MAIN_SERVER_API}/authen/scmauthinfo/`),
+  fetchAPIManager(`${MAIN_SERVER_API}/authen/gitcallback/`),
+);

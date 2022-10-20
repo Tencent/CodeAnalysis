@@ -63,7 +63,7 @@ export interface UseFetchOptions {
   /** 失败的回调 */
   onFail?: (error: any) => void
   /** 最终的回调 */
-  onFinnaly?: () => void
+  onFinally?: () => void
 }
 
 /**
@@ -78,7 +78,7 @@ const useFetch = <ApiArgs extends any[]>(
   apiArgs: ApiArgs,
   options: UseFetchOptions = {},
 ): [State, () => void] => {
-  const { initData = null, onPreHandler, onSuccess, onFail, onFinnaly } = options;
+  const { initData = null, onPreHandler, onSuccess, onFail, onFinally } = options;
   const [state, dispatch] = useReducer(fetchReducer, {
     isLoading: false,
     isError: false,
@@ -117,7 +117,7 @@ const useFetch = <ApiArgs extends any[]>(
         dispatch({ type: 'FETCH_FAILURE', payload: error });
         onFail?.(error);
       } finally {
-        onFinnaly?.();
+        onFinally?.();
       }
     };
     fetchData();
