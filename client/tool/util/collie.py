@@ -74,7 +74,8 @@ class Collie(object):
             psutil.Process(pid)
             ProcMgr().kill_proc_famliy(pid)
         except psutil.NoSuchProcess as e:
-            logger.exception("exception: %s", str(e))
+            # logger.exception("exception: %s", str(e))
+            pass
 
     def scan(self, files=None, want_suffix=None, force_all=False):
         """
