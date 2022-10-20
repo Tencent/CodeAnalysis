@@ -87,7 +87,7 @@ export const postRepoMembers = (orgSid: string, teamName: string, repoId: any, d
  * @param username
  * @returns
  */
-export const delRepoMembers = (orgSid: string, teamName: string, repoId: any, username: string) => del(`${getMainBaseURL(orgSid, teamName)}/repos/${repoId}/memberconf/1/${username}`);
+export const delRepoMembers = (orgSid: string, teamName: string, repoId: any, username: string) => del(`${getMainBaseURL(orgSid, teamName)}/repos/${repoId}/memberconf/1/${username}/`);
 
 /**
  * 删除代码库

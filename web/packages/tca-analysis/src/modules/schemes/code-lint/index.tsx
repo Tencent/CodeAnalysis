@@ -20,7 +20,6 @@ import AngleRight from 'coding-oa-uikit/lib/icon/AngleRight';
 
 import Loading from '@src/components/loading';
 import {
-  getLintConfig,
   updateLintConfig,
   getCheckPackages,
   getLabels,
@@ -43,17 +42,17 @@ interface CodeLintProps {
   schemeId: string | number;
   languages: any;
   schemeInfo: any;
+  data: any;
   callback?: (data: any) => void;
 }
 
 const CodeLint = (props: CodeLintProps) => {
-  const { orgSid, teamName, repoId, schemeId, languages, schemeInfo } = props;
+  const { orgSid, teamName, repoId, schemeId, languages, schemeInfo, data, callback } = props;
   const history = useHistory();
 
   const [visible, setVisible] = useState(false);
   const [selectedPkgs, setSelectedPkgs] = useState<any>([]);
   const [customPackage, setCustomPackage] = useState<any>({});
-  const [data, setData] = useState<any>({});
   const [labels, setLabels] = useState([]);
   const [allPkgs, setAllPkgs] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -78,7 +77,6 @@ const CodeLint = (props: CodeLintProps) => {
   }, []);
 
   useEffect(() => {
-    (async () => schemeId && setData(await getLintConfig(orgSid, teamName, repoId, schemeId)))();
     setSearchParams({});
   }, [schemeId]);
 
@@ -109,7 +107,7 @@ const CodeLint = (props: CodeLintProps) => {
     ...data,
     ...params,
   }).then((res) => {
-    setData(res);
+    callback(res);
   });
 
   const getList = async () => {

@@ -16,7 +16,7 @@ import { Tabs, Button } from 'coding-oa-uikit';
 import { useStateStore } from '@src/context/store';
 import Repos from '@src/components/repos';
 import { getSchemeRouter, getTmplBlankRouter } from '@src/utils/getRoutePath';
-import { getSchemes, getLanguages, getTags, getSchemeBasic } from '@src/services/schemes';
+import { getSchemes, getLanguages, getTags, getSchemeBasic, getLintConfig } from '@src/services/schemes';
 import { getTmplList } from '@src/services/template';
 import noDataSvg from '@src/images/no-data.svg';
 import Loading from '@src/components/loading';
@@ -46,10 +46,12 @@ const Schemes = () => {
   const [tags, setTags] = useState([]);
   const [languages, setLanguages] = useState([]);
   const [templates, setTemplates] = useState([]);
+  const [lintConfig, setLintConfig] = useState<any>({});
   const [pullModalVsb, setPullModalVsb] = useState(false);
 
   const tab = params.tabs || 'basic';
   const schemeId = toNumber(params.schemeId);
+  const repoId = toNumber(params.repoId) || curRepo.id;
   const { orgSid, teamName } = params;
 
   useEffect(() => {
@@ -57,14 +59,18 @@ const Schemes = () => {
   }, []);
 
   useEffect(() => {
-    if (curRepo.id) {
-      history.replace(`${getSchemeRouter(orgSid, teamName, curRepo.id, schemeId)}`);
+    schemeId && getLintConf();
+  }, [schemeId]);
+
+  useEffect(() => {
+    if (repoId) {
+      history.replace(`${getSchemeRouter(orgSid, teamName, repoId, schemeId)}`);
 
       (async () => {
         getSchemeList(schemeId);
       })();
     }
-  }, [curRepo.id]);
+  }, [repoId]);
 
   const getCommonData = async () => {
     setTags(get(await getTags(orgSid), 'results', []));
@@ -72,9 +78,13 @@ const Schemes = () => {
     setTemplates(get(await getTmplList(orgSid, { limit: 100 }), 'results', []));
   };
 
+  const getLintConf = async () => {
+    setLintConfig(await getLintConfig(orgSid, teamName, repoId, schemeId));
+  };
+
   const getSchemeList = async (schemeId?: string | number) => {
     setSchemesLoading(true);
-    let res = await getSchemes(orgSid, teamName, curRepo.id, { limit: 1000 });
+    let res = await getSchemes(orgSid, teamName, repoId, { limit: 1000 });
     res = res.results || [];
     setSchemes(res);
     setSchemesLoading(false);
@@ -87,9 +97,9 @@ const Schemes = () => {
 
   const getSchemeInfo = async (schemeId: string | number) => {
     if (schemeId) {
-      const res = await getSchemeBasic(orgSid, teamName, curRepo.id, schemeId);
-      history.replace(`${getSchemeRouter(orgSid, teamName, curRepo.id, schemeId)}/basic`);
+      const res = await getSchemeBasic(orgSid, teamName, repoId, schemeId);
       setSchemeInfo(res);
+      history.replace(`${getSchemeRouter(orgSid, teamName, repoId, schemeId)}/basic`);
     }
   };
 
@@ -116,7 +126,7 @@ const Schemes = () => {
       ) : (
         <div className={style.schemeContainer}>
           <List
-            repoId={curRepo.id}
+            repoId={repoId}
             scheme={schemeInfo}
             schemeList={schemes}
             addSchemeHandle={() => {
@@ -162,7 +172,7 @@ const Schemes = () => {
                 history.push(`${getSchemeRouter(
                   orgSid,
                   teamName,
-                  curRepo.id,
+                  repoId,
                   schemeInfo.id,
                 )}/${key}`);
               }}
@@ -172,7 +182,8 @@ const Schemes = () => {
                   orgSid={orgSid}
                   teamName={teamName}
                   data={schemeInfo}
-                  repoId={curRepo.id}
+                  lintConf={lintConfig}
+                  repoId={repoId}
                   tags={tags}
                   languages={languages}
                   callback={(data: any) => {
@@ -193,19 +204,23 @@ const Schemes = () => {
               </TabPane>
               <TabPane tab="代码检查" key="codelint">
                 <CodeLint
+                  data={lintConfig}
                   orgSid={orgSid}
                   teamName={teamName}
-                  repoId={curRepo.id}
+                  repoId={repoId}
                   schemeId={schemeInfo.id}
                   languages={languages}
                   schemeInfo={schemeInfo}
+                  callback={(data: any) => {
+                    setLintConfig(data);
+                  }}
                 />
               </TabPane>
               <TabPane tab="代码度量" key="codemetric">
                 <CodeMetrics
                   orgSid={orgSid}
                   teamName={teamName}
-                  repoId={curRepo.id}
+                  repoId={repoId}
                   schemeId={schemeInfo.id}
                 />
               </TabPane>
@@ -213,7 +228,7 @@ const Schemes = () => {
                 <PathFilter
                   orgSid={orgSid}
                   teamName={teamName}
-                  repoId={curRepo.id}
+                  repoId={repoId}
                   schemeId={schemeInfo.id}
                 />
               </TabPane>
@@ -224,7 +239,7 @@ const Schemes = () => {
                 <Branchs
                   orgSid={orgSid}
                   teamName={teamName}
-                  repoId={curRepo.id}
+                  repoId={repoId}
                   schemeId={schemeInfo.id}
                 />
               </TabPane>
@@ -239,7 +254,7 @@ const Schemes = () => {
         tags={tags}
         languages={languages}
         schemeList={schemes}
-        repoId={curRepo.id}
+        repoId={repoId}
         templates={templates}
         onClose={() => {
           setVisible(false);
@@ -251,7 +266,7 @@ const Schemes = () => {
       <PullModal
         orgSid={orgSid}
         teamName={teamName}
-        repoId={curRepo.id}
+        repoId={repoId}
         schemeId={schemeInfo.id}
         visible={pullModalVsb}
         onClose={() => setPullModalVsb(false)}

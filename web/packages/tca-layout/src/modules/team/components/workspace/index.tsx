@@ -6,6 +6,7 @@ import { Tabs, Table } from 'coding-oa-uikit';
 import AlignLeft from 'coding-oa-uikit/lib/icon/AlignLeft';
 import Clock from 'coding-oa-uikit/lib/icon/Clock';
 import { formatDateTime } from '@tencent/micro-frontend-shared/util';
+import { getRepoName } from '@tencent/micro-frontend-shared/tca/util';
 
 // 项目内
 import { DEFAULT_PAGER } from '@src/constant';
@@ -89,7 +90,7 @@ const Workspace = () => {
                     record.id,
                   )}
                 >
-                  {name}
+                  {getRepoName(record)}
                 </Link>
                 <p className={style.repoUrl}>{record.scm_url}</p>
               </>

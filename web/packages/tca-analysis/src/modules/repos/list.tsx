@@ -15,9 +15,10 @@ import MemberSettingsIcon from 'coding-oa-uikit/lib/icon/MemberSettings';
 import ClockIcon from 'coding-oa-uikit/lib/icon/Clock';
 import AlignLeftIcon from 'coding-oa-uikit/lib/icon/AlignLeft';
 
+import { formatDateTime } from '@tencent/micro-frontend-shared/util';
+import { getRepoName } from '@tencent/micro-frontend-shared/tca/util';
 import { putRepo } from '@src/services/repos';
 // import { subscribedRepo, cancelSubscribedRepo, putRepo } from '@src/services/repos';
-import { formatDateTime, getRepoName } from '@src/utils';
 import { getProjectRouter } from '@src/utils/getRoutePath';
 
 import MemberConfig from './member-config';
@@ -131,7 +132,7 @@ const RepoList = (props: RepoListProps) => {
                 <Highlighter
                   searchWords={[searchWords]}
                   autoEscape={true}
-                  textToHighlight={name || getRepoName(data.scm_url)}
+                  textToHighlight={getRepoName(data)}
                 />
               </Link>
               {/* todo: 待接口完善 */}
@@ -167,7 +168,7 @@ const RepoList = (props: RepoListProps) => {
                           <div>
                             <Input
                               size='small'
-                              defaultValue={name || getRepoName(data.scm_url)}
+                              defaultValue={getRepoName(data)}
                               onChange={e => setName(e.target.value)}
                             />
                             <div style={{

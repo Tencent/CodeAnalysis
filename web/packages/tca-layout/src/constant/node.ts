@@ -25,6 +25,8 @@ export const STATE_CHOICES = {
   [STATE_ENUM.FREE]: '空闲',
 };
 
+export const STATE_OPTIONS = generateOptions(STATE_CHOICES, true);
+
 export const TAG_TYPE_ENUM = {
   PUBLIC: 1,
   PRIVATE: 2,
@@ -74,6 +76,18 @@ export const getNodeSearchFields = (tagOptions: any[]): SearchFormField[] => [{
   type: 'string',
   formType: 'input',
   placeholder: '负责人',
+}, {
+  name: 'state',
+  label: '状态',
+  type: 'number',
+  formType: 'select',
+  options: STATE_OPTIONS,
+}, {
+  name: 'enabled',
+  label: '可用性',
+  type: 'number',
+  formType: 'select',
+  options: STATUS_OPTIONS,
 }, {
   name: 'exec_tags',
   label: '所属标签',
