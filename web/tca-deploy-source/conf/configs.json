@@ -5,12 +5,12 @@
     "prefix": [
       "/static/tca-layout/"
     ],
-    "commitId": "f8dd22f94bd1cb605ec55352484913af5254bd6c",
+    "commitId": "4c1039fece6a55dfff9037dca711101828ea19b2",
     "match": "/",
     "js": [
-      "/static/tca-layout/runtime~tca-layout-1cfdfdb2.js",
-      "/static/tca-layout/vendors~tca-layout-d2b7c9c6.js",
-      "/static/tca-layout/tca-layout-69b7673d.js"
+      "/static/tca-layout/runtime~tca-layout-3bb5a1f6.js",
+      "/static/tca-layout/vendors~tca-layout-568ace76.js",
+      "/static/tca-layout/tca-layout-396ec810.js"
     ],
     "css": [
       "/static/tca-layout/tca-layout-33874d5a.css"
@@ -40,15 +40,15 @@
     "prefix": [
       "/static/tca-analysis/"
     ],
-    "commitId": "8a178929623697853fbc145fa1e75d23c74374f9",
+    "commitId": "4c1039fece6a55dfff9037dca711101828ea19b2",
     "match": "^/t/[^/]+/p/[^/]+/(code-analysis|repos|template|profile|group)",
     "js": [
-      "/static/tca-analysis/runtime~tca-analysis-c9a232b2.js",
-      "/static/tca-analysis/vendors~tca-analysis-c2cc8806.js",
-      "/static/tca-analysis/tca-analysis-54f1ce10.js"
+      "/static/tca-analysis/runtime~tca-analysis-ab220a30.js",
+      "/static/tca-analysis/vendors~tca-analysis-75e01754.js",
+      "/static/tca-analysis/tca-analysis-7675b4e2.js"
     ],
     "css": [
-      "/static/tca-analysis/tca-analysis-b26cebab.css"
+      "/static/tca-analysis/tca-analysis-8cc40a1b.css"
     ]
   },
   {
@@ -57,15 +57,15 @@
     "prefix": [
       "/static/tca-manage/"
     ],
-    "commitId": "aea7b3a3759f985ad24abc12d44060fd09802fcf",
+    "commitId": "4c1039fece6a55dfff9037dca711101828ea19b2",
     "match": "^/manage",
     "js": [
-      "/static/tca-manage/runtime~tca-manage-2980c7fb.js",
-      "/static/tca-manage/vendors~tca-manage-592ca4ab.js",
-      "/static/tca-manage/tca-manage-7f2c7f2e.js"
+      "/static/tca-manage/runtime~tca-manage-be7b0e58.js",
+      "/static/tca-manage/vendors~tca-manage-154b5c9c.js",
+      "/static/tca-manage/tca-manage-ed3a2413.js"
     ],
     "css": [
-      "/static/tca-manage/vendors~tca-manage-ca3b7a74.css",
+      "/static/tca-manage/vendors~tca-manage-67864e12.css",
       "/static/tca-manage/tca-manage-7d737fd2.css"
     ]
   }
