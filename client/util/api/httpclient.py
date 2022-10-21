@@ -8,6 +8,7 @@
 """ http client
 """
 
+import ssl
 import json
 import logging
 
@@ -40,7 +41,7 @@ class HttpRequest(object):
         try:
             request = Request(url=url, data=body, headers=headers)
             request.get_method = lambda: method.upper()
-            response = urlopen(request)
+            response = urlopen(request, context=ssl._create_unverified_context())
             return response
         except HTTPError as err:
             error_msg = err.read().decode('utf-8')
