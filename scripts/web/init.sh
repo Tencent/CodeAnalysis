@@ -1,10 +1,8 @@
 #!/bin/bash
 
-set -eo pipefail
-
 # 当前脚本执行目录
 CURRENT_SCRIPT_PATH=$(
-  cd "$(dirname "${BASH_SOURCE[0]}")"
+  cd "$(dirname "${BASH_SOURCE[0]}")" || exit
   pwd
 )
 
@@ -48,13 +46,13 @@ function init_unzip_build() {
   LOG_INFO "解压编译后文件到 $TCA_WEB_DEPLOY_PATH ..."
   rm -rf "${TCA_WEB_DEPLOY_PATH:?}"/
   mkdir -p "$TCA_WEB_DEPLOY_PATH"
-  cd "$TCA_WEB_DEPLOY_SOURCE_PATH"/build_zip/
+  cd "$TCA_WEB_DEPLOY_SOURCE_PATH"/build_zip/ || exit
   # 遍历并解压
   MICRO_FRONTEND="$MICRO_FRONTEND_FRAMEWORK $MICRO_FRONTEND_APPS $MICRO_FRONTEND_DOCUMENT"
   for app in $MICRO_FRONTEND; do
     unzip -q -o "$app".zip -d "$TCA_WEB_DEPLOY_PATH"/"$app"
   done
-  cd "$TCA_WEB_DEPLOY_SOURCE_PATH"
+  cd "$TCA_WEB_DEPLOY_SOURCE_PATH" || exit
 }
 
 # 初始化配置 framework
