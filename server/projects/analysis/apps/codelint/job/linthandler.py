@@ -218,14 +218,13 @@ class LintResultHandler(object):
         self._tool_name = task_result["name"]
         self._task_result = task_result
         self._current_time = current_time or timezone.make_aware(datetime.now(), timezone.get_current_timezone())
-        self._issue_detail_num = 0
         self._result_data_dir = None
         self._result_data_paths = []
         self._log_prefix = "[Project: %s][Scan: %s][Tool: %s]" % (self._scan.project_id, self._scan.id, self._tool_name)
 
     @property
     def issue_detail_num(self):
-        return self._issue_detail_num
+        return self._task_result["result_data"]["issue_count"]
 
     def _check_incr_scan(self):
         """判断当前扫描是否为增量扫描
