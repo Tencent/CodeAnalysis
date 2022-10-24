@@ -14,9 +14,10 @@ URL前缀：/api/authen/
 from django.urls import path
 
 # 项目内 import
-from apps.authen.apis import v1
+from apps.authen.apis import v1, v3
 
 # 前缀/api/authen/
 urlpatterns = [
     path("urlauth/", v1.ProxyServerAuthenticationAPIView.as_view(), name="apiv1_authen_urlauth"),
+    path("scmallaccounts/", v3.ScmAllAcountListApiView.as_view.as_view(), name="apiv1_all_scm_accounts"),
 ]
