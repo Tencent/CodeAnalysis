@@ -247,9 +247,11 @@ class ScmAllAcountListApiView(generics.GenericAPIView):
         user = self.request.user
         accounts = models.ScmAccount.objects.filter(user=user).order_by("-id")
         sshs = models.ScmSshInfo.objects.filter(user=user).order_by("-id")
+        oauths = models.ScmAuthInfo.objects.filter(user).order_by("-id")
         return Response({
             "ssh": ScmSshInfoSerializer(sshs, many=True).data,
             "account": ScmAccountSerializer(accounts, many=True).data,
+            "oauth": ScmAuthInfoSerializer(oauths, many=True).data
         })
 
 
