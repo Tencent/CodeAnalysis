@@ -19,7 +19,7 @@ import AttentionRed from 'coding-oa-uikit/lib/icon/AttentionRed';
 import Attention from 'coding-oa-uikit/lib/icon/Attention';
 import CloudDownload from 'coding-oa-uikit/lib/icon/CloudDownload';
 
-import { getProjectRouter, getSchemeRouter } from '@src/utils/getRoutePath';
+import { getProjectRouter, getSchemeBlankRouter } from '@src/utils/getRoutePath';
 import { getScanDetail, getTaskDetail, getLog } from '@src/services/projects';
 import { getQuery, formatDateTime } from '@src/utils';
 
@@ -271,7 +271,7 @@ const ScanDetail = () => {
             <a
               className={style.detailBtn}
               target='_blank'
-              href={`${getSchemeRouter(
+              href={`${getSchemeBlankRouter(
                 orgSid,
                 teamName,
                 repoId,

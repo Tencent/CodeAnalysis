@@ -91,9 +91,10 @@ class Reporter(object):
             token = Crypto(settings.PASSWORD_KEY).decrypt(encrypted_token)
 
             dog_server = RetryDogServer(server_url, token).get_api_server(retry_times=0)
-            # 非节点模式，不存在NODE_ID字段，此时传参为None
+            # 非节点模式,NODE_ID字段传参为None
+            node_id = persist_data.get('NODE_ID') if self._task_scene == TaskScene.NORMAL else None
             dog_server.update_task_progress(self._task_params,
-                                            persist_data.get('NODE_ID'),
+                                            node_id,
                                             info.message,
                                             info.percent)
         except Exception as err:

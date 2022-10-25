@@ -8,15 +8,14 @@
  * 圈复杂度 - 方法列表详情
  */
 import React, { useEffect, useState, useRef } from 'react';
-import { Link } from 'react-router-dom';
 import cn from 'classnames';
 import AutoSizer from 'react-virtualized-auto-sizer';
 import Highlight from 'react-highlight';
 import { VariableSizeList as List } from 'react-window';
 import { Modal, Button, Tooltip } from 'coding-oa-uikit';
 import InfoCircle from 'coding-oa-uikit/lib/icon/InfoCircle';
-import LinkIcon from 'coding-oa-uikit/lib/icon/Link';
 
+import Copy from '@src/components/copy';
 import PositionIcon from '@src/images/position.svg';
 import { getCodeFile, getCCIssueDetail } from '@src/services/projects';
 import Loading from '@src/components/loading';
@@ -127,11 +126,17 @@ const IssueModal = (props: IssueModalProps) => {
       centered
       title={
         <div className={style.modalTitle}>
-          <p>{detail.func_name}</p>
-          <Tooltip title='点击跳转新窗口打开详情页'>
+          <p>{detail.func_name}
+            <span className={style.modalDesc}>
+              文件路径：{detail.file_path}
+            </span>
+            <Copy text={detail.file_path} className={style.copyIcon} />
+
+          </p>
+          {/* <Tooltip title='点击跳转新窗口打开详情页'>
             <Link className={style.link} target='_blank' to={`${location.pathname}/${issueId}`}><LinkIcon /></Link>
-          </Tooltip>
-        </div>
+          </Tooltip> */}
+        </div >
       }
       width={1000}
       visible={visible}
@@ -201,7 +206,7 @@ const IssueModal = (props: IssueModalProps) => {
         <Button onClick={prevIssue} disabled={loading || isFirstIssue}>上一个方法</Button>
         <Button onClick={nextIssue} disabled={loading || isLastIssue}>下一个方法</Button>
       </div>
-    </Modal>
+    </Modal >
   );
 };
 

@@ -62,7 +62,7 @@ const JobTable = ({ loading, dataSource, pagination, cancelJob, archived = false
     }, {
       colKey: 'state',
       title: t('执行状态'),
-      width: 220,
+      width: 180,
       cell: ({ row }) => (
         <Space align='center'>
           {row.state !== StateEnum.CLOSED
@@ -81,12 +81,12 @@ const JobTable = ({ loading, dataSource, pagination, cancelJob, archived = false
     }, {
       colKey: 'result_msg',
       title: t('执行结果'),
-      width: 250,
+      width: 300,
       cell: ({ row }) => (
         <>
           {row.result_code !== null && (
             <Tag theme={row.result_code < 100 ? 'success' : 'danger'} variant='light'>
-              {row.result_code_msg}
+              {row.result_code} {row.result_code_msg}
             </Tag>
           )}
           {row.result_msg && <div className="mt-xs fs-12 text-grey-6">{row.result_msg}</div>}

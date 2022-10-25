@@ -55,6 +55,6 @@ export interface PostMessageData {
  * @params target 通信对象窗口
  * @params msg 通信消息
  */
-export const postMessageToTarget = (target: Window, msg: PostMessageData) => {
-  target.postMessage(msg, target.location.origin);
+export const postMessageToTarget = (target: Window, msg: PostMessageData, targetOrigin?: string) => {
+  target.postMessage(msg, targetOrigin || target.location.origin);
 };

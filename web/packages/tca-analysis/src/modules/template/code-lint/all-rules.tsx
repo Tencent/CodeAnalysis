@@ -79,7 +79,7 @@ const AllRules = () => {
 
   const getAllPkgs = async () => {
     let pkgs = await getAllCheckPackages(orgSid, tmplId);
-    pkgs = (pkgs.results || []).filter((item: any) => !item.disable);
+    pkgs = (pkgs || [])?.filter((item: any) => !item.disable);
     setAllPkgs(pkgs);
   };
 

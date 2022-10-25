@@ -13,7 +13,7 @@ import Filter from '@src/components/filter';
 import { SEVERITY, CATEGORY } from '../constants';
 
 const numberParams = ['checkpackage', 'severity', 'category'];
-const arrayParams = ['language'];
+const arrayParams = ['language_name'];
 
 interface SearchProps {
   filters: any;
@@ -109,16 +109,15 @@ const Search = (props: SearchProps) => {
           }
         />
       </Filter.Item>
-      <Filter.Item label="适用语言" name="language">
+      <Filter.Item label="适用语言" name="language_name">
         <SelectBorderless
-          multiple
           allowClear
           placeholder="全部"
           data={languages?.map((item: any) => ({
             value: item.name,
             text: item.display_name,
           }))}
-          onChange={(value: any) => value && onChange('language', value.join(','))
+          onChange={(value: any) => onChange('language_name', value)
           }
         />
       </Filter.Item>
@@ -150,7 +149,6 @@ const Search = (props: SearchProps) => {
           }
         /> */}
       </Filter.Item>
-
       <Filter.Item label="" name="real_name">
         <Input.Search
           size="middle"
@@ -162,9 +160,9 @@ const Search = (props: SearchProps) => {
       {Object.keys(searchParams).some((key: string) => (isArray(searchParams[key])
         ? !isEmpty(searchParams[key])
         : searchParams[key])) && (
-        <Button type="link" onClick={onClear} style={{ height: '36px', marginRight: 10 }}>
-          清空过滤
-        </Button>
+          <Button type="link" onClick={onClear} style={{ height: '36px', marginRight: 10 }}>
+            清空过滤
+          </Button>
       )}
       {
         find(checkTools, { id: initialValues.checktool }) && (

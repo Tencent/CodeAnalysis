@@ -104,3 +104,15 @@ export const TOOL_STATUS_CHOICES = {
 };
 
 export const TOOL_STATUS_OPTIONS = generateOptions(TOOL_STATUS_CHOICES);
+
+export enum ToolScopeEnum {
+  PUBLIC = 0,
+  PRIVATE = 1,
+}
+
+export const TOOL_SCOPE_CHOICES = {
+  [ToolScopeEnum.PUBLIC]: '公开',
+  [ToolScopeEnum.PRIVATE]: '私有',
+};
+
+export const TOOL_SCOPE_OPTIONS = generateOptions(TOOL_SCOPE_CHOICES);

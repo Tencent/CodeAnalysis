@@ -52,3 +52,12 @@ interface WindowMicroHook {
 interface Window {
   microHook: WindowMicroHook;
 }
+
+
+// drf restful list api
+interface RestfulListAPIParams {
+  results: any[];
+  count: number;
+  next: string;
+  previous: string
+}

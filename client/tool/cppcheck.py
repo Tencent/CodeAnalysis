@@ -6,7 +6,7 @@
 # ==============================================================================
 
 """
-cppcheck 扫描任务
+cppcheck 分析任务
 """
 
 import os
@@ -35,11 +35,11 @@ class Cppcheck(CodeLintModel):
         self.sensitive_word_maps = {"cppcheck": "Tool", "Cppcheck": "Tool"}
 
     def analyze(self, params):
-        """执行cppcheck扫描任务
+        """执行cppcheck分析任务
 
         :param params: 需包含下面键值：
-           'rules'： lint扫描的规则列表
-           'incr_scan' : 是否增量扫描
+           'rules'： lint分析的规则列表
+           'incr_scan' : 是否增量分析
 
         :return: return a :py:class:`IssueResponse`
         """
@@ -112,20 +112,21 @@ class Cppcheck(CodeLintModel):
         return id_severity_map
 
     def _get_needed_visitors(self, id_severity_map, rule_list):
-        """cppcheck不能指定规则扫描，只能指定规则级别，这里通过rules获取所属的规则级别"""
+        """cppcheck不能指定规则分析，只能指定规则级别，这里通过rules获取所属的规则级别"""
         assert rule_list is not None
         # cppcheck默认就是开启error规则（且无法指定enable=error),所以这里取补集
         return {id_severity_map[rule_name] for rule_name in rule_list} - {"error"}
 
     def _run_cppcheck(self, files_path, rules, id_severity_map):
         """
-        执行cppcheck扫描工具
+        执行cppcheck分析工具
         :param files_path:
         :param rules:
         :param id_severity_map:
         :return:
         """
         CPPCHECK_HOME = os.environ["CPPCHECK_HOME"]
+        LogPrinter.info("使用 cppcheck 为 %s" % CPPCHECK_HOME)
         path_mgr = PathMgr()
         cmd_args = [
             "cppcheck",
@@ -155,10 +156,11 @@ class Cppcheck(CodeLintModel):
         custom_cfgs = ["--library=" + cfg for cfg in custom_cfgs]
         cmd_args.extend(custom_cfgs)
 
-        # 指定扫描文件
+        # 指定分析文件
         cmd_args.append("--file-list=%s" % files_path)
         scan_result_path = "cppcheck_result.xml"
         self.print_log(f"cmd: {' '.join(cmd_args)}")
+        cmd_args = path_mgr.format_cmd_arg_list(cmd_args)
         SubProcController(
             cmd_args,
             cwd=CPPCHECK_HOME,
@@ -166,21 +168,25 @@ class Cppcheck(CodeLintModel):
             stderr_line_callback=self._error_callback,
             stdout_line_callback=self.print_log,
         ).wait()
-        if not os.path.exists(scan_result_path):
-            return scan_result_path
-        if sys.platform == "win32":
-            result_content = open(scan_result_path, "r", encoding="gbk").read()
-            open(scan_result_path, "w", encoding="utf-8").write(result_content)
-        with open(scan_result_path, "r", encoding="utf-8") as rf:
-            scan_result = rf.read()
-
-        if not scan_result:
-            return scan_result_path
+        # if not os.path.exists(scan_result_path):
+        #     return scan_result_path
+        # try:
+        #     if sys.platform == "win32":
+        #         result_content = open(scan_result_path, 'r', encoding='gbk').read()
+        #         open(scan_result_path, 'w', encoding='utf-8').write(result_content)
+        #     with open(scan_result_path, 'r', encoding='utf-8') as rf:
+        #         scan_result = rf.read()
+        # except UnicodeDecodeError as e:
+        #     LogPrinter.warning(e)
+        #     with open(scan_result_path, 'rb')
+        # if not scan_result:
+        #     return scan_result_path
 
         # 2019-8-28 偶现因为系统编码输出到结果文件，导致解析失败的情况
-        error_msg = "/bin/sh: warning: setlocale: LC_ALL: cannot change locale (en_US.UTF-8)\n"
-        if scan_result.startswith(error_msg):
-            scan_result = scan_result[len(error_msg) :]
+        # 2022-10-14 解析结果不再使用xml格式而是逐行解析，故不需要在解析前查看该文件
+        # error_msg = "/bin/sh: warning: setlocale: LC_ALL: cannot change locale (en_US.UTF-8)\n"
+        # if scan_result.startswith(error_msg):
+        #     scan_result = scan_result[len(error_msg):]
 
         # self.print_log("%s's result: \n%s" % (scan_result_path, scan_result))
 
@@ -200,9 +206,13 @@ class Cppcheck(CodeLintModel):
         """格式化工具执行结果"""
         issues = []
         relpos = len(source_dir) + 1
-        with open(scan_result_path, "r") as rf:
+        with open(scan_result_path, "rb") as rf:
             lines = rf.readlines()
             for line in lines:
+                try:
+                    line = line.decode("utf-8")
+                except:
+                    line = line.decode("gbk")
                 error = line.split("[CODEDOG]")
                 if len(error) != 5:
                     LogPrinter.info("该error信息不全或格式有误: %s" % line)
@@ -232,8 +242,8 @@ class Cppcheck(CodeLintModel):
     def check_tool_usable(self, tool_params):
         """
         这里判断机器是否支持运行cppcheck
-        1. 支持的话，便在客户机器上扫描
-        2. 不支持的话，就发布任务到公线机器扫描
+        1. 支持的话，便在客户机器上分析
+        2. 不支持的话，就发布任务到公线机器分析
         :return:
         """
         if SubProcController(["cppcheck", "--version"], stderr_line_callback=self.print_log).wait() != 0:

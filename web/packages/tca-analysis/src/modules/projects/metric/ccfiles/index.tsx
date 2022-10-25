@@ -9,7 +9,7 @@
  *
  */
 import React, { useEffect, useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { cloneDeep, toNumber, omit, omitBy } from 'lodash';
 import qs from 'qs';
 
@@ -18,7 +18,7 @@ import UserIcon from 'coding-oa-uikit/lib/icon/User';
 
 import { getQuery } from '@src/utils';
 import { DEFAULT_PAGER } from '@src/constant';
-import { getProjectRouter } from '@src/utils/getRoutePath';
+import { getProjectRouter, getProjectBlankRouter } from '@src/utils/getRoutePath';
 import { getCCFilesIssues } from '@src/services/projects';
 import { CC_CHANGE_TYPE_CHOICES } from '../../constants';
 import Search from './search';
@@ -111,20 +111,20 @@ const CCFiles = (props: CCFilesProps) => {
           title="所属文件"
           dataIndex="file_path"
           render={(file_path, data: any) => (
-            <Link
+            <a
               target="_blank"
-              to={`${getProjectRouter(
+              href={`${getProjectBlankRouter(
                 orgSid,
                 teamName,
                 repoId,
                 projectId,
               )}/metric/ccfiles/${data.id}`}
               className="link-name"
-              title={data.file_path}
+              title={data.file_path} rel="noreferrer"
             >
               <p>{file_path.split('/').pop()}</p>
               <p className="path">{file_path}</p>
-            </Link>
+            </a>
           )}
         />
         <Column
@@ -134,13 +134,13 @@ const CCFiles = (props: CCFilesProps) => {
           align='center'
           render={change_type => (
             // todo: remove
-              <span
-                style={{
-                  color: CC_CHANGE_TYPE_CHOICES[change_type].labelColor,
-                }}
-              >
-                {CC_CHANGE_TYPE_CHOICES[change_type].label}
-              </span>
+            <span
+              style={{
+                color: CC_CHANGE_TYPE_CHOICES[change_type].labelColor,
+              }}
+            >
+              {CC_CHANGE_TYPE_CHOICES[change_type].label}
+            </span>
           )}
         />
         <Column

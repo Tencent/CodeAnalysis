@@ -88,7 +88,7 @@ export const webpackConfig = (options?: Options) => {
   } = options || {};
   const outDir = path.resolve(BASE_PATH, isTrue(ENABLE_MANAGE) ? `${outputPath}-admin` : outputPath);
   const templatePath = path.resolve(BASE_PATH, publicDir, 'index.html');
-  const { envs, runtimeEnvs } = envConfig ? merge(defaultEnvConfig, envConfig) : defaultEnvConfig;
+  const { envs, runtimeEnvs = {} } = envConfig ? merge(defaultEnvConfig, envConfig) : defaultEnvConfig;
   if (!NAME) {
     throw new Error('webpack 未获取到 process.env.npm_package_name，请确认package.json中是否存在name字段');
   }
