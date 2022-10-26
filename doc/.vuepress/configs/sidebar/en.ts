@@ -101,6 +101,12 @@ export const en: SidebarConfig = {
         '/en/guide/web/deploySource.md',
       ]
     },
+    {
+      text: '插件',
+      children: [
+        '/en/guide/插件/Jenkins_Plugin.md',
+      ]
+    },
   ],
   '/en/advanced/': [
     {
