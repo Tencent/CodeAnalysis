@@ -59,6 +59,41 @@
                 "severity": "warning",
                 "rule_params": null,
                 "state": "enabled"
+            },
+            {
+                "checktool": "tca_ql_cpp",
+                "checkrule": "dead_code",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "tca_ql_cpp",
+                "checkrule": "dead_branch",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "tca_ql_cpp",
+                "checkrule": "forward_null",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "tca_ql_cpp",
+                "checkrule": "reverse_null",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "tca_ql_cpp",
+                "checkrule": "uinit",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
             }
         ],
         "open_saas": false,
