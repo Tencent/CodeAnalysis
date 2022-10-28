@@ -11,7 +11,7 @@
       "scan_app": "codelint",
       "scm_url": "tca_plugin_sqlcheck",
       "run_cmd": "python src/main.py scan",
-      "envs": "python_version = 3",
+      "envs": "",
       "build_flag": false,
       "checkrule_set": [
         {

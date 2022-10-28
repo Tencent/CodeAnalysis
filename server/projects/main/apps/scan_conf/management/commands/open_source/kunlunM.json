@@ -11,7 +11,7 @@
         "scan_app": "codelint",
         "scm_url": "common-kunlun",
         "run_cmd": "python main.py",
-        "envs": "python_version = 3",
+        "envs": "",
         "build_flag": false,
         "checkrule_set": [
             {
