@@ -10,3 +10,8 @@
 - [missing_lock](https://tencent.github.io/CodeAnalysis/zh/guide/代码检查/工具/TCA-Armory-Q1.html#missing_lock)
 - [resource_leak](https://tencent.github.io/CodeAnalysis/zh/guide/代码检查/工具/TCA-Armory-Q1.html#resource_leak)
 - [unused_value](https://tencent.github.io/CodeAnalysis/zh/guide/代码检查/工具/TCA-Armory-Q1.html#unused_value)
+- [dead_branch](https://tencent.github.io/CodeAnalysis/zh/guide/代码检查/工具/TCA-Armory-Q1.html#dead_branch)
+- [forward_null](https://tencent.github.io/CodeAnalysis/zh/guide/代码检查/工具/TCA-Armory-Q1.html#forward_null)
+- [reverse_null](https://tencent.github.io/CodeAnalysis/zh/guide/代码检查/工具/TCA-Armory-Q1.html#reverse_null)
+- [dead_code](https://tencent.github.io/CodeAnalysis/zh/guide/代码检查/工具/TCA-Armory-Q1.html#dead_code)
+- [uinit](https://tencent.github.io/CodeAnalysis/zh/guide/代码检查/工具/TCA-Armory-Q1.html#uinit)

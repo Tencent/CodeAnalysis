@@ -68,6 +68,23 @@
                 "disable": false
             },
             {
+                "real_name": "dead_branch",
+                "display_name": "DeadBranch",
+                "severity": "warning",
+                "category": "performance",
+                "rule_title": "dead_branch 检查永远不会被执行到的分支代码，其原因可能是具有相同效果的控制语句或某些条件在特定情况下永远不会执行。",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "",
+                "owner": "",
+                "labels": [],
+                "description": "dead_branch 检查永远不会被执行到的分支代码，其原因可能是具有相同效果的控制语句或某些条件在特定情况下永远不会执行。\n\n##### 代码示例\n\n以下提供一个或多个dead_branch代码案例\n\n```\n\nvoid dead_branch(int i) {\n    if (i < 100) {\n        if ( i > 100) {     // Defect: dead_branch, i 属于 (-inf, 100) 不存在 (100, inf)的可能\n            dosomething() ;\n        }\n        return;\n    } else if (i >= 100) {\n        if ( i < 99 ) {     // Defect: dead_branch, i 属于[100, inf) 不存在 (-inf, 99)的可能\n            dosomething();\n        }\n        return;\n    } else if (i < 10){     // Defect: dead_branch, 在前面分支中已经包含了所有i的可能，这里已经不存在 (-inf, 10)的可能\n        dosomething();\n    }\n    else {                  // Defect: dead_branch, 在前面分支中已经包含了所有i的可能\n        dosomething();\n    }\n    return;\n}",
+                "disable": false
+            },
+            {
                 "real_name": "dead_code",
                 "display_name": "DeadCode死代码检查",
                 "severity": "warning",
@@ -99,6 +116,23 @@
                 "owner": "",
                 "labels": [],
                 "description": "#### dead_lock\ndead_lock 如果发现文件内存在 mtx1 -> mtx2 的上锁顺序时，另存在mtx2 -> mtx1 的上锁顺序，视为死锁或存在死锁的可能，则会上报错误。\n死锁发生时程序将会卡死无法正常执行。\n\n##### 规则参数\n- better-lock: True or False 默认为 False\n\n##### 代码示例\n以下提供一个或多个 dead_lock 案例\n\n在下面代码中，函数 increase 以将 counter 加到 1000 为目的。但在线程 1 中第一次释放 mtx 后，线程 2 的 mtx 上锁，此时线程1等待线程2释放mtx，线程2等待线程1释放mtx2，形成死锁，程序卡死。\n```\nint counter = 0;\nstd::mutex mtx;\nstd::mutex mtx2;\nvoid increase() {\n    while (1) {\n        mtx.lock();\n        mtx2.lock();\n        mtx.unlock();\n        mtx.lock();  // defect: dead_lock\n        if (counter <= 1000)\n            counter++;\n        else\n            break;\n        mtx2.unlock();\n        mtx.unlock()\n    }\n}\n```\n\n在下面代码中 线程函数increase1存在mtx -> mtx2 的顺序，increase2顺序为 mtx2 -> mtx；视为出现死锁。\n```\nvoid increase1() {\n    while (1) {\n        mtx.lock();\n        mtx2.lock();\n        if (counter <= 1000)\n            counter++;\n        else\n            break;\n        mtx2.unlock();\n        mtx.unlock()\n    }\n}\nvoid increase2() {\n    while (1) {\n        mtx2.lock();\n        mtx.lock();  // defect: dead_lock; \n        if (counter <= 1000)\n            counter++;\n        else\n            break;\n        mtx2.unlock();\n        mtx.unlock()\n    }\n}\n```\n\n以下案例在`better-lock`参数为`True`时将会生效\n使用`better-lock`规则会检查在上锁期间若调用其他函数时将视为可能会出现预期之外的异常，且上锁期间应只做对全局变量操作以提升性能\n```\nvoid increase1() {\n    while (1) {\n        mtx.lock();\n        if (counter <= 1000)\n            counter++;\n        else\n            break;\n        read_counter(counter);  // defect: dead_lock\n        mtx.unlock()\n    }\n}\nvoid read_counter(counter){\n    std::cout << counter << std::endl;\n    do_something_more();\n}\nvoid increase1() {\n    while (1) {\n        std::lock_guard<std::mutex> lk(mtx);  // good: 使用lock_guard会自动上锁解锁将不会检查dead_lock\n        if (counter <= 1000)\n            counter++;\n        else\n            break;\n        read_counter(counter);\n    }\n}\n```",
+                "disable": false
+            },
+            {
+                "real_name": "forward_null",
+                "display_name": "ForwardNull",
+                "severity": "error",
+                "category": "correctness",
+                "rule_title": "forward_null 检查可能导致程序终止或运行时异常的错误。它查找指针或引用被检查是否为 null 或被赋值为 null，且之后被解引用的很多情况。",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "确认使用时指针不可能为空，若为误报请处理为误报",
+                "owner": null,
+                "labels": [],
+                "description": "#### forward_null\nforward_null 检查可能导致程序终止或运行时异常的错误。它查找指针或引用被检查是否为 null 或被赋值为 null，且之后被解引用的很多情况。\n\n\n##### 规则参数\n- trust_param True or False 默认为 True\n\n##### 代码示例\n以下提供一个或多个forward_null代码案例\n\n指针曾经有过检查null的操作则会视为有可能为空指针，之后在未被确认为非空指针情况下直接使用。将会视为`forward_null`错误\n```\nvoid forward_null_1() {\n    int * p;\n    p = get_int_pointer();\n    dosomething(p);\n    if (p == NULL) {\n        std::cout << \"Null Pointer Find\" << srd::endl;\n        // return;      // prefer: if return here\n    } else {\n        dosomething(p);     // good: p is not NULL\n    }\n    dosomething(p);     // defect forward_null: p may NULL\n}\n\n\nvoid forward_null_2(int *p) {\n    dosomething(p);\n    if (p == NULL) {\n        return;\n    } else {\n        dosomething(p);     // good: p is not NULL\n    }\n    dosomething(p);     // good\n    ...\n    if (p != NULL) {    // means p may nullpointer here\n        dosomething(p);\n    }\n    dosomething(p);     // defect forward_null:p may NULL\n}\n```\n\n以下案例在设置`trust_param`为`False`时将会生效，其将会默认认为函数参数存在空指针可能，必须确认无空指针可能时方可使用\n```\nvoid forward_null_2(int *p) {\n    dosomething(p);     // defect: param p may NULL\n    if (p != NULL) {    // means p may nullpointer here\n        dosomething(p);\n    }\n    dosomething(p);     // defect forward_null:p may NULL\n}\n```",
                 "disable": false
             },
             {
@@ -150,6 +184,23 @@
                 "owner": "",
                 "labels": [],
                 "description": "当函数存在nullptr返回值时，在调用该函数的地方必须判断指针是否为空。该规则会全量检查项目内调用，耗时会较长，简化版规则func_ret_null",
+                "disable": false
+            },
+            {
+                "real_name": "glob_null_pointer",
+                "display_name": "GlobNullPointer",
+                "severity": "error",
+                "category": "correctness",
+                "rule_title": "glob_null_pointer 检查文件内全局指针是否为空，指针赋值将会被认为不为空指针，但检测到空指针判断则视为指针此时可能为空，如果在可能为空时使用则会报错",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "全局指针使用前确保不为空",
+                "owner": null,
+                "labels": [],
+                "description": "#### glob_null_pointer\nglob_null_pointer 检查文件内全局指针是否为空，指针赋值将会被认为不为空指针，但检测到空指针判断则视为指针此时可能为空，如果在可能为空时使用则会报错\n\n##### 代码示例\n以下将提供一个或多个glob_null_pointer案例\n\n```\nint *p;\n\n\nvoid thread1() {\n    p = get_int_pointer();      // p is not NULL\n    dosomething(p);     // good\n    if (p != NULL) {\n        something(p);   // good\n    }\n    something(p);  // defect: p may NULL, because check p before\n}\n\n\nvoid thread2() {\n    *p = 6;     // defect: p may NULL\n    if (p != NULL) {\n        something(p);   // good\n    }\n    something(p);  // defect: p may NULL\n}\n```",
                 "disable": false
             },
             {
@@ -238,6 +289,23 @@
                 "disable": false
             },
             {
+                "real_name": "reverse_null",
+                "display_name": "ReverseNull",
+                "severity": "warning",
+                "category": "correctness",
+                "rule_title": "reverse_null 检查已经使用过指针，但在后续又对指针进行了判空操作；会被认为之前使用指针也有可能是空指针。",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "确认是否也需要判空",
+                "owner": null,
+                "labels": [],
+                "description": "#### reverse_null\nreverse_null 检查已经使用过指针，但在后续又对指针进行了判空操作；会被认为之前使用指针也有可能是空指针。\n\n##### 代码示例\n以下将提供一个或多个reverse_null案例\n\n```\nvoid reverse_null(int *p) {\n    dosomething(p);      // use p\n    if (p != NULL) {    // defect reverse_null: It means p may NULL\n        dosomething(p);\n    }\n    ...\n```",
+                "disable": false
+            },
+            {
                 "real_name": "static_cast_checker",
                 "display_name": "StaticCast",
                 "severity": "warning",
@@ -252,6 +320,23 @@
                 "owner": "",
                 "labels": [],
                 "description": "不同类型的数值精准的不同从一个类型转换到另一个类型会发生数据丢失\n```\n[\n    \"int\", \"unsigned int\", \"long\", \"unsigned long\", \"long long\", \"unsigned long long\", \"float\", \"double\", \"long double\",\n]\n```\n从右到左的转换都有可能发生错误",
+                "disable": false
+            },
+            {
+                "real_name": "uinit",
+                "display_name": "UInit",
+                "severity": "warning",
+                "category": "correctness",
+                "rule_title": "uinit 检查变量在定义后直接使用，却没有初始化的场景；使用未初始化的变量 可能导致无法预测的行为、崩溃和安全漏洞。",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "",
+                "owner": "",
+                "labels": [],
+                "description": "#### uinit\nuinit 检查变量在定义后直接使用，却没有初始化的场景；使用未初始化的变量 可能导致无法预测的行为、崩溃和安全漏洞。\n\n##### 规则参数\n- deep_level: true, false 设置为true时将会分析作为函数参数的情况，否则无视作为函数参数的使用。\n\n##### 代码示例\n\n以下提供一个或多个 uinit 代码案例\n\n\n```\n\nvoid test(char* t) {\n    std::cout<< t << std::endl;     // Defect: p 作为函数参数，此处未初始化。\n    return;\n}\n\n\nint uinit(int i) {\n    int a;\n    char * p;\n    test(p);    // deep_level = true\n    if (i < 10)\n        a = 1;\n    else\n        i = 1;\n    return a;   // Defect: i大于10时，a并未赋值\n}\n```",
                 "disable": false
             },
             {

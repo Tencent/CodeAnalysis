@@ -507,4 +507,90 @@ class son: public father, public man{
         void test2(){ std::cout<<"hello";};  // defect: bad override
 };
 ```
+## 死代码检查
 
+#### dead_code
+dead_code 检查永远不会执行到的代码，主要为在同一作用域内 return, break 后的代码
+
+##### 代码示例
+以下提供一个或多个dead_code代码案例
+
+```
+// C/Cpp
+void dead_code(int t) {
+    int sum = 0;
+    for (int i = 1; i <= 100; i++) {
+        if (i == t) {
+            break;
+            sum = t;    // Defect: dead_code
+        }
+        sum += i;
+    }
+}
+```
+
+#### dead_branch
+dead_branch 检查永远不会被执行到的分支代码，其原因可能是具有相同效果的控制语句或某些条件在特定情况下永远不会执行。
+
+##### 代码示例
+
+以下提供一个或多个dead_branch代码案例
+
+```
+
+void dead_branch(int i) {
+    if (i < 100) {
+        if ( i > 100) {     // Defect: dead_branch, i 属于 (-inf, 100) 不存在 (100, inf)的可能
+            dosomething() ;
+        }
+        return;
+    } else if (i >= 100) {
+        if ( i < 99 ) {     // Defect: dead_branch, i 属于[100, inf) 不存在 (-inf, 99)的可能
+            dosomething();
+        }
+        return;
+    } else if (i < 10){     // Defect: dead_branch, 在前面分支中已经包含了所有i的可能，这里已经不存在 (-inf, 10)的可能
+        dosomething();
+    }
+    else {                  // Defect: dead_branch, 在前面分支中已经包含了所有i的可能
+        dosomething();
+    }
+    return;
+}
+
+```
+
+## 变量初始化检查
+包含规则
+- uinit
+
+#### uinit
+uinit 检查变量在定义后直接使用，却没有初始化的场景；使用未初始化的变量 可能导致无法预测的行为、崩溃和安全漏洞。
+
+##### 规则参数
+- deep_level: true, false 设置为true时将会分析作为函数参数的情况，否则无视作为函数参数的使用。
+
+##### 代码示例
+
+以下提供一个或多个 uinit 代码案例
+
+
+```
+
+void test(char* t) {
+    std::cout<< t << std::endl;     // Defect: p 作为函数参数，此处未初始化。
+    return;
+}
+
+
+int uinit(int i) {
+    int a;
+    char * p;
+    test(p);    // deep_level = true
+    if (i < 10)
+        a = 1;
+    else
+        i = 1;
+    return a;   // Defect: i大于10时，a并未赋值
+}
+```

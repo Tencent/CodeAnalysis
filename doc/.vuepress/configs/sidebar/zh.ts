@@ -101,6 +101,12 @@ export const zh: SidebarConfig = {
         '/zh/guide/web/deploySource.md',
       ]
     },
+    {
+      text: '插件',
+      children: [
+        '/zh/guide/插件/Jenkins_Plugin.md',
+      ]
+    },
   ],
   '/zh/advanced/': [
     {
