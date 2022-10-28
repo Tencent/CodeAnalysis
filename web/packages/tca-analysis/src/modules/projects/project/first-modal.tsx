@@ -50,15 +50,15 @@ const FirstModal = (props: FirstModalProps) => {
 
   useEffect(() => {
     (async () => {
-      setTags(get(await getTags(orgSid), 'results', []));
-      setLanguages(get(await getLanguages(), 'results', []));
+      if (visible) {
+        setTags(get(await getTags(orgSid), 'results', []));
+        setLanguages(get(await getLanguages(), 'results', []));
+      }
     })();
-  }, []);
+  }, [visible]);
 
   const onFinish = (data: any) => {
     const { funcList = [] } = data;
-    // 开源版需要隐藏tag，默认赋予tag Codedog_Linux
-    const tag = tags.filter(item => item.public && item.name === 'Codedog_Linux').pop() || tags.pop();
     data = data.type === 'create' ? {
       branch: data.branch,
       scan_scheme: {
@@ -72,7 +72,6 @@ const FirstModal = (props: FirstModalProps) => {
         envs: null,
         pre_cmd: null,
         build_flag: false,
-        tag: tag.name || 'Codedog_Linux',
       },
     } : {
       branch: data.branch,

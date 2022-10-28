@@ -8,7 +8,7 @@
  * 度量结果 - 重复代码 - 列表页
  */
 import React, { useEffect, useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { cloneDeep, toNumber, omit, omitBy, isString } from 'lodash';
 import qs from 'qs';
 import { Table, Avatar } from 'coding-oa-uikit';
@@ -17,7 +17,7 @@ import UserIcon from 'coding-oa-uikit/lib/icon/User';
 import { getQuery } from '@src/utils';
 import { getDupIssues } from '@src/services/projects';
 import { DEFAULT_PAGER } from '@src/constant';
-import { getProjectRouter } from '@src/utils/getRoutePath';
+import { getProjectBlankRouter } from '@src/utils/getRoutePath';
 import { DUP_FILE_STATE_OPTIONS } from '../../constants';
 
 import Search from './search';
@@ -137,20 +137,20 @@ const DupFiles = (props: DupFilesProps) => {
           sorter
           sortOrder={sort.key === 'file_name' ? sort.order : undefined}
           render={(file_name, data: any) => (
-            <Link
+            <a
               target="_blank"
-              to={`${getProjectRouter(
+              href={`${getProjectBlankRouter(
                 orgSid,
                 teamName,
                 repoId,
                 projectId,
               )}/metric/dupfiles/${data.id}`}
               className="link-name"
-              title={data.file_path}
+              title={data.file_path} rel="noreferrer"
             >
               <p>{file_name}</p>
               <p className="path">{data.file_path}</p>
-            </Link>
+            </a>
           )}
         />
         <Column
@@ -202,19 +202,19 @@ const DupFiles = (props: DupFilesProps) => {
             //     color: 'uncompleted',
             //   },
             // ];
-              <div className={style.progressWrapper}>
-                {/* todo: remove */}
-                {/* <ProgressBar
+            <div className={style.progressWrapper}>
+              {/* todo: remove */}
+              {/* <ProgressBar
                                     className={style.progressSize}
                                     progress={progress}
                                     parentRef={null}
                                     percent={data.duplicate_rate}
                                 /> */}
-                <span className={style.percentage}>
-                  {' '}
-                  {data.duplicate_rate}%
-                                        </span>
-              </div>
+              <span className={style.percentage}>
+                {' '}
+                {data.duplicate_rate}%
+              </span>
+            </div>
           )
           }
         />

@@ -4,14 +4,14 @@
 // See LICENSE for details
 // ==============================================================================
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Form, Button, Input, message } from 'coding-oa-uikit';
-import { pick, get, find } from 'lodash';
-import { useSelector } from 'react-redux';
+import { pick } from 'lodash';
 
 // 项目内
+import { useLoginUserIsAdmin } from '@plat/hooks';
 import { getProjectListRouter, getProjectOverviewRouter } from '@src/utils/getRoutePath';
 import { formatDateTime, getUserName } from '@src/utils';
 import { getProjectTeam, putProjectTeam, disableProject } from '@src/services/common';
@@ -28,13 +28,11 @@ const Overview = () => {
   const { orgSid, teamName }: any = useParams();
   // 判断是否有权限删除团队项目
   const history: any = useHistory();
-  const APP = useSelector((state: any) => state.APP);
-  const isSuperuser = get(APP, 'user.is_superuser', false); // 当前用户是否是超级管理员
-  const userName = get(APP, 'user.username', null);
-  const isAdmin = !!find(team?.admins, { username: userName });  // 当前用户是否是项目管理员
-  const deletable = isAdmin || isSuperuser;  // 删除权限
   const [deleteVisible, setDeleteVisible] = useState<boolean>(false);
   const { t } = useTranslation();
+
+  const admins = useMemo(() => team?.admins?.map((userinfo: any) => userinfo.username) || [], [team]);
+  const isAdmin = useLoginUserIsAdmin(admins);
 
   // 重置
   const onReset = () => {
@@ -144,7 +142,7 @@ const Overview = () => {
               {t('编辑')}
             </Button>
           )}
-          {deletable && <Button className="ml-12" htmlType="button" onClick={onDelete} danger type='primary'>
+          {isAdmin && <Button className="ml-12" htmlType="button" onClick={onDelete} danger type='primary'>
             {t('禁用项目')}
           </Button>}
         </div>

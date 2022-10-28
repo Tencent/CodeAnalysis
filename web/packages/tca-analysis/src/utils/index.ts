@@ -8,9 +8,9 @@ import Moment from 'moment';
 import qs from 'qs';
 import { message } from 'coding-oa-uikit';
 import { get, uniqBy, throttle } from 'lodash';
-import { LOGIN_SERVER_API } from '@src/services/common';
+import { LOGIN_SERVER_API } from '@plat/api';
 import { useStateStore } from '@src/context/store';
-
+import { getMetaContent } from '@tencent/micro-frontend-shared/util';
 
 /**
  * 格式化时间，默认返回时间的年月日
@@ -84,10 +84,12 @@ export const getRuntimeEnv = (key: string, defaultValue = '') => {
 /**
  * 重新登录，节流
  */
-export const reLogin = throttle((content: string) => {
-  message.warning(content);
+export const reLogin = throttle((content?: string) => {
+  content && message.warning(content);
   const timer = setTimeout(() => {
     window.location.href = `/login?redirect_uri=${encodeURIComponent(window.location.href)}`;
     clearTimeout(timer);
   }, 300);
 }, 1000);
+
+export const isEnableManage = () => getMetaContent('ENABLE_MANAGE', process.env.ENABLE_MANAGE) === 'TRUE';

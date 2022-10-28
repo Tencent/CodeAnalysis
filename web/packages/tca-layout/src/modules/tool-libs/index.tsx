@@ -162,10 +162,11 @@ export const ToolLibs = () => {
             <Column
               title='操作'
               dataIndex='id'
-              render={(id: number) => (
+              render={(id: number, libInfo: any) => (
                 <Button
                   type='text'
                   icon={<EditIcon />}
+                  disabled={!isSuperuser && libInfo.lib_type === LibTypeEnum.PUBLIC}
                   onClick={() => setModalData({
                     visible: true,
                     libId: id,

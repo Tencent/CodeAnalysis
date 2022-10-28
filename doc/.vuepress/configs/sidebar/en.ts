@@ -27,14 +27,20 @@ export const en: SidebarConfig = {
           children: [
             '/en/guide/代码检查/工具/eslint.md',
             '/en/guide/代码检查/工具/golangcilint.md',
-            '/eh/guide/代码检查/工具/TCA-Armory-R.md',
-            '/eh/guide/代码检查/工具/TCA-Armory-C1.md',
+            '/en/guide/代码检查/工具/TCA-Armory-R.md',
+            '/en/guide/代码检查/工具/TCA-Armory-C1.md',
+            '/en/guide/代码检查/工具/TCA-Armory-Q1.md',
           ],
         },
         {
           text: '典型规则包使用手册',
           children: [
+            '/en/guide/代码检查/规则包/cpp_doc.md',
             '/en/guide/代码检查/规则包/enhanced_safety_java.md',
+            '/en/guide/代码检查/规则包/test_case_verify_go.md',
+            '/en/guide/代码检查/规则包/code_spec_oc.md',
+            '/en/guide/代码检查/规则包/front_end_framework_check.md',
+            '/en/guide/代码检查/规则包/dependency_vul.md',
           ],
         },
       ]
@@ -55,6 +61,7 @@ export const en: SidebarConfig = {
       text: '工具管理',
       children: [
         '/en/guide/工具管理/工具管理说明.md',
+        '/en/guide/工具管理/工具列表.md',
         '/en/guide/工具管理/自定义规则.md',
         '/en/guide/工具管理/自定义工具.md',
       ]
@@ -76,6 +83,7 @@ export const en: SidebarConfig = {
       children: [
         '/en/guide/客户端/本地分析.md',
         '/en/guide/客户端/常驻节点分析.md',
+        '/en/guide/客户端/快速扫描模式.md',
         '/en/guide/客户端/其他配置.md',
       ]
     },
@@ -91,6 +99,12 @@ export const en: SidebarConfig = {
       children: [
         '/en/guide/web/web.md',
         '/en/guide/web/deploySource.md',
+      ]
+    },
+    {
+      text: '插件',
+      children: [
+        '/en/guide/插件/Jenkins_Plugin.md',
       ]
     },
   ],

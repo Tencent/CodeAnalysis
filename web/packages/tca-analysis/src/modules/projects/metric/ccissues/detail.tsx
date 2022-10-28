@@ -122,31 +122,31 @@ const CcIssueDetail = () => {
       <hr className={s.detailHr} />
       <p className={s.title} style={{ marginTop: '16px' }}>
         缺陷位置
-                </p>
+      </p>
       <div className={s.bug_info_content}>
         {loadingIssueDetail ? (
           <Loading />
         ) : (
-            <>
-              <Button
-                empty
-                type="confirm"
-                className={cn(s.hoverBtn, s.hoverFuncBtn)}
-                onClick={() => scrollToLine(startLineNum)}
-              >
-                第{startLineNum}行
-                            </Button>
-              <span className={s.des}>-</span>
-              <Button
-                empty
-                type="confirm"
-                style={{ marginLeft: '15px' }}
-                className={cn(s.hoverBtn, s.hoverFuncBtn)}
-                onClick={() => scrollToLine(endLineNum)}
-              >
-                第{endLineNum}行
-                            </Button>
-            </>
+          <>
+            <Button
+              empty
+              type="confirm"
+              className={cn(s.hoverBtn, s.hoverFuncBtn)}
+              onClick={() => scrollToLine(startLineNum)}
+            >
+              第{startLineNum}行
+            </Button>
+            <span className={s.des}>-</span>
+            <Button
+              empty
+              type="confirm"
+              style={{ marginLeft: '15px' }}
+              className={cn(s.hoverBtn, s.hoverFuncBtn)}
+              onClick={() => scrollToLine(endLineNum)}
+            >
+              第{endLineNum}行
+            </Button>
+          </>
         )}
       </div>
       {/* todo: remove Row Col */}
@@ -165,10 +165,10 @@ const CcIssueDetail = () => {
                   </span>
                 </>
               ) : (
-                  <>
-                    <span className={s.nullAvatar} />
-                    <span className={s.noUser}>未分配</span>
-                  </>
+                <>
+                  <span className={s.nullAvatar} />
+                  <span className={s.noUser}>未分配</span>
+                </>
               )}
             </div>
           )}
@@ -182,7 +182,7 @@ const CcIssueDetail = () => {
         <Col xs={8}>
           <p>
             数量上表现为独立执行路径条数，也可理解为覆盖所有的可能情况最少使用的测试用例数。
-                        </p>
+          </p>
         </Col>
       </Row>
       <Row className={s.bug_info_line}>
@@ -193,7 +193,7 @@ const CcIssueDetail = () => {
           <p>
             圈复杂度大说明程序代码可能质量低且难于测试和维护，
             根据经验，程序的可能错误和高的圈复杂度有着很大关系。
-                        </p>
+          </p>
         </Col>
       </Row>
       <Row className={s.bug_info_line}>
@@ -256,27 +256,27 @@ const CcIssueDetail = () => {
               >
                 <span className={s.goback}>
                   <AngleLeft />
-                                        返回上一级
-                                    </span>
+                  返回上一级
+                </span>
               </Link>
             </div>
           </div>
           <p className={cn(s.des, s.filePath)} style={{ marginBottom: '4px' }}>
             路径：
-                            {issueDetail.file_path
-                              ? issueDetail.file_path.split('/').join(' / ')
-                              : ''}
+            {issueDetail.file_path
+              ? issueDetail.file_path.split('/').join(' / ')
+              : ''}
           </p>
           <p className={cn(s.des, s.filePath)} style={{ marginBottom: '16px' }}>
             <span style={{ marginRight: '4px' }}>
               仓库地址：
-                                {`${curRepo.scm_url}.${curRepo.scm_type}`}
+              {`${curRepo.scm_url}.${curRepo.scm_type}`}
             </span>
             <Copy text={curRepo.url} copyText={curRepo.url} />
           </p>
         </div>
       ) : (
-          <Loading />
+        <Loading />
       )}
     </div>
   );
@@ -334,18 +334,18 @@ const CcIssueDetail = () => {
             <div className={s.sug_tips}>
               <p className={s.sug_item}>
                 1. 代码库账号密码问题 -- 前往
-                                <a href={`${branchAdmin}`} target="_blank" rel="noreferrer">
+                <a href={`${branchAdmin}`} target="_blank" rel="noreferrer">
                   分支项目凭证管理页面
-                                </a>
-                                查看
-                            </p>
+                </a>
+                查看
+              </p>
               <p className={s.sug_item}>
                 2. 文件格式无法展示 -- 不支持展示.jar等二进制文件
-                            </p>
+              </p>
               <p className={s.sug_item}>
                 3. 代码文件不存在 --
                 可能为本地分析中间代码，请在本地环境下查看代码或联系管理员定位问题
-                            </p>
+              </p>
             </div>
           </>
         )}
@@ -367,17 +367,17 @@ const CcIssueDetail = () => {
       {loadingCodeContents ? (
         renderLoading()
       ) : (
-          <>
-            {renderCodeContent()}
-            {getCodeFileDetail !== '' && (
-              <tr>
-                <td />
-                <td>
-                  <p className={s.des}>{getCodeFileDetail}</p>
-                </td>
-              </tr>
-            )}
-          </>
+        <>
+          {renderCodeContent()}
+          {getCodeFileDetail !== '' && (
+            <tr>
+              <td />
+              <td>
+                <p className={s.des}>{getCodeFileDetail}</p>
+              </td>
+            </tr>
+          )}
+        </>
       )}
     </>
   );

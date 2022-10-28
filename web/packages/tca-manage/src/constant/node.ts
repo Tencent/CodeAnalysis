@@ -15,6 +15,9 @@ export const STATE_CHOICES = {
   [NodeStateEnum.FREE]: '空闲',
 };
 
+/** 节点工作状态 options */
+export const NODE_STATE_OPTIONS = generateOptions(STATE_CHOICES, true);
+
 /** 节点可用状态 */
 export enum NodeEnabledEnum {
   /** 不可用 */

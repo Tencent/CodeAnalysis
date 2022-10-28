@@ -22,7 +22,7 @@ runtimeKeys.forEach((key) => {
 
 export interface EnvConfig {
   envs: Envs,
-  runtimeEnvs: Envs
+  runtimeEnvs?: Envs
 }
 
 const envConfig: EnvConfig = {

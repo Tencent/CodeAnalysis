@@ -60,17 +60,16 @@ export const JOB_SEARCH_FIELDS: SearchFormField[] = [{
   formType: 'select',
   options: STATE_OPTIONS,
 }, {
-  name: 'result',
-  label: '结果',
+  name: 'result_code_gte',
+  label: '结果码',
+  placeholder: '结果码 >=',
   type: 'number',
-  formType: 'select',
-  options: RESULT_OPTIONS,
-}, {
-  name: 'repo',
-  label: 'ID',
-  type: 'string',
   formType: 'input',
-  placeholder: '代码库 ID',
+}, {
+  name: 'result_code_lte',
+  placeholder: '结果码 <=',
+  type: 'number',
+  formType: 'input',
 }];
 
 /** 高级搜索的筛选字段 */
@@ -80,6 +79,12 @@ export const JOB_MORE_SEARCH_FIELDS: SearchFormField[] = [{
   type: 'string',
   formType: 'input',
   placeholder: t('结果详情'),
+}, {
+  name: 'result',
+  label: '结果',
+  type: 'number',
+  formType: 'select',
+  options: RESULT_OPTIONS,
 }, {
   name: 'created_from',
   label: t('渠道'),
@@ -98,6 +103,12 @@ export const JOB_MORE_SEARCH_FIELDS: SearchFormField[] = [{
   type: 'string',
   formType: 'input',
   placeholder: t('启动人'),
+}, {
+  name: 'repo',
+  label: 'ID',
+  type: 'string',
+  formType: 'input',
+  placeholder: '代码库 ID',
 }];
 
 /** 整体的筛选字段 */
@@ -138,11 +149,16 @@ export const ARCHIVE_JOB_SEARCH_FIELDS: SearchFormField[] = [{
   options: PERIOD_OPTIONS,
   defaultValue: DEFAULT_ARCHIVE_JOB_FILTER.period,
 }, {
-  name: 'result',
-  label: '结果',
+  name: 'result_code_gte',
+  label: '结果码',
+  placeholder: '结果码 >=',
   type: 'number',
-  formType: 'select',
-  options: RESULT_OPTIONS,
+  formType: 'input',
+}, {
+  name: 'result_code_lte',
+  placeholder: '结果码 <=',
+  type: 'number',
+  formType: 'input',
 }];
 
 /** 归档分析记录高级筛选项 */
