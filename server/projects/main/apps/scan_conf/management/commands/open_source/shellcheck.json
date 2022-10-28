@@ -10,7 +10,7 @@
             "datahandle"
         ],
         "scan_app": "codelint",
-        "scm_url": "https://github.com/TCATools/shellcheck.git",
+        "scm_url": "shellcheck",
         "run_cmd": "python shellcheck.py",
         "envs": "",
         "build_flag": false,
