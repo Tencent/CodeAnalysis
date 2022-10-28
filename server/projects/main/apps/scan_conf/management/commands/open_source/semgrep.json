@@ -10,7 +10,7 @@
             "datahandle"
         ],
         "scan_app": "codelint",
-        "scm_url": "https://github.com/TCATools/custom-semgrep.git",
+        "scm_url": "custom-semgrep",
         "run_cmd": "python main.py",
         "envs": "python_version = 3",
         "build_flag": false,

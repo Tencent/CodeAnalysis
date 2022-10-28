@@ -9,7 +9,7 @@
             "datahandle"
         ],
         "scan_app": "codelint",
-        "scm_url": "https://github.com/TCATools/common-kunlun.git",
+        "scm_url": "common-kunlun",
         "run_cmd": "python main.py",
         "envs": "python_version = 3",
         "build_flag": false,
