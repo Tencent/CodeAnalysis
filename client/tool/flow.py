@@ -59,7 +59,8 @@ class Flow(CodeLintModel):
         SubProcController(["flow", "stop"], cwd=source_dir).wait()
 
         # 删除flow生成的配置文件，并将客户代码库自身的配置文件拷贝会代码库中，恢复现场
-        os.remove(config_file)
+        if os.path.exists(config_file):
+            os.remove(config_file)
         if os.path.exists(user_config_file):
             copyfile(user_config_file, config_file)
 
