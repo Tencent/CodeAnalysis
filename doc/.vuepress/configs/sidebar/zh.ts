@@ -67,6 +67,12 @@ export const zh: SidebarConfig = {
       ]
     },
     {
+      text: '个人中心',
+      children: [
+        '/zh/guide/个人中心/个人令牌.md',
+      ]
+    },
+    {
       text: '后台管理',
       children: [
         '/zh/guide/后台管理/用户管理.md',
