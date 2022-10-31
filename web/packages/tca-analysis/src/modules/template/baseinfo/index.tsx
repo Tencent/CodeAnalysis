@@ -21,6 +21,7 @@ import {
 
 import { updateTmpl, syncScheme, getTmplLint, updateTmplLint } from '@src/services/template';
 import NodeTag from '@src/components/node-tag';
+import Copy from '@src/components/copy';
 
 import SyncModal from '../sync-modal';
 import style from './style.scss';
@@ -102,6 +103,12 @@ const BaseConfig = (props: BaseConfigProps) => {
         form={form}
         onFinish={onFinish}
       >
+         <Form.Item {...layout} name="id" label="模板ID">
+          <span className={style.tooltip}>
+            {data.id}
+            <Copy text='点击复制方案模板ID' copyText={data.id}/>
+          </span>
+        </Form.Item>
         <Form.Item
           {...layout}
           name="name"

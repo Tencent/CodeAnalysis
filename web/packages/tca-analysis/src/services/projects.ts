@@ -5,7 +5,7 @@
 // ==============================================================================
 
 /**
- * description      分支项目请求
+ * description      分析项目请求
  * author           luochunlan@coding.net
  * create at        2020-10-23
  */
@@ -15,14 +15,14 @@ import {  getMainBaseURL, getAnalysisBaseURL } from './common';
 const getProjectBaseURL = (orgSid: string, teamName: string, repoId: string | number, projectId: number) => `${getMainBaseURL(orgSid, teamName)}/repos/${repoId}/projects/${projectId}`;
 
 /**
- * 获取分支项目
+ * 获取分析项目
  * @param repoId - 代码库ID
  * @param query - 查询参数
  */
 export const getProjects = (orgSid: string, teamName: string, repoId: string | number, query: any) => get(`${getMainBaseURL(orgSid, teamName)}/repos/${repoId}/projects/`, query);
 
 /**
- * 新建分支项目
+ * 新建分析项目
  * @param repoId - 代码库ID
  * @param data
  */
@@ -39,14 +39,14 @@ export const createProject = (orgSid: string, teamName: string, repoId: string |
 export const createJob = (orgSid: string, teamName: string, repoId: string | number, projectId: string | number, data: any) => post(`${getMainBaseURL(orgSid, teamName)}/repos/${repoId}/projects/${projectId}/scans/`, data);
 
 /**
- * 获取分支项目信息
+ * 获取分析项目信息
  * @param repoId - 代码库ID
  * @param projectId - 项目ID
  */
 export const getProjectDetail = (orgSid: string, teamName: string, repoId: string | number, projectId: string | number) => get(`${getMainBaseURL(orgSid, teamName)}/repos/${repoId}/projects/${projectId}/`);
 
 /**
- * 获取分支项目信息
+ * 获取分析项目信息
  * @param repoId - 代码库ID
  * @param projectId - 项目ID
  */
@@ -88,41 +88,41 @@ export const downloadIniFile = (orgSid: string, teamName: string, repoId: number
 
 /**
  * 获取代码检查最近问题信息
- * @param projectId 分支项目ID
+ * @param projectId 分析项目ID
  */
 export const getLatestLintScans = (orgSid: string, teamName: string, repoId: number, projectId: number) => get(`${getAnalysisBaseURL(orgSid, teamName)}/repos/${repoId}/projects/${projectId}/overview/lintscans/latest/`);
 
 /**
  * 获取代码检查历史详情数据
- * @param projectId 分支项目ID
+ * @param projectId 分析项目ID
  * @param query 查询参数
  */
 export const getLintScans = (orgSid: string, teamName: string, repoId: number, projectId: number, query?: any) => get(`${getAnalysisBaseURL(orgSid, teamName)}/repos/${repoId}/projects/${projectId}/overview/lintscans/`, query);
 
 /**
  * 获取圈复杂度历史详情数据
- * @param projectId 分支项目ID
+ * @param projectId 分析项目ID
  * @param query 查询参数
  */
 export const getCCScans = (orgSid: string, teamName: string, repoId: number, projectId: number, query?: any) => get(`${getAnalysisBaseURL(orgSid, teamName)}/repos/${repoId}/projects/${projectId}/overview/cycscans/`, query);
 
 /**
  * 获取重复代码历史详情数据
- * @param projectId 分支项目ID
+ * @param projectId 分析项目ID
  * @param query 查询参数
  */
 export const getDupScans = (orgSid: string, teamName: string, repoId: number, projectId: number, query?: any) => get(`${getAnalysisBaseURL(orgSid, teamName)}/repos/${repoId}/projects/${projectId}/overview/dupscans/`, query);
 
 /**
  * 获取代码统计历史详情数据
- * @param projectId 分支项目ID
+ * @param projectId 分析项目ID
  * @param query 查询参数
  */
 export const getClocScans = (orgSid: string, teamName: string, repoId: number, projectId: number, query?: any) => get(`${getAnalysisBaseURL(orgSid, teamName)}/repos/${repoId}/projects/${projectId}/overview/clocscans/`, query);
 
 /**
  * 获取与我相关的数据
- * @param projectId 分支项目ID
+ * @param projectId 分析项目ID
  */
 export const getMineOverview = (orgSid: string, teamName: string, repoId: number, projectId: number) => get(`${getAnalysisBaseURL(orgSid, teamName)}/repos/${repoId}/projects/${projectId}/overview/mine/`);
 
@@ -213,14 +213,14 @@ export const resoluteIssue = (
 
 /**
  * 代码统计 目录和文件列表
- * @param projectId 分支项目id
+ * @param projectId 分析项目id
  * @param path  查询路径
  */
 export const getClocFiles = (orgSid: string, teamName: string, repoId: number, projectId: number | string, path = '') => get(`${getAnalysisBaseURL(orgSid, teamName)}/repos/${repoId}/projects/${projectId}/codemetric/clocs/`, { path });
 
 /**
  * 获取代码统计的项目语言分布
- * @param projectId 分支项目id
+ * @param projectId 分析项目id
  * @param data 筛选参数
  */
 export const getClocLangs = (orgSid: string, teamName: string, repoId: number, projectId: number | string, data: any = { limit: 100 }) => get(`${getAnalysisBaseURL(orgSid, teamName)}/repos/${repoId}/projects/${projectId}/codemetric/cloclangs/`, data);
@@ -228,28 +228,28 @@ export const getClocLangs = (orgSid: string, teamName: string, repoId: number, p
 // ============================================ 度量结果 ============================================
 /**
  * 圈复杂度 - 获取圈复杂度文件列表，issue列表数据
- * @param projectId 分支项目ID
+ * @param projectId 分析项目ID
  * @param query 查询参数
  */
 export const getCCFilesIssues = (orgSid: string, teamName: string, repoId: number, projectId: number, query: any) => get(`${getAnalysisBaseURL(orgSid, teamName)}/repos/${repoId}/projects/${projectId}/codemetric/ccfiles/`, query);
 
 /**
  * 圈复杂度 - 获取圈复杂度方法列表，issue列表数据
- * @param projectId 分支项目ID
+ * @param projectId 分析项目ID
  * @param query 查询参数
  */
 export const getCCFunIssues = (orgSid: string, teamName: string, repoId: number, projectId: number, query: any) => get(`${getAnalysisBaseURL(orgSid, teamName)}/repos/${repoId}/projects/${projectId}/codemetric/ccissues/`, query);
 
 /**
  * 圈复杂度 - 获取圈复杂度文件详情
- * @param projectId 分支项目ID
+ * @param projectId 分析项目ID
  * @param fileId 文件ID
  */
 export const getCCFileDetail = (orgSid: string, teamName: string, repoId: number, projectId: number, fileId: any) => get(`${getAnalysisBaseURL(orgSid, teamName)}/repos/${repoId}/projects/${projectId}/codemetric/ccfiles/${fileId}/`);
 
 /**
  * 圈复杂度 - 获取圈复杂度文件issue详情
- * @param projectId 分支项目ID
+ * @param projectId 分析项目ID
  * @param issueId 问题ID
  */
 export const getCCIssueDetail = (orgSid: string, teamName: string, repoId: number, projectId: number, issueId: any) => get(`${getAnalysisBaseURL(orgSid, teamName)}/repos/${repoId}/projects/${projectId}/codemetric/ccissues/${issueId}/`);
@@ -257,7 +257,7 @@ export const getCCIssueDetail = (orgSid: string, teamName: string, repoId: numbe
 
 /**
 * 圈复杂度 - 获取圈复杂度文件评论
-* @param projectId 分支项目ID
+* @param projectId 分析项目ID
 * @param fileId 文件ID
 * @param query 查询参数
 */
@@ -265,7 +265,7 @@ export const getCCFileDetailComments = (orgSid: string, teamName: string, repoId
 
 /**
  * 圈复杂度 - 获取圈复杂度文件issue列表
- * @param projectId 分支项目ID
+ * @param projectId 分析项目ID
  * @param fileId 文件ID
  * @param query 查询参数
  */
@@ -362,7 +362,7 @@ export const getDupFileIssueComments = (orgSid: string, teamName: string, repoId
 
 /**
  * 分析历史 - 获取分析历史数据
- * @param projectId - 分支项目ID
+ * @param projectId - 分析项目ID
  * @param query - 查询参数
  */
 export const getScans = (orgSid: string, teamName: string, repoId: number, projectId: number, query: any) => get(`${getAnalysisBaseURL(orgSid, teamName)}/repos/${repoId}/projects/${projectId}/scans/`, query);

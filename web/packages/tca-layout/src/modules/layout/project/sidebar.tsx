@@ -30,7 +30,7 @@ const SiderBar = () => {
         key: 'code-analysis',
         childrens: [
           {
-            title: t('分支项目'),
+            title: t('分析项目'),
             link: `/t/${orgSid}/p/${name}/code-analysis/repos/projects`,
             key: 'projects',
             regexMatch: /(^\/t\/[^/]+\/p\/[^/]+\/code-analysis\/repos\/\d+\/projects)|(^\/t\/[^/]+\/p\/[^/]+\/code-analysis\/repos\/projects)/i,
