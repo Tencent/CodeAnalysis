@@ -8,6 +8,7 @@
  * 分析方案 - 已关联分支
  */
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import cn from 'classnames';
 import moment from 'moment';
 
@@ -20,6 +21,7 @@ import { DEFAULT_PAGER } from '@src/constant';
 import commonStyle from '../style.scss';
 import style from './style.scss';
 import { getUserImgUrl } from '@src/utils';
+import { getProjectRouter } from '@src/utils/getRoutePath';
 
 const { Column } = Table;
 
@@ -77,8 +79,19 @@ const Branchs = (props: BranchsProps) => {
         onShowSizeChange,
       }}
     >
-      <Column title="分支名称" dataIndex="branch" key="branch" />
-      {/* <Column title="创建渠道" dataIndex="created_from" key="created_from" /> */}
+      <Column
+      title="分支名称"
+      dataIndex="branch"
+      key="branch"
+      render={(branch: string, item: any) => (
+        <Link
+          className={style.linkName}
+          to={`${getProjectRouter(orgSid, teamName, repoId, item.id)}/overview`}
+        >
+          {branch}
+        </Link>
+      )}
+      />
       <Column
         title="创建人"
         dataIndex="creator"
