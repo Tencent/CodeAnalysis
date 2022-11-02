@@ -91,7 +91,7 @@ const Schemes = () => {
                 history.push(`${getTmplRouter(orgSid, teamName)}/${tmplId}/${key}`);
               }}
             >
-              <TabPane tab="基础属性" key="basic">
+              <TabPane tab="基础配置" key="basic">
                 <BaseInfo
                   orgSid={orgSid}
                   isSysTmpl={isSysTmpl}
@@ -102,7 +102,7 @@ const Schemes = () => {
                   callback={data => setData(data)}
                 />
               </TabPane>
-              <TabPane tab="代码检查" key="codelint">
+              <TabPane tab="规则配置" key="codelint">
                 <CodeLint
                   orgSid={orgSid}
                   teamName={teamName}
@@ -111,7 +111,7 @@ const Schemes = () => {
                   tmplInfo={data}
                 />
               </TabPane>
-              <TabPane tab="代码度量" key="codemetric">
+              <TabPane tab="度量配置" key="codemetric">
                 <CodeMetrics orgSid={orgSid} isSysTmpl={isSysTmpl} tmplId={tmplId} />
               </TabPane>
               <TabPane tab="过滤配置" key="filters">

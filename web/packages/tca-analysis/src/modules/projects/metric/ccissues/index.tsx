@@ -78,7 +78,7 @@ const CCIssues = (props: CCIssuesProps) => {
       .then((response: any) => {
         setCount(response.count);
         callback?.(response.results || []);
-        history.push(`${location.pathname}?${qs.stringify(params)}`);
+        history.replace(`${location.pathname}?${qs.stringify(params)}`);
         setData({
           list: response.results || [],
           next: response.next,
