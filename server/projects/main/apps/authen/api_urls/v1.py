@@ -19,5 +19,5 @@ from apps.authen.apis import v1, v3
 # 前缀/api/authen/
 urlpatterns = [
     path("urlauth/", v1.ProxyServerAuthenticationAPIView.as_view(), name="apiv1_authen_urlauth"),
-    path("scmallaccounts/", v3.ScmAllAcountListApiView.as_view.as_view(), name="apiv1_all_scm_accounts"),
+    path("scmallaccounts/", v3.ScmAllAcountListApiView.as_view(), name="apiv1_all_scm_accounts"),
 ]

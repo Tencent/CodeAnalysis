@@ -13,7 +13,6 @@ Infer: a code static analyzer for c/c++/oc/java.
 import shlex
 import os
 import json
-import ijson
 
 from util.subprocc import SubProcController
 from util.logutil import LogPrinter
@@ -286,6 +285,8 @@ class Infer(object):
         ]
         :return:
         """
+        import ijson
+
         f = open(error_output, "r")
         parser = ijson.parse(f)
         is_in_issue = False

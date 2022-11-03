@@ -10,7 +10,7 @@
             "datahandle"
         ],
         "scan_app": "codelint",
-        "scm_url": "https://github.com/TCATools/rips-scanner.git",
+        "scm_url": "rips-scanner",
         "run_cmd": "./php main.php",
         "envs": "",
         "build_flag": false,

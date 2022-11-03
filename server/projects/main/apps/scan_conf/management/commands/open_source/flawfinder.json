@@ -10,9 +10,9 @@
             "datahandle"
         ],
         "scan_app": "codelint",
-        "scm_url": "https://github.com/TCATools/flawfinder.git",
-        "run_cmd": "python main.py",
-        "envs": "PYTHON_HOME = $PYTHON37_HOME\nPATH = $PYTHON_HOME/bin:$PATH",
+        "scm_url": "flawfinder",
+        "run_cmd": "python3 main.py",
+        "envs": "",
         "build_flag": false,
         "checkrule_set": [
             {
