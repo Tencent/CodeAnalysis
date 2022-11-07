@@ -1,0 +1,32 @@
+[
+  {
+    "name": "【C/C++】基础安全",
+    "description": "C/C++基础安全扫描规则包，检查C/C++代码中的高危函数的使用。",
+    "revision": null,
+    "package_type": "official",
+    "languages": [
+      "cpp"
+    ],
+    "labels": [
+      "安全"
+    ],
+    "checkrule_set": [
+      {
+        "checktool": "regexscan",
+        "checkrule": "DangerousMethod",
+        "severity": "error",
+        "rule_params": null,
+        "state": "enabled"
+      },
+      {
+        "checktool": "cpplint",
+        "checkrule": "runtime/threadsafe_fn",
+        "severity": "fatal",
+        "rule_params": null,
+        "state": "enabled"
+      }
+    ],
+    "open_saas": false,
+    "envs": null
+  }
+]
