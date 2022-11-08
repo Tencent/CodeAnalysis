@@ -175,6 +175,40 @@
                 "disable": false
             },
             {
+                "real_name": "detect-css-expression-method",
+                "display_name": "DetectCssExpressionMethod",
+                "severity": "info",
+                "category": "security",
+                "rule_title": "检测css文件中的高危函数expression",
+                "rule_params": "regex=\\b(expression)\\s*\\(\nmsg=发现高危函数expression.\nignore_comment=True\ninclude=*.css",
+                "custom": false,
+                "languages": [
+                    "css"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "检测css文件中的高危函数expression",
+                "disable": false
+            },
+            {
+                "real_name": "detect-css-url-method",
+                "display_name": "DetectCssUrlMethod",
+                "severity": "info",
+                "category": "security",
+                "rule_title": "检测css文件中的高危函数url",
+                "rule_params": "regex=\\b(url)\\s*\\(\nmsg=发现高危函数url.\nignore_comment=True\ninclude=*.css",
+                "custom": false,
+                "languages": [
+                    "css"
+                ],
+                "solution": "",
+                "owner": null,
+                "labels": [],
+                "description": "检测css文件中的高危函数url",
+                "disable": false
+            },
+            {
                 "real_name": "DetectedGithubToken",
                 "display_name": "DetectedGithubToken",
                 "severity": "error",
