@@ -74,7 +74,7 @@ class RegexScanner(CodeLintModel):
         for rule in rule_list:
             rule_name = rule['name']
             if not rule.get('params'):
-                logger.error(f"{rule_name}规则参数为空, 检查已存在的规则.")
+                logger.error(f"{rule_name} rule parameter is empty, check for existing rules.")
                 no_params_rules.append(rule_name)
                 continue
             if "[regexcheck]" in rule['params']:
@@ -85,7 +85,7 @@ class RegexScanner(CodeLintModel):
 
             reg_exp = rule_params_dict.get('regex', '')
             if not reg_exp:
-                logger.error(f"{rule_name}规则参数有误,未填写正则表达式,跳过该规则.")
+                logger.error(f"{rule_name} rule parameter is wrong, not fill in the regular expression, skip this rule.")
                 continue
 
             # 规则的过滤路径（正则表达式）
@@ -97,7 +97,7 @@ class RegexScanner(CodeLintModel):
             # 大小写不敏感,可以支持True|true|False|false等
             ignore_comment = True if rule_params_dict.get('ignore_comment', 'False').lower() == 'true' else False
             file_scan = True if rule_params_dict.get('file_scan', 'False').lower() == 'true' else False
-            msg = rule_params_dict.get('msg', "发现不规范代码: %s")
+            msg = rule_params_dict.get('msg', "Irregular codes found: %s")
             rules["rules"].append({
                 "name": rule_name,
                 "regex": reg_exp,
@@ -129,7 +129,6 @@ class RegexScanner(CodeLintModel):
         files_path = os.path.join(work_dir, "regexscanner_paths.txt")
         output_path = os.path.join(work_dir, "regexscanner_result.json")
 
-        logger.info('获取需要分析的文件')
         toscans = []
         if incr_scan:
             diffs = SCMMgr(params).get_scm_diff()
@@ -168,8 +167,8 @@ class RegexScanner(CodeLintModel):
         subproc.wait()
 
         if not os.path.exists(output_path):
-            logger.info("没有生成结果文件")
-            raise AnalyzeTaskError("工具执行错误")
+            logger.info("No results file generated.")
+            raise AnalyzeTaskError("Tool running error")
 
         issues = []
         with open(output_path, "r") as f:
