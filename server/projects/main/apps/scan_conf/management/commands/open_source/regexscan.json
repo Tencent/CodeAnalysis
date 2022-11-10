@@ -845,18 +845,18 @@
       "description": "#### Company inner mail address leaks\r\nAfter hackers get inner mail information, they can send targeted phishing mail attacks in the pre-invasion period, and can blast passwords according to known accounts during the invasion, which has certain security risks."
     },
     {
-      "real_name": "PassworkLeak",
+      "real_name": "PasswordLeak",
       "display_name": "PasswordLeak",
       "severity": "warning",
       "category": "security",
       "rule_title": "Scan for sensitive information contained in the code - passwords for inner company systems to prevent leaks, otherwise it will be easy to hack",
-      "rule_params": "regex = (?!)(://[^:]+:([^@]+)@)|([\\'\"])([%s]+)(\\1)|(((pass(?!(ed)|(ing)))|password|passwd|pwd|secret|secrete|token)[^=,;\"']*('|\")?\\s*((={1,3})|:)\\s*((\"[^\"]+\")|('[^']+')))|(BEGIN RSA PRIVATE KEY)|(BEGIN DSA PRIVATE KEY)|(BEGIN EC PRIVATE KEY)|(BEGIN OPENSSH PRIVATE KEY)|(BEGIN PRIVATE KEY)|(PuTTY-User-Key-File-2)|(BEGIN SSH2 ENCRYPTED PRIVATE KEY)\r\nmsg = It may contain the password '%s' of the company's system, which may lead to password leaks, so it is recommended to delete or replace it with an irrelevant password.\r\nignore_comment = False",
+      "rule_params": "regex = (?i)(://[^:]+:([^@]+)@)|([\\'\"])([%s]+)(\\1)|(((pass(?!(ed)|(ing)))|password|passwd|pwd|secret|secrete|token)[^=,;\"']*('|\")?\\s*((={1,3})|:)\\s*((\"[^\"]+\")|('[^']+')))|(BEGIN RSA PRIVATE KEY)|(BEGIN DSA PRIVATE KEY)|(BEGIN EC PRIVATE KEY)|(BEGIN OPENSSH PRIVATE KEY)|(BEGIN PRIVATE KEY)|(PuTTY-User-Key-File-2)|(BEGIN SSH2 ENCRYPTED PRIVATE KEY)\r\nmsg = It may contain the password '%s' of the company's system, which may lead to password leaks, so it is recommended to delete or replace it with an irrelevant password.\r\nignore_comment = False",
       "custom": true,
       "languages": [],
-      "solution": null,
+      "solution": "It is recommended to delete or replace with irrelevant passwords",
       "owner": null,
       "labels": [],
-      "description": ""
+      "description": "#### Password leakage\r\nThere will be some false positives in the rules, and it is recommended that developers intervene for review."
     },
     {
       "real_name": "InnerIPLeak",
@@ -1564,21 +1564,6 @@
       "owner": null,
       "labels": [],
       "description": "发现直接调用了系统函数openURL，请替换为HuashanCOM.h中的接口。",
-      "disable": false
-    },
-    {
-      "real_name": "PassworkLeak",
-      "display_name": "密码泄漏",
-      "severity": "warning",
-      "category": "security",
-      "rule_title": "扫描代码中包含的敏感信息-公司内部系统密码，以防泄漏，否则会大幅降低黑客入侵的难度",
-      "rule_params": "regex = (?i)(://[^:]+:([^@]+)@)|([\\'\"])([%s]+)(\\1)|(((pass(?!(ed)|(ing)))|password|passwd|pwd|secret|secrete|token)[^=,;\"']*('|\")?\\s*((={1,3})|:)\\s*((\"[^\"]+\")|('[^']+')))|(BEGIN RSA PRIVATE KEY)|(BEGIN DSA PRIVATE KEY)|(BEGIN EC PRIVATE KEY)|(BEGIN OPENSSH PRIVATE KEY)|(BEGIN PRIVATE KEY)|(PuTTY-User-Key-File-2)|(BEGIN SSH2 ENCRYPTED PRIVATE KEY)\nmsg = 可能包含公司系统密码“%s”，导致密码泄漏，建议删除或者替换为无关密码\nignore_comment = False",
-      "custom": true,
-      "languages": [],
-      "solution": "建议删除或者替换为无关密码",
-      "owner": null,
-      "labels": [],
-      "description": "#### 密码泄漏\r\n\r\n\r\n规则会存在一定误报，建议开发介入进行review。",
       "disable": false
     },
     {
