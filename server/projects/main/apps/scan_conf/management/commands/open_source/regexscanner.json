@@ -179,8 +179,8 @@
                 "display_name": "DetectCssExpressionMethod",
                 "severity": "info",
                 "category": "security",
-                "rule_title": "检测css文件中的高危函数expression",
-                "rule_params": "regex=\\b(expression)\\s*\\(\nmsg=发现高危函数expression.\nignore_comment=True\ninclude=*.css",
+                "rule_title": "Detected high-risk method:expression() in css files",
+                "rule_params": "regex=\\b(expression)\\s*\\(\nmsg=Detected high-risk method:expression().\nignore_comment=True\ninclude=*.css",
                 "custom": false,
                 "languages": [
                     "css"
@@ -188,7 +188,7 @@
                 "solution": "",
                 "owner": null,
                 "labels": [],
-                "description": "检测css文件中的高危函数expression",
+                "description": "Detected high-risk method:expression() in css files",
                 "disable": false
             },
             {
@@ -196,8 +196,8 @@
                 "display_name": "DetectCssUrlMethod",
                 "severity": "info",
                 "category": "security",
-                "rule_title": "检测css文件中的高危函数url",
-                "rule_params": "regex=\\b(url)\\s*\\(\nmsg=发现高危函数url.\nignore_comment=True\ninclude=*.css",
+                "rule_title": "Detected high-risk method:url() in css files",
+                "rule_params": "regex=\\b(url)\\s*\\(\nmsg=Detected high-risk method:url().\nignore_comment=True\ninclude=*.css",
                 "custom": false,
                 "languages": [
                     "css"
@@ -205,7 +205,7 @@
                 "solution": "",
                 "owner": null,
                 "labels": [],
-                "description": "检测css文件中的高危函数url",
+                "description": "Detected high-risk method:url() in css files",
                 "disable": false
             },
             {

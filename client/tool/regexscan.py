@@ -50,7 +50,7 @@ class RegexScanner(object):
                         try:
                             message = msg_template % cap_text_list
                         except:
-                            message = u"发现不规范代码: %s" % cap_text_list
+                            message = u"Irregular codes found: %s" % cap_text_list
                 issue = {
                     'rule': name,
                     'msg': message,
@@ -156,7 +156,7 @@ class RegexScan(CodeLintModel):
         for rule in rule_list:
             rule_name = rule['name']
             if not rule.get('params'):
-                logger.error(f"{rule_name}规则参数为空,跳过该规则.")
+                logger.error(f"{rule_name} rule parameter is empty, check for existing rules.")
                 continue
             if "[regexcheck]" in rule['params']:
                 rule_params = rule['params']
@@ -166,7 +166,7 @@ class RegexScan(CodeLintModel):
 
             reg_exp = rule_params_dict.get('regex', '')
             if not reg_exp:
-                logger.error(f"{rule_name}规则参数有误,未填写正则表达式,跳过该规则.")
+                logger.error(f"{rule_name} rule parameter is wrong, not fill in the regular expression, skip this rule.")
                 continue
             reg_pattern = re.compile(reg_exp)
             exclude_paths = rule_params_dict.get('exclude', '')
@@ -175,7 +175,7 @@ class RegexScan(CodeLintModel):
             include_paths = [p.strip() for p in include_paths.split(';') if p.strip()] if include_paths else []
             # 大小写不敏感,可以支持True|true|False|false等
             ignore_comment = True if rule_params_dict.get('ignore_comment', 'False').lower() == 'true' else False
-            msg = rule_params_dict.get('msg', "发现不规范代码: %s")
+            msg = rule_params_dict.get('msg', "Irregular codes found: %s")
             rules[rule_name] = {
                 'reg_pattern': reg_pattern,
                 'exclude': exclude_paths,
@@ -198,7 +198,6 @@ class RegexScan(CodeLintModel):
         incr_scan = params['incr_scan']
         rules = self.__format_rules(params['rule_list'])
 
-        logger.info('获取需要扫描的文件')
         if incr_scan:
             diffs = SCMMgr(params).get_scm_diff()
             toscans = [os.path.join(source_dir, diff.path) for diff in diffs if
