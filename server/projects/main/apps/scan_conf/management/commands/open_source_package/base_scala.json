@@ -20,7 +20,7 @@
 		},
 		{
 			"checktool": "regexscan",
-			"checkrule": "PassworkLeak",
+			"checkrule": "PasswordLeak",
 			"severity": "warning",
 			"rule_params": null,
 			"state": "enabled"
