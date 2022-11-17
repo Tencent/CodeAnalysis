@@ -210,6 +210,7 @@ class JobManager(object):
             job_context.update({
                 "project_id": self._project.id,
                 "repo_id": self._project.repo.id,
+                "scan_path": self._project.scan_path,
                 "team_name": project_team.name if project_team else None,
                 "org_sid": organization.org_sid if organization else None,
                 "scm_type": self._project.scm_type,
