@@ -226,6 +226,7 @@ services:
     env_file:
       - ./web/tca-deploy-source/docker_conf/.env
     volumes:
+      - ./.docker_data/logs/nginx:/var/log/nginx
       - ./web/tca-deploy-source:/data/tca-deploy-source
       - ./server/configs/nginx/tca_8000_compose.conf:/etc/nginx/conf.d/tca_8000_compose.conf
     entrypoint: bash /data/tca-deploy-source/scripts/deploy.sh init
