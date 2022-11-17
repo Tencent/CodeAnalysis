@@ -95,6 +95,7 @@ class BaseJob(models.Model):
     async_flag = models.BooleanField(default=False, verbose_name="异步启动标识", blank=True, null=True)
     client_flag = models.BooleanField(verbose_name="客户端创建标识", blank=True, null=True)
     creator = models.CharField(max_length=32, verbose_name="启动人", blank=True, null=True)
+    ext_field = models.JSONField(verbose_name="扩展字段", null=True, blank=True)
 
     class Meta:
         abstract = True
@@ -106,6 +107,44 @@ class BaseJob(models.Model):
 
     def get_project_id(self):
         raise NotImplementedError
+
+    def add_field(self, field_info):
+        """增加字段
+        """
+        if self.ext_field:
+            for k, v in field_info.items():
+                self.ext_field[k] = v
+        else:
+            self.ext_field = field_info
+        self.save()
+
+    def disable_redirect(self):
+        """禁止重定向
+        """
+        self.add_field({"redirect": False})
+
+    def check_redirect(self):
+        """检查是否支持重定向
+        不支持重定向时，会显式禁止
+        """
+        if self.ext_field and self.ext_field.get("redirect") is False:
+            return False
+        else:
+            return True
+
+    def disable_reinit(self):
+        """禁止重新初始化
+        """
+        self.add_field({"reinit": False})
+
+    def check_reinit(self):
+        """检查是否支持重新初始化
+        不支持重新初始化，会显式禁止
+        """
+        if self.ext_field and self.ext_field.get("reinit") is False:
+            return False
+        else:
+            return True
 
     @property
     def waiting_time(self):
