@@ -509,7 +509,7 @@ class ProjectSerializer(base.ProjectSerializer):
     class Meta:
         model = models.Project
         exclude = ["scm_auth", "scm_initial_revision", "refer_project"]
-        read_only_fields = ["repo", "scan_scheme", "status"]
+        read_only_fields = ["repo", "scan_scheme", "status", "project_key"]
 
 
 class ProjectUpdatetSerializer(base.ProjectUpdatetSerializer):

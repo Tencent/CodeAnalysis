@@ -1133,8 +1133,10 @@ class RepoProjectInitialSerializer(serializers.Serializer):
     """项目初始化序列化，用于首次创建项目
     """
     id = serializers.ReadOnlyField()
-    branch = serializers.CharField(max_length=128, help_text="扫描分支")
+    branch = serializers.CharField(max_length=200, help_text="扫描分支")
     scan_scheme = ScanSchemeInitialSerializer(help_text="扫描方案初始化参数", required=False)
+    scan_path = serializers.CharField(max_length=512, help_text="扫描路径",
+                                      required=False, allow_null=True, allow_blank=True)
     global_scheme_id = serializers.IntegerField(help_text="全局扫描方案编号",
                                                 required=False, write_only=True, allow_null=True)
     custom_scheme_name = serializers.CharField(help_text="自定义方案名称",
@@ -1222,8 +1224,11 @@ class RepoProjectInitialSerializer(serializers.Serializer):
             # 设置默认扫描方案，如果同时有多个方案正在初始化，可能会失败
             core.ScanSchemeManager.set_default_scanscheme(scan_scheme)
             # 创建项目
-            project = models.Project.objects.create(repo=repo, branch=validated_data["branch"],
-                                                    scan_scheme=scan_scheme, creator=user)
+            # project = models.Project.objects.create(repo=repo, branch=validated_data["branch"],
+            #                                         scan_scheme=scan_scheme, creator=user)
+            project, _ = core.ProjectManager.create_project(
+                repo=repo, scan_scheme=scan_scheme, branch=validated_data["branch"],
+                scan_path=validated_data.get("scan_path"), creator=user)
             # 在Analysis Server创建项目
             try:
                 core.ProjectManager.create_project_on_analysis_server(project, user)
@@ -1256,12 +1261,15 @@ class ProjectSimpleSerializer(CDBaseModelSerializer):
 class ProjectSerializer(CDBaseModelSerializer):
     """扫描项目序列化
     """
+    scan_path = serializers.CharField(max_length=512, help_text="扫描路径",
+                                      required=False, allow_null=True, allow_blank=True)
     scan_scheme_id = serializers.PrimaryKeyRelatedField(queryset=models.ScanScheme.objects.all(), allow_null=True,
                                                         help_text="扫描方案", write_only=True, required=False)
     global_scheme_id = serializers.IntegerField(help_text="全局扫描方案编号",
                                                 required=False, write_only=True, allow_null=True)
     custom_scheme_name = serializers.CharField(help_text="自定义方案名称",
                                                max_length=128, write_only=True, required=False)
+    project_key = serializers.ReadOnlyField()
     repo = RepositorySimpleSerializer(read_only=True)
     scan_scheme = ScanSchemeSimpleSerializer(read_only=True)
 
@@ -1365,12 +1373,11 @@ class ProjectSerializer(CDBaseModelSerializer):
 
         # 避免请求失败异常
         with transaction.atomic():
-            scan_project, created = models.Project.objects.get_or_create(
-                repo_id=repo_id, branch=branch, scan_scheme=scan_scheme)
+            scan_project, created = core.ProjectManager.create_project(
+                repo=repo, scan_scheme=scan_scheme, branch=branch,
+                scan_path=validated_data.get("scan_path"),
+                creator=user, created_from=validated_data.get("created_from", models.Project.CreatedFromEnum.WEB))
             if created:
-                scan_project.creator = user
-                scan_project.created_from = validated_data.get("created_from", scan_project.created_from)
-                scan_project.save(user=user)
                 try:
                     core.ProjectManager.create_project_on_analysis_server(scan_project, user)
                 except Exception as err:
@@ -1438,7 +1445,7 @@ class ProjectJobSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Project
-        fields = ['id', 'branch', 'repo_id', 'scan_scheme', 'repo_scm_url']
+        fields = ['id', 'branch', 'repo_id', 'scan_scheme', 'repo_scm_url', 'scan_path']
 
 
 class ProjectJobDetailSerializer(serializers.ModelSerializer):
@@ -1580,6 +1587,8 @@ class APIProjectsSerializer(CDBaseModelSerializer):
     }
     """
     scm_url = serializers.CharField(max_length=400, label="代码库地址", help_text="代码库地址，分支用#间隔", write_only=True)
+    scan_path = serializers.CharField(max_length=512, help_text="扫描路径",
+                                      required=False, allow_null=True, allow_blank=True)
     scm_type = serializers.ChoiceField(label="代码库类型", help_text="git 或者 svn",
                                        choices=models.Repository.SCM_TYPE_CHOICES)
     scm_platform = serializers.ChoiceField(label="代码库平台类型", choices=scm.SCM_PLATFORM_CHOICES,
@@ -1844,14 +1853,10 @@ class APIProjectsSerializer(CDBaseModelSerializer):
         # 3. 创建项目，绑定分支和代码库方案
         # 注：使用事务，Analysis Server创建失败时可以重新创建
         with transaction.atomic():
-            project, created = models.Project.objects.get_or_create(
-                repo=repo,
-                branch=branch,
-                scan_scheme=scan_scheme,
-                defaults={
-                    "created_from": created_from,
-                    "creator": request.user,
-                }
+            project, created = core.ProjectManager.create_project(
+                repo=repo, scan_scheme=scan_scheme, branch=branch,
+                scan_path=validated_data.get("scan_path"),
+                creator=request.user, created_from=created_from,
             )
             if created:
                 try:
@@ -1867,7 +1872,7 @@ class APIProjectsSerializer(CDBaseModelSerializer):
     class Meta:
         model = models.Project
         fields = "__all__"
-        read_only_fields = ["branch", "status", "scan_scheme", "refer_project"]
+        read_only_fields = ["branch", "status", "scan_scheme", "refer_project", "project_key"]
 
 
 class ServerScanCreateSerializer(serializers.Serializer):
