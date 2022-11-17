@@ -10,6 +10,7 @@ codeproj - base models
 """
 
 # 原生 import
+import hashlib
 import logging
 
 # 第三方 import
@@ -373,6 +374,10 @@ class BaseScanScheme(CDBaseModel):
 class BaseProject(CDBaseModel):
     """扫描项目
     """
+    class Meta:
+        index_together = (
+            ("repo", "scan_scheme", "branch")
+        )
 
     class StatusEnum(object):
         ACTIVE = 1
@@ -395,6 +400,8 @@ class BaseProject(CDBaseModel):
     branch = models.CharField(max_length=200, help_text="关联分支")
     repo = models.ForeignKey(BaseRepository, help_text="关联代码库", on_delete=models.SET_NULL, null=True)
     scan_scheme = models.ForeignKey(BaseScanScheme, help_text="关联扫描方案", on_delete=models.SET_NULL, null=True)
+    scan_path = models.CharField(max_length=512, help_text="扫描路径", null=True, blank=True)
+    project_key = models.CharField(max_length=64, help_text="项目Key值", null=True, blank=True, unique=True)
     refer_project = models.ForeignKey("self", on_delete=models.SET_NULL, blank=True, null=True, help_text="参照项目")
     status = models.IntegerField(default=StatusEnum.ACTIVE, choices=STATUS_CHOICES, verbose_name="项目状态")
     created_from = models.CharField(max_length=32, help_text="创建渠道", default=CreatedFromEnum.WEB)
@@ -402,8 +409,13 @@ class BaseProject(CDBaseModel):
     scm_auth = models.ForeignKey(ScmAuth, on_delete=models.SET_NULL, verbose_name="项目授权", blank=True, null=True)
     remark = models.TextField(help_text="备注信息", blank=True, null=True)
 
-    class Meta:
-        unique_together = ("repo", "scan_scheme", "branch")
+    @classmethod
+    def gen_project_key(cls, repo_id, scheme_id, branch, scan_path):
+        if not scan_path:
+            scan_path = "/"
+        key_string = "{repo_id}#{scheme_id}#{branch}#{path}".format(
+            repo_id=repo_id, scheme_id=scheme_id, branch=branch, path=scan_path)
+        return hashlib.sha256(key_string.encode("utf-8")).hexdigest()
 
     @property
     def project_name(self):
@@ -484,6 +496,7 @@ class BaseProject(CDBaseModel):
                 "id": self.id,
                 "repo_id": self.repo_id,
                 "scan_scheme_id": self.scan_scheme_id,
+                "scan_path": self.scan_path,
                 "creator": self.creator.username if self.creator else None,
                 "scm_type": self.scm_type,
                 "scm_url": self.scm_url
@@ -494,7 +507,11 @@ class BaseProject(CDBaseModel):
             return False
 
     def __str__(self):
-        return "%s-%s-%s" % (self.repo_id, self.branch, self.scan_scheme.name if self.scan_scheme else "NoScanScheme")
+        return "%s-%s-%s-%s" % (
+            self.repo_id, self.branch,
+            self.scan_scheme.name if self.scan_scheme else "NoScanScheme",
+            self.scan_path
+        )
 
 
 Repository = BaseRepository
