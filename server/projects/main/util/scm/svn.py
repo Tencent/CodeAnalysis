@@ -9,14 +9,14 @@
 SVN源码库的操作功能
 """
 
-import re
 import logging
+import re
 from datetime import datetime
 
 from django.conf import settings
 
-from util.rpcproxy import CustomServerProxy
 from util.scm.base import IScmClient, ScmUrlFormatter
+from util.scm.rpcproxy import CustomServerProxy
 
 logger = logging.getLogger(__name__)
 
