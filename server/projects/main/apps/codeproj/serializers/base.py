@@ -31,6 +31,7 @@ from apps.scan_conf.models import CheckRule, CheckTool, Label, PackageMap
 from util import scm
 from util.cdcrypto import encrypt
 from util.operationrecord import OperationRecordHandler
+from util.time import localnow
 
 logger = logging.getLogger(__name__)
 
@@ -533,12 +534,13 @@ class RepositorySerializer(CDBaseModelSerializer):
     project_team = ProjectTeamSimpleSerializer(read_only=True)
 
     def get_recent_active(self, repo):
-        job = job_models.Job.objects.filter(project__repo=repo).order_by("-start_time").first()
+        job = job_models.Job.objects.filter(project__repo=repo).order_by("-start_time") \
+            .only('project__branch', 'start_time', 'total_line_num', 'code_line_num') \
+            .first()
         if job:
-            project = job.project
             return {
-                "id": project.id,
-                "branch_name": project.branch,
+                "id": job.project_id,
+                "branch_name": job.project.branch,
                 "active_time": job.start_time,
                 "total_line_num": job.total_line_num,
                 "code_line_num": job.code_line_num
@@ -633,7 +635,7 @@ class RepositoryCreateSerializer(CDBaseModelSerializer):
             scm_password = scm_auth_info.gitoa_access_token if scm_auth_info and scm_auth_info.gitoa_access_token \
                 else None
             if not scm_password:
-                raise serializers.ValidationError({"scm_auth": "请授权给CodeDog"})
+                raise serializers.ValidationError({"scm_auth": "未授权给Codedog平台"})
             scm_client = scm.ScmClient(
                 scm_type, scm_url, auth_type, username=user.username, password=scm_password,
                 scm_platform=scm_platform)
@@ -768,7 +770,7 @@ class RepositoryAuthUpdateSerializer(serializers.Serializer):
             scm_password = scm_auth_info.gitoa_access_token if scm_auth_info and scm_auth_info.gitoa_access_token \
                 else None
             if not scm_password:
-                raise serializers.ValidationError({"scm_auth_info": u"未授权给Codedog平台"})
+                raise serializers.ValidationError({"scm_auth_info": "未授权给Codedog平台"})
             scm_client = scm.ScmClient(scm_type, scm_url, auth_type,
                                        username=user.username, password=scm_password)
         elif auth_type == models.ScmAuth.ScmAuthTypeEnum.SSHTOKEN:
@@ -1393,6 +1395,29 @@ class ProjectUpdatetSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Project
         fields = ['status']
+
+    def update(self, instance, validated_data):
+        """更新项目状态
+        """
+        user = self.context["request"].user
+        status = validated_data.get("status")
+        if status == models.Project.StatusEnum.ARCHIVED_WITHOUT_CLEAN:
+            instance.update_remark({
+                "archived_time": str(localnow()),
+                "clean_time": str(localnow() + settings.PROJECT_ARCHIVE_CLEAN_TIMEOUT)})
+        elif status == models.Project.StatusEnum.ACTIVE \
+                and instance.status in [
+            models.Project.StatusEnum.ARCHIVED,
+            models.Project.StatusEnum.ARCHIVING,
+            models.Project.StatusEnum.ARCHIVED_WITHOUT_CLEAN
+        ]:
+            raise serializers.ValidationError({"cd_error": "归档项目无法更新状态"})
+        instance.status = status
+        instance.save()
+        OperationRecordHandler.add_project_operation_record(
+            instance, "更新项目状态", user.username, message=validated_data
+        )
+        return instance
 
 
 class ProjectBranchNameSerializer(serializers.Serializer):

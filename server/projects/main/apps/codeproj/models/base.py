@@ -11,6 +11,7 @@ codeproj - base models
 
 # 原生 import
 import hashlib
+import json
 import logging
 
 # 第三方 import
@@ -374,6 +375,7 @@ class BaseScanScheme(CDBaseModel):
 class BaseProject(CDBaseModel):
     """扫描项目
     """
+
     class Meta:
         index_together = (
             ("repo", "scan_scheme", "branch")
@@ -383,13 +385,15 @@ class BaseProject(CDBaseModel):
         ACTIVE = 1
         DISACTIVE = 2
         ARCHIVING = 3
-        ARCHIVED = 4
+        ARCHIVED_WITHOUT_CLEAN = 4
+        ARCHIVED = 5
 
     STATUS_CHOICES = (
         (StatusEnum.ACTIVE, "活跃"),
         (StatusEnum.DISACTIVE, "失活"),
         (StatusEnum.ARCHIVING, "归档中"),
-        (StatusEnum.ARCHIVED, "已归档")
+        (StatusEnum.ARCHIVED_WITHOUT_CLEAN, "已归档未清理"),
+        (StatusEnum.ARCHIVED, "已归档"),
     )
 
     class CreatedFromEnum(object):
@@ -416,6 +420,11 @@ class BaseProject(CDBaseModel):
         key_string = "{repo_id}#{scheme_id}#{branch}#{path}".format(
             repo_id=repo_id, scheme_id=scheme_id, branch=branch, path=scan_path)
         return hashlib.sha256(key_string.encode("utf-8")).hexdigest()
+
+    def refresh_project_key(self):
+        project_key = self.gen_project_key(self.repo_id, self.scan_scheme_id, self.branch, self.scan_path)
+        self.project_key = project_key
+        self.save()
 
     @property
     def project_name(self):
@@ -446,26 +455,6 @@ class BaseProject(CDBaseModel):
         else:
             return None
 
-    def get_format_url(self, **kwargs):
-        """获取格式化的链接
-        """
-        if self.repo.scm_type == BaseRepository.ScmTypeEnum.GIT:
-            return "%s#%s" % (self.repo.get_format_url(**kwargs), self.branch)
-        else:
-            return "%s/%s" % (self.repo.get_format_url(**kwargs), self.branch)
-
-    def get_scm_url_with_auth(self, **kwargs):
-        """根据凭证获取URL
-        """
-        repo_scm_url = self.repo.get_scm_url_with_auth(**kwargs)
-        if self.repo:
-            if self.repo.scm_type == BaseRepository.ScmTypeEnum.GIT:
-                return "%s#%s" % (repo_scm_url, self.branch)
-            else:
-                return "%s/%s" % (repo_scm_url, self.branch)
-        else:
-            return None
-
     @property
     def languages(self):
         if self.scan_scheme:
@@ -489,6 +478,46 @@ class BaseProject(CDBaseModel):
         auth_info = self.auth_info
         return {"auth_type": auth_info.get("auth_type"),
                 "scm_username": auth_info.get("username") or auth_info.get("scm_username")}
+
+    @property
+    def remark_info(self):
+        """备注信息Dict格式
+        """
+        if self.remark:
+            try:
+                return json.loads(self.remark)
+            except Exception as err:  # NOCA:broad-except(可能存在多种异常)
+                logger.exception("[Project: %s] get remark info failed, err: %s, remark: %s" % (
+                    self.id, err, self.remark))
+                return {}
+        else:
+            return {}
+
+    def update_remark(self, **kwargs):
+        """更新备注信息
+        """
+        self.remark = json.dumps(self.remark_info.update(**kwargs))
+        self.save()
+
+    def get_format_url(self, **kwargs):
+        """获取格式化的链接
+        """
+        if self.repo.scm_type == BaseRepository.ScmTypeEnum.GIT:
+            return "%s#%s" % (self.repo.get_format_url(**kwargs), self.branch)
+        else:
+            return "%s/%s" % (self.repo.get_format_url(**kwargs), self.branch)
+
+    def get_scm_url_with_auth(self, **kwargs):
+        """根据凭证获取URL
+        """
+        repo_scm_url = self.repo.get_scm_url_with_auth(**kwargs)
+        if self.repo:
+            if self.repo.scm_type == BaseRepository.ScmTypeEnum.GIT:
+                return "%s#%s" % (repo_scm_url, self.branch)
+            else:
+                return "%s/%s" % (repo_scm_url, self.branch)
+        else:
+            return None
 
     def sync_to_analyse_server(self):
         try:
