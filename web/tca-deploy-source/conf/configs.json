@@ -40,15 +40,15 @@
     "prefix": [
       "/static/tca-analysis/"
     ],
-    "commitId": "4c1039fece6a55dfff9037dca711101828ea19b2",
+    "commitId": "58d60dff4932f86dc5146a418bfad2e8721289e0",
     "match": "^/t/[^/]+/p/[^/]+/(code-analysis|repos|template|profile|group)",
     "js": [
-      "/static/tca-analysis/runtime~tca-analysis-ab220a30.js",
-      "/static/tca-analysis/vendors~tca-analysis-75e01754.js",
-      "/static/tca-analysis/tca-analysis-7675b4e2.js"
+      "/static/tca-analysis/runtime~tca-analysis-617f7477.js",
+      "/static/tca-analysis/vendors~tca-analysis-c19b2ef6.js",
+      "/static/tca-analysis/tca-analysis-17bafcb6.js"
     ],
     "css": [
-      "/static/tca-analysis/tca-analysis-8cc40a1b.css"
+      "/static/tca-analysis/tca-analysis-6f780d00.css"
     ]
   },
   {
