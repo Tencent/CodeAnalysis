@@ -55,13 +55,14 @@ def create_local_scan(project, creator, scan_data, created_from="codedog_client"
     }
     job_context.update(**scan_data)
     job_manager = JobManager(project)
-    logger.info("开始初始化任务，任务参数: %s" % json.dumps(job_context, indent=2))
+    logger.info("[Project: %s] 开始初始化任务，任务参数: %s" % (project.id, json.dumps(job_context)))
     scan_type = job_manager.get_scan_type(scan_data, job_context)
     job = job_manager.initialize_job(
         force_create=job_context["force_create"],
         creator=creator, created_from=created_from,
         client_flag=True
     )
+    logger.info("[Project: %s] 初始化任务完成，任务编号: %s" % (project.id, job.id))
     try:
         job.context = job_context
         job.save()
@@ -69,6 +70,7 @@ def create_local_scan(project, creator, scan_data, created_from="codedog_client"
         task_infos = None
         if task_names:
             task_infos = job_manager.init_tasks(job, task_names)
+        logger.info("[Project: %s] 创建任务完成: %s，关联扫描编号：%s" % (project.id, job.id, job.scan_id))
         return job.id, job.scan_id, task_infos
     except Exception as err:
         if isinstance(err, CDErrorBase):

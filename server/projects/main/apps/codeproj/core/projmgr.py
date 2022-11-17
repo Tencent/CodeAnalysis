@@ -1026,6 +1026,41 @@ class ProjectManager(object):
     """
 
     @classmethod
+    def format_scan_path(cls, scan_path):
+        """格式化scan_path
+        """
+        scan_path = scan_path.strip()
+        if not scan_path or scan_path == "/":
+            scan_path = "/"
+        else:
+            scan_path = scan_path.strip("/")
+        return scan_path
+
+    @classmethod
+    def create_project(cls, repo, scan_scheme, branch, scan_path=None, **kwargs):
+        """创建项目
+        """
+        if not scan_path:
+            scan_path = "/"
+        else:
+            scan_path = cls.format_scan_path(scan_path)
+
+        project_key = models.Project.gen_project_key(
+            repo_id=repo.id, scheme_id=scan_scheme.id, branch=branch, scan_path=scan_path)
+        project, created = models.Project.objects.get_or_create(
+            project_key=project_key,
+            defaults={
+                "repo_id": repo.id,
+                "branch": branch,
+                "scan_scheme_id": scan_scheme.id,
+                "scan_path": scan_path,
+                "creator": kwargs.get("creator"),
+                "created_from": kwargs.get("created_from") or models.Project.CreatedFromEnum.WEB,
+                "refer_project": kwargs.get("refer_project"),
+        })
+        return project, created
+
+    @classmethod
     def create_project_on_analysis_server(cls, project, user):
         """在Analysis服务器创建项目
         """
@@ -1034,6 +1069,7 @@ class ProjectManager(object):
                 "id": project.id,
                 "repo_id": project.repo_id,
                 "scan_scheme_id": project.scan_scheme_id,
+                "scan_path": project.scan_path,
                 "creator": user.username,
                 "scm_type": project.scm_type,
                 "scm_url": project.scm_url,
