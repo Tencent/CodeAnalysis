@@ -92,6 +92,7 @@ const Search = ({
     const params = {
       ...searchParams,
       [key]: value,
+      offset: null,
     };
     onRouteHandle(params);
     callback?.(params);

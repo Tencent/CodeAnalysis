@@ -5,7 +5,7 @@
 // ==============================================================================
 
 /**
- * 分支项目公共导航栏
+ * 分析项目公共导航栏
  */
 import React, { useEffect, useState } from 'react';
 import { useParams, useHistory, Route } from 'react-router-dom';
@@ -152,7 +152,7 @@ const Nav = ({ allSchemes, templates }: NavProps) => {
             style={{ marginRight: 10 }}
             onClick={() => setCreateProjectVsb(true)}
           >
-            新建分支项目
+            新建分析项目
           </Button>
           <Button type="primary" onClick={() => setVisible(true)}>
             启动分析

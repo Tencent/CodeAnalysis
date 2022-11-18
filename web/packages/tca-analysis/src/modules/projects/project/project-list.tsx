@@ -5,7 +5,7 @@
 // ==============================================================================
 
 /**
- * description      分支项目列表
+ * description      分析项目列表
  */
 
 import React, { useEffect, useState } from 'react';
@@ -131,7 +131,7 @@ const ProjectList = (props: ProjectListProps) => {
   const handleDeleteProject = () => {
     delProject(orgSid, teamName, repoId, curProjId)
       .then(() => {
-        message.success('已删除分支项目');
+        message.success('已删除分析项目');
         setReload(!reload);
       })
       .finally(() => {
@@ -145,8 +145,8 @@ const ProjectList = (props: ProjectListProps) => {
       <div className={style.projectSearch}>
         <div>
           <h4 className={style.title}>
-            分支项目列表
-            <Tips title="分支项目 = 分支 + 分析方案" />
+            分析项目列表
+            <Tips title="分析项目 = 分支 + 分析方案" />
           </h4>
           <SelectDropdown
             allowClear
@@ -176,7 +176,7 @@ const ProjectList = (props: ProjectListProps) => {
           />
         </div>
         <Button type="primary" onClick={() => setCreateProjectVsb(true)}>
-          添加分支项目
+          添加分析项目
         </Button>
       </div>
       <div className={style.projectContent}>
@@ -312,7 +312,7 @@ const ProjectList = (props: ProjectListProps) => {
       />
       <DeleteModal
         actionType="删除"
-        objectType="分支项目"
+        objectType="分析项目"
         confirmName={`${curProjId}`}
         visible={deleteVisible}
         onCancel={() => setDeleteVisible(false)}

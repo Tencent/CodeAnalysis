@@ -39,7 +39,7 @@ export const getReposRouter = (orgSid: string, name: string) => `/t/${orgSid}/p/
  */
 export const getAnalysisBaseRouter =  (orgSid: string, name: string) => `${getBaseRouter(orgSid, name)}/code-analysis`;
 
-/** 代码分析-分支项目基础路由 */
+/** 代码分析-分析项目基础路由 */
 const getAnalysisProjectBaseRouter = (orgSid: string, name: string) => {
   const analysisBasePath = getAnalysisBaseRouter(orgSid, name);
   if (isTrue(process.env.ENABLE_ANALYSIS_PREFIX_EXACT_MATCH)) {
@@ -58,7 +58,7 @@ const getAnalysisSchemeBaseRouter = (orgSid: string, name: string) => {
 };
 
 /**
- * 获取分支项目路由前缀
+ * 获取分析项目路由前缀
  * @param {string} [projectPath] - coding项目名
  * @param {string | number} repoId - 仓库ID
  * @param {string | number} [projectId] - 项目ID

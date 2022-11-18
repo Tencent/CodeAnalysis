@@ -304,6 +304,20 @@
     }
   }
 
+  .issue-line-bar {
+    padding: 4px 20px;
+    border-top: 1px solid #e6e9ed;
+    background-color: #f5f7fa;
+
+    .line-label {
+      color: #606c80;
+    }
+
+    .line {
+      padding: 0 8px;
+    }
+  }
+
   .code-wrapper {
     height: 800px;
     height: calc(100vh - 340px);
@@ -408,6 +422,12 @@
             }
           }
         }
+      }
+      
+      .issue-refers {
+        padding-left: 10px;
+        color: #202d40;
+        background-color: #cceaff;
       }
     }
   }

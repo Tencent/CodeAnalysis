@@ -1,5 +1,10 @@
 @import "@tencent/micro-frontend-shared/style/color.scss";
 
+$fatal-color: #ca1628;
+$error-color: #f76469;
+$warning-color: #f0850a;
+$info-color: #3d98ff;
+
 .scans {
   :global(.ant-table-thead > tr:first-child > th) {
     border-top: none;
@@ -35,6 +40,51 @@
 
 .result {
   max-width: 1000px;
+
+  .label {
+    padding-left: 8px;
+    margin-top: 8px;
+  }
+
+  .state-dot {
+    position: relative;
+    margin-right: 20px;
+    padding-left: 4px;
+    color: $grey-8;
+    font-size: 12px;
+
+    &:hover {
+      color: $blue-5;
+    }
+
+    &::before {
+      position: absolute;
+      left: -8px;
+      top: 6px;
+      content: " ";
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background-color: #eb333f;
+    }
+
+    &.fatal::before {
+      background-color: $fatal-color;
+    }
+
+    &.error::before {
+      background-color: $error-color;
+    }
+
+    &.warning::before {
+      background-color: $warning-color;
+    }
+
+    &.info::before {
+      background-color: $info-color;
+    }
+  }
 
   .module {
     font-size: 13px;
@@ -254,9 +304,10 @@
 .detail-btn {
   display: inline-block;
   color: #606c80;
-  // font-size: 12px;
+  font-size: 12px;
   padding: 0 10px;
-  line-height: 22px;
+  margin-left: 12px;
+  line-height: 20px;
   background-color: #f5f7fa;
   border-radius: 10px;
   cursor: pointer;

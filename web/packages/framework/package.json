@@ -15,8 +15,8 @@
   "scripts": {
     "dev": "NODE_ENV=development webpack server --config ./webpack.config.ts --open --progress --color",
     "build": "NODE_ENV=production webpack --config ./webpack.config.ts --progress --color",
-    "build:analyzer:comment": "echo '构建并打开bundle分析插件'",
-    "build:analyzer": "BUNDLE_ANALYZER=true NODE_ENV=production webpack --config ./webpack.config.ts --progress --color",
+    "build:analyzer:comment": "echo '构建并打开 speed 和 bundle 分析插件'",
+    "build:analyzer": "ENABLE_SPEED_MEASURE=true BUNDLE_ANALYZER=true NODE_ENV=production webpack --config ./webpack.config.ts --progress --color",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx src/",
     "lint:fix": "eslint --ext .js,.jsx,.ts,.tsx src/ --fix"
   },
