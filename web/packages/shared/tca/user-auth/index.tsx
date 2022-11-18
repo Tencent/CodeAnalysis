@@ -116,7 +116,7 @@ const UserAuth = ({ userAuthAPI, showOrigin }: UserAuthProps) => {
       </Col>
     </Row>
     <p className="text-grey-7">
-      {t('录入后，仓库登记、分支项目等模块可直接选择凭证，无需重复填写。')}
+      {t('录入后，仓库登记、分析项目等模块可直接选择凭证，无需重复填写。')}
     </p>
   </div>
     <AuthTable

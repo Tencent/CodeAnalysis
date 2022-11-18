@@ -36,8 +36,17 @@ export class MicroApplicationAPILoader implements MicroApplicationLoader {
       info('API: 微前端资源配置信息完成加载 ^ _ ^');
       return meta;
     } catch (e) {
-      message.error('微前端资源配置信息加载失败，请检查 MICRO_FRONTEND_API', 0);
-      warn('API: 微前端资源配置信息加载失败... (｡ì _ í｡)');
+      // 增加 reload，首次获取失败时默认刷新页面进行一次重试
+      const loadMicroFrontendFailed = 'loadMicroFrontendFailed';
+      const firstRecord = sessionStorage.getItem(loadMicroFrontendFailed);
+      if (!firstRecord) {
+        sessionStorage.setItem(loadMicroFrontendFailed, 'true');
+        window.location.reload();
+        return;
+      }
+      sessionStorage.removeItem(loadMicroFrontendFailed);
+      message.error('微前端资源配置信息加载失败，请刷新页面重试或联系系统管理员', 0);
+      warn('API: 微前端资源配置信息加载失败，请检查 MICRO_FRONTEND_API ... (｡ì _ í｡)');
       throw new Error(e);
     }
   }

@@ -22,10 +22,10 @@ export const getProjectsRouter = (orgSid: string) => `/t/${orgSid}/projects`;
 /** 获取团队项目组路由 */
 export const getProjectRouter = (orgSid: string, name: string) => `/t/${orgSid}/p/${name}`;
 
-/** 获取代码分析代码库分支项目列表路由 */
+/** 获取代码分析代码库分析项目列表路由 */
 export const getRepoRouter = (orgSid: string, teamName: string, repoId: number | string) => `/t/${orgSid}/p/${teamName}/code-analysis/repos/${repoId}/projects`;
 
-/** 获取代码分析分支项目概览页路由 */
+/** 获取代码分析分析项目概览页路由 */
 export const getRepoProjectRouter = (orgSid: string, teamName: string, repoId: number | string, projectId: number | string) => `/t/${orgSid}/p/${teamName}/code-analysis/repos/${repoId}/projects/${projectId}/overview`;
 
 /** 获取个人中心用户信息路由 */

@@ -24,8 +24,6 @@ import defaultEnvConfig, { EnvConfig, Envs } from './env';
 import { isTrue, modTsConfigPaths } from './util';
 import { StrBoolean } from './type';
 
-const smp = new SpeedMeasurePlugin();
-
 /** 页面资源压缩配置 */
 const htmlMinify = {
   html5: true, // 根据HTML5规范解析输入
@@ -51,6 +49,7 @@ const {
   PLATFORM_ENV,
   BUNDLE_ANALYZER,
   ENABLE_EXTERNALS,
+  ENABLE_SPEED_MEASURE,
   WEBPACK_COS_ENABLE,
 } = process.env;
 /** 根据NODE_ENV判断是否为开发模式 */
@@ -326,7 +325,10 @@ export const webpackConfig = (options?: Options) => {
   }
   // 避免MiniCssExtractPlugin与SpeedMeasurePlugin异常
   // https://github.com/stephencookdev/speed-measure-webpack-plugin/issues/167
-  config = smp.wrap(config);
+  if (isTrue(ENABLE_SPEED_MEASURE)) {
+    const smp = new SpeedMeasurePlugin();
+    config = smp.wrap(config);
+  }
   config.plugins?.push(new MiniCssExtractPlugin({
     filename: `[name]${IS_DEV ? '' : '-[contenthash:8]'}.css`,
     chunkFilename: `[name]${IS_DEV ? '' : '-[contenthash:8]'}.css`,

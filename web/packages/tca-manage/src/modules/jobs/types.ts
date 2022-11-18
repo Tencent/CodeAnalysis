@@ -22,9 +22,9 @@ interface TeamData {
   status: number
 }
 
-/** 分支项目数据结构 */
+/** 分析项目数据结构 */
 interface ProjectData {
-  /** 分支项目ID */
+  /** 分析项目ID */
   id: number;
   /** 分支名称 */
   branch: string;
@@ -44,7 +44,7 @@ interface ProjectData {
 export interface JobData {
   /** ID */
   id: number;
-  /** 分支项目 */
+  /** 分析项目 */
   project: ProjectData;
   /** 子任务数量 */
   task_num?: number;

@@ -99,7 +99,7 @@ const Schemes = () => {
     if (schemeId) {
       const res = await getSchemeBasic(orgSid, teamName, repoId, schemeId);
       setSchemeInfo(res);
-      history.replace(`${getSchemeRouter(orgSid, teamName, repoId, schemeId)}/basic`);
+      history.replace(`${getSchemeRouter(orgSid, teamName, repoId, schemeId)}/${tab}`);
     }
   };
 
@@ -177,7 +177,7 @@ const Schemes = () => {
                 )}/${key}`);
               }}
             >
-              <TabPane tab="基础属性" key="basic">
+              <TabPane tab="基础配置" key="basic">
                 <BaseInfo
                   orgSid={orgSid}
                   teamName={teamName}
@@ -202,7 +202,7 @@ const Schemes = () => {
                   }}
                 />
               </TabPane>
-              <TabPane tab="代码检查" key="codelint">
+              <TabPane tab="规则配置" key="codelint">
                 <CodeLint
                   data={lintConfig}
                   orgSid={orgSid}
@@ -216,7 +216,7 @@ const Schemes = () => {
                   }}
                 />
               </TabPane>
-              <TabPane tab="代码度量" key="codemetric">
+              <TabPane tab="度量配置" key="codemetric">
                 <CodeMetrics
                   orgSid={orgSid}
                   teamName={teamName}

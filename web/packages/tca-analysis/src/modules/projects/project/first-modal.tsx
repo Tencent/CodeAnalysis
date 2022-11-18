@@ -81,7 +81,7 @@ const FirstModal = (props: FirstModalProps) => {
 
     setLoading(true);
     initRepos(orgSid, teamName, repoId, data).then((res) => {
-      message.success('分支项目创建成功');
+      message.success('分析项目创建成功');
       onReset();
       history.push(`${getProjectRouter(orgSid, teamName, repoId, res.id)}/overview`);
       setScan({
