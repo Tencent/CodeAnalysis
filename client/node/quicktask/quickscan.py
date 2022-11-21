@@ -290,6 +290,12 @@ class QuickScan(object):
 
         total_path_issues = {}
         total_issues_cnt = 0
+        security_count = {
+            "fatal": 0,
+            "error": 0,
+            "warning": 0,
+            "info": 0
+        }
         for task_name, result_path in task_result_paths.items():
             if QuickScan.is_quick_scan():
                 # 输出debug log,方便问题定位
@@ -346,6 +352,7 @@ class QuickScan(object):
                             LogPrinter.warning(
                                 f"Wrong rule severity, change to Error: \n{json.dumps(issue, indent=2)}")
                             issue["severity"] = "Error"
+                        security_count[issue["severity"]] += 1
                         # issue["tool_name"] = rule_info.get("tool_name")  # issue中已经有checker字段
                         issue["rule_title"] = rule_info.get("rule_title")
 
@@ -356,7 +363,9 @@ class QuickScan(object):
                             total_path_issues[path] = [issue]
 
         result["issue_count"] = total_issues_cnt
+        result["security_count"] = security_count
         result["issue_detail"] = total_path_issues
+
         if "code_line" in result:
             result.pop("code_line")
         with open(report_path, "wb") as status_obj:
