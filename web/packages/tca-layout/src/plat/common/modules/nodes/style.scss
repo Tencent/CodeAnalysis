@@ -1,0 +1,19 @@
+@import "@tencent/micro-frontend-shared/style/color.scss";
+
+.header {
+  padding: 0 24px;
+  border-bottom: 1px solid $grey-3;
+  :global(.ant-tabs-nav::before) {
+    border: none;
+  }
+}
+
+.filter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 48px;
+  padding: 0 24px;
+  background-color: hsla(0, 0%, 98.8%, 0.98);
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.1), 0 0.5px 0 0 rgba(0, 0, 0, 0.08);
+}
