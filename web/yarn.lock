@@ -10950,10 +10950,10 @@ react-piwik@^1.12.0:
   resolved "https://registry.yarnpkg.com/react-piwik/-/react-piwik-1.12.0.tgz#eb026d5c9df8e95dff832bfad0c88acfe31c5175"
   integrity sha512-LAnddCJIg/PEAQX8jZrVqr6ZLa9Fjd14pyLf4saRgtPp314arJy1o4wZ04CKMAYKJUXJGWuaEvOMnwAaUUC/iA==
 
-react-popper@~2.2.5:
-  version "2.2.5"
-  resolved "https://registry.yarnpkg.com/react-popper/-/react-popper-2.2.5.tgz#1214ef3cec86330a171671a4fbcbeeb65ee58e96"
-  integrity sha512-kxGkS80eQGtLl18+uig1UIf9MKixFSyPxglsgLBxlYnyDf65BiY9B3nZSc6C9XUNDgStROB0fMQlTEz1KxGddw==
+react-popper@~2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/react-popper/-/react-popper-2.3.0.tgz#17891c620e1320dce318bad9fede46a5f71c70ba"
+  integrity sha512-e1hj8lL3uM+sgSR4Lxzn5h1GxBlpa4CQz0XLF8kx4MDrDRWY0Ena4c97PUeSX9i5W3UAfDP0z0FXCTQkoXUl3Q==
   dependencies:
     react-fast-compare "^3.0.1"
     warning "^4.0.2"
@@ -12388,10 +12388,10 @@ tdesign-icons-react@^0.1.6:
     "@babel/runtime" "^7.16.5"
     classnames "^2.2.6"
 
-tdesign-react@0.42.3:
-  version "0.42.3"
-  resolved "https://registry.yarnpkg.com/tdesign-react/-/tdesign-react-0.42.3.tgz#5e4114ac9b3c65084223c26afd0acf45b334cb83"
-  integrity sha512-tD4BOxZHP2sz0oEHtdJRxF7rr0Uy1a5qBzpK9zKmx6UOfEhljf6klF5YcjkD5H+NxZ7AeqzB+cHuydzMlfk3IQ==
+tdesign-react@0.42.6:
+  version "0.42.6"
+  resolved "https://registry.yarnpkg.com/tdesign-react/-/tdesign-react-0.42.6.tgz#a48745309ee39e3a91808e1361e34887f8900a55"
+  integrity sha512-T90HcEdsyUzoH3nxdhtm7sGIr54+qNSBWgVvSKVztRLtug5W9LlKXwT0KUxtUb9s2Xqf/MHck+ASXXy6PH9roQ==
   dependencies:
     "@babel/runtime" "~7.17.2"
     "@popperjs/core" "~2.11.2"
@@ -12404,7 +12404,7 @@ tdesign-react@0.42.3:
     lodash "~4.17.15"
     raf "~3.4.1"
     react-is "^18.2.0"
-    react-popper "~2.2.5"
+    react-popper "~2.3.0"
     react-transition-group "~4.4.1"
     sortablejs "^1.15.0"
     tdesign-icons-react "^0.1.6"

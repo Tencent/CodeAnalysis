@@ -227,9 +227,9 @@ export class FetchManager {
     ...custom,
   });
 
-  postFile = (url: string, data: any, custom?: FetchCustomParams) => fetch(url, {
+  postFile = (url: string, data?: any, custom?: FetchCustomParams) => fetch(url, {
     method: 'POST',
-    body: JSON.stringify(data),
+    body: data ? JSON.stringify(data) : null,
   }, {
     fileHandler: postFileResultHandler,
     ...this.custom,
