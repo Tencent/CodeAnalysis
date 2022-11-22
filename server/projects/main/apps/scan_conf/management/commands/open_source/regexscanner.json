@@ -177,7 +177,7 @@
             {
                 "real_name": "detect-css-expression-method",
                 "display_name": "DetectCssExpressionMethod",
-                "severity": "info",
+                "severity": "warning",
                 "category": "security",
                 "rule_title": "Detected high-risk method:expression() in css files",
                 "rule_params": "regex=\\b(expression)\\s*\\(\nmsg=Detected high-risk method:expression().\nignore_comment=True\ninclude=*.css",
@@ -194,7 +194,7 @@
             {
                 "real_name": "detect-css-url-method",
                 "display_name": "DetectCssUrlMethod",
-                "severity": "info",
+                "severity": "warning",
                 "category": "security",
                 "rule_title": "Detected high-risk method:url() in css files",
                 "rule_params": "regex=\\b(url)\\s*\\(\nmsg=Detected high-risk method:url().\nignore_comment=True\ninclude=*.css",
