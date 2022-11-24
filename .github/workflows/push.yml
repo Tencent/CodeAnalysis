@@ -9,6 +9,34 @@ on:
 jobs:
   build: 
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - dockerfile: ./projects/server/main/Dockfile
+            context: ./projects/server/main
+            image:  ${{ secrets.DOCKER_HUB_USERNAME }}/tca-main
+          - dockerfile: ./projects/server/analysis/Dockfile
+            context: ./projects/server/analysis
+            image:  ${{ secrets.DOCKER_HUB_USERNAME }}/tca-analysis
+          - dockerfile: ./projects/server/login/Dockfile
+            context: ./projects/server/login
+            image:  ${{ secrets.DOCKER_HUB_USERNAME }}/tca-login
+          - dockerfile: ./projects/server/file/Dockfile
+            context: ./projects/server/file
+            image:  ${{ secrets.DOCKER_HUB_USERNAME }}/tca-file
+          - dockerfile: ./projects/server/scmproxy/Dockfile
+            context: ./projects/server/scmproxy
+            image:  ${{ secrets.DOCKER_HUB_USERNAME }}/tca-scmproxy
+          - dockerfile: ./server/dockerconfs/Dockerfile-nginx-mirror
+            context: ./web/tca-deploy-source
+            image:  ${{ secrets.DOCKER_HUB_USERNAME }}/tca-web
+          - dockerfile: ./client/Dockerfile
+            context: ./client
+            image:  ${{ secrets.DOCKER_HUB_USERNAME }}/tca-client
+          - dockerfile: ./Dockerfile
+            context: .
+            image:  ${{ secrets.DOCKER_HUB_USERNAME }}/tca-client
 
     steps:
     # 1. 检出
@@ -34,12 +62,12 @@ jobs:
       id: docker_build
       uses: docker/build-push-action@v2
       with:
-        context: ./
-        file: ./Dockerfile
+        context: ${{ matrix.context }}
+        file: ${{ matrix.dockerfile }}
         platforms: linux/amd64, linux/arm64
-        push: true
+        push: false
         tags: ${{ secrets.DOCKER_HUB_USERNAME }}/tca:latest, ${{ secrets.DOCKER_HUB_USERNAME }}/tca:${{ github.event.release.name }}
-      if: ${{ github.event_name == 'release' }}
+      if: ${{ github.event_name == 'workflow_dispatch' }}
 
     - name: Build and push with beta tag
       id: docker_build_beta
