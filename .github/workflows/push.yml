@@ -13,20 +13,20 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - dockerfile: ./projects/server/main/Dockfile
-            context: ./projects/server/main
+          - dockerfile: ./server/projects/main/Dockfile
+            context: ./server/projects/main
             image: tca-main
-          - dockerfile: ./projects/server/analysis/Dockfile
-            context: ./projects/server/analysis
+          - dockerfile: ./server/projects/analysis/Dockfile
+            context: ./server/projects/analysis
             image: tca-analysis
-          - dockerfile: ./projects/server/login/Dockfile
-            context: ./projects/server/login
+          - dockerfile: ./server/projects/login/Dockfile
+            context: ./server/projects/login
             image: tca-login
-          - dockerfile: ./projects/server/file/Dockfile
-            context: ./projects/server/file
+          - dockerfile: ./server/projects/file/Dockfile
+            context: ./server/projects/file
             image: tca-file
-          - dockerfile: ./projects/server/scmproxy/Dockfile
-            context: ./projects/server/scmproxy
+          - dockerfile: ./server/projects/scmproxy/Dockfile
+            context: ./server/projects/scmproxy
             image: tca-scmproxy
           - dockerfile: ./server/dockerconfs/Dockerfile-nginx-mirror
             context: ./web/tca-deploy-source
@@ -52,10 +52,10 @@ jobs:
 
     # 3. 设置 docker 环境
     - name: Set up QEMU
-      uses: docker/setup-qemu-action@v1
+      uses: docker/setup-qemu-action@v2
 
     - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v1
+      uses: docker/setup-buildx-action@v2
       
     # 4. 构建并推送镜像
     - name: Build and push with latest tag and release tag
