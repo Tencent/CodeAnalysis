@@ -12,6 +12,7 @@ apps.nodemgr.filters 说明
 import logging
 
 # 第三方 import
+from django.db.models import Q
 from django_filters import rest_framework as filters
 
 # 项目内 import
@@ -31,7 +32,24 @@ class NodeFilter(filters.FilterSet):
     enabled = filters.BaseInFilter(help_text="节点可用性，0表示失效，1表示活跃，2表示掉线，可多选，格式为1,2,3")
     related_managers = filters.CharFilter(field_name="related_managers__username", help_text="节点相关责任人",
                                           lookup_expr="icontains")
+    addr = filters.CharFilter(help_text="节点IP地址", lookup_expr="icontains")
 
     class Meta:
         model = models.Node
-        fields = ["name", "manager", "exec_tags", "state", "enabled", "related_managers"]
+        fields = ["name", "manager", "exec_tags", "state", "enabled", "related_managers", "addr"]
+
+
+class TagFilter(filters.FilterSet):
+    """标签筛选
+    """
+    name = filters.CharFilter(help_text="标签名称", lookup_expr="icontains")
+    display_name = filters.CharFilter(help_text="标签展示名称", lookup_expr="icontains")
+    fuzzy_name = filters.CharFilter(help_text="标签名称综合模糊匹配", method="fuzzy_name_filter")
+    tag_type = filters.NumberFilter(help_text="标签类型， 1表示公共标签，2表示非公共标签，99表示已停用标签", lookup_expr="exact")
+
+    def fuzzy_name_filter(self, queryset, name, value):
+        return queryset.filter(Q(name__icontains=value) | Q(display_name__icontains=value))
+
+    class Meta:
+        model = models.ExecTag
+        fields = ["name", "display_name", "fuzzy_name", "tag_type"]
