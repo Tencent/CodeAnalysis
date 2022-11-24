@@ -16,8 +16,10 @@ from apps.nodemgr.apis import v3
 
 # 前缀 /api/v3/orgs/<org_sid>/nodes/
 urlpatterns = [
-    path("tags/", v3.OrgExecTagListView.as_view(), name="apiv3_tag_list"),
-    path("tags/<int:tag_id>/", v3.OrgExecTagDetailView.as_view(), name="apiv3_tag_detail"),
+    path("tags/", v3.OrgExecTagListAPIView.as_view(), name="apiv3_tag_list"),
+    path("tags/<int:tag_id>/", v3.OrgExecTagDetailAPIView.as_view(), name="apiv3_tag_detail"),
+    path("tags/<int:tag_id>/processes/", v3.OrgExecTagProcessesAPIView.as_view(),
+         name="apiv3_tag_processes"),
 
     path("", v3.OrgNodeListAPIView.as_view(), name="apiv3_node_list"),
     path("<int:node_id>/", v3.OrgNodeDetailAPIView.as_view(), name="apiv3_node_detail"),
