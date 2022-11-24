@@ -15,28 +15,28 @@ jobs:
         include:
           - dockerfile: ./projects/server/main/Dockfile
             context: ./projects/server/main
-            image:  ${{ secrets.DOCKER_HUB_USERNAME }}/tca-main
+            image: tca-main
           - dockerfile: ./projects/server/analysis/Dockfile
             context: ./projects/server/analysis
-            image:  ${{ secrets.DOCKER_HUB_USERNAME }}/tca-analysis
+            image: tca-analysis
           - dockerfile: ./projects/server/login/Dockfile
             context: ./projects/server/login
-            image:  ${{ secrets.DOCKER_HUB_USERNAME }}/tca-login
+            image: tca-login
           - dockerfile: ./projects/server/file/Dockfile
             context: ./projects/server/file
-            image:  ${{ secrets.DOCKER_HUB_USERNAME }}/tca-file
+            image: tca-file
           - dockerfile: ./projects/server/scmproxy/Dockfile
             context: ./projects/server/scmproxy
-            image:  ${{ secrets.DOCKER_HUB_USERNAME }}/tca-scmproxy
+            image: tca-scmproxy
           - dockerfile: ./server/dockerconfs/Dockerfile-nginx-mirror
             context: ./web/tca-deploy-source
-            image:  ${{ secrets.DOCKER_HUB_USERNAME }}/tca-web
+            image: tca-web
           - dockerfile: ./client/Dockerfile
             context: ./client
-            image:  ${{ secrets.DOCKER_HUB_USERNAME }}/tca-client
+            image: tca-client
           - dockerfile: ./Dockerfile
             context: .
-            image:  ${{ secrets.DOCKER_HUB_USERNAME }}/tca-client
+            image: tca
 
     steps:
     # 1. 检出
@@ -66,7 +66,7 @@ jobs:
         file: ${{ matrix.dockerfile }}
         platforms: linux/amd64, linux/arm64
         push: false
-        tags: ${{ secrets.DOCKER_HUB_USERNAME }}/tca:latest, ${{ secrets.DOCKER_HUB_USERNAME }}/tca:${{ github.event.release.name }}
+        tags: ${{ secrets.DOCKER_HUB_USERNAME }}/${{ matrix.image }}:latest, ${{ secrets.DOCKER_HUB_USERNAME }}/${{ matrix.image }}:${{ github.event.release.name }}
       if: ${{ github.event_name == 'workflow_dispatch' }}
 
     - name: Build and push with beta tag
