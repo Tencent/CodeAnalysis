@@ -42,7 +42,7 @@ class Command(BaseCommand):
             ExecTag.objects.get_or_create(name=name)
         ExecTag.objects.filter(name__in=tag_names).update(public=True)
         self.stdout.write("新增规则标签...")
-        label_names = ["基础", "推荐", "通用", "开源", "规范", "安全"]
+        label_names = ["基础", "推荐", "通用", "开源", "规范", "安全", "增强"]
         for name in label_names:
             conf_models.Label.objects.get_or_create(name=name)
         self.stdout.write("初始化语言...")
