@@ -57,6 +57,21 @@ BASE_PATH=
 LICENSE=<Client License>
 ```
 
+::: warning
+不同的部署方式可以根据下面方法修改`config.ini`配置
+
+- 源码部署：
+  - 修改源码目录下的`client/config.ini`
+  - 重启客户端：`./quick_install.sh local start client`
+- Docker部署：
+  - 方式1: 修改源码目录下的`.docker_temp/configs/client/config.ini`，并重启`tca-services`容器
+  - 方式2: 进入`tca-service`容器后，修改`/CodeAnalysis/client/config.ini`，并退出重启`tca-services`容器
+  - 重启容器方式：`docker restart tca-service`
+- Docker-Compose部署:
+  - 修改源码目录下的`client/config.ini`，并重启`client`容器
+  - 重启容器方式：`docker-compose restart client`
+:::
+
 3. 向 TCA 团队邮件申请 License
 
 - 收件邮箱：
