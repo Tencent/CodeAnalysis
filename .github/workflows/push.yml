@@ -66,7 +66,8 @@ jobs:
         file: ${{ matrix.dockerfile }}
         platforms: linux/amd64, linux/arm64
         push: false
-        tags: ${{ secrets.DOCKER_HUB_USERNAME }}/${{ matrix.image }}:latest, ${{ secrets.DOCKER_HUB_USERNAME }}/${{ matrix.image }}:${{ github.event.release.name }}
+        tags: ${{ secrets.DOCKER_HUB_USERNAME }}/${{ matrix.image }}:latest
+        #tags: ${{ secrets.DOCKER_HUB_USERNAME }}/${{ matrix.image }}:latest, ${{ secrets.DOCKER_HUB_USERNAME }}/${{ matrix.image }}:${{ github.event.release.name }}
       if: ${{ github.event_name == 'workflow_dispatch' }}
 
     - name: Build and push with beta tag
