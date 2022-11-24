@@ -64,22 +64,21 @@ jobs:
       with:
         context: ${{ matrix.context }}
         file: ${{ matrix.dockerfile }}
-        platforms: linux/amd64
-        push: false
-        tags: ${{ secrets.DOCKER_HUB_USERNAME }}/${{ matrix.image }}:latest
-        #tags: ${{ secrets.DOCKER_HUB_USERNAME }}/${{ matrix.image }}:latest, ${{ secrets.DOCKER_HUB_USERNAME }}/${{ matrix.image }}:${{ github.event.release.name }}
-      if: ${{ github.event_name == 'workflow_dispatch' }}
+        platforms: linux/amd64, linux/arm64
+        push: true
+        tags: ${{ secrets.DOCKER_HUB_USERNAME }}/${{ matrix.image }}:latest, ${{ secrets.DOCKER_HUB_USERNAME }}/${{ matrix.image }}:${{ github.event.release.name }}
+      if: ${{ github.event_name == 'release' }}
 
-    # - name: Build and push with beta tag
-    #   id: docker_build_beta
-    #   uses: docker/build-push-action@v2
-    #   with:
-    #     context: ./
-    #     file: ./Dockerfile
-    #     platforms: linux/amd64, linux/arm64
-    #     push: true
-    #     tags: ${{ secrets.DOCKER_HUB_USERNAME }}/tca:beta
-    #   if: ${{ github.event_name == 'workflow_dispatch' }}
+    - name: Build and push with beta tag
+      id: docker_build_beta
+      uses: docker/build-push-action@v2
+      with:
+        context: ${{ matrix.context }}
+        file: ${{ matrix.dockerfile }}
+        platforms: linux/amd64, linux/arm64
+        push: true
+        tags: ${{ secrets.DOCKER_HUB_USERNAME }}/${{ matrix.image }}:beta
+      if: ${{ github.event_name == 'workflow_dispatch' }}
 
     # 5. 打印docker镜像SHA256值
     - name: Image digest
