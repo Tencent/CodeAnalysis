@@ -14,25 +14,25 @@ jobs:
       matrix:
         include:
           - dockerfile: ./server/projects/main/Dockfile
-            context: ./server/projects/main
+            context: ./server/projects/main/
             image: tca-main
           - dockerfile: ./server/projects/analysis/Dockfile
-            context: ./server/projects/analysis
+            context: ./server/projects/analysis/
             image: tca-analysis
           - dockerfile: ./server/projects/login/Dockfile
-            context: ./server/projects/login
+            context: ./server/projects/login/
             image: tca-login
           - dockerfile: ./server/projects/file/Dockfile
-            context: ./server/projects/file
+            context: ./server/projects/file/
             image: tca-file
           - dockerfile: ./server/projects/scmproxy/Dockfile
-            context: ./server/projects/scmproxy
+            context: ./server/projects/scmproxy/
             image: tca-scmproxy
           - dockerfile: ./server/dockerconfs/Dockerfile-nginx-mirror
-            context: ./web/tca-deploy-source
+            context: ./web/tca-deploy-source/
             image: tca-web
           - dockerfile: ./client/Dockerfile
-            context: ./client
+            context: ./client/
             image: tca-client
           - dockerfile: ./Dockerfile
             context: .
