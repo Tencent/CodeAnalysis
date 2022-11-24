@@ -122,7 +122,7 @@ class CheckerSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.CheckTool
         fields = [
-            "name", "display_name", "description", "license", "libscheme_set",
+            "name", "display_name", "description", "license", "libscheme_set", "image_url",
             "task_processes", "scan_app", "scm_url", "run_cmd", "envs", "build_flag",
             "checkrule_set", "open_user", "open_saas", "virtual_name", "show_display_name"
         ]
