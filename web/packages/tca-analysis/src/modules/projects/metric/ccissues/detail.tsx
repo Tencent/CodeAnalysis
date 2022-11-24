@@ -335,7 +335,7 @@ const CcIssueDetail = () => {
               <p className={s.sug_item}>
                 1. 代码库账号密码问题 -- 前往
                 <a href={`${branchAdmin}`} target="_blank" rel="noreferrer">
-                  分支项目凭证管理页面
+                  分析项目凭证管理页面
                 </a>
                 查看
               </p>

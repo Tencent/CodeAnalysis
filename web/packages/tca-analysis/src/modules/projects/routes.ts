@@ -7,9 +7,9 @@
 import qs from 'qs';
 import { getProjectRouter } from '@src/utils/getRoutePath';
 /**
- * 获取分支项目代码检查issue列表路由前缀
+ * 获取分析项目代码检查issue列表路由前缀
  * @param repoId 代码库ID
- * @param projectId 分支项目ID
+ * @param projectId 分析项目ID
  * @param query 筛选参数
  */
 export const getProjectLintIssueRouter = (
@@ -22,9 +22,9 @@ export const getProjectLintIssueRouter = (
 }`;
 
 /**
-* 获取分支项目圈复杂度方法issue列表路由前缀
+* 获取分析项目圈复杂度方法issue列表路由前缀
 * @param repoId 代码库ID
-* @param projectId 分支项目ID
+* @param projectId 分析项目ID
 * @param query 筛选参数
 */
 export const getProjectCCFunIssueRouter = (
@@ -37,9 +37,9 @@ export const getProjectCCFunIssueRouter = (
 }`;
 
 /**
-* 获取分支项目圈复杂度文件issue列表路由前缀
+* 获取分析项目圈复杂度文件issue列表路由前缀
 * @param repoId 代码库ID
-* @param projectId 分支项目ID
+* @param projectId 分析项目ID
 * @param query 筛选参数
 */
 export const getProjectCCFileIssueRouter = (
@@ -52,9 +52,9 @@ export const getProjectCCFileIssueRouter = (
 }`;
 
 /**
-* 获取分支项目重复代码issue列表路由前缀
+* 获取分析项目重复代码issue列表路由前缀
 * @param repoId 代码库ID
-* @param projectId 分支项目ID
+* @param projectId 分析项目ID
 * @param query 筛选参数
 */
 export const getProjectDupIssueRouter = (

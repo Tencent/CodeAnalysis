@@ -61,7 +61,7 @@ const HandleIssueModal = (props: HandleIssueModalProps) => {
                             }}
                         />&nbsp;全局忽略
                         （非必选项，谨慎操作）
-                        <Tooltip title="开启全局忽略后，代码库内其他分支项目扫出相同问题会直接复用当前忽略方式，请谨慎操作！">
+                        <Tooltip title="开启全局忽略后，代码库内其他分析项目扫出相同问题会直接复用当前忽略方式，请谨慎操作！">
                             <QuestionCircle />
                         </Tooltip>
                     </p>

@@ -66,6 +66,21 @@ class RegexScanner(CodeLintModel):
                             break
         return config_rules_path
 
+    def __get_regexes_exp(self, regex_type, rule_params_dict):
+        """获取正则列表
+        """
+        regexes = []
+        i = 1
+        while True:
+            key = f"{regex_type}{i}"
+            if key in rule_params_dict:
+                reg_exp = rule_params_dict.get(key, "")
+                if reg_exp:
+                    regexes.append(reg_exp)
+                i += 1
+            else:
+                return regexes
+
     def __format_rules(self, work_dir, rule_list):
         """格式化规则
         """
@@ -83,10 +98,13 @@ class RegexScanner(CodeLintModel):
                 rule_params = "[regexcheck]\r\n" + rule['params']
             rule_params_dict = ConfigReader(cfg_string=rule_params).read('regexcheck')
 
-            reg_exp = rule_params_dict.get('regex', '')
-            if not reg_exp:
+            regex = rule_params_dict.get("regex", "")
+            regex_not = rule_params_dict.get("regex_not", "")
+            if not regex:
                 logger.error(f"{rule_name} rule parameter is wrong, not fill in the regular expression, skip this rule.")
                 continue
+            regexes = self.__get_regexes_exp("regex", rule_params_dict)
+            regexes_not = self.__get_regexes_exp("regex_not", rule_params_dict)
 
             # 规则的过滤路径（正则表达式）
             exclude_paths = rule_params_dict.get('exclude', '')
@@ -98,16 +116,20 @@ class RegexScanner(CodeLintModel):
             ignore_comment = True if rule_params_dict.get('ignore_comment', 'False').lower() == 'true' else False
             file_scan = True if rule_params_dict.get('file_scan', 'False').lower() == 'true' else False
             msg = rule_params_dict.get('msg', "Irregular codes found: %s")
-            rules["rules"].append({
+            rule = {
                 "name": rule_name,
-                "regex": reg_exp,
+                "regex": regex,
+                "regexes": regexes,
+                "regex-not": regex_not,
+                "regexes-not": regexes_not,
+                "message": msg,
+                "ignore-comment": ignore_comment,
+                "filescan": file_scan,
+                "severity": "error",
                 "excludes": exclude_paths,
                 "includes": include_paths,
-                "message": msg,
-                "ignorecomment": ignore_comment,
-                "filescan": file_scan,
-                "severity": "error"
-            })
+            }
+            rules["rules"].append(rule)
         config_rules_path = self.__add_rules(work_dir, no_params_rules)
         rules_path = os.path.join(config_rules_path, "regexscanner_rules.yaml")
         with open(rules_path, "w", encoding="utf-8") as f:

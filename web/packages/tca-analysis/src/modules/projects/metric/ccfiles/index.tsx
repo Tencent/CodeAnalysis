@@ -64,7 +64,7 @@ const CCFiles = (props: CCFilesProps) => {
     getCCFilesIssues(orgSid, teamName, repoId, projectId, params)
       .then((response: any) => {
         setCount(response.count);
-        history.push(`${location.pathname}?${qs.stringify(params)}`);
+        history.replace(`${location.pathname}?${qs.stringify(params)}`);
         setFilesIssue(response.results || []);
       })
       .finally(() => {

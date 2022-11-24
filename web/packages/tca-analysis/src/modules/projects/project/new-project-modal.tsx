@@ -5,7 +5,7 @@
 // ==============================================================================
 
 /**
- * 新建分支项目模态框
+ * 新建分析项目模态框
  */
 
 import React, { useState } from 'react';
@@ -59,8 +59,8 @@ const NewProjectModal = (props: NewProjectModalProps) => {
 
       if (project.id && data.type !== 'template') {
         Modal.confirm({
-          title: '分支项目已存在',
-          content: '是否跳转到该分支项目？',
+          title: '分析项目已存在',
+          content: '是否跳转到该分析项目？',
           onOk() {
             history.push(`${getProjectRouter(
               orgSid,
@@ -81,8 +81,8 @@ const NewProjectModal = (props: NewProjectModalProps) => {
 
         if (project.id) {
           Modal.confirm({
-            title: '分支项目已创建',
-            content: '是否跳转到该分支项目？',
+            title: '分析项目已创建',
+            content: '是否跳转到该分析项目？',
             onOk() {
               history.push(`${getProjectRouter(
                 orgSid,
@@ -110,11 +110,11 @@ const NewProjectModal = (props: NewProjectModalProps) => {
 
   return (
     <Modal
-      title="添加分支项目"
+      title="添加分析项目"
       className={style.newProjectModal}
       visible={visible}
       onCancel={onReset}
-      okText="新建分支项目"
+      okText="新建分析项目"
       confirmLoading={loading}
       onOk={() => {
         form.validateFields().then(onFinish);
