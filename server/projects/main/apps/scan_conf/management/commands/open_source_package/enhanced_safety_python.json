@@ -8,7 +8,8 @@
             "python"
         ],
         "labels": [
-            "安全"
+            "安全",
+            "增强"
         ],
         "checkrule_set": [
             {
