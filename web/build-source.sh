@@ -90,5 +90,6 @@ function run_config() {
   echo '['"${configs:2}"']' >"${CONF_PATH}"/configs.json
 }
 
+yarn
 run
 run_config

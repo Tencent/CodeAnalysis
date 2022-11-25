@@ -23,12 +23,24 @@ export const zh: SidebarConfig = {
         '/zh/guide/代码检查/分析结果查看.md',
         '/zh/guide/代码检查/添加规则配置.md',
         {
-          text: '典型工具接入指引',
+          text: '典型工具使用手册',
           children: [
             '/zh/guide/代码检查/工具/eslint.md',
             '/zh/guide/代码检查/工具/golangcilint.md',
             '/zh/guide/代码检查/工具/TCA-Armory-R.md',
             '/zh/guide/代码检查/工具/TCA-Armory-C1.md',
+            '/zh/guide/代码检查/工具/TCA-Armory-Q1.md',
+          ],
+        },
+        {
+          text: '典型规则包使用手册',
+          children: [
+            '/zh/guide/代码检查/规则包/cpp_doc.md',
+            '/zh/guide/代码检查/规则包/enhanced_safety_java.md',
+            '/zh/guide/代码检查/规则包/test_case_verify_go.md',
+            '/zh/guide/代码检查/规则包/code_spec_oc.md',
+            '/zh/guide/代码检查/规则包/front_end_framework_check.md',
+            '/zh/guide/代码检查/规则包/dependency_vul.md',
           ],
         },
       ]
@@ -49,8 +61,15 @@ export const zh: SidebarConfig = {
       text: '工具管理',
       children: [
         '/zh/guide/工具管理/工具管理说明.md',
+        '/zh/guide/工具管理/工具列表.md',
         '/zh/guide/工具管理/自定义规则.md',
         '/zh/guide/工具管理/自定义工具.md',
+      ]
+    },
+    {
+      text: '个人中心',
+      children: [
+        '/zh/guide/个人中心/个人令牌.md',
       ]
     },
     {
@@ -70,6 +89,7 @@ export const zh: SidebarConfig = {
       children: [
         '/zh/guide/客户端/本地分析.md',
         '/zh/guide/客户端/常驻节点分析.md',
+        '/zh/guide/客户端/快速扫描模式.md',
         '/zh/guide/客户端/其他配置.md',
       ]
     },
@@ -87,6 +107,12 @@ export const zh: SidebarConfig = {
         '/zh/guide/web/deploySource.md',
       ]
     },
+    {
+      text: '插件',
+      children: [
+        '/zh/guide/插件/Jenkins_Plugin.md',
+      ]
+    },
   ],
   '/zh/advanced/': [
     {
@@ -94,6 +120,7 @@ export const zh: SidebarConfig = {
       children: [
         '/zh/advanced/任务分布式执行.md',
         '/zh/advanced/集成代码分析工具.md',
+        '/zh/advanced/使用自建工具git库.md'
       ],
     },
     {

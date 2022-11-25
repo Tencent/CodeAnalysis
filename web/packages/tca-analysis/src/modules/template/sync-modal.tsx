@@ -9,11 +9,11 @@
  */
 
 import React, { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { Table, Modal } from 'coding-oa-uikit';
 import { get } from 'lodash';
 
-import { getSchemeRouter } from '@src/utils/getRoutePath';
+import { getSchemeBlankRouter } from '@src/utils/getRoutePath';
 import { DEFAULT_PAGER } from '@src/constant';
 import { getSchemeList } from '@src/services/template';
 
@@ -69,54 +69,54 @@ const SyncModal = (props: SyncModalProps) => {
   // };
 
   return (
-        <Modal
-            title={`${onlySync ? '' : '保存 & '}同步`}
-            width={800}
-            // className={style.schemeCreateModal}
-            visible={visible}
-            onCancel={onClose}
-            onOk={() => onOk(selectedRowKeys)}
-        >
-            <p style={{ marginBottom: 10 }}>
-                当前模板下存在以下分析方案，请勾选需要同步的分析方案
-                {!onlySync && '；若不勾选，则只修改模板，不进行同步操作'}
-            </p>
-            <Table
-                size='small'
-                dataSource={list}
-                rowKey={(item: any) => item.id}
-                loading={loading}
-                // className={style.schemeList}
-                rowSelection={{
-                  selectedRowKeys,
-                  onChange: keys => setSelectedRowKeys(keys),
-                }}
-                pagination={{
-                  size: 'default',
-                  current: Math.floor(pageStart / pageSize) + 1,
-                  total: count,
-                  pageSize,
-                  showSizeChanger: true,
-                  showTotal: (total, range) => `${range[0]} - ${range[1]} 条，共 ${total} 条`,
-                  onChange: onChangePageSize,
-                  // onShowSizeChange,
-                }}
-            >
-                <Column
-                    title="分析方案名称"
-                    dataIndex="name"
-                    key="name"
-                    render={(name: string, data: any) => (
-                        <Link target='_blank' to={`${getSchemeRouter(orgSid, teamName, get(data, 'repo.id'), data.id)}/basic`}>{name}</Link>
-                    )}
-                />
-                <Column
-                    title="所属代码库"
-                    dataIndex={['repo', 'scm_url']}
-                    key="repo"
-                />
-            </Table>
-        </Modal>
+    <Modal
+      title={`${onlySync ? '' : '保存 & '}同步`}
+      width={800}
+      // className={style.schemeCreateModal}
+      visible={visible}
+      onCancel={onClose}
+      onOk={() => onOk(selectedRowKeys)}
+    >
+      <p style={{ marginBottom: 10 }}>
+        当前模板下存在以下分析方案，请勾选需要同步的分析方案
+        {!onlySync && '；若不勾选，则只修改模板，不进行同步操作'}
+      </p>
+      <Table
+        size='small'
+        dataSource={list}
+        rowKey={(item: any) => item.id}
+        loading={loading}
+        // className={style.schemeList}
+        rowSelection={{
+          selectedRowKeys,
+          onChange: keys => setSelectedRowKeys(keys),
+        }}
+        pagination={{
+          size: 'default',
+          current: Math.floor(pageStart / pageSize) + 1,
+          total: count,
+          pageSize,
+          showSizeChanger: true,
+          showTotal: (total, range) => `${range[0]} - ${range[1]} 条，共 ${total} 条`,
+          onChange: onChangePageSize,
+          // onShowSizeChange,
+        }}
+      >
+        <Column
+          title="分析方案名称"
+          dataIndex="name"
+          key="name"
+          render={(name: string, data: any) => (
+            <a target='_blank' href={`${getSchemeBlankRouter(orgSid, teamName, get(data, 'repo.id'), data.id)}/basic`} rel="noreferrer">{name}</a>
+          )}
+        />
+        <Column
+          title="所属代码库"
+          dataIndex={['repo', 'scm_url']}
+          key="repo"
+        />
+      </Table>
+    </Modal>
   );
 };
 

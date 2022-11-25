@@ -16,6 +16,7 @@ import QuestionCircle from 'coding-oa-uikit/lib/icon/QuestionCircle';
 
 import { getPermConf, updatePermConf } from '@src/services/template';
 import { getOrgMembers } from '@src/services/common';
+import { TMPL_SCHEME_PERM_OPEN_LABEL } from '@plat/modules';
 
 import formStyle from '../style.scss';
 import style from './style.scss';
@@ -78,7 +79,7 @@ const Permission = (props: PermissionProps) => {
     >
       <Form.Item
         {...layout}
-        label="是否团队内公开"
+        label={TMPL_SCHEME_PERM_OPEN_LABEL}
         name="execute_scope"
         valuePropName="checked"
       >
@@ -91,7 +92,7 @@ const Permission = (props: PermissionProps) => {
           <span>
             管理员
             <Tooltip
-              getPopupContainer={() => document.getElementById('main-container')}
+              getPopupContainer={() => document.body}
               title="拥有模板编辑权限"
             >
               <QuestionCircle className={formStyle.questionIcon} />
@@ -104,7 +105,7 @@ const Permission = (props: PermissionProps) => {
           mode="multiple"
           disabled={isSysTmpl}
           optionFilterProp="label"
-          getPopupContainer={() => document.getElementById('main-container')}
+          getPopupContainer={() => document.body}
           options={teamMembers.map((item: any) => ({
             label: item.nickname,
             value: item.username,
@@ -119,7 +120,7 @@ const Permission = (props: PermissionProps) => {
           <span>
             普通成员
             <Tooltip
-              getPopupContainer={() => document.getElementById('main-container')}
+              getPopupContainer={() => document.body}
               title="可使用模板"
             >
               <QuestionCircle className={formStyle.questionIcon} />
@@ -132,7 +133,7 @@ const Permission = (props: PermissionProps) => {
           mode="multiple"
           disabled={isSysTmpl}
           optionFilterProp="label"
-          getPopupContainer={() => document.getElementById('main-container')}
+          getPopupContainer={() => document.body}
           options={teamMembers.map((item: any) => ({
             label: item.nickname,
             value: item.username,

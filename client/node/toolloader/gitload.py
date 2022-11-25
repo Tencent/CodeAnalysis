@@ -37,9 +37,9 @@ class GitLoader(object):
         self._dest_dir = dest_dir
         self._scm_auth_info = scm_auth_info
         self._print_enable = print_enable
-        self._scm_client = self.__init_scm_client()
         # 生成一个随机的文件路径保存ssh私钥，避免多个工具相互覆盖，以及删除时误删
         self._ssh_temp_file = os.path.abspath(f"tool_ssh_{uuid.uuid1().hex}")
+        self._scm_client = self.__init_scm_client()
 
     def __init_scm_client(self):
         """

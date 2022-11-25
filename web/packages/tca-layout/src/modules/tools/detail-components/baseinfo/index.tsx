@@ -4,11 +4,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import cn from 'classnames';
-import { get } from 'lodash';
+import { get, isEmpty } from 'lodash';
 import { Form, Button, Input, Checkbox, Select, message, Tag, Modal, Radio } from 'coding-oa-uikit';
 import EditIcon from 'coding-oa-uikit/lib/icon/Edit';
 import { formatDateTime } from '@tencent/micro-frontend-shared/util';
-import Authority from '@tencent/micro-frontend-shared/component/authority';
+import AuthFormItem from '@tencent/micro-frontend-shared/tca/user-auth/auth-form-item';
 
 // 项目内
 import { updateTool, updateToolStatus } from '@src/services/tools';
@@ -16,7 +16,7 @@ import {
   AuthTypeEnum, ToolStatusEnum, SCM_PLATFORM_CHOICES, AUTH_TYPE_CHOICES,
   TOOL_STATUS_OPTIONS, TOOL_STATUS_CHOICES, REPO_TYPE_OPTIONS, SCM_MAP,
 } from '@src/constant';
-import { UserAPI } from '@plat/api';
+import { userAuthAPI } from '@plat/api';
 import style from '../style.scss';
 
 const { TextArea } = Input;
@@ -122,7 +122,7 @@ const BaseInfo = ({ orgSid, data, editable, getDetail }: BaseInfoProps) => {
         initialValues={{
           ...data,
           status: ToolStatusEnum.NORMAL,
-          scm_auth_id: `${data.scm_auth?.auth_type}#${get(data, ['scm_auth', get(SCM_MAP, data.scm_auth?.auth_type), 'id'])}`,
+          scm_auth_id: !isEmpty(data.scm_auth) && `${data.scm_auth?.auth_type}#${get(data, ['scm_auth', get(SCM_MAP, data.scm_auth?.auth_type), 'id'])}`,
         }}
         onFinish={isEdit ? onFinish : undefined}
       >
@@ -197,7 +197,7 @@ const BaseInfo = ({ orgSid, data, editable, getDetail }: BaseInfoProps) => {
                 getComponent(
                   <Input.Group compact>
                     <Form.Item name='scm_type' noStyle>
-                      <Select style={{ width: '15%' }} options={REPO_TYPE_OPTIONS} />
+                      <Select style={{ width: '16%' }} options={REPO_TYPE_OPTIONS} />
                     </Form.Item>
                     <Form.Item
                       name='scm_url'
@@ -206,7 +206,7 @@ const BaseInfo = ({ orgSid, data, editable, getDetail }: BaseInfoProps) => {
                         { required: true, message: t('请输入工具仓库地址') },
                       ]}
                     >
-                      <Input style={{ width: '85%' }} />
+                      <Input style={{ width: '84%' }} />
                     </Form.Item>
                   </Input.Group>,
                   data.scm_url,
@@ -216,25 +216,19 @@ const BaseInfo = ({ orgSid, data, editable, getDetail }: BaseInfoProps) => {
           )
         }
         {
-          data.scm_auth && (
-            getComponent(
-              <Authority
-                form={form}
-                name='scm_auth_id'
-                label={t('凭证')}
-                getAuthList={[
-                  UserAPI.authSSH().get,
-                  UserAPI.authAccount().get,
-                  UserAPI.getOAuthInfos,
-                  UserAPI.getPlatformStatus,
-                ]}
-                selectStyle={{ width: 360 }}
-                required={isEdit}
-              />,
-              <Form.Item label={t('凭证')}>
-                {getAuthDisplay(data.scm_auth)}
-              </Form.Item>,
-            )
+          getComponent(
+            <AuthFormItem
+              form={form}
+              name='scm_auth_id'
+              label={t('凭证')}
+              userAuthAPI={userAuthAPI}
+              authinfo={data.scm_auth}
+              selectStyle={{ width: 360 }}
+              allowClear
+            />,
+            data.scm_auth && (<Form.Item label={t('凭证')}>
+              {getAuthDisplay(data.scm_auth)}
+            </Form.Item>),
           )
         }
         {

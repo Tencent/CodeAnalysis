@@ -5,7 +5,7 @@
 // ==============================================================================
 
 /**
- * 分支项目 - 问题列表
+ * 分析项目 - 问题列表
  */
 import React, { useState, useEffect } from 'react';
 import cn from 'classnames';
@@ -118,7 +118,7 @@ const Issues = (props: IssuesProps) => {
       .then((response: any) => {
         callback?.(response.results || []);
         setCount(response.count);
-        history.push(`${location.pathname}?${qs.stringify(params)}`);
+        history.replace(`${location.pathname}?${qs.stringify(params)}`);
         setData({
           list: response.results || [],
           next: response.next,

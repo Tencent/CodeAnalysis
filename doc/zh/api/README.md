@@ -12,7 +12,7 @@
 
 ```json
 {
-  "Authorization": "当前user的token"
+  "Authorization": "Token 当前user的token"
 }
 ```
 
@@ -37,7 +37,7 @@ import requests
 # 获取helloworld团队下的hellotca项目下登记的代码库
 url="http://tca.com/server/main/api/orgs/helloworld/teams/hellotca/repos/?limit=12&offset=0"
 headers = {
-  "Authorization": token,
+  "Authorization": "Token %s" % token,
 }
 
 response = requests.get(url, headers=headers)
@@ -115,3 +115,17 @@ print(response.json())
 平台返回的数据分页格式是使用`limit`和`offset`参数进行分页处理
 
 比如：`server/main/api/orgs/<org_sid>/teams/?limit=12&offset=12`获取得到的数据是从第 13 条开始获取
+
+## 响应格式
+
+平台返回的响应格式如下：
+
+
+```JSON
+{
+    "data": {...},      # 详细数据
+    "code": 0,          # 请求结果码，为0表示正常
+    "msg": "xxx" ,      # 请求结果信息
+    "status_code": 200  # 请求响应码
+}
+```

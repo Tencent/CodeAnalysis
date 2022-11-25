@@ -22,7 +22,7 @@ import {
 } from 'coding-oa-uikit';
 import EllipsisH from 'coding-oa-uikit/lib/icon/EllipsisH';
 
-import { updateSchemeBasic, getLintConfig, updateLintConfig } from '@src/services/schemes';
+import { updateSchemeBasic, updateLintConfig } from '@src/services/schemes';
 import NodeTag from '@src/components/node-tag';
 
 import style from './style.scss';
@@ -41,24 +41,18 @@ interface BaseConfigProps {
   tags: any[];
   languages: any[];
   data: any;
+  lintConf: any;   // 环境变量初始值
   callback?: (data: any) => void;
 }
 
 const BaseConfig = (props: BaseConfigProps) => {
-  const { orgSid, teamName, data, repoId, tags, languages, callback } = props;
+  const { orgSid, teamName, data, repoId, tags, languages, lintConf, callback } = props;
   const [form] = Form.useForm();
   const [visible, setVisible] = useState(false);
   const [isDefault, setDefault] = useState(true);
-  const [lintConfig, setLintConfig] = useState<any>({});
   const schemeId = data.id;
 
-  useEffect(() => {
-    if (schemeId) {
-      getLintConfig(orgSid, teamName, repoId, data.id).then(res => setLintConfig(res));
-    }
-  }, [schemeId]);
-
-  useEffect(() => form.resetFields(), [schemeId, lintConfig.envs]);
+  useEffect(() => form.resetFields(), [schemeId, lintConf]);
 
   // todo: remove
   const openModal = ({ key }: { key: string }) => {
@@ -76,12 +70,10 @@ const BaseConfig = (props: BaseConfigProps) => {
       callback?.(response);
     });
 
-    if (formData.envs !== lintConfig.envs) {
+    if (formData.envs !== lintConf.envs) {
       updateLintConfig(orgSid, teamName, repoId, schemeId, {
-        ...lintConfig,
+        ...lintConf,
         envs: formData.envs,
-      }).then((res) => {
-        setLintConfig(res);
       });
     }
   };
@@ -104,7 +96,7 @@ const BaseConfig = (props: BaseConfigProps) => {
       <Form
         labelAlign="left"
         className={cn(style.baseConfig, formStyle.schemeFormVertical)}
-        initialValues={{ ...data, envs: lintConfig.envs }}
+        initialValues={{ ...data, envs: lintConf.envs }}
         form={form}
         onFinish={onFinish}
       >
@@ -194,7 +186,7 @@ const BaseConfig = (props: BaseConfigProps) => {
         <p>
           {isDefault
             ? '建议默认分析方案用于主干代码分析，请谨慎操作！'
-            : '废弃该方案将导致关联的分支项目关闭，确定要废弃该方案？请查看关联分支列表，慎重操作！'}
+            : '废弃该方案将导致关联的分析项目关闭，确定要废弃该方案？请查看关联分支列表，慎重操作！'}
         </p>
       </Modal>
     </>

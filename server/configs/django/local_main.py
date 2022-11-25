@@ -64,6 +64,11 @@ if SENTRY_DSN:
         integrations=[DjangoIntegration(), CeleryIntegration()]
     )
 
+# -*-*-*-*-*-*-*-*-*-*-*-*-*-*-
+# CodeDog运行环境配置
+# -*-*-*-*-*-*-*-*-*-*-*-*-*-*-
+HTTPS_CLONE_FLAG = True if os.environ.get("HTTPS_CLONE_FLAG") == "true" else False
+
 # -*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-
 # -*-*-*-*-*-*-*-*-*-*-*-   服务交互配置    -*-*-*-*-*-*-*-*-*-*-*-
 # -*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*--*-*-*-*-*-*-*-*-*-*-
@@ -107,4 +112,3 @@ anRqpNE+R4MKfzCa4uKURK9z7cG6DQT6ihpdSYw36iaMIRMYUM7SsismpYYe68q3
 98nXivMpCDOeO3VC91Y8DU/9058smPswwr6kYFU/TZIDAUqb+H6T5DSbKnl7WZqx
 UdWbyBDJ9R9QeSy0owIDAQAB
 -----END PUBLIC KEY-----"""
-

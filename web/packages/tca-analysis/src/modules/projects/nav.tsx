@@ -5,10 +5,10 @@
 // ==============================================================================
 
 /**
- * 分支项目公共导航栏
+ * 分析项目公共导航栏
  */
 import React, { useEffect, useState } from 'react';
-import { useParams, useHistory, Route, Link } from 'react-router-dom';
+import { useParams, useHistory, Route } from 'react-router-dom';
 import { toNumber, get, find } from 'lodash';
 
 import { Tabs, Button } from 'coding-oa-uikit';
@@ -16,7 +16,7 @@ import LinkIcon from 'coding-oa-uikit/lib/icon/Link';
 
 import SelectDropdown from '@src/components/select-dropdown';
 import { useStateStore } from '@src/context/store';
-import { getProjectRouter, getSchemeRouter } from '@src/utils/getRoutePath';
+import { getProjectRouter, getSchemeBlankRouter } from '@src/utils/getRoutePath';
 import { PROJECT_ROUTE_PREFIX } from '@src/constant';
 import {
   getProjectDetail,
@@ -134,17 +134,17 @@ const Nav = ({ allSchemes, templates }: NavProps) => {
               history.push(`${getProjectRouter(orgSid, teamName, repoId, id)}/overview`);
             }}
           />
-          <Link
+          <a
             target="_blank"
-            to={`${getSchemeRouter(
+            href={`${getSchemeBlankRouter(
               orgSid,
               teamName,
               repoId,
               get(curProject, 'scan_scheme.id', ''),
-            )}`}
+            )}`} rel="noreferrer"
           >
             查看分析方案 <LinkIcon />
-          </Link>
+          </a>
         </div>
 
         <div className={style.operations}>
@@ -152,7 +152,7 @@ const Nav = ({ allSchemes, templates }: NavProps) => {
             style={{ marginRight: 10 }}
             onClick={() => setCreateProjectVsb(true)}
           >
-            新建分支项目
+            新建分析项目
           </Button>
           <Button type="primary" onClick={() => setVisible(true)}>
             启动分析

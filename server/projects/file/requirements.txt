@@ -13,6 +13,7 @@ djangorestframework==3.11.2
 
 # for celery
 celery==5.2.3
+importlib-metadata==4.13.0
 redis==4.1.1
 
 # for exception log

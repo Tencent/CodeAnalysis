@@ -1,5 +1,3 @@
-import { generateOptions } from '@tencent/micro-frontend-shared/util';
-
 export enum AuthTypeEnum {
   HTTP = 'password',
   SSH = 'ssh_token',
@@ -62,41 +60,6 @@ export const SCM_PLATFORM_CHOICES = {
   [ScmPlatformEnum.GITLAB]: 'GitLab',
   [ScmPlatformEnum.OTHER]: '其它平台',
 };
-
-export const SCM_PLATFORM_OPTIONS = generateOptions(SCM_PLATFORM_CHOICES, true);
-
-export const DEFAULT_SCM_PLATFORM = [
-  {
-    id: ScmPlatformEnum.TGIT,
-    scm_platform: ScmPlatformEnum.TGIT,
-    scm_platform_name: ScmPlatformNameEnum.TGIT,
-  },
-  {
-    id: ScmPlatformEnum.GIT_TENCENT,
-    scm_platform: ScmPlatformEnum.GIT_TENCENT,
-    scm_platform_name: ScmPlatformNameEnum.GIT_TENCENT,
-  },
-  {
-    id: ScmPlatformEnum.CODING,
-    scm_platform: ScmPlatformEnum.CODING,
-    scm_platform_name: ScmPlatformNameEnum.CODING,
-  },
-  {
-    id: ScmPlatformEnum.GITHUB,
-    scm_platform: ScmPlatformEnum.GITHUB,
-    scm_platform_name: ScmPlatformNameEnum.GITHUB,
-  },
-  {
-    id: ScmPlatformEnum.GITEE,
-    scm_platform: ScmPlatformEnum.GITEE,
-    scm_platform_name: ScmPlatformNameEnum.GITEE,
-  },
-  {
-    id: ScmPlatformEnum.GITLAB,
-    scm_platform: ScmPlatformEnum.GITLAB,
-    scm_platform_name: ScmPlatformNameEnum.GITLAB,
-  },
-];
 
 export enum LevelEnum {
   NORMAL = 1,

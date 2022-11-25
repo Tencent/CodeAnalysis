@@ -4,16 +4,7 @@
 // See LICENSE for details
 // ==============================================================================
 
-/**
- * 公共请求
- */
-import { get, put, post, del } from './index';
-
-export const MAIN_SERVER = '/server/main/';
-export const MAIN_SERVER_API = '/server/main/api/v3';
-export const ANALYSIS_SERVER_API = '/server/analysis/api/v3';
-export const ANALYSIS_SERVER_CODEDOG_API = '/api/codedog/analysis/v3/';
-export const LOGIN_SERVER_API = '/server/credential/api/v3';
+import { MAIN_SERVER_API, ANALYSIS_SERVER_API, LOGIN_SERVER_API, get, put, post, del } from '@plat/api';
 
 export const getBaseURL = (orgSid: string, teamName: string) => `/orgs/${orgSid}/teams/${teamName}`;
 

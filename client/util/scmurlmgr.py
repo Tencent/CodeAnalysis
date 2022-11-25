@@ -52,6 +52,9 @@ class BaseScmUrlMgr(object):
             dirname = dirname.replace(".zip", "")
         if dirname.endswith(".7z"):
             dirname = dirname.replace(".7z", "")
+        # 如果url包含分支，即 .git#BranchName 的格式，目录名删除.git
+        if ".git#" in dirname:
+            dirname = dirname.replace(".git#", "#")
         return dirname
 
 

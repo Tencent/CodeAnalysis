@@ -5,11 +5,11 @@
 // ==============================================================================
 
 /**
- * 分支项目入口文件
+ * 分析项目入口文件
  */
 
 import React, { useEffect, useState } from 'react';
-import { Switch, Route, useHistory, useParams } from 'react-router-dom';
+import { Switch, Route, useHistory, useParams, Redirect } from 'react-router-dom';
 import { isEmpty, get } from 'lodash';
 import { useStateStore } from '@src/context/store';
 
@@ -56,8 +56,8 @@ const Projects = () => {
   return (
     <div>
       <Repos
-        // orgSid={orgSid}
-        // teamName={teamName}
+        orgSid={orgSid}
+        teamName={teamName}
         callback={(repo: any) => history.push(getProjectRouter(orgSid, teamName, repo.id))
         }
       />
@@ -72,7 +72,7 @@ const Projects = () => {
       <Switch>
         <Route
           exact
-          path={`${BASE_ROUTE_PREFIX}/code-analysis/repos/:repoId?/projects`}
+          path={`${BASE_ROUTE_PREFIX}/code-analysis/(project)?/repos/:repoId?/projects`}
           render={() => <ProjectList templates={templates} schemes={schemes} />}
         />
         <Route
@@ -80,6 +80,7 @@ const Projects = () => {
           // path={`${BASE_ROUTE_PREFIX}/code-analysis/repos/:repoId?/projects/:projectId?/:tabs`}
           render={() => <Nav templates={templates} allSchemes={schemes} />}
         />
+        <Redirect from={`${BASE_ROUTE_PREFIX}/code-analysis/project/repos/`} to={`${BASE_ROUTE_PREFIX}/code-analysis/project/repos/:repoId?/projects`} />
       </Switch>
     </div>
   );

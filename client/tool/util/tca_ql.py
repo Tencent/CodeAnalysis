@@ -71,7 +71,7 @@ class TcaQl(CodeLintModel):
             file_server = RetryFileServer(retry_times=2).get_server()
             if file_server.download_big_file(file_name, zip_file):
                 logger.info("下载成功")
-                Zip.decompress(zip_file, db_path)
+                Zip.decompress_by_7z(zip_file, db_path)
                 return True
         except Exception as e:
             logger.warning(f"下载失败 {e}")

@@ -30,17 +30,18 @@ interface AuthorityProps {
   selectStyle?: any;
   placeholder?: string;
   required?: boolean;
+  allowClear?: boolean;
 }
 
 const Authority = (props: AuthorityProps) => {
-  const { form, name, label, initAuth, getAuthList, selectStyle = {}, placeholder, required } = props;
+  const { form, name, label, initAuth, getAuthList, selectStyle = {}, placeholder, required, allowClear } = props;
   const [sshAuthList, setSshAuthList] = useState<any>([]);
   const [httpAuthList, setHttpAuthList] = useState<any>([]);
   const [oauthAuthList, setOauthAuthList] = useState<any>([]);
   const [authLoading, setAuthLoading] = useState(false);
   const history = useHistory();
 
-  const setCurAuth = (sshList = sshAuthList, httpList = httpAuthList) => {
+  const setCurAuth = (sshList = sshAuthList, httpList = httpAuthList, oauthList = oauthAuthList) => {
     // 设置初始值
     if (initAuth[SCM_MAP[initAuth.auth_type]]?.id) {
       form?.setFieldsValue?.({ [name]: `${initAuth.auth_type}#${initAuth[SCM_MAP[initAuth.auth_type]]?.id}` });
@@ -60,6 +61,13 @@ const Authority = (props: AuthorityProps) => {
       && !find(httpList, { id: initAuth.scm_account?.id })
     ) {
       setHttpAuthList([initAuth.scm_account, ...httpList]);
+    }
+    if (
+      initAuth.scm_oauth
+      && initAuth.auth_type === AUTH_TYPE.OAUTH
+      && !find(oauthAuthList, { id: initAuth.scm_oauth?.id })
+    ) {
+      setOauthAuthList([initAuth.scm_oauth, ...oauthList]);
     }
   };
 
@@ -104,6 +112,7 @@ const Authority = (props: AuthorityProps) => {
         <Select
           style={selectStyle}
           placeholder={placeholder}
+          clearable={allowClear}
         >
           {!isEmpty(oauthAuthList) && (
             <OptionGroup label={AUTH_TYPE_TXT.OAUTH}>
@@ -111,9 +120,10 @@ const Authority = (props: AuthorityProps) => {
                 <Option
                   key={`${AUTH_TYPE.OAUTH}#${auth.id}`}
                   value={`${AUTH_TYPE.OAUTH}#${auth.id}`}
-                  label={`${get(SCM_PLATFORM_CHOICES, auth.scm_platform)}: ${AUTH_TYPE_TXT.OAUTH}`}
+                  label={`${get(SCM_PLATFORM_CHOICES, auth.scm_platform)}: ${auth.user?.username || auth.user}`}
                 >
-                  {get(SCM_PLATFORM_CHOICES, auth.scm_platform)}
+                  {get(SCM_PLATFORM_CHOICES, auth.scm_platform)}: {auth.user?.username || auth.user}
+                  <small style={{ marginLeft: 8, color: '#8592a6' }}>(在 {auth.auth_origin} 创建)</small>
                 </Option>
               ))}
             </OptionGroup>

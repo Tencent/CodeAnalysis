@@ -66,6 +66,21 @@ class RegexScanner(CodeLintModel):
                             break
         return config_rules_path
 
+    def __get_regexes_exp(self, regex_type, rule_params_dict):
+        """获取正则列表
+        """
+        regexes = []
+        i = 1
+        while True:
+            key = f"{regex_type}{i}"
+            if key in rule_params_dict:
+                reg_exp = rule_params_dict.get(key, "")
+                if reg_exp:
+                    regexes.append(reg_exp)
+                i += 1
+            else:
+                return regexes
+
     def __format_rules(self, work_dir, rule_list):
         """格式化规则
         """
@@ -74,7 +89,7 @@ class RegexScanner(CodeLintModel):
         for rule in rule_list:
             rule_name = rule['name']
             if not rule.get('params'):
-                logger.error(f"{rule_name}规则参数为空, 检查已存在的规则.")
+                logger.error(f"{rule_name} rule parameter is empty, check for existing rules.")
                 no_params_rules.append(rule_name)
                 continue
             if "[regexcheck]" in rule['params']:
@@ -83,10 +98,13 @@ class RegexScanner(CodeLintModel):
                 rule_params = "[regexcheck]\r\n" + rule['params']
             rule_params_dict = ConfigReader(cfg_string=rule_params).read('regexcheck')
 
-            reg_exp = rule_params_dict.get('regex', '')
-            if not reg_exp:
-                logger.error(f"{rule_name}规则参数有误,未填写正则表达式,跳过该规则.")
+            regex = rule_params_dict.get("regex", "")
+            regex_not = rule_params_dict.get("regex_not", "")
+            if not regex:
+                logger.error(f"{rule_name} rule parameter is wrong, not fill in the regular expression, skip this rule.")
                 continue
+            regexes = self.__get_regexes_exp("regex", rule_params_dict)
+            regexes_not = self.__get_regexes_exp("regex_not", rule_params_dict)
 
             # 规则的过滤路径（正则表达式）
             exclude_paths = rule_params_dict.get('exclude', '')
@@ -97,17 +115,21 @@ class RegexScanner(CodeLintModel):
             # 大小写不敏感,可以支持True|true|False|false等
             ignore_comment = True if rule_params_dict.get('ignore_comment', 'False').lower() == 'true' else False
             file_scan = True if rule_params_dict.get('file_scan', 'False').lower() == 'true' else False
-            msg = rule_params_dict.get('msg', "发现不规范代码: %s")
-            rules["rules"].append({
+            msg = rule_params_dict.get('msg', "Irregular codes found: %s")
+            rule = {
                 "name": rule_name,
-                "regex": reg_exp,
+                "regex": regex,
+                "regexes": regexes,
+                "regex-not": regex_not,
+                "regexes-not": regexes_not,
+                "message": msg,
+                "ignore-comment": ignore_comment,
+                "filescan": file_scan,
+                "severity": "error",
                 "excludes": exclude_paths,
                 "includes": include_paths,
-                "message": msg,
-                "ignorecomment": ignore_comment,
-                "filescan": file_scan,
-                "severity": "error"
-            })
+            }
+            rules["rules"].append(rule)
         config_rules_path = self.__add_rules(work_dir, no_params_rules)
         rules_path = os.path.join(config_rules_path, "regexscanner_rules.yaml")
         with open(rules_path, "w", encoding="utf-8") as f:
@@ -129,7 +151,6 @@ class RegexScanner(CodeLintModel):
         files_path = os.path.join(work_dir, "regexscanner_paths.txt")
         output_path = os.path.join(work_dir, "regexscanner_result.json")
 
-        logger.info('获取需要分析的文件')
         toscans = []
         if incr_scan:
             diffs = SCMMgr(params).get_scm_diff()
@@ -168,8 +189,8 @@ class RegexScanner(CodeLintModel):
         subproc.wait()
 
         if not os.path.exists(output_path):
-            logger.info("没有生成结果文件")
-            raise AnalyzeTaskError("工具执行错误")
+            logger.info("No results file generated.")
+            raise AnalyzeTaskError("Tool running error")
 
         issues = []
         with open(output_path, "r") as f:

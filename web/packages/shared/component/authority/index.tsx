@@ -8,8 +8,8 @@ import PlusIcon from 'coding-oa-uikit/lib/icon/Plus';
 import RefreshIcon from 'coding-oa-uikit/lib/icon/Refresh';
 
 import { AUTH_TYPE, AUTH_TYPE_TXT, SCM_MAP, SCM_PLATFORM_CHOICES } from './constants';
+import { FormInstance } from 'coding-oa-uikit/lib/form';
 
-import { FormInstance } from 'rc-field-form';
 const { Option, OptGroup } = Select;
 
 export interface RestfulListAPIParams {
@@ -29,16 +29,21 @@ interface AuthorityProps {
   selectStyle?: any;
   placeholder?: string;
   required?: boolean;
+  allowClear?: boolean;
+  formLayout?: any;
+  /** 新增凭证路由 */
+  addAuthRouter?: string
 }
 
 const Authority = (props: AuthorityProps) => {
-  const { form, name, label, initAuth, getAuthList, selectStyle = {}, placeholder, required } = props;
+  const { form, name, label, initAuth, getAuthList, selectStyle = {},
+    placeholder, required, allowClear, formLayout, addAuthRouter } = props;
   const [sshAuthList, setSshAuthList] = useState<any>([]);
   const [httpAuthList, setHttpAuthList] = useState<any>([]);
   const [oauthAuthList, setOauthAuthList] = useState<any>([]);
   const [authLoading, setAuthLoading] = useState(false);
 
-  const setCurAuth = (sshList = sshAuthList, httpList = httpAuthList) => {
+  const setCurAuth = (sshList = sshAuthList, httpList = httpAuthList, oauthList = oauthAuthList) => {
     // 设置初始值
     if (initAuth[SCM_MAP[initAuth.auth_type]]?.id) {
       form.setFieldsValue({ [name]: `${initAuth.auth_type}#${initAuth[SCM_MAP[initAuth.auth_type]]?.id}` });
@@ -58,6 +63,13 @@ const Authority = (props: AuthorityProps) => {
       && !find(httpList, { id: initAuth.scm_account?.id })
     ) {
       setHttpAuthList([initAuth.scm_account, ...httpList]);
+    }
+    if (
+      initAuth.scm_oauth
+      && initAuth.auth_type === AUTH_TYPE.OAUTH
+      && !find(oauthAuthList, { id: initAuth.scm_oauth?.id })
+    ) {
+      setOauthAuthList([initAuth.scm_oauth, ...oauthList]);
     }
   };
 
@@ -97,13 +109,14 @@ const Authority = (props: AuthorityProps) => {
   }, [initAuth, authLoading]);
 
   return (
-    <Form.Item label={label} required={required}>
+    <Form.Item label={label} required={required} {...formLayout}>
       <Form.Item name={name} noStyle rules={[{ required, message: '请选择仓库凭证' }]}>
         <Select
           style={selectStyle}
           placeholder={placeholder}
           getPopupContainer={() => document.body}
           optionLabelProp="label"
+          allowClear={allowClear}
         >
           {!isEmpty(oauthAuthList) && (
             <OptGroup label={AUTH_TYPE_TXT.OAUTH}>
@@ -111,9 +124,10 @@ const Authority = (props: AuthorityProps) => {
                 <Option
                   key={`${AUTH_TYPE.OAUTH}#${auth.id}`}
                   value={`${AUTH_TYPE.OAUTH}#${auth.id}`}
-                  label={`${get(SCM_PLATFORM_CHOICES, auth.scm_platform)}: ${AUTH_TYPE_TXT.OAUTH}`}
+                  label={`${get(SCM_PLATFORM_CHOICES, auth.scm_platform)}: ${auth.user?.username || auth.user}`}
                 >
-                  {get(SCM_PLATFORM_CHOICES, auth.scm_platform)}
+                  {get(SCM_PLATFORM_CHOICES, auth.scm_platform)}: {auth.user?.username || auth.user}
+                  <small style={{ marginLeft: 8, color: '#8592a6' }}>(在 {auth.auth_origin} 创建)</small>
                 </Option>
               ))}
             </OptGroup>
@@ -154,7 +168,7 @@ const Authority = (props: AuthorityProps) => {
         right: 10,
       }}>
         <Tooltip title='新增凭证' placement='top' getPopupContainer={() => document.body}>
-          <Button type='link' className="ml-12" href='/user/auth' target='_blank'><PlusIcon /></Button>
+          <Button type='link' className="ml-12" href={addAuthRouter || '/user/auth'} target='_blank'><PlusIcon /></Button>
         </Tooltip>
         <Tooltip title='刷新凭证' placement='top' getPopupContainer={() => document.body}>
           <Button

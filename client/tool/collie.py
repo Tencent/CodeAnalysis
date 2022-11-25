@@ -32,10 +32,10 @@ class Collie(CodeLintModel):
         return issues
 
     def check_tool_usable(self, tool_params):
-        cmds = Tool().get_cmd(["-v"])
         if settings.PLATFORMS[sys.platform] == "mac":
             return []
-        elif SubProcController(cmds).wait() != 0:
+        cmds = Tool().get_cmd(["-v"])
+        if SubProcController(cmds).wait() != 0:
             return []
         return ["analyze"]
 

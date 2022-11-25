@@ -92,6 +92,7 @@ const Search = ({
     const params = {
       ...searchParams,
       [key]: value,
+      offset: null,
     };
     onRouteHandle(params);
     callback?.(params);
@@ -103,6 +104,7 @@ const Search = ({
     Object.keys(searchParams).forEach((key) => {
       params[key] = '';
     });
+    form.setFieldsValue(params);
     onRouteHandle(params);
     callback?.(params);
   };

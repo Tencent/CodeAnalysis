@@ -7,7 +7,7 @@
 // import React, { useEffect, useState, lazy } from 'react';
 import React, { useEffect, useState } from 'react';
 import { Route, Switch, useParams, useHistory } from 'react-router-dom';
-import { toNumber, isEmpty, get, find } from 'lodash';
+import { toNumber, isEmpty, find } from 'lodash';
 
 import { useDispatchStore } from '@src/context/store';
 import {
@@ -20,21 +20,20 @@ import {
   PROJECT_ROUTE_PREFIX,
   SCHEMES_ROUTE_PREFIX,
   BASE_ROUTE_PREFIX,
-  REPOS_ROUTE_PREFIX,
 } from '@src/constant';
 // import { getBaseRouter } from '@src/utils/getRoutePath';
 import { getRepos, getProjectTeamMembers } from '@src/services/common';
+import { getRepo } from '@src/services/repos';
 
 import Loading from '@src/components/loading';
 
 import Projects from '@src/modules/projects';
-import Repos from '@src/modules/repos';
 import PkgRules from '@src/modules/schemes/code-lint/pkg-rules';
 import AllRules from '@src/modules/schemes/code-lint/all-rules';
 import Schemes from '@src/modules/schemes';
 
 import Welcome from '@src/modules/welcome';
-import Create from '@src/modules/repos/create';
+// import Create from '@src/modules/repos/create';
 import Detail from '@src/modules/projects/issues/detail';
 import CCFilesDetail from '@src/modules/projects/metric/ccfiles/detail';
 import CCIssuesDetail from '@src/modules/projects/metric/ccissues/detail';
@@ -72,61 +71,68 @@ const Routers = () => {
 
   const getPageStatus = (pathname: string) => setIsWelcome(PATH_NAME.every((path: any) => !pathname.match(path)));
 
-  const getRepoList = async (page = 1) => {
-    const offset = (page - 1) * 100;
-    const response = await getRepos(orgSid, teamName, { limit: 100, offset });
-    let list = get(response, 'results', []);
-
-    if (response.next) {
-      list = list.concat(await getRepoList(page + 1));
-    }
-    return list;
-  };
-
   const init = async () => {
-    dispatch({
-      type: SET_REPOS,
-      payload: [],
-    });
-    // 获取当前项目内的代码库列表
     setLoading(true);
-    dispatch({
-      type: SET_REPOS_LOADING,
-      payload: true,
-    });
-    const list = (await getRepoList()) || [];
-
-    if (!isEmpty(list)) {
-      setRepos(list);
-      // 将获取的代码库列表存入SET_REPOS
+    getRepos(orgSid, teamName, {
+      scope: 'related_me',
+      scm_url_or_name: '',
+      limit: 12,
+    }).then((res) => {
+      const repos = (res?.results ?? []).map((item: any) => ({
+        ...item,
+        url: item.scm_url,
+      }));
+      setRepos(repos);
       dispatch({
         type: SET_REPOS,
-        payload: list,
+        payload: repos,
       });
-    }
-    dispatch({
-      type: SET_REPOS_LOADING,
-      payload: false,
+
+      if (repoId && !isNaN(toNumber(repoId))) {  // 从链接跳转进入
+        getRepo(orgSid, teamName, repoId)
+          .then((res: any) => {
+            const repo = {
+              ...res,
+              url: res.scm_url,
+            };
+            dispatch({
+              type: SET_CUR_REPO,
+              payload: repo,
+            });
+
+            /* 如果当前代码库不存在代码库列表中，则追加到代码库列表 */
+            if (!find(repos, { id: toNumber(repoId) })) {
+              dispatch({
+                type: SET_REPOS,
+                payload: repos.concat(repo),
+              });
+            }
+          })
+          .finally(() => {
+            setLoading(false);
+          });
+      } else {
+        dispatch({
+          type: SET_CUR_REPO,
+          payload: repos[0] || {},
+        });
+        setLoading(false);
+      }
     });
-    setLoading(false);
     // 成员设置
     const members = await getProjectTeamMembers(orgSid, teamName);
     dispatch({
       type: SET_PROJECT_MEMBER,
       payload: members,
     });
-    const repo = repoId ? find(list, { id: repoId }) : list[0];
-
-    // 存在repo，将其存入context
-    if (!isEmpty(repo)) {
-      dispatch({
-        type: SET_CUR_REPO,
-        payload: repo,
-      });
-    } else {
-      // history.replace(`${getBaseRouter(orgSid, teamName)}/repos`);
-    }
   };
+
+  useEffect(() => {
+    dispatch({
+      type: SET_REPOS_LOADING,
+      payload: loading,
+    });
+  }, [loading]);
 
   useEffect(() => getPageStatus(history.location?.pathname), [
     teamName,
@@ -147,9 +153,6 @@ const Routers = () => {
 
   return (
     <Switch>
-      <Route exact path={`${REPOS_ROUTE_PREFIX}/create`} component={Create} />
-      <Route path={`${REPOS_ROUTE_PREFIX}/:repoId?`} component={Repos} />
-
       <Route
         exact
         path={`${PROJECT_ROUTE_PREFIX}/codelint-issues/:issueId`}
@@ -191,11 +194,11 @@ const Routers = () => {
 
       <Route
         exact
-        path={`${BASE_ROUTE_PREFIX}/code-analysis/repos/:repoId?/projects`}
+        path={[`${BASE_ROUTE_PREFIX}/code-analysis/repos/:repoId?/projects`, `${BASE_ROUTE_PREFIX}/code-analysis/project/repos/:repoId?/(projects)?`]}
         component={Projects}
       />
       <Route
-        path={`${BASE_ROUTE_PREFIX}/code-analysis/repos/:repoId?/schemes`}
+        path={[`${BASE_ROUTE_PREFIX}/code-analysis/repos/:repoId?/schemes`, `${BASE_ROUTE_PREFIX}/code-analysis/scheme/repos/:repoId?/(schemes)?`]}
         component={Schemes}
       />
     </Switch>

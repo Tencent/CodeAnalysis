@@ -2,12 +2,12 @@
  * issue 弹框
  */
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import cn from 'classnames';
 import AutoSizer from 'react-virtualized-auto-sizer';
 import { VariableSizeList as List } from 'react-window';
 import ReactMarkdown from 'react-markdown';
-import { findIndex, cloneDeep } from 'lodash';
+import { findIndex, cloneDeep, find, isEmpty, sortBy } from 'lodash';
 import { Modal, Button, Tooltip, Divider } from 'coding-oa-uikit';
 import CaretRight from 'coding-oa-uikit/lib/icon/CaretRight';
 import CaretDown from 'coding-oa-uikit/lib/icon/CaretDown';
@@ -71,12 +71,38 @@ const IssueModal = (props: IssueModalProps) => {
   const issueLines = detail.issue_details?.map((item: any) => item.line) ?? [];
   const loadingStatus = loading || listLoading;
 
+  // 文件追溯信息
+  /* 开源版issue detail没有ID信息，所以用line代替 */
+  const [curIssueLine, setCurIssueLine] = useState(null);
+  const [showRefers, setShowRefers] = useState(false);
+  const issueRefers = useMemo(() => {
+    const curIssueDetail = find(detail.issue_details, { line: curIssueLine });
+    if (curIssueDetail && !isEmpty(curIssueDetail.issue_refers)) {
+      const refers = curIssueDetail.issue_refers?.map((item: any) => {
+        // 不在当前文件，跨文件追溯信息展示在 issue detail 行
+        if (item.file_path !== detail.file_path) {
+          item.isExternal = true;
+          item.newline = curIssueDetail.line;
+        } else {
+          item.isExternal = false;
+          item.newline = item.line;
+        }
+        return item;
+      });
+      return sortBy(refers, 'seq');
+    }
+    return [];
+  }, [curIssueLine]);
+
   useEffect(() => {
     // 重置数据
     setExpanded([]);
     setRuleDetail({});
 
     if (visible && issueId) {
+      setCurIssueLine(null);
+      setShowRefers(false);
+
       getIssueDetail(orgSid, teamName, repoId, projectId, issueId).then((res) => {
         const params: any = {
           path: res.file_path,
@@ -152,12 +178,16 @@ const IssueModal = (props: IssueModalProps) => {
     rowHeights.current = { ...rowHeights.current, [index]: size };
   };
 
+  const getCurIssueDetail = (line: number) => find(detail.issue_details, { line });
+
   const rowRenderer = ({ index, style: rowStyle }: any) => {
     const { lineNum: line, content } = codeFile?.codeContents[index] ?? {};
     const rowRef: any = useRef({});
-    const language =      detail.language ?? codeFile.suffix?.split('.')[1] ?? 'plaintext';
+    const language = detail.language ?? codeFile.suffix?.split('.')[1] ?? 'plaintext';
     const issueIndex = issueLines.indexOf(line);
     const fileError = line === 1 && issueLines[0] === 0; // 文件级警告
+    const curIssueDetail = getCurIssueDetail(line);
+    const curIssueRefers = issueRefers?.filter((item: any) => item.newline === line);
 
     useEffect(() => {
       if (rowRef.current) {
@@ -212,12 +242,16 @@ const IssueModal = (props: IssueModalProps) => {
                           e.stopPropagation();
                           if (issueIndex > -1) {
                             scrollToItem(issueLines[issueIndex - 1]);
+                            const nextIssueDetail = getCurIssueDetail(issueLines[issueIndex - 1]);
+                            if (nextIssueDetail) {
+                              setCurIssueLine(nextIssueDetail.line);
+                            }
                           }
                         }}
                       />
                     </Tooltip>
                   )}
-                  {issueIndex !== issueLines.length - 1 && !fileError && (
+                  {issueIndex < issueLines.length - 1 && !fileError && (
                     <Tooltip
                       title="下一处问题"
                       getPopupContainer={() => document.body}
@@ -229,6 +263,10 @@ const IssueModal = (props: IssueModalProps) => {
                           e.stopPropagation();
                           if (issueIndex > -1) {
                             scrollToItem(issueLines[issueIndex + 1]);
+                            const nextIssueDetail = getCurIssueDetail(issueLines[issueIndex + 1]);
+                            if (nextIssueDetail) {
+                              setCurIssueLine(nextIssueDetail.line);
+                            }
                           }
                         }}
                       />
@@ -236,7 +274,20 @@ const IssueModal = (props: IssueModalProps) => {
                   )}
                 </span>
               </div>
-              <div className={style.issueMsg}>错误原因：{detail.msg}</div>
+              <div className={style.issueMsg}>
+                错误原因：{detail.msg}&nbsp;
+                {!isEmpty(curIssueDetail?.issue_refers) && (
+                    <Button
+                      type="link"
+                      onClick={() => {
+                        setShowRefers(!showRefers);
+                        setCurIssueLine(curIssueDetail.line);
+                      }}
+                    >
+                      {showRefers && !isEmpty(curIssueRefers) ? '关闭' : '展开'}追溯
+                    </Button>
+                )}
+                </div>
               {(expanded[issueIndex] || fileError)
                 && ruleDetail.checkruledesc?.desc && (
                   <div className={style.ruleDesc}>
@@ -253,6 +304,51 @@ const IssueModal = (props: IssueModalProps) => {
               ? `${content.substring(0, CODE_MAX_CHAR_LENGTH)}...`
               : content}&nbsp;
           </Highlight>
+          {
+            // 追溯信息
+            showRefers && !isEmpty(curIssueRefers) && (
+              curIssueRefers.map((item: any) => {
+                const index = findIndex(issueRefers, { id: item.id });
+                return (
+                  <div className={style.issueRefers} key={item.id}>
+                    序号 {item.seq}.【 {item.isExternal ? `跨文件问题，文件路径：${item.file_path}，` : ''}第 {line} 行】{item.msg}
+                    <span>
+                      {index !== -1 && index > 0 && (
+                        <Tooltip
+                          title="上一步"
+                          getPopupContainer={() => document.body}
+                        >
+                          <Button
+                            type="link"
+                            icon={<AngleUp />}
+                            onClick={(e: any) => {
+                              e.stopPropagation();
+                              scrollToItem(issueRefers[index - 1]?.newline);
+                            }}
+                          />
+                        </Tooltip>
+                      )}
+                      {index !== -1 && index < issueRefers.length - 1 && (
+                        <Tooltip
+                          title="下一步"
+                          getPopupContainer={() => document.body}
+                        >
+                          <Button
+                            type="link"
+                            icon={<AngleDown />}
+                            onClick={(e: any) => {
+                              e.stopPropagation();
+                              scrollToItem(issueRefers[index + 1]?.newline);
+                            }}
+                          />
+                        </Tooltip>
+                      )}
+                    </span>
+                  </div>
+                );
+              })
+            )
+          }
         </div>
       </div>
     );
@@ -288,6 +384,7 @@ const IssueModal = (props: IssueModalProps) => {
     setRuleDetail({});
     setPopStatus();
     setCode({});
+    setShowRefers(false);
 
     // 在弹框关闭之后再请求数据是为了避免列表顺序变化（排序导致），影响弹框中【上/下一个】问题的操作
     if (reloadList) {
@@ -342,6 +439,24 @@ const IssueModal = (props: IssueModalProps) => {
             });
           }}
         />
+        {/* 显示展示问题所在行 */}
+        {/* {
+          issueLines?.length > 1 && (
+            <div className={style.issueLineBar}>
+              <label className={style.lineLabel}>问题所在行：</label>
+              {
+                issueLines?.map((line: number) => (
+                  <a
+                    key={line}
+                    className={style.line}
+                    onClick={() => {
+                      scrollToItem(line);
+                    }}>第 {line} 行</a>
+                ))
+              }
+            </div>
+          )
+        } */}
         <div className={style.codeWrapper}>
           {loadingStatus && <Loading className={style.loading} />}
           {!loadingStatus && codeFile.codeContents && (

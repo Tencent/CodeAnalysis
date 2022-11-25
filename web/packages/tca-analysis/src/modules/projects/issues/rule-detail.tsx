@@ -9,12 +9,12 @@
  */
 import React from 'react';
 import cn from 'classnames';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import { get } from 'lodash';
 
 import { Drawer } from 'coding-oa-uikit';
-import { getToolsRouter } from '@src/utils/getRoutePath';
+import { ToolInfoLink } from '@plat/modules';
 
 import style from './style.scss';
 
@@ -48,12 +48,7 @@ const RuleDetail = (props: RuleDetailProps) => {
       <div className={style.row}>
         <span className={style.label}>所属工具</span>
         {data?.checktool?.display_name ? (
-          <Link
-            target="_blank"
-            to={`${getToolsRouter(orgSid, data?.checktool?.id, 'baseinfo')}`}
-          >
-            {data?.checktool?.display_name}
-          </Link>
+          <ToolInfoLink orgSid={orgSid} checktool={data.checktool} />
         ) : (
           <span>--</span>
         )}

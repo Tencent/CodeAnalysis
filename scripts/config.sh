@@ -37,6 +37,7 @@ export TCA_APP_DATA_DIR=${TCA_APP_DATA_DIR}
 # Main工程配置
 ## 框架配置
 export MAIN_DEBUG_MODE=true
+export HTTPS_CLONE_FLAG=true
 export MAIN_SECRET_KEY='lh+6y8pyf16bbor*)p=kp=p(cg615+y+5nnin$l(n%os$8z^v%'
 
 ## 服务DB配置

@@ -134,7 +134,7 @@ export const ToolLibs = () => {
         <Column
           title='依赖系统'
           dataIndex='lib_os'
-          render={(os: string) => os.split(';').map((item: string) => (
+          render={(os: string) => os?.split(';').map((item: string) => (
             <Tag key={item}>{get(LIB_ENV, item, item)}</Tag>
           ))}
         />
@@ -162,10 +162,11 @@ export const ToolLibs = () => {
             <Column
               title='操作'
               dataIndex='id'
-              render={(id: number) => (
+              render={(id: number, libInfo: any) => (
                 <Button
                   type='text'
                   icon={<EditIcon />}
+                  disabled={!isSuperuser && libInfo.lib_type === LibTypeEnum.PUBLIC}
                   onClick={() => setModalData({
                     visible: true,
                     libId: id,
