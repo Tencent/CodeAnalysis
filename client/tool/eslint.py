@@ -142,7 +142,7 @@ class Eslint(CodeLintModel):
 
     def _set_eslint_config(self, params, config_file, eslint_type, set_rule_flag=True):
         """
-        给配置文件设置规则，将之只为warm级别
+        给配置文件设置规则，将之置为warn级别
         注意：
         1. react扫描，即babel-eslint解析时候，no-unused-vars规则可能会解析失败，导致eslint执行失败
         :param params:

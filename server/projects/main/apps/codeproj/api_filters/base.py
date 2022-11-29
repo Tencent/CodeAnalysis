@@ -47,6 +47,7 @@ class ApiProjectFilter(filters.FilterSet):
     scm_url = filters.CharFilter(label="代码库#分支地址", help_text="会根据仓库地址及分支进行匹配，代码库与分支使用#间隔",
                                  method="scm_url_branch_filter")
     branch = filters.CharFilter(label="代码库分支", help_text="代码库分支筛选", lookup_expr="exact")
+    scan_path = filters.CharFilter(label="扫描路径", help_text="扫描路径筛选", lookup_expr="icontains")
     scm_url__exact = filters.CharFilter(label="代码库地址精准匹配", help_text="会根据仓库地址进行匹配",
                                         method="scm_url_filter")
     created_time__lte = filters.DateTimeFilter(field_name="created_time",
@@ -87,7 +88,7 @@ class ApiProjectFilter(filters.FilterSet):
     class Meta:
         model = models.Project
         fields = ["scm_url", "scm_url__exact", "scan_scheme__name", "scan_scheme__default_flag",
-                  "scan_scheme_id", "branch", "created_time__gte", "created_time__lte"]
+                  "scan_scheme_id", "branch", "created_time__gte", "created_time__lte", "scan_path"]
 
 
 class ScanSchemeFilter(filters.FilterSet):
@@ -194,18 +195,22 @@ class ProjectFilter(filters.FilterSet):
     """项目筛选
     """
     branch = filters.CharFilter(help_text="分支名称")
+    scan_path = filters.CharFilter(help_text="扫描路径筛选", lookup_expr="icontains")
     scan_scheme = filters.NumberFilter(help_text="扫描方案编号")
     scan_scheme__name = filters.CharFilter(help_text="扫描方案名称")
     scan_scheme__status = filters.NumberFilter(help_text="扫描方案状态，1为活跃，2为废弃")
     branch_or_scheme = filters.CharFilter(label="分支名称/扫描方案名称", help_text="分支名称/扫描方案名称",
-                                          method="branch_or_scheme_filter")
+                                          method="branch_or_scheme_or_path_filter")
 
-    def branch_or_scheme_filter(self, queryset, name, value):
-        return queryset.filter(Q(branch__icontains=value) | Q(scan_scheme__name__icontains=value))
+    def branch_or_scheme_or_path_filter(self, queryset, name, value):
+        return queryset.filter(
+            Q(branch__icontains=value) |
+            Q(scan_scheme__name__icontains=value) |
+            Q(scan_path__icontains=value))
 
     class Meta:
         model = models.Project
-        fields = ["branch", "scan_scheme", "branch_or_scheme", "scan_scheme__status", "status",
+        fields = ["branch", "scan_scheme", "scan_path", "branch_or_scheme", "scan_scheme__status", "status",
                   "scan_scheme__default_flag", "scan_scheme__name"]
 
 

@@ -93,7 +93,7 @@ bash ./quick_install.sh local check  #检查服务是否启动失败
 - 启动Main相关服务：`bash ./quick_install.sh local start main`
   - `local start`支持启动指定服务，如上述的启动Main服务，还支持`mysql/redis/analysis/file/login/scmproxy/nginx/client/all`
 
-- 停止所有服务：`bash /quick_install.sh local stop`
+- 停止所有服务：`bash ./quick_install.sh local stop`
 
 - 停止Main相关服务：`bash ./quick_install.sh local stop main`
   - `local stop`支持停止指定服务，如上述的停止Main服务，还支持`analysis/file/login/scmproxy/nginx/client/all`

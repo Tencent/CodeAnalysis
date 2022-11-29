@@ -8,14 +8,17 @@
 """
 codeproj - job core
 """
+# 原生 import
 import copy
 import logging
 from datetime import datetime, timedelta
 
+# 第三方 import
 from django.conf import settings
 from django.db import transaction
 from django.utils import timezone
 
+# 项目内 import
 from apps.codeproj import models
 from apps.codeproj.core.projmgr import ScanSchemeManager
 from apps.codeproj.core.scmmgr import ScmClientManager
@@ -210,6 +213,7 @@ class JobManager(object):
             job_context.update({
                 "project_id": self._project.id,
                 "repo_id": self._project.repo.id,
+                "scan_path": self._project.scan_path,
                 "team_name": project_team.name if project_team else None,
                 "org_sid": organization.org_sid if organization else None,
                 "scm_type": self._project.scm_type,
@@ -370,7 +374,7 @@ class JobManager(object):
         else:
             scan_scheme_languages = [l.name for l in scan_scheme.languages.all()]
         if not scan_scheme_languages:
-            raise ClientError(errcode.E_CLIENT_CONFIG_ERROR, '配置错误，请在项目配置中设置项目语言。')
+            raise ClientError(errcode.E_USER_CONFIG_LANG_ERROR, '配置错误，请在项目配置中设置项目语言。')
         task_basic_params = {
             "scan_languages": scan_scheme_languages,
             "pre_cmd": lint_setting.pre_cmd,
@@ -393,7 +397,7 @@ class JobManager(object):
             return self._get_codelint_task_confs_by_checkprofile(
                 checkprofile, task_basic_params)
         else:
-            raise ClientError(errcode.E_CLIENT_CONFIG_ERROR, '未绑定扫描规则集，请在项目配置-扫描设置中绑定。')
+            raise ClientError(errcode.E_USER_CONFIG_CODELINT_PKG_ERROR, '未配置扫描规则，请在"扫描方案-代码扫描"中添加')
 
     def get_codemetric_task_confs(self, job_context, scm_last_revision=None, **kwargs):
         """
@@ -436,7 +440,7 @@ class JobManager(object):
         # 增加cpd task 重复代码扫描
         if metric_setting.dup_scan_enabled:
             if not scan_scheme_languages:
-                raise ClientError(errcode.E_CLIENT_CONFIG_ERROR, '配置错误，请在项目配置中设置项目语言。')
+                raise ClientError(errcode.E_USER_CONFIG_LANG_ERROR, '配置错误，请在项目配置中设置项目语言。')
             last_dup_scan = models.CodeMetricDupInfo.objects.filter(project=self._project).first()
             if not scm_last_revision and self._project:
                 scm_last_revision = last_dup_scan.scan_revision if last_dup_scan else self._project.scm_initial_revision
@@ -464,7 +468,7 @@ class JobManager(object):
         # 增加lizard task 圈复杂度
         if metric_setting.cc_scan_enabled:
             if not scan_scheme_languages:
-                raise ClientError(errcode.E_CLIENT_CONFIG_ERROR, '配置错误，请在项目配置中设置项目语言。')
+                raise ClientError(errcode.E_USER_CONFIG_LANG_ERROR, '配置错误，请在项目配置中设置项目语言。')
 
             last_cc_scan = models.CodeMetricCCInfo.objects.filter(project=self._project).first()
             if not scm_last_revision and self._project:
@@ -504,6 +508,8 @@ class JobManager(object):
                 "task_params": task_params,
                 "tag": tag
             })
+
+        # Todo：支持组件分析
         return tasks
 
     def get_job_confs(self, job_context=None, last_revision=None, **kwargs):
@@ -542,7 +548,7 @@ class JobManager(object):
             metric_tasks = self.get_codemetric_task_confs(job_context, last_revision,
                                                           scan_scheme=kwargs.get("scan_scheme"))
             if not lint_tasks and not metric_tasks:
-                raise ClientError(errcode.E_CLIENT_CONFIG_ERROR, '配置错误，请在设置中启用代码检查或代码度量功能')
+                raise ClientError(errcode.E_USER_CONFIG_NO_LINT_OR_METRIC, '配置错误，请在设置中启用代码检查或代码度量功能')
             tasks = lint_tasks + metric_tasks
         except Exception as e:
             if isinstance(e, CDErrorBase):
@@ -598,7 +604,7 @@ class JobManager(object):
             logger.info("%s开始获取codemetric参数" % self._log_prefix)
             metric_tasks = self.get_codemetric_task_confs(job_context, last_revision)
             if not lint_tasks and not metric_tasks:
-                raise ClientError(errcode.E_CLIENT_CONFIG_ERROR, '配置错误，请在设置中启用代码检查或代码度量功能')
+                raise ClientError(errcode.E_USER_CONFIG_NO_LINT_OR_METRIC, '配置错误，请在设置中启用代码检查或代码度量功能')
             tasks = lint_tasks + metric_tasks
         except Exception as e:
             if isinstance(e, CDErrorBase):
