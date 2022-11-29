@@ -1,0 +1,45 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "tca.fullname" . }}-client-config
+data:
+  config.ini: |
+    ; ---------------------------------------------------------------------------
+    ; 自定义配置项，可以根据实际情况设置
+    ; ---------------------------------------------------------------------------
+
+    [COMMON]
+    ; [必填]工具配置库git地址
+    ; 如果github网络慢，建议修改为腾讯工蜂地址：https://git.code.tencent.com/TCA/tca-tools/puppy-tools-config.git
+    TOOL_CONFIG_URL=https://git.code.tencent.com/TCA/tca-tools/puppy-tools-config.git
+    ; NOCA:hardcode-password([必填]scm加解密秘钥，工具代码库是开源代码库，任何人可以访问，该密钥可以公开，不存在泄露风险。)
+    PASSWORD_KEY={{ .Values.tca.commonConfig.passwordKey }}
+    ; [可选]日志级别,默认为info级别,设置为True则调整为debug级别
+    DEBUG=
+    ; [可选]是否使用本地工具目录,默认为False,如果设置为True,不从git拉取(需要事先准备好工具，存放到tools目录下)
+    USE_LOCAL_TOOL={{ .Values.tca.commonConfig.useLocalTool }}
+
+
+    [SERVER_URL]
+    ; [必填]请将<Server IP地址>替换为实际的tca server地址
+    URL=http://{{ template "tca.fullname" . }}-gateway/main/
+
+    [FILE_SERVER]
+    ; [必填]文件服务器地址，请将<Server IP地址>替换为实际的tca server地址
+    URL=http://{{ template "tca.fullname" . }}-gateway/files/
+    ; [必填]文件服务器token
+    TOKEN={{ .Values.tca.commonConfig.defaultToken }}
+
+    [TOOL_LOAD_ACCOUNT]
+    ; [可选]拉取工具库的账号密码
+    ; 如果TOOL_CONFIG_URL使用的是腾讯工蜂，账号密码必填（如果没有，可以先去https://git.code.tencent.com注册）
+    USERNAME={{ .Values.tca.commonConfig.toolLoadUsername }}
+    PASSWORD={{ .Values.tca.commonConfig.toolLoadPassword }}
+
+    [LICENSE_CONFIG]
+    ; [可选]使用自研工具时，需要填写，默认不需要
+    ; license服务器url, base_path, license
+    URL=
+    BASE_PATH=
+    LICENSE=
+    

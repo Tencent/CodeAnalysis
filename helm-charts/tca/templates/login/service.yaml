@@ -1,0 +1,27 @@
+{{- if .Values.tca.login.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "tca.fullname" . }}-login
+  labels:
+    k8s-app: {{ template "tca.fullname" . }}-login-server
+    app: {{ template "tca.name" . }}
+    chart: {{ template "tca.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  type: {{ .Values.tca.login.server.service.type }}
+  ports:
+    - name: http
+      port: {{ .Values.tca.login.server.service.ports.http }}
+      protocol: TCP
+      targetPort: http
+      {{- if (and (or (eq .Values.tca.login.server.service.type "NodePort") (eq .Values.tca.login.server.service.type "LoadBalancer")) (not (empty .Values.tca.login.server.service.nodePorts.http))) }}
+      nodePort: {{ .Values.tca.login.server.service.nodePorts.http }}
+      {{- else if eq .Values.tca.login.server.service.type "ClusterIP" }}
+      nodePort: null
+      {{- end }}
+  selector:
+    k8s-app: {{ template "tca.fullname" . }}-login-server
+    release: {{ .Release.Name }}
+{{- end }}

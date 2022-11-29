@@ -1,0 +1,29 @@
+apiVersion: v2
+appVersion: 1.0.0
+name: tca
+description: Tencent Cloud Code Analysis (TCA for short, code-named CodeDog inside the company early) is a comprehensive platform for code analysis and issue tracking. TCA consist of three components, server, web and client. It integrates of a number of self-developed tools, and also supports dynamic integration of code analysis tools in various programming languages.
+home: https://github.com/Tencent/CodeAnalysis
+icon: https://github.com/Tencent/CodeAnalysis/blob/main/media/Logo.png
+dependencies:
+  - name: mariadb
+    repository: https://charts.bitnami.com/bitnami
+    version: 11.1.8
+    condition: mariadb.enabled
+  - name: redis
+    repository: https://charts.bitnami.com/bitnami
+    version: 17.0.6
+    condition: redis.enabled
+  - name: nginx-ingress-controller
+    version: 9.3.2
+    repository: https://charts.bitnami.com/bitnami
+    condition: nginx-ingress-controller.enabled
+keywords:
+  - code-analysis
+  - code-quality
+  - code-review
+  - static-analysis
+  - code-quality-analyzer
+sources: 
+  - https://github.com/Tencent/CodeAnalysis
+type: application
+version: 0.1.0

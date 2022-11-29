@@ -1,0 +1,58 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  labels:
+    k8s-app: {{ template "tca.fullname" . }}-db-wait-job
+    app: {{ template "tca.name" . }}
+    chart: {{ template "tca.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+  name: {{ template "tca.fullname" . }}-db-wait-job
+  annotations:
+    "helm.sh/hook": post-install
+    "helm.sh/hook-weight": "1"
+    "helm.sh/hook-delete-policy": hook-succeeded
+spec:
+  ttlSecondsAfterFinished: 100
+  template:
+    metadata:
+      labels:
+        k8s-app: {{ template "tca.fullname" . }}-db-wait-job
+        release: {{ .Release.Name }}
+    spec:
+      {{- with .Values.global.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- if .Values.tca.podAntiAffinity.enable }}
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 1
+              podAffinityTerm:
+                topologyKey: "{{ .Values.tca.podAntiAffinity.topologyKey }}"
+                labelSelector:
+                  matchLabels:
+                    k8s-app: {{ template "tca.fullname" . }}-db-wait-job
+                    release: {{ .Release.Name }}
+      {{- end }}
+      containers:
+        - name: {{ template "tca.fullname" . }}-db-wait-job
+          image: "{{ .Values.tca.main.image.repository }}:{{ .Values.tca.main.image.tag }}"
+          imagePullPolicy: {{ .Values.global.imagePullPolicy }}
+          command: ["bash"]
+          args: ["bin/wait.sh", "$(TCA_DB_HOST):$(TCA_DB_PORT)", "$(TCA_REDIS_HOST):$(TCA_REDIS_PORT)"]
+          env:
+            - name: TCA_DB_HOST
+              value: {{ include "tca.database.host" . | quote }}
+            - name: TCA_DB_PORT
+              value: {{ include "tca.database.port" . | quote }}
+            - name: TCA_REDIS_HOST
+              value: {{ include "tca.redis.host" . | quote }}
+            - name: TCA_REDIS_PORT
+              value: {{ include "tca.redis.port" . | quote }}
+
+          resources:
+{{ toYaml .Values.tca.main.beat.resources | indent 12 }}
+      restartPolicy: Never
+  backoffLimit: 2
