@@ -31,7 +31,7 @@ import { getSchemeRouter, getSchemeBlankRouter } from '@src/utils/getRoutePath';
 
 import Filter from '@src/components/filter';
 import SelectBorderless from '@src/components/select-borderless';
-import CompileConfig from '@plat/modules/schemes/compile-modal';
+import CompileConfig from './compile-modal';
 
 import style from './style.scss';
 

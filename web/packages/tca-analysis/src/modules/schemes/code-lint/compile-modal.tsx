@@ -9,6 +9,7 @@
  */
 import React from 'react';
 import { Modal, Form, Input } from 'coding-oa-uikit';
+import CompileTip from '@plat/modules/schemes/compile-tip';
 
 interface CompileConfigProps {
   visible: boolean;
@@ -33,6 +34,7 @@ const CompileConfig = ({ visible, data, onOk, onClose }: CompileConfigProps) => 
         form.validateFields().then(onFinish);
       }}
     >
+      <CompileTip />
       <Form
         layout="vertical"
         form={form}

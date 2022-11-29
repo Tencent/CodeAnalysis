@@ -53,7 +53,7 @@ export const getNodeCommand = (orgId: string, nodeId: number | string) => get(`$
  * @param nodeId
  * @returns
  */
-export const getConfigIni = (orgId: string, nodeId: number | string) => postFile(`${getNodePrefix(orgId)}${nodeId}/configini/`);
+export const getConfigIni = (orgId: string, nodeId: number | string, params: any) => postFile(`${getNodePrefix(orgId)}${nodeId}/configini/`, params);
 
 /**
  * 获取节点进程
