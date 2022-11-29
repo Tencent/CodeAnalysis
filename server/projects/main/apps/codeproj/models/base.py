@@ -10,6 +10,8 @@ codeproj - base models
 """
 
 # 原生 import
+import hashlib
+import json
 import logging
 
 # 第三方 import
@@ -374,17 +376,24 @@ class BaseProject(CDBaseModel):
     """扫描项目
     """
 
+    class Meta:
+        index_together = (
+            ("repo", "scan_scheme", "branch")
+        )
+
     class StatusEnum(object):
         ACTIVE = 1
         DISACTIVE = 2
         ARCHIVING = 3
-        ARCHIVED = 4
+        ARCHIVED_WITHOUT_CLEAN = 4
+        ARCHIVED = 5
 
     STATUS_CHOICES = (
         (StatusEnum.ACTIVE, "活跃"),
         (StatusEnum.DISACTIVE, "失活"),
         (StatusEnum.ARCHIVING, "归档中"),
-        (StatusEnum.ARCHIVED, "已归档")
+        (StatusEnum.ARCHIVED_WITHOUT_CLEAN, "已归档未清理"),
+        (StatusEnum.ARCHIVED, "已归档"),
     )
 
     class CreatedFromEnum(object):
@@ -395,6 +404,8 @@ class BaseProject(CDBaseModel):
     branch = models.CharField(max_length=200, help_text="关联分支")
     repo = models.ForeignKey(BaseRepository, help_text="关联代码库", on_delete=models.SET_NULL, null=True)
     scan_scheme = models.ForeignKey(BaseScanScheme, help_text="关联扫描方案", on_delete=models.SET_NULL, null=True)
+    scan_path = models.CharField(max_length=512, help_text="扫描路径", null=True, blank=True)
+    project_key = models.CharField(max_length=64, help_text="项目Key值", null=True, blank=True, unique=True)
     refer_project = models.ForeignKey("self", on_delete=models.SET_NULL, blank=True, null=True, help_text="参照项目")
     status = models.IntegerField(default=StatusEnum.ACTIVE, choices=STATUS_CHOICES, verbose_name="项目状态")
     created_from = models.CharField(max_length=32, help_text="创建渠道", default=CreatedFromEnum.WEB)
@@ -402,8 +413,18 @@ class BaseProject(CDBaseModel):
     scm_auth = models.ForeignKey(ScmAuth, on_delete=models.SET_NULL, verbose_name="项目授权", blank=True, null=True)
     remark = models.TextField(help_text="备注信息", blank=True, null=True)
 
-    class Meta:
-        unique_together = ("repo", "scan_scheme", "branch")
+    @classmethod
+    def gen_project_key(cls, repo_id, scheme_id, branch, scan_path):
+        if not scan_path:
+            scan_path = "/"
+        key_string = "{repo_id}#{scheme_id}#{branch}#{path}".format(
+            repo_id=repo_id, scheme_id=scheme_id, branch=branch, path=scan_path)
+        return hashlib.sha256(key_string.encode("utf-8")).hexdigest()
+
+    def refresh_project_key(self):
+        project_key = self.gen_project_key(self.repo_id, self.scan_scheme_id, self.branch, self.scan_path)
+        self.project_key = project_key
+        self.save()
 
     @property
     def project_name(self):
@@ -434,26 +455,6 @@ class BaseProject(CDBaseModel):
         else:
             return None
 
-    def get_format_url(self, **kwargs):
-        """获取格式化的链接
-        """
-        if self.repo.scm_type == BaseRepository.ScmTypeEnum.GIT:
-            return "%s#%s" % (self.repo.get_format_url(**kwargs), self.branch)
-        else:
-            return "%s/%s" % (self.repo.get_format_url(**kwargs), self.branch)
-
-    def get_scm_url_with_auth(self, **kwargs):
-        """根据凭证获取URL
-        """
-        repo_scm_url = self.repo.get_scm_url_with_auth(**kwargs)
-        if self.repo:
-            if self.repo.scm_type == BaseRepository.ScmTypeEnum.GIT:
-                return "%s#%s" % (repo_scm_url, self.branch)
-            else:
-                return "%s/%s" % (repo_scm_url, self.branch)
-        else:
-            return None
-
     @property
     def languages(self):
         if self.scan_scheme:
@@ -478,12 +479,53 @@ class BaseProject(CDBaseModel):
         return {"auth_type": auth_info.get("auth_type"),
                 "scm_username": auth_info.get("username") or auth_info.get("scm_username")}
 
+    @property
+    def remark_info(self):
+        """备注信息Dict格式
+        """
+        if self.remark:
+            try:
+                return json.loads(self.remark)
+            except Exception as err:  # NOCA:broad-except(可能存在多种异常)
+                logger.exception("[Project: %s] get remark info failed, err: %s, remark: %s" % (
+                    self.id, err, self.remark))
+                return {}
+        else:
+            return {}
+
+    def update_remark(self, **kwargs):
+        """更新备注信息
+        """
+        self.remark = json.dumps(self.remark_info.update(**kwargs))
+        self.save()
+
+    def get_format_url(self, **kwargs):
+        """获取格式化的链接
+        """
+        if self.repo.scm_type == BaseRepository.ScmTypeEnum.GIT:
+            return "%s#%s" % (self.repo.get_format_url(**kwargs), self.branch)
+        else:
+            return "%s/%s" % (self.repo.get_format_url(**kwargs), self.branch)
+
+    def get_scm_url_with_auth(self, **kwargs):
+        """根据凭证获取URL
+        """
+        repo_scm_url = self.repo.get_scm_url_with_auth(**kwargs)
+        if self.repo:
+            if self.repo.scm_type == BaseRepository.ScmTypeEnum.GIT:
+                return "%s#%s" % (repo_scm_url, self.branch)
+            else:
+                return "%s/%s" % (repo_scm_url, self.branch)
+        else:
+            return None
+
     def sync_to_analyse_server(self):
         try:
             AnalyseClient().api("create_project", data={
                 "id": self.id,
                 "repo_id": self.repo_id,
                 "scan_scheme_id": self.scan_scheme_id,
+                "scan_path": self.scan_path,
                 "creator": self.creator.username if self.creator else None,
                 "scm_type": self.scm_type,
                 "scm_url": self.scm_url
@@ -494,7 +536,11 @@ class BaseProject(CDBaseModel):
             return False
 
     def __str__(self):
-        return "%s-%s-%s" % (self.repo_id, self.branch, self.scan_scheme.name if self.scan_scheme else "NoScanScheme")
+        return "%s-%s-%s-%s" % (
+            self.repo_id, self.branch,
+            self.scan_scheme.name if self.scan_scheme else "NoScanScheme",
+            self.scan_path
+        )
 
 
 Repository = BaseRepository
