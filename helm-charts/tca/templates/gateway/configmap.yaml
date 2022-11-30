@@ -1,0 +1,95 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "tca.fullname" . }}-nginx-configmap
+data:
+  tca_backend.conf: |
+    server {
+      listen                     80;
+      server_name                0.0.0.0;
+      charset                    utf-8;
+      client_max_body_size       5G;
+      access_log                 /dev/stdout;
+      access_log                 /var/log/nginx/nginx_codedog_access.log;
+      error_log                  /dev/stdout;
+      error_log                  /var/log/nginx/nginx_codedog_error.log;
+
+      location /main/ {
+          proxy_pass                  http://{{ template "tca.fullname" . }}-main/;
+          proxy_set_header            X-Real-IP  $remote_addr;
+          proxy_set_header            X-Forwarded-For $proxy_add_x_forwarded_for;
+          proxy_set_header            Host $host;
+          proxy_set_header            X-Real-Port $server_port;
+          proxy_set_header            X-Real-Scheme $scheme;
+          proxy_set_header            X-Script-Name /main;
+      }
+
+      location /analysis/ {
+          auth_request                 /urlauth/;
+          auth_request_set             $user $upstream_http_x_codedog_user;
+          auth_request_set             $ticket $upstream_http_x_codedog_ticket;
+          proxy_set_header             X-CodeDog-User $user;
+          proxy_set_header             X-CodeDog-Ticket $ticket;
+          if ($request_method = OPTIONS) {
+              add_header Content-Length 0;
+              add_header Content-Type text/plain;
+              add_header Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS";
+              add_header Access-Control-Allow-Origin $http_origin;
+              add_header Access-Control-Allow-Headers "Authorization, Content-Type, X-CSRFToken";
+              add_header Access-Control-Allow-Credentials true;
+              return 200;
+          }
+          proxy_pass                   http://{{ template "tca.fullname" . }}-analysis/;
+          proxy_set_header             X-Real-IP  $remote_addr;
+          proxy_set_header             X-Forwarded-For $proxy_add_x_forwarded_for;
+          proxy_set_header             Host $host;
+          proxy_set_header             X-Real-Port $server_port;
+          proxy_set_header             X-Real-Scheme $scheme;
+          proxy_set_header             X-Script-Name /analysis;
+      }
+
+      location /credential/ {
+          proxy_pass                   http://{{ template "tca.fullname" . }}-login/;
+          proxy_set_header             X-Real-IP $remote_addr;
+          proxy_set_header             X-Forwarded-For $proxy_add_x_forwarded_for;
+          proxy_set_header             Host $host;
+          proxy_set_header             X-Real-Port $server_port;
+          proxy_set_header             X-Real-Scheme $scheme;
+          proxy_set_header             X-Script-Name /credential;
+      }
+
+      location /files/ {
+          auth_request                 /urlauth/;
+          auth_request_set             $user $upstream_http_x_codedog_user;
+          auth_request_set             $ticket $upstream_http_x_codedog_ticket;
+          proxy_set_header             X-CodeDog-User "codedog";
+          proxy_set_header             X-CodeDog-Ticket $ticket;
+          if ($request_method = OPTIONS) {
+              add_header Content-Length 0;
+              add_header Content-Type text/plain;
+              add_header Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS";
+              add_header Access-Control-Allow-Origin $http_origin;
+              add_header Access-Control-Allow-Headers "Authorization, Content-Type, X-CSRFToken";
+              add_header Access-Control-Allow-Credentials true;
+              return 200;
+          }
+          proxy_pass                   http://{{ template "tca.fullname" . }}-file/files/codedog/;
+          proxy_set_header             X-Forwarded-For $proxy_add_x_forwarded_for;
+          proxy_set_header             Host $host;
+          proxy_set_header             X-Real-Port $server_port;
+          proxy_set_header             X-Real-Scheme $scheme;
+      }
+
+      location = /urlauth/ {
+          internal;
+          client_max_body_size         5G;
+          proxy_pass                   http://{{ template "tca.fullname" . }}-main/api/authen/urlauth/;
+          proxy_pass_request_body      off;
+          proxy_set_header             Content-Length "";
+          proxy_set_header             X-Original-URI $request_uri;
+      }
+      location / {
+          default_type text/html;
+          return 200 'Weclome to TCA';
+      }
+    }

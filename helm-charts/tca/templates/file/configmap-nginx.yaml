@@ -1,0 +1,266 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "tca.fullname" . }}-file-nginx-configmap
+data:
+  nginx.conf: |
+    worker_processes  4;
+    worker_cpu_affinity auto;
+
+    error_log   /var/log/nginx/file_error.log;
+    error_log   /dev/stdout;
+
+
+    events {
+        worker_connections  1024;
+        use                 epoll;
+    }
+
+    http {
+        include       mime.types;
+        default_type  application/octet-stream;
+
+        log_format    main  '$remote_addr - $remote_user [$time_local] "$request" '
+                            '$status $body_bytes_sent "$http_referer" '
+                            '"$http_user_agent" "$http_x_forwarded_for" "$upstream_addr" "$upstream_status" $request_time $upstream_response_time';
+
+        access_log   /var/log/nginx/file_access.log  main;
+        access_log   /dev/stdout;
+        
+        sendfile                      on;
+        tcp_nopush                    on;
+        keepalive_timeout             0;
+        rewrite_log                   on;
+        log_subrequest                on;
+        client_max_body_size          0;
+        client_header_timeout         10m;
+        client_body_timeout           10m; 
+        proxy_connect_timeout         10m; 
+        proxy_read_timeout            10m;  
+        proxy_send_timeout            10m;
+        proxy_max_temp_file_size      0;
+
+{{ if eq .Values.tca.file.settings.minio.enabled "true" }}
+        server {
+            include                         mime.types;
+            default_type                    application/octet-stream;
+            access_log                      /var/log/nginx/nginx_file_access.log;
+            access_log                      /dev/stdout;
+            error_log                       /var/log/nginx/nginx_file_error.log;
+            error_log                       /dev/stdout;
+            sendfile                        on;
+            tcp_nopush                      on;
+            keepalive_timeout               0;
+            rewrite_log                     on;
+            log_subrequest                  on;
+            client_max_body_size            0;
+            client_header_timeout           10m;
+            client_body_timeout             10m;
+            proxy_connect_timeout           10m;
+            proxy_read_timeout              10m;
+            proxy_send_timeout              10m;
+            proxy_max_temp_file_size        0;
+            listen                          80;
+            server_name                     0.0.0.0;
+
+            location / {
+                proxy_pass                  http://127.0.0.1:8804;
+                proxy_set_header            X-Real-IP  $remote_addr;
+                proxy_set_header            X-Forwarded-For $proxy_add_x_forwarded_for;
+                proxy_set_header            Host $host;
+                proxy_set_header            X-Real-Port $server_port;
+                proxy_set_header            X-Real-Scheme $scheme;
+                proxy_set_header            X-Script-Name /files;
+            }
+
+            location /files {
+                auth_request      /ngx_cos_auth;
+                auth_request_set  $cos_host $sent_http_req_host;
+                auth_request_set  $req_path $sent_http_req_path;
+                auth_request_set  $err_type $sent_http_err_type;
+                auth_request_set  $err_msg $sent_http_err_msg;
+                auth_request_set  $auth_status $upstream_status;
+                
+                auth_request_set  $auth $sent_http_authorization;
+                auth_request_set  $x_amz_date $sent_http_x_amz_date;
+                auth_request_set  $x_amz_content_sha256 $sent_http_x_amz_content_sha256;
+                auth_request_set  $content_md5 $sent_http_content_md5;
+                
+                auth_request_set  $redirect_url $sent_http_redirect_url;
+                error_page        401    @no_auth;
+                error_page        500 403 =  /ngx_failback;
+
+                proxy_set_header  AUTHORIZATION $auth;
+                proxy_set_header  Host $cos_host;
+                proxy_set_header  x-amz-date $x_amz_date;
+                proxy_set_header  content-md5 $content_md5;
+                proxy_set_header  x-amz-content-sha256 $x_amz_content_sha256;
+                
+                proxy_buffering   off;
+                proxy_pass        http://$cos_host$req_path;
+                if ($request_method = GET) {
+                    add_header Content-Disposition "attachment;";
+                }
+                post_action       /ngx_file_log;
+            }
+
+            location @no_auth{
+                if ($redirect_url){
+                    return 302 $redirect_url;
+                }
+                return 401;
+            }
+
+        location = /ngx_failback {
+                    internal;
+                    proxy_set_header           err-type $err_type;
+                    proxy_set_header           err-msg $err_msg;
+                    proxy_pass                 http://$server_name:$server_port/api/files/error;
+                }
+                location = /ngx_cos_auth {
+                    internal;
+                    proxy_method               $request_method;
+                    proxy_pass                 http://$server_name:$server_port/api/files/auth$request_uri;
+                    proxy_pass_request_body    off;
+                    proxy_set_header           Content-Length "";
+                }
+                location = /ngx_file_log {
+                    internal;
+                    proxy_set_header           pre-method $request_method;
+                    proxy_set_header           pre-uri $request_uri;
+                    proxy_set_header           pre-request $request;
+                    proxy_set_header           pre-status $status;
+                    proxy_set_header           X-Forwarded-For $proxy_add_x_forwarded_for;
+                    proxy_pass_request_body    off;
+                    proxy_set_header           Content-Length "";
+                    proxy_method               $request_method;
+                    proxy_pass                 http://$server_name:$server_port/api/files/logs;
+                }
+        }
+{{else if eq .Values.tca.file.settings.tencentcos.enabled "true" }}
+        server {
+            include                         mime.types;
+            default_type                    application/octet-stream;
+            access_log                      /var/log/nginx/nginx_file_access.log;
+            access_log                      /dev/stdout;
+            error_log                       /var/log/nginx/nginx_file_error.log;
+            error_log                       /dev/stdout;
+            sendfile                        on;
+            tcp_nopush                      on;
+            keepalive_timeout               0;
+            rewrite_log                     on;
+            log_subrequest                  on;
+            client_max_body_size            0;
+            client_header_timeout           10m;
+            client_body_timeout             10m;
+            proxy_connect_timeout           10m;
+            proxy_read_timeout              10m;
+            proxy_send_timeout              10m;
+            proxy_max_temp_file_size        0;
+            listen                          80;
+            server_name                     0.0.0.0;
+            location / {
+                proxy_pass                  http://127.0.0.1:8804;
+                proxy_set_header            X-Real-IP  $remote_addr;
+                proxy_set_header            X-Forwarded-For $proxy_add_x_forwarded_for;
+                proxy_set_header            Host $host;
+                proxy_set_header            X-Real-Port $server_port;
+                proxy_set_header            X-Real-Scheme $scheme;
+                proxy_set_header            X-Script-Name /files;
+            }
+            location /files {
+                auth_request      /ngx_cos_auth;
+                auth_request_set  $cos_host $sent_http_req_host;
+                auth_request_set  $req_path $sent_http_req_path;
+                auth_request_set  $err_type $sent_http_err_type;
+                auth_request_set  $err_msg $sent_http_err_msg;
+                auth_request_set  $auth_status $upstream_status;
+                auth_request_set  $auth $sent_http_authorization;
+                auth_request_set  $x_amz_date $sent_http_x_amz_date;
+                auth_request_set  $x_amz_content_sha256 $sent_http_x_amz_content_sha256;
+                auth_request_set  $content_md5 $sent_http_content_md5;
+                auth_request_set  $redirect_url $sent_http_redirect_url;
+                error_page        401    @no_auth;
+                error_page        500 403 =  /ngx_failback;
+                proxy_set_header  AUTHORIZATION $auth;
+                proxy_set_header  Host $cos_host;
+                proxy_set_header  x-cos-meta-md5 $sent_http_ftp_md5;
+                resolver         8.8.8.8;
+                proxy_buffering  off;
+                proxy_pass       http://$cos_host$req_path;
+                if ($request_method = GET) {
+                    add_header Content-Disposition "attachment;";
+                }
+                post_action /ngx_file_log;
+            }
+            location @no_auth{
+                if ($redirect_url){
+                    return 302 $redirect_url;
+                }
+                return 401;
+            }
+            location = /ngx_failback {
+                    internal;
+                    proxy_set_header           err-type $err_type;
+                    proxy_set_header           err-msg $err_msg;
+                    proxy_pass                 http://$server_name:$server_port/api/files/error;
+                }
+                location = /ngx_cos_auth {
+                    internal;
+                    proxy_method               $request_method;
+                    proxy_pass                 http://$server_name:$server_port/api/files/auth$request_uri;
+                    proxy_pass_request_body    off;
+                    proxy_set_header           Content-Length "";
+                }
+                location = /ngx_file_log {
+                    internal;
+                    proxy_set_header           pre-method $request_method;
+                    proxy_set_header           pre-uri $request_uri;
+                    proxy_set_header           pre-request $request;
+                    proxy_set_header           pre-status $status;
+                    proxy_set_header           X-Forwarded-For $proxy_add_x_forwarded_for;
+                    proxy_pass_request_body    off;
+                    proxy_set_header           Content-Length "";
+                    proxy_method               $request_method;
+                    proxy_pass                 http://$server_name:$server_port/api/files/logs;
+                }
+        }
+{{- else }}
+        server {
+        listen                           80;
+        server_name                      0.0.0.0;
+        underscores_in_headers           on;
+        client_max_body_size             0;
+        client_header_timeout	           10m;
+        client_body_timeout              10m;
+        proxy_connect_timeout            10m;
+        proxy_read_timeout               10m;
+        proxy_send_timeout               10m;
+        proxy_max_temp_file_size         0;
+        access_log                       /var/log/nginx/nginx_file_access.log;
+        #   access_log                       /dev/stdout;
+        error_log                        /var/log/nginx/nginx_file_error.log;
+        error_log                        /dev/stdout;
+
+        location = /files/codedog/healthcheck/ {
+            proxy_pass                  http://127.0.0.1:8804/healthcheck/;
+            proxy_set_header            X-Real-IP  $remote_addr;
+            proxy_set_header            X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header            Host $host;
+            proxy_set_header            X-Real-Port $server_port;
+            proxy_set_header            X-Real-Scheme $scheme;
+            proxy_set_header            X-Script-Name /files;
+        }
+
+        location /files/ {
+            proxy_pass                  http://127.0.0.1:8804/api/files/;
+            proxy_set_header            X-Real-IP  $remote_addr;
+            proxy_set_header            X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header            Host $host;
+            proxy_set_header            X-Real-Port $server_port;
+            proxy_set_header            X-Real-Scheme $scheme;
+            proxy_set_header            X-Script-Name /files;
+        }
+        }
+{{- end }}
+    }

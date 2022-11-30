@@ -1,0 +1,715 @@
+## @section Global parameters
+## Global Docker image parameters
+## @param global.imagePullPolicy TCA all image pull policy
+## @param global.imagePullSecrets Global Docker registry secret names as an array
+global:
+  ## Specify a imagePullPolicy
+  ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
+  imagePullPolicy: IfNotPresent
+  ## E.g.
+  ## imagePullSecrets:
+  ##   - myRegistryKeySecretName
+  ##
+  imagePullSecrets: []
+
+## @section Metrics parameters
+##
+metrics:
+  ## @param metrics.enabled start servicemonitor to expose TCA metrics
+  ## Notice: TCA all services will support metrics soon.
+  ##
+  enable: false
+
+## @section Ingress parameters
+## ref: https://kubernetes.io/docs/user-guide/ingress/
+##
+ingress:
+  ## @param ingress.enabled Enable ingress record generation for TCA
+  ##
+  enabled: true
+  ## @param ingress.annotations Additional annotations for the Ingress resource. To enable certificate autogeneration, place here your cert-manager annotations.
+  ## Use this parameter to set the required annotations for cert-manager, see
+  ## ref: https://cert-manager.io/docs/usage/ingress/#supported-annotations
+  ## e.g:
+  ## annotations:
+  ##   kubernetes.io/ingress.class: nginx
+  ##   cert-manager.io/cluster-issuer: cluster-issuer-name
+  ##
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/proxy-body-size: "10240m"
+
+## @section nginx-ingress-controller parameters
+## ref: https://github.com/bitnami/charts/tree/master/bitnami/nginx-ingress-controller
+## 
+nginx-ingress-controller:
+  ## @param nginx-ingress-controller.enabled Enable nginx-ingress-controller deployment for TCA
+  ##
+  enabled: true
+  defaultBackend:
+    enabled: false
+
+## @section redis parameters
+## ref: https://github.com/bitnami/charts/tree/master/bitnami/redis
+## 
+redis:
+  ## @param redis.enabled Enable redis deployment for TCA
+  ##
+  enabled: true
+  auth:
+    enabled: true
+    password: tca2022
+
+## @section externalRedis parameters
+## 
+## Notice: Before using externalRedis, please disable deploying redis with helm!
+externalRedis:
+  ## @param externalRedis.host External Redis service host name
+  ## @param externalRedis.port External Redis service port number
+  ## @param externalRedis.password External Redis service auth password
+  ## 
+  host: ""
+  port: ""
+  password: ""
+
+## @section mariadb parameters
+## ref: https://github.com/bitnami/charts/tree/master/bitnami/mariadb
+## 
+mariadb:
+  ## @param mariadb.enabled Enable mariadb deployment for TCA
+  ##
+  enabled: true
+  auth:
+    rootPassword: Tca2022
+    database: codedog_main
+  primary:
+    persistence:
+      size: 100Gi
+  initdbScriptsConfigMap: tca-db-init
+
+## @section externalMySQL parameters
+## 
+## Notice: Before using externalMySQL, please disable deploying mariadb with helm!
+externalMySQL:
+  ## @param externalMySQL.host External Mariadb service host name
+  ## @param externalMySQL.port External Mariadb service port number
+  ## @param externalMySQL.username External Mariadb service auth username
+  ## @param externalMySQL.password External Mariadb service auth password
+  ##
+  host: ""
+  port: ""
+  username: ""
+  password: ""
+
+tca:
+  podAntiAffinity:
+    enable: false
+    topologyKey: "kubernetes.io/hostname"
+  
+  ## TCA common config parameters
+  ## 
+  commonConfig:
+    ## @param commonConfig.publicUrl TCA web public url, default "dev.tca.com"
+    ## 
+    publicUrl: "dev.tca.com"
+    ## @param commonConfig.daemonFlag TCA server debug mode, default "False"
+    ##
+    daemonFlag: "False"
+    ## @param commonConfig.accessLogPath TCA server access log path, using "-" will print access log with STDOUT
+    ## 
+    accessLogPath: "-"
+    ## @param commonConfig.errorLogPath TCA server error log path, using "-" will print error log with STDOUT
+    ##
+    errorLogPath: "-"
+    ## @param commonConfig.apiTicketSalt TCA server internal api ticket salt
+    ## @param commonConfig.apiTicketToken TCA server internal api ticket token
+    ## @param commonConfig.passwordKey TCA server internal encryption key for sensitive data
+    ## @param commonConfig.nodeTicketSalt TCA server internal encryption key for node connection
+    ## @param commonConfig.secretKey TCA server django secert key
+    ## Notice: 
+    ##   - ticket salt and password key generation way: use any 16 or 32 ascii characters.
+    ##   - api ticket token generation way: use any ascii characters.
+    ## 
+    apiTicketSalt: "a6x4c7esudcv396w"
+    apiTicketToken: "tca@public@2021"
+    passwordKey: "a6x4c7esudcv396w"
+    nodeTicketSalt: "a6x4c7esudcv396w"
+    secretKey: "25n=e*_e=4q!ert$4u#9v&^2n+)_#mi7&7ll@x29@j=w=k^q@^"
+    ## @param commonConfig.defaultAdmin TCA server default user username, use any 16 ascii characters.
+    ## @param commonConfig.defaultPassword TCA server default user password, use any 16 ascii characters.
+    ## @param commonConfig.defaultToken TCA server default user token, use any 40 ascii characters.
+    ## 
+    defaultAdmin: "CodeDog"
+    defaultPassword: "admin"
+    defaultToken: "0712b895f30c5e958ec71a7c22e1b1a2ad1d5c6b"
+    ## @param commonConfig.sentryDsn TCA server sentry url config
+    ##
+    sentryDsn: ""
+    ## @param commonConfig.useLocalTool Using local tools prepared in advance.
+    ## @param commonConfig.toolLoadUsername Tencent Git Username for TCA client pulling analysis tools
+    ## @param commonConfig.toolLoadPassword Tencent Git Password for TCA client pulling analysis tools
+    ##
+    useLocalTool: "False"
+    toolLoadUsername: "private"
+    toolLoadPassword: "gJDAHmgA50AtXj6utNXF"
+    ## @param commonConfig.clsServerUrl CLS server url
+    ## @param commonConfig.clsServerLicense CLS server license
+    ##
+    clsServerUrl: ""
+    clsServerLicense: ""
+
+  ## TCA web: frontend service
+  ## 
+  web:
+    image: 
+      repository: tencenttca/tca-web
+      tag: latest
+    resources:
+      limits:
+        cpu: 500m
+        memory: 1Gi
+      requests:
+        cpu: 100m
+        memory: 200Mi
+    ## @param tca.web.autoscaling TCA Web auto scaling config
+    ## 
+    autoscaling:   
+      enabled: true
+      minReplicas: 1
+      maxReplicas: 2
+      targetCPU: ""
+      targetMemory: ""
+    ## @param tca.web.serverName TCA web serverName config for nginx
+    ## @param tca.web.port TCA web port config for nginx
+    ## 
+    serverName: "0.0.0.0"
+    port: "80"
+    confPath: "/etc/nginx/conf.d"
+    logPath: "/var/log/nginx"
+    deployPath: "/usr/share/nginx/www"
+    isDocker: "TRUE"
+    routeListenerDataType: "host"
+    service:
+      ## @param tca.web.service.type TCA Web service type
+      ##
+      type: NodePort
+      ## @param tca.web.service.ports.http TCA web service HTTP port
+      ## @param tca.web.service.ports.https TCA web service HTTPS port
+      ##
+      ports:
+        http: 80
+        https: ""
+      ## @param tca.web.service.httpsTargetPort Target port for HTTPS
+      ##
+      httpsTargetPort: https
+      ## Node ports to expose
+      ## @param tca.web.service.nodePorts.http Node port for HTTP
+      ## @param tca.web.service.nodePorts.https Node port for HTTPS
+      ## NOTE: choose port between <30000-32767>
+      ##
+      nodePorts:
+        http: ""
+        https: ""
+
+  ## TCA main: Manage config with project, job and scan rules.
+  ##
+  main:
+    image:
+      repository: tencenttca/tca-main
+      tag: latest
+    ## TCA main server config
+    ## 
+    server:
+      ## @param tca.main.server.port A port for main server listening
+      ## @param tca.analysis.server.processNum The number of processes main server is running
+      ##
+      port: 80
+      processNum: 8
+      resources:
+        limits:
+          cpu: "1000m"
+          memory: "2Gi"
+        requests:
+          cpu: "200m"
+          memory: "500Mi"
+      ## TCA main server service config
+      ## 
+      service:
+        ## @param tca.main.server.service.type TCA Main server service type
+        ##
+        type: NodePort
+        ## @param tca.main.server.service.ports.http TCA Main server service HTTP port
+        ##
+        ports:
+          http: 80
+        ## Node ports to expose
+        ## @param tca.main.server.service.nodePorts.http Node port for HTTP
+        ## NOTE: choose port between <30000-32767>
+        ##
+        nodePorts:
+          http: ""
+      ## @param tca.main.server.autoscaling : TCA Main Server auto scaling config
+      ## 
+      autoscaling: 
+        enabled: true
+        minReplicas: 1
+        maxReplicas: 2
+        targetCPU: ""
+        targetMemory: ""
+    ## TCA main worker: Async tasks worker.
+    ##
+    worker:
+      ## @param tca.main.worker.enabled Enable main worker starting
+      ## @param tca.main.worker.num TCA main worker num
+      ## 
+      enabled: true
+      num: 2
+      resources:
+        limits:
+          cpu: "1000m"
+          memory: "2Gi"
+        requests:
+          cpu: "200m"
+          memory: "500Mi"
+      ## TCA main worker auto scaling config
+      ## 
+      autoscaling: 
+        enabled: true
+        minReplicas: 1
+        maxReplicas: 2
+        targetCPU: ""
+        targetMemory: ""
+    ## TCA main beat: Scheduled tasks delivery.
+    ##
+    beat:
+      ## @param tca.main.beat.enabled Enable main worker starting
+      ##
+      enabled: true
+      resources:
+        limits:
+          cpu: "500m"
+          memory: "1Gi"
+        requests:
+          cpu: "100m"
+          memory: "100Mi"
+    ## TCA main settings
+    ## 
+    settings:
+      base:
+        ## @param tca.main.settings.module TCA main server setting module
+        ## @param tca.main.settings.debugMode Debug mode
+        ## @param tca.main.settings.httpsCloneFlag default using https scm url
+        ##
+        module: codedog.settings.open_env
+        debugMode: "true"
+        httpsCloneFlag: "true"
+      ## TCA main db config
+      ## Notice:
+      ##   - Using tca.main.settings.customDB config first, if exists. Default using internal mariadb config or externalMysql
+      ## 
+      dbName: "codedog_main"
+      customDB:
+        host: ""
+        port: ""
+        user: ""
+        password: ""
+      ## TCA main redis config
+      ## Notice:
+      ##   - Using tca.main.settings.customRedis config first, if exists. Default using internal redis config or externalRedis
+      ## 
+      redisDBId: 1
+      customRedis:
+        host: ""
+        port: ""
+        password: ""
+
+  
+  ## TCA analysis: Manage result from lint and metric tools.
+  ##
+  analysis:
+    image:
+      repository: tencenttca/tca-analysis
+      tag: latest
+    server:
+      ## @param tca.analysis.server.port A port for analysis server listening
+      ## @param tca.analysis.server.processNum The number of processes analysis server is running
+      ##
+      port: 80
+      processNum: 8
+      resources:
+        limits:
+          cpu: "1000m"
+          memory: "2Gi"
+        requests:
+          cpu: "200m"
+          memory: "500Mi"
+      ## TCA analysis server service config
+      ## 
+      service:
+        ## @param tca.analysis.server.service.type TCA Analysis server service type
+        ##
+        type: NodePort
+        ## @param tca.analysis.server.service.ports.http TCA Analysis server service HTTP port
+        ##
+        ports:
+          http: 80
+        ## Node ports to expose
+        ## @param tca.analysis.server.service.nodePorts.http Node port for HTTP
+        ## NOTE: choose port between <30000-32767>
+        ##
+        nodePorts:
+          http: ""
+      ## TCA analysis server auto scaling config
+      ## 
+      autoscaling: 
+        enabled: true
+        minReplicas: 1
+        maxReplicas: 2
+        targetCPU: ""
+        targetMemory: ""
+    ## TCA analysis worker: Async tasks worker for saving result.
+    ##
+    worker:
+      ## @param tca.analysis.worker.enabled Enable analysis worker starting
+      ## @param tca.analysis.worker.num TCA analysis worker num
+      ## 
+      enabled: true
+      num: 2
+      resources:
+        limits:
+          cpu: "1000m"
+          memory: "4Gi"
+        requests:
+          cpu: "500m"
+          memory: "2Gi"
+      ## TCA analysis worker auto scaling config
+      ## 
+      autoscaling: 
+        enabled: true
+        minReplicas: 1
+        maxReplicas: 2
+        targetCPU: ""
+        targetMemory: ""
+    ## TCA analysis settings
+    ## 
+    settings:
+      base:
+        ## @param tca.analysis.settings.module TCA analysis server setting module
+        ## @param tca.analysis.settings.debugMode Debug mode
+        ##
+        module: codedog.settings.open_env
+        debugMode: "true"
+      ## TCA analysis db config
+      ## Notice:
+      ##   - Using tca.analysis.settings.customDB config first, if exists. Default using internal mariadb config or externalMysql
+      ## 
+      dbName: "codedog_analysis"
+      customDB:
+        host: ""
+        port: ""
+        user: ""
+        password: ""
+      ## TCA analysis redis config
+      ## Notice:
+      ##   - Using tca.analysis.settings.customRedis config first, if exists. Default using internal redis config or externalRedis
+      redisDBId: 0
+      customRedis:
+        host: ""
+        port: ""
+        password: ""
+  
+  ## TCA login: TCA login server.
+  ##
+  login:
+    image:
+      repository: tencenttca/tca-login
+      tag: latest
+    ## @param tca.login.worker.enabled Enable login server starting
+    ## 
+    enabled: true
+    server:
+      ## @param tca.login.server.port A port for login server listening
+      ## @param tca.login.server.processNum The number of processes login server is running
+      ##
+      port: 80
+      processNum: 8
+      resources:
+        limits:
+          cpu: "1000m"
+          memory: "1Gi"
+        requests:
+          cpu: "200m"
+          memory: "500Mi"
+      ## TCA login server service config
+      ## 
+      service:
+        ## @param tca.login.server.service.type TCA Login server service type
+        ##
+        type: NodePort
+        ## @param tca.login.server.service.ports.http TCA Login server service HTTP port
+        ##
+        ports:
+          http: 80
+        ## Node ports to expose
+        ## @param tca.login.server.service.nodePorts.http Node port for HTTP
+        ## NOTE: choose port between <30000-32767>
+        ##
+        nodePorts:
+          http: ""
+      ## TCA login server auto scaling config
+      ## 
+      autoscaling: 
+        enabled: true
+        minReplicas: 1
+        maxReplicas: 2
+        targetCPU: ""
+        targetMemory: ""
+    ## TCA login settings
+    ## 
+    settings:
+      base:
+        ## @param tca.login.settings.module TCA login server setting module
+        ## @param tca.login.settings.debugMode Debug mode
+        ##
+        module: apps.settings.open_env
+        debugMode: "true"
+      ## TCA login db config
+      ## Notice:
+      ##   - Using tca.login.settings.customDB config first, if exists. Default using internal mariadb config or externalMysql
+      ##
+      dbName: "codedog_login"
+      customDB:
+        host: ""
+        port: ""
+        user: ""
+        password: ""
+
+  ## TCA file: TCA file server.
+  ##
+  file:
+    image:
+      repository: tencenttca/tca-file
+      tag: latest
+    server:
+      ## @param tca.file.server.port A port for file server listening
+      ## @param tca.file.server.processNum The number of processes file server is running
+      ##
+      port: 8804
+      processNum: 8
+      resources:
+        limits: 
+          cpu: "1000m"
+          memory: "2Gi"
+        requests:
+          cpu: "200m"
+          memory: "500Mi"
+      ## TCA file server service config
+      ## 
+      service:
+        ## @param tca.file.server.service.type TCA File server service type
+        ##
+        type: NodePort
+        ## @param tca.file.server.service.ports.http TCA File server service HTTP port
+        ##
+        ports:
+          http: 80
+        ## Node ports to expose
+        ## @param tca.file.server.service.nodePorts.http Node port for HTTP
+        ## NOTE: choose port between <30000-32767>
+        ##
+        nodePorts:
+          http: ""
+      ## TCA file server auto scaling config
+      ##
+      autoscaling: 
+        enabled: true
+        minReplicas: 1
+        maxReplicas: 2
+        targetCPU: ""
+        targetMemory: ""
+    ## TCA file settings
+    ## 
+    settings:
+      base:
+        ## @param tca.file.settings.module TCA file server setting module
+        ## @param tca.file.settings.debugMode Debug mode
+        ##
+        module: codedog_file_server.settings
+        debugMode: "true"
+      ## TCA file db config
+      ## Notice:
+      ##   - Using tca.file.settings.customDB config first, if exists. Default using internal mariadb config or externalMysql
+      ##
+      dbName: "codedog_file"
+      customDB:
+        host: ""
+        port: ""
+        user: ""
+        password: ""
+      ## @param tca.file.settings.storageClient TCA file storage mode: local/cos/minio
+      ##
+      storageClient: "local"
+      local:
+        ## @param tca.file.settings.local.dirpath The path saving files on TCA file server
+        ##
+        dirPath: "/data/file"
+        ## TCA File nfs volume config
+        ## @param tca.file.settings.local.volumes.nfsServer The NFS server for TCA File server
+        ## @param tca.file.settings.local.volumes.nfsPath The NFS server path for TCA File server
+        ##
+        volumes:
+          nfsServer: ""
+          nfsPath: ""
+      tencentcos:
+        ## @param tca.file.settings.tencentcos.enabled Enable using cos to save files
+        ## @param tca.file.settings.tencentcos.appId TencentCloud Cos appId
+        ## @param tca.file.settings.tencentcos.secretId TencentCloud Cos secretId
+        ## @param tca.file.settings.tencentcos.secretKey TencentCloud Cos secretKey
+        ## @param tca.file.settings.tencentcos.region TencentCloud Cos region
+        ## @param tca.file.settings.tencentcos.rootBucket TencentCloud Cos root bucket name
+        ##
+        enabled: "false"
+        appId: ""
+        secretId: ""
+        secretKey: ""
+        region: ""
+        rootBucket: ""
+      minio:
+        ## @param tca.file.settings.minio.enabled Enable using minio to save files
+        ## @param tca.file.settings.minio.entrypoint MinIO server url
+        ## @param tca.file.settings.minio.accessKey MinIO server access key
+        ## @param tca.file.settings.minio.secretKey MinIO server secret key
+        ##
+        enabled: "false"
+        entrypoint: ""
+        accessKey: ""
+        secretKey: ""
+  
+  ## TCA scmproxy: TCA scm proxy for tgit/github/gitlab...
+  ##
+  scmproxy:
+    image:
+      repository: tencenttca/tca-scmproxy
+      tag: latest
+    ## @param tca.scmproxy.port A port for scmproxy server listening
+    ##
+    port: 80
+    ## @param tca.scmproxy.privateScmUrl private scm url, such as gitlab
+    ##
+    privateScmUrl: ""
+    resources:
+      limits:
+        cpu: "1000m"
+        memory: "2Gi"
+      requests:
+        cpu: "300m"
+        memory: "500Mi"
+    ## TCA scmproxy server auto scaling config
+    ##
+    autoscaling: 
+      enabled: true
+      minReplicas: 1
+      maxReplicas: 2
+      targetCPU: ""
+      targetMemory: ""
+    ## TCA scmproxy server service config
+    ## 
+    service:
+      ## @param tca.scmproxy.service.type TCA ScmProxy service type
+      ##
+      type: NodePort
+      ## @param tca.scmproxy.service.ports.http TCA ScmProxy service HTTP port
+      ##
+      ports:
+        http: 80
+      ## Node ports to expose
+      ## @param tca.scmproxy.service.nodePorts.http Node port for HTTP
+      ## NOTE: choose port between <30000-32767>
+      ##
+      nodePorts:
+        http: ""
+  
+  ## TCA client: TCA client analysing code
+  ##
+  client:
+    image:
+      repository: tencenttca/tca-client
+      tag: latest
+    ## @param tca.client.enabled Enable TCA client starting
+    ##
+    enabled: true
+    resources:
+      limits:
+        cpu: "4000m"
+        memory: "8Gi"
+      requests:
+        cpu: "1000m"
+        memory: "2Gi"
+    ## TCA client auto scaling config
+    ## 
+    autoscaling: 
+      enabled: true
+      minReplicas: 2
+      maxReplicas: 4
+      targetCPU: ""
+      targetMemory: ""
+
+  ## TCA gateway: TCA gateway for all servers
+  ##
+  gateway:
+    image:
+      repository: nginx
+      tag: 1.13.7
+    resources:
+      limits:
+        cpu: "1000m"
+        memory: "1Gi"
+      requests:
+        cpu: "100m"
+        memory: "100Mi"
+    ## TCA gateway server service config
+    ## 
+    service:
+      ## @param tca.gateway.service.type TCA gateway service type
+      ##
+      type: NodePort
+      ## @param tca.gateway.service.ports.http TCA gateway service HTTP port
+      ## @param tca.gateway.service.ports.https TCA gateway service HTTPS port
+      ##
+      ports:
+        http: 80
+        https: ""
+      ## Node ports to expose
+      ## @param tca.gateway.service.nodePorts.http Node port for HTTP
+      ## @param tca.gateway.service.nodePorts.https Node port for HTTPS
+      ## NOTE: choose port between <30000-32767>
+      ##
+      nodePorts:
+        http: ""
+        https: ""
+      ## @param tca.gateway.service.clusterIP TCA gateway service Cluster IP
+      ##
+      clusterIP: ""
+      ## @param tca.gateway.service.loadBalancerIP TCA gateway service Load Balancer IP
+      ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#type-loadbalancer
+      ##
+      loadBalancerIP: ""
+      ## @param service.loadBalancerSourceRanges TCA gateway service Load Balancer sources
+      ## ref: https://kubernetes.io/docs/tasks/access-application-cluster/configure-cloud-provider-firewall/#restrict-access-for-loadbalancer-service
+      ## e.g:
+      ## loadBalancerSourceRanges:
+      ##   - 10.10.10.0/24
+      ##
+      loadBalancerSourceRanges: []
+      ## @param service.externalTrafficPolicy TCA gateway service external traffic policy
+      ## ref https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip
+      ##
+      externalTrafficPolicy: Cluster
+    ## TCA gateway server auto scaling config
+    ## 
+    autoscaling: 
+      enabled: true
+      minReplicas: 1
+      maxReplicas: 2
+      targetCPU: ""
+      targetMemory: ""

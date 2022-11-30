@@ -1,0 +1,70 @@
+{{- if .Values.externalMySQL.host }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  labels:
+    k8s-app: {{ template "tca.fullname" . }}-db-init-job
+    app: {{ template "tca.name" . }}
+    chart: {{ template "tca.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+  name: {{ template "tca.fullname" . }}-db-init-job
+  annotations:
+    "helm.sh/hook": post-install
+    "helm.sh/hook-weight": "2"
+    "helm.sh/hook-delete-policy": hook-succeeded
+spec:
+  ttlSecondsAfterFinished: 100
+  template:
+    metadata:
+      labels:
+        k8s-app: {{ template "tca.fullname" . }}-db-init-job
+        release: {{ .Release.Name }}
+    spec:
+      {{- with .Values.global.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- if .Values.tca.podAntiAffinity.enable }}
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 1
+              podAffinityTerm:
+                topologyKey: "{{ .Values.tca.podAntiAffinity.topologyKey }}"
+                labelSelector:
+                  matchLabels:
+                    k8s-app: {{ template "tca.fullname" . }}-db-init-job
+                    release: {{ .Release.Name }}
+      {{- end }}
+      containers:
+        - name: {{ template "tca.fullname" . }}-db-init-job
+          image: "{{ .Values.tca.main.image.repository }}:{{ .Values.tca.main.image.tag }}"
+          imagePullPolicy: {{ .Values.global.imagePullPolicy }}
+          command: ["/bin/bash"]
+          args: ["-c", "mysql --user=$(MYSQL_USER) --host=$(MYSQL_HOST) --port=$(MYSQL_PORT) < /sql/init.sql"]
+          env:
+            - name: MYSQL_HOST
+              value: {{ .Values.externalMySQL.host | quote }}
+            - name: MYSQL_PORT
+              value: {{ .Values.externalMySQL.port | quote }}
+            - name: MYSQL_USER
+              value: {{ .Values.externalMySQL.username | quote }}
+            - name: MYSQL_PWD
+              value: {{ .Values.externalMySQL.password | quote }}
+          volumeMounts:
+            - mountPath: /sql/
+              name: db-init
+          resources:
+{{ toYaml .Values.tca.main.beat.resources | indent 12 }}
+      volumes:
+        - configMap:
+            items:
+              - key: init.sql
+                mode: 420
+                path: init.sql
+            name: {{ template "tca.fullname" . }}-db-init
+          name: db-init
+      restartPolicy: Never
+  backoffLimit: 2
+{{- end }}
