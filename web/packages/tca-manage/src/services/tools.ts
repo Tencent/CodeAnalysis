@@ -54,10 +54,3 @@ export const putToolOpen = (toolId: number | string, params: any) => put(`${MAIN
  * @returns 官方规则包列表 Promise
  */
 export const getPackages = (params: any = null) => get(`${MAIN_SERVER_API}/conf/checkpackages/`, params);
-
-/**
- * 获取分析方案模板列表
- * @param params 筛选参数
- * @returns 分析方案模板列表 Promise
- */
-export const getSchemes = (params: any = null) => get(`${MAIN_SERVER_API}/schemes/`, params);
