@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "tca.fullname" . }}-main
+  labels:
+    k8s-app: {{ template "tca.fullname" . }}-main-server
+    app: {{ template "tca.name" . }}
+    chart: {{ template "tca.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  type: {{ .Values.tca.main.server.service.type }}
+  ports:
+    - name: http
+      port: {{ .Values.tca.main.server.service.ports.http }}
+      protocol: TCP
+      targetPort: http
+      {{- if (and (or (eq .Values.tca.main.server.service.type "NodePort") (eq .Values.tca.main.server.service.type "LoadBalancer")) (not (empty .Values.tca.main.server.service.nodePorts.http))) }}
+      nodePort: {{ .Values.tca.main.server.service.nodePorts.http }}
+      {{- else if eq .Values.tca.main.server.service.type "ClusterIP" }}
+      nodePort: null
+      {{- end }}
+  selector:
+    k8s-app: {{ template "tca.fullname" . }}-main-server
+    release: {{ .Release.Name }}

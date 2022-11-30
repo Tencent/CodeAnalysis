@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: main-env
+data:
+  DAEMON: {{ .Values.tca.commonConfig.daemonFlag | quote}}
+  SERVER_ACCESS_LOG: {{ .Values.tca.commonConfig.accessLogPath | quote }}
+  SERVER_ERROR_LOG: {{ .Values.tca.commonConfig.errorLogPath | quote }}
+  API_TICKET_SALT: {{ .Values.tca.commonConfig.apiTicketSalt }}
+  API_TICKET_TOKEN: {{ .Values.tca.commonConfig.apiTicketToken }}
+  MAIN_SENTRY_DSN: {{ .Values.tca.commonConfig.sentryDsn | quote }}
+  LOCAL_DOMAIN: {{ .Values.tca.commonConfig.publicUrl }}
+  WEB_SERVER_URL: {{ .Values.tca.commonConfig.publicUrl }}
+  PASSWORD_KEY: {{ .Values.tca.commonConfig.passwordKey }}
+  NODE_TICKET_SALT: {{ .Values.tca.commonConfig.nodeTicketSalt }}
+  CODEDOG_TOKEN: {{ .Values.tca.commonConfig.defaultToken }}
+  MAIN_SECRET_KEY: {{ .Values.tca.commonConfig.secretKey }}
+  CELERY_WORKER_NUM: {{ .Values.tca.main.worker.num | quote }}
+  MAIN_SERVER_PORT: {{ .Values.tca.main.server.port | quote }}
+  MAIN_SERVER_PROCESS_NUM: {{ .Values.tca.main.server.processNum | quote }}
+  DJANGO_SETTINGS_MODULE: {{ .Values.tca.main.settings.base.module }}
+  MAIN_DEBUG_MODE: {{ .Values.tca.main.settings.base.debugMode | quote }}
+  HTTPS_CLONE_FLAG: {{ .Values.tca.main.settings.base.httpsCloneFlag | quote }}
+  MAIN_DB_NAME: {{ .Values.tca.main.settings.dbName }}
+  MAIN_REDIS_DBID: {{ .Values.tca.main.settings.redisDBId | quote }}
+  # DB相关配置，优先使用 Values.tca.main.settings.customDB 配置，默认使用 tca.database
+  MAIN_DB_USER: {{ .Values.tca.main.settings.customDB.user | default ( include "tca.database.username" . ) }}
+  MAIN_DB_PASSWORD: {{ .Values.tca.main.settings.customDB.password | default ( include "tca.database.password" . ) }}
+  MAIN_DB_HOST: {{ .Values.tca.main.settings.customDB.host | default ( include "tca.database.host" . ) }}
+  MAIN_DB_PORT: {{ .Values.tca.main.settings.customDB.port | default ( include "tca.database.port" . ) | quote }}
+  # Redis相关配置，优先使用 Values.tca.main.settings.customRedis 配置，默认使用 tca.redis
+  MAIN_REDIS_HOST: {{ .Values.tca.main.settings.customRedis.host | default ( include "tca.redis.host" . ) | quote }}
+  MAIN_REDIS_PORT: {{ .Values.tca.main.settings.customRedis.port | default ( include "tca.redis.port" . ) | quote }}
+  MAIN_REDIS_PASSWD: {{ .Values.tca.main.settings.customRedis.password | default ( include "tca.redis.password" . ) }}
+  # 内部服务通信配置
+  MAIN_SERVER_URL: http://{{ template "tca.fullname" . }}-main
+  ANALYSE_SERVER_URL: http://{{ template "tca.fullname" . }}-analysis
+  LOGIN_SERVER_URL: http://{{ template "tca.fullname" . }}-login
+  FILE_SERVER_URL: http://{{ template "tca.fullname" . }}-gateway/files/
+  SCMPROXY: http://{{ template "tca.fullname" . }}-scmproxy

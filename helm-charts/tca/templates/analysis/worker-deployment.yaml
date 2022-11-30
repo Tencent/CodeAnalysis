@@ -1,0 +1,120 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    k8s-app: {{ template "tca.fullname" . }}-analysis-worker
+    app: {{ template "tca.name" . }}
+    chart: {{ template "tca.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+  name: {{ template "tca.fullname" . }}-analysis-worker
+spec:
+  selector:
+    matchLabels:
+      k8s-app: {{ template "tca.fullname" . }}-analysis-worker
+      release: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        k8s-app: {{ template "tca.fullname" . }}-analysis-worker
+        release: {{.Release.Name}}
+    spec:
+      {{- with .Values.global.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- if .Values.tca.podAntiAffinity.enable }}
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 1
+              podAffinityTerm:
+                topologyKey: "{{ .Values.tca.podAntiAffinity.topologyKey }}"
+                labelSelector:
+                  matchLabels:
+                    k8s-app: {{ template "tca.fullname" . }}-analysis-worker
+                    release: {{ .Release.Name }}
+      {{- end }}
+      containers:
+        - name: {{ template "tca.fullname" . }}-analysis-worker
+          image: "{{ .Values.tca.analysis.image.repository }}:{{ .Values.tca.analysis.image.tag }}"
+          imagePullPolicy: {{ .Values.global.imagePullPolicy }}
+          command: ["celery"]
+          args: ["-A", "codedog", "worker", "--concurrency=$(CELERY_WORKER_NUM)", "-l", "INFO"]
+          envFrom:
+            - configMapRef:
+                name: analysis-env
+          env:
+            - name: _HASH_CONFIG_
+              value: {{ include (print $.Template.BasePath "/analysis/configmap.yaml") . | sha256sum }}
+          lifecycle:
+            preStop:
+              exec:
+                command:
+                  - sleep
+                  - '70'
+          livenessProbe:
+            exec:
+              command:
+                - /bin/sh
+                - '-c'
+                - >-
+                  bash -c "celery -A codedog inspect ping
+                  -d celery@$HOSTNAME"
+            failureThreshold: 5
+            initialDelaySeconds: 30
+            periodSeconds: 60
+            successThreshold: 1
+            timeoutSeconds: 10
+          readinessProbe:
+            exec:
+              command:
+                - /bin/sh
+                - '-c'
+                - >-
+                  bash -c "celery -A codedog inspect ping
+                  -d celery@$HOSTNAME"
+            failureThreshold: 5
+            initialDelaySeconds: 30
+            periodSeconds: 40
+            successThreshold: 1
+            timeoutSeconds: 10
+          resources:
+{{ toYaml .Values.tca.analysis.worker.resources | indent 12 }}
+---
+{{- if .Values.tca.analysis.worker.autoscaling.enabled }}
+apiVersion: autoscaling/v2beta2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: {{ template "tca.fullname" . }}-analysis-worker
+  labels:
+    k8s-app: {{ template "tca.fullname" . }}-analysis-worker
+    app: {{ template "tca.name" . }}
+    chart: {{ template "tca.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: {{ template "tca.fullname" . }}-analysis-worker
+  minReplicas: {{ .Values.tca.analysis.worker.autoscaling.minReplicas }}
+  maxReplicas: {{ .Values.tca.analysis.worker.autoscaling.maxReplicas }}
+  metrics:
+    {{- if .Values.tca.analysis.worker.autoscaling.targetMemory }}
+    - type: Resource
+      resource:
+        name: memory
+        target:
+          type: Utilization
+          averageUtilization: {{ .Values.tca.analysis.worker.autoscaling.targetMemory }}
+    {{- end }}
+    {{- if .Values.tca.analysis.worker.autoscaling.targetCPU }}
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: {{ .Values.tca.analysis.worker.autoscaling.targetCPU }}
+    {{- end }}
+{{- end }}

@@ -1,0 +1,131 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    k8s-app: {{ template "tca.fullname" . }}-file-server
+    app: {{ template "tca.name" . }}
+    chart: {{ template "tca.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+  name: {{ template "tca.fullname" . }}-file-server
+spec:
+  selector:
+    matchLabels:
+      k8s-app: {{ template "tca.fullname" . }}-file-server
+      release: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        k8s-app: {{ template "tca.fullname" . }}-file-server
+        release: {{ .Release.Name }}
+    spec:
+      {{- with .Values.global.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- if .Values.tca.podAntiAffinity.enable }}
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 1
+              podAffinityTerm:
+                topologyKey: "{{ .Values.tca.podAntiAffinity.topologyKey }}"
+                labelSelector:
+                  matchLabels:
+                    k8s-app: {{ template "tca.fullname" . }}-file-server
+                    release: {{ .Release.Name }}
+      {{- end }}
+      containers:
+        - name: {{ template "tca.fullname" . }}-file-server
+          image: "{{ .Values.tca.file.image.repository }}:{{ .Values.tca.file.image.tag }}"
+          imagePullPolicy: {{ .Values.global.imagePullPolicy }}
+          command: ["gunicorn"]
+          args: ["codedog_file_server.wsgi", "-c", "file.gunicorn.conf.py"]
+          envFrom:
+            - configMapRef:
+                name: tca-file-env
+          env:
+            - name: _HASH_ENV_
+              value: {{ include (print $.Template.BasePath "/file/configmap-env.yaml") . | sha256sum }}
+          lifecycle:
+            preStop:
+              exec:
+                command:
+                  - sleep
+                  - '20'
+          resources:
+{{ toYaml .Values.tca.file.resources | indent 12 }}
+          volumeMounts:
+            - mountPath: {{ .Values.tca.file.settings.local.dirPath }}
+              name: tca-file-data
+        - name: {{ template "tca.fullname" . }}-file-nginx
+          image: "{{ .Values.tca.gateway.image.repository }}:{{ .Values.tca.gateway.image.tag }}"
+          imagePullPolicy: {{ .Values.global.imagePullPolicy }}
+          env:
+            - name: _HASH_CONFIG_
+              value: {{ include (print $.Template.BasePath "/file/configmap-nginx.yaml") . | sha256sum }}
+          resources:
+{{ toYaml .Values.tca.file.resources | indent 12 }}
+          volumeMounts:
+            - mountPath: /etc/nginx/nginx.conf
+              subPath: nginx.conf
+              name: file-nginx-conf
+            - mountPath: {{ .Values.tca.file.settings.local.dirPath }}
+              name: tca-file-data
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+      volumes:
+        - name: file-nginx-conf
+          configMap:
+            items:
+              - key: nginx.conf
+                mode: 420
+                path: nginx.conf
+            name: {{ template "tca.fullname" . }}-file-nginx-configmap
+        - name: tca-file-data
+          {{- if .Values.tca.file.settings.local.volumes.nfsServer }}
+          nfs:
+            server: {{ .Values.tca.file.settings.local.volumes.nfsServer }}
+            path: {{ .Values.tca.file.settings.local.volumes.nfsPath }}
+          {{- else }}
+          emptyDir: {}
+          {{- end }}
+---
+{{- if .Values.tca.file.server.autoscaling.enabled }}
+apiVersion: autoscaling/v2beta2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: {{ template "tca.fullname" . }}-file-server
+  labels:
+    k8s-app: {{ template "tca.fullname" . }}-file-server
+    app: {{ template "tca.name" . }}
+    chart: {{ template "tca.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: {{ template "tca.fullname" . }}-file-server
+  minReplicas: {{ .Values.tca.file.server.autoscaling.minReplicas }}
+  maxReplicas: {{ .Values.tca.file.server.autoscaling.maxReplicas }}
+  metrics:
+    {{- if .Values.tca.file.server.autoscaling.targetMemory }}
+    - type: Resource
+      resource:
+        name: memory
+        target:
+          type: Utilization
+          averageUtilization: {{ .Values.tca.file.server.autoscaling.targetMemory }}
+    {{- end }}
+    {{- if .Values.tca.file.server.autoscaling.targetCPU }}
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: {{ .Values.tca.file.server.autoscaling.targetCPU }}
+    {{- end }}
+{{- end }}
