@@ -12,8 +12,8 @@ scm client
 from django.conf import settings
 
 from util.cdcrypto import decrypt
-from util.errorcatch import ErrorCatcher
-from util.scm.base import ScmErrorHandler, ScmPlatformEnum, SCM_PLATFORM_NUM_AS_KEY
+from util.scm.base import SCM_PLATFORM_NUM_AS_KEY, ScmErrorHandler, ScmPlatformEnum
+from util.scm.errorcatch import ErrorCatcher
 from util.scm.git import GitRemoteClient
 from util.scm.svn import SvnRemoteClient
 

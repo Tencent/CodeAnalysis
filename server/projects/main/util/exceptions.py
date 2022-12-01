@@ -61,6 +61,7 @@ class ServerConfigError(ServerError):
     """
     CodeDog Server异常错误类型。遇到配置异常时，需要抛出ServerConfigError，指定msg
     """
+
     def __init__(self, msg, data=None):
         """
         :param msg: 异常数据
@@ -74,6 +75,7 @@ class ServerOperationError(ServerError):
     """
     CodeDog Server异常错误类型。遇到操作异常时，需要抛出ServerOperationError，指定msg
     """
+
     def __init__(self, msg, data=None):
         """
         :param msg: 异常数据
@@ -106,7 +108,7 @@ class BaseServerError(Exception):
         self.code = code or self.code
         self.msg = msg or 'server error'
         self.data = data
-    
+
     def __str__(self):
         return "[%s]%s" % (self.code, self.msg)
 
@@ -184,6 +186,12 @@ class ProjectScanCreateError(BaseServerError):
     pass
 
 
+class ProjectArchiveStartError(BaseServerError):
+    """分析任务启动归档错误
+    """
+    pass
+
+
 class ProjectScanConfigError(BaseServerError):
     """分析任务创建扫描配置错误
     """
@@ -193,6 +201,7 @@ class ProjectScanConfigError(BaseServerError):
 class NodeRegisterError(BaseServerError):
     """节点注册错误
     """
+
     def __init__(self, msg=None, data=None):
         """初始化函数
         """
@@ -203,6 +212,16 @@ class ScmInfoError(BaseServerError):
     """scm info校验error
     """
     pass
+
+
+class UserNoOAuthError(BaseServerError):
+    """未授权error
+    """
+
+    def __init__(self, msg=None, data=None):
+        """初始化函数
+        """
+        super().__init__(errcode.E_USER_CONFIG_NO_OAUTH, msg, data)
 
 
 class DragSortError(BaseServerError):

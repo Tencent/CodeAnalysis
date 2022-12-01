@@ -7,4 +7,3 @@ from .userperm import *
 from .repoperm import *
 from .scanconfperm import *
 from .proxyperm import *
-
