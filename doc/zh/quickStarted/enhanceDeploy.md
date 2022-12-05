@@ -48,6 +48,15 @@ xxx
 
 2. 在 TCA Client目录的 [`config.ini`](https://github.com/Tencent/CodeAnalysis/blob/main/client/config.ini) 中配置 CLS 微服务信息，比如
 
+```ini
+[LICENSE_CONFIG]
+; [可选]使用独立工具时，需要填写，默认不需要
+; License服务的域名和端口
+URL=http://<IP或者域名>:<port>
+BASE_PATH=
+LICENSE=<Client License>
+```
+
 ::: warning
 不同的部署方式可以根据下面方法修改`config.ini`配置
 
@@ -63,16 +72,7 @@ xxx
   - 重启容器方式：`docker-compose restart client`
 :::
 
-```ini
-[LICENSE_CONFIG]
-; [可选]使用独立工具时，需要填写，默认不需要
-; License服务的域名和端口
-URL=http://<IP或者域名>:<port>
-BASE_PATH=
-LICENSE=<Client License>
-```
-
-1. 向 TCA 团队邮件申请 License
+3. 向 TCA 团队邮件申请 License
 
 - 收件邮箱：
 ```
