@@ -97,6 +97,7 @@ class CheckTool(CDBaseModel):
     scm_auth = models.ForeignKey(ScmAuth, on_delete=models.SET_NULL, blank=True, null=True, help_text='工具授权凭证')
     scm_type = models.CharField(max_length=16, choices=SCM_TYPE_CHOICES, default=ScmTypeEnum.GIT, help_text='代码库类型')
     tool_key = models.CharField(max_length=64, null=True, help_text="工具key值，org_'<org_id>'")
+    image_url = models.CharField(max_length=200, null=True, blank=True, help_text="镜像地址")
 
     @property
     def auth_info(self):
