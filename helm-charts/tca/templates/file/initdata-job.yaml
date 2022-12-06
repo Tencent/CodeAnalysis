@@ -1,0 +1,54 @@
+
+apiVersion: batch/v1
+kind: Job
+metadata:
+  labels:
+    k8s-app: {{ template "tca.fullname" . }}-file-init-job
+    app: {{ template "tca.name" . }}
+    chart: {{ template "tca.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+  name: {{ template "tca.fullname" . }}-file-init-job
+  annotations:
+    "helm.sh/hook": post-install
+    "helm.sh/hook-weight": "5"
+spec:
+  ttlSecondsAfterFinished: 100
+  template:
+    metadata:
+      labels:
+        k8s-app: {{ template "tca.fullname" . }}-file-init-job
+        release: {{ .Release.Name }}
+    spec:
+      {{- with .Values.global.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- if .Values.tca.podAntiAffinity.enable }}
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 1
+              podAffinityTerm:
+                topologyKey: "{{ .Values.tca.podAntiAffinity.topologyKey }}"
+                labelSelector:
+                  matchLabels:
+                    k8s-app: {{ template "tca.fullname" . }}-file-init-job
+                    release: {{ .Release.Name }}
+{{- end }}
+      containers:
+        - name: {{ template "tca.fullname" . }}-file-init-job
+          image: "{{ .Values.tca.file.image.repository }}:{{ .Values.tca.file.image.tag }}"
+          imagePullPolicy: {{ .Values.global.imagePullPolicy }}
+          command: ["bash"]
+          args: ["./bin/init.sh"]
+          envFrom:
+            - configMapRef:
+                name: tca-file-env
+          env:
+            - name: _HASH_ENV_
+              value: {{ include (print $.Template.BasePath "/file/configmap-env.yaml") . | sha256sum }}
+          resources:
+{{ toYaml .Values.tca.file.server.resources | indent 12 }}
+      restartPolicy: Never
+  backoffLimit: 2

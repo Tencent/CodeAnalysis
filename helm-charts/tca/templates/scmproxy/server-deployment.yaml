@@ -1,0 +1,98 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    k8s-app: {{ template "tca.fullname" . }}-scmproxy
+    app: {{ template "tca.name" . }}
+    chart: {{ template "tca.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+  name: {{ template "tca.fullname" . }}-scmproxy
+spec:
+  selector:
+    matchLabels:
+      k8s-app: {{ template "tca.fullname" . }}-scmproxy
+      release: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        k8s-app: {{ template "tca.fullname" . }}-scmproxy
+        release: {{ .Release.Name }}
+    spec:
+      {{- with .Values.global.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- if .Values.tca.podAntiAffinity.enable }}
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 1
+              podAffinityTerm:
+                topologyKey: "{{ .Values.tca.podAntiAffinity.topologyKey }}"
+                labelSelector:
+                  matchLabels:
+                    k8s-app: {{ template "tca.fullname" . }}-scmproxy
+                    release: {{ .Release.Name }}
+      {{- end }}
+      containers:
+        - name: {{ template "tca.fullname" . }}-scmproxy
+          image: "{{ .Values.tca.scmproxy.image.repository }}:{{ .Values.tca.scmproxy.image.tag }}"
+          imagePullPolicy: {{ .Values.global.imagePullPolicy }}
+          command: ["python"]
+          args: ["proxyserver.py"]
+          lifecycle:
+            preStop:
+              exec:
+                command:
+                  - sleep
+                  - '20'
+          envFrom:
+            - configMapRef:
+                name: scmproxy-env
+          env:
+            - name: _HASH_CONF_
+              value: {{ include (print $.Template.BasePath "/scmproxy/configmap.yaml") . | sha256sum }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.tca.scmproxy.port }}
+              protocol: TCP
+          resources:
+{{ toYaml .Values.tca.scmproxy.resources | indent 12 }}
+---
+{{- if .Values.tca.scmproxy.autoscaling.enabled }}
+apiVersion: autoscaling/v2beta2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: {{ template "tca.fullname" . }}-scmproxy
+  labels:
+    k8s-app: {{ template "tca.fullname" . }}-scmproxy
+    app: {{ template "tca.name" . }}
+    chart: {{ template "tca.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: {{ template "tca.fullname" . }}-scmproxy
+  minReplicas: {{ .Values.tca.scmproxy.autoscaling.minReplicas }}
+  maxReplicas: {{ .Values.tca.scmproxy.autoscaling.maxReplicas }}
+  metrics:
+    {{- if .Values.tca.scmproxy.autoscaling.targetMemory }}
+    - type: Resource
+      resource:
+        name: memory
+        target:
+          type: Utilization
+          averageUtilization: {{ .Values.tca.scmproxy.autoscaling.targetMemory }}
+    {{- end }}
+    {{- if .Values.tca.scmproxy.autoscaling.targetCPU }}
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: {{ .Values.tca.scmproxy.autoscaling.targetCPU }}
+    {{- end }}
+{{- end }}

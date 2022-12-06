@@ -12,12 +12,12 @@ wrap object for catching all error
 
 class ErrorCatcher(object):
     """Catch an object method"s exception and handle the exception with custom error handler.
-    
+
     The custom error handler is a callable accept an argument ``error``::
-    
+
        def my_error_handler(error):
            if isinstance(error, Exception):
-               #return Exception subclass instance if want to raise 
+               #return Exception subclass instance if want to raise
                #else just return a value to caller
            else:
                #do else thing
@@ -35,7 +35,7 @@ class ErrorCatcher(object):
     def __getattr__(self, name):
         try:
             value = getattr(self._obj, name)
-        except Exception as err:
+        except Exception as err:  # NOCA:broad-except(可能存在多种异常)
             rst = self._err_handler(err)
             if isinstance(rst, Exception):
                 raise rst
@@ -48,7 +48,7 @@ class ErrorCatcher(object):
                 def _callwrap(*args, **kwargs):
                     try:
                         return value(*args, **kwargs)
-                    except Exception as err:
+                    except Exception as err:  # NOCA:broad-except(可能存在多种异常)
                         rst = self._err_handler(err)
                         if isinstance(rst, Exception):
                             raise rst

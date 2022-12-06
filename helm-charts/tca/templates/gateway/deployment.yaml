@@ -1,0 +1,124 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    k8s-app: {{ template "tca.fullname" . }}-gateway
+    app: {{ template "tca.name" . }}
+    chart: {{ template "tca.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+  name: {{ template "tca.fullname" . }}-gateway
+spec:
+  selector:
+    matchLabels:
+      k8s-app: {{ template "tca.fullname" . }}-gateway
+      release: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        k8s-app: {{ template "tca.fullname" . }}-gateway
+        release: {{ .Release.Name }}
+    spec:
+      {{- with .Values.global.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- if .Values.tca.podAntiAffinity.enable }}
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 1
+              podAffinityTerm:
+                topologyKey: "{{ .Values.tca.podAntiAffinity.topologyKey }}"
+                labelSelector:
+                  matchLabels:
+                    k8s-app: {{ template "tca.fullname" . }}-gateway
+                    release: {{ .Release.Name }}
+      {{- end }}
+      containers:
+        - name: {{ template "tca.fullname" . }}-gateway
+          image: "{{ .Values.tca.gateway.image.repository }}:{{ .Values.tca.gateway.image.tag }}"
+          imagePullPolicy: {{ .Values.global.imagePullPolicy }}
+          env:
+            - name: __HASH_CONFIG_
+              value: {{ include (print $.Template.BasePath "/gateway/configmap.yaml") . | sha256sum }}
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          lifecycle:
+            preStop:
+              exec:
+                command:
+                  - sleep
+                  - '20'
+          livenessProbe:
+            failureThreshold: 10
+            httpGet:
+              path: /
+              port: 80
+              scheme: HTTP
+            initialDelaySeconds: 30
+            periodSeconds: 20
+            successThreshold: 1
+            timeoutSeconds: 2
+          readinessProbe:
+            failureThreshold: 5
+            httpGet:
+              path: /
+              port: 80
+              scheme: HTTP
+            initialDelaySeconds: 30
+            periodSeconds: 5
+            successThreshold: 1
+            timeoutSeconds: 2
+          resources:
+{{ toYaml .Values.tca.gateway.resources | indent 12 }}
+          volumeMounts:
+            - mountPath: /etc/nginx/conf.d/
+              name: local-conf
+      volumes:
+        - configMap:
+            items:
+              - key: tca_backend.conf
+                mode: 420
+                path: tca_backend.conf
+            name: {{ template "tca.fullname" . }}-nginx-configmap
+          name: local-conf
+---
+{{- if .Values.tca.gateway.autoscaling.enabled }}
+apiVersion: autoscaling/v2beta2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: {{ template "tca.fullname" . }}-gateway
+  labels:
+    k8s-app: {{ template "tca.fullname" . }}-gateway
+    app: {{ template "tca.name" . }}
+    chart: {{ template "tca.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: {{ template "tca.fullname" . }}-gateway
+  minReplicas: {{ .Values.tca.gateway.autoscaling.minReplicas }}
+  maxReplicas: {{ .Values.tca.gateway.autoscaling.maxReplicas }}
+  metrics:
+    {{- if .Values.tca.gateway.autoscaling.targetMemory }}
+    - type: Resource
+      resource:
+        name: memory
+        target:
+          type: Utilization
+          averageUtilization: {{ .Values.tca.gateway.autoscaling.targetMemory }}
+    {{- end }}
+    {{- if .Values.tca.gateway.autoscaling.targetCPU }}
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: {{ .Values.tca.gateway.autoscaling.targetCPU }}
+    {{- end }}
+{{- end }}

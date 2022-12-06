@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: tca-file-env
+data:
+  DAEMON: {{ .Values.tca.commonConfig.daemonFlag | quote}}
+  SERVER_ACCESS_LOG: {{ .Values.tca.commonConfig.accessLogPath | quote }}
+  SERVER_ERROR_LOG: {{ .Values.tca.commonConfig.errorLogPath | quote }}
+  API_TICKET_SALT: {{ .Values.tca.commonConfig.apiTicketSalt }}
+  API_TICKET_TOKEN: {{ .Values.tca.commonConfig.apiTicketToken }}
+  FILE_SITE_URL: {{ .Values.tca.commonConfig.publicUrl }}
+  FILE_SENTRY_DSN: {{ .Values.tca.commonConfig.sentryDsn | quote }}
+  FILE_SERVER_PROCESS_NUM: {{ .Values.tca.file.server.processNum | quote }}
+  FILE_SERVER_PORT: {{ .Values.tca.file.server.port | quote }}
+  DJANGO_SETTINGS_MODULE: {{ .Values.tca.file.settings.base.module }}
+  FILE_DEBUG_MODE: {{ .Values.tca.file.settings.base.debugMode | quote }}
+  FILE_SECRET_KEY: {{ .Values.tca.commonConfig.secretKey }}
+  FILE_STORAGE_CLIENT: {{ .Values.tca.file.settings.storageClient }}
+  FILE_STORAGE_DIR: {{ .Values.tca.file.settings.local.dirPath }}
+  FILE_TENCENT_COS_ENABLED: {{ .Values.tca.file.settings.tencentcos.enabled | quote }}
+  TENCENT_COS_APPID: {{ .Values.tca.file.settings.tencentcos.appId | quote }}
+  TENCENT_COS_SECRETID: {{ .Values.tca.file.settings.tencentcos.secretId | quote }}
+  TENCENT_COS_SECRETKEY: {{ .Values.tca.file.settings.tencentcos.secretKey | quote }}
+  TENCENT_COS_REGION: {{ .Values.tca.file.settings.tencentcos.region | quote }}
+  TENCENT_COS_ROOT_BUCKET: {{ .Values.tca.file.settings.tencentcos.rootBucket | quote }}
+  FILE_MINIO_ENABLED: {{ .Values.tca.file.settings.minio.enabled | quote }}
+  FILE_MINIO_ENTRYPOINT: {{ .Values.tca.file.settings.minio.entrypoint | quote }}
+  FILE_MINIO_ACCESS_KEY: {{ .Values.tca.file.settings.minio.accessKey | quote }}
+  FILE_MINIO_SECRET_KEY: {{ .Values.tca.file.settings.minio.secretKey | quote }}
+  FILE_DB_NAME: {{ .Values.tca.file.settings.dbName | quote }}
+  # DB相关配置，优先使用 Values.tca.file.settings.customDB 配置，默认使用 tca.database
+  FILE_DB_USER: {{ .Values.tca.file.settings.customDB.user | default ( include "tca.database.username" . ) }}
+  FILE_DB_PASSWORD: {{ .Values.tca.file.settings.customDB.password | default ( include "tca.database.password" . ) }}
+  FILE_DB_HOST: {{ .Values.tca.file.settings.customDB.host | default ( include "tca.database.host" . ) }}
+  FILE_DB_PORT: {{ .Values.tca.file.settings.customDB.port | default ( include "tca.database.port" . ) | quote }}  
+  # 内部服务通信配置
+  MAIN_SERVER_URL: http://{{ template "tca.fullname" . }}-main
+  FILE_SERVER_URL: http://{{ template "tca.fullname" . }}-gateway/files/

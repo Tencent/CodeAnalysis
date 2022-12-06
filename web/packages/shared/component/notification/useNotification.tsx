@@ -39,52 +39,56 @@ export interface NotificationProps {
   /** 是否开启过期操作 */
   useExpireOper?: boolean;
   /** 通知其他参数 */
-  notifyArgs: Omit<ArgsProps, 'key'>
+  notifyArgs: Omit<ArgsProps, 'key'>;
+  /** 是否展示，默认展示 */
+  show?: boolean;
 }
 
 /** 通知hooks */
-const useNotification = ({ key, type, useExpireOper = false, notifyArgs }: NotificationProps) => {
+const useNotification = ({ key, type, show = true, useExpireOper = false, notifyArgs }: NotificationProps) => {
   const { btn, ...rest } = notifyArgs;
 
   useEffect(() => {
-    if (useExpireOper) {
-      const notifyStorageData = getNotificationDataByLocalStorage(key);
-      if (notifyStorageData?.neverRemind
-        || (notifyStorageData?.expireTimestamp && Moment().valueOf() < notifyStorageData.expireTimestamp)
-      ) {
-        return;
+    if (show) {
+      if (useExpireOper) {
+        const notifyStorageData = getNotificationDataByLocalStorage(key);
+        if (notifyStorageData?.neverRemind
+          || (notifyStorageData?.expireTimestamp && Moment().valueOf() < notifyStorageData.expireTimestamp)
+        ) {
+          return;
+        }
       }
-    }
 
-    notification[type]({
-      duration: null,
-      btn: useExpireOper ? <Space>
-        <Button type="primary" size="small" onClick={() => {
-          // 明日凌点时间戳
-          const timestamp = Moment().startOf('day')
-            .add(1, 'day')
-            .valueOf();
-          const notifyStorageData: NotifyStorageData = {
-            neverRemind: false,
-            expireTimestamp: timestamp,
-          };
-          setNotificationDataToLocalStorage(key, notifyStorageData);
-          notification.close(key);
-        }}>
-          今日不再提醒
-        </Button>
-        <Button type="secondary" size="small" onClick={() => {
-          const notifyStorageData: NotifyStorageData = { neverRemind: true };
-          setNotificationDataToLocalStorage(key, notifyStorageData);
-          notification.close(key);
-        }}>
-          不再提醒
-        </Button>
-      </Space> : btn,
-      ...rest,
-      key,
-    });
-  }, []);
+      notification[type]({
+        duration: null,
+        btn: useExpireOper ? <Space>
+          <Button type="primary" size="small" onClick={() => {
+            // 明日凌点时间戳
+            const timestamp = Moment().startOf('day')
+              .add(1, 'day')
+              .valueOf();
+            const notifyStorageData: NotifyStorageData = {
+              neverRemind: false,
+              expireTimestamp: timestamp,
+            };
+            setNotificationDataToLocalStorage(key, notifyStorageData);
+            notification.close(key);
+          }}>
+            今日不再提醒
+          </Button>
+          <Button type="secondary" size="small" onClick={() => {
+            const notifyStorageData: NotifyStorageData = { neverRemind: true };
+            setNotificationDataToLocalStorage(key, notifyStorageData);
+            notification.close(key);
+          }}>
+            不再提醒
+          </Button>
+        </Space> : btn,
+        ...rest,
+        key,
+      });
+    }
+  }, [show]);
 };
 
 export default useNotification;

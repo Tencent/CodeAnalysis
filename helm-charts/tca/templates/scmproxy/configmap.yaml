@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: scmproxy-env
+data:
+  SCMPROXY_PORT: {{ .Values.tca.scmproxy.port | quote }}
+  SCMPROXY_SENTRY_URL: {{ .Values.tca.commonConfig.sentryDsn | quote }}

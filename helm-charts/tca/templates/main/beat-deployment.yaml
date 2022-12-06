@@ -1,0 +1,84 @@
+{{- if .Values.tca.main.beat.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    k8s-app: {{ template "tca.fullname" . }}-main-beat
+    app: {{ template "tca.name" . }}
+    chart: {{ template "tca.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+  name: {{ template "tca.fullname" . }}-main-beat
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      k8s-app: {{ template "tca.fullname" . }}-main-beat
+      release: {{ .Release.Name }}
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        k8s-app: {{ template "tca.fullname" . }}-main-beat
+        release: {{.Release.Name}}
+    spec:
+      {{- with .Values.global.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+{{- if .Values.tca.podAntiAffinity.enable }}
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 1
+              podAffinityTerm:
+                topologyKey: "{{ .Values.tca.podAntiAffinity.topologyKey }}"
+                labelSelector:
+                  matchLabels:
+                    k8s-app: {{ template "tca.fullname" . }}-main-beat
+                    release: {{ .Release.Name }}
+{{- end }}
+      containers:
+        - name: {{ template "tca.fullname" . }}-main-beat
+          image: "{{ .Values.tca.main.image.repository }}:{{ .Values.tca.main.image.tag }}"
+          imagePullPolicy: {{ .Values.global.imagePullPolicy }}
+          command: ["celery"]
+          args: ["-A", "codedog", "beat", "-S", "redbeat.RedBeatScheduler", "-l", "INFO"]
+          env:
+            - name: _HASH_CONFIG_
+              value: {{ include (print $.Template.BasePath "/main/configmap.yaml") . | sha256sum }}
+          envFrom:
+            - configMapRef:
+                name: main-env
+          lifecycle:
+            preStop:
+              exec:
+                command:
+                  - sleep
+                  - '70'
+          resources:
+{{ toYaml .Values.tca.main.beat.resources | indent 12 }}
+---
+{{- if and (.Values.tca.main.beat.autoscaling) (.Values.tca.main.beat.resources) }}
+apiVersion: autoscaling/v2beta2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: {{ template "tca.fullname" . }}-main-beat
+  labels:
+    k8s-app: {{ template "tca.fullname" . }}-main-beat
+    app: {{ template "tca.name" . }}
+    chart: {{ template "tca.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: {{ template "tca.fullname" . }}-main-beat
+  minReplicas: {{ .Values.tca.main.beat.autoscaling.minReplicas }}
+  maxReplicas: {{ .Values.tca.main.beat.autoscaling.maxReplicas }}
+  metrics:
+{{ toYaml .Values.tca.main.beat.autoscaling.metrics | indent 4 }}
+{{- end }}
+{{- end }}

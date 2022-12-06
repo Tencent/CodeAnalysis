@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "tca.fullname" . }}-scmproxy
+  labels:
+    k8s-app: {{ template "tca.fullname" . }}-scmproxy
+    app: {{ template "tca.name" . }}
+    chart: {{ template "tca.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  type: {{ .Values.tca.scmproxy.service.type }}
+  ports:
+    - name: http
+      port: {{ .Values.tca.scmproxy.service.ports.http }}
+      protocol: TCP
+      targetPort: http
+      {{- if (and (or (eq .Values.tca.scmproxy.service.type "NodePort") (eq .Values.tca.scmproxy.service.type "LoadBalancer")) (not (empty .Values.tca.scmproxy.service.nodePorts.http))) }}
+      nodePort: {{ .Values.tca.scmproxy.service.nodePorts.http }}
+      {{- else if eq .Values.tca.scmproxy.service.type "ClusterIP" }}
+      nodePort: null
+      {{- end }}
+  selector:
+    k8s-app: {{ template "tca.fullname" . }}-scmproxy
+    release: {{ .Release.Name }}

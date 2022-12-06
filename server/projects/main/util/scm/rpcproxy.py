@@ -15,6 +15,7 @@ from xmlrpc.client import Transport, ServerProxy
 class CustomTransport(Transport):
     """自定义传输
     """
+
     def __init__(self, timeout, headers=None):
         Transport.__init__(self)
         self._timeout = timeout or 20
@@ -43,6 +44,7 @@ class CustomTransport(Transport):
 class CustomServerProxy(ServerProxy):
     """自定义服务代理
     """
+
     def __init__(self, uri, transport=None, encoding=None,
                  verbose=0, timeout=None, headers=None):
         if transport is None:

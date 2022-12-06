@@ -18,6 +18,6 @@ const fetchManager = new FetchManager({
   },
 });
 
-export const { get, post, put, patch, del } = fetchManager;
+export const { get, post, put, patch, del, postFile } = fetchManager;
 
 export const fetchAPIManager = (url: string) => FetchAPIManager.getInstance(url, fetchManager);

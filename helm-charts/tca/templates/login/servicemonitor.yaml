@@ -1,0 +1,16 @@
+{{- if .Values.tca.login.enabled }}
+{{- if .Values.metrics.enable }}
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ template "tca.fullname" . }}-login-server
+spec:
+  selector:
+    matchLabels:
+      k8s-app: {{ template "tca.fullname" . }}-login-server
+  endpoints:
+    - port: http
+      path: /prometheus/metrics
+      interval: 30s
+{{- end }}
+{{- end }}

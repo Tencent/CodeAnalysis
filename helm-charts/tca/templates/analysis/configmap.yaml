@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: analysis-env
+data:
+  DAEMON: {{ .Values.tca.commonConfig.daemonFlag | quote}}
+  SERVER_ACCESS_LOG: {{ .Values.tca.commonConfig.accessLogPath | quote }}
+  SERVER_ERROR_LOG: {{ .Values.tca.commonConfig.errorLogPath | quote }}
+  API_TICKET_SALT: {{ .Values.tca.commonConfig.apiTicketSalt }}
+  API_TICKET_TOKEN: {{ .Values.tca.commonConfig.apiTicketToken }}
+  LOCAL_DOMAIN: {{ .Values.tca.commonConfig.publicUrl }}
+  ANALYSIS_SENTRY_DSN: {{ .Values.tca.commonConfig.sentryDsn | quote }}
+  ANALYSIS_SECRET_KEY: {{ .Values.tca.commonConfig.secretKey }}
+  CELERY_WORKER_NUM: {{ .Values.tca.analysis.worker.num | quote }}
+  ANALYSIS_SERVER_PORT: {{ .Values.tca.analysis.server.port | quote }}
+  ANALYSIS_SERVER_PROCESS_NUM: {{ .Values.tca.analysis.server.processNum | quote }}
+  DJANGO_SETTINGS_MODULE: {{ .Values.tca.analysis.settings.base.module }}
+  ANALYSIS_DEBUG_MODE: {{ .Values.tca.analysis.settings.base.debugMode | quote }}
+  ANALYSIS_DB_NAME: {{ .Values.tca.analysis.settings.dbName }}
+  ANALYSIS_REDIS_DBID: {{ .Values.tca.analysis.settings.redisDBId | quote }}
+  # DB相关配置，优先使用 Values.tca.analysis.settings.customDB 配置，默认使用 tca.database
+  ANALYSIS_DB_USER: {{ .Values.tca.analysis.settings.customDB.user | default ( include "tca.database.username" . ) }}
+  ANALYSIS_DB_PASSWORD: {{ .Values.tca.analysis.settings.customDB.password | default ( include "tca.database.password" . ) }}
+  ANALYSIS_DB_HOST: {{ .Values.tca.analysis.settings.customDB.host | default ( include "tca.database.host" . ) }}
+  ANALYSIS_DB_PORT: {{ .Values.tca.analysis.settings.customDB.port | default ( include "tca.database.port" . ) | quote }}
+  # Redis相关配置，优先使用 Values.tca.analysis.settings.customRedis 配置，默认使用 tca.redis
+  ANALYSIS_REDIS_HOST: {{ .Values.tca.analysis.settings.customRedis.host | default ( include "tca.redis.host" . ) | quote }}
+  ANALYSIS_REDIS_PORT: {{ .Values.tca.analysis.settings.customRedis.port | default ( include "tca.redis.port" . ) | quote }}
+  ANALYSIS_REDIS_PASSWD: {{ .Values.tca.analysis.settings.customRedis.password | default ( include "tca.redis.password" . ) }}
+  # 内部服务通信配置
+  MAIN_SERVER_URL: http://{{ template "tca.fullname" . }}-main
+  FILE_SERVER_URL: http://{{ template "tca.fullname" . }}-gateway/files/

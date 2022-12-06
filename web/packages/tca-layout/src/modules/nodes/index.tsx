@@ -8,8 +8,10 @@ import { Tabs } from 'coding-oa-uikit';
 import { getTags } from '@src/services/nodes';
 
 // 模块内
-import NodeTable from './node-table';
-import TagTable from './tag-table';
+// import NodeTable from './node-table';
+// import TagTable from './tag-table';
+import NodeTable from '@plat/modules/nodes/node-table';
+import TagTable from '@plat/modules/nodes/tag-table';
 
 const { TabPane } = Tabs;
 

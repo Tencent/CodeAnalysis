@@ -23,7 +23,7 @@ from rest_framework import serializers
 
 # 项目内 import
 from apps.codeproj.models import CodeLintInfo, CodeMetricCCInfo, CodeMetricClocInfo, \
-    CodeMetricDupInfo, Project, Repository
+    CodeMetricDupInfo, Organization, Project, ProjectTeam, Repository
 from apps.job import models
 from apps.nodemgr.models import Node, NodeToolProcessRelation
 from util import errcode
@@ -49,6 +49,27 @@ class JobDispatchHandler(object):
             return False
 
     @classmethod
+    def get_enable_nodes(cls, job, tag):
+        """获取可执行的节点列表
+        """
+        project = job.project
+        repo = project.repo
+        team = repo.project_team
+        org = repo.organization
+
+        superusers = User.objects.filter(is_superuser=True)
+        users = [user for user in repo.get_members(Repository.PermissionEnum.ADMIN)] + \
+                [user for user in repo.get_members(Repository.PermissionEnum.USER)] + \
+                [user for user in superusers]
+        if team:
+            users += [user for user in team.get_members(ProjectTeam.PermissionEnum.ADMIN)]
+        if org:
+            users += [user for user in org.get_members(Organization.PermissionEnum.ADMIN)]
+        users = set(users)
+        nodes = Node.objects.filter(manager__in=users, exec_tags=tag).exclude(enabled=Node.EnabledEnum.DISABLED)
+        return nodes
+
+    @classmethod
     def add_job_to_queue(cls, job):
         """根据分配规则，将job下相关的task和task_process分配到相应的node节点去：
            标签对应：任务的标签继承自项目标签，标签需要一一对应
@@ -62,21 +83,13 @@ class JobDispatchHandler(object):
         if cls.check_job_tag_disabled(tag):
             message = "当前项目配置的运行环境标签[%s]已停用，请在扫描方案中调整\"运行环境标签\"后重新启动。" % tag.name
             logger.warning(message)
-            JobCloseHandler.revoke_job(job, errcode.E_CLIENT_CONFIG_ERROR, message)
+            JobCloseHandler.revoke_job(job, errcode.E_USER_CONFIG_NODE_ERROR, message)
             return
-        
+
         logger.info("[Job: %s] start to add job to queue..." % job)
-        project = job.project
-        repo = project.repo
-
-        superusers = User.objects.filter(is_superuser=True)
-        users = set([user for user in repo.get_members(Repository.PermissionEnum.ADMIN)] +
-                    [user for user in repo.get_members(Repository.PermissionEnum.USER)] +
-                    [user for user in superusers])
-
         # 1. Node管理员需要对Project有访问权限
         # 2. 标签对应
-        nodes = Node.objects.filter(manager__in=users, exec_tags=tag)
+        nodes = cls.get_enable_nodes(job, tag)
         if not nodes:
             logger.warning("找不到符合运行环境标签[%s]且有权限的节点分配" % tag.name if tag else "None")
         queue_set = []
@@ -114,7 +127,7 @@ class JobDispatchHandler(object):
             message = "当前项目配置的运行环境标签[%s]没有机器资源可以运行工具[%s]，请在扫描方案中调整\"运行环境\"的标签后重新启动。" % (
                 tag.name, none_node_task_str)
             logger.warning(message)
-            JobCloseHandler.revoke_job(job, errcode.E_CLIENT_CONFIG_ERROR, message)
+            JobCloseHandler.revoke_job(job, errcode.E_USER_CONFIG_NODE_ERROR, message)
 
 
 class JobCloseHandler(object):
@@ -163,7 +176,7 @@ class JobCloseHandler(object):
             logger.exception("[Job: %s] 更新扫描任务状态失败: %s" % (job_id, err))
             return
         models.Job.objects.filter(id=job_id).update(
-            state=models.Job.StateEnum.RUNNING, result_code=None)
+            state=models.Job.StateEnum.CLOSING, result_code=None, closing_time=timezone.now())
         cls.close_scan(job_id, reset=True)
 
     @classmethod
@@ -201,10 +214,10 @@ class JobCloseHandler(object):
                           cls.CodeMetricDupResultInfoSerializer),
                          ("code_metric_cloc_info", CodeMetricClocInfo,
                           cls.CodeMetricClocResultInfoSerializer), ]
-            for key, model, serializer in info_list:
+            for key, model_cls, serializer in info_list:
                 info_data = result_data.get(key) if result_data else None
                 if info_data:
-                    instance, _ = model.objects.get_or_create(project=project)
+                    instance, _ = model_cls.objects.get_or_create(project=project)
                     slz = serializer(instance=instance, data=info_data)
                     if slz.is_valid():
                         slz.save()
@@ -230,7 +243,7 @@ class JobCloseHandler(object):
         ).update(state=models.Job.StateEnum.CLOSING)
         if nrows == 0:
             return
-
+        logger.info("[Job: %s] revoke job, result: [%s]%s" % (job.id, result_code, result_msg))
         job = models.Job.objects.get(id=job_id)
         revoke_time = now()
         for task in job.task_set.exclude(state=models.Task.StateEnum.CLOSED):
@@ -248,6 +261,7 @@ class JobCloseHandler(object):
             if nrow == 1:  # race condition
                 # put this task to killingtask table
                 if task.node:
+                    logger.info("[Task: %s][Node: %s] revoke job, update node to free state" % (task.id, task.node))
                     node_id = task.node.id  # codepuppy 未上线_kill_task可能会导致继续给节点派发任务
                     Node.objects.filter(id=node_id).update(state=Node.StateEnum.FREE)
                     models.KillingTask.objects.create(node=task.node, task=task)
@@ -359,14 +373,17 @@ class JobCloseHandler(object):
         logger.info("[Job: %d] checking older job unclosed..." % job_id)
         try:
             older_jobs = models.Job.objects.filter(
-                project=job.project, id__lt=job.id).exclude(state=models.Job.StateEnum.CLOSED)
+                project=job.project, id__lt=job.id
+            ).exclude(
+                state=models.Job.StateEnum.CLOSED
+            )
             if older_jobs:
-                logger.info("[Job: %d] canceling %d older scan jobs..." %
-                            (job_id, older_jobs.count()))
+                logger.info("[Job: %d] canceling %d older scan jobs..." % (job_id, older_jobs.count()))
                 try:
                     for j in older_jobs:
-                        logger.info(
-                            "[Job: %d] canceling older job[%d]..." % (job_id, j.id))
+                        if not j.check_redirect():
+                            continue
+                        logger.info("[Job: %d] canceling older job[%d]..." % (job_id, j.id))
                         result_msg = json.dumps(
                             {"job_id": job.id, "scan_id": scan_id, "msg": "plz check the other job's result"})
                         JobCloseHandler.revoke_job(j, errcode.CLIENT_REDIRECT, result_msg)
@@ -436,12 +453,21 @@ class JobCloseHandler(object):
             logger.info("[Task: %s] 进程[%s]关闭数量: %s" % (task_id, processes, nrow))
             if nrow == 0:
                 return
+
             tp_relations = models.TaskProcessRelation.objects.filter(task_id=task_id)
-            if tp_relations.filter(state=models.TaskProcessRelation.StateEnum.RUNNING):
+            running_processes = tp_relations.filter(state=models.TaskProcessRelation.StateEnum.RUNNING)
+            waiting_processes = tp_relations.exclude(state=models.TaskProcessRelation.StateEnum.CLOSED)
+            if running_processes.count() > 0 and nrow != tp_relations.count():
+                logger.info("[Task: %s] 当前还有%s个进程正在运行: %s" % (
+                    task_id, running_processes.count(), running_processes.values_list("process__name", flat=True)))
                 task_state = models.Task.StateEnum.RUNNING
-            elif tp_relations.exclude(state=models.TaskProcessRelation.StateEnum.CLOSED):
+            elif waiting_processes.count() > 0 and nrow != tp_relations.count():
+                logger.info("[Task: %s] 当前还有%s个进程处于等待状态: %s" % (
+                    task_id, waiting_processes.count(), waiting_processes.values_list("process__name", flat=True)))
                 task_state = models.Task.StateEnum.WAITING
             else:
+                logger.info("[Task: %s] 当前%s个进程全部关闭: %s" % (
+                    task_id, tp_relations.count(), tp_relations.values_list("process__name", flat=True)))
                 task_state = models.Task.StateEnum.CLOSED
             nrow = models.Task.objects.filter(
                 id=task_id,
@@ -471,9 +497,6 @@ class JobCloseHandler(object):
                         node=task.node
                     )
                     logger.info("[Job: %s][Task: %s] 关闭Task: %s" % (job_id, task_id, nrow))
-                if task.node:  # 私有进程执行，可能不会记录node节点
-                    Node.objects.filter(id=task.node.id, state=Node.StateEnum.BUSY).update(
-                        state=Node.StateEnum.FREE)
 
         else:
             # 不存在processes，使用旧逻辑
@@ -497,6 +520,24 @@ class JobCloseHandler(object):
                         executor_used_num=F('executor_used_num') - 1)
                     Node.objects.filter(id=task.node.id, state=Node.StateEnum.BUSY).update(
                         state=Node.StateEnum.FREE)
+
+    @classmethod
+    def check_closing_job(cls, job):
+        """检查正在入库的任务
+        """
+        if not models.Job.objects.filter(id=job.id, state=models.Job.StateEnum.CLOSING).exists():
+            return True
+        try:
+            response = AnalyseClient().api("scan_check", path_params=(job.project_id, job.scan_id,), data=None)
+        except Exception as err:
+            logger.exception("[Project: %s][Job: %s] scan check error, err: %s" % (job.project_id, job.id, err))
+            return True
+        if response.get("result") is True:
+            return True
+        logger.warning("[Project: %s][Job: %s] job closing check failed, reset job closing..." % (
+            job.project_id, job.id))
+        cls.reclose_job(job.id)
+        return False
 
 
 class NodeTaskRegisterManager(object):
@@ -527,7 +568,7 @@ class NodeTaskRegisterManager(object):
         """
         task = models.Task.objects.get(id=task_id)
         node = Node.objects.get(id=node_id)
-        logger.info("[Task: %s] start running with node:%s" % (task_id, node.name))
+        logger.info("[Task: %s] start running with node:%s(%s)" % (task_id, node.name, node.state))
         current_time = now()
         # 将task的process置为运行中的状态
         models.TaskProcessRelation.objects.filter(
@@ -546,8 +587,7 @@ class NodeTaskRegisterManager(object):
         if task.job.state in [models.Job.StateEnum.WAITING, models.Job.StateEnum.INITED]:
             nrows = models.Job.objects.filter(id=task.job.id, state__in=[
                 models.Job.StateEnum.WAITING, models.Job.StateEnum.INITED
-            ]).update(
-                state=models.Job.StateEnum.RUNNING)
+            ]).update(state=models.Job.StateEnum.RUNNING)
             if nrows > 0:
                 models.Job.objects.filter(id=task.job_id, start_time__isnull=True).update(
                     start_time=current_time
@@ -557,7 +597,7 @@ class NodeTaskRegisterManager(object):
     def release_node(cls, node_id):
         """更新节点状态，调整为空闲状态
         """
-        models.Node.objects.select_related().filter(id=node_id, state=models.Node.StateEnum.BUSY).update(
+        models.Node.objects.filter(id=node_id, state=models.Node.StateEnum.BUSY).update(
             state=models.Node.StateEnum.FREE)
 
     @classmethod
@@ -568,22 +608,22 @@ class NodeTaskRegisterManager(object):
         models.TaskProcessNodeQueue.objects.filter(task__job=job, task__state=models.Task.StateEnum.CLOSED).delete()
 
     @classmethod
-    def set_node_busy_state(cls, node_id, **kwargs):
+    def set_node_busy_state(cls, node, **kwargs):
         """设置节点为忙碌状态
         """
         # 查询并占用节点，如果节点忙碌，则返回空
         if kwargs.get("free") is True:
-            logger.info("[NodeID: %s] update node free state" % node_id)
-            models.Node.objects.filter(id=node_id).update(state=models.Node.StateEnum.FREE)
+            logger.info("[Node: %s] update node free state" % node)
+            models.Node.objects.filter(id=node.id).update(state=models.Node.StateEnum.FREE)
 
-        node = models.Node.objects.select_related().filter(id=node_id, state=models.Node.StateEnum.FREE).first()
-        logger.debug("[NodeID: %s] filter free node: %s" % (node_id, node))
-        if not node:
+        free_node = models.Node.everything.filter(id=node.id, state=models.Node.StateEnum.FREE).first()
+        logger.debug("[Node: %s] filter free node %s" % (node, node.id))
+        if not free_node:
             return False
         nrows = models.Node.everything.filter(
-            id=node.id, state=models.Node.StateEnum.FREE
+            id=free_node.id, state=models.Node.StateEnum.FREE
         ).update(state=models.Node.StateEnum.BUSY)
-        logger.info("[NodeID: %s] update free node:%s busy state" % (node_id, node))
+        logger.info("[Node: %s] update free node %s to busy state" % (free_node, free_node.id))
         if nrows == 1:  # Node已有任务在执行，并未put result
             return True
         else:
@@ -759,8 +799,8 @@ class NodeTaskRegisterManager(object):
         if task:
             if occupy:  # 将任务相关状态更新为运行中
                 cls.update_task_process_state_with_running(task, processes, node)
-            logger.debug("[Task: %s] task with processes(%s) got by node[%d]" % (
-                task.id, ",".join([process.name for process in processes]), node.id))
+            logger.debug("[Task: %s] task with processes(%s) got by node[%s]" % (
+                task.id, ",".join([process.name for process in processes]), node))
         else:
             if occupy:
                 # 取不到任务则重新释放节点

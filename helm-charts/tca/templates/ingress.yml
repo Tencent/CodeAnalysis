@@ -1,0 +1,23 @@
+{{- if .Values.ingress.enabled }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ template "tca.fullname" . }}-ingress
+  labels:
+    k8s-app: {{ template "tca.fullname" . }}-ingress
+    app: {{ template "tca.name" . }}
+    chart: {{ template "tca.chart" . }}
+    release: {{ .Release.Name }}
+spec:
+  rules:
+    - host: {{ .Values.tca.commonConfig.publicUrl }}
+      http:
+        paths:
+          - backend:
+              service:
+                name: {{ template "tca.fullname" . }}-web
+                port:
+                  number: 80
+            path: /
+            pathType: Prefix
+{{- end }}
