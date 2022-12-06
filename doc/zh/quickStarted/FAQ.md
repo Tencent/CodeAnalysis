@@ -293,6 +293,13 @@ TCA 本地部署启动后，会监听多个端口：
 5. scmproxy所在的机器git版本较低，出现``unknown option `local` ``错误
     - 可以升级机器上的git版本，目前工具支持最低的git版本为``1.8.3.1``
 
+#### 3.3.2 代码库登记成功后，开启第一次代码分析时，出现代码库及账号不匹配
+
+该错误出现可能有以下几个原因：
+
+1. 代码仓库地址不支持https访问，但分析时请求的https访问
+    - 修改 ``.docker_temp/configs/config.sh``, 将HTTPS_CLONE_FLAG调整为false, 然后重启容器``docker restart tca-services``
+
 #### 3.4 查看问题文件提示**获取代码信息耗时较久，请稍后再试**
 
 出现该提示的原因是，代码库偏大或``clone``代码库时间较长，可以稍等一会再刷新重试
