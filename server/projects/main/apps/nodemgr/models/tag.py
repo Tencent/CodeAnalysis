@@ -12,6 +12,7 @@ from django.db import models
 
 from apps.authen.models import Organization
 from apps.base.basemodel import CDBaseModel
+from apps.scan_conf.models import CheckTool, Process
 
 
 class ExecTag(CDBaseModel):
@@ -49,3 +50,12 @@ class ExecTag(CDBaseModel):
             return Organization.objects.filter(org_sid=self.org_sid).first()
         else:
             return None
+
+
+class TagToolProcessRelation(models.Model):
+    """
+    标签工具进程关联表
+    """
+    tag = models.ForeignKey(ExecTag, verbose_name="标签", on_delete=models.CASCADE)
+    checktool = models.ForeignKey(CheckTool, verbose_name="工具", on_delete=models.CASCADE)
+    process = models.ForeignKey(Process, verbose_name="进程", on_delete=models.CASCADE)
