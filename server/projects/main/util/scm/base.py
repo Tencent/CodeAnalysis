@@ -8,10 +8,9 @@
 """
 源码库的操作功能
 """
-import re
 import logging
+import re
 from urllib.parse import urlparse
-
 
 logger = logging.getLogger(__name__)
 
@@ -37,7 +36,6 @@ SCM_PLATFORM_CHOICES = (
     (ScmPlatformEnum.GITLAB, "gitlab"),
     (ScmPlatformEnum.OTHER, "other"),
 )
-
 
 SCM_PLATFORM_NUM_AS_KEY = dict(SCM_PLATFORM_CHOICES)
 SCM_PLATFORM_NAME_AS_KEY = dict((v, k) for k, v in SCM_PLATFORM_NUM_AS_KEY.items())

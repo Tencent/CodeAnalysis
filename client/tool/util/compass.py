@@ -25,7 +25,11 @@ class Compass(object):
         self.tool_name = self.__class__.__name__
         self.params = params
 
-    def scan(self, source_dir=None, task_request=None, args=[]) -> str:
+    def scan(self, source_dir=None, task_request=None, args=None) -> str:
+        # 2022/11/25 参数不能使用可变类型变量作为默认值，比如[] {}等，每次调用都会指向同一个指针
+        if args is None:
+            args = []
+
         source_dir = source_dir if source_dir else self.params["source_dir"]
         task_dir = os.path.dirname(os.getcwd())
         os.environ["SOURCE_DIR"] = source_dir

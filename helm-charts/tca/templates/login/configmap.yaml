@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: login-env
+data:
+  DAEMON: {{ .Values.tca.commonConfig.daemonFlag | quote}}
+  SERVER_ACCESS_LOG: {{ .Values.tca.commonConfig.accessLogPath | quote }}
+  SERVER_ERROR_LOG: {{ .Values.tca.commonConfig.errorLogPath | quote }}
+  API_TICKET_SALT: {{ .Values.tca.commonConfig.apiTicketSalt }}
+  API_TICKET_TOKEN: {{ .Values.tca.commonConfig.apiTicketToken }}
+  PASSWORD_KEY: {{ .Values.tca.commonConfig.passwordKey }}
+  LOGIN_SENTRY_DSN: {{ .Values.tca.commonConfig.sentryDsn | quote }}
+  TCA_DEFAULT_ADMIN: {{ .Values.tca.commonConfig.defaultAdmin }}
+  TCA_DEFAULT_PASSWORD: {{ .Values.tca.commonConfig.defaultPassword }}
+  LOGIN_SECRET_KEY: {{ .Values.tca.commonConfig.secretKey }}
+  LOGIN_SERVER_PROCESS_NUM: {{ .Values.tca.login.server.processNum | quote }}
+  LOGIN_SERVER_PORT: {{ .Values.tca.login.server.port | quote }}
+  DJANGO_SETTINGS_MODULE: {{ .Values.tca.login.settings.base.module }}
+  LOGIN_DEBUG_MODE: {{ .Values.tca.login.settings.base.debugMode | quote }}
+  LOGIN_DB_NAME: {{ .Values.tca.login.settings.dbName }}
+  # DB相关配置，优先使用 Values.tca.login.settings.customDB 配置，默认使用 tca.database
+  LOGIN_DB_USER: {{ .Values.tca.login.settings.customDB.user | default ( include "tca.database.username" . ) }}
+  LOGIN_DB_PASSWORD: {{ .Values.tca.login.settings.customDB.password | default ( include "tca.database.password" . ) }}
+  LOGIN_DB_HOST: {{ .Values.tca.login.settings.customDB.host | default ( include "tca.database.host" . ) }}
+  LOGIN_DB_PORT: {{ .Values.tca.login.settings.customDB.port | default ( include "tca.database.port" . ) | quote }}

@@ -1,0 +1,100 @@
+{{- if .Values.tca.login.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    k8s-app: {{ template "tca.fullname" . }}-login-server
+    app: {{ template "tca.name" . }}
+    chart: {{ template "tca.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+  name: {{ template "tca.fullname" . }}-login-server
+spec:
+  selector:
+    matchLabels:
+      k8s-app: {{ template "tca.fullname" . }}-login-server
+      release: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        k8s-app: {{ template "tca.fullname" . }}-login-server
+        release: {{ .Release.Name }}
+    spec:
+      {{- with .Values.global.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- if .Values.tca.podAntiAffinity.enable }}
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 1
+              podAffinityTerm:
+                topologyKey: "{{ .Values.tca.podAntiAffinity.topologyKey }}"
+                labelSelector:
+                  matchLabels:
+                    k8s-app: {{ template "tca.fullname" . }}-login-server
+                    release: {{ .Release.Name }}
+      {{- end }}
+      containers:
+        - name: {{ template "tca.fullname" . }}-login-server
+          image: "{{ .Values.tca.login.image.repository }}:{{ .Values.tca.login.image.tag }}"
+          imagePullPolicy: {{ .Values.global.imagePullPolicy }}
+          command: ["gunicorn"]
+          args: ["apps.wsgi", "--preload", "-c", "login.gunicorn.conf.py"]
+          envFrom:
+            - configMapRef:
+                name: login-env
+          env:
+            - name: _HASH_CONFIG_
+              value: {{ include (print $.Template.BasePath "/login/configmap.yaml") . | sha256sum }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.tca.login.server.port }}
+              protocol: TCP
+          lifecycle:
+            preStop:
+              exec:
+                command:
+                  - sleep
+                  - '20'
+          resources:
+{{ toYaml .Values.tca.login.server.resources | indent 12 }}
+---
+{{- if .Values.tca.login.server.autoscaling.enabled }}
+apiVersion: autoscaling/v2beta2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: {{ template "tca.fullname" . }}-login-server
+  labels:
+    k8s-app: {{ template "tca.fullname" . }}-login-server
+    app: {{ template "tca.name" . }}
+    chart: {{ template "tca.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: {{ template "tca.fullname" . }}-login-server
+  minReplicas: {{ .Values.tca.login.server.autoscaling.minReplicas }}
+  maxReplicas: {{ .Values.tca.login.server.autoscaling.maxReplicas }}
+  metrics:
+    {{- if .Values.tca.login.server.autoscaling.targetMemory }}
+    - type: Resource
+      resource:
+        name: memory
+        target:
+          type: Utilization
+          averageUtilization: {{ .Values.tca.login.server.autoscaling.targetMemory }}
+    {{- end }}
+    {{- if .Values.tca.login.server.autoscaling.targetCPU }}
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: {{ .Values.tca.login.server.autoscaling.targetCPU }}
+    {{- end }}
+{{- end }}
+{{- end }}

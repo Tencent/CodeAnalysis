@@ -288,7 +288,6 @@ const CodeLint = (props: CodeLintProps) => {
               </div>
               <div className={style.footer}>
                 <a
-                  target="_blank"
                   href={`${getTmplBlankRouter(
                     orgSid,
                     teamName,
