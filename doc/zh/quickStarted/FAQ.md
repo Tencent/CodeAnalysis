@@ -245,6 +245,12 @@ TCA 本地部署启动后，会监听多个端口：
     - 服务启动日志：``server/projects/scmproxy/nohup.out``
     - 服务运行日志：``server/projects/scmproxy/logs/scmproxy.log``
 
+#### 2.3 服务启动失败
+
+1. 启动服务报错 ``json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)``
+    - 检查``config.ini``文件和``codedog.ini``文件是否按照json格式正确填写
+    - 如果``config.int``文件中的 ``【SERVER_URL】``已正确填写，则检查``codedog.ini``文件中是否有填写``codedog_env``配置项，如果存在则删除``codedog.ini``文件的``codedog_env``配置项，再尝试重启服务
+
 ### 3. 平台使用
 
 #### 3.1 平台登录的默认账号密码是什么？
