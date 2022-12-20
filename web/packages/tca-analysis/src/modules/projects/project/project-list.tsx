@@ -237,7 +237,10 @@ const ProjectList = (props: ProjectListProps) => {
               </a>
             )}
           />
-
+          <Column
+            title="代码目录"
+            dataIndex='scan_path'
+          />
           <Column
             title="操作"
             dataIndex="id"
