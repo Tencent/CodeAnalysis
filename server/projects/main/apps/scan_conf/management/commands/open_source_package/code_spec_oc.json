@@ -8,7 +8,8 @@
             "oc"
         ],
         "labels": [
-            "规范"
+            "规范",
+            "增强"
         ],
         "checkrule_set": [
             {

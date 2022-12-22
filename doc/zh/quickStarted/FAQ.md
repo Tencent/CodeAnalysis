@@ -245,6 +245,12 @@ TCA 本地部署启动后，会监听多个端口：
     - 服务启动日志：``server/projects/scmproxy/nohup.out``
     - 服务运行日志：``server/projects/scmproxy/logs/scmproxy.log``
 
+#### 2.3 服务启动失败
+
+1. 启动服务报错 ``json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)``
+    - 检查``config.ini``文件和``codedog.ini``文件是否按照json格式正确填写
+    - 如果``config.int``文件中的 ``【SERVER_URL】``已正确填写，则检查``codedog.ini``文件中是否有填写``codedog_env``配置项，如果存在则删除``codedog.ini``文件的``codedog_env``配置项，再尝试重启服务
+
 ### 3. 平台使用
 
 #### 3.1 平台登录的默认账号密码是什么？
@@ -292,6 +298,13 @@ TCA 本地部署启动后，会监听多个端口：
     - 可以手动在机器/容器中执行``git clone xxxx``（xxx表示待登记的代码库），检查看看是否能够正常拉取
 5. scmproxy所在的机器git版本较低，出现``unknown option `local` ``错误
     - 可以升级机器上的git版本，目前工具支持最低的git版本为``1.8.3.1``
+
+#### 3.3.2 代码库登记成功后，开启第一次代码分析时，出现代码库及账号不匹配
+
+该错误出现可能有以下几个原因：
+
+1. 代码仓库地址不支持https访问，但分析时请求的https访问
+    - 修改 ``.docker_temp/configs/config.sh``, 将HTTPS_CLONE_FLAG调整为false, 然后重启容器``docker restart tca-services``
 
 #### 3.4 查看问题文件提示**获取代码信息耗时较久，请稍后再试**
 

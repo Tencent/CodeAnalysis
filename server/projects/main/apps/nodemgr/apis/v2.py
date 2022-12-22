@@ -27,7 +27,6 @@ from rest_framework.views import APIView
 from apps.nodemgr import filters, models
 from apps.nodemgr.core import NodeManager
 from apps.nodemgr.serializers import base as serializers
-from apps.scan_conf.models import ToolProcessRelation
 from util.permissions import IsSuperUserOrReadOnly
 
 logger = logging.getLogger(__name__)
@@ -44,6 +43,8 @@ class ExecTagListAPIView(generics.ListCreateAPIView):
     """
     permission_classes = [IsSuperUserOrReadOnly]
     serializer_class = serializers.ExecTagSerializer
+    filter_backends = (DjangoFilterBackend,)
+    filterset_class = filters.TagFilter
     queryset = models.ExecTag.objects.all()
 
 
@@ -156,19 +157,9 @@ class NodeProcessesAPIView(generics.GenericAPIView):
 
     def get(self, request, **kwargs):
         node = self.get_node(request, **kwargs)
-        result = {}
-        for tool_process in ToolProcessRelation.objects.all():
-            processes = result.get(tool_process.checktool.name, {})
-            processes.update({tool_process.process.name: {"supported": False}})
-            result.update({tool_process.checktool.name: processes})
-        for node_tool_process in models.NodeToolProcessRelation.objects.filter(node=node):
-            try:
-                result[node_tool_process.checktool.name][node_tool_process.process.name]["supported"] = True
-                result[node_tool_process.checktool.name][node_tool_process.process.name]["id"] = node_tool_process.id
-            except Exception as e:
-                logger.exception("[Tool: %s][Process: %s] err: %s" % (
-                    node_tool_process.checktool.name, node_tool_process.process.name, e))
-        return Response(result)
+        all_processes = NodeManager.get_all_processes()
+        all_processes = NodeManager.get_support_process_relations(all_processes, node)
+        return Response(all_processes)
 
     def put(self, request, **kwargs):
         node = self.get_node(request, **kwargs)
@@ -214,9 +205,34 @@ class AllProcessesAPIView(generics.GenericAPIView):
     """
 
     def get(self, request, **kwargs):
-        result = {}
-        for tool_process in ToolProcessRelation.objects.all():
-            processes = result.get(tool_process.checktool.name, {})
-            processes.update({tool_process.process.name: {"supported": False}})
-            result.update({tool_process.checktool.name: processes})
-        return Response(result)
+        all_processes = NodeManager.get_all_processes()
+        return Response(all_processes)
+
+
+class TagProcessesAPIView(APIView):
+    """
+    ### GET
+    应用场景：获取标签进程配置情况
+
+    ### PUT
+    应用场景：修改标签进程配置，参数为get所得参数格式，按需修改supported的值为true or false即可
+    """
+    permission_classes = [IsAdminUser]
+
+    def get_tag(self, request, **kwargs):
+        """获取标签
+        """
+        tag_id = kwargs["tag_id"]
+        return get_object_or_404(models.ExecTag, id=tag_id)
+
+    def get(self, request, **kwargs):
+        tag = self.get_tag(request, **kwargs)
+        all_processes = NodeManager.get_all_processes()
+        all_processes = NodeManager.get_support_process_relations(all_processes, tag)
+        return Response(all_processes)
+
+    def put(self, request, **kwargs):
+        tag = self.get_tag(request, **kwargs)
+        data = request.data
+        NodeManager.update_tag_processes(tag, data)
+        return Response(data)

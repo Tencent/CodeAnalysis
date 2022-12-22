@@ -55,7 +55,7 @@ class ProjectMgr(object):
         self._create_from = create_from
         self._enable_module = enable_module
 
-    def __check_project_exist(self, branch, scheme_name):
+    def __check_project_exist(self, branch, scheme_name, scan_path):
         """
         判断项目是否已存在
         :return:
@@ -64,7 +64,7 @@ class ProjectMgr(object):
         try:
             proj_info_list = self._dog_server.get_proj_info(branch=branch, scan_scheme=scheme_name,
                                                             repo_id=self._repo_id, org_sid=self._org_sid,
-                                                            team_name=self._team_name)
+                                                            team_name=self._team_name, scan_path=scan_path)
         except ResfulApiError as err:
             logger.error("获取项目ID失败,退出!\n%s", err.msg)
             sys.exit(-1)
@@ -138,7 +138,7 @@ class ProjectMgr(object):
 
         return scheme_name, is_scheme_existed
 
-    def check_and_create_proj(self):
+    def check_and_create_proj(self, scan_path):
         """
         根据代码库url查询是否有创建项目,如果没有,新建项目
         :return:
@@ -168,7 +168,7 @@ class ProjectMgr(object):
         scheme_name, is_scheme_existed = self._check_scheme(repo_schemes)
 
         # 3. 判断项目是否存在
-        proj_info = self.__check_project_exist(self._scm_info.branch, scheme_name)
+        proj_info = self.__check_project_exist(self._scm_info.branch, scheme_name, scan_path)
         if proj_info:
             self._proj_id = proj_info["id"]
             is_scheme_existed = True
@@ -191,6 +191,8 @@ class ProjectMgr(object):
                                                                           self._team_name)
                 self.__check_no_language_exit()
 
+            if not scan_path:
+                scan_path = '/'
             if self._ref_scheme_id:
                 proj_info = {
                     "scm_type": self._scm_info.scm_type,
@@ -199,6 +201,7 @@ class ProjectMgr(object):
                     "refer_scheme_id": self._ref_scheme_id,
                     "created_from": self._create_from,
                     "admins": self._admins,
+                    "scan_path": scan_path
                 }
             else:
                 enable_module_setting = ScanModule.get_module_setting(self._enable_module)
@@ -220,6 +223,7 @@ class ProjectMgr(object):
                     "dup_scan_enabled": enable_module_setting["dup"],
                     "cloc_scan_enabled": enable_module_setting["cloc"],
                     "created_from": self._create_from,
+                    "scan_path": scan_path
                 }
 
             logger.info("开始自动创建项目...")

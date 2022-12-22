@@ -1100,7 +1100,7 @@ class ProjectManager(object):
         logger.info("[User: %s] 在 %s 删除了 %s 分支项目" % (user.username, deleted_time, project))
         project.branch = ("deleted by %s(%s)" % (user.username, deleted_time))[:198]
         project.status = models.Project.StatusEnum.DISACTIVE
-        project.update_remark({"branch": old_branch})
+        project.update_remark(**{"branch": old_branch})
         project.save()
         project.delete(user=user)
         OperationRecordHandler.add_project_operation_record(
