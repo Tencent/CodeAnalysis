@@ -58,6 +58,10 @@ LICENSE=<Client License>
 ```
 
 ::: warning
+注意：URL对应值的最后不需要跟斜杆`/`.
+:::
+
+::: warning
 不同的部署方式可以根据下面方法修改`config.ini`配置
 
 - 源码部署：
