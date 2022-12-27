@@ -249,7 +249,7 @@ TCA 本地部署启动后，会监听多个端口：
 
 1. 启动服务报错 ``json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)``
     - 检查``config.ini``文件和``codedog.ini``文件是否按照json格式正确填写
-    - 如果``config.int``文件中的 ``【SERVER_URL】``已正确填写，则检查``codedog.ini``文件中是否有填写``codedog_env``配置项，如果存在则删除``codedog.ini``文件的``codedog_env``配置项，再尝试重启服务
+    - 如果``config.ini``文件中的 ``【SERVER_URL】``已正确填写，则检查``codedog.ini``文件中是否有填写``codedog_env``配置项。如果有填写，往往因为填写有误（比如URL缺少最后的`/`）导致报错。建议直接删除``codedog.ini``文件的``codedog_env``配置项（``config.ini``已配置``【SERVER_URL】``，无需重复配置），再尝试重启服务。
 
 ### 3. 平台使用
 
