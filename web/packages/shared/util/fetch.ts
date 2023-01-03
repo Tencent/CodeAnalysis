@@ -19,6 +19,8 @@ export interface FetchCustomParams {
   statusHandler?: (response: Response) => void;
   /** fetch 文件下载处理 */
   fileHandler?: (response: Response) => any;
+  // message plugin
+  messagePlugin?: any;
 }
 
 interface RequestCustom extends FetchCustomParams {
@@ -111,7 +113,7 @@ const fetchTimeout = (custom: RequestCustom) => new Promise((resolve, reject) =>
     if (!custom.isFetched) {
       // 还未收到响应，则开始超时逻辑，并标记fetch需要放弃
       custom.isAbort = true;
-      custom.showError && message.error('网络开小差了，稍后再试');
+      custom.showError && (custom.messagePlugin || message).error('网络开小差了，稍后再试');
       reject({ msg: 'timeout' });
     }
   }, (custom.timeout || 30) * 1000);
@@ -141,9 +143,8 @@ const failResultHandler = (jsonData: any, custom: RequestCustom) => {
   let { msg } = jsonData;
   if (custom.failResultHandler) {
     msg = custom.failResultHandler(jsonData);
-  }
-  if (msg && custom.showError) {
-    message.error(getFailMessage(msg));
+  } else if (msg && custom.showError) {
+    (custom.messagePlugin || message).error(getFailMessage(msg));
   }
   return jsonData;
 };

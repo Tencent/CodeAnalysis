@@ -1,4 +1,5 @@
 import { FetchManager, FetchAPIManager } from '@tencent/micro-frontend-shared/util/fetch';
+import { MessagePlugin } from 'tdesign-react';
 
 // 项目内
 import { reLogin } from '../util';
@@ -15,6 +16,7 @@ const fetchManager = new FetchManager({
       reLogin('登录态已过期，重新登录...');
     }
   },
+  messagePlugin: MessagePlugin,
 });
 
 export const { get, post, put, patch, del } = fetchManager;

@@ -96,8 +96,6 @@ const NewProjectModal = (props: NewProjectModalProps) => {
           });
         }
       }
-    } catch (e) {
-      console.log(e);
     } finally {
       setLoading(false);
     }
@@ -134,6 +132,12 @@ const NewProjectModal = (props: NewProjectModalProps) => {
           rules={[{ required: true, message: '请输入分支名称' }]}
         >
           <Input placeholder="请输入分支名称" />
+        </Form.Item>
+        <Form.Item
+          name="scan_path"
+          label="代码目录"
+        >
+          <Input placeholder='相对路径，默认为/' />
         </Form.Item>
         <Form.Item name="type" label="">
           <Radio.Group>
