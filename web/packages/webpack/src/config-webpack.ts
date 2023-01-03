@@ -209,15 +209,14 @@ export const webpackConfig = (options?: Options) => {
       runtimeChunk: true,
       splitChunks: {
         chunks: 'all',
-        name: (module: any, chunks: Array<any>, cacheGroupKey: string) => {
-          const allChunksNames = chunks.map(item => item.name).join('~');
-          return `${cacheGroupKey}~${allChunksNames}`;
-        },
         cacheGroups: {
           vendors: {
             test: /[\\/]node_modules[\\/]/,
             chunks: 'all',
+            priority: -10,
+            reuseExistingChunk: true,
             enforce: true,
+            name: `vendors~${NAME}`,
           },
         },
       },

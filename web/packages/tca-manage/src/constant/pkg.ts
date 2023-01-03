@@ -1,3 +1,5 @@
+import { generateOptions } from '@tencent/micro-frontend-shared/util';
+
 export enum PkgStatusEnum {
   RUNNING = 1,
   TESTING,
@@ -12,9 +14,4 @@ export const PKG_STATUS_CHOICES = {
   [PkgStatusEnum.DISABLED]: '已禁用',
 };
 
-export const PKG_STATUS_OPTIONS = [
-  PkgStatusEnum.RUNNING,
-  PkgStatusEnum.TESTING,
-  PkgStatusEnum.HIDDEN,
-  PkgStatusEnum.DISABLED,
-];
+export const PKG_STATUS_OPTIONS = generateOptions(PKG_STATUS_CHOICES, true);
