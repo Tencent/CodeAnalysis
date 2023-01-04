@@ -59,13 +59,15 @@ class Cppcheck(CodeLintModel):
         # all_rule_versions_set 所有的规则版本号
         all_rule_versions_set = set(re.findall(
             find_all_rule_version_regex, open(misra_rule_file, "r").read()))
+        LogPrinter.info(
+            f"[misra_rules_all_rule_versions_set]: {all_rule_versions_set}")
+
         # disable_rule_version_set 需要关闭的规则版本号
-        disable_rule_version_set = set()
-        for rule_name in rules:
-            rule_version = rule_name[len(misra_rule_prefix):]
-            if rule_version in all_rule_versions_set:
-                continue
-            disable_rule_version_set.add(rule_name)
+        disable_rule_version_set = all_rule_versions_set - \
+            set([rule[len(misra_rule_prefix):] for rule in rules])
+        LogPrinter.info(
+            f"[misra_rules_disable_rule_version_set]: {disable_rule_version_set}")
+            
         # 构造misra分析所需的配置文件
         misra_config = {
             "script": os.path.join(CPPCHECK_HOME, "addons", "misra.py"),
@@ -78,7 +80,7 @@ class Cppcheck(CodeLintModel):
             # 兼容全部规则启用的情况 ，不再需要 suppress-rules 参数
             misra_config["args"].append(
                 f"--suppress-rules {disable_rule_version_str}")
-        LogPrinter.info(f"misra_config] {misra_config}")
+        LogPrinter.info(f"[misra_config] {misra_config}")
 
         # 将配置写入到 misra.json 文件中，然后使用cppcheck --addon=<json file path> 指定配置
         misra_file = os.path.join(work_dir, "misra.json")
