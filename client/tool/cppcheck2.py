@@ -20,9 +20,9 @@ from tool.cppcheck import Cppcheck
 
 
 class CppCheck2(Cppcheck):
-
     def __init__(self, params):
-        cppcheck2_home = os.environ.get("CPPCHECK2_HOME")
+        # 环境变量 CPPCHECK_HOME 替换为cppcheck2
+        cppcheck2_home = os.environ["CPPCHECK2_HOME"]
         os.environ["CPPCHECK_HOME"] = cppcheck2_home
         super().__init__(params)
 
