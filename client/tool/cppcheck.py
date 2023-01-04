@@ -70,10 +70,14 @@ class Cppcheck(CodeLintModel):
         misra_config = {
             "script": os.path.join(CPPCHECK_HOME, "addons", "misra.py"),
             "args": [
-                f"--rule-text={misra_rule_file}",
-                f"--suppress-rules {','.join(list(disable_rule_version_set))}"
+                f"--rule-text={misra_rule_file}"
             ]
         }
+        disable_rule_version_str = ','.join(list(disable_rule_version_set))
+        if disable_rule_version_str:
+            # 兼容全部规则启用的情况 ，不再需要 suppress-rules 参数
+            misra_config["args"].append(
+                f"--suppress-rules {disable_rule_version_str}")
         LogPrinter.info(f"misra_config] {misra_config}")
 
         # 将配置写入到 misra.json 文件中，然后使用cppcheck --addon=<json file path> 指定配置
