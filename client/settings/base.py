@@ -141,3 +141,12 @@ LICENSE_CONFIG = {
     "BASE_PATH": "",
     "LICENSE": ""
 }
+
+# ========================
+# license备份服务器url, base_path, license,需要在config.ini中配置
+# ========================
+LICENSE_CONFIG_BAK = {
+    "URL": "",
+    "BASE_PATH": "",
+    "LICENSE": ""
+}
