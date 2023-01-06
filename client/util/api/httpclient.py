@@ -83,6 +83,10 @@ class HttpClient(object):
         response = HttpRequest.request(url=self.url, headers=self.headers, body=self.data, method="PUT")
         return response
 
+    def head(self):
+        response = HttpRequest.request(url=self.url, headers=self.headers, body=self.data, method="HEAD")
+        return response
+
 
 class RetryHttpClient(object):
     """
