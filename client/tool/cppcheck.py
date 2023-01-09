@@ -9,19 +9,19 @@
 cppcheck 分析任务
 """
 
+import json
 import os
-import sys
-import psutil
+import re
 
-from task.scmmgr import SCMMgr
-from util.pathlib import PathMgr
+import psutil
 from task.codelintmodel import CodeLintModel
-from util.subprocc import SubProcController
+from task.scmmgr import SCMMgr
 from util.envset import EnvSet
-from util.exceptions import AnalyzeTaskError
-from util.exceptions import ConfigError
-from util.pathfilter import FilterPathUtil
+from util.exceptions import AnalyzeTaskError, ConfigError
 from util.logutil import LogPrinter
+from util.pathfilter import FilterPathUtil
+from util.pathlib import PathMgr
+from util.subprocc import SubProcController
 
 try:
     import xml.etree.cElementTree as ET
@@ -34,6 +34,92 @@ class Cppcheck(CodeLintModel):
         CodeLintModel.__init__(self, params)
         self.sensitive_word_maps = {"cppcheck": "Tool", "Cppcheck": "Tool"}
 
+    def _run_misra_addon_analyze(self, source_dir, params, files_path):
+        """cppcheck执行misra规则检查
+        """
+        rules = params["rules"]
+        work_dir = params.work_dir
+        misra_rule_prefix = "misra-c2012-"
+        CPPCHECK_HOME = os.environ["CPPCHECK_HOME"]
+        find_all_rule_version_regex = r'Rule ([\.\d]+) [R|M|A]'
+        misra_rule_file = os.path.join(
+            CPPCHECK_HOME, "addons", "config", "misra_rules.txt")
+
+        # 获取需要检查的misra规则
+        misra_rules = [
+            rule for rule in rules if rule.startswith(misra_rule_prefix)]
+        LogPrinter.info(f"[misra_rules]: {misra_rules}")
+        if not misra_rules:
+            return []
+
+        # 其余的规则留给cppcheck进行检查
+        other_cppcheck_rules = list(set(rules) - set(misra_rules))
+        params["rules"] = other_cppcheck_rules
+
+        # all_rule_versions_set 所有的规则版本号
+        all_rule_versions_set = set(re.findall(
+            find_all_rule_version_regex, open(misra_rule_file, "r").read()))
+        LogPrinter.info(
+            f"[misra_rules_all_rule_versions_set]: {all_rule_versions_set}")
+
+        # disable_rule_version_set 需要关闭的规则版本号
+        disable_rule_version_set = all_rule_versions_set - \
+            set([rule[len(misra_rule_prefix):] for rule in rules])
+        LogPrinter.info(
+            f"[misra_rules_disable_rule_version_set]: {disable_rule_version_set}")
+            
+        # 构造misra分析所需的配置文件
+        misra_config = {
+            "script": os.path.join(CPPCHECK_HOME, "addons", "misra.py"),
+            "args": [
+                f"--rule-text={misra_rule_file}"
+            ]
+        }
+        disable_rule_version_str = ','.join(list(disable_rule_version_set))
+        if disable_rule_version_str:
+            # 兼容全部规则启用的情况 ，不再需要 suppress-rules 参数
+            misra_config["args"].append(
+                f"--suppress-rules {disable_rule_version_str}")
+        LogPrinter.info(f"[misra_config] {misra_config}")
+
+        # 将配置写入到 misra.json 文件中，然后使用cppcheck --addon=<json file path> 指定配置
+        misra_file = os.path.join(work_dir, "misra.json")
+        with open(misra_file, "w") as f:
+            f.write(json.dumps(misra_config))
+
+        # 执行cppcheck misra 分析检查命令
+        cmd_args = [
+            "cppcheck",
+            f"--addon={misra_file}",
+            "--addon-python=python3",
+            '--template="{file}[CODEDOG]{line}[CODEDOG]{id}[CODEDOG]{severity}[CODEDOG]{message}"',
+            '--inconclusive',
+            '--file-list=%s' % files_path
+        ]
+        LogPrinter.info(f"[misra_cmd_args]: {cmd_args}")
+        scan_misra_result_path = "cppcheck_addon_misra_result.xml"
+        return_code = SubProcController(
+            cmd_args,
+            cwd=CPPCHECK_HOME,
+            stderr_filepath=scan_misra_result_path,
+            stderr_line_callback=self._error_callback,
+            stdout_line_callback=self.print_log,
+        ).wait()
+        LogPrinter.info(f"[misra_cmd run return code: {return_code}")
+
+        # 如果没有结果文件的写入，直接返回空列表
+        if not os.path.exists(scan_misra_result_path):
+            LogPrinter.info("scan_misra_result is empty ")
+            return []
+
+        # 将列表中的结果格式化标准输出
+        result_list = self._format_result(
+            source_dir, scan_misra_result_path, misra_rules,
+            [misra_rule_prefix +
+                rule_version for rule_version in list(all_rule_versions_set)]
+        )
+        return result_list
+
     def analyze(self, params):
         """执行cppcheck分析任务
 
@@ -45,7 +131,6 @@ class Cppcheck(CodeLintModel):
         """
         source_dir = params.source_dir
         work_dir = params.work_dir
-        rules = params["rules"]
         incr_scan = params["incr_scan"]
         relpos = len(source_dir) + 1
         files_path = os.path.join(work_dir, "paths.txt")
@@ -72,6 +157,13 @@ class Cppcheck(CodeLintModel):
         with open(files_path, "w", encoding="UTF-8") as f:
             f.write("\n".join(toscans))
 
+        # 执行cppcheck misra规则分析检查
+        addon_misra_result_list = self._run_misra_addon_analyze(
+            source_dir, params, files_path)
+
+        # 获取剩余的rules给cppcheck使用
+        rules = params["rules"]
+
         id_severity_map = self._get_id_severity_map()  # 获取当前版本cppcheck的 规则名:严重级别 对应关系
         supported_rules = id_severity_map.keys()  # 获取当前版本cppcheck支持的所有规则名
         # 过滤掉当前版本cppcheck不支持的规则
@@ -83,10 +175,14 @@ class Cppcheck(CodeLintModel):
 
         if not os.path.exists(scan_result_path):
             LogPrinter.info("result is empty ")
-            return []
+            cppcheck_result_list = []
 
-        # 格式化结果
-        return self._format_result(source_dir, scan_result_path, rules, supported_rules)
+        # 格式化cppcheck结果
+        cppcheck_result_list = self._format_result(source_dir, scan_result_path, rules, supported_rules)
+
+        # cppcheck + misra结果一起返回
+        result_list = cppcheck_result_list + addon_misra_result_list
+        return result_list
 
     def _get_id_severity_map(self):
         """获取cppcheck所有规则和严重级别的对应关系

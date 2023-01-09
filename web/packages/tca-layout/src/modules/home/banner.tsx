@@ -17,7 +17,7 @@ import s from './style.scss';
 // 开源地址
 const GITHUB_URL = getMetaContent('GITHUB_URL');
 
-// 客户端URL地址
+// 客户端指引URL地址
 const CLIENT_GUIDE_URL = getMetaContent('CLIENT_GUIDE_URL');
 
 // 获取当前第一个路由
@@ -74,9 +74,9 @@ const Banner = () => {
           {CLIENT_GUIDE_URL && <div className={s.info}>
             <h2 className={s.title}>客户端节点接入</h2>
             <p className={s.pContent}>
-              提供团队专机资源一键接入，自主管控机器资源和编译环境。
+              团队专机资源一键接入，自主管控机器资源和编译环境。
               <br />
-              由腾讯云提供的 TencentOS Server 2.4 (TK4) 镜像环境，预装了腾讯云代码分析客户端和所有分析工具。
+              分别提供客户端的二进制包和 Docker 镜像，可自由选择安装到专机中，无需额外部署，方便专机快速接入。
             </p>
             <div className={s.btnArea}>
               <Button
