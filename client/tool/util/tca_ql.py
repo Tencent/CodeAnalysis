@@ -29,12 +29,12 @@ except ImportError:
 from util.api.fileserver import RetryFileServer
 from util.configlib import ConfigReader
 from util.envset import EnvSet
-from util.errcode import E_NODE_TASK_PARAM
-from util.exceptions import AnalyzeTaskError, TaskError
+from util.textutil import CodecClient
 from util.pathfilter import FilterPathUtil
 from util.pathlib import PathMgr
 from task.codelintmodel import CodeLintModel
 from task.scmmgr import SCMMgr
+from task.basic.common import subprocc_log
 from util.subprocc import SubProcController
 from util.zipmgr import Zip
 from util.logutil import LogPrinter
@@ -53,8 +53,6 @@ lang_map = {
 
 
 class TcaQl(CodeLintModel):
-    """ """
-
     def __init__(self, params):
         CodeLintModel.__init__(self, params)
 
@@ -71,10 +69,13 @@ class TcaQl(CodeLintModel):
             file_server = RetryFileServer(retry_times=2).get_server()
             if file_server.download_big_file(file_name, zip_file):
                 logger.info("下载成功")
-                Zip.decompress_by_7z(zip_file, db_path)
+                Zip().decompress_by_7z(zip_file, db_path)
+                os.remove(zip_file)
                 return True
+            else:
+                return False
         except Exception as e:
-            logger.warning(f"下载失败 {e}")
+            logger.warning(f"下载失败")
             return False
 
     def __upload_database(self, params, path):
@@ -128,6 +129,33 @@ class TcaQl(CodeLintModel):
         tree.write(setting_file, encoding="utf-8")
         return setting_file
 
+    def __get_zeus_version(self, params):
+        # 2023/1/10 调整获取Zeus版本的方式
+        envs = os.environ
+        ZEUS_HOME = envs.get("ZEUS_HOME", None)
+        work_dir = params.work_dir
+        scan_cmd = self.get_cmd(
+            "Zeus",
+            [
+                "--version",
+            ],
+        )
+        lang_ext_output = os.path.join(work_dir, "Zeus_version.txt")
+        spc = SubProcController(
+            scan_cmd,
+            cwd=ZEUS_HOME,
+            stdout_line_callback=subprocc_log,
+            stderr_line_callback=subprocc_log,
+            stdout_filepath=lang_ext_output,
+        )
+        spc.wait()
+
+        fi = open(lang_ext_output, "rb")
+        # 读取文件内容并解码为字符串
+        content = CodecClient().decode(fi.read())
+        fi.close()
+        return content.split(" ")[-1].strip()
+
     def compile(self, params, lang):
         """
         编译函数，指代码生成数据流
@@ -140,10 +168,10 @@ class TcaQl(CodeLintModel):
         repo_id = params.repo_id
         envs = os.environ
         ZEUS_HOME = envs.get("ZEUS_HOME", None)
-        tool_path = os.path.join(ZEUS_HOME, "Zeus")
         scm_revision = params["scm_revision"]
-        db_name = f"{repo_id}_{scm_revision}_{lang}"
-        db_path = os.path.join(db_dir, db_name + ".db")
+        version = self.__get_zeus_version(params)
+        db_name = f"{repo_id}_{scm_revision}_{lang}_{version}"
+        db_path = os.path.join(db_dir, f"{db_name}.db")
         inc = params["incr_scan"]
         want_suffix = lang_map[lang]
         logger.info("是否为增量编译: %s" % inc)
@@ -156,13 +184,15 @@ class TcaQl(CodeLintModel):
                 return
         if inc:
             last_scm_revision = params["scm_last_revision"]
-            last_db_name = f"{repo_id}_{last_scm_revision}_{lang}"
+            last_db_name = f"{repo_id}_{last_scm_revision}_{lang}_{version}"
             last_db_path = os.path.join(db_dir, last_db_name + ".db")
             logger.info(f"下载上个成功分析版本数据库{last_db_name}")
             if not self.__download_database(params, last_db_name):
                 logger.info("下载全量数据库失败将重新生成，本次分析将只分析增量部分")
-            else:
+            elif os.path.exists(last_db_path):
                 shutil.copyfile(last_db_path, db_path)
+            else:
+                logger.error("下载失败，本次将只分析增量文件，建议全量分析下项目。")
             diffs = SCMMgr(params).get_scm_diff()
             # 增量需要所有增量文件都重新生成，故这里不能过滤文件
             toscans = [diff.path.replace(os.sep, "/") for diff in diffs if diff.path.endswith(tuple(want_suffix))]
@@ -173,36 +203,39 @@ class TcaQl(CodeLintModel):
                 for toscan in toscans:
                     wf.writelines(toscan)
                     wf.write("\n")
-            inc_build_cmd = [
-                "./Zeus",
-                "inc_compile",
-                "-l",
-                lang,
-                "-p",
-                db_name,
-                "-db",
-                db_dir,
-                "-s",
-                source_dir,
-                # "-d",
-                "-f",
-                file_list,
-            ]
-            logger.info(inc_build_cmd)
-            inc_build_cmd = self.get_cmd(tool_path, inc_build_cmd)
+            inc_build_cmd = self.get_cmd(
+                "Zeus",
+                [
+                    "inc_compile",
+                    "-l",
+                    lang,
+                    "-p",
+                    db_name,
+                    "-db",
+                    db_dir,
+                    "-s",
+                    source_dir,
+                    # "-d",
+                    "-f",
+                    file_list,
+                ],
+            )
+            logger.info(" ".join(inc_build_cmd))
             # cmd_args += toscans
             sp = SubProcController(
                 command=inc_build_cmd,
                 cwd=ZEUS_HOME,
-                stdout_line_callback=self.subprocc_log,
-                stderr_line_callback=self.subprocc_log,
+                stdout_line_callback=subprocc_log,
+                stderr_line_callback=subprocc_log,
             )
             sp.wait()
             logger.info(sp.returncode)
             self.__upload_database(params, db_name)
             return
         # 全量编译命令
-        toscans = [path.replace(os.sep, "/") for path in PathMgr().get_dir_files(source_dir, tuple(want_suffix))]
+        toscans = [
+            path.replace(os.sep, "/") for path in PathMgr().get_dir_files(source_dir, want_suffix=tuple(want_suffix))
+        ]
         toscans = FilterPathUtil(params).get_include_files(toscans, relpos)
         if not toscans:
             return []
@@ -210,28 +243,29 @@ class TcaQl(CodeLintModel):
             for toscan in toscans:
                 wf.writelines(toscan)
                 wf.write("\n")
-        full_build_cmd = [
-            # "./Zeus",
-            "compile",
-            "-p",
-            db_name,
-            "-cc",
-            db_dir,
-            "-l",
-            lang,
-            "-s",
-            source_dir,
-            "-f",
-            file_list
-            # "-d",  # 调试使用
-        ]
-        logger.info(full_build_cmd)
-        full_build_cmd = self.get_cmd(tool_path, full_build_cmd)
+        full_build_cmd = self.get_cmd(
+            "Zeus",
+            [
+                "compile",
+                "-p",
+                db_name,
+                "-cc",
+                db_dir,
+                "-l",
+                lang,
+                "-s",
+                source_dir,
+                "-f",
+                file_list
+                # "-d",  # 调试使用
+            ],
+        )
+        logger.info(" ".join(full_build_cmd))
         sp = SubProcController(
             command=full_build_cmd,
             cwd=ZEUS_HOME,
-            stdout_line_callback=self.subprocc_log,
-            stderr_line_callback=self.subprocc_log,
+            stdout_line_callback=subprocc_log,
+            stderr_line_callback=subprocc_log,
         )
         sp.wait()
         logger.info(sp.returncode)
@@ -251,10 +285,10 @@ class TcaQl(CodeLintModel):
         repo_id = params.repo_id
         envs = os.environ
         HADES_HOME = envs.get("HADES_HOME", None)
-        tool_path = os.path.join(HADES_HOME, "Hades")
         scm_revision = params["scm_revision"]
-        db_name = f"{repo_id}_{scm_revision}_{lang}"
-        db_path = os.path.join(db_dir, db_name + ".db")
+        version = self.__get_zeus_version(params)
+        db_name = f"{repo_id}_{scm_revision}_{lang}_{version}"
+        db_path = os.path.join(db_dir, f"{db_name}.db")
         if not os.path.exists(db_path):
             if not os.path.exists(db_dir):
                 os.makedirs(db_dir)
@@ -274,7 +308,8 @@ class TcaQl(CodeLintModel):
             ]
         else:
             toscans = [
-                path.replace(os.sep, "/")[relpos:] for path in PathMgr().get_dir_files(source_dir, tuple(want_suffix))
+                path.replace(os.sep, "/")[relpos:]
+                for path in PathMgr().get_dir_files(source_dir, want_suffix=tuple(want_suffix))
             ]
         # 过滤文件以及过滤文件取相对路径
         toscans = FilterPathUtil(params).get_include_files([os.path.join(source_dir, path) for path in toscans], relpos)
@@ -287,32 +322,33 @@ class TcaQl(CodeLintModel):
             return []
         output_json = os.path.join(work_dir, "result.json")
         setting_file = self.__generate_config_file(rules, work_dir, source_dir, toscans)
-        analyze_cmd = [
-            # "./Hades",
-            "analyze",
-            "-l",
-            lang,
-            "-cc",
-            db_dir,
-            "-db",
-            db_name,
-            "-o",
-            output_json,
-            "-c",
-            setting_file,
-            # "-d",
-        ]
+        analyze_cmd = self.get_cmd(
+            "Hades",
+            [
+                "analyze",
+                "-l",
+                lang,
+                "-cc",
+                db_dir,
+                "-db",
+                db_name,
+                "-o",
+                output_json,
+                "-c",
+                setting_file,
+                # "-d",
+            ],
+        )
         logger.info(analyze_cmd)
         task_dir = os.path.dirname(os.getcwd())
         request_file = os.path.abspath(os.path.join(task_dir, "task_request.json"))
         os.environ["TASK_REQUEST"] = request_file
         issues = []
-        analyze_cmd = self.get_cmd(tool_path, analyze_cmd)
         sp = SubProcController(
             command=analyze_cmd,
             cwd=HADES_HOME,
-            stdout_line_callback=self.subprocc_log,
-            stderr_line_callback=self.subprocc_log,
+            stdout_line_callback=subprocc_log,
+            stderr_line_callback=subprocc_log,
             env=EnvSet().get_origin_env(),
         )
         sp.wait()
@@ -326,12 +362,8 @@ class TcaQl(CodeLintModel):
         #     self.__upload_database(params, db_name)
         return issues
 
-    def subprocc_log(self, line):
-        """"""
-        logger.info(line)
-
-    def get_cmd(self, tool_path, options):
-        return __lu__().format_cmd(tool_path, options)
+    def get_cmd(self, tool_path, args):
+        return __lu__().format_cmd(tool_path, args)
 
 
 tool = TcaQl
