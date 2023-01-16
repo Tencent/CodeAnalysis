@@ -220,7 +220,7 @@ class TcaQl(CodeLintModel):
                     file_list,
                 ],
             )
-            logger.info(" ".join(inc_build_cmd))
+            # logger.info(" ".join(inc_build_cmd))
             # cmd_args += toscans
             sp = SubProcController(
                 command=inc_build_cmd,
@@ -260,7 +260,7 @@ class TcaQl(CodeLintModel):
                 # "-d",  # 调试使用
             ],
         )
-        logger.info(" ".join(full_build_cmd))
+        # logger.info(" ".join(full_build_cmd))
         sp = SubProcController(
             command=full_build_cmd,
             cwd=ZEUS_HOME,
@@ -339,7 +339,7 @@ class TcaQl(CodeLintModel):
                 # "-d",
             ],
         )
-        logger.info(analyze_cmd)
+        # logger.info(" ".join(analyze_cmd))
         task_dir = os.path.dirname(os.getcwd())
         request_file = os.path.abspath(os.path.join(task_dir, "task_request.json"))
         os.environ["TASK_REQUEST"] = request_file
