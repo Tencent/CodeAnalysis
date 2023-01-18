@@ -12,6 +12,11 @@ import os
 
 DEBUG = True if os.environ.get("FILE_DEBUG_MODE") == "true" else False
 
+# Notice：默认的SECRET_KEY仅测试用途，如在正式环境部署请重新生成
+# 生成方式：
+# 步骤一：执行 python 命令
+# 步骤二：输入代码： from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())
+# 步骤三：获取执行输出，拷贝替换下方的SECRET_KEY
 SECRET_KEY = os.environ.get("FILE_SECRET_KEY", "4uf)0sfdth1bn7t450_6)_^+pcx4qa8_nw5l1!g3gp%0loq5p^")
 
 # 服务域名
