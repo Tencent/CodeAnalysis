@@ -493,7 +493,7 @@ class BaseProject(CDBaseModel):
         else:
             return {}
 
-    def update_remark(self, **kwargs):
+    def update_remark(self, kwargs):
         """更新备注信息
         """
         self.remark = json.dumps(self.remark_info.update(**kwargs))

@@ -27,6 +27,11 @@ DEBUG = True if os.environ.get("ANALYSIS_DEBUG_MODE") == "true" else False
 # 管理员列表
 ADMINS = []
 
+# Notice：默认的SECRET_KEY仅测试用途，如在正式环境部署请重新生成
+# 生成方式：
+# 步骤一：执行 python 命令
+# 步骤二：输入代码： from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())
+# 步骤三：获取执行输出，拷贝替换下方的SECRET_KEY
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get("ANALYSIS_SECRET_KEY", "25n=e*_e=4q!ert$4u#9v&^2n+)_#mi7&7ll@x29@j=w=k^q@^")
 
