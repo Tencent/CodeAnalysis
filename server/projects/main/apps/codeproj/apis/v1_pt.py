@@ -172,6 +172,14 @@ class PTScanSchemeListAPIView(v3.ScanSchemeListApiView):
     """
 
 
+class PTRepositorySchemeCopyApiView(v3.RepositorySchemeCopyApiView):
+    """拷贝方案模板
+
+    ### POST
+    应用场景：仅用于拷贝方案模板
+    """
+
+
 class PTScanSchemeBasicConfAPIView(v3.ScanSchemeBasicConfApiView):
     """指定扫描方案详情接口，仅basic配置
 
