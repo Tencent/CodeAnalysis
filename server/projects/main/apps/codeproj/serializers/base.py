@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (c) 2021-2022 THL A29 Limited
+# Copyright (c) 2021-2023 THL A29 Limited
 #
 # This source code file is made available under MIT License
 # See LICENSE for details
@@ -1402,7 +1402,7 @@ class ProjectUpdatetSerializer(serializers.ModelSerializer):
         user = self.context["request"].user
         status = validated_data.get("status")
         if status == models.Project.StatusEnum.ARCHIVED_WITHOUT_CLEAN:
-            instance.update_remark(**{
+            instance.update_remark({
                 "archived_time": str(localnow()),
                 "clean_time": str(localnow() + settings.PROJECT_ARCHIVE_CLEAN_TIMEOUT)})
         elif status == models.Project.StatusEnum.ACTIVE \

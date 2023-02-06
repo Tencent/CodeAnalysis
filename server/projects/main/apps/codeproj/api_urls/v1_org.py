@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (c) 2021-2022 THL A29 Limited
+# Copyright (c) 2021-2023 THL A29 Limited
 #
 # This source code file is made available under MIT License
 # See LICENSE for details
@@ -77,7 +77,9 @@ repo_url_patterns = [
          v1_pt.PTProjectScanCreateAPIView.as_view(),
          name="apiv1_pt_project_team_repo_project_scans"),
     path("<int:repo_id>/schemes/", v1_pt.PTScanSchemeListAPIView.as_view(),
-         name="apiv1_pt_project_team_repo_scheme_detail"),
+         name="apiv1_pt_project_team_repo_scheme_list"),
+    path("<int:repo_id>/copyscheme/", v1_pt.PTRepositorySchemeCopyApiView.as_view(),
+         name="apiv1_pt_project_team_repo_scheme_copy"),
     path("<int:repo_id>/schemes/<int:scheme_id>/basicconf/", v1_pt.PTScanSchemeBasicConfAPIView.as_view(),
          name="apiv1_pt_project_team_repo_scheme_basicconf"),
     path("<int:repo_id>/schemes/<int:scheme_id>/lintconf/", v1_pt.PTScanSchemeLintConfAPIView.as_view(),

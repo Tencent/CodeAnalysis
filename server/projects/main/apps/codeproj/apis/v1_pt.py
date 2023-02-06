@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (c) 2021-2022 THL A29 Limited
+# Copyright (c) 2021-2023 THL A29 Limited
 #
 # This source code file is made available under MIT License
 # See LICENSE for details
@@ -169,6 +169,14 @@ class PTScanSchemeListAPIView(v3.ScanSchemeListApiView):
 
     ### POST
     应用场景：创建指定代码库的扫描方案
+    """
+
+
+class PTRepositorySchemeCopyApiView(v3.RepositorySchemeCopyApiView):
+    """拷贝方案模板
+
+    ### POST
+    应用场景：仅用于拷贝方案模板
     """
 
 

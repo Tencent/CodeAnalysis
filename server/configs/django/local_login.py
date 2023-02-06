@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (c) 2021-2022 THL A29 Limited
+# Copyright (c) 2021-2023 THL A29 Limited
 #
 # This source code file is made available under MIT License
 # See LICENSE for details
@@ -15,6 +15,11 @@ from .open_base import *
 
 DEBUG = True if os.environ.get("LOGIN_DEBUG_MODE") == "true" else False
 
+# Notice：默认的SECRET_KEY仅测试用途，如在正式环境部署请重新生成
+# 生成方式：
+# 步骤一：执行 python 命令
+# 步骤二：输入代码： from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())
+# 步骤三：获取执行输出，拷贝替换下方的SECRET_KEY
 SECRET_KEY = os.environ.get("LOGIN_SECRET_KEY", "iht%_(ixb)w&sedrh2t-ydxnre)uy+=_hv4v^8m@19p27r6sz_")
 
 # 数据库配置，可参考django数据库配置

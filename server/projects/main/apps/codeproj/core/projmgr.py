@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (c) 2021-2022 THL A29 Limited
+# Copyright (c) 2021-2023 THL A29 Limited
 #
 # This source code file is made available under MIT License
 # See LICENSE for details
@@ -1095,13 +1095,12 @@ class ProjectManager(object):
         if not project:
             raise ServerOperationError("分支项目[%s-%s]不存在" % (repo_id, project_id))
         project_str = str(project)
-        old_branch = project.branch
-        deleted_time = now()
-        logger.info("[User: %s] 在 %s 删除了 %s 分支项目" % (user.username, deleted_time, project))
-        project.branch = ("deleted by %s(%s)" % (user.username, deleted_time))[:198]
+        old_project_key = project.project_key
+        project.project_key = None
         project.status = models.Project.StatusEnum.DISACTIVE
-        project.update_remark(**{"branch": old_branch})
+        project.update_remark({"project_key": old_project_key})
         project.save()
+        logger.info("[User: %s] 在 %s 删除了 %s 分支项目" % (user.username, now(), project))
         project.delete(user=user)
         OperationRecordHandler.add_project_operation_record(
             project, "删除分支项目", user.username, message="删除分支项目: %s" % project_str
