@@ -1,4 +1,4 @@
-// Copyright (c) 2021-2023 THL A29 Limited
+// Copyright (c) 2021-2022 THL A29 Limited
 //
 // This source code file is made available under MIT License
 // See LICENSE for details
@@ -11,10 +11,9 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import qs from 'qs';
 import { toNumber, isEmpty, difference, omitBy, omit, cloneDeep } from 'lodash';
+import { Table, Button, message, Tag } from 'coding-oa-uikit';
 
-import { Table, Button, message } from 'coding-oa-uikit';
-import ArrowLeft from 'coding-oa-uikit/lib/icon/ArrowLeft';
-
+import Header from '@src/components/header';
 import { getSchemeRouter } from '@src/utils/getRoutePath';
 import { getQuery } from '@src/utils';
 import { DEFAULT_PAGER } from '@src/constant';
@@ -150,24 +149,26 @@ const AllRules = () => {
 
   return (
     <div className={style.packageRules}>
-      <div className={style.header}>
-        <span
-          className={style.backIcon}
-          onClick={() => history.push(`${getSchemeRouter(
-            orgSid,
-            teamName,
-            repoId,
-            schemeId,
-          )}/check-profiles/${checkProfileId}/pkg/${pkgId}`)
-          }
-        >
-          <ArrowLeft />
-        </span>
-        <div style={{ flex: 1 }}>
-          <h3 className={style.title}>批量添加规则</h3>
-        </div>
-      </div>
-
+      <Header
+        title="批量添加规则"
+        link={
+          params.pkgId
+          // 从自定义规则包进入
+            ? `${getSchemeRouter(
+              orgSid,
+              teamName,
+              repoId,
+              schemeId,
+            )}/check-profiles/${checkProfileId}/pkg/${pkgId}`
+            // 从已配置规则进入
+            : `${getSchemeRouter(
+              orgSid,
+              teamName,
+              repoId,
+              schemeId,
+            )}/check-profiles/${checkProfileId}/checkrules`
+        }
+      />
       <Search
         filters={{
           allPkgs,
@@ -227,6 +228,19 @@ const AllRules = () => {
           <Column title="所属工具" dataIndex={['checktool', 'display_name']} />
           <Column title="分类" dataIndex="category_name" />
           <Column title="问题级别" dataIndex="severity_name" width={80}/>
+          <Column
+            title="是否需要编译"
+            width={120}
+            dataIndex={['checktool', 'build_flag']}
+            render={(buildFlag: boolean) => (
+              <Tag
+                style={{ margin: 0 }}
+                className={buildFlag && style.buildTag}
+              >
+                {buildFlag ? '需要' : '无需'}编译
+              </Tag>
+            )}
+          />
         </Table>
       </div>
       <RuleDetail

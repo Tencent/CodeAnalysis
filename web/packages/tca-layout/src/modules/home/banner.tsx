@@ -5,6 +5,8 @@ import { useTranslation } from 'react-i18next';
 import { Button, Carousel } from 'coding-oa-uikit';
 import { getMetaContent } from '@tencent/micro-frontend-shared/util';
 import cn from 'classnames';
+import AngleLeft from 'coding-oa-uikit/lib/icon/AngleLeft';
+import AngleRight from 'coding-oa-uikit/lib/icon/AngleRight';
 
 // 项目内
 import CodeBannerPng from '@src/images/code-banner.png';
@@ -24,6 +26,18 @@ const CLIENT_GUIDE_URL = getMetaContent('CLIENT_GUIDE_URL');
 const path = routes[0]?.path || '/';
 const router = path instanceof Array ? path[0] : path;
 
+interface ArrowProps {
+  direction: 'left' | 'right'
+}
+
+const Arrow = ({ direction, ...carouselProps }: ArrowProps) => (
+  direction === 'left' ? (
+    <AngleLeft {...carouselProps} className={cn(s.arrowLeft, s.arrow)} />
+  ) : (
+    <AngleRight {...carouselProps} className={cn(s.arrowRight, s.arrow)} />
+  )
+);
+
 const Banner = () => {
   const history = useHistory();
   const { t } = useTranslation();
@@ -40,7 +54,13 @@ const Banner = () => {
       </div>
       <div className={s.sectionContainer}>
 
-        <Carousel autoplay>
+        <Carousel
+          autoplay
+          autoplaySpeed={5000}
+          arrows
+          nextArrow={<Arrow direction="right" />}
+          prevArrow={<Arrow direction="left" />}
+        >
           <div className={s.info}>
             <h2 className={s.title}>腾讯云代码分析</h2>
             <p className={s.pContent}>
@@ -76,7 +96,9 @@ const Banner = () => {
             <p className={s.pContent}>
               团队专机资源一键接入，自主管控机器资源和编译环境。
               <br />
-              分别提供客户端的二进制包和 Docker 镜像，可自由选择安装到专机中，无需额外部署，方便专机快速接入。
+              分别提供客户端的二进制包和 Docker 镜像，可自由选择安装到专机中，
+              <br />
+              无需额外部署，方便专机快速接入。
             </p>
             <div className={s.btnArea}>
               <Button
@@ -94,7 +116,9 @@ const Banner = () => {
             <p className={s.pContent}>
               用心关注每行代码迭代、助力传承卓越代码文化！
               <br />
-              精准跟踪管理代码分析发现的代码质量缺陷、代码规范、代码安全漏洞、无效代码，以及度量代码复杂度、重复代码、代码统计。
+              精准跟踪管理代码分析发现的代码质量缺陷、代码规范、代码安全漏洞、无效代码，
+              <br />
+              以及度量代码复杂度、重复代码、代码统计。
             </p>
             <div className={s.btnArea}>
               <Button

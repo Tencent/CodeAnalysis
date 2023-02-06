@@ -1,4 +1,4 @@
-// Copyright (c) 2021-2023 THL A29 Limited
+// Copyright (c) 2021-2022 THL A29 Limited
 //
 // This source code file is made available under MIT License
 // See LICENSE for details
@@ -110,6 +110,20 @@ const Search = (props: SearchProps) => {
           data={getData(language)}
           onChange={(value: any) => value && onChange('checkrule_language', value.join(','))
           }
+        />
+      </Filter.Item>
+      <Filter.Item label="是否需要编译" name="checktool_build_flag">
+        <SelectBorderless
+          allowClear
+          placeholder="全部"
+          data={[{
+            value: 'true',
+            text: '需要编译',
+          }, {
+            value: 'false',
+            text: '无需编译',
+          }]}
+          onChange={(value: any) => onChange('checktool_build_flag', value)}
         />
       </Filter.Item>
       <Filter.Item label="" name="checkrule_name">

@@ -1,4 +1,4 @@
-// Copyright (c) 2021-2023 THL A29 Limited
+// Copyright (c) 2021-2022 THL A29 Limited
 //
 // This source code file is made available under MIT License
 // See LICENSE for details
@@ -30,6 +30,7 @@ import Loading from '@src/components/loading';
 import Projects from '@src/modules/projects';
 import PkgRules from '@src/modules/schemes/code-lint/pkg-rules';
 import AllRules from '@src/modules/schemes/code-lint/all-rules';
+import SchemeCheckRules from '@src/modules/schemes/code-lint/rules';
 import Schemes from '@src/modules/schemes';
 
 import Welcome from '@src/modules/welcome';
@@ -186,8 +187,19 @@ const Routers = () => {
       />
       <Route
         exact
-        path={`${SCHEMES_ROUTE_PREFIX}/check-profiles/:checkProfileId/pkg/:pkgId/add-rule`}
+        path={[
+          // 从自定义规则包跳转的路由匹配
+          `${SCHEMES_ROUTE_PREFIX}/check-profiles/:checkProfileId/pkg/:pkgId/add-rule`,
+          // 从已配置规则列表跳转的路由匹配
+          `${SCHEMES_ROUTE_PREFIX}/check-profiles/:checkProfileId/add-rule`,
+        ]}
+        // path={`${SCHEMES_ROUTE_PREFIX}/check-profiles/:checkProfileId/pkg/:pkgId/add-rule`}
         component={AllRules}
+      />
+      <Route
+        exact
+        path={`${SCHEMES_ROUTE_PREFIX}/check-profiles/:checkProfileId/checkrules`}
+        component={SchemeCheckRules}
       />
       {/* <Route path={`${BASE_ROUTE_PREFIX}/schemes/:schemeId?/:tabs?`} component={Schemes} /> */}
       <Route path={`${SCHEMES_ROUTE_PREFIX}/:tabs?`} component={Schemes} />
