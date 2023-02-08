@@ -26,7 +26,7 @@ minio==7.1.0
 # for password
 pyaes==1.6.1
 pycryptodome==3.9.8
-cryptography==3.3.2
+cryptography==39.0.1
 
 # for monitor
 django-prometheus==2.0.0
