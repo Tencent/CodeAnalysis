@@ -13,7 +13,7 @@ import Copy from '@tencent/micro-frontend-shared/component/copy';
 
 import { NAMESPACE, UserState } from '@src/store/user';
 import { getTeamInfo, updateTeamInfo, disableTeam } from '@src/services/team';
-import { getExtraTeamInfos } from '@plat/modules/team';
+import { getExtraTeamInfos, ENABLE_DELETE_ORG } from '@plat/modules/team';
 import style from './style.scss';
 
 const layout = {
@@ -189,7 +189,7 @@ const Profile = () => {
                 {t('编辑')}
               </Button>
             )}
-            {deletable && <Button className=" ml-12" htmlType="button" onClick={onDelete} danger type='primary'>
+            {ENABLE_DELETE_ORG && deletable && <Button className=" ml-12" htmlType="button" onClick={onDelete} danger type='primary'>
               {t('禁用团队')}
             </Button>}
           </div>

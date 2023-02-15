@@ -117,7 +117,7 @@ $content-min-height: $foot-height + 48px;
       .info {
         color: $white;
         font-weight: 500;
-        padding-top: 96px;
+        padding: 96px 96px 0px 96px;
       }
 
       .title {
@@ -130,7 +130,7 @@ $content-min-height: $foot-height + 48px;
 
       .p-content {
         font-size: 16px;
-        max-width: 588px;
+        max-width: 600px;
         line-height: 30px;
       }
 
@@ -319,5 +319,33 @@ $content-min-height: $foot-height + 48px;
         width: 100%;
       }
     }
+  }
+}
+
+.arrow {
+  color: rgba(255,255,255,0.55);
+  font-size: 20px;
+  height: 20px;
+  width: 20px;
+  position: absolute;
+  top: 50%;
+  display: block;
+  margin-top: -10px;
+  padding: 0;
+  border: 0;
+  outline: none;
+  cursor: pointer;
+  z-index: 2;
+
+  &:hover {
+    color: rgba(255,255,255,0.85);
+  }
+
+  &-left {
+    left: 10px;
+  }
+
+  &-right {
+    right: 10px;
   }
 }

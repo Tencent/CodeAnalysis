@@ -1,4 +1,4 @@
-// Copyright (c) 2021-2023 THL A29 Limited
+// Copyright (c) 2021-2022 THL A29 Limited
 //
 // This source code file is made available under MIT License
 // See LICENSE for details
@@ -24,7 +24,7 @@ import {
   getSchemesByBranch,
 } from '@src/services/projects';
 
-import ScanModal from './project/scan-modal';
+import ScanModal from '@plat/modules/projects/scan-modal';
 import NewProjectModal from './project/new-project-modal';
 import Issues from './issues';
 import Overview from './overview';

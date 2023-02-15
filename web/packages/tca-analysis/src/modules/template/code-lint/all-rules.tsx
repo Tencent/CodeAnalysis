@@ -1,4 +1,4 @@
-// Copyright (c) 2021-2023 THL A29 Limited
+// Copyright (c) 2021-2022 THL A29 Limited
 //
 // This source code file is made available under MIT License
 // See LICENSE for details
@@ -12,7 +12,7 @@ import { useParams, useHistory } from 'react-router-dom';
 import qs from 'qs';
 import { toNumber, isEmpty, difference, omitBy, omit, cloneDeep } from 'lodash';
 
-import { Table, Button, message } from 'coding-oa-uikit';
+import { Table, Button, message, Tag } from 'coding-oa-uikit';
 import ArrowLeft from 'coding-oa-uikit/lib/icon/ArrowLeft';
 
 import { getTmplRouter } from '@src/utils/getRoutePath';
@@ -227,6 +227,19 @@ const AllRules = () => {
           <Column title="所属工具" dataIndex={['checktool', 'display_name']} />
           <Column title="分类" dataIndex="category_name" />
           <Column title="问题级别" dataIndex="severity_name" />
+          <Column
+            title="是否需要编译"
+            width={120}
+            dataIndex={['checktool', 'build_flag']}
+            render={(buildFlag: boolean) => (
+              <Tag
+                style={{ margin: 0 }}
+                className={buildFlag && style.buildTag}
+              >
+                {buildFlag ? '需要' : '无需'}编译
+              </Tag>
+            )}
+          />
         </Table>
       </div>
       <RuleDetail

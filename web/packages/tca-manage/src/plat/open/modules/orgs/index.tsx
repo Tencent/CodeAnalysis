@@ -10,7 +10,7 @@ import { DeleteModal } from '@tencent/micro-frontend-shared/tdesign-component/mo
 import s from '@src/modules/style.scss';
 
 // 模块内
-import { ORG_FILTER_FIELDS as filterFields, ORG_SEARCH_FIELDS, OrgStateEnum } from './constants';
+import { ORG_FILTER_FIELDS as filterFields, ORG_SEARCH_FIELDS, OrgStatusEnum } from './constants';
 import OrgTable from './org-table';
 
 const { TabPanel } = Tabs;
@@ -31,7 +31,7 @@ const Orgs = () => {
 
   /** 删除团队操作 */
   const handleDeleteOrg = () => {
-    putOrgStatus(curOrg.org_sid, { status: OrgStateEnum.INACTIVE }).then(() => {
+    putOrgStatus(curOrg.org_sid, { status: OrgStatusEnum.INACTIVE }).then(() => {
       MessagePlugin.success(t('已禁用团队'));
       reload();
       setDeleteVisible(false);
@@ -45,7 +45,7 @@ const Orgs = () => {
       header: t('恢复团队'),
       body: t('确定要恢复已禁用的团队吗？'),
       onConfirm() {
-        putOrgStatus(org.org_sid, { status: OrgStateEnum.ACTIVE }).then(() => {
+        putOrgStatus(org.org_sid, { status: OrgStatusEnum.ACTIVE }).then(() => {
           MessagePlugin.success(t('已恢复团队'));
           confirmDia.hide();
           reload();
