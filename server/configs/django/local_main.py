@@ -27,6 +27,11 @@ ALLOWED_HOSTS = ["*"]
 # 管理员列表
 ADMINS = []
 
+# Notice：默认的SECRET_KEY仅测试用途，如在正式环境部署请重新生成
+# 生成方式：
+# 步骤一：执行 python 命令
+# 步骤二：输入代码： from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())
+# 步骤三：获取执行输出，拷贝替换下方的SECRET_KEY
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get("MAIN_SECRET_KEY", "lh+6y8pyf16bbor*)p=kp=p(cg615+y+5nnin$l(n%os$8z^v%")
 
@@ -106,6 +111,7 @@ FILE_SERVER = {
 }
 
 # 登录鉴权公钥
+# Notice：默认的公钥仅测试用途，如在正式环境部署请重新生成
 AUTHORIZATION_PUBKEY = """-----BEGIN PUBLIC KEY-----
 MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDtuJtwo+ZkqAA7ZKNdzcQM1N+r
 anRqpNE+R4MKfzCa4uKURK9z7cG6DQT6ihpdSYw36iaMIRMYUM7SsismpYYe68q3

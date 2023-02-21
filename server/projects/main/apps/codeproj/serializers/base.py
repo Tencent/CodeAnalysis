@@ -1402,7 +1402,7 @@ class ProjectUpdatetSerializer(serializers.ModelSerializer):
         user = self.context["request"].user
         status = validated_data.get("status")
         if status == models.Project.StatusEnum.ARCHIVED_WITHOUT_CLEAN:
-            instance.update_remark(**{
+            instance.update_remark({
                 "archived_time": str(localnow()),
                 "clean_time": str(localnow() + settings.PROJECT_ARCHIVE_CLEAN_TIMEOUT)})
         elif status == models.Project.StatusEnum.ACTIVE \
