@@ -1175,7 +1175,7 @@ class RepoProjectInitialSerializer(serializers.Serializer):
         if repo.scm_type == models.Repository.ScmTypeEnum.GIT:
             scm_url = "%s#%s" % (repo.get_scm_url_with_auth(), branch)
         else:
-            scm_url = "%s/%s" % (repo.scm_url, branch)
+            scm_url = "%s/%s" % (repo.get_scm_url_with_auth(), branch)
         logger.info("check branch validate: %s" % scm_url)
         scm_client = core.ScmClientManager.get_scm_client_with_repo(repo, scm_url=scm_url)
         try:
@@ -1312,7 +1312,7 @@ class ProjectSerializer(CDBaseModelSerializer):
         if repo.scm_type == models.Repository.ScmTypeEnum.GIT:
             scm_url = "%s#%s" % (repo.get_scm_url_with_auth(), branch)
         else:
-            scm_url = "%s/%s" % (repo.scm_url, branch)
+            scm_url = "%s/%s" % (repo.get_scm_url_with_auth(), branch)
         logger.info("check branch validate: %s" % scm_url)
         scm_client = core.ScmClientManager.get_scm_client_with_repo(repo, scm_url=scm_url)
         try:
