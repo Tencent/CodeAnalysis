@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (c) 2021-2022 THL A29 Limited
+# Copyright (c) 2021-2023 THL A29 Limited
 #
 # This source code file is made available under MIT License
 # See LICENSE for details
@@ -8,19 +8,22 @@
 """
 codeproj - project core
 """
+# 原生 import
 import json
 import logging
 import uuid
 
+# 第三方 import
 from django.db.models import Q
 from django.db.utils import IntegrityError
 from django.utils.timezone import now
 
-from apps.authen.models import Organization, ScmAuth, ScmAccount
+# 项目内 import
+from apps.authen.models import Organization, ScmAccount, ScmAuth
 from apps.codeproj import models
-from apps.scan_conf.core import add_checkrules_to_checkpackage, CheckProfileManager, CheckRuleManager
+from apps.scan_conf.core import CheckProfileManager, CheckRuleManager, add_checkrules_to_checkpackage
 from apps.scan_conf.models import CheckProfile, PackageMap
-from util.exceptions import ServerConfigError, ServerOperationError, RepositoryCreateError, errcode, ProjectCreateError
+from util.exceptions import ProjectCreateError, RepositoryCreateError, ServerConfigError, ServerOperationError, errcode
 from util.operationrecord import OperationRecordHandler
 from util.scm import ScmClient
 from util.webclients import AnalyseClient
@@ -771,8 +774,10 @@ class ScanSchemeManager(object):
         metric_setting.dup_issue_limit = metric_setting_data.get("dup_issue_limit", metric_setting.dup_issue_limit)
         metric_setting.cloc_scan_enabled = metric_setting_data.get("cloc_scan_enabled",
                                                                    metric_setting.cloc_scan_enabled)
-        metric_setting.core_file_path = metric_setting_data.get("core_file_path", metric_setting.core_file_path)
-        metric_setting.file_mon_path = metric_setting_data.get("file_mon_path", metric_setting.file_mon_path)
+        metric_setting.core_file_path = metric_setting_data.get("core_file_path",
+                                                                metric_setting.core_file_path)
+        metric_setting.file_mon_path = metric_setting_data.get("file_mon_path",
+                                                               metric_setting.file_mon_path)
         metric_setting.save(user)
 
     @classmethod
@@ -1026,6 +1031,43 @@ class ProjectManager(object):
     """
 
     @classmethod
+    def format_scan_path(cls, scan_path):
+        """格式化scan_path
+        """
+        scan_path = scan_path.strip()
+        if not scan_path or scan_path == "/" or scan_path == "./":
+            scan_path = "/"
+        elif scan_path.startswith("./"):
+            scan_path = scan_path[2:].strip("/")
+        else:
+            scan_path = scan_path.strip("/")
+        return scan_path
+
+    @classmethod
+    def create_project(cls, repo, scan_scheme, branch, scan_path=None, **kwargs):
+        """创建项目
+        """
+        if not scan_path:
+            scan_path = "/"
+        else:
+            scan_path = cls.format_scan_path(scan_path)
+
+        project_key = models.Project.gen_project_key(
+            repo_id=repo.id, scheme_id=scan_scheme.id, branch=branch, scan_path=scan_path)
+        project, created = models.Project.objects.get_or_create(
+            project_key=project_key,
+            defaults={
+                "repo_id": repo.id,
+                "branch": branch,
+                "scan_scheme_id": scan_scheme.id,
+                "scan_path": scan_path,
+                "creator": kwargs.get("creator"),
+                "created_from": kwargs.get("created_from") or models.Project.CreatedFromEnum.WEB,
+                "refer_project": kwargs.get("refer_project"),
+            })
+        return project, created
+
+    @classmethod
     def create_project_on_analysis_server(cls, project, user):
         """在Analysis服务器创建项目
         """
@@ -1034,6 +1076,7 @@ class ProjectManager(object):
                 "id": project.id,
                 "repo_id": project.repo_id,
                 "scan_scheme_id": project.scan_scheme_id,
+                "scan_path": project.scan_path,
                 "creator": user.username,
                 "scm_type": project.scm_type,
                 "scm_url": project.scm_url,
@@ -1052,13 +1095,25 @@ class ProjectManager(object):
         if not project:
             raise ServerOperationError("分支项目[%s-%s]不存在" % (repo_id, project_id))
         project_str = str(project)
-        old_branch = project.branch
-        deleted_time = now()
-        logger.info("[User: %s] 在 %s 删除了 %s 分支项目" % (user.username, deleted_time, project))
-        project.branch = ("deleted by %s(%s)" % (user.username, deleted_time))[:198]
-        project.remark = json.dumps({"branch": old_branch})
+        old_project_key = project.project_key
+        project.project_key = None
+        project.status = models.Project.StatusEnum.DISACTIVE
+        project.update_remark({"project_key": old_project_key})
         project.save()
+        logger.info("[User: %s] 在 %s 删除了 %s 分支项目" % (user.username, now(), project))
         project.delete(user=user)
         OperationRecordHandler.add_project_operation_record(
             project, "删除分支项目", user.username, message="删除分支项目: %s" % project_str
         )
+
+    @classmethod
+    def filter_disactive_projects(cls, queries):
+        """筛选失活项目
+        """
+        return models.Project.objects.filter(status=models.Project.StatusEnum.DISACTIVE).filter(**queries)
+
+    @classmethod
+    def filter_deleted_projects(cls, queries):
+        """筛选已删除的项目
+        """
+        return models.Project.everything.filter(deleted_time__isnull=False).filter(**queries)

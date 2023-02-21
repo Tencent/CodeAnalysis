@@ -17,6 +17,9 @@ import s from './style.scss';
 // 开源地址
 const GITHUB_URL = getMetaContent('GITHUB_URL');
 
+// 客户端指引URL地址
+const CLIENT_GUIDE_URL = getMetaContent('CLIENT_GUIDE_URL');
+
 // 获取当前第一个路由
 const path = routes[0]?.path || '/';
 const router = path instanceof Array ? path[0] : path;
@@ -36,6 +39,7 @@ const Banner = () => {
         </div>
       </div>
       <div className={s.sectionContainer}>
+
         <Carousel autoplay>
           <div className={s.info}>
             <h2 className={s.title}>腾讯云代码分析</h2>
@@ -67,6 +71,24 @@ const Banner = () => {
               )}
             </div>
           </div>
+          {CLIENT_GUIDE_URL && <div className={s.info}>
+            <h2 className={s.title}>客户端节点接入</h2>
+            <p className={s.pContent}>
+              团队专机资源一键接入，自主管控机器资源和编译环境。
+              <br />
+              分别提供客户端的二进制包和 Docker 镜像，可自由选择安装到专机中，无需额外部署，方便专机快速接入。
+            </p>
+            <div className={s.btnArea}>
+              <Button
+                className={s.btn}
+                type="link"
+                href={CLIENT_GUIDE_URL}
+                target="_blank"
+              >
+                {t('接入指引')}
+              </Button>
+            </div>
+          </div>}
           {GITHUB_URL && <div className={s.info}>
             <h2 className={s.title}>我们开源啦</h2>
             <p className={s.pContent}>

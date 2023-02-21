@@ -1,4 +1,4 @@
-import { get, post, put, del, MAIN_SERVER_API } from '@plat/api';
+import { get, post, put, del, MAIN_SERVER_API, postFile } from '@plat/api';
 
 const getNodePrefix = (orgId: string) => `${MAIN_SERVER_API}/orgs/${orgId}/nodes/`;
 
@@ -8,6 +8,14 @@ const getNodePrefix = (orgId: string) => `${MAIN_SERVER_API}/orgs/${orgId}/nodes
  * @param params 筛选参数
  */
 export const getNodes = (orgId: string, params: any = null) => get(getNodePrefix(orgId), params);
+
+/**
+ * 创建节点
+ * @param orgId
+ * @param data
+ * @returns
+ */
+export const createNode = (orgId: string, data: any) => post(`${getNodePrefix(orgId)}create/`, data);
 
 /**
  * 获取节点详情
@@ -30,6 +38,22 @@ export const putNode = (orgId: string, nodeId: number | string, data: any) => pu
  * @param nodeId
  */
 export const delNode = (orgId: string, nodeId: number | string) => del(`${getNodePrefix(orgId)}${nodeId}/`);
+
+/**
+ * 获取节点启动命令
+ * @param orgId
+ * @param nodeId
+ * @returns
+ */
+export const getNodeCommand = (orgId: string, nodeId: number | string) => get(`${getNodePrefix(orgId)}${nodeId}/command/`);
+
+/**
+ * 获取节点启动配置文件
+ * @param orgId
+ * @param nodeId
+ * @returns
+ */
+export const getConfigIni = (orgId: string, nodeId: number | string, params: any) => postFile(`${getNodePrefix(orgId)}${nodeId}/configini/`, params);
 
 /**
  * 获取节点进程

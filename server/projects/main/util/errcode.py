@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (c) 2021-2022 THL A29 Limited
+# Copyright (c) 2021-2023 THL A29 Limited
 #
 # This source code file is made available under MIT License
 # See LICENSE for details
@@ -27,7 +27,6 @@ E_SERVER_JOB_CREATE_ERROR = 120
 E_SERVER_JOB_INIT_ERROR = 121
 E_SERVER_JOB_MIGRATE_ERROR = 122
 E_SERVER_SCAN_TIMEOUT = 199
-
 
 # 节点端错误
 E_NODE = 200
@@ -60,6 +59,14 @@ E_NODE_TASK_CANCEL = 299
 E_CLIENT = 300
 E_CLIENT_CANCELED = 301
 E_CLIENT_CONFIG_ERROR = 302
+E_USER_CONFIG_BASIC_ERROR = 310  # 扫描方案配置错误
+E_USER_CONFIG_LANG_ERROR = 311  # 扫描方案未配置语言
+E_USER_CONFIG_NO_LINT_OR_METRIC = 312  # 扫描方案未启用代码扫描或代码度量
+E_USER_CONFIG_NODE_ERROR = 313  # 扫描方案配置的标签或关联节点失效
+E_USER_CONFIG_CODELINT_ERROR = 320  # 扫描方案代码扫描配置错误
+E_USER_CONFIG_CODELINT_PKG_ERROR = 321  # 扫描方案的代码扫描未配置规则
+E_USER_CONFIG_CODEMETRIC_ERROR = 330  # 扫描方案的代码度量未配置错误
+E_USER_CONFIG_NO_OAUTH = 340  # 当前用户未OAuth授权
 
 # E_SERVER请求错误
 E_SERVER_BASE = 1000  # server端错误
@@ -172,6 +179,13 @@ _CLIENT_ERROR_CHOICE = (
     (E_CLIENT, "用户取消或配置错误"),
     (E_CLIENT_CANCELED, "用户取消"),
     (E_CLIENT_CONFIG_ERROR, "配置错误"),
+    (E_USER_CONFIG_BASIC_ERROR, "扫描方案配置错误"),
+    (E_USER_CONFIG_LANG_ERROR, "扫描方案未配置语言"),
+    (E_USER_CONFIG_NO_LINT_OR_METRIC, "扫描方案未启用代码扫描或代码度量"),
+    (E_USER_CONFIG_NODE_ERROR, "扫描方案配置的标签或关联节点失效"),
+    (E_USER_CONFIG_CODELINT_ERROR, "扫描方案的代码扫描配置错误"),
+    (E_USER_CONFIG_CODELINT_PKG_ERROR, "扫描方案未配置扫描规则"),
+    (E_USER_CONFIG_CODEMETRIC_ERROR, "扫描方案的代码度量配置错误"),
 )
 
 CLIENT_ERROR_DICT = dict(_CLIENT_ERROR_CHOICE)
@@ -191,13 +205,15 @@ EXCEPTION_TYPE = {
     "API 请求异常": [E_NODE_TASK_RESFULAPI, E_NODE_REQUESTS_API],
     "客户端压缩异常": [E_NODE_ZIP],
     "任务取消或配置异常": [E_CLIENT, E_CLIENT_CANCELED, E_CLIENT_CONFIG_ERROR, E_NODE_TASK_PARAM, E_NODE_TASK_CONFIG,
-                  E_NODE_JOB_BEAT_ERROR],
+                  E_NODE_JOB_BEAT_ERROR, E_USER_CONFIG_BASIC_ERROR, E_USER_CONFIG_LANG_ERROR,
+                  E_USER_CONFIG_NO_LINT_OR_METRIC, E_USER_CONFIG_NODE_ERROR, E_USER_CONFIG_CODELINT_ERROR,
+                  E_USER_CONFIG_CODELINT_PKG_ERROR, E_USER_CONFIG_CODEMETRIC_ERROR],
     "第三方工具执行异常": [E_NODE_TASK, E_NODE_LOCAL_SCAN],
 }
 
-SUCCESS_TYPE_KEY = '成功'
+SUCCESS_TYPE_KEY = "成功"
 
-PLATFORM_TYPE_KEYS = ['API 请求异常', '客户端未明确异常', '平台服务异常', '任务执行时异常']
+PLATFORM_TYPE_KEYS = ["API 请求异常", "客户端未明确异常", "平台服务异常", "任务执行时异常"]
 
 
 def _get_display_name(choice, code):
@@ -277,8 +293,8 @@ def get_platform_type():
     """获取平台类型分类，包含平台、成功
     """
     codes = []
-    platform_type_keys = ['成功', '中间文件传输时资源异常', 'API 请求异常', '客户端未明确异常',
-                          '客户端压缩异常', '平台服务异常', '任务执行时异常']
+    platform_type_keys = ["成功", "中间文件传输时资源异常", "API 请求异常", "客户端未明确异常",
+                          "客户端压缩异常", "平台服务异常", "任务执行时异常"]
     for key in EXCEPTION_TYPE:
         if key in platform_type_keys:
             codes.extend(EXCEPTION_TYPE[key])

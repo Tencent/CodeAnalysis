@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (c) 2021-2022 THL A29 Limited
+# Copyright (c) 2021-2023 THL A29 Limited
 #
 # This source code file is made available under MIT License
 # See LICENSE for details
@@ -83,7 +83,7 @@ class NodeManager(object):
             if data.get("org_sid"):
                 logger.info("[Node: %s] 团队节点需手动初始化" % node)
             else:
-                NodeManager.init_node_config(node, data.get("os_info"))
+                NodeManager.init_node_config(node, data.get("os_info"), data.get("tag"))
         return {'id': node.id}
 
     @classmethod
@@ -133,57 +133,43 @@ class NodeManager(object):
         return node
 
     @classmethod
-    def init_node_config(cls, node, node_os=None):
+    def init_node_config(cls, node, node_os=None, node_tag=None):
         """初始化节点配置（关联工具和标签）
         """
-        for checktool in scan_conf_models.CheckTool.objects.all():
-            if not checktool.is_public() or (checktool.license and "商业" in checktool.license):
-                continue
-            processes = scan_conf_models.Process.objects.filter(checktool=checktool)
-            for process in processes:
-                models.NodeToolProcessRelation.objects.get_or_create(node=node, checktool=checktool, process=process)
+
         if not node_os:
             node_os = ""
-        if "linux" in node_os.lower():
-            linux_tag = models.ExecTag.objects.filter(name__contains="Linux", public=True).first()
-            node.exec_tags.add(linux_tag)
+        if node_tag:
+            node.exec_tags.add(node_tag)
+            tag = node_tag
+        elif "linux" in node_os.lower():
+            tag = models.ExecTag.objects.filter(name__contains="Linux", public=True).first()
+            node.exec_tags.add(tag)
         elif "windows" in node_os.lower():
-            windows_tag = models.ExecTag.objects.filter(name__contains="Windows", public=True).first()
-            node.exec_tags.add(windows_tag)
+            tag = models.ExecTag.objects.filter(name__contains="Windows", public=True).first()
+            node.exec_tags.add(tag)
         elif "mac" in node_os.lower() or "darwin" in node_os.lower():
-            mac_tag = models.ExecTag.objects.filter(name__contains="Mac", public=True).first()
-            node.exec_tags.add(mac_tag)
+            tag = models.ExecTag.objects.filter(name__contains="Mac", public=True).first()
+            node.exec_tags.add(tag)
         else:
             logger.warning("[Node: %s] 无法识别当前操作系统[%s]，默认设置为Linux公共标签" % (node.addr, node_os))
-            linux_tag = models.ExecTag.objects.filter(name__contains="Linux", public=True).first()
-            node.exec_tags.add(linux_tag)
+            tag = models.ExecTag.objects.filter(name__contains="Linux", public=True).first()
+            node.exec_tags.add(tag)
 
-    @classmethod
-    def update_node_processes(cls, node, data):
-        """更新节点进程
-        """
-        delete_ids = []
-        checktool_dict = {
-            checktool.name: checktool for checktool in scan_conf_models.CheckTool.objects.all()}
-        process_dict = {
-            process.name: process for process in scan_conf_models.Process.objects.all()}
-        for checktool__name, process_relations in data.items():
-            checktool = checktool_dict.get(checktool__name)
-            if checktool:
-                for process__name, setting in process_relations.items():
-                    process = process_dict.get(process__name)
-                    if setting["supported"]:
-                        if process and not models.NodeToolProcessRelation.objects.filter(node=node, checktool=checktool,
-                                                                                         process=process):
-                            models.NodeToolProcessRelation.objects.create(
-                                node=node, checktool=checktool, process=process)
-                    else:  # not supported
-                        relations = models.NodeToolProcessRelation.objects.filter(
-                            node=node, checktool=checktool, process=process).first()
-                        if relations:
-                            delete_ids.append(relations.id)
-        models.NodeToolProcessRelation.objects.filter(
-            id__in=delete_ids).delete()
+        if not models.TagToolProcessRelation.objects.first():
+            """当未匹配到标签进程时，自动选择公开工具进行配置
+            """
+            if tag.public is True:
+                for checktool in scan_conf_models.CheckTool.objects.all():
+                    if not checktool.is_public() or (checktool.license and "商业" in checktool.license):
+                        continue
+                    processes = scan_conf_models.Process.objects.filter(checktool=checktool)
+                    for process in processes:
+                        models.NodeToolProcessRelation.objects.get_or_create(node=node, checktool=checktool,
+                                                                             process=process)
+        else:
+            all_processes = cls.get_support_process_relations(cls.get_all_processes(), tag)
+            cls.update_node_processes(node, all_processes)
 
     @classmethod
     def batch_update_node_processes(cls, nodes, data):
@@ -198,7 +184,104 @@ class NodeManager(object):
         包含相关责任人、节点标签等
         """
         for node in nodes:
-            if data.get("related_managers"):
+            if data.get("related_managers") is not None:
                 node.related_managers.set(data.get("related_managers"))
-            if data.get("exec_tags"):
+            if data.get("exec_tags") is not None:
                 node.exec_tags.set(data.get("exec_tags"))
+            if data.get("enabled") is not None:
+                node.enabled = data["enabled"]
+                node.save()
+
+    @classmethod
+    def get_checktool_dict(cls):
+        """获取检查工具映射
+        """
+        checktool_dict = {
+            checktool.name: checktool for checktool in scan_conf_models.CheckTool.objects.all()}
+        return checktool_dict
+
+    @classmethod
+    def get_process_dict(cls):
+        """获取进程映射
+        """
+        process_dict = {
+            process.name: process for process in scan_conf_models.Process.objects.all()}
+        return process_dict
+
+    @classmethod
+    def get_all_processes(cls):
+        """获取所有工具进程
+        """
+        all_processes = {}
+        for tool_process in scan_conf_models.ToolProcessRelation.objects.all():
+            processes = all_processes.get(tool_process.checktool.name, {})
+            processes.update({tool_process.process.name: {"supported": False}})
+            all_processes.update({tool_process.checktool.name: processes})
+        return all_processes
+
+    @classmethod
+    def get_support_process_relations(cls, all_processes, obj):
+        """获取已支持的进程关系数据
+        """
+        if isinstance(obj, models.ExecTag):
+            fields = {"tag": obj}
+            relation_cls = models.TagToolProcessRelation
+        elif isinstance(obj, models.Node):
+            fields = {"node": obj}
+            relation_cls = models.NodeToolProcessRelation
+        else:
+            return
+        for process_relation in relation_cls.objects.filter(**fields):
+            try:
+                all_processes[process_relation.checktool.name][
+                    process_relation.process.name]["supported"] = True
+                all_processes[process_relation.checktool.name][
+                    process_relation.process.name]["id"] = process_relation.id
+            except Exception as e:  # NOCA:broad-except(可能存在多种异常)
+                logger.exception("[Tool: %s][Process: %s] err: %s" % (
+                    process_relation.checktool.name, process_relation.process.name, e))
+        return all_processes
+
+    @classmethod
+    def update_process_relations(cls, data, obj):
+        """更新指定对象的进程映射关系
+        """
+        if isinstance(obj, models.ExecTag):
+            fields = {"tag": obj}
+            relation_cls = models.TagToolProcessRelation
+        elif isinstance(obj, models.Node):
+            fields = {"node": obj}
+            relation_cls = models.NodeToolProcessRelation
+        else:
+            return
+
+        delete_ids = {}
+        checktool_dict = cls.get_checktool_dict()
+        process_dict = cls.get_process_dict()
+        for checktool__name, process_relations in data.items():
+            checktool = checktool_dict.get(checktool__name)
+            if checktool:
+                for process__name, setting in process_relations.items():
+                    process = process_dict.get(process__name)
+                    if setting["supported"]:
+                        if process and not relation_cls.objects.filter(
+                                checktool=checktool, process=process, **fields):
+                            relation_cls.objects.create(checktool=checktool, process=process, **fields)
+                    else:  # not supported
+                        relations = relation_cls.objects.filter(checktool=checktool, process=process, **fields).first()
+                        if relations:
+                            delete_ids[relations.id] = {"tool": checktool.name, "process": process.name}
+        logger.info("%s delete node tool process: %s" % (fields, list(delete_ids.values())))
+        relation_cls.objects.filter(id__in=list(delete_ids.keys())).delete()
+
+    @classmethod
+    def update_node_processes(cls, node, data):
+        """更新节点进程
+        """
+        cls.update_process_relations(data, node)
+
+    @classmethod
+    def update_tag_processes(cls, tag, data):
+        """更新标签进程
+        """
+        cls.update_process_relations(data, tag)

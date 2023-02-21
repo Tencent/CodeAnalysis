@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (c) 2021-2022 THL A29 Limited
+# Copyright (c) 2021-2023 THL A29 Limited
 #
 # This source code file is made available under MIT License
 # See LICENSE for details
@@ -119,6 +119,8 @@ class NodeBatchUpdateSerializer(serializers.Serializer):
     exec_tags = serializers.SlugRelatedField(
         queryset=models.ExecTag.objects.all(), slug_field="name", many=True,
         allow_null=True, allow_empty=True, required=False)
+    enabled = serializers.ChoiceField(
+        choices=models.Node.ENABLED_CHOICES, required=False, help_text="节点状态")
 
 
 class NodeTaskSerializer(serializers.ModelSerializer):
@@ -133,6 +135,7 @@ class NodeTaskSerializer(serializers.ModelSerializer):
         return {
             "id": project.id,
             "branch": branch,
+            "repo_id": project.repo_id,
             "scm_url": repo_scm_url
         }
 

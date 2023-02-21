@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (c) 2021-2022 THL A29 Limited
+# Copyright (c) 2021-2023 THL A29 Limited
 #
 # This source code file is made available under MIT License
 # See LICENSE for details
@@ -68,12 +68,13 @@ class RepositoryListSerializer(CDBaseModelSerializer):
     project_team = base.ProjectTeamSimpleSerializer(read_only=True)
 
     def get_recent_active(self, repo):
-        job = Job.objects.filter(project__repo=repo).order_by("-start_time").first()
+        job = Job.objects.filter(project__repo=repo).order_by("-start_time") \
+            .only('project__branch', 'start_time', 'total_line_num', 'code_line_num') \
+            .first()
         if job:
-            project = job.project
             return {
-                "id": project.id,
-                "branch_name": project.branch,
+                "id": job.project_id,
+                "branch_name": job.project.branch,
                 "active_time": job.start_time,
                 "total_line_num": job.total_line_num,
                 "code_line_num": job.code_line_num
@@ -267,7 +268,6 @@ class RepositoryAuthUpdateSerializer(serializers.Serializer):
         # 与RepositoryCreateSerializer校验鉴权相同
         scm_auth = attrs.get("scm_auth")
         auth_type = scm_auth.get("auth_type")
-
         if auth_type == models.ScmAuth.ScmAuthTypeEnum.OAUTH:
             scm_oauth = scm_auth.get("scm_oauth")
             scm_oauth_id = scm_oauth.id if scm_oauth else None
@@ -509,7 +509,7 @@ class ProjectSerializer(base.ProjectSerializer):
     class Meta:
         model = models.Project
         exclude = ["scm_auth", "scm_initial_revision", "refer_project"]
-        read_only_fields = ["repo", "scan_scheme", "status"]
+        read_only_fields = ["repo", "scan_scheme", "status", "project_key"]
 
 
 class ProjectUpdatetSerializer(base.ProjectUpdatetSerializer):

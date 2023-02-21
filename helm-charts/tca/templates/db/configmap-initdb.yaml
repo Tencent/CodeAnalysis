@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "tca.fullname" . }}-db-init
+data:
+  init.sql: |
+    CREATE DATABASE IF NOT EXISTS {{ .Values.tca.main.settings.dbName }} CHARACTER SET UTF8mb4 COLLATE utf8mb4_general_ci;
+    CREATE DATABASE IF NOT EXISTS {{ .Values.tca.analysis.settings.dbName }} CHARACTER SET UTF8mb4 COLLATE utf8mb4_general_ci;
+    CREATE DATABASE IF NOT EXISTS {{ .Values.tca.login.settings.dbName }} CHARACTER SET UTF8mb4 COLLATE utf8mb4_general_ci;
+    CREATE DATABASE IF NOT EXISTS {{ .Values.tca.file.settings.dbName }} CHARACTER SET UTF8mb4 COLLATE utf8mb4_general_ci;

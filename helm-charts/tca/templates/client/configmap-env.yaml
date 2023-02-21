@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: client-env
+data:
+  CODEDOG_TOKEN: {{ .Values.tca.commonConfig.defaultToken | quote}}
+  # # 内部服务通信配置
+  # CODEDOG_SERVER: http://{{ template "tca.fullname" . }}-gateway/main/
+  # FILE_SERVER_URL: http://{{ template "tca.fullname" . }}-gateway/files/

@@ -1,4 +1,4 @@
-// Copyright (c) 2021-2022 THL A29 Limited
+// Copyright (c) 2021-2023 THL A29 Limited
 //
 // This source code file is made available under MIT License
 // See LICENSE for details
@@ -20,7 +20,8 @@ import CaretDown from 'coding-oa-uikit/lib/icon/CaretDown';
 import LinkIcon from 'coding-oa-uikit/lib/icon/Link';
 import ConfigIcon from 'coding-oa-uikit/lib/icon/Cog';
 
-import Copy from '@tencent/micro-frontend-shared/component/copy';
+// import Copy from '@tencent/micro-frontend-shared/component/copy';
+import Copy from '../copy';
 import { getRepoName } from '@tencent/micro-frontend-shared/tca/util';
 import { getRepos } from '@src/services/common';
 import { getReposRouter } from '@src/utils/getRoutePath';
@@ -137,7 +138,7 @@ const Repos = (props: IProps) => {
             <CaretDown className={style.icon} />
           </div>
         </Dropdown>
-        <Copy text={`点击复制代码库ID：${curRepo.id}`} copyText={curRepo.id}/>
+        <Copy className={style.iconTipColor} text={`点击复制代码库ID：${curRepo.id}`} copyText={curRepo.id} />
         {/* <Copy text={curRepo.scm_url} className={style.copyIcon} /> */}
         <Tooltip title={<div style={{ wordBreak: 'break-all' }}>跳转代码库: {curRepo.scm_url}</div>}>
           <a className={style.repoLink} target="_blank" href={curRepo.scm_url} rel="noreferrer">

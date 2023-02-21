@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: web-env
+data:
+  SERVER_ENV: {{ template "tca.fullname" . }}-gateway
+  INGRESS_SERVER_NAME: {{ .Values.tca.web.serverName | quote }}
+  INGRESS_PORT: {{ .Values.tca.web.port | quote }}
+  NGINX_CONF_PATH: {{ .Values.tca.web.confPath | quote }}
+  NGINX_LOG_PATH: {{ .Values.tca.web.logPath | quote }}
+  WEB_DEPLOY_PATH: {{ .Values.tca.web.deployPath | quote }}
+  IS_DOCKER: {{ .Values.tca.web.isDocker | quote }}

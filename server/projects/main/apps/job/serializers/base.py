@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (c) 2021-2022 THL A29 Limited
+# Copyright (c) 2021-2023 THL A29 Limited
 #
 # This source code file is made available under MIT License
 # See LICENSE for details
@@ -22,13 +22,13 @@ from apps.codeproj.models import Project
 from apps.codeproj.serializers.base import ProjectTeamSimpleSerializer
 from apps.job import models
 
-
 logger = logging.getLogger(__name__)
 
 
 class TaskBriefSerializer(serializers.ModelSerializer):
     """任务序列化
     """
+
     class Meta:
         model = models.Task
         fields = ["id", "module", "task_name", "progress_rate",
@@ -50,6 +50,7 @@ class JobProjectSerializer(serializers.ModelSerializer):
 class JobCodeLineSerializer(serializers.ModelSerializer):
     """任务代码行信息序列化
     """
+
     class Meta:
         model = models.Job
         fields = ["id", "state", "result_code", "result_msg", "code_line_num",
@@ -88,6 +89,7 @@ class JobCancelSerializer(serializers.Serializer):
 class TaskSerializer(serializers.ModelSerializer):
     """子任务序列化
     """
+
     class Meta:
         model = models.Task
         fields = "__all__"
@@ -124,7 +126,6 @@ class ExcutableTaskSerializer(serializers.ModelSerializer):
         model = models.Task
         exclude = ["processes", "exec_tags", "result_code",
                    "result_msg", "result_path", "node", "params_path"]
-
 
 
 class TaskInfoSerializer(serializers.ModelSerializer):
@@ -185,7 +186,7 @@ class JobClosedSerializer(serializers.Serializer):
     result_msg = serializers.CharField(
         help_text="结果消息", allow_blank=True, allow_null=True)
     result_data = serializers.JSONField(
-        help_text="统计结果，包含code_lint_info, code_metric_cc_info, code_metric_dup_info, code_metric_cloc_info")
+        help_text="统计结果，包含code_lint_info, code_metric_cc_info, code_metric_dup_info, code_metric_cloc_info等")
 
 
 class TaskResultSerializer(serializers.Serializer):
@@ -203,6 +204,7 @@ class TaskResultSerializer(serializers.Serializer):
 class TaskProgressSerializer(serializers.ModelSerializer):
     """任务进度序列化
     """
+
     def validate_progress_rate(self, value):
         """校验上报进度
         """
@@ -230,4 +232,3 @@ class TaskResultSerializer(serializers.Serializer):
     log_url = serializers.CharField(help_text="日志链接", allow_null=True, allow_blank=True)
     processes = serializers.ListField(child=serializers.CharField(
         max_length=64, help_text="进程"), allow_null=True)
-

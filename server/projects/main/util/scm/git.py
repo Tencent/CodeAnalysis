@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (c) 2021-2022 THL A29 Limited
+# Copyright (c) 2021-2023 THL A29 Limited
 #
 # This source code file is made available under MIT License
 # See LICENSE for details
@@ -15,8 +15,8 @@ from datetime import datetime
 
 from django.conf import settings
 
-from util.rpcproxy import CustomServerProxy
 from util.scm.base import IScmClient, ScmUrlFormatter
+from util.scm.rpcproxy import CustomServerProxy
 
 logger = logging.getLogger(__name__)
 
@@ -24,8 +24,7 @@ logger = logging.getLogger(__name__)
 class GitRemoteClient(IScmClient):
     """Git 远程客户端 - 通过 GitProxy 获取项目信息"""
 
-    def __init__(self, scm_url, username=None, password=None, ssh_key=None, ssh_password=None, scm_platform_name=None,
-                 **kwargs):
+    def __init__(self, scm_url, username=None, password=None, ssh_key=None, ssh_password=None, scm_platform_name=None):
         """
         初始化函数
 
@@ -45,11 +44,11 @@ class GitRemoteClient(IScmClient):
             }
         elif username == "oauth2":
             self._scm_info = {
-                'scm_type': 'git-oauth',
-                'scm_platform': scm_platform_name,
-                'scm_url': self.get_http_url(),
-                'username': username,
-                'password': password,
+                "scm_type": "git-oauth",
+                "scm_platform": scm_platform_name,
+                "scm_url": self.get_http_url(),
+                "username": username,
+                "password": password,
             }
         else:
             self._scm_info = {
@@ -141,7 +140,7 @@ class GitRemoteClient(IScmClient):
         scm_url = self.get_http_url()
 
         # 获取检查的url链接和分支
-        url_items = url.split("#", 1)
+        url_items = url.strip().split("#", 1)
         if len(url_items) == 2:
             url, branch = url_items
         else:
@@ -158,14 +157,15 @@ class GitRemoteClient(IScmClient):
             scm_branch = "master"
         scm_url = ScmUrlFormatter.get_git_url(scm_url)
 
-        if url.startswith(("git@", "ssh://git@")) and url == self.get_ssh_url() \
-                and scm_branch.lower() == branch.lower():
+        if url.startswith(
+                ("git@", "ssh://git@")) and url == self.get_ssh_url() and scm_branch.lower() == branch.lower():
             return True
 
         return scm_url == http_url and scm_branch.lower() == branch.lower()
 
     def cat(self, path, revision):
         """获取文件内容
+
         :param path: 文件路径
         :param revision: 文件版本
         :type revision: str

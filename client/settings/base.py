@@ -1,5 +1,5 @@
 # -*- encoding: utf-8 -*-
-# Copyright (c) 2021-2022 THL A29 Limited
+# Copyright (c) 2021-2023 THL A29 Limited
 #
 # This source code file is made available under MIT License
 # See LICENSE for details
@@ -137,6 +137,15 @@ SERVER_URL = {
 # license服务器url, base_path, license,需要在config.ini中配置
 # ========================
 LICENSE_CONFIG = {
+    "URL": "",
+    "BASE_PATH": "",
+    "LICENSE": ""
+}
+
+# ========================
+# license备份服务器url, base_path, license,需要在config.ini中配置
+# ========================
+LICENSE_CONFIG_BAK = {
     "URL": "",
     "BASE_PATH": "",
     "LICENSE": ""

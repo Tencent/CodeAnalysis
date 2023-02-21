@@ -1,5 +1,5 @@
 # -*- encoding: utf-8 -*-
-# Copyright (c) 2021-2022 THL A29 Limited
+# Copyright (c) 2021-2023 THL A29 Limited
 #
 # This source code file is made available under MIT License
 # See LICENSE for details
@@ -67,6 +67,7 @@ class LocalRunner(TaskRunner):
         self._languages = []
         self._scan_plan = None  # 分析方案名称
         self._branch = None
+        self._scan_path = None
         self._total_scan = False  # 默认为False,即增量扫描
         self._exclude_paths = []
         self._include_paths = []
@@ -137,6 +138,7 @@ class LocalRunner(TaskRunner):
             self._languages = UserInput().format_languages(languages_value)
         self._scan_plan = self._get_value_from_config_file(config_dict, "scan_plan")
         self._branch = self._get_value_from_config_file(config_dict, "branch")
+        self._scan_path = self._get_value_from_config_file(config_dict, "scan_path")
         total_scan_value = self._get_value_from_config_file(config_dict, "total_scan")
         if total_scan_value:
             self._total_scan = True if total_scan_value in ["True", "true"] else False
@@ -179,6 +181,8 @@ class LocalRunner(TaskRunner):
             self._scm_auth_info.scm_password = args.password
         if args.branch:
             self._branch = args.branch
+        if args.scan_path:
+            self._scan_path = args.scan_path
         if args.compare_branch:
             self._compare_branch = args.compare_branch
         if args.exclude_paths:
@@ -242,6 +246,24 @@ class LocalRunner(TaskRunner):
             raise NodeError(code=errcode.E_NODE_TASK_CONFIG,
                             msg="未输入认证令牌(Token)信息,没有CodeDog扫描权限,请先补充Token参数再启动.\n"
                                 "Token获取方式:浏览器打开%s,复制Token." % token_url)
+
+        self._check_scan_path()
+
+    def _check_scan_path(self):
+        """检查scan_path，并添加到过滤路径中"""
+        if self._scan_path:  # 先判空，避免未传值时是None
+            # 删除前后空格
+            self._scan_path = self._scan_path.strip()
+            # 如果包含头尾斜杠，去掉
+            self._scan_path = self._scan_path.strip('/')
+        if self._scan_path:
+            if self._source_dir:
+                # 检查指定的目录是否存在
+                scan_full_path = os.path.join(self._source_dir, self._scan_path)
+                if not os.path.exists(scan_full_path):
+                    raise NodeError(code=errcode.E_NODE_TASK_CONFIG, msg=f"scan path {self._scan_path} not exists!")
+            # 添加到include路径中
+            self._include_paths.append(f"{self._scan_path}/*")
 
     def __check_config_info(self):
         """
@@ -353,7 +375,7 @@ class LocalRunner(TaskRunner):
                                      self._scm_auth_info, self._front_end_url,
                                      self._labels, self._machine_tag, self._ref_scheme_id, self._proj_env,
                                      self._create_from, self._enable_module)
-            self._repo_id, self._proj_id = project_mgr.check_and_create_proj()
+            self._repo_id, self._proj_id = project_mgr.check_and_create_proj(self._scan_path)
 
             # 获取任务执行参数
             proj_conf = self._get_proj_config(self._repo_id, self._proj_id, self._org_sid, self._team_name)

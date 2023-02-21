@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (c) 2021-2022 THL A29 Limited
+# Copyright (c) 2021-2023 THL A29 Limited
 #
 # This source code file is made available under MIT License
 # See LICENSE for details
@@ -9,14 +9,14 @@
 SVN源码库的操作功能
 """
 
-import re
 import logging
+import re
 from datetime import datetime
 
 from django.conf import settings
 
-from util.rpcproxy import CustomServerProxy
 from util.scm.base import IScmClient, ScmUrlFormatter
+from util.scm.rpcproxy import CustomServerProxy
 
 logger = logging.getLogger(__name__)
 

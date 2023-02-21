@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (c) 2021-2022 THL A29 Limited
+# Copyright (c) 2021-2023 THL A29 Limited
 #
 # This source code file is made available under MIT License
 # See LICENSE for details
@@ -16,12 +16,12 @@ import logging
 from django_filters.rest_framework.backends import DjangoFilterBackend
 from rest_framework import exceptions
 from rest_framework import generics, status
+from rest_framework.exceptions import ParseError, PermissionDenied
 from rest_framework.filters import OrderingFilter
 from rest_framework.generics import get_object_or_404
 from rest_framework.permissions import IsAdminUser
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework.exceptions import PermissionDenied, ParseError
 
 # 项目内 import
 from apps.authen.backends import TCANodeTokenBackend
@@ -61,7 +61,7 @@ class NodeHeartBeatApiView(APIView):
 
     def post(self, request, node_id):
         node = get_object_or_404(models.Node, id=node_id)
-        logger.debug("[Node: %s][User: %s] upload node heart" % (node_id, request.user))
+        logger.debug("[Node: %s][User: %s] upload node heart" % (node, request.user))
         if request.user != node.manager:
             raise exceptions.PermissionDenied("非节点管理员无权操作")
         if node.enabled == models.Node.EnabledEnum.DISABLED:

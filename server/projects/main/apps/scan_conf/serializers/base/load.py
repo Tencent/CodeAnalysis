@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (c) 2021-2022 THL A29 Limited
+# Copyright (c) 2021-2023 THL A29 Limited
 #
 # This source code file is made available under MIT License
 # See LICENSE for details
@@ -122,7 +122,7 @@ class CheckerSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.CheckTool
         fields = [
-            "name", "display_name", "description", "license", "libscheme_set",
+            "name", "display_name", "description", "license", "libscheme_set", "image_url",
             "task_processes", "scan_app", "scm_url", "run_cmd", "envs", "build_flag",
             "checkrule_set", "open_user", "open_saas", "virtual_name", "show_display_name"
         ]

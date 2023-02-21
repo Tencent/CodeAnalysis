@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (c) 2021-2022 THL A29 Limited
+# Copyright (c) 2021-2023 THL A29 Limited
 #
 # This source code file is made available under MIT License
 # See LICENSE for details
@@ -16,8 +16,10 @@ from apps.nodemgr.apis import v3
 
 # 前缀 /api/v3/orgs/<org_sid>/nodes/
 urlpatterns = [
-    path("tags/", v3.OrgExecTagListView.as_view(), name="apiv3_tag_list"),
-    path("tags/<int:tag_id>/", v3.OrgExecTagDetailView.as_view(), name="apiv3_tag_detail"),
+    path("tags/", v3.OrgExecTagListAPIView.as_view(), name="apiv3_tag_list"),
+    path("tags/<int:tag_id>/", v3.OrgExecTagDetailAPIView.as_view(), name="apiv3_tag_detail"),
+    path("tags/<int:tag_id>/processes/", v3.OrgExecTagProcessesAPIView.as_view(),
+         name="apiv3_tag_processes"),
 
     path("", v3.OrgNodeListAPIView.as_view(), name="apiv3_node_list"),
     path("<int:node_id>/", v3.OrgNodeDetailAPIView.as_view(), name="apiv3_node_detail"),

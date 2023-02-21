@@ -1,5 +1,5 @@
 # -*- encoding: utf-8 -*-
-# Copyright (c) 2021-2022 THL A29 Limited
+# Copyright (c) 2021-2023 THL A29 Limited
 #
 # This source code file is made available under MIT License
 # See LICENSE for details
@@ -115,6 +115,10 @@ class Clang(CodeLintModel):
     def format_result(self, rules, source_dir, plist_paths):
         """格式化工具执行结果
         """
+        # 支持通过环境变量，配置是否启用全量规则
+        use_all_rules = True if os.environ.get('CLANG_ALL_RULES', "False") == "True" else False
+        if use_all_rules:
+            LogPrinter.info("全量规则分析,不需要过滤规则.")
         issues = []
         for plist_path in plist_paths:
             try:
@@ -122,7 +126,7 @@ class Clang(CodeLintModel):
                     continue
             except (IOError, OSError):
                 continue
-            result = PlistParser().parse_plist(plist_path, source_dir, rules)
+            result = PlistParser().parse_plist(plist_path, source_dir, rules, use_all_rules)
             issues.extend(result)
         return issues
 

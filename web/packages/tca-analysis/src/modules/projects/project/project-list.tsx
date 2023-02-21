@@ -1,4 +1,4 @@
-// Copyright (c) 2021-2022 THL A29 Limited
+// Copyright (c) 2021-2023 THL A29 Limited
 //
 // This source code file is made available under MIT License
 // See LICENSE for details
@@ -237,7 +237,10 @@ const ProjectList = (props: ProjectListProps) => {
               </a>
             )}
           />
-
+          <Column
+            title="代码目录"
+            dataIndex='scan_path'
+          />
           <Column
             title="操作"
             dataIndex="id"

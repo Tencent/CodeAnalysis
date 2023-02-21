@@ -1,4 +1,4 @@
-// Copyright (c) 2021-2022 THL A29 Limited
+// Copyright (c) 2021-2023 THL A29 Limited
 //
 // This source code file is made available under MIT License
 // See LICENSE for details
@@ -31,7 +31,7 @@ import { getSchemeRouter, getSchemeBlankRouter } from '@src/utils/getRoutePath';
 
 import Filter from '@src/components/filter';
 import SelectBorderless from '@src/components/select-borderless';
-import CompileConfig from '@plat/modules/schemes/compile-modal';
+import CompileConfig from './compile-modal';
 
 import style from './style.scss';
 
@@ -253,7 +253,6 @@ const CodeLint = (props: CodeLintProps) => {
               </div>
               <div className={style.footer}>
                 <a
-                  target="_blank"
                   href={`${getSchemeBlankRouter(
                     orgSid,
                     teamName,

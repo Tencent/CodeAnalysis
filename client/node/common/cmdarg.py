@@ -1,5 +1,5 @@
 # -*- encoding: utf-8 -*-
-# Copyright (c) 2021-2022 THL A29 Limited
+# Copyright (c) 2021-2023 THL A29 Limited
 #
 # This source code file is made available under MIT License
 # See LICENSE for details
@@ -47,6 +47,8 @@ class CmdArgParser(object):
         localscan_parser.add_argument("--ref-scheme-id", dest="ref_scheme_id", type=int,
                                       help="参照扫描方案ID,新建项目时复制指定ID的扫描方案使用,达到多个代码仓库使用相同的扫描方案的效果")
         localscan_parser.add_argument("--branch", dest="branch", type=str, help="指定本地扫描的git代码库分支名称")
+        localscan_parser.add_argument("--scan-path", dest="scan_path", type=str,
+                                      help="填写子目录的相对路径，指定某个子目录作为当前项目的扫描目录，适用于大仓场景，只针对某个业务目录进行扫描。默认扫描整个代码仓库")
         localscan_parser.add_argument("--exclude", dest="exclude_paths", type=str,
                                       help="需要过滤的目录或文件(相对路径),多个路径用英文逗号(,)分隔,路径格式遵循python fnmatch语法")
         localscan_parser.add_argument("--compare-branch", dest="compare_branch", type=str,

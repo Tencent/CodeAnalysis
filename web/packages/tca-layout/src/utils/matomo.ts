@@ -35,15 +35,15 @@ export const useInitMamoto = () => {
 };
 
 export const setPvUserInfo = (userinfo: any) => {
-  const { url } = getMatomoOptions();
-  if (url) {
+  const { url, siteId } = getMatomoOptions();
+  if (url && siteId) {
     setUserInfoCustomVariable(userinfo);
   }
 };
 
 export const setPvOrgInfo = (orginfo: any) => {
-  const { url } = getMatomoOptions();
-  if (url && orginfo) {
+  const { url, siteId } = getMatomoOptions();
+  if (url && siteId && orginfo) {
     ReactPiwik.push(['setCustomVariable', 2, '组织', `${orginfo.org_sid} - ${orginfo.name}`, 'visit']);
   }
 };

@@ -42,7 +42,7 @@ const CreateRule = (props: CreateRuleProps) => {
   }, [visible]);
 
   const onFinish = (formData: any) => {
-    const data = {
+    const params = {
       ...formData,
       languages: formData.languages || [],
       checkruledesc: {
@@ -54,7 +54,7 @@ const CreateRule = (props: CreateRuleProps) => {
     if (isEdit) {
       onUpdate(orgSid, toolId, data.id, {
         real_name: data.real_name,
-        ...data,
+        ...params,
       }).then(() => {
         message.success(t('修改成功'));
         callback();
@@ -64,7 +64,7 @@ const CreateRule = (props: CreateRuleProps) => {
           setLoading(false);
         });
     } else {
-      onAdd(orgSid, toolId, data).then(() => {
+      onAdd(orgSid, toolId, params).then(() => {
         message.success(t('创建成功'));
         callback(DEFAULT_PAGER.pageStart, DEFAULT_PAGER.pageSize);
         onClose();

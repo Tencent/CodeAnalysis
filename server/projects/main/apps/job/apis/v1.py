@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (c) 2021-2022 THL A29 Limited
+# Copyright (c) 2021-2023 THL A29 Limited
 #
 # This source code file is made available under MIT License
 # See LICENSE for details
@@ -118,8 +118,8 @@ class ProjectScanJobInitApiView(generics.GenericAPIView, ProjectBaseAPIView):
                 raise PermissionDenied("您没有执行该操作的权限，该扫描方案已私有化，您不在该方案权限配置的关联分支项目权限成员列表中！！！")
         slz = self.get_serializer(data=request.data)
         if slz.is_valid(raise_exception=True):
-            logger.info("参数校验通过，开始初始化任务，参数如下：")
-            logger.info(json.dumps(slz.validated_data, indent=4))
+            logger.info("[Project: %s] 参数校验通过，开始初始化任务，参数如下：" % project.id)
+            logger.info(json.dumps(slz.validated_data))
             try:
                 job_id, scan_id, task_infos = codeproj_core.create_local_scan(
                     project=project, creator=UserManager.get_username(request.user),
@@ -152,8 +152,7 @@ class ProjectJobFinishApiView(generics.GenericAPIView, ProjectBaseAPIView):
                 raise PermissionDenied("您没有执行该操作的权限，该扫描方案已私有化，您不在该方案权限配置的关联分支项目权限成员列表中！！！")
         slz = self.get_serializer(data=request.data)
         if slz.is_valid(raise_exception=True):
-            logger.info("参数校验通过，开始结束任务，参数如下：")
-            logger.info(json.dumps(request.data, indent=4))
+            logger.info("[Job: %s]参数校验通过，开始结束任务" % job.id)
             try:
                 job_id, scan_id = codeproj_core.finish_job_from_client(
                     job, project, slz.validated_data, puppy_create=True)
@@ -215,7 +214,7 @@ class NodeTaskRegisterApiView(APIView):
             if killed_task:
                 return killed_task
             # 查询并占用节点，如果节点忙碌，则返回空
-            if not core.NodeTaskRegisterManager.set_node_busy_state(node_id, **request.data):
+            if not core.NodeTaskRegisterManager.set_node_busy_state(node, **request.data):
                 return None
 
         task, processes = core.NodeTaskRegisterManager.register_task(node, occupy)

@@ -49,7 +49,7 @@ interface SearchProps {
   /** 筛选参数，传入参数 */
   searchParams: FilterParams;
   /** 筛选请求加载中 */
-  loading: boolean;
+  loading?: boolean;
   /** 筛选回调 */
   callback?: (params: any) => void;
   /** 是否开启路由跳转，默认开启 */
@@ -71,7 +71,7 @@ const formLayout = {
 };
 
 const Search = ({
-  fields, moreFields, searchParams, loading, callback,
+  fields, moreFields, searchParams, loading = false, callback,
   className, style, extraContent, route = true, filters,
   defaultValues,
 }: SearchProps) => {
