@@ -1,4 +1,4 @@
-// Copyright (c) 2021-2023 THL A29 Limited
+// Copyright (c) 2021-2022 THL A29 Limited
 //
 // This source code file is made available under MIT License
 // See LICENSE for details
@@ -78,6 +78,13 @@ const CodeLint = (props: CodeLintProps) => {
 
   useEffect(() => {
     setSearchParams({});
+    (async () => {
+      setLoading(true);
+      let pkgs = await getAllCheckPackages(orgSid, teamName, repoId, schemeId);
+      pkgs = (pkgs || []).filter((item: any) => !item.disable);
+      setLoading(false);
+      setAllPkgs(pkgs);
+    })();
   }, [schemeId]);
 
   useEffect(() => {
@@ -88,7 +95,7 @@ const CodeLint = (props: CodeLintProps) => {
         setCustomPackage(checkprofile.custom_checkpackage);
       }
     })();
-  }, [checkprofile.id]);
+  }, [schemeId, checkprofile.id]);
 
   useEffect(() => {
     if (firstSort && !isEmpty(selectedPkgs) && !isEmpty(allPkgs)) {
@@ -231,6 +238,24 @@ const CodeLint = (props: CodeLintProps) => {
               >
                 添加规则
               </Button>
+              <Tooltip
+                title='自定义规则包 + 官方规则包去重后的规则列表'
+                overlayStyle={{ maxWidth: '350px' }}
+              >
+                <Button
+                  style={{ marginRight: 10 }}
+                  onClick={() => {
+                    history.push(`${getSchemeRouter(
+                      orgSid,
+                      teamName,
+                      repoId,
+                      schemeId,
+                    )}/check-profiles/${checkprofile.id}/checkrules`);
+                  }}
+                >
+                  查看已配置规则
+                </Button>
+              </Tooltip>
               <Button onClick={() => setVisible(true)}>编译配置</Button>
             </div>
           </div>
@@ -315,6 +340,13 @@ const Item = (props: any) => {
         <Switch checked={checked} onChange={value => onChange(value, item.id)} />
       </div>
       <div className={style.labelWrapper}>
+        {
+          item.need_compile && (
+            <span className={cn(style.label, style.build)}>
+              需要编译
+            </span>
+          )
+        }
         {item.labels.map((label: any) => (
           <span key={label} className={style.label}>
             {label}

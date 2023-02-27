@@ -1,4 +1,4 @@
-// Copyright (c) 2021-2023 THL A29 Limited
+// Copyright (c) 2021-2022 THL A29 Limited
 //
 // This source code file is made available under MIT License
 // See LICENSE for details
@@ -73,7 +73,7 @@ const Projects = () => {
         <Route
           exact
           path={`${BASE_ROUTE_PREFIX}/code-analysis/(project)?/repos/:repoId?/projects`}
-          render={() => <ProjectList templates={templates} schemes={schemes} />}
+          render={() => <ProjectList templates={templates} schemes={schemes}/>}
         />
         <Route
           path={`${PROJECT_ROUTE_PREFIX}/:tabs`}

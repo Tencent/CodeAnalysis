@@ -1,0 +1,48 @@
+@import "@tencent/micro-frontend-shared/style/color.scss";
+
+.header {
+    display: flex;
+    align-items: flex-start;
+    // margin-bottom: 20px;
+
+    .back-icon {
+        width: 28px;
+        height: 28px;
+        color: $blue-5;
+        margin-right: 20px;
+        text-align: center;
+        background: #ffffff;
+        border-radius: 50%;
+        box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+        cursor: pointer;
+        transition: all 0.3s;
+
+        svg {
+            font-size: 18px;
+            vertical-align: middle !important;
+        }
+
+        &:hover {
+            box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+        }
+    }
+
+    .title {
+        flex: 1;
+        font-size: 18px;
+        font-weight: 500;
+        margin-bottom: 0;
+    }
+
+    .small-title {
+      flex: 1;
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 0;
+  }
+
+  .description {
+    color: $grey-7;
+    margin-top: 6px;
+  }
+}

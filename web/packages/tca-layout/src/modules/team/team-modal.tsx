@@ -64,23 +64,23 @@ const TeamModal = ({ visible, data, onOk, onCancel }: TeamModalProps) => {
           label={t('团队负责人')}
           rules={[{ required: true, message: t('负责人为必填项') }]}
         >
-          <Input />
+          <Input placeholder='请输入负责人贵姓' />
         </Form.Item>
         <Form.Item
           name="tel_number"
-          label="团队联系电话"
+          label="微信关联手机号"
           rules={[
             {
               required: true,
-              message: t('联系电话为必填项'),
+              message: t('微信关联的手机号为必填项'),
             },
             {
               pattern: /^[0-9,-]*$/,
-              message: t('请输入合法的联系电话'),
+              message: t('请输入合法的手机号'),
             },
           ]}
         >
-          <Input />
+          <Input placeholder='请输入微信关联手机号' />
         </Form.Item>
         {getExtraCreateTeamInfos?.()}
       </Form>

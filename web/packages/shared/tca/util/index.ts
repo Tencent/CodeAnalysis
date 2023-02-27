@@ -29,7 +29,7 @@ export const getRepoName = (repoInfo: any, params: GetRepoNameParams = { onlyLas
   const repoUrl = url || scmUrl || info.scm_url;
   if (repoUrl) {
     if (params.onlyLastName) {
-      return repoUrl.substring(0, repoUrl.lastIndexOf('/') + 1);
+      return repoUrl.substring(repoUrl.lastIndexOf('/') + 1);
     }
     return getScmUrlPath(repoUrl);
   }

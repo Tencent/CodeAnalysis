@@ -5,10 +5,12 @@ export const NAMESPACE = 'USER';
 
 export const SET_USERINFO = 'SET_USERINFO';
 export const SET_PUPPYINFO = 'SET_PUPPYINFO';
+export const SET_MANAGEORG = 'SET_MANAGEORG';
 
 export interface UserState {
   userinfo: any;
-  puppyInfo: any
+  puppyInfo: any;
+  manageOrg: number;
 }
 
 export interface UserAction {
@@ -19,6 +21,7 @@ export interface UserAction {
 const initialState: UserState = {
   userinfo: {},
   puppyInfo: {},
+  manageOrg: NaN,
 };
 
 const reducer: Reducer<UserState, UserAction> = (state, action) => {
@@ -27,6 +30,8 @@ const reducer: Reducer<UserState, UserAction> = (state, action) => {
       return { ...state, userinfo: action.payload };
     case SET_PUPPYINFO:
       return { ...state, puppyInfo: action.payload };
+    case SET_MANAGEORG:
+      return { ...state, manageOrg: action.payload };
     default:
       return state;
   }

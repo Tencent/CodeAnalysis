@@ -66,6 +66,11 @@
       color: #0f4799;
       background-color: rgba(15, 71, 153, 0.08);
       border-radius: 2px;
+
+      &.build {
+        color: $red-8;
+        background-color: rgba($color: $red-8, $alpha: 0.07);
+      }
     }
 
     .common {
@@ -181,6 +186,11 @@
       overflow: hidden;
       white-space: nowrap;
       // padding-right: 20px;
+    }
+
+    .build-tag {
+      color: $red-8;
+      background-color: rgba($color: $red-8, $alpha: 0.07);
     }
   }
 }

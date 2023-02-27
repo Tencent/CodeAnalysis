@@ -1,0 +1,11 @@
+@import '@tencent/micro-frontend-shared/style/color.scss';
+
+.ant-modal-scan-modal {
+  .desc {
+    color: $grey-7;
+    margin-bottom: 10px;
+  }
+  .btn {
+    margin-left: 10px;
+  }
+}

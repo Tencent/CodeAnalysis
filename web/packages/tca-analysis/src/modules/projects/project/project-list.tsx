@@ -1,4 +1,4 @@
-// Copyright (c) 2021-2023 THL A29 Limited
+// Copyright (c) 2021-2022 THL A29 Limited
 //
 // This source code file is made available under MIT License
 // See LICENSE for details
@@ -11,7 +11,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import { Table, Button, Input, message } from 'coding-oa-uikit';
-import { pickBy, isNumber, get, toNumber } from 'lodash';
+import { pickBy, isNumber, get, toNumber, isEmpty } from 'lodash';
 import qs from 'qs';
 
 import { useLoginUserIsAdmin } from '@plat/hooks';
@@ -24,7 +24,7 @@ import { getProjectRouter, getSchemeBlankRouter } from '@src/utils/getRoutePath'
 import { getProjects, delProject } from '@src/services/projects';
 import { getRepoMembers } from '@src/services/repos';
 
-import ScanModal from './scan-modal';
+import ScanModal from '@plat/modules/projects/scan-modal';
 import NewProjectModal from './new-project-modal';
 import DeleteModal from '@src/components/delete-modal';
 
@@ -66,6 +66,14 @@ const ProjectList = (props: ProjectListProps) => {
   const isAdmin = useLoginUserIsAdmin(admins);
 
   useEffect(() => {
+    if (!isEmpty(schemes)) {
+      // 分析方案不为空，则表示不会打开【开启第一次代码分析弹框】
+      // 为避免同时打开两个弹框，需先判断分析方案是否为空
+      getListData(pageSize, pageStart, true);
+    }
+  }, [schemes]);
+
+  useEffect(() => {
     repoId && getListData();
   }, [
     repoId,
@@ -88,22 +96,29 @@ const ProjectList = (props: ProjectListProps) => {
   const getListData = (
     limit: number = pageSize,
     offset: number = pageStart,
+    modal = false,
   ) => {
+    const otherParams = pickBy(
+      searchParams,
+      (value, key) => isNumber(value) || (key === 'branch_or_scheme' && value),
+    );
     const params = {
       limit,
       offset,
-      ...pickBy(
-        searchParams,
-        (value, key) => isNumber(value) || (key === 'branch_or_scheme' && value),
-      ),
+      ...otherParams,
     };
     getProjects(orgSid, teamName, repoId, {
       ...params,
       scan_scheme__status: 1,
-    }).then((response) => {
+    }).then((response: any) => {
       history.replace(`${location.pathname}?${qs.stringify(params)}`);
       setList(response.results);
       setPager({ ...pager, count: response.count });
+
+      // 分析项目为空，且分析方案不为空时默认打开创建分支项目弹框
+      if (modal && isEmpty(otherParams) && response.count === 0) {
+        setCreateProjectVsb(true);
+      }
     });
   };
 
