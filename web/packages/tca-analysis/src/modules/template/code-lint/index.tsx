@@ -1,4 +1,4 @@
-// Copyright (c) 2021-2023 THL A29 Limited
+// Copyright (c) 2021-2022 THL A29 Limited
 //
 // This source code file is made available under MIT License
 // See LICENSE for details
@@ -372,6 +372,13 @@ const Item = (props: any) => {
         />
       </div>
       <div className={style.labelWrapper}>
+        {
+          item.need_compile && (
+            <span className={cn(style.label, style.build)}>
+              需要编译
+            </span>
+          )
+        }
         {item.labels.map((label: any) => (
           <span key={label} className={style.label}>
             {label}

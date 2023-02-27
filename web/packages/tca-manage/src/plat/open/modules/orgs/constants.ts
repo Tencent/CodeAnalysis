@@ -3,19 +3,21 @@ import { t } from '@tencent/micro-frontend-shared/i18n';
 import { generateOptions } from '@tencent/micro-frontend-shared/util';
 
 /** 团队使用状态 */
-export enum OrgStateEnum {
+export enum OrgStatusEnum {
   ACTIVE = 1,
-  INACTIVE = 99
+  DISACTIVE,
+  EXPIRED,
+  FORBIDEN = 99
 }
 
 /** 团队使用状态 kv */
-export const ORG_STATE_CHOICES = {
-  [OrgStateEnum.ACTIVE]: t('活跃'),
-  [OrgStateEnum.INACTIVE]: t('禁用'),
+export const ORG_STATUS_CHOICES = {
+  [OrgStatusEnum.ACTIVE]: t('活跃'),
+  [OrgStatusEnum.FORBIDEN]: t('禁用'),
 };
 
 /** 团队使用状态 options */
-export const ORG_STATE_OPTIONS = generateOptions(ORG_STATE_CHOICES, true);
+export const ORG_STATE_OPTIONS = generateOptions(ORG_STATUS_CHOICES, true);
 
 /** 定义筛选字段结构 */
 export const ORG_SEARCH_FIELDS: SearchFormField[] = [{
@@ -25,7 +27,7 @@ export const ORG_SEARCH_FIELDS: SearchFormField[] = [{
   label: '名称',
   placeholder: '团队名称',
 }, {
-  name: 'check_status',
+  name: 'status',
   type: 'number',
   formType: 'select',
   label: '状态',

@@ -1,4 +1,4 @@
-// Copyright (c) 2021-2023 THL A29 Limited
+// Copyright (c) 2021-2022 THL A29 Limited
 //
 // This source code file is made available under MIT License
 // See LICENSE for details
@@ -13,7 +13,7 @@ import qs from 'qs';
 import { useParams, useHistory, useLocation } from 'react-router-dom';
 import { toNumber, isEmpty, get, omit, omitBy, cloneDeep } from 'lodash';
 
-import { Table, Button, Modal, message, Radio, Tooltip } from 'coding-oa-uikit';
+import { Table, Button, Modal, message, Radio, Tooltip, Tag } from 'coding-oa-uikit';
 import ArrowLeft from 'coding-oa-uikit/lib/icon/ArrowLeft';
 
 import { getTmplRouter } from '@src/utils/getRoutePath';
@@ -351,11 +351,24 @@ const PkgRules = () => {
             render={(severity, data: any) => SEVERITY[data.severity || severity]
             }
           />
+           <Column
+            title="是否需要编译"
+            width={120}
+            dataIndex={['checktool', 'build_flag']}
+            render={(buildFlag: boolean) => (
+              <Tag
+                style={{ margin: 0 }}
+                className={buildFlag && style.buildTag}
+              >
+                {buildFlag ? '需要' : '无需'}编译
+              </Tag>
+            )}
+          />
           {!isSysTmpl && (
             <Column
               title="操作"
               dataIndex="id"
-              width={100}
+              width={120}
               render={(id, item: any) => (
                 <>
                   <a

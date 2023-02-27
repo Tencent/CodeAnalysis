@@ -1,4 +1,4 @@
-// Copyright (c) 2021-2023 THL A29 Limited
+// Copyright (c) 2021-2022 THL A29 Limited
 //
 // This source code file is made available under MIT License
 // See LICENSE for details
@@ -22,7 +22,7 @@ import NodeTag from '@src/components/node-tag';
 import { SCAN_LIST } from '../../schemes/constants';
 import style from '../style.scss';
 
-import ScanModal from './scan-modal';
+import ScanModal from '@plat/modules/projects/scan-modal';
 
 const { Option } = Select;
 

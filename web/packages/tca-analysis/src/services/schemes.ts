@@ -1,4 +1,4 @@
-// Copyright (c) 2021-2023 THL A29 Limited
+// Copyright (c) 2021-2022 THL A29 Limited
 //
 // This source code file is made available under MIT License
 // See LICENSE for details
@@ -206,6 +206,16 @@ export const getPackagesRule = (
  * @returns
  */
 export const getRulesFilter = (orgSid: string, teamName: string, repoId: string | number, schemeId: string | number, pkgId: number) => get(`${getMainBaseURL(orgSid, teamName)}/repos/${repoId}/schemes/${schemeId}/checkprofile/checkpackages/${pkgId}/rules/filter/`);
+
+/**
+ * 代码检查 - 获取所有已配置的规则
+ */
+export const getAllCheckRules = (orgSid: string, teamName: string, repoId: string | number, schemeId: string | number, query: any) => get(`${getSchemePrefix(orgSid, teamName, repoId, schemeId)}/checkrules/`, query);
+
+/**
+ * 代码检查 - 获取所有已配置规则的筛选项
+ */
+export const getAllCheckRulesFilters = (orgSid: string, teamName: string, repoId: string | number, schemeId: string | number) => get(`${getSchemePrefix(orgSid, teamName, repoId, schemeId)}/checkrules/filter/`);
 
 /**
  * 代码检查-规则配置-修改规则状态
