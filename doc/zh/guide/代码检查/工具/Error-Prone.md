@@ -5,7 +5,11 @@
 > Error Prone是google开源的Java编译时检测工具，将常见的Java错误捕获为编译时错误，增强对java代码的类型分析，从而让开发人员及时发现问题
 
 ## TCA使用指引
-由于Error Prone同为编译时检测工具，已添加规则至JavaWarning工具以增强类型检测。建议采用客户端本地分析模式以满足编译条件，参考[编译配置](../../../guide/分析方案/代码检查编译配置.md)，Error Prone客户端配置和编译命令可参考文档下文。
+
+TCA原有编译时检测工具JavaWarning获取java代码编译时的告警信息，现集成Error Prone规则至JavaWarning工具以增加获取Error Prone的错误告警信息。
+- 在规则包中添加JavaWarning工具的Error Prone规则（可通过规则解决方法进行区分）；
+- 采用[TCA Client](../../../guide/客户端/本地分析.md)模式，根据客户端环境配置工具和编译命令，详情参考下文；
+- 客户端启动分析，在TCA Web页面上查看问题。
 
 
 ## Error Prone 配置
