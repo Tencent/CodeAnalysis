@@ -90,6 +90,8 @@ class RegexScanner(CodeLintModel):
             rule_name = rule['name']
             if not rule.get('params'):
                 logger.error(f"{rule_name} rule parameter is empty, check for existing rules.")
+                # 没有参数的规则，可能为工具内部隐藏规则
+                rules["rules"].append({"name":rule_name})
                 no_params_rules.append(rule_name)
                 continue
             if "[regexcheck]" in rule['params']:
@@ -101,7 +103,8 @@ class RegexScanner(CodeLintModel):
             regex = rule_params_dict.get("regex", "")
             regex_not = rule_params_dict.get("regex_not", "")
             if not regex:
-                logger.error(f"{rule_name} rule parameter is wrong, not fill in the regular expression, skip this rule.")
+                # 没有正则的规则，可能为工具内部隐藏规则
+                rules["rules"].append({"name":rule_name})
                 continue
             regexes = self.__get_regexes_exp("regex", rule_params_dict)
             regexes_not = self.__get_regexes_exp("regex_not", rule_params_dict)
@@ -116,6 +119,8 @@ class RegexScanner(CodeLintModel):
             ignore_comment = True if rule_params_dict.get('ignore_comment', 'False').lower() == 'true' else False
             file_scan = True if rule_params_dict.get('file_scan', 'False').lower() == 'true' else False
             msg = rule_params_dict.get('msg', "Irregular codes found: %s")
+            match_group = rule_params_dict.get('match_group', 0)
+            entropy = rule_params_dict.get('entropy', 0.0)
             rule = {
                 "name": rule_name,
                 "regex": regex,
@@ -128,6 +133,8 @@ class RegexScanner(CodeLintModel):
                 "severity": "error",
                 "excludes": exclude_paths,
                 "includes": include_paths,
+                "match-group": match_group,
+                "entropy": entropy,
             }
             rules["rules"].append(rule)
         config_rules_path = self.__add_rules(work_dir, no_params_rules)
@@ -162,6 +169,8 @@ class RegexScanner(CodeLintModel):
         # filter include and exclude path
         relpos = len(source_dir) + 1
         toscans = FilterPathUtil(params).get_include_files(toscans, relpos)
+
+        toscans = self.get_valid_encode_files(toscans)
 
         if not toscans:
             logger.debug("To-be-scanned files is empty ")
@@ -202,8 +211,8 @@ class RegexScanner(CodeLintModel):
                 continue
             issue = dict()
             issue["path"] = item["path"]
-            issue["line"] = item["line"]
-            issue["column"] = item["column"]
+            issue["line"] = item.get("start-line") if "start-line" in item else item["line"]
+            issue["column"] = item.get("start-column") if "start-column" in item else item["column"]
             issue["msg"] = item["msg"]
             issue["rule"] = item["rule"]
             issue["refs"] = []
@@ -217,6 +226,20 @@ class RegexScanner(CodeLintModel):
         if settings.PLATFORMS[sys.platform] == "windows":
             tool_path = f"{tool_path}.exe"
         return __lu__().format_cmd(tool_path, args)
+
+    def get_valid_encode_files(self, toscans: list):
+        """
+        获取能正确解码的文件字符串
+        """
+        new_toscans = []
+        for path in toscans:
+            try:
+                path.encode(encoding="UTF-8")
+            except UnicodeEncodeError:
+                logger.info("ignore file: %s" % path)
+                continue
+            new_toscans.append(path)
+        return new_toscans
 
     def set_filter_type_list(self):
         '''
