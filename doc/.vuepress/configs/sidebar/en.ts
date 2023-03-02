@@ -31,6 +31,7 @@ export const en: SidebarConfig = {
             '/en/guide/代码检查/工具/TCA-Armory-C1.md',
             '/en/guide/代码检查/工具/TCA-Armory-Q1.md',
             '/en/guide/代码检查/工具/cppcheck.md',
+            '/en/guide/代码检查/工具/Error-Prone.md',
           ],
         },
         {

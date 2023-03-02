@@ -7,6 +7,7 @@
 
 """
 javawarning, 获取java编译警告信息
+Error Prone，增强java的类型分析
 """
 
 import os
@@ -65,7 +66,8 @@ class JavaWarning(CodeLintModel):
         issues = list()
         fi = open(build_log_path)
         for line in fi.readlines():
-            if line.find(": warning: [") != -1 or line.find(": 警告: [") != -1:
+            if (line.find(": warning: [") != -1 or line.find(": 警告: [") != -1 or
+                    line.find(": error: [") != -1 or line.find(": 错误: [") != -1):
                 infos = line.split(":")
                 path = infos[0].strip()[pos:]
                 line_num = int(infos[1].strip())
