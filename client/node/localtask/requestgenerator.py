@@ -163,11 +163,12 @@ class TaskRequestGenerator(object):
         """获取本地执行的任务参数列表"""
         execute_request_list = []
 
-        # 如果本地有指定过滤路径,与默认过滤路径合并使用
+        # 如果本地有指定过滤路径,与server配置的过滤路径合并使用
         if self._exclude_paths or self._include_paths:
             project_path_filters = FilterManager.get_local_filtered_paths(self._include_paths, self._exclude_paths,
                                                                           self._dog_server, self._repo_id,
-                                                                          self._proj_id, self._org_sid, self._team_name)
+                                                                          self._proj_id, self._org_sid, self._team_name,
+                                                                          job_context["path_filters"])
         else:  # 否则，使用server上的配置的过滤路径
             project_path_filters = job_context["path_filters"]
 
