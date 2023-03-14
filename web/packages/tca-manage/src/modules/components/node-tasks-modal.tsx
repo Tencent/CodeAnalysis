@@ -4,7 +4,7 @@ import { Table, Dialog, PageInfo, Tag } from 'tdesign-react';
 import { get } from 'lodash';
 
 // 项目内
-import { t } from '@tencent/micro-frontend-shared/i18n';
+import { t } from '@src/utils/i18n';
 import { getNodeTask } from '@src/services/nodes';
 import { STATE_CHOICES } from '@src/modules/jobs/constants';
 import EllipsisTemplate from '@tencent/micro-frontend-shared/tdesign-component/ellipsis';

@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useParams } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
+import { t } from '@src/utils/i18n';
 
 import Panel from 'coding-oa-uikit/lib/icon/Panel';
 import Group from 'coding-oa-uikit/lib/icon/Group';
@@ -14,9 +14,8 @@ import { getApiDocURL } from '@plat/util';
 
 const SideBar = () => {
   const { orgSid }: any = useParams();
-  const { t } = useTranslation();
 
-  return <LayoutMenu breakpoint="md" menus={[
+  const menus = useMemo(() => [
     {
       icon: <Panel />,
       title: t('工作台'),
@@ -58,9 +57,7 @@ const SideBar = () => {
     {
       icon: <Tiles />,
       title: t('工具管理'),
-      link: `/t/${orgSid}/tools`,
       key: 'tools',
-      regexMatch: /^\/t\/[^/]+\/tools/i,
       childrens: [
         {
           title: t('工具列表'),
@@ -89,7 +86,9 @@ const SideBar = () => {
       key: 'docs',
       open: true,
     },
-  ]} />;
+  ], [orgSid]);
+
+  return <LayoutMenu breakpoint="md" menus={menus} />;
 };
 
 export default SideBar;

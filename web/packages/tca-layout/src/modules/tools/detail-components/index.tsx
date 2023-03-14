@@ -2,7 +2,7 @@
  * 工具详情
  */
 import React, { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { t } from '@src/utils/i18n';
 import { useParams, useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { Tabs } from 'coding-oa-uikit';
@@ -25,7 +25,6 @@ const { TabPane } = Tabs;
 
 const ToolDetail = () => {
   const history = useHistory();
-  const { t } = useTranslation();
   const { userinfo } = useStateStore<UserState>(NAMESPACE);
   const { orgSid, toolId, tab }: any = useParams();
   const [detail, setDetail] = useState<any>({});

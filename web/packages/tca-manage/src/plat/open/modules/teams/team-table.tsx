@@ -1,5 +1,5 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
+import { t } from '@src/utils/i18n';
 import { get } from 'lodash';
 import { PaginationProps, Tag, Space, PrimaryTableCol, TableRowData } from 'tdesign-react';
 
@@ -25,8 +25,6 @@ interface TeamTableProps {
 }
 
 const TeamTable = ({ dataSource, pagination, loading, onDelete, onRecover }: TeamTableProps) => {
-  const { t } = useTranslation();
-
   const columns: PrimaryTableCol<TableRowData>[] = [
     {
       colKey: 'display_name',

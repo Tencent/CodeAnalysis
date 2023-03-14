@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { t } from '@src/utils/i18n';
 import { Tabs } from 'tdesign-react';
 
 // 模块内
@@ -15,7 +15,6 @@ const { TabPanel } = Tabs;
 const Nodes = () => {
   const [tags, setTags] = useState([]);
   const [tagOptions, setTagOptions] = useState([]);
-  const { t } = useTranslation();
 
   const getData = async () => {
     const res: any = await tagAPI.get({ limit: 1000 });

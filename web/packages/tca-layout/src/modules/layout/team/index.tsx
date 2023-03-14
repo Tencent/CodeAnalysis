@@ -25,15 +25,6 @@ import { getTeamsRouter } from '@src/utils/getRoutePath';
 // 模块内
 import Sidebar from './sidebar';
 
-const getComponent = (Component: any) => (
-  <>
-    <Header />
-    <Sidebar />
-    <Container>
-      <Component />
-    </Container>
-  </>
-);
 
 const TeamLayout = () => {
   const [loading, setLoading] = useState(true);
@@ -78,22 +69,28 @@ const TeamLayout = () => {
   }
 
   return (
-    <>
-      <Switch>
-        <Route path={'/t/:orgSid'} exact render={() => getComponent(Workspace)} />
-        <Route path={'/t/:orgSid/workspace'} render={() => getComponent(Workspace)} />
-        <Route path={'/t/:orgSid/projects'} render={() => getComponent(Projects)} />
-        <Route path={'/t/:orgSid/profile'} render={() => getComponent(Profile)} />
-        <Route path={'/t/:orgSid/members'} render={() => getComponent(Members)} />
-        <Route key='detail' exact path="/t/:orgSid/tools/:toolId/:tab?" render={() => getComponent(ToolDetail)} />
-        <Route key='tools' exact path="/t/:orgSid/tools" render={() => getComponent(Tools)} />
-        <Route key='toollibs' exact path="/t/:orgSid/toollibs" render={() => getComponent(Toollibs)} />
-        <Route path="/t/:orgSid/nodes/:nodeId/process" render={() =>  getComponent(NodeProcess)} />
-        <Route path="/t/:orgSid/nodes/" render={() =>  getComponent(Nodes)} />
-        <Route path="/t/:orgSid/p/:name/" render={() => <Analysis />} />
-        <Redirect to="/" />
-      </Switch>
-    </>
+    <Switch>
+      <Route path="/t/:orgSid/p/:name/" component={Analysis} />
+      <>
+        <Header />
+        <Sidebar />
+        <Container>
+          <Switch>
+            <Route path={'/t/:orgSid'} exact component={Workspace} />
+            <Route path={'/t/:orgSid/workspace'} component={Workspace} />
+            <Route path={'/t/:orgSid/projects'} component={Projects} />
+            <Route path={'/t/:orgSid/profile'} component={Profile} />
+            <Route path={'/t/:orgSid/members'} component={Members} />
+            <Route exact path="/t/:orgSid/tools/:toolId/:tab?" component={ToolDetail} />
+            <Route exact path="/t/:orgSid/tools" component={Tools} />
+            <Route exact path="/t/:orgSid/toollibs" component={Toollibs} />
+            <Route path="/t/:orgSid/nodes/:nodeId/process" component={NodeProcess} />
+            <Route path="/t/:orgSid/nodes/" component={Nodes} />
+            <Redirect to="/" />
+          </Switch>
+        </Container>
+      </>
+    </Switch>
   );
 };
 

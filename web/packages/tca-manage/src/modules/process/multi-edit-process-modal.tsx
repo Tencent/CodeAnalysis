@@ -4,7 +4,7 @@
 import React, { useState } from 'react';
 import { omit } from 'lodash';
 import { Dialog, Loading, MessagePlugin } from 'tdesign-react';
-import { useTranslation } from 'react-i18next';
+import { t } from '@src/utils/i18n';
 
 import { putMultiNodeProcess } from '@src/services/nodes';
 import ProcessTable from '@src/modules/process/process-table';
@@ -17,7 +17,6 @@ interface MultiProcessModalProps {
 }
 
 const MultiProcessModal = ({ visible, selectedNodes, onOk, onCancel }: MultiProcessModalProps) => {
-  const { t } = useTranslation();
   const [loading, setLoading] = useState<boolean>(false);
   const [processTableData, setProcessTableData] = useState<Array<any>>([]);
 

@@ -5,7 +5,7 @@
  * biz-end
  */
 import React, { useState, useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
+import { t } from '@src/utils/i18n';
 import { unionBy } from 'lodash';
 import { Row, Col, Tabs, MessagePlugin } from 'tdesign-react';
 
@@ -23,7 +23,6 @@ import s from '../style.scss';
 const { TabPanel } = Tabs;
 
 const OAuth = () => {
-  const { t } = useTranslation();
   const [listData, setListData] = useState<OAuthSettingData[]>([]);
   const [visibleEdit, setVisibleEdit] = useState<boolean>(false);
   const [visibleDel, setVisibleDel] = useState<boolean>(false);

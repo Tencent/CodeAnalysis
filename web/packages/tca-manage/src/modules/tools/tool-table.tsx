@@ -1,5 +1,5 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
+import { t } from '@src/utils/i18n';
 import cn from 'classnames';
 import { PaginationProps, Tag, Space, PrimaryTableCol } from 'tdesign-react';
 import Table from '@tencent/micro-frontend-shared/tdesign-component/table';
@@ -23,8 +23,6 @@ interface ToolTableProps {
 }
 
 const ToolTable = ({ dataSource, pagination, loading, onEdit }: ToolTableProps) => {
-  const { t } = useTranslation();
-
   const columns: PrimaryTableCol<ToolData>[] = [
     {
       colKey: 'display_name',
@@ -56,19 +54,19 @@ const ToolTable = ({ dataSource, pagination, loading, onEdit }: ToolTableProps) 
     {
       colKey: 'created_time',
       title: t('创建时间'),
-      width: 150,
+      width: 100,
       cell: ({ row }) => formatDateTime(row.created_time),
     },
     {
       colKey: 'modified_time',
       title: t('最近修改时间'),
-      width: 150,
+      width: 100,
       cell: ({ row }) => formatDateTime(row.modified_time),
     },
     {
       colKey: 'status',
       title: t('状态'),
-      width: 80,
+      width: 120,
       cell: ({ row }) => (
         <Tag className={cn(s.toolTag, s[`status-${row.status}`])}>
           {STATUS_CHOICES[row.status as StatusEnum]}
@@ -105,7 +103,7 @@ const ToolTable = ({ dataSource, pagination, loading, onEdit }: ToolTableProps) 
     {
       colKey: 'op',
       title: t('操作'),
-      width: 80,
+      width: 100,
       fixed: 'right',
       cell: ({ row }) => <a onClick={() => onEdit(row)}>{t('权限调整')}</a>,
     },

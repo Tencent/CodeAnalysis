@@ -2,7 +2,7 @@
  * 新增/编辑弹框
  */
 import React, { useState, useEffect, useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
+import { t } from '@src/utils/i18n';
 import cn from 'classnames';
 import { isEmpty, compact } from 'lodash';
 import { Modal, Form, Select, Input, Tag, Tooltip, message, Checkbox } from 'coding-oa-uikit';
@@ -37,7 +37,6 @@ interface UpdateLibSchemeModalProps {
 
 const UpdateLibSchemeModal = (props: UpdateLibSchemeModalProps) => {
   const { orgSid, toolId, visible, initData, toolSchemes, onClose, callback } = props;
-  const { t } = useTranslation();
   const [form] = Form.useForm();
   const [toolLibs, setToolLibs] = useState<Array<any>>([]);
   const [fields, setFields] = useState<Array<any>>(defaultFields);

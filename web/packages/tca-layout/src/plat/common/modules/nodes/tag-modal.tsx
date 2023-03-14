@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
+import { t } from '@src/utils/i18n';
 import { Modal, Form, Input, message, Select } from 'coding-oa-uikit';
 
 // 项目内
@@ -20,7 +20,6 @@ interface IProps {
 
 const TagModal = ({ taginfo, visible, onOk, onCancel }: IProps) => {
   const [form] = Form.useForm();
-  const { t } = useTranslation();
   const { orgSid }: any = useParams();
 
   useEffect(() => {

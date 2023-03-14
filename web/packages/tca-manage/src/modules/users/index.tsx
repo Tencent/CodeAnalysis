@@ -5,7 +5,7 @@
  * biz-end
  */
 import React, { useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { t } from '@src/utils/i18n';
 import { Row, Col, Tabs, Button } from 'tdesign-react';
 import { useURLParams, useFetch } from '@tencent/micro-frontend-shared/hooks';
 
@@ -21,7 +21,6 @@ import s from '../style.scss';
 const { TabPanel } = Tabs;
 
 const Users = () => {
-  const { t } = useTranslation();
   const { filter, currentPage, pageSize } = useURLParams();
   const [{ data }, reload] = useFetch(userAPI.get, [filter]);
   const { results: listData = [], count = 0 } = data || {};

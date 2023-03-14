@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
+import { t } from '@src/utils/i18n';
 import copy2Clipboard from 'copy-to-clipboard';
 import { get } from 'lodash';
 import { Input, Button, Modal, Row, Col, message, Tag } from 'coding-oa-uikit';
@@ -22,7 +22,6 @@ interface MemberItemProps {
 }
 
 const MemberItem = ({ list, role, onAddMemberClick, onRemoveMemberClick }: MemberItemProps) => {
-  const { t } = useTranslation();
   const { tit, desc }: any = get(ORG_MEMBER_ROLE_INFO, role, {});
   return (
     <div className={style.memberItem}>
@@ -72,7 +71,6 @@ const Members = () => {
   const [removeUser, setRemoveUser] = useState<any>(null);
 
   const { orgSid }: any = useParams();
-  const { t } = useTranslation();
 
   useEffect(() => {
     if (orgSid) {

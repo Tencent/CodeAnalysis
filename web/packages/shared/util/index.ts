@@ -3,6 +3,8 @@ export * from './time';
 export * from './route';
 export * from './size';
 export * from './check';
+export * from './blob';
+export * from './url';
 export { default as LogMgr } from './log';
 
 

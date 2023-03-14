@@ -3,7 +3,7 @@
  */
 
 import React, { useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { t } from '@src/utils/i18n';
 import cn from 'classnames';
 import { isEmpty, get } from 'lodash';
 import { Table, Button, Tooltip, Tag } from 'coding-oa-uikit';
@@ -30,7 +30,6 @@ interface ListComponentProps {
 
 const ListComponent = (props: ListComponentProps) => {
   const { data, loading, pager, editable, onChangePageSize, onShowSizeChange, onEdit, onDel } = props;
-  const { t } = useTranslation();
   const { pageSize, pageStart, count } = pager;
   const [visible, setVisible] = useState(false);
   const [ruleDetail, setRuleDetail] = useState({});

@@ -239,6 +239,7 @@ export const webpackConfig = (options?: Options) => {
               '**/index.html',
             ],
           },
+          noErrorOnMissing: true,
         }],
       }),
       new HtmlWebpackPlugin({

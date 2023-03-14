@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
+import { t } from '@src/utils/i18n';
 import { Modal, Form, Input, message } from 'coding-oa-uikit';
 
 // 项目内
@@ -16,7 +16,6 @@ interface TeamModalProps {
 const TeamModal = ({ visible, data, onOk, onCancel }: TeamModalProps) => {
   const [loading, setLoading] = useState(false);
   const [form] = Form.useForm();
-  const { t } = useTranslation();
 
   useEffect(() => {
     if (visible) {

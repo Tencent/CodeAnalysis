@@ -159,6 +159,9 @@ const Repo = () => {
       visible={authVisible}
       repoInfo={repoInfo}
       onCancel={() => setAuthVisible(false)}
+      callback={() => {
+        init();
+      }}
     />
     <EditModal
       orgSid={orgSid}

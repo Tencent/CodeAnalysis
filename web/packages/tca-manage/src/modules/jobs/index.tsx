@@ -5,7 +5,7 @@
  * biz-end
  */
 import React, { useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { t } from '@src/utils/i18n';
 import { Row, Col, Tabs } from 'tdesign-react';
 import Search from '@tencent/micro-frontend-shared/tdesign-component/search';
 import { useURLParams, useFetch } from '@tencent/micro-frontend-shared/hooks';
@@ -23,7 +23,6 @@ import s from '../style.scss';
 const { TabPanel } = Tabs;
 
 const Jobs = () => {
-  const { t } = useTranslation();
   const { filter, currentPage, pageSize, searchParams } = useURLParams(filterFields);
   const [{ data, isLoading }, reload] = useFetch(jobAPI.get, [filter]);
   const { results: listData = [], count = 0 } = data || {};

@@ -1,4 +1,4 @@
-import { t } from '@tencent/micro-frontend-shared/i18n';
+import { t } from '@src/utils/i18n';
 import { SearchFormField } from '@tencent/micro-frontend-shared/tdesign-component/search';
 import { NODE_ENABLED_OPTIONS, NODE_STATE_OPTIONS } from '@src/constant/node';
 

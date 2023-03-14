@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
+import { t } from 'i18next';
 import { message } from 'coding-oa-uikit';
 
 // 项目内
@@ -17,7 +17,6 @@ interface GitOAuthCallbackProps {
 const GitOAuthCallback = ({ oauthCallback }: GitOAuthCallbackProps) => {
   const query = getURLSearch();
   const { scmPlatformName }: any = useParams();
-  const { t } = useTranslation();
 
   useEffect(() => {
     const { opener } = window;

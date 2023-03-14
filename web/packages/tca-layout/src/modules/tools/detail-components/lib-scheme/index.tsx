@@ -2,7 +2,7 @@
  * 依赖方案配置
  */
 import React, { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { t } from '@src/utils/i18n';
 import type { MouseEvent } from 'react';
 import { Tag, Row, Col, Collapse, Tooltip, message, Modal, Button } from 'coding-oa-uikit';
 import TrashIcon from 'coding-oa-uikit/lib/icon/Trash';
@@ -24,7 +24,6 @@ interface LibSchemeProps {
 }
 
 const LibScheme = (props: LibSchemeProps) => {
-  const { t } = useTranslation();
   const { orgSid, toolId, editable } = props;
   const [activeKeys, setActiveKeys] = useState<Array<number>>([]);
   const [toolSchemes, setToolSchemes] = useState([]);
