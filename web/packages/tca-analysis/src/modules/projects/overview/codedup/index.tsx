@@ -10,7 +10,7 @@
 import React, { useState } from 'react';
 import { Radio, Row, Col } from 'coding-oa-uikit';
 import classnames from 'classnames';
-import { useTranslation } from 'react-i18next';
+import { t } from '@src/utils/i18n';
 import get from 'lodash/get';
 
 // 项目内
@@ -31,7 +31,6 @@ interface IProps {
 }
 
 const CodeDup = ({ dupScans }: IProps) => {
-  const { t } = useTranslation();
   const [standardValue, setStandardValue] = useState(STANDARD_TYPE.DEFAULT);
   const [riskValue, setRiskValue] = useState(RISK_TYPE.EXHI);
   // 获取重复代码历史趋势数据

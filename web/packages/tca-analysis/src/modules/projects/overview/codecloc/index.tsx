@@ -8,7 +8,7 @@
  * 分支概览代码统计详情
  */
 import React, { useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { t } from '@src/utils/i18n';
 import { Radio, Row, Col } from 'coding-oa-uikit';
 import { get, minBy } from 'lodash';
 
@@ -57,7 +57,6 @@ const CodeCloc = ({ clocScans }: IProps) => {
   const clocLineData: Array<any> = get(lineChartDatas, typeValue, []);
   // 获取饼图数据
   const clocPieData = getClocPieChartData(clocScans);
-  const { t } = useTranslation();
 
   return (
     <div className={s.item}>

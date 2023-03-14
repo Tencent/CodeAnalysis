@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { useHistory } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
+import { t } from '@src/utils/i18n';
 import { isEmpty, concat } from 'lodash';
 import { Tabs, Input, Button, Spin, Divider } from 'coding-oa-uikit';
 
@@ -29,7 +29,6 @@ const Team = () => {
   const INIT_LOAD_SIZE = 50;
 
   const history = useHistory();
-  const { t } = useTranslation();
 
   useEffect(() => {
     getTeamList(false, DEFAULT_TEAM_PAGER.pageStart, INIT_LOAD_SIZE, {}, (list: any) => {

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { t } from '@src/utils/i18n';
 import { Table, Button, Tag } from 'coding-oa-uikit';
 
 // 模块内
@@ -16,7 +16,6 @@ interface TagTableProps {
 const TagTable = ({ tags: listData, reload }: TagTableProps) => {
   const [visible, setVisible] = useState(false);
   const [selectTag, setSelectTag] = useState(null);
-  const { t } = useTranslation();
 
   const onCreateOrUpdateHandle = (tag: any = null) => {
     setVisible(true);

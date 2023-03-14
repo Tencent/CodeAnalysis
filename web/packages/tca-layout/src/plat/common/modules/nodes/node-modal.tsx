@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
+import { t } from '@src/utils/i18n';
 import { useParams } from 'react-router-dom';
 import { Modal, Form, Input, message, Select } from 'coding-oa-uikit';
 
@@ -23,7 +23,6 @@ interface IProps {
 const NodeModal = ({ nodeinfo, visible, onOk, onCancel, tagOptions, members }: IProps) => {
   const [form] = Form.useForm();
   const { orgSid }: any = useParams();
-  const { t } = useTranslation();
 
   useEffect(() => {
     if (visible) {

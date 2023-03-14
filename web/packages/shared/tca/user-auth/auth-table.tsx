@@ -1,5 +1,5 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
+import { t } from 'i18next';
 import { Table, Button, Tag, Tooltip, Space, Popconfirm } from 'coding-oa-uikit';
 import Edit from 'coding-oa-uikit/lib/icon/Edit';
 import Trash from 'coding-oa-uikit/lib/icon/Trash';
@@ -25,9 +25,7 @@ interface AuthTableProps {
   showOrigin?: boolean;
 }
 
-const AuthTable = ({ dataSource, onEdit, onDel, showOrigin }: AuthTableProps) => {
-  const { t } = useTranslation();
-  return <Table
+const AuthTable = ({ dataSource, onEdit, onDel, showOrigin }: AuthTableProps) => <Table
     rowKey={(item: any) => `${item.auth_type}#${item.id}`}
     dataSource={dataSource}
     pagination={{
@@ -95,6 +93,5 @@ const AuthTable = ({ dataSource, onEdit, onDel, showOrigin }: AuthTableProps) =>
       }}
     />
   </Table>;
-};
 
 export default AuthTable;

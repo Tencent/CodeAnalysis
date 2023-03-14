@@ -1,5 +1,5 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
+import { t } from '@src/utils/i18n';
 import { get } from 'lodash';
 import { PaginationProps, Tag, Progress, Button, PrimaryTableCol, Space, Loading } from 'tdesign-react';
 import Table from '@tencent/micro-frontend-shared/tdesign-component/table';
@@ -23,8 +23,6 @@ interface JobTableProps {
 }
 
 const JobTable = ({ loading, dataSource, pagination, cancelJob, archived = false }: JobTableProps) => {
-  const { t } = useTranslation();
-
   const getColumns = () => {
     const columns: PrimaryTableCol<JobData>[] = [{
       colKey: 'job',

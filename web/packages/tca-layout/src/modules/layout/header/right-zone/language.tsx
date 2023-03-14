@@ -1,5 +1,6 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
+import { t } from '@src/utils/i18n';
+import i18n from 'i18next';
 import classnames from 'classnames';
 import Cookies from 'universal-cookie';
 import AngleRight from 'coding-oa-uikit/lib/icon/AngleRight';
@@ -18,7 +19,6 @@ const LANG = [
 const cookies = new Cookies();
 
 const LanguageUI = () => {
-  const { t, i18n } = useTranslation();
   const lang = cookies.get(COOKIE_NAME) ?? DEFAULT_LANG;
   const { name: langText = '' } = LANG.find(({ key }) => lang === key) || {};
 

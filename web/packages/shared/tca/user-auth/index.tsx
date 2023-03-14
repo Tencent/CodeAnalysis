@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
+import { t } from 'i18next';
 import { Button, Row, Col, message } from 'coding-oa-uikit';
 import Plus from 'coding-oa-uikit/lib/icon/Plus';
 
@@ -32,7 +32,6 @@ const UserAuth = ({ userAuthAPI, showOrigin }: UserAuthProps) => {
   const [dataSource, setDataSource] = useState<any[]>([]);
   const [reload, setReload] = useState(false);
   const [authConf, setAuthConf] = useState(authConfInitData);
-  const { t } = useTranslation();
 
   useEffect(() => {
     // 获取凭证列表

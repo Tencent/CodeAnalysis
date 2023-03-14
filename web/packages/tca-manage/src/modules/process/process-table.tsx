@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
+import { t } from '@src/utils/i18n';
 import { get } from 'lodash';
 import { Table, Checkbox } from 'tdesign-react';
 
@@ -19,7 +19,6 @@ const ProcessTable = ({ nodeId, processTableData, setProcessTableData }: Process
   const uncheckedAll = processTableData.every(item => !item.checktool.supported);
   const checkedAllIndeterminate = !uncheckedAll && !checkedAll;
 
-  const { t } = useTranslation();
 
   const getNodePorcessList = () => {
     setLoading(true);

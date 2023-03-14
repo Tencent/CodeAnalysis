@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { useTranslation } from 'react-i18next';
+import { t } from '@src/utils/i18n';
 import cn from 'classnames';
 import { get } from 'lodash';
 import { Typography, Tooltip, Tag, Button } from 'coding-oa-uikit';
@@ -25,7 +25,6 @@ const DEFAULT_SIZE = 50;
 
 const Tools = () => {
   const history = useHistory();
-  const { t } = useTranslation();
   const { orgSid }: any = useParams();
   const { userinfo } = useStateStore<UserState>(NAMESPACE);
   const isAdmin = useSelector((state: any) => state.APP)?.isOrgAdminUser ?? false;
@@ -74,7 +73,7 @@ const Tools = () => {
     <div className={style.tools}>
       <div className={style.header}>
         <p className={style.title}>{t('工具管理')}</p>
-        <p className={style.desc}>{t(`共 ${count} 个工具，包含公开工具 + 团队可用工具，团队成员可使用工具规则，仅团队管理员能添加工具和规则`)}</p>
+        <p className={style.desc}>{`共 ${count} 个工具，包含公开工具 + 团队可用工具，团队成员可使用工具规则，仅团队管理员能添加工具和规则`}</p>
       </div>
       <Search style={{ paddingLeft: 30, paddingRight: 30 }} fields={TOOL_SEARCH_FIELDS} extraContent={
         editable && (

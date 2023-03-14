@@ -6,7 +6,7 @@
 
 import React, { useState, useEffect, useMemo } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
+import { t } from '@src/utils/i18n';
 import { Form, Button, Input, message } from 'coding-oa-uikit';
 import { pick } from 'lodash';
 
@@ -29,7 +29,6 @@ const Overview = () => {
   // 判断是否有权限删除团队项目
   const history: any = useHistory();
   const [deleteVisible, setDeleteVisible] = useState<boolean>(false);
-  const { t } = useTranslation();
 
   const admins = useMemo(() => team?.admins?.map((userinfo: any) => userinfo.username) || [], [team]);
   const isAdmin = useLoginUserIsAdmin(admins);

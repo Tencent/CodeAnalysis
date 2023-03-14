@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
+import { t } from '@src/utils/i18n';
 import { filter } from 'lodash';
 import { Tabs } from 'coding-oa-uikit';
 
@@ -14,7 +14,6 @@ import TagTable from './tag-table';
 const { TabPane } = Tabs;
 
 const Nodes = () => {
-  const { t } = useTranslation();
   const [tags, setTags] = useState([]);
   const { orgSid }: any = useParams();
   const tagOptions = useMemo(() => tags.map((item: any) => ({

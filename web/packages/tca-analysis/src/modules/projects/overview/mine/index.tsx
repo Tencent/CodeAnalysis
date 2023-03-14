@@ -8,7 +8,7 @@
  * 分支概览代码检查详情
  */
 import React, { ReactNode } from 'react';
-import { useTranslation } from 'react-i18next';
+import { t } from '@src/utils/i18n';
 import { Row, Col, Progress } from 'coding-oa-uikit';
 // 项目内
 import s from '../style.scss';
@@ -44,7 +44,6 @@ const MineCol = ({ title, formatData, children }: IMineColProps) => (
 );
 
 const Mine = ({ mineData, latestLintData, briefCycData, briefDupData }: IProps) => {
-  const { t } = useTranslation();
   const formatLintData = getMineFormatData(mineData.lint_issue_num, latestLintData.total);
   const formatCycData = getMineFormatData(
     mineData.cyc_issue_num,

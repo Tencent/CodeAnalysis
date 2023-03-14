@@ -16,7 +16,7 @@ const { FormItem } = Form;
 
 /** 判断是否存在不为空的筛选参数 */
 const isExistSearchParam = (params: FilterParams) => Object.keys(params)
-  .some((key: string) => typeof params[key] === 'number' || !isEmpty(params[key]));
+  .some((key: string) => typeof params[key] === 'number' || !isEmpty(params[key]) || params[key] === true);
 
 /** search 组件 表单类型 */
 export type SearchFormFieldType = 'input' | 'select' | 'datepicker' | 'checkbox' | 'multiselect' | 'rangepicker';
@@ -197,7 +197,7 @@ const Search = ({
       <div className={classnames(s.search, className)} style={style}>
         <Form
           className={s.searchContent}
-          labelWidth={60}
+          labelWidth='auto'
           style={{ width: '100%' }}
           ref={formRef}
         >

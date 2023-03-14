@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
+import { t } from '@src/utils/i18n';
 import { omit, get } from 'lodash';
 import { Table, Button, Checkbox, MessagePlugin, Tag, Card, Space } from 'tdesign-react';
 import { SaveIcon } from 'tdesign-icons-react';
@@ -21,7 +21,6 @@ const Process = () => {
   const checkedAllIndeterminate = !uncheckedAll && !checkedAll;
 
   const { nodeId }: any = useParams();
-  const { t } = useTranslation();
 
   const getNodePorcessRequest = async (id: number) => {
     setLoading(true);

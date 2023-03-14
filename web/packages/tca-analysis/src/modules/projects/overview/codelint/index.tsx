@@ -8,7 +8,7 @@
  * 分支概览代码检查详情
  */
 import React, { useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { t } from '@src/utils/i18n';
 import { Radio, Row, Col } from 'coding-oa-uikit';
 import { get, minBy } from 'lodash';
 
@@ -159,7 +159,6 @@ interface IProps {
 }
 
 const CodeLint = ({ lintScans }: IProps) => {
-  const { t } = useTranslation();
   const [undealTypeValue, setUndealTypeValue] = useState(LINT_TYPE.SEVERITY);
   const [totalTypeValue, setTotalTypeValue] = useState(LINT_TYPE.SEVERITY);
   const [historyTypeValue, setHistoryTypeValue] = useState(LINT_HISTORY_TYPE.TOTAL);

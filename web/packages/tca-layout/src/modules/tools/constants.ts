@@ -1,5 +1,5 @@
 import { SearchFormField } from '@tencent/micro-frontend-shared/component/search';
-import { t } from '@tencent/micro-frontend-shared/i18n';
+import { t } from '@src/utils/i18n';
 import { TOOL_STATUS_OPTIONS, ToolScopeEnum } from '@src/constant';
 
 /** 定义筛选字段结构 */

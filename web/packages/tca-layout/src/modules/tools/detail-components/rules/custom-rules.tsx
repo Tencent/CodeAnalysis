@@ -2,7 +2,7 @@
  * 规则列表
  */
 import React, { useState, useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
+import { t } from '@src/utils/i18n';
 import { useHistory } from 'react-router-dom';
 import { omitBy } from 'lodash';
 import qs from 'qs';
@@ -26,7 +26,6 @@ interface RulesProps {
 
 const CustomRules = ({ orgSid, toolId, toolDetail, editable, tab }: RulesProps) => {
   const history = useHistory();
-  const { t } = useTranslation();
   const [languages, setLanguages] = useState([]);
   const [loading, setLoading] = useState(false);
   const [filters, setFilters] = useState({});
@@ -89,7 +88,7 @@ const CustomRules = ({ orgSid, toolId, toolDetail, editable, tab }: RulesProps) 
 
   const delRule = (data: any) => {
     Modal.confirm({
-      title: t(`确定删除规则【 ${data.display_name} 】？`),
+      title: `确定删除规则【 ${data.display_name} 】？`,
       okButtonProps: { danger: true },
       okText: t('确定删除'),
       onOk: () => {

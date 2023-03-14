@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { find } from 'lodash';
-import { useTranslation } from 'react-i18next';
+import { t } from '@src/utils/i18n';
 import { Input, Form, Button, Row, Col, Statistic, Card, message } from 'coding-oa-uikit';
 import Group from 'coding-oa-uikit/lib/icon/Group';
 import Project from 'coding-oa-uikit/lib/icon/Project';
@@ -26,7 +26,6 @@ const Profile = () => {
   const [data, setData] = useState({}) as any;
   const [isEdit, setIsEdit] = useState(false);
   const history = useHistory();
-  const { t } = useTranslation();
 
   // 判断用户是否有权限删除团队，仅超级管理员和团队管理员可以删除
   const { userinfo } = useStateStore<UserState>(NAMESPACE);

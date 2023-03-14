@@ -1,5 +1,5 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
+import { t } from '@src/utils/i18n';
 import ReactMarkdown from 'react-markdown';
 import cn from 'classnames';
 import { get } from 'lodash';
@@ -15,10 +15,7 @@ interface RuleDetailProps {
   onClose: () => void;
 }
 
-const RuleDetail = ({ visible, data, onClose }: RuleDetailProps) => {
-  const { t } = useTranslation();
-
-  return (
+const RuleDetail = ({ visible, data, onClose }: RuleDetailProps) => (
     <Drawer
       title={t('规则详情')}
       visible={visible}
@@ -77,7 +74,6 @@ const RuleDetail = ({ visible, data, onClose }: RuleDetailProps) => {
         }
       </Row>
     </Drawer>
-  );
-};
+);
 
 export default RuleDetail;

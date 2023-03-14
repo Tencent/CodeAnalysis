@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { get } from 'lodash';
 import { Dialog, PageInfo, Table } from 'tdesign-react';
-import { useTranslation } from 'react-i18next';
+import { t } from '@src/utils/i18n';
 import { formatDateTime } from '@tencent/micro-frontend-shared/util';
 
 type FetchApi<ApiArgs extends any[]> = (...args: ApiArgs) => Promise<unknown>;
@@ -20,7 +20,6 @@ export const DEFAULT_PAGER = {
 };
 
 const OperationRecordModal = ({ id, getRecordListApi, visible, onCancel }: OperationRecordModalProps) => {
-  const { t } = useTranslation();
   const [operationRecord, setOperationRecord] = useState<any>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [pager, setPager] = useState<any>(DEFAULT_PAGER);

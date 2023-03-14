@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
+import { t } from '@src/utils/i18n';
 import { Tag, Button, Space } from 'coding-oa-uikit';
 import { isEmpty, unionBy } from 'lodash';
 
@@ -28,7 +28,6 @@ interface NodeTableProps {
 const NodeTable = ({ tagOptions }: NodeTableProps) => {
   const history = useHistory();
   const { orgSid }: any = useParams();
-  const { t } = useTranslation();
 
   const filterFields = getNodeSearchFields(tagOptions);
   const { filter, currentPage, pageSize, searchParams } = useURLParams(filterFields);

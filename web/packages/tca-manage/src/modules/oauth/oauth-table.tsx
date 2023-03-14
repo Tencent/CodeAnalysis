@@ -1,5 +1,5 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
+import { t } from '@src/utils/i18n';
 import { get } from 'lodash';
 import { Table, Tag, Space, PrimaryTableCol } from 'tdesign-react';
 
@@ -18,8 +18,6 @@ interface OAuthTableProps {
 }
 
 const OAuthTable = ({ dataSource, onEdit, onDelete }: OAuthTableProps) => {
-  const { t } = useTranslation();
-
   const columns: PrimaryTableCol<OAuthSettingData>[] = [
     {
       title: t('平台'),

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { t } from '@src/utils/i18n';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import { Layout, Row, Col, Input, Button, message, notification, Divider, Tag, Popconfirm } from 'coding-oa-uikit';
 import Copy from 'coding-oa-uikit/lib/icon/Copy';
@@ -45,7 +45,6 @@ const Token = () => {
   const [token, setToken] = useState('');
   const { userinfo } = useStateStore<UserState>(NAMESPACE);
   const { level, username } = userinfo;
-  const { t } = useTranslation();
 
   useEffect(() => {
     if (level === LevelEnum.SUPER_VIP) {

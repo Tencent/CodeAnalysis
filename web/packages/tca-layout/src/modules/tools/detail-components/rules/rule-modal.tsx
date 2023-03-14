@@ -2,7 +2,7 @@
  * 创建规则
  */
 import React, { useState, useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
+import { t } from '@src/utils/i18n';
 import { Modal, Form, Input, Select, message, Switch } from 'coding-oa-uikit';
 
 // 项目内
@@ -30,7 +30,6 @@ interface CreateRuleProps {
 
 const CreateRule = (props: CreateRuleProps) => {
   const { orgSid, toolId, languages, visible, data, onClose, onUpdate, onAdd, callback } = props;
-  const { t } = useTranslation();
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
   const isEdit = !!data.id;

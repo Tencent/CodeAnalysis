@@ -1,4 +1,4 @@
-import { t } from '@tencent/micro-frontend-shared/i18n';
+import { t } from '@src/utils/i18n';
 
 export const TAG_TYPE_ENUM = {
   PUBLIC: 1,

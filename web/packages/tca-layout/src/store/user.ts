@@ -5,12 +5,12 @@ export const NAMESPACE = 'USER';
 
 export const SET_USERINFO = 'SET_USERINFO';
 export const SET_PUPPYINFO = 'SET_PUPPYINFO';
-export const SET_MANAGEORG = 'SET_MANAGEORG';
+export const SET_ORG_MANAGE_PERM = 'SET_ORG_MANAGE_PERM';
 
 export interface UserState {
   userinfo: any;
   puppyInfo: any;
-  manageOrg: number;
+  hasOrgManagePerm: boolean;
 }
 
 export interface UserAction {
@@ -21,7 +21,7 @@ export interface UserAction {
 const initialState: UserState = {
   userinfo: {},
   puppyInfo: {},
-  manageOrg: NaN,
+  hasOrgManagePerm: false,
 };
 
 const reducer: Reducer<UserState, UserAction> = (state, action) => {
@@ -30,8 +30,8 @@ const reducer: Reducer<UserState, UserAction> = (state, action) => {
       return { ...state, userinfo: action.payload };
     case SET_PUPPYINFO:
       return { ...state, puppyInfo: action.payload };
-    case SET_MANAGEORG:
-      return { ...state, manageOrg: action.payload };
+    case SET_ORG_MANAGE_PERM:
+      return { ...state, hasOrgManagePerm: action.payload };
     default:
       return state;
   }

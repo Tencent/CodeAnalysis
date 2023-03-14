@@ -1,5 +1,6 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
+import { t } from '@src/utils/i18n';
+import i18n from 'i18next';
 import Cookies from 'universal-cookie';
 import { MessagePlugin, Dropdown, Button } from 'tdesign-react';
 import { InternetIcon, ChevronUpIcon } from 'tdesign-icons-react';
@@ -18,7 +19,6 @@ const LANG = [
 const cookies = new Cookies();
 
 const LanguageUI = () => {
-  const { t, i18n } = useTranslation();
   const lang = cookies.get(COOKIE_NAME) ?? DEFAULT_LANG;
 
   const onChange = (key: string) => {

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
+import { t } from '@src/utils/i18n';
 import { Input, Modal, Table, message } from 'coding-oa-uikit';
 
 import { DEFAULT_PAGER } from '@src/constant';
@@ -21,7 +21,6 @@ interface AddPackagesModalProps {
 
 const AddWhiteListModal = (props: AddPackagesModalProps) => {
   const { orgSid, toolId, visible, whiteList, onHide, callback } = props;
-  const { t } = useTranslation();
   const [list, setList] = useState([]);
   const [searchName, setSearchName] = useState('');
   const [pager, setPager] = useState(DEFAULT_PAGER);

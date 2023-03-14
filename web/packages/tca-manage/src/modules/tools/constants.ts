@@ -1,5 +1,5 @@
 import { SearchFormField } from '@tencent/micro-frontend-shared/tdesign-component/search';
-import { t } from '@tencent/micro-frontend-shared/i18n';
+import { t } from '@src/utils/i18n';
 import { generateOptions } from '@tencent/micro-frontend-shared/util';
 
 /** 工具运营状态 */

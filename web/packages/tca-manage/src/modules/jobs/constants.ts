@@ -1,7 +1,7 @@
 import moment from 'moment';
 import { flatMap } from 'lodash';
 
-import { t } from '@tencent/micro-frontend-shared/i18n';
+import { t } from '@src/utils/i18n';
 import { SearchFormField } from '@tencent/micro-frontend-shared/tdesign-component/search';
 import { FilterField } from '@tencent/micro-frontend-shared/util/types';
 import { generateOptions, formatDate } from '@tencent/micro-frontend-shared/util';
