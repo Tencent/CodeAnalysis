@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { useTranslation } from 'react-i18next';
+import { t } from '@src/utils/i18n';
 import { Dialog, Form, Input, message, Switch, Select, notification, Button, FormInstanceFunctions } from 'tdesign-react';
 import { FileCopyIcon } from 'tdesign-icons-react';
 import CopyToClipboard from 'react-copy-to-clipboard';
@@ -55,7 +55,6 @@ interface UserModalProps {
 
 const UserModal = ({ userinfo, visible, onOk, onCancel }: UserModalProps) => {
   const formRef = useRef<FormInstanceFunctions>(null);
-  const { t } = useTranslation();
 
   /** 用户创建/更新请求操作 */
   const onSaveRequest = (formData: any) => {

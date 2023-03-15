@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { t } from '@src/utils/i18n';
 import { useParams } from 'react-router-dom';
 import { Table, Modal, Tag } from 'coding-oa-uikit';
 
@@ -24,7 +24,6 @@ interface NodeTaskModalProps {
 
 const NodeTaskModal = ({ visible, nodeId, onCancel }: NodeTaskModalProps) => {
   const { orgSid }: any = useParams();
-  const { t } = useTranslation();
   const [listData, setListData] = useState<Array<any>>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [pager, setPager] = useState<any>(DEFAULT_PAGER);

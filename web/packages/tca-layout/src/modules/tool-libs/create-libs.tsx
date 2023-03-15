@@ -10,6 +10,7 @@ import AttentionIcon from 'coding-oa-uikit/lib/icon/AttentionRed';
 import AuthFormItem from '@tencent/micro-frontend-shared/tca/user-auth/auth-form-item';
 import { userAuthAPI } from '@plat/api';
 
+import { formScmURLSecValidate } from '@tencent/micro-frontend-shared/util';
 import { addToolLib, getLibDetail, updateToolLib } from '@src/services/tools';
 import { TOOLLIB_REPO_TYPE_OPTIONS, RepoTypeEnum, SCM_MAP, LIB_ENV, LIB_TYPE } from '@src/constant';
 
@@ -187,7 +188,7 @@ const CreateToollibs = (props: CreateToollibsProps) => {
           label="依赖仓库地址"
           name="scm_url"
           required
-          help={zipWarningVisible && <span style={{ color: '#eb333f' }}><AttentionIcon />请勿使用不明来源的文件链接，避免潜在的安全风险。</span>}
+          help={zipWarningVisible ? <span style={{ color: '#eb333f' }}><AttentionIcon />请勿使用不明来源的文件链接，避免潜在的安全风险。</span> : null}
         >
           <Input.Group compact>
             <Form.Item name='scm_type' noStyle>
@@ -202,6 +203,7 @@ const CreateToollibs = (props: CreateToollibsProps) => {
               noStyle
               rules={[
                 { required: true, message: '依赖仓库地址' },
+                !zipWarningVisible && formScmURLSecValidate(),
               ]}
             >
               <Input style={{ width: '84%' }} />

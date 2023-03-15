@@ -1,6 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
+import { t } from '@src/utils/i18n';
 import { Modal, Form, Input, Checkbox, Select, message } from 'coding-oa-uikit';
 
 // 项目内
@@ -8,6 +8,7 @@ import { createTool } from '@src/services/tools';
 import { getToolsRouter } from '@src/utils/getRoutePath';
 import { RepoTypeEnum, REPO_TYPE_OPTIONS, AuthTypeEnum, SCM_MAP } from '@src/constant';
 import AuthFormItem from '@tencent/micro-frontend-shared/tca/user-auth/auth-form-item';
+import { formScmURLSecValidate } from '@tencent/micro-frontend-shared/util';
 import { userAuthAPI } from '@plat/api';
 
 const { TextArea } = Input;
@@ -26,7 +27,6 @@ interface CreateToolModalProps {
 const CreateToolModal = ({ orgId, visible, onClose }: CreateToolModalProps) => {
   const [form] = Form.useForm();
   const history = useHistory();
-  const { t } = useTranslation();
 
   /** 创建工具 */
   const onFinish = (data: any) => {
@@ -100,6 +100,7 @@ const CreateToolModal = ({ orgId, visible, onClose }: CreateToolModalProps) => {
               noStyle
               rules={[
                 { required: true, message: t('请输入工具仓库地址') },
+                formScmURLSecValidate,
               ]}
             >
               <Input style={{ width: '84%' }} />

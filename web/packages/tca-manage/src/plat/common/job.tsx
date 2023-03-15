@@ -2,7 +2,7 @@ import React from 'react';
 import { get } from 'lodash';
 import { PrimaryTableCol } from 'tdesign-react';
 import { SearchFormField } from '@tencent/micro-frontend-shared/tdesign-component/search';
-import { t } from '@tencent/micro-frontend-shared/i18n';
+import { t } from '@src/utils/i18n';
 
 import OrgAndTeamInfo from '@src/modules/components/org-team-info';
 

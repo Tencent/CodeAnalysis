@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useHistory } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
+import { t } from '@src/utils/i18n';
 import { get, isEmpty } from 'lodash';
 import { Space, Button, MessagePlugin, PrimaryTableCol, TableRowData } from 'tdesign-react';
 import Search from '@tencent/micro-frontend-shared/tdesign-component/search';
@@ -47,7 +47,6 @@ const NodeTable = ({ tagOptions }: NodeTableProps) => {
   const { results: listData = [], count = 0 } = data || {};
 
   const history = useHistory();
-  const { t } = useTranslation();
 
   const onCreateOrUpdateHandle = (node: any = null) => {
     setVisible(true);

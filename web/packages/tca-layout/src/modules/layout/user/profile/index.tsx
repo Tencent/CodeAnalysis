@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { t } from '@src/utils/i18n';
 import classnames from 'classnames';
 import { pick } from 'lodash';
 import { Layout, Row, Col, Form, Button, Input, message } from 'coding-oa-uikit';
@@ -24,7 +24,6 @@ const Profile = () => {
   const { userinfo } = useStateStore<UserState>(NAMESPACE);
   const [form] = Form.useForm();
   const [edit, setEdit] = useState(false);
-  const { t } = useTranslation();
 
   // 重置
   const onReset = () => {

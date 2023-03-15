@@ -1,5 +1,5 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
+import { t } from '@src/utils/i18n';
 
 import { Modal, Form, Input, message } from 'coding-oa-uikit';
 import { createProject } from '@src/services/team';
@@ -13,7 +13,6 @@ interface CreateProjectProps {
 
 const CreateProject = (props: CreateProjectProps) => {
   const { orgSid, visible, onClose, callback } = props;
-  const { t } = useTranslation();
   const [form] = Form.useForm();
 
   const onFinish = (formData: any) => {

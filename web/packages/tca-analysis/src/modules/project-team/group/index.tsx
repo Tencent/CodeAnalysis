@@ -6,7 +6,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
+import { t } from '@src/utils/i18n';
 import { Button, Avatar, Row, Col, Modal, Select, message } from 'coding-oa-uikit';
 import PlusCircleIcon from 'coding-oa-uikit/lib/icon/PlusCircle';
 import UserIcon from 'coding-oa-uikit/lib/icon/User';
@@ -89,7 +89,6 @@ const MemberItem = ({ list, role, onAddMemberClick, onRemoveMemberClick }: IMemb
 const Group = () => {
   const { orgSid, teamName }: any = useParams();
   const [allUsers, setAllUsers] = useState<Array<any>>([]);
-  const { t } = useTranslation();
 
   const [members, setMembers] = useState<any>({
     admins: [],

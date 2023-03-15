@@ -1,6 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
+import { t } from '@src/utils/i18n';
 import { PaginationProps, Tag, Space, PrimaryTableCol, TableRowData, Divider } from 'tdesign-react';
 import Table from '@tencent/micro-frontend-shared/tdesign-component/table';
 import EllipsisTemplate from '@tencent/micro-frontend-shared/tdesign-component/ellipsis';
@@ -26,7 +26,6 @@ interface OrgTableProps {
 
 const OrgTable = ({ dataSource, pagination, loading, onDelete, onRecover }: OrgTableProps) => {
   const history = useHistory();
-  const { t } = useTranslation();
 
   const columns: PrimaryTableCol<TableRowData>[] = [
     {

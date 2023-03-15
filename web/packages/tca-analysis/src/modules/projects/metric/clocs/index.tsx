@@ -9,7 +9,7 @@
  */
 import React, { useEffect, useState } from 'react';
 import { Tree, Row, Col, Descriptions, Tooltip, Tag, Button } from 'coding-oa-uikit';
-import { useTranslation } from 'react-i18next';
+import { t } from '@src/utils/i18n';
 import QuestionCircleIcon from 'coding-oa-uikit/lib/icon/QuestionCircle';
 import ArrowLeftIcon from 'coding-oa-uikit/lib/icon/ArrowLeft';
 import { forEach, get } from 'lodash';
@@ -46,7 +46,6 @@ const Clocs = ({ orgSid, teamName, repoId, projectId }: IProps) => {
   const [treeData, setTreeData] = useState<Array<any>>([]);
   const [rootNodeInfo, setRootNodeInfo] = useState<any>({});
   const [selectNodeInfo, setSelectNodeInfo] = useState<any>({});
-  const { t } = useTranslation();
 
   useEffect(() => {
     // 初始化获取根节点数据

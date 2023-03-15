@@ -1,5 +1,4 @@
 import i18n, { InitOptions } from 'i18next';
-import Backend from 'i18next-http-backend';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import Log from '../util/log';
 
@@ -10,14 +9,6 @@ export interface InitI18next {
   modules?: any[]
 }
 
-/** 去除PUBLIC_PATH末尾斜杠 */
-const getPublicPath = (publicPath: string) => {
-  if (publicPath.endsWith('/')) {
-    return publicPath.substring(0, publicPath.length - 1);
-  }
-  return publicPath;
-};
-
 /**
  * 初始化i18n
  * @param param0 {options, modules} 参数配置
@@ -27,7 +18,7 @@ const getPublicPath = (publicPath: string) => {
  * react使用i18n时，需要将react-i18next的initReactI18next传递至modules中，
  */
 const initI18next = ({ options, modules = [] }: InitI18next) => {
-  const i18nModules = [Backend, LanguageDetector, ...modules];
+  const i18nModules = [LanguageDetector, ...modules];
   i18nModules.forEach((module) => {
     i18n.use(module);
   });
@@ -44,15 +35,14 @@ const initI18next = ({ options, modules = [] }: InitI18next) => {
       // caches: ['localStorage', 'cookie'],
       caches: ['cookie'],
     },
-    backend: {
-      loadPath: `${getPublicPath(process.env.PUBLIC_PATH)}/locales/{{lng}}/{{ns}}.json`,
-    },
     ...options,
   };
 
-  return i18n.init(i18nOptions, (err) => {
+  i18n.init(i18nOptions, (err) => {
     Log.info('i18n插件初始化完毕', err);
   });
+
+  return i18n;
 };
 
 export default initI18next;

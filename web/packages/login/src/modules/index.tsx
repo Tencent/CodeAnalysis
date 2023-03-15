@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
+import { t } from '@src/utils/i18n';
 import { Tabs } from 'tdesign-react';
 
 // 项目内
@@ -12,8 +12,6 @@ import Language from './language';
 const { TabPanel } = Tabs;
 
 const Login = () => {
-  const { t } = useTranslation();
-
   useEffect(() => {
     // 每次进来都清除storage
     clearLoginLocalStorage();

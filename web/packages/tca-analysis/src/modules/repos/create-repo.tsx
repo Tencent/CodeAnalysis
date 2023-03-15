@@ -8,6 +8,7 @@ import { Modal, Form, Input, Select, message } from 'coding-oa-uikit';
 import AuthFormItem from '@tencent/micro-frontend-shared/tca/user-auth/auth-form-item';
 import { AuthTypeEnum, SCM_MAP } from '@tencent/micro-frontend-shared/tca/user-auth/constant';
 import { getRepoName } from '@tencent/micro-frontend-shared/tca/util';
+import { formScmURLSecValidate } from '@tencent/micro-frontend-shared/util';
 import { userAuthAPI } from '@plat/api';
 // import Authority from '@src/components/authority';
 // import { SCM_MAP } from '@src/components/authority/constants';
@@ -120,6 +121,7 @@ const CreateRepo = (props: CreateRepoProps) => {
               noStyle
               rules={[
                 { required: true, message: '请输入代码库地址' },
+                formScmURLSecValidate,
               ]}
             >
               <Input

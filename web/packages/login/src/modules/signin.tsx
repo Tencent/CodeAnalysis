@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { useTranslation } from 'react-i18next';
+import { t } from '@src/utils/i18n';
 import { get } from 'lodash';
 import { Form, Input, Button, MessagePlugin, SubmitContext, FormInstanceFunctions } from 'tdesign-react';
 import { DesktopIcon, LockOnIcon } from 'tdesign-icons-react';
@@ -13,7 +13,6 @@ const { FormItem } = Form;
 
 const NormalSignin = () => {
   const formRef = useRef<FormInstanceFunctions>(null);
-  const { t } = useTranslation();
 
   const onSubmit = (e: SubmitContext) => {
     if (e.validateResult === true) {
