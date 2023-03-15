@@ -1,1 +1,72 @@
-[{"name":"tca-layout","description":"tca layout微前端","prefix":["/static/tca-layout/"],"commitId":"10fbbd5d0d00f0a505baddbd1f41c1dddd96bf4c","match":"/","js":["/static/tca-layout/runtime~tca-layout-ba525719.js","/static/tca-layout/vendors~tca-layout-228a2e1b.js","/static/tca-layout/tca-layout-9744c018.js"],"css":["/static/tca-layout/tca-layout-0b67b41c.css"]}, {"name":"login","description":"login 登录微前端","prefix":["/static/login/"],"commitId":"10fbbd5d0d00f0a505baddbd1f41c1dddd96bf4c","match":"^/login","js":["/static/login/runtime~login-46ae0dcb.js","/static/login/vendors~login-fdb78cec.js","/static/login/login-b01d7cbc.js"],"css":["/static/login/vendors~login-65f73047.css","/static/login/login-d1b28ba7.css"]}, {"name":"tca-analysis","description":"TCA Analysis 微前端","prefix":["/static/tca-analysis/"],"commitId":"10fbbd5d0d00f0a505baddbd1f41c1dddd96bf4c","match":"^/t/[^/]+/p/[^/]+/(code-analysis|repos|template|profile|group)","js":["/static/tca-analysis/runtime~tca-analysis-2538b909.js","/static/tca-analysis/vendors~tca-analysis-1da3002b.js","/static/tca-analysis/tca-analysis-5f292223.js"],"css":["/static/tca-analysis/tca-analysis-8860c614.css"]}, {"name":"tca-manage","description":"TCA 后台管理微前端","prefix":["/static/tca-manage/"],"commitId":"10fbbd5d0d00f0a505baddbd1f41c1dddd96bf4c","match":"^/manage","js":["/static/tca-manage/runtime~tca-manage-1506bd94.js","/static/tca-manage/vendors~tca-manage-a59c9280.js","/static/tca-manage/tca-manage-0bcf7c35.js"],"css":["/static/tca-manage/vendors~tca-manage-0908a3f1.css","/static/tca-manage/tca-manage-7d737fd2.css"]}]
+[
+  {
+    "name": "tca-layout",
+    "description": "tca layout微前端",
+    "prefix": [
+      "/static/tca-layout/"
+    ],
+    "commitId": "10fbbd5d0d00f0a505baddbd1f41c1dddd96bf4c",
+    "match": "/",
+    "js": [
+      "/static/tca-layout/runtime~tca-layout-ba525719.js",
+      "/static/tca-layout/vendors~tca-layout-228a2e1b.js",
+      "/static/tca-layout/tca-layout-9744c018.js"
+    ],
+    "css": [
+      "/static/tca-layout/tca-layout-0b67b41c.css"
+    ]
+  },
+  {
+    "name": "login",
+    "description": "login 登录微前端",
+    "prefix": [
+      "/static/login/"
+    ],
+    "commitId": "10fbbd5d0d00f0a505baddbd1f41c1dddd96bf4c",
+    "match": "^/login",
+    "js": [
+      "/static/login/runtime~login-46ae0dcb.js",
+      "/static/login/vendors~login-fdb78cec.js",
+      "/static/login/login-b01d7cbc.js"
+    ],
+    "css": [
+      "/static/login/vendors~login-65f73047.css",
+      "/static/login/login-d1b28ba7.css"
+    ]
+  },
+  {
+    "name": "tca-analysis",
+    "description": "TCA Analysis 微前端",
+    "prefix": [
+      "/static/tca-analysis/"
+    ],
+    "commitId": "10fbbd5d0d00f0a505baddbd1f41c1dddd96bf4c",
+    "match": "^/t/[^/]+/p/[^/]+/(code-analysis|repos|template|profile|group)",
+    "js": [
+      "/static/tca-analysis/runtime~tca-analysis-2538b909.js",
+      "/static/tca-analysis/vendors~tca-analysis-1da3002b.js",
+      "/static/tca-analysis/tca-analysis-5f292223.js"
+    ],
+    "css": [
+      "/static/tca-analysis/tca-analysis-8860c614.css"
+    ]
+  },
+  {
+    "name": "tca-manage",
+    "description": "TCA 后台管理微前端",
+    "prefix": [
+      "/static/tca-manage/"
+    ],
+    "commitId": "10fbbd5d0d00f0a505baddbd1f41c1dddd96bf4c",
+    "match": "^/manage",
+    "js": [
+      "/static/tca-manage/runtime~tca-manage-1506bd94.js",
+      "/static/tca-manage/vendors~tca-manage-a59c9280.js",
+      "/static/tca-manage/tca-manage-0bcf7c35.js"
+    ],
+    "css": [
+      "/static/tca-manage/vendors~tca-manage-0908a3f1.css",
+      "/static/tca-manage/tca-manage-7d737fd2.css"
+    ]
+  }
+]
