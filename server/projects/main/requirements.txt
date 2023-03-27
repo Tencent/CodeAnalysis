@@ -17,7 +17,7 @@ markupsafe==2.0.1
 celery==5.2.3
 importlib-metadata==4.13.0
 django-celery-results==2.4.0
-redis==4.1.1
+redis==4.5.3
 celery-redbeat==2.0.0
 
 # for rest api
