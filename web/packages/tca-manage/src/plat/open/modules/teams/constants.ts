@@ -17,7 +17,7 @@ export const TEAM_STATE_OPTIONS = generateOptions(TEAM_STATE_CHOICES, true);
 
 /** 定义筛选字段结构 */
 export const TEAM_SEARCH_FIELDS: SearchFormField[] = [{
-  name: 'check_status',
+  name: 'status',
   type: 'number',
   formType: 'select',
   label: '状态',
