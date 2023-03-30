@@ -14,7 +14,7 @@ djangorestframework==3.11.2
 # for celery
 celery==5.2.3
 importlib-metadata==4.13.0
-redis==4.1.1
+redis==4.5.3
 
 # for exception log
 sentry-sdk==0.10.2
