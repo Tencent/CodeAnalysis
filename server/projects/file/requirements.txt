@@ -17,7 +17,7 @@ importlib-metadata==4.13.0
 redis==4.5.4
 
 # for exception log
-sentry-sdk==0.10.2
+sentry-sdk==1.14.0
 
 # for storage
 cos-python-sdk-v5==1.7.4
