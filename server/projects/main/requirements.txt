@@ -47,7 +47,7 @@ urllib3==1.26.7
 django-import-export==2.5.0
 
 # for exception log
-sentry-sdk==0.10.2
+sentry-sdk==1.14.0
 
 # for monitor
 django-prometheus==2.0.0
