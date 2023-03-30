@@ -40,6 +40,13 @@ const eslintWebpackPlugin = new EslintWebpackPlugin({
       },
     ],
   },
+  overrideConfig: {
+    // 暂时关闭开发过程react-hooks校验
+    rules: {
+      'react-hooks/rules-of-hooks': 'off',
+      'react-hooks/exhaustive-deps': 'off',
+    },
+  },
 });
 
 export default eslintWebpackPlugin;

@@ -28,7 +28,7 @@ const LoadInitService: FC = ({ children }: any) => {
   useEffect(() => {
     // 处理一些初始化时额外需要的请求
     initRequest?.(dispatch, storeDispatch);
-  }, []);
+  }, [dispatch, storeDispatch]);
 
   useFetch(UserAPI.getUserInfo, [], {
     onPreHandler: () => {
