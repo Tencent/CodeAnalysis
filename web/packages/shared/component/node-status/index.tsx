@@ -2,7 +2,7 @@
  * 节点状态组件
  */
 import React from 'react';
-import { useTranslation } from 'react-i18next';
+import { t } from 'i18next';
 import { Tag } from 'coding-oa-uikit';
 import Loading from 'coding-oa-uikit/lib/icon/Loading';
 import Stop from 'coding-oa-uikit/lib/icon/Stop';
@@ -32,8 +32,6 @@ interface NodeStatusProps {
 
 /** 节点状态组件 */
 const NodeStatus = ({ node }: NodeStatusProps) => {
-  const { t } = useTranslation();
-
   if (node) {
     const { enabled, state } = node;
     if (enabled === StatusEnum.ACTIVE && state === StateEnum.BUSY) {

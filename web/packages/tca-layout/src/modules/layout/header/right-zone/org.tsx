@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
+import { t } from '@src/utils/i18n';
 import classnames from 'classnames';
 import { Popover, Avatar, message } from 'coding-oa-uikit';
 import AngleRight from 'coding-oa-uikit/lib/icon/AngleRight';
@@ -18,7 +18,6 @@ interface IProps {
 const OrgUI = ({ name }: IProps) => {
   const [orgs, setOrgs] = useState<Array<any>>([]);
   const history = useHistory();
-  const { t } = useTranslation();
 
   const onChange = (item: any) => {
     message.loading(t('团队切换中...'), 0.3);

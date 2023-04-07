@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { useTranslation } from 'react-i18next';
+import { t } from '@src/utils/i18n';
 import { Dialog, Form, message, Input, FormInstanceFunctions } from 'tdesign-react';
 
 // 项目内
@@ -17,7 +17,6 @@ interface CancelJobModalProps {
 
 const CancelJobModal = ({ jobInfo, visible, onOk, onCancel }: CancelJobModalProps) => {
   const formRef = useRef<FormInstanceFunctions>(null);
-  const { t } = useTranslation();
 
   /**
    * 表单保存操作

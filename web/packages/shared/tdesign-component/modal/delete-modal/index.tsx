@@ -10,7 +10,7 @@
 
 import React, { useEffect, useState, useRef } from 'react';
 import { Dialog, Form, Input, message, Button } from 'tdesign-react';
-import { useTranslation } from 'react-i18next';
+import { t } from 'i18next';
 
 import s from './style.scss';
 
@@ -28,7 +28,6 @@ interface DeleteModalProps {
 
 const DeleteModal = ({ actionType, objectType, confirmName, addtionInfo = '', visible, onCancel, onOk }: DeleteModalProps) => {
   const formRef = useRef<any>(null);
-  const { t } = useTranslation();
   const [confirmed, setConfirmed] = useState<boolean>(false);
 
   useEffect(() => {
@@ -89,7 +88,7 @@ const DeleteModal = ({ actionType, objectType, confirmName, addtionInfo = '', vi
             {t('您正在')}{actionType}{objectType} <span className={s.confirmText}>{confirmName}</span>{' '}<br/>
       </p>
       {addtionInfo && <p className={s.warningMessage}>{addtionInfo}</p>}
-      <p className={s.confirmMessage}>{t(`为确认${actionType}操作，请输入您要${actionType}的`)}{objectType}{t('名称')}</p>
+      <p className={s.confirmMessage}>{`为确认${actionType}操作，请输入您要${actionType}的`}{objectType}{t('名称')}</p>
       <Form
         layout="vertical"
         ref={formRef}

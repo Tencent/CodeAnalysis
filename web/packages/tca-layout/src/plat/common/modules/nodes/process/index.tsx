@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
+import { t } from '@src/utils/i18n';
 import {
   Descriptions,
   Tag,
@@ -27,7 +27,6 @@ const Process = () => {
   const [nodeInfo, setNodeInfo] = useState<any>(null);
   const [processTableData, setProcessTableData] = useState<Array<any>>([]);
   const [loading, setLoading] = useState(false);
-  const { t } = useTranslation();
 
   const checkedAll = processTableData.every(item => item.checktool.supported);
   const uncheckedAll = processTableData.every(item => !item.checktool.supported);
@@ -136,7 +135,7 @@ const Process = () => {
             ))}
           </Descriptions.Item>
           <Descriptions.Item span={3} label={t('节点配置信息')}>
-            <Tag>{t(`CPU: ${nodestatus?.cpu_usage} % (${nodestatus?.cpu_num}) 核`)}</Tag>
+            <Tag>{`CPU: ${nodestatus?.cpu_usage} % (${nodestatus?.cpu_num}) 核`}</Tag>
             <Tag>
               {t('可用内存:')} {bytesToSize(nodestatus?.mem_free_space)} / {bytesToSize(nodestatus?.mem_space)}
             </Tag>

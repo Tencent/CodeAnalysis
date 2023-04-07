@@ -18,7 +18,7 @@ export interface URLSearch {
 }
 
 /** 解析筛选字段值类型 */
-export type FilterValue = URLSearchValue | URLSearchValue[] | number | number[];
+export type FilterValue = URLSearchValue | URLSearchValue[] | number | number[] | boolean;
 
 /** 筛选字段结构 */
 export interface Filter {

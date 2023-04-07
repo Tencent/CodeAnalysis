@@ -4,7 +4,7 @@
 import React, { useRef, useState } from 'react';
 import { some, get } from 'lodash';
 import { Dialog, Form, Select, Loading, MessagePlugin, FormInstanceFunctions } from 'tdesign-react';
-import { useTranslation } from 'react-i18next';
+import { t } from '@src/utils/i18n';
 
 import { putMultiNode } from '@src/services/nodes';
 import { NodeMultiEditFormItem } from '@src/constant/node';
@@ -23,7 +23,6 @@ interface MultiEditNodeModalProps {
 const MultiEditNodeModal = ({
   visible, onOk, onCancel, selectedNodes, editItems,
 }: MultiEditNodeModalProps) => {
-  const { t } = useTranslation();
   const [loading, setLoading] = useState<boolean>(false);
   const formRef = useRef<FormInstanceFunctions>(null);
 

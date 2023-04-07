@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
+import { t } from '@src/utils/i18n';
 import { get } from 'lodash';
 import { Dialog, Form, Input, MessagePlugin, Select, Tag } from 'tdesign-react';
 
@@ -25,7 +25,6 @@ interface TagModalProps {
 const TagModal = ({ tagInfo, orgList, visible, onOk, onCancel }: TagModalProps) => {
   const formRef = useRef<any>(null);
   const [tagType, setTagType] = useState<number>();
-  const { t } = useTranslation();
 
   useEffect(() => {
     setTagType(tagInfo?.tag_type);

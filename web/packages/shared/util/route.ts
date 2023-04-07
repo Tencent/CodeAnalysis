@@ -109,7 +109,7 @@ export const getFilterFieldByURLSearch = (filterFields: FilterField[] = [], page
         filter[key] = value;
         break;
       case 'boolean':
-        filter[key] = value;
+        filter[key] = value === 'true';
         break;
       case 'number':
         filter[key] = toNumber(value);

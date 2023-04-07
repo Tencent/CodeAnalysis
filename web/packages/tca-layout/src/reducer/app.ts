@@ -13,7 +13,7 @@ const initialState = {
   isOrgAdminUser: false,
   user: {},
   puppyInfo: {},
-  manageOrg: NaN,
+  hasOrgManagePerm: false,
 };
 
 export interface IAction {
@@ -38,8 +38,8 @@ const appReducer = (state = initialState, action: IAction) => {
         org: action.payload,
       };
     }
-    case Constant.SET_MANAGEORG:
-      return { ...state, manageOrg: action.payload };
+    case Constant.SET_ORG_MANAGE_PERM:
+      return { ...state, hasOrgManagePerm: action.payload };
     default:
       return state;
   }

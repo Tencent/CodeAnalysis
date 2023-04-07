@@ -151,10 +151,10 @@ const NewProjectModal = (props: NewProjectModalProps) => {
           }
         >
           {({ getFieldValue }) => (getFieldValue('type') === 'template' ? (
+            <>
               <Form.Item
                 name="global_scheme_id"
                 label="分析方案模板"
-                style={{ marginBottom: 0 }}
                 rules={[{ required: true, message: '请选择方案模板' }]}
               >
                 <Select
@@ -162,6 +162,9 @@ const NewProjectModal = (props: NewProjectModalProps) => {
                   placeholder="请选择分析方案模板"
                   optionLabelProp="label"
                   optionFilterProp="label"
+                  onChange={(id: number, option: any) => {
+                    form.setFieldsValue({ custom_scheme_name: option.label });
+                  }}
                 >
                   {templates.map((item: any) => (
                     <Option key={item.id} value={item.id} label={item.name}>
@@ -179,6 +182,16 @@ const NewProjectModal = (props: NewProjectModalProps) => {
                   ))}
                 </Select>
               </Form.Item>
+              <Form.Item
+                name="custom_scheme_name"
+                label="分析方案名称"
+                style={{ marginBottom: 0 }}
+                rules={[{ required: true, message: '请输入分析方案名称' }]}
+              >
+                <Input placeholder='请为所创建的分析方案命名' />
+              </Form.Item>
+              <p className={style.desc}>Tips: 根据模板创建项目实质是按照模板新增一份分析方案后创建项目</p>
+              </>
           ) : (
               <Form.Item
                 name="scan_scheme_id"

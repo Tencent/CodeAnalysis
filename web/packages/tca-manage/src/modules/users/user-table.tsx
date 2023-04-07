@@ -1,5 +1,5 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
+import { t } from '@src/utils/i18n';
 import cn from 'classnames';
 import { Tag, PaginationProps, PrimaryTableCol } from 'tdesign-react';
 import Table from '@tencent/micro-frontend-shared/tdesign-component/table';
@@ -16,10 +16,7 @@ interface UserTableProps {
   onEdit: (user: UserData) => void;
 }
 
-const UserTable = ({ dataSource, pagination, onEdit }: UserTableProps) => {
-  const { t } = useTranslation();
-
-  return (
+const UserTable = ({ dataSource, pagination, onEdit }: UserTableProps) => (
     <Table
       rowKey='username'
       data={dataSource}
@@ -78,8 +75,7 @@ const UserTable = ({ dataSource, pagination, onEdit }: UserTableProps) => {
       ] as PrimaryTableCol<UserData>[]}
       pagination={pagination}
     />
-  );
-};
+);
 
 
 export default UserTable;

@@ -6,7 +6,7 @@
 
 import React from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
+import { t } from '@src/utils/i18n';
 import { Button } from 'coding-oa-uikit';
 import PlusIcon from 'coding-oa-uikit/lib/icon/Plus';
 // 项目内
@@ -16,7 +16,6 @@ import s from './style.scss';
 
 const Welcome = () => {
   const history = useHistory();
-  const { t } = useTranslation();
   const { orgSid, teamName }: any = useParams();
 
   return (

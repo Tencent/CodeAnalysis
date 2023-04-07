@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
+import { t } from '@src/utils/i18n';
 import { Button, Carousel } from 'coding-oa-uikit';
 import { getMetaContent } from '@tencent/micro-frontend-shared/util';
 import cn from 'classnames';
@@ -40,7 +40,6 @@ const Arrow = ({ direction, ...carouselProps }: ArrowProps) => (
 
 const Banner = () => {
   const history = useHistory();
-  const { t } = useTranslation();
 
   return (
     <div className={s.bannerSection}>

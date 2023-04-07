@@ -2,7 +2,7 @@
  * 工具白名单列表
  */
 import React, { useState, useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
+import { t } from '@src/utils/i18n';
 import { Table, Input, Button, Tooltip, Modal, message } from 'coding-oa-uikit';
 import Trash from 'coding-oa-uikit/lib/icon/Trash';
 
@@ -21,7 +21,6 @@ interface RulesProps {
 }
 
 const WhiteList = ({ orgSid, toolId, tab }: RulesProps) => {
-  const { t } = useTranslation();
   const [visible, setVisible] = useState(false);
   const [loading, setLoading] = useState(false);
   const [orgName, setOrgName] = useState('');
@@ -46,7 +45,7 @@ const WhiteList = ({ orgSid, toolId, tab }: RulesProps) => {
 
   const onDel = (data: any) => {
     Modal.confirm({
-      title: t(`确定移除白名单【 ${data?.organization?.name} 】？`),
+      title: `确定移除白名单【 ${data?.organization?.name} 】？`,
       okButtonProps: { danger: true },
       okText: t('确定删除'),
       onOk: () => {

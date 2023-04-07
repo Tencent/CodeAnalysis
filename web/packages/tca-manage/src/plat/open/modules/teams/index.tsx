@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { get } from 'lodash';
-import { useTranslation } from 'react-i18next';
+import { t } from '@src/utils/i18n';
 import { Row, Col, Tabs, DialogPlugin, MessagePlugin } from 'tdesign-react';
 import Search from '@tencent/micro-frontend-shared/tdesign-component/search';
 import { useURLParams, useFetch } from '@tencent/micro-frontend-shared/hooks';
@@ -17,7 +17,6 @@ import { DeleteModal } from '@tencent/micro-frontend-shared/tdesign-component/mo
 const { TabPanel } = Tabs;
 
 const ProjectTeams = () => {
-  const { t } = useTranslation();
   const { filter, currentPage, pageSize, searchParams } = useURLParams(filterFields);
   const [{ data, isLoading }, reload] = useFetch(getTeams, [filter]);
   const { results: listData = [], count = 0 } = data || {};

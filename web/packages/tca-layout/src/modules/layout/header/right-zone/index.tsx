@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
+import { t } from '@src/utils/i18n';
 import classnames from 'classnames';
 import { Dropdown, Menu } from 'coding-oa-uikit';
 import { useStateStore } from '@tencent/micro-frontend-shared/hook-store';
@@ -21,7 +21,6 @@ interface IProps {
 
 const RightZone = ({ org }: IProps) => {
   const { userinfo } = useStateStore<UserState>(NAMESPACE);
-  const { t } = useTranslation();
 
   const isManage = /^\/manage/.test(window.location.pathname);
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
+import { t } from '@src/utils/i18n';
 import { get } from 'lodash';
 import { Table, Button } from 'tdesign-react';
 
@@ -19,7 +19,6 @@ const TagTable = ({ tags: listData, reload }: TagTableProps) => {
   const [visible, setVisible] = useState(false);
   const [selectTag, setSelectTag] = useState(null);
   const [orgList, setOrgList] = useState<Array<any>>([]);
-  const { t } = useTranslation();
 
   useEffect(() => {
     // 获取活跃团队

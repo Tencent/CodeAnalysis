@@ -2,12 +2,12 @@
  * 工具基本信息
  */
 import React, { useState, useEffect, useRef } from 'react';
-import { useTranslation } from 'react-i18next';
+import { t } from '@src/utils/i18n';
 import cn from 'classnames';
 import { get, isEmpty } from 'lodash';
 import { Form, Button, Input, Checkbox, Select, message, Tag, Modal, Radio } from 'coding-oa-uikit';
 import EditIcon from 'coding-oa-uikit/lib/icon/Edit';
-import { formatDateTime } from '@tencent/micro-frontend-shared/util';
+import { formatDateTime, formScmURLSecValidate } from '@tencent/micro-frontend-shared/util';
 import AuthFormItem from '@tencent/micro-frontend-shared/tca/user-auth/auth-form-item';
 
 // 项目内
@@ -38,7 +38,6 @@ const BaseInfo = ({ orgSid, data, editable, getDetail }: BaseInfoProps) => {
   const [isEdit, setIsEdit] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const statusRef = useRef();
-  const { t } = useTranslation();
 
   useEffect(() => {
     form.resetFields();
@@ -204,6 +203,7 @@ const BaseInfo = ({ orgSid, data, editable, getDetail }: BaseInfoProps) => {
                       noStyle
                       rules={[
                         { required: true, message: t('请输入工具仓库地址') },
+                        formScmURLSecValidate,
                       ]}
                     >
                       <Input style={{ width: '84%' }} />

@@ -12,6 +12,7 @@ TCA独立工具TCA-Armory-R，别名RegexScanner，正则匹配工具，支持�
 - 扫描速度更快，大概减少60%的耗时
 - 单条规则内支持多条正则表达式
 - 支持正则过滤
+- 支持匹配分组和熵检测
 - *只支持[go的正则语法](https://pkg.go.dev/regexp/syntax)*
 
 ## 快速接入
@@ -90,6 +91,14 @@ TCA独立工具TCA-Armory-R，别名RegexScanner，正则匹配工具，支持�
   > > 2. `exclude=tests` 会忽略以下文件: tests/test.py, a/tests/b/test.py
   > > 3. `include=main.*` 会只扫描以下文件: src/main.py, app/main.go
   > > 4. `include=src`且`exclude=src/lib` 会只扫描以下文件: src/main.py, src/project/proj.py; 忽略以下文件: src/lib/lib.py, src/lib/package/pack.js
+
+- (11)[可选] `match_group` 参数，用于指定正则匹配的分组，数值不能大于正则匹配分组数，例如：
+`regex=(aws_account_id)\s{0,50}(:|=>|=)\s{0,50}([0-9]{12})`
+`match_group=3`，匹配到第3个分组`([0-9]{12})`
+
+- (12)[可选] `entropy` 参数，用于指定正则匹配结果的最小信息熵，例如：`entropy=3`，熵不大于3的匹配结果将被过滤
+  > 信息熵：[熵(信息论)](https://zh.wikipedia.org/wiki/%E7%86%B5_(%E4%BF%A1%E6%81%AF%E8%AE%BA)) 可用于敏感信息（密钥、token）的检测
+  > 含义：可以理解为字符串的混乱程度，字符越随机，熵越大。因此，设置合适的熵，可以过滤掉一些误报或者人为测试用例。
 
 ### 4. 将自定义规则添加到项目分析方案中
 进入 代码分析 - 分析方案 - 代码检查 - 自定义规则包 - 查看详细规则，添加规则。

@@ -21,4 +21,4 @@ pycryptodome==3.9.8
 cryptography===39.0.1
 
 # for exception log
-sentry-sdk==0.10.2
+sentry-sdk==1.14.0

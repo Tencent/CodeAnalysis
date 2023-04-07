@@ -1,4 +1,4 @@
-import { t } from '@tencent/micro-frontend-shared/i18n';
+import { t } from '@src/utils/i18n';
 import { generateOptions } from '@tencent/micro-frontend-shared/util';
 
 /** 节点工作状态 */

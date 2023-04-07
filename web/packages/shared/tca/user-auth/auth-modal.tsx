@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
+import { t } from 'i18next';
 import { Modal, Form, Input, Select, message } from 'coding-oa-uikit';
 import { UserAuthAPI } from './types';
 
@@ -21,7 +21,6 @@ interface AuthModalProps {
 
 const AuthModal = ({ visible, authinfo, userAuthAPI, onOk, onCancel }: AuthModalProps) => {
   const [form] = Form.useForm();
-  const { t } = useTranslation();
 
   const isUpdate = !!authinfo;
 

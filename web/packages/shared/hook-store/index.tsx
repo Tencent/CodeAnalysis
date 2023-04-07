@@ -6,7 +6,7 @@ import React, { Context, useMemo, createContext, Dispatch, useContext, useReduce
 
 import { StateProps, ProviderProps, DispatchContextType } from './types';
 import { getInitialState, getComdbinedReducer } from './utils';
-import { applyMiddleware, genarateDefaultMiddlewares } from './middleware';
+import { useApplyMiddleware, genarateDefaultMiddlewares } from './middleware';
 
 let StateContext: Context<StateProps>;
 let DispatchContext: DispatchContextType<any>;
@@ -26,11 +26,12 @@ export const StoreProvider = <State, Action>(props: ProviderProps<State, Action>
   const [state, dispatch] = useReducer(combinedReducer, initialState);
 
   // 让 dispatch 支持 middlewares
-  const defaultMiddlewares = genarateDefaultMiddlewares<Action>();
-  const middlewares = defaultMiddlewares.concat(props.middlewares ? props.middlewares : []);
-  const enhancedDispatch = middlewares?.length
-    ? applyMiddleware<Action>(state, dispatch, middlewares)
-    : dispatch;
+  const middlewares = useMemo(() => {
+    const defaultMiddlewares = genarateDefaultMiddlewares<Action>();
+    return defaultMiddlewares.concat(props.middlewares ? props.middlewares : []);
+  }, [props.middlewares]);
+
+  const enhancedDispatch = useApplyMiddleware<Action>(state, dispatch, middlewares);
 
   return (
     <DispatchContext.Provider value={enhancedDispatch}>

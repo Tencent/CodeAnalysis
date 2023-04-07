@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { useTranslation } from 'react-i18next';
+import { t } from '@src/utils/i18n';
 import { get } from 'lodash';
 import { Dialog, Form, MessagePlugin, Input, Select } from 'tdesign-react';
 
@@ -20,7 +20,6 @@ interface NodeModalProps {
 
 const NodeModal = ({ nodeinfo, visible, onOk, onCancel, tagOptions, memberOptions }: NodeModalProps) => {
   const formRef = useRef<any>(null);
-  const { t } = useTranslation();
 
   /**
    * 表单保存操作
