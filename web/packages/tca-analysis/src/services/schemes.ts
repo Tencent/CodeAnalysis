@@ -48,6 +48,13 @@ export const getLabels = () => get(`${MAIN_SERVER_API}/labels/?limit=100`);
 export const getTags = (orgId: string, params: any = null) => get(`${MAIN_SERVER_API}/orgs/${orgId}/nodes/tags/`, params);
 
 /**
+ * 获取节点列表
+ * @param orgId
+ * @param params 筛选参数
+ */
+export const getNodes = (orgId: string, params: any = null) => get(`${MAIN_SERVER_API}/orgs/${orgId}/nodes/`, params);
+
+/**
  * 拉取模板配置
  * @param orgSid 团队唯一标识
  * @param teamName 项目唯一标识

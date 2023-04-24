@@ -8,14 +8,15 @@
  * 新建分析项目模态框
  */
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory, Link } from 'react-router-dom';
 import { get } from 'lodash';
 import cn from 'classnames';
-import { Modal, Input, Form, Select, Radio, Tag } from 'coding-oa-uikit';
+import { Modal, Input, Form, Select, Radio, Tag, Alert } from 'coding-oa-uikit';
 
 import { getProjectRouter, getSchemeRouter } from '@src/utils/getRoutePath';
 import { getProjects, createProject } from '@src/services/projects';
+import { getNodes } from '@src/services/schemes';
 
 import style from '../style.scss';
 
@@ -36,6 +37,7 @@ const NewProjectModal = (props: NewProjectModalProps) => {
   const [form] = Form.useForm();
   const history = useHistory();
   const [loading, setLoading] = useState(false);
+  const [noNode, setNoNode] = useState(false);
   const {
     orgSid,
     teamName,
@@ -46,6 +48,14 @@ const NewProjectModal = (props: NewProjectModalProps) => {
     onClose,
     callback,
   } = props;
+
+  useEffect(() => {
+    getNodes(orgSid).then((res: any) => {
+      if (!res?.count) {
+        setNoNode(true);
+      }
+    });
+  }, [visible]);
 
   const onFinish = async (data: any) => {
     setLoading(true);
@@ -118,6 +128,14 @@ const NewProjectModal = (props: NewProjectModalProps) => {
         form.validateFields().then(onFinish);
       }}
     >
+      {noNode && <Alert
+        message={<p>团队未接入任何专机节点，可能导致分析失败。
+          <a href={`/t/${orgSid}/nodes/`} target='_blank' rel="noreferrer">立即接入{'>>'}</a>
+        </p>}
+        type="warning"
+        showIcon
+        className={style.alert}
+      />}
       <Form
         layout="vertical"
         form={form}

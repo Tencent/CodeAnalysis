@@ -12,10 +12,10 @@ import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import cn from 'classnames';
 import { get, pick, find } from 'lodash';
-import { Modal, Form, Input, Select, Radio, Row, Col, Checkbox, message, Tag } from 'coding-oa-uikit';
+import { Modal, Form, Input, Select, Radio, Row, Col, Checkbox, message, Tag, Alert } from 'coding-oa-uikit';
 
 import { getProjectRouter } from '@src/utils/getRoutePath';
-import { getLanguages, getTags } from '@src/services/schemes';
+import { getLanguages, getTags, getNodes } from '@src/services/schemes';
 import { initRepos } from '@src/services/projects';
 import NodeTag from '@src/components/node-tag';
 
@@ -41,6 +41,7 @@ const FirstModal = (props: FirstModalProps) => {
   const [languages, setLanguages] = useState<any>([]);
   const [tags, setTags] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
+  const [noNode, setNoNode] = useState(false);
   const [scan, setScan] = useState({
     visible: false,
     projectId: -1,
@@ -51,7 +52,12 @@ const FirstModal = (props: FirstModalProps) => {
   useEffect(() => {
     (async () => {
       if (visible) {
-        setTags(get(await getTags(orgSid), 'results', []));
+        getNodes(orgSid).then((res: any) => {
+          if (!res?.count) {
+            setNoNode(true);
+          }
+        });
+        setTags(get(await getTags(orgSid), 'results', [])?.reverse());
         setLanguages(get(await getLanguages(), 'results', []));
       }
     })();
@@ -112,6 +118,14 @@ const FirstModal = (props: FirstModalProps) => {
           form.validateFields().then(onFinish);
         }}
       >
+        {noNode && <Alert
+          message={<p>团队未接入任何专机节点，可能导致分析失败。
+            <a href={`/t/${orgSid}/nodes/`} target='_blank' rel="noreferrer">立即接入{'>>'}</a>
+          </p>}
+          type="warning"
+          showIcon
+          className={style.alert}
+        />}
         <Form
           layout='vertical'
           form={form}
@@ -129,15 +143,15 @@ const FirstModal = (props: FirstModalProps) => {
           <Form.Item
             name="type"
             label=""
-            initialValue="template"
+            initialValue="create"
           >
             <Radio.Group style={{ width: '100%' }} >
               <Row gutter={12}>
                 <Col span={7}>
-                  <Radio value="template">分析方案模板</Radio>
+                  <Radio value="create">创建分析方案</Radio>
                 </Col>
                 <Col span={7}>
-                  <Radio value="create">创建分析方案</Radio>
+                  <Radio value="template">分析方案模板</Radio>
                 </Col>
               </Row>
             </Radio.Group>
@@ -170,6 +184,7 @@ const FirstModal = (props: FirstModalProps) => {
                 <NodeTag
                   name="tag"
                   label="运行环境"
+                  placeholder="请选择运行环境"
                   rules={[{ required: true, message: '请选择运行环境' }]}
                   tags={tags}
                 />
