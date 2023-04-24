@@ -31,7 +31,7 @@ export const useInitMamoto = () => {
         piwik = null;
       }
     };
-  }, []);
+  }, [history]);
 };
 
 export const setPvUserInfo = (userinfo: any) => {

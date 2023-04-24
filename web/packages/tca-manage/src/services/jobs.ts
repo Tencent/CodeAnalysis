@@ -3,7 +3,7 @@ import { MAIN_SERVER_API, get, post } from '@plat/api';
 import { ResultEnum } from '@src/modules/jobs/constants';
 
 /** 格式化筛选项中的result，result_code <= 99 表示通过，result_code >= 99 表示异常 */
-const formatJobResultFilter = (result?: string) => {
+export const formatJobResultFilter = (result?: string) => {
   if (result) {
     if (toNumber(result) === ResultEnum.SUCCESS) {
       return { result_code_lte: 99 };

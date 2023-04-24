@@ -1,5 +1,5 @@
 import React, { ReactNode, useEffect, useMemo, useState, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import classnames from 'classnames';
 import { Layout, Menu, Button } from 'coding-oa-uikit';
 import Aleft from 'coding-oa-uikit/lib/icon/Aleft';
@@ -59,6 +59,7 @@ const LayoutMenu = ({ menus, breakpoint, title, showTitleBottomBorder }: LayoutM
   const [collapsed, setCollapsed] = useState(false);
   const [openKeys, setOpenKeys] = useState([]);
   const tmpCollapsed = useRef(false);
+  const location = useLocation();
 
   // 控制菜单collapsed样式
   useEffect(() => {
@@ -108,15 +109,15 @@ const LayoutMenu = ({ menus, breakpoint, title, showTitleBottomBorder }: LayoutM
       if (menu.link) {
         if (menu.regexMatch) {
           // 正则匹配
-          return menu.regexMatch.test(window.location.pathname);
+          return menu.regexMatch.test(location.pathname);
         }
         // 否则采用startsWith
-        return window.location.pathname.startsWith(menu.link);
+        return location.pathname.startsWith(menu.link);
       }
       return false;
     });
     return menuFilters.length > 0 ? menuFilters[0].key : '';
-  }, [aggMenuItems, window.location.pathname]);
+  }, [aggMenuItems, location.pathname]);
 
   useEffect(() => {
     setOpenKeys(getMatchOpenKeys(menus, selectedKey, tmpCollapsed.current));

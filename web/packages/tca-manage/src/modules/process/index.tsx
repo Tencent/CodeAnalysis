@@ -49,7 +49,7 @@ const Process = () => {
       setNodeInfo(node);
       await getNodePorcessRequest(nodeId);
     })();
-  }, []);
+  }, [nodeId]);
 
   // 全选、全不选
   const onSelectAllChange = (checked: boolean) => {

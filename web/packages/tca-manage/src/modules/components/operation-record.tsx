@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { get } from 'lodash';
 import { Dialog, PageInfo, Table } from 'tdesign-react';
 import { t } from '@src/utils/i18n';
@@ -25,14 +25,7 @@ const OperationRecordModal = ({ id, getRecordListApi, visible, onCancel }: Opera
   const [pager, setPager] = useState<any>(DEFAULT_PAGER);
   const { count, pageSize, currentPage } = pager;
 
-  useEffect(() => {
-    if (visible && id) {
-      setLoading(true);
-      getRecordList(DEFAULT_PAGER.currentPage, DEFAULT_PAGER.pageSize);
-    }
-  }, [visible]);
-
-  const getRecordList = (page: number, pageSize: number) => {
+  const getRecordList = useCallback((page: number, pageSize: number) => {
     getRecordListApi(id, {
       limit: pageSize,
       offset: (page - 1) * pageSize,
@@ -45,7 +38,14 @@ const OperationRecordModal = ({ id, getRecordListApi, visible, onCancel }: Opera
       });
       setLoading(false);
     });
-  };
+  }, [getRecordListApi, id]);
+
+  useEffect(() => {
+    if (visible && id) {
+      setLoading(true);
+      getRecordList(DEFAULT_PAGER.currentPage, DEFAULT_PAGER.pageSize);
+    }
+  }, [visible, id, getRecordList]);
 
   const onChangePage = ({ current, pageSize }: PageInfo) => {
     setLoading(true);

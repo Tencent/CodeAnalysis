@@ -12,7 +12,7 @@ import { setPvUserInfo } from '@src/utils/matomo';
 import { getUserAvatarURL } from '@src/utils';
 import { UserAPI } from '@plat/api';
 import { initRequest } from '@plat/util';
-import { useNotification, useVersionChangeRedirect } from '@plat/hooks';
+import { useVersionChangeRedirect } from '@plat/hooks';
 
 /**
  * 初始化页面时的一些请求
@@ -22,7 +22,6 @@ const LoadInitService: FC = ({ children }: any) => {
   const dispatch = useDispatchStore<UserAction>();
   const storeDispatch = useDispatch();
 
-  useNotification();
   useVersionChangeRedirect();
 
   useEffect(() => {
