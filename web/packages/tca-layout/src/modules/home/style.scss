@@ -113,6 +113,8 @@ $content-min-height: $foot-height + 48px;
       margin: 0 auto;
       max-width: $content-max-width;
       z-index: 11;
+      display: flex;
+      align-items: flex-end;
 
       .info {
         color: $white;
@@ -143,6 +145,86 @@ $content-min-height: $foot-height + 48px;
           padding: 0px 50px;
           color: #fff;
           background: $blue-5;
+          height: 50px;
+          line-height: 48px;
+          font-size: 20px;
+          font-weight: 600;
+        }
+
+        .second-btn {
+          margin-right: 16px;
+          padding: 0px 50px;
+          color: $blue-5;
+          border: 1px solid $blue-5;
+          height: 50px;
+          line-height: 48px;
+          font-size: 20px;
+          font-weight: 600;
+        }
+      }
+
+      .qr-code-area {
+        margin: 44px 80px;
+        text-align: center;
+
+        .qr-code {
+          padding: 8px;
+          border-radius: 8px;
+          background-color: white;
+        }
+
+        .invite {
+          margin-top: 10px;
+          color: white;
+          font-weight: 500;
+        }
+      }
+    }
+  }
+
+  .info-section {
+    margin-bottom: 40px;
+    padding: 0 20px;
+    overflow: hidden;
+    position: relative;
+
+    .section-container {
+      position: relative;
+      margin: 0 auto;
+      max-width: $content-max-width;
+      z-index: 11;
+
+      .attention {
+        color: $red-5;
+      }
+
+      .info {
+        font-weight: 500;
+        padding: 96px 96px 0px 96px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .title {
+        font-size: 28px;
+        font-weight: 600;
+        letter-spacing: 1.07px;
+        margin-bottom: 12px;
+      }
+
+      .p-content {
+        font-size: 16px;
+        max-width: 600px;
+        line-height: 30px;
+        font-weight: 400;
+      }
+
+      .btn-area {
+        margin-top: 10px;
+
+        .btn {
+          color: $blue-5;
           height: 50px;
           line-height: 48px;
           font-size: 20px;

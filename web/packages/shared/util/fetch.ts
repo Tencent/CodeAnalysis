@@ -199,9 +199,9 @@ export class FetchManager {
     method: 'GET',
   }, { ...this.custom, ...custom });
 
-  post = (url: string, data: any, custom?: FetchCustomParams) => fetch(url, {
+  post = (url: string, data?: any, custom?: FetchCustomParams) => fetch(url, {
     method: 'POST',
-    body: JSON.stringify(data),
+    body: data ? JSON.stringify(data) : null,
   }, { ...this.custom, ...custom });
 
   put = (url: string, data: any, custom?: FetchCustomParams) => fetch(url, {

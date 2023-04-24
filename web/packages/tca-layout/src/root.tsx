@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
-import { hot } from 'react-hot-loader';
+import { hot } from 'react-hot-loader/root';
 import Loading from '@tencent/micro-frontend-shared/component/loading';
 
 // import { isEnableManage } from '@src/utils';
@@ -35,4 +35,4 @@ const Root = () => (
   </Router>
 );
 
-export default hot(module)(Root);
+export default hot(Root);
