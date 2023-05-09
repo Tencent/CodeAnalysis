@@ -60,7 +60,7 @@ class Tscan(CodeLintModel):
                 stdout_line_callback=subprocc_log,
             )
             sp.wait()
-            if os.path.exists(output_file):
+            if os.path.exists(output_file) and os.stat(output_file).st_size != 0:
                 issues.extend(self._format_issue(output_file))
         return issues
 
