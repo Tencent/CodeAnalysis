@@ -102,8 +102,8 @@ const OAuthModal = ({ scminfo, visible, onCancel, onOk }: OAuthModalProps) => {
           initialData={getHostName(scminfo?.redirect_uri)}
         >
           <InputAdornment style={{ width: '100%' }}
-            prepend={<div style={{ width: 46 }}>http://</div>}
-            append={<div style={{ width: 150 }}>/cb_git_auth/{scminfo?.scm_platform_name}</div>}>
+            prepend='http://'
+            append={`/cb_git_auth/${scminfo?.scm_platform_name}`}>
             <Input placeholder="部署机IP" />
           </InputAdornment>
         </FormItem>

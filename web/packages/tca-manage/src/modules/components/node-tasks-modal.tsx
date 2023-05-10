@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { Table, Dialog, PageInfo, Tag } from 'tdesign-react';
 import { get } from 'lodash';
@@ -28,13 +28,7 @@ const NodeTaskModal = ({ visible, nodeId, onCancel }: NodeTaskModalProps) => {
   const [pager, setPager] = useState<any>(DEFAULT_PAGER);
   const { count, pageSize, currentPage } = pager;
 
-  useEffect(() => {
-    if (visible && nodeId) {
-      getTaskList(DEFAULT_PAGER.currentPage, DEFAULT_PAGER.pageSize);
-    }
-  }, [nodeId]);
-
-  const getTaskList = (page: number, pageSize: number) => {
+  const getTaskList = useCallback((page: number, pageSize: number) => {
     setLoading(true);
     getNodeTask(nodeId, {
       limit: pageSize,
@@ -48,7 +42,13 @@ const NodeTaskModal = ({ visible, nodeId, onCancel }: NodeTaskModalProps) => {
       });
       setLoading(false);
     });
-  };
+  }, [nodeId]);
+
+  useEffect(() => {
+    if (visible && nodeId) {
+      getTaskList(DEFAULT_PAGER.currentPage, DEFAULT_PAGER.pageSize);
+    }
+  }, [nodeId, visible, getTaskList]);
 
   const onChangePage = ({ current, pageSize }: PageInfo) => {
     setLoading(true);

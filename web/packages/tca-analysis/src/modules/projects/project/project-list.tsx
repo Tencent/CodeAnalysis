@@ -66,7 +66,7 @@ const ProjectList = (props: ProjectListProps) => {
   const isAdmin = useLoginUserIsAdmin(admins);
 
   useEffect(() => {
-    if (!isEmpty(schemes)) {
+    if (!isEmpty(schemes) && schemes[0]?.repo === toNumber(repoId)) {
       // 分析方案不为空，则表示不会打开【开启第一次代码分析弹框】
       // 为避免同时打开两个弹框，需先判断分析方案是否为空
       getListData(pageSize, pageStart, true);
@@ -115,7 +115,7 @@ const ProjectList = (props: ProjectListProps) => {
       setList(response.results);
       setPager({ ...pager, count: response.count });
 
-      // 分析项目为空，且分析方案不为空时默认打开创建分支项目弹框
+      // 分析项目为空，且分析方案不为空时默认打开创建分支项目弹框，排除搜索导致list为空的情况
       if (modal && isEmpty(otherParams) && response.count === 0) {
         setCreateProjectVsb(true);
       }
