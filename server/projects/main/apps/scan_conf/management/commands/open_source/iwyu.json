@@ -49,6 +49,23 @@
                 "labels": [],
                 "description": "should remove",
                 "disable": false
+            },
+            {
+                "real_name": "iwyu-note",
+                "display_name": "iwyu-note",
+                "severity": "info",
+                "category": "other",
+                "rule_title": "#includes/fwd-decls are correct",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "#includes/fwd-decls are correct",
+                "owner": null,
+                "labels": [],
+                "description": "#includes/fwd-decls are correct",
+                "disable": false
             }
         ],
         "open_user": true,
