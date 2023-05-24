@@ -200,10 +200,9 @@ class RegexScan(CodeLintModel):
 
         if incr_scan:
             diffs = SCMMgr(params).get_scm_diff()
-            toscans = [os.path.join(source_dir, diff.path) for diff in diffs if
-                       diff.path.lower().endswith(CODE_EXT) and diff.state != 'del']
+            toscans = [os.path.join(source_dir, diff.path) for diff in diffs if diff.state != 'del']
         else:
-            toscans = PathMgr().get_dir_files(source_dir, CODE_EXT)
+            toscans = PathMgr().get_dir_files(source_dir)
 
         # filter include and exclude path
         relpos = len(source_dir) + 1
