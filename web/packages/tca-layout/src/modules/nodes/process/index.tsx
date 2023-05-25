@@ -34,7 +34,7 @@ const Process = () => {
 
   const getNodePorcessRequest = async (id: number) => {
     setLoading(true);
-    const process: { [key: string]: any }  = await getNodeProcess(orgSid, id);
+    const process: { [key: string]: any } = await getNodeProcess(orgSid, id);
     const data = Object.keys(process).map((key: string) => {
       const item = process[key];
       const supported = Object.keys(item).every((k: string) => item[k].supported);
@@ -129,7 +129,10 @@ const Process = () => {
           <Descriptions.Item label={t('最近上报心跳')}>
             {formatDateTime(nodeInfo.last_beat_time) || '- -'}
           </Descriptions.Item>
-          <Descriptions.Item span={3} label={t('所属标签')}>
+          <Descriptions.Item span={1} label={t('创建时间')}>
+            {formatDateTime(nodeInfo.created_time) || '- -'}
+          </Descriptions.Item>
+          <Descriptions.Item span={2} label={t('所属标签')}>
             {nodeInfo.exec_tags.map((tag: string) => (
               <Tag key={tag}>{tag}</Tag>
             ))}

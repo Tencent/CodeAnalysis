@@ -23,6 +23,7 @@ export const useInitMamoto = () => {
       // 初始化matomo
       piwik = new ReactPiwik({ url, siteId });
       piwik.connectToHistory(history);
+      ReactPiwik.push(['trackPageView']);
     }
 
     return () => {
