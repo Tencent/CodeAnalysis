@@ -5,12 +5,12 @@
     "prefix": [
       "/static/tca-layout/"
     ],
-    "commitId": "7a2f7ede1557f47eade3a7ab7afd4a9437f62bfd",
+    "commitId": "b2546d53cdb6c12c0c15d697fc235be3922eb84f",
     "match": "/",
     "js": [
-      "/static/tca-layout/runtime~tca-layout-1b543117.js",
-      "/static/tca-layout/vendors~tca-layout-0278cbfc.js",
-      "/static/tca-layout/tca-layout-960ead67.js"
+      "/static/tca-layout/runtime~tca-layout-fc8d3d6a.js",
+      "/static/tca-layout/vendors~tca-layout-31809f6b.js",
+      "/static/tca-layout/tca-layout-b5f2c6ca.js"
     ],
     "css": [
       "/static/tca-layout/tca-layout-02355b29.css"
@@ -40,12 +40,12 @@
     "prefix": [
       "/static/tca-analysis/"
     ],
-    "commitId": "7a2f7ede1557f47eade3a7ab7afd4a9437f62bfd",
+    "commitId": "b2546d53cdb6c12c0c15d697fc235be3922eb84f",
     "match": "^/t/[^/]+/p/[^/]+/(code-analysis|repos|template|profile|group)",
     "js": [
       "/static/tca-analysis/runtime~tca-analysis-d3b32738.js",
-      "/static/tca-analysis/vendors~tca-analysis-d24bee4a.js",
-      "/static/tca-analysis/tca-analysis-f445e076.js"
+      "/static/tca-analysis/vendors~tca-analysis-33d31da9.js",
+      "/static/tca-analysis/tca-analysis-c324cb2b.js"
     ],
     "css": [
       "/static/tca-analysis/tca-analysis-ac48fa7e.css"
@@ -57,10 +57,10 @@
     "prefix": [
       "/static/tca-manage/"
     ],
-    "commitId": "7a2f7ede1557f47eade3a7ab7afd4a9437f62bfd",
+    "commitId": "b2546d53cdb6c12c0c15d697fc235be3922eb84f",
     "match": "^/manage",
     "js": [
-      "/static/tca-manage/runtime~tca-manage-73a7b8ef.js",
+      "/static/tca-manage/runtime~tca-manage-66e8cb11.js",
       "/static/tca-manage/vendors~tca-manage-e46a05a1.js",
       "/static/tca-manage/tca-manage-f745225b.js"
     ],
