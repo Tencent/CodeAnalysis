@@ -111,8 +111,15 @@ const NodeTable = ({ tagOptions }: NodeTableProps) => {
           title={t('最近上报心跳')}
           dataIndex="last_beat_time"
           key="last_beat_time"
-          width={120}
+          width={160}
           render={(last_beat_time: any) => formatDateTime(last_beat_time) || '- -'}
+        />
+        <Column
+          title={t('创建时间')}
+          dataIndex="created_time"
+          key="created_time"
+          width={160}
+          render={(created_time: any) => formatDateTime(created_time) || '- -'}
         />
         <Column
           title={t('所属标签')}
@@ -131,7 +138,7 @@ const NodeTable = ({ tagOptions }: NodeTableProps) => {
           title={t('节点状态')}
           dataIndex="enabled"
           key="enabled"
-          render={(enabled: any, node: any) => <NodeStatus node={node}/>}
+          render={(enabled: any, node: any) => <NodeStatus node={node} />}
         />
         <Column
           title={t('操作')}

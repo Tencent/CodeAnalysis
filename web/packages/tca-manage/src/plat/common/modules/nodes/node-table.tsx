@@ -119,8 +119,14 @@ const NodeTable = ({ tagOptions }: NodeTableProps) => {
     {
       colKey: 'last_beat_time',
       title: t('最近上报心跳'),
-      width: 200,
+      width: 160,
       cell: ({ row }: any) => formatDateTime(get(row, 'last_beat_time')) || '- -',
+    },
+    {
+      colKey: 'created_time',
+      title: t('创建时间'),
+      width: 160,
+      cell: ({ row }: any) => formatDateTime(get(row, 'created_time')) || '- -',
     },
     {
       colKey: 'exec_tags',

@@ -125,7 +125,7 @@ export const getLintLineChartData = (scans: any) => {
     });
     return {
       [LINT_HISTORY_TYPE.TOTAL]: rowsTotal.reverse(),
-      [LINT_HISTORY_TYPE.UNDEAL]: rowsPending,
+      [LINT_HISTORY_TYPE.UNDEAL]: rowsPending.reverse(),
     };
   }
   return { [LINT_HISTORY_TYPE.TOTAL]: [], [LINT_HISTORY_TYPE.UNDEAL]: [] };
@@ -259,7 +259,7 @@ export const getCyCLineChartData = (scans: any, standard: string) => {
     });
     return {
       [CYC_TYPE.TOTAL]: rowsTotal.reverse(),
-      [CYC_TYPE.OVER]: rowsExcess,
+      [CYC_TYPE.OVER]: rowsExcess.reverse(),
     };
   }
   return { [CYC_TYPE.TOTAL]: [], [CYC_TYPE.OVER]: [] };

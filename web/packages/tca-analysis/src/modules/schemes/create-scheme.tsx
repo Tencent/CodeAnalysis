@@ -91,7 +91,7 @@ const CreatSchemeModal = (props: IProps) => {
         <Form.Item
           name="createType"
           label="创建方式"
-          initialValue="template"
+          initialValue="create"
           rules={[{ required: true, message: '请选择创建方式' }]}
         >
           <Radio.Group
@@ -102,10 +102,10 @@ const CreatSchemeModal = (props: IProps) => {
           >
             <Row gutter={12}>
               <Col span={7}>
-                <Radio value="template">模板创建</Radio>
+                <Radio value="create">普通创建</Radio>
               </Col>
               <Col span={7}>
-                <Radio value="create">普通创建</Radio>
+                <Radio value="template">模板创建</Radio>
               </Col>
               <Col span={10}>
                 <Radio value="copy">复制已有分析方案</Radio>
@@ -153,7 +153,44 @@ const CreatSchemeModal = (props: IProps) => {
                   </>
                 );
 
-              case 'create':
+              case 'template':
+                return (
+                  <>
+                    <Form.Item
+                      name="ref_scheme"
+                      rules={[{ required: true, message: '请选择模板' }]}
+                    >
+                      <Select
+                        placeholder="请选择模板"
+                        style={{ width: '100%' }}
+                        optionLabelProp="label"
+                        onChange={(value: string, item: any) => form.setFieldsValue({ name: item.label })
+                        }
+                      >
+                        {templates.map(item => (
+                          <Option key={item.id} value={item.id} label={item.name}>
+                            <div className={style.tmpl}>
+                              <span>{item.name}</span>
+                              <Tag className={cn(style.tmplTag, { [style.sys]: item.scheme_key === 'public' })}
+                              >{item.scheme_key === 'public' ? '系统' : '自定义'}</Tag>
+                            </div>
+                          </Option>
+                        ))}
+                      </Select>
+                    </Form.Item>
+                    <Form.Item
+                      name="name"
+                      label="方案名称"
+                      rules={[
+                        { required: true, message: '请输入方案名称' },
+                        { max: 127, message: '方案名称过长' },
+                      ]}
+                    >
+                      <Input placeholder="请输入方案名称" />
+                    </Form.Item>
+                  </>
+                );
+              default:
                 return (
                   <>
                     <Form.Item
@@ -213,43 +250,6 @@ const CreatSchemeModal = (props: IProps) => {
                           ))}
                         </Row>
                       </Checkbox.Group>
-                    </Form.Item>
-                  </>
-                );
-              default:
-                return (
-                  <>
-                    <Form.Item
-                      name="ref_scheme"
-                      rules={[{ required: true, message: '请选择模板' }]}
-                    >
-                      <Select
-                        placeholder="请选择模板"
-                        style={{ width: '100%' }}
-                        optionLabelProp="label"
-                        onChange={(value: string, item: any) => form.setFieldsValue({ name: item.label })
-                        }
-                      >
-                        {templates.map(item => (
-                          <Option key={item.id} value={item.id} label={item.name}>
-                            <div className={style.tmpl}>
-                              <span>{item.name}</span>
-                              <Tag className={cn(style.tmplTag, { [style.sys]: item.scheme_key === 'public' })}
-                              >{item.scheme_key === 'public' ? '系统' : '自定义'}</Tag>
-                            </div>
-                          </Option>
-                        ))}
-                      </Select>
-                    </Form.Item>
-                    <Form.Item
-                      name="name"
-                      label="方案名称"
-                      rules={[
-                        { required: true, message: '请输入方案名称' },
-                        { max: 127, message: '方案名称过长' },
-                      ]}
-                    >
-                      <Input placeholder="请输入方案名称" />
                     </Form.Item>
                   </>
                 );
