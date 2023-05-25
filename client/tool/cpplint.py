@@ -118,7 +118,7 @@ class CpplintRunner(object):
         """扫描单个文件"""
         # 先置空，以免上一个影响
         self.cmd_output = []
-        cmd = cmd_args + [file_path]
+        cmd = cmd_args + ["\"%s\"" % file_path]
         logger.info("scan file: %s" % file_path)
         # cpplint的error信息通过stderr通道输出,结果统计信息通过stdout通道输出,可以只解析stderr结果
         subProC = SubProcController(cmd, stderr_line_callback=self.__collect_result_callback__)
@@ -131,6 +131,7 @@ class CpplintRunner(object):
                 )
                 ProcMgr().kill_proc_famliy(subProC.pid)
             else:
+                logger.error("error on file(%s): %s" % (file_path, err))
                 raise
 
         # 解析cpplint原始结果
@@ -203,8 +204,8 @@ class Cpplint(CodeLintModel):
 
         cmd_args = [
             "python",
-            cpplint_path,
-            "--repository=%s" % source_dir,
+            "\"%s\"" % cpplint_path,
+            "--repository=\"%s\"" % source_dir,
             "--linelength=%s" % linelength,
             "--headers=h,hpp,cuh,hxx,h++",
         ]
