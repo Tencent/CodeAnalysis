@@ -189,11 +189,17 @@ const Process = () => {
               <span className={s.info}><NodeStatus node={nodeInfo} /></span>
             </div>
           </div>
-          <div className={s.singleInfoBox}>
+          <div className={s.infoBox}>
             <div className={s.infoBoxItem}>
               <span className={s.title}>{t('最近上报心跳')}</span>
               <span className={s.info}>{formatDateTime(nodeInfo.last_beat_time) || '- -'}</span>
             </div>
+            <div className={s.infoBoxItem}>
+              <span className={s.title}>{t('创建时间')}</span>
+              <span className={s.info}>{formatDateTime(nodeInfo.created_time) || '- -'}</span>
+            </div>
+          </div>
+          <div className={s.singleInfoBox}>
             <div className={s.infoBoxItem}>
               <span className={s.title}>{t('所属标签')}</span>
               <span className={s.info}>
