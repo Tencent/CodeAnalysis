@@ -1,0 +1,398 @@
+[
+    {
+        "name": "Pyright",
+        "display_name": "Pyright",
+        "description": "Pyright 是微软开发的一个 Python 代码类型检查工具",
+        "license": "MIT",
+        "libscheme_set": [],
+        "image_url": null,
+        "task_processes": [
+            "analyze",
+            "datahandle"
+        ],
+        "scan_app": "codelint",
+        "scm_url": "pyright",
+        "run_cmd": "python3 src/main.py scan",
+        "build_flag": false,
+        "checkrule_set": [
+            {
+                "real_name": "reportAssertAlwaysTrue",
+                "display_name": "reportAssertAlwaysTrue",
+                "severity": "warning",
+                "category": "correctness",
+                "rule_title": "断言始终会成立",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "python"
+                ],
+                "solution": "",
+                "owner": "",
+                "labels": [],
+                "description": "Diagnostics for 'assert' statement that will provably always assert. This can be indicative of a programming error.",
+                "disable": false
+            },
+            {
+                "real_name": "reportGeneralTypeIssues",
+                "display_name": "reportGeneralTypeIssues",
+                "severity": "error",
+                "category": "correctness",
+                "rule_title": "类型不一致，不支持的操作，参数不匹配等错误",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "python"
+                ],
+                "solution": "",
+                "owner": "",
+                "labels": [],
+                "description": "Diagnostics for general type inconsistencies, unsupported operations, argument/parameter mismatches, etc. Covers all of the basic type-checking rules not covered by other rules. Does not include syntax errors.",
+                "disable": false
+            },
+            {
+                "real_name": "reportInvalidStringEscapeSequence",
+                "display_name": "reportInvalidStringEscapeSequence",
+                "severity": "warning",
+                "category": "correctness",
+                "rule_title": "字符串使用无效转义序列",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "python"
+                ],
+                "solution": "",
+                "owner": "",
+                "labels": [],
+                "description": "Diagnostics for invalid escape sequences used within string literals. The Python specification indicates that such sequences will generate a syntax error in future versions.",
+                "disable": false
+            },
+            {
+                "real_name": "reportInvalidTypeVarUse",
+                "display_name": "reportInvalidTypeVarUse",
+                "severity": "warning",
+                "category": "correctness",
+                "rule_title": "TypeVar 在通用函数签名中使用不当",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "python"
+                ],
+                "solution": "",
+                "owner": "",
+                "labels": [],
+                "description": "Diagnostics for improper use of type variables in a function signature.",
+                "disable": false
+            },
+            {
+                "real_name": "reportMissingModuleSource",
+                "display_name": "reportMissingModuleSource",
+                "severity": "warning",
+                "category": "correctness",
+                "rule_title": "存根文件丢失",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "python"
+                ],
+                "solution": "",
+                "owner": "",
+                "labels": [],
+                "description": "没有找到对应模块的存根文件，无法进行类型推断",
+                "disable": false
+            },
+            {
+                "real_name": "reportOptionalCall",
+                "display_name": "reportOptionalCall",
+                "severity": "error",
+                "category": "correctness",
+                "rule_title": "调用具有可选类型的变量",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "python"
+                ],
+                "solution": "",
+                "owner": "",
+                "labels": [],
+                "description": "Diagnostics for an attempt to call a variable with an Optional type.",
+                "disable": false
+            },
+            {
+                "real_name": "reportOptionalContextManager",
+                "display_name": "reportOptionalContextManager",
+                "severity": "error",
+                "category": "correctness",
+                "rule_title": "可选类型作为上下文管理器",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "python"
+                ],
+                "solution": "常见的错误如，可选类型作为with语句的参数",
+                "owner": "",
+                "labels": [],
+                "description": "Diagnostics for an attempt to use an Optional type as a context manager (as a parameter to a with statement).",
+                "disable": false
+            },
+            {
+                "real_name": "reportOptionalIterable",
+                "display_name": "reportOptionalIterable",
+                "severity": "error",
+                "category": "correctness",
+                "rule_title": "可选类型作为迭代值",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "python"
+                ],
+                "solution": "",
+                "owner": "",
+                "labels": [],
+                "description": "Diagnostics for an attempt to use an Optional type as an iterable value (e.g. within a for statement).",
+                "disable": false
+            },
+            {
+                "real_name": "reportOptionalMemberAccess",
+                "display_name": "reportOptionalMemberAccess",
+                "severity": "error",
+                "category": "correctness",
+                "rule_title": "访问可选变量的成员",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "python"
+                ],
+                "solution": "",
+                "owner": "",
+                "labels": [],
+                "description": "Diagnostics for an attempt to access a member of a variable with an Optional type.",
+                "disable": false
+            },
+            {
+                "real_name": "reportOptionalOperand",
+                "display_name": "reportOptionalOperand",
+                "severity": "error",
+                "category": "correctness",
+                "rule_title": "可选类型作为二元或一元运算符的操作数值",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "python"
+                ],
+                "solution": "",
+                "owner": "",
+                "labels": [],
+                "description": "Diagnostics for an attempt to use an Optional type as an operand to a binary or unary operator (like '+', '==', 'or', 'not').",
+                "disable": false
+            },
+            {
+                "real_name": "reportOptionalSubscript",
+                "display_name": "reportOptionalSubscript",
+                "severity": "error",
+                "category": "correctness",
+                "rule_title": "获取可选类型的下标",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "python"
+                ],
+                "solution": "",
+                "owner": "",
+                "labels": [],
+                "description": "Diagnostics for an attempt to subscript (index) a variable with an Optional type.",
+                "disable": false
+            },
+            {
+                "real_name": "reportPrivateImportUsage",
+                "display_name": "reportPrivateImportUsage",
+                "severity": "error",
+                "category": "correctness",
+                "rule_title": "对从 \"py.typed\" 模块导入的符号不正确使用",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "python"
+                ],
+                "solution": "",
+                "owner": "",
+                "labels": [],
+                "description": "Diagnostics for incorrect usage of symbol imported from a \"py.typed\" module that is not re-exported from that module.",
+                "disable": false
+            },
+            {
+                "real_name": "reportSelfClsParameterName",
+                "display_name": "reportSelfClsParameterName",
+                "severity": "warning",
+                "category": "correctness",
+                "rule_title": "self,cls参数诊断",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "python"
+                ],
+                "solution": "",
+                "owner": "",
+                "labels": [],
+                "description": "Diagnostics for a missing or misnamed “self” parameter in instance methods and “cls” parameter in class methods. Instance methods in metaclasses (classes that derive from “type”) are allowed to use “cls” for instance methods.",
+                "disable": false
+            },
+            {
+                "real_name": "reportTypedDictNotRequiredAccess",
+                "display_name": "reportTypedDictNotRequiredAccess",
+                "severity": "error",
+                "category": "correctness",
+                "rule_title": "访问Typed类型中的可选成员而不先判断是否存在",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "python"
+                ],
+                "solution": "",
+                "owner": "",
+                "labels": [],
+                "description": "Diagnostics for an attempt to access a non-required key within a TypedDict without a check for its presence.",
+                "disable": false
+            },
+            {
+                "real_name": "reportUnboundVariable",
+                "display_name": "reportUnboundVariable",
+                "severity": "error",
+                "category": "correctness",
+                "rule_title": "变量可能未被绑定",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "python"
+                ],
+                "solution": "",
+                "owner": "",
+                "labels": [],
+                "description": "Diagnostics for unbound and possibly unbound variables.",
+                "disable": false
+            },
+            {
+                "real_name": "reportUndefinedVariable",
+                "display_name": "reportUndefinedVariable",
+                "severity": "error",
+                "category": "correctness",
+                "rule_title": "未定义变量",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "python"
+                ],
+                "solution": "",
+                "owner": "",
+                "labels": [],
+                "description": "Diagnostics for undefined variables.",
+                "disable": false
+            },
+            {
+                "real_name": "reportUnsupportedDunderAll",
+                "display_name": "reportUnsupportedDunderAll",
+                "severity": "warning",
+                "category": "correctness",
+                "rule_title": "检查__all__中的模块",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "python"
+                ],
+                "solution": "",
+                "owner": "",
+                "labels": [],
+                "description": "Diagnostics for unsupported operations performed on __all__.",
+                "disable": false
+            },
+            {
+                "real_name": "reportUnusedCoroutine",
+                "display_name": "reportUnusedCoroutine",
+                "severity": "error",
+                "category": "correctness",
+                "rule_title": "未被调用的协程",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "python"
+                ],
+                "solution": "",
+                "owner": "",
+                "labels": [],
+                "description": "Diagnostics for call expressions that return a Coroutine and whose results are not consumed.",
+                "disable": false
+            },
+            {
+                "real_name": "reportUnusedExpression",
+                "display_name": "reportUnusedExpression",
+                "severity": "warning",
+                "category": "correctness",
+                "rule_title": "未被使用的表达式",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "python"
+                ],
+                "solution": "",
+                "owner": "",
+                "labels": [],
+                "description": "Diagnostics for simple expressions whose value is not used in any way.",
+                "disable": false
+            },
+            {
+                "real_name": "reportUnusedFunction",
+                "display_name": "reportUnusedFunction",
+                "severity": "warning",
+                "category": "correctness",
+                "rule_title": "判断私有方法是否被使用",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "python"
+                ],
+                "solution": "如果私有方法没有在声明类中被使用，请确认是否为多余代码，或者不小心被遗漏",
+                "owner": "riverjjiang",
+                "labels": [],
+                "description": "判断私有方法是否被使用",
+                "disable": false
+            },
+            {
+                "real_name": "reportUnusedImport",
+                "display_name": "reportUnusedImport",
+                "severity": "warning",
+                "category": "correctness",
+                "rule_title": "判断导入的包是否被使用",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "python"
+                ],
+                "solution": "考虑手动删除无用import，提升代码简洁性",
+                "owner": "riverjjiang",
+                "labels": [],
+                "description": "判断导入的包是否被使用",
+                "disable": false
+            },
+            {
+                "real_name": "reportWildcardImportFromLibrary",
+                "display_name": "reportWildcardImportFromLibrary",
+                "severity": "warning",
+                "category": "correctness",
+                "rule_title": "通过通配符的方式导入外部库",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "python"
+                ],
+                "solution": "",
+                "owner": "",
+                "labels": [],
+                "description": "Diagnostics for an wildcard import from an external library.",
+                "disable": false
+            }
+        ],
+        "open_user": true,
+        "open_saas": false,
+        "virtual_name": "217",
+        "show_display_name": true
+    }
+]
