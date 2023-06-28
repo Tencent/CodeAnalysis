@@ -1,0 +1,80 @@
+[
+    {
+        "name": "【全语种】license分析规则包",
+        "description": "分析代码库中包含的License，并根据风险区分严重级别。",
+        "revision": null,
+        "package_type": "official",
+        "languages": [
+            "cpp",
+            "cs",
+            "css",
+            "Go",
+            "html",
+            "java",
+            "js",
+            "kotlin",
+            "Lua",
+            "oc",
+            "php",
+            "python",
+            "ruby",
+            "scala",
+            "swift",
+            "ts",
+            "visualbasic",
+            "abap",
+            "apex",
+            "cobol",
+            "flex",
+            "pli",
+            "plsql",
+            "rpg",
+            "tsql",
+            "xml",
+            "dart",
+            "shell"
+        ],
+        "labels": [
+            "安全"
+        ],
+        "checkrule_set": [
+            {
+                "checktool": "license-classifier",
+                "checkrule": "critical-risk",
+                "severity": "fatal",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "license-classifier",
+                "checkrule": "high-risk",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "license-classifier",
+                "checkrule": "medium-risk",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "license-classifier",
+                "checkrule": "low-risk",
+                "severity": "info",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "license-classifier",
+                "checkrule": "unknown-risk",
+                "severity": "info",
+                "rule_params": null,
+                "state": "enabled"
+            }
+        ],
+        "open_saas": false,
+        "envs": null
+    }
+]

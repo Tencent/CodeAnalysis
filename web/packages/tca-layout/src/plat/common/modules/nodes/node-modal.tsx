@@ -68,7 +68,7 @@ const NodeModal = ({ nodeinfo, visible, onOk, onCancel, tagOptions, members }: I
           label="所属标签"
           rules={[{ required: true, message: t('节点标签为必选项') }]}
         >
-          <Select mode="multiple">
+          <Select mode="multiple" showArrow>
             {tagOptions.map((item: any) => (
               <Option key={item.value} value={item.value}>
                 {item.label}
@@ -93,7 +93,7 @@ const NodeModal = ({ nodeinfo, visible, onOk, onCancel, tagOptions, members }: I
           name="related_managers"
           label="关注人"
         >
-          <Select mode="multiple">
+          <Select mode="multiple" showArrow>
             {members.map((item: any) => (
               <Option key={item.username} value={item.username}>
                 {item.nickname}

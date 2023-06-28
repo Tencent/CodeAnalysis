@@ -38,7 +38,9 @@ const Nodes = () => {
       <div className="px-lg">
         <Tabs defaultActiveKey="nodes" size="large">
           <TabPane tab={t('节点列表')} key="nodes">
-            <NodeTable tagOptions={tagOptions}/>
+            <NodeTable tagOptions={tagOptions} reloadTag={() => {
+              getData();
+            }}/>
           </TabPane>
           <TabPane tab={t('标签列表')} key="tags">
             <TagTable tags={tags} reload={() => {

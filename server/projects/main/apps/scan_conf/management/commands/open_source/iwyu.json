@@ -1,0 +1,76 @@
+[
+    {
+        "name": "iwyu",
+        "display_name": "include-what-you-use",
+        "description": "A tool for use with clang to analyze #includes in C and C++ source files",
+        "license": "University of Illinois/NCSA Open Source License",
+        "libscheme_set": [],
+        "image_url": null,
+        "task_processes": [
+            "analyze",
+            "datahandle"
+        ],
+        "scan_app": "codelint",
+        "scm_url": "iwyu-0.19",
+        "run_cmd": "python iwyu_tool.py",
+        "envs": "",
+        "build_flag": true,
+        "checkrule_set": [
+            {
+                "real_name": "iwyu-add",
+                "display_name": "iwyu-add",
+                "severity": "error",
+                "category": "other",
+                "rule_title": "should add",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Reference msg add",
+                "owner": null,
+                "labels": [],
+                "description": "should add",
+                "disable": false
+            },
+            {
+                "real_name": "iwyu-remove",
+                "display_name": "iwyu-remove",
+                "severity": "warning",
+                "category": "performance",
+                "rule_title": "superfluous",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "Reference msg remove",
+                "owner": null,
+                "labels": [],
+                "description": "should remove",
+                "disable": false
+            },
+            {
+                "real_name": "iwyu-note",
+                "display_name": "iwyu-note",
+                "severity": "info",
+                "category": "other",
+                "rule_title": "#includes/fwd-decls are correct",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "#includes/fwd-decls are correct",
+                "owner": null,
+                "labels": [],
+                "description": "#includes/fwd-decls are correct",
+                "disable": false
+            }
+        ],
+        "open_user": true,
+        "open_saas": false,
+        "virtual_name": "215",
+        "show_display_name": true
+    }
+]

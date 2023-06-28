@@ -1,0 +1,100 @@
+[
+    {
+        "name": "license-classifier",
+        "display_name": "LicenseClassifier",
+        "description": "license分类器：查找代码内的许可证并根据风险区分严重性",
+        "license": "Apache-2.0 license",
+        "libscheme_set": [],
+        "image_url": null,
+        "task_processes": [
+            "analyze",
+            "datahandle"
+        ],
+        "scan_app": "codelint",
+        "scm_url": "license-classifier",
+        "run_cmd": "python main.py",
+        "envs": "",
+        "build_flag": false,
+        "checkrule_set": [
+            {
+                "real_name": "critical-risk",
+                "display_name": "critical-risk",
+                "severity": "fatal",
+                "category": "security",
+                "rule_title": "严重风险：禁止使用的许可证",
+                "rule_params": null,
+                "custom": false,
+                "languages": [],
+                "solution": "",
+                "owner": "",
+                "labels": [],
+                "description": "严重风险：禁止使用的许可证",
+                "disable": false
+            },
+            {
+                "real_name": "high-risk",
+                "display_name": "high-risk",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "高风险：受限制的许可证",
+                "rule_params": null,
+                "custom": false,
+                "languages": [],
+                "solution": "",
+                "owner": "",
+                "labels": [],
+                "description": "高风险：如果产品包括了受此类许可证保护的第三方代码，则需要强制分发源代码",
+                "disable": false
+            },
+            {
+                "real_name": "low-risk",
+                "display_name": "low-risk",
+                "severity": "info",
+                "category": "security",
+                "rule_title": "低风险：极少限制的许可证",
+                "rule_params": null,
+                "custom": false,
+                "languages": [],
+                "solution": "",
+                "owner": "",
+                "labels": [],
+                "description": "低风险：这些许可证包含很少的限制，允许原创或修改的第三方软件在任何产品中分发，而不危及或妨碍我们的源代码。不过某些低风险许可证，可能要求外部发行须包括许可证中规定的声明或条款",
+                "disable": false
+            },
+            {
+                "real_name": "medium-risk",
+                "display_name": "medium-risk",
+                "severity": "warning",
+                "category": "security",
+                "rule_title": "中风险：互惠的许可证",
+                "rule_params": null,
+                "custom": false,
+                "languages": [],
+                "solution": "",
+                "owner": "",
+                "labels": [],
+                "description": "中风险：这些许可证允许以“未修改的”形式免费使用，如果源代码以任何方式被修改，这些对原始第三方源代码的修改必须展示出来",
+                "disable": false
+            },
+            {
+                "real_name": "unknown-risk",
+                "display_name": "unknown-risk",
+                "severity": "info",
+                "category": "security",
+                "rule_title": "未知风险：建议检查这些未知的许可证",
+                "rule_params": null,
+                "custom": false,
+                "languages": [],
+                "solution": "",
+                "owner": "",
+                "labels": [],
+                "description": "未知风险：建议检查这些未知的许可证",
+                "disable": false
+            }
+        ],
+        "open_user": true,
+        "open_saas": false,
+        "virtual_name": "231",
+        "show_display_name": true
+    }
+]
