@@ -180,4 +180,20 @@ ps aux|grep cls
 # 重启微服务
 kill -USR2 <pid>
 ```
+#### CLS 更新
 
+1. 使用以下命令查找 cls 进程并杀掉进程
+```shell
+# 查找CLS进程ID
+ps aux|grep cls
+# 重启微服务
+kill -9 <pid>
+```
+2. 下载最新版的 cls 并覆盖掉其中的 cls 二进制文件  
+::: warning
+注意：不能删除原来的 cls 目录，只需要替换其中的 cls 二进制文件即可。
+:::
+3. 使用以下命令重启 cls 服务
+```shell
+./cls server -d
+```
