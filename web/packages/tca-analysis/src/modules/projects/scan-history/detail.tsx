@@ -9,7 +9,7 @@ import cn from 'classnames';
 import qs from 'qs';
 import { find, isEmpty, toNumber, get } from 'lodash';
 
-import { Steps, Tooltip, Tabs, Tag } from 'coding-oa-uikit';
+import { Steps, Tooltip, Tabs, Tag, Button, message } from 'coding-oa-uikit';
 import ArrowLeft from 'coding-oa-uikit/lib/icon/ArrowLeft';
 import Waiting from 'coding-oa-uikit/lib/icon/Waiting';
 import Success from 'coding-oa-uikit/lib/icon/Success';
@@ -20,7 +20,7 @@ import Attention from 'coding-oa-uikit/lib/icon/Attention';
 import CloudDownload from 'coding-oa-uikit/lib/icon/CloudDownload';
 
 import { getProjectRouter, getSchemeBlankRouter } from '@src/utils/getRoutePath';
-import { getScanDetail, getTaskDetail, getLog } from '@src/services/projects';
+import { getScanDetail, getTaskDetail, getLog, cancelScan } from '@src/services/projects';
 import { getQuery, formatDateTime } from '@src/utils';
 
 import Result from './result';
@@ -248,42 +248,59 @@ const ScanDetail = () => {
     return null;
   };
 
+  /**
+ * 取消分析
+ */
+  const onCancel = () => {
+    cancelScan(orgSid, teamName, repoId, projectId, jobId).then(() => {
+      message.success('任务已取消');
+      getJobDetail();
+    });
+  };
+
   return (
     <div className={style.scanDetail}>
       <div className={style.header}>
-        <span
-          className={style.backIcon}
-          onClick={() => history.push(`${getProjectRouter(
-            orgSid,
-            teamName,
-            repoId,
-            projectId,
-          )}/scan-history`)
-          }
-        >
-          <ArrowLeft />
-        </span>
-        <div className={style.right}>
-          <h2 className={style.title}>
-            任务执行情况
-            <Tag style={{ marginLeft: 10 }}>Job ID: {jobId}</Tag>
-            <Tag>Scan ID: {data?.scan_id}</Tag>
-            <a
-              className={style.detailBtn}
-              target='_blank'
-              href={`${getSchemeBlankRouter(
-                orgSid,
-                teamName,
-                repoId,
-                data?.project?.scan_scheme,
-              )}/basic`} rel="noreferrer"
-            >查看分析方案</a>
-          </h2>
-          <p className={style.desc}>
-            代码库：{data?.project?.repo_scm_url}
-            <span className='ml-sm'>分支：{data?.project?.branch}</span>
-          </p>
+        <div style={{ display: 'flex' }}>
+          <span
+            className={style.backIcon}
+            onClick={() => history.push(`${getProjectRouter(
+              orgSid,
+              teamName,
+              repoId,
+              projectId,
+            )}/scan-history`)
+            }
+          >
+            <ArrowLeft />
+          </span>
+          <div className={style.right}>
+            <h2 className={style.title}>
+              任务执行情况
+              <Tag style={{ marginLeft: 10 }}>Job ID: {jobId}</Tag>
+              <Tag>Scan ID: {data?.scan_id}</Tag>
+              <a
+                className={style.detailBtn}
+                target='_blank'
+                href={`${getSchemeBlankRouter(
+                  orgSid,
+                  teamName,
+                  repoId,
+                  data?.project?.scan_scheme,
+                )}/basic`} rel="noreferrer"
+              >查看分析方案</a>
+            </h2>
+            <p className={style.desc}>
+              代码库：{data?.project?.repo_scm_url}
+              <span className='ml-sm'>分支：{data?.project?.branch}</span>
+            </p>
+          </div>
         </div>
+        {
+          data.result_code === null && (
+            <Button type="primary" danger onClick={onCancel}>取消分析</Button>
+          )
+        }
       </div>
       <Tabs
         activeKey={scanTab || 'detail'}

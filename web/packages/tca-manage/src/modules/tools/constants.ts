@@ -46,7 +46,7 @@ export const PERM_OPTIONS = generateOptions(PERM_CHOICES, true);
 
 /** 定义筛选字段结构 */
 export const TOOL_SEARCH_FIELDS: SearchFormField[] = [{
-  name: 'display_name',
+  name: 'fuzzy_name',
   label: '名称',
   formType: 'input',
   type: 'string',

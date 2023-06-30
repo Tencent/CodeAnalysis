@@ -1,13 +1,20 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { t } from 'i18next';
-import { message } from 'coding-oa-uikit';
+import { Result } from 'coding-oa-uikit';
+import s from './style.scss';
+import Loading from 'coding-oa-uikit/lib/icon/Loading';
 
 // 项目内
-import Loading from '../../../component/loading';
 import { getURLSearch } from '../../../util/route';
 import { FetchAPIManager } from '../../../util/fetch';
 import { PostMessageType, PostMessageCode, postMessageToTarget } from '../../../util/window';
+
+enum OauthStateEnum {
+  LOADING,
+  SUCCESS,
+  FAIL,
+}
 
 interface GitOAuthCallbackProps {
   /** auth 接口模块 */
@@ -17,24 +24,45 @@ interface GitOAuthCallbackProps {
 const GitOAuthCallback = ({ oauthCallback }: GitOAuthCallbackProps) => {
   const query = getURLSearch();
   const { scmPlatformName }: any = useParams();
+  const [oauthState, setOauthState] = useState<OauthStateEnum>(OauthStateEnum.LOADING);
+  const [errorInfo, setErrorInfo] = useState<string>('');
 
   useEffect(() => {
     const { opener } = window;
     oauthCallback.getDetail(scmPlatformName, query).then(() => {
-      message.success(t('OAuth授权成功'));
+      setOauthState(OauthStateEnum.SUCCESS);
+      setTimeout(() => window.close(), 1000);
       postMessageToTarget(opener, { code: PostMessageCode.SUCCESS, type: PostMessageType.GIT_OAUTH });
-    })
-      .catch(() => {
-        message.error(t('OAuth授权失败'));
-        postMessageToTarget(opener, { code: PostMessageCode.FAIL, type: PostMessageType.GIT_OAUTH });
-      })
-      .finally(() => {
-        window.close();
-      });
+    }, (e: any) => {
+      setErrorInfo(e?.detail);
+      setOauthState(OauthStateEnum.FAIL);
+      postMessageToTarget(opener, { code: PostMessageCode.FAIL, type: PostMessageType.GIT_OAUTH });
+    });
   }, []);
 
+  if (oauthState === OauthStateEnum.LOADING) {
+    return (
+      <div className={s.oauthNote}>
+        <Result
+          title={t('OAuth授权中')}
+          icon={<Loading />}
+        />
+      </div>
+    );
+  }
+
   return (
-    <Loading msg={t('OAuth授权中')} />
+    <div className={s.oauthNote}>
+      {oauthState === OauthStateEnum.SUCCESS ? <Result
+        title={t('OAuth授权成功')}
+        subTitle="窗口将在 1 秒后关闭。"
+        status="success"
+      /> : <Result
+        status="error"
+        title={t('OAuth授权失败')}
+        subTitle={errorInfo}
+      />}
+    </div>
   );
 };
 

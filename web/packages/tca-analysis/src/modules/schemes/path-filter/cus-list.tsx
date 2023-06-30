@@ -15,6 +15,7 @@ import { SCAN_TYPES, PATH_TYPES } from '../constants';
 import { updateScanDir, delScanDir } from '@src/services/schemes';
 
 import UpdateModal from './modal';
+import s from './style.scss';
 
 const { Column } = Table;
 
@@ -78,7 +79,12 @@ const List = (props: IProps) => {
           onChange: onChangePageSize,
         }}
       >
-        <Column title="路径" dataIndex="dir_path" key="dir_path" />
+        <Column
+          title="路径"
+          dataIndex="dir_path"
+          key="dir_path"
+          render={(path: string) => <div className={s.dirPath}>{path}</div>}
+        />
         <Column
           title="格式"
           dataIndex="path_type"

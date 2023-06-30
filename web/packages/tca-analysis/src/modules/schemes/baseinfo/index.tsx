@@ -124,6 +124,7 @@ const BaseConfig = (props: BaseConfigProps) => {
             mode="multiple"
             placeholder="请选择分析语言"
             optionFilterProp="children"
+            showArrow
           >
             {languages.map(item => (
               <Option key={item.name} value={item.name}>

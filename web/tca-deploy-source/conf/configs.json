@@ -5,12 +5,12 @@
     "prefix": [
       "/static/tca-layout/"
     ],
-    "commitId": "b2546d53cdb6c12c0c15d697fc235be3922eb84f",
+    "commitId": "97c427aa243e40017ba84765e463e4ad4e985ab6",
     "match": "/",
     "js": [
-      "/static/tca-layout/runtime~tca-layout-fc8d3d6a.js",
-      "/static/tca-layout/vendors~tca-layout-31809f6b.js",
-      "/static/tca-layout/tca-layout-b5f2c6ca.js"
+      "/static/tca-layout/runtime~tca-layout-70929dfa.js",
+      "/static/tca-layout/vendors~tca-layout-3cce0bd3.js",
+      "/static/tca-layout/tca-layout-308fe57e.js"
     ],
     "css": [
       "/static/tca-layout/tca-layout-02355b29.css"
@@ -22,15 +22,15 @@
     "prefix": [
       "/static/login/"
     ],
-    "commitId": "10fbbd5d0d00f0a505baddbd1f41c1dddd96bf4c",
+    "commitId": "97c427aa243e40017ba84765e463e4ad4e985ab6",
     "match": "^/login",
     "js": [
-      "/static/login/runtime~login-46ae0dcb.js",
-      "/static/login/vendors~login-fdb78cec.js",
-      "/static/login/login-b01d7cbc.js"
+      "/static/login/runtime~login-8392b500.js",
+      "/static/login/vendors~login-697c8011.js",
+      "/static/login/login-a33ce90b.js"
     ],
     "css": [
-      "/static/login/vendors~login-65f73047.css",
+      "/static/login/vendors~login-c0a83f78.css",
       "/static/login/login-d1b28ba7.css"
     ]
   },
@@ -40,15 +40,15 @@
     "prefix": [
       "/static/tca-analysis/"
     ],
-    "commitId": "b2546d53cdb6c12c0c15d697fc235be3922eb84f",
+    "commitId": "97c427aa243e40017ba84765e463e4ad4e985ab6",
     "match": "^/t/[^/]+/p/[^/]+/(code-analysis|repos|template|profile|group)",
     "js": [
-      "/static/tca-analysis/runtime~tca-analysis-d3b32738.js",
-      "/static/tca-analysis/vendors~tca-analysis-33d31da9.js",
-      "/static/tca-analysis/tca-analysis-c324cb2b.js"
+      "/static/tca-analysis/runtime~tca-analysis-10861cc0.js",
+      "/static/tca-analysis/vendors~tca-analysis-fd35fa3f.js",
+      "/static/tca-analysis/tca-analysis-fba9093f.js"
     ],
     "css": [
-      "/static/tca-analysis/tca-analysis-ac48fa7e.css"
+      "/static/tca-analysis/tca-analysis-f7d9e90f.css"
     ]
   },
   {
@@ -57,12 +57,12 @@
     "prefix": [
       "/static/tca-manage/"
     ],
-    "commitId": "b2546d53cdb6c12c0c15d697fc235be3922eb84f",
+    "commitId": "97c427aa243e40017ba84765e463e4ad4e985ab6",
     "match": "^/manage",
     "js": [
-      "/static/tca-manage/runtime~tca-manage-66e8cb11.js",
-      "/static/tca-manage/vendors~tca-manage-e46a05a1.js",
-      "/static/tca-manage/tca-manage-f745225b.js"
+      "/static/tca-manage/runtime~tca-manage-a7728255.js",
+      "/static/tca-manage/vendors~tca-manage-565cccad.js",
+      "/static/tca-manage/tca-manage-68db86a4.js"
     ],
     "css": [
       "/static/tca-manage/vendors~tca-manage-0061904f.css",
