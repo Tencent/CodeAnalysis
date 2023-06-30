@@ -143,6 +143,10 @@ tommyzhang@tencent.com
 | 是否私有化部署 | 是 |
 | 首次登记的机器码 | xxx |
 | 体验申请用途 | xxx |
+| Client License | xxx |
+
+- `首次登记的机器码`: 步骤一中输出的`Server ID`
+- `Client License`: 步骤一中输出的`Client License`
 
 4. 收到 TCA 团队回复邮件之后，在 CLS 目录下的 [`config.yaml`](https://github.com/Tencent/CodeAnalysis/blob/main/server/cls/config.yaml) 文件中填写License  
 
