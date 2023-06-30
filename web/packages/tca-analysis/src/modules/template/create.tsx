@@ -91,6 +91,7 @@ const CreatSchemeModal = (props: IProps) => {
             style={{ width: '100%' }}
             mode='multiple'
             optionFilterProp='children'
+            showArrow
           >
             {languages.map(item => (
               <Option key={item.name} value={item.name}>
