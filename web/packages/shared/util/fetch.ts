@@ -143,7 +143,8 @@ const failResultHandler = (jsonData: any, custom: RequestCustom) => {
   let { msg } = jsonData;
   if (custom.failResultHandler) {
     msg = custom.failResultHandler(jsonData);
-  } else if (msg && custom.showError) {
+  }
+  if (msg && custom.showError) {
     (custom.messagePlugin || message).error(getFailMessage(msg));
   }
   return jsonData;

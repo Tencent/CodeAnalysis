@@ -4,7 +4,7 @@ import { TOOL_STATUS_OPTIONS, ToolScopeEnum } from '@src/constant';
 
 /** 定义筛选字段结构 */
 export const TOOL_SEARCH_FIELDS: SearchFormField[] = [{
-  name: 'display_name',
+  name: 'fuzzy_name',
   type: 'string',
   formType: 'input',
   placeholder: t('工具名称'),

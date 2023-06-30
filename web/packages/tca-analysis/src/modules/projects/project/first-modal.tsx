@@ -173,6 +173,7 @@ const FirstModal = (props: FirstModalProps) => {
                     style={{ width: '100%' }}
                     mode='multiple'
                     optionFilterProp='children'
+                    showArrow
                   >
                     {languages.map((item: any) => (
                       <Option key={item.name} value={item.name}>

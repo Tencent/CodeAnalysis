@@ -129,7 +129,7 @@ const BaseConfig = (props: BaseConfigProps) => {
           label="分析语言"
           rules={[{ required: true, message: '请选择分析语言' }]}
         >
-          <Select disabled={isSysTmpl} mode="multiple" placeholder="请选择分析语言" optionFilterProp='children'>
+          <Select disabled={isSysTmpl} mode="multiple" placeholder="请选择分析语言" optionFilterProp='children' showArrow>
             {languages.map(item => (
               <Option key={item.name} value={item.name}>
                 {item.display_name}
