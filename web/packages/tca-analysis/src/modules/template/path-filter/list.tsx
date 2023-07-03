@@ -12,6 +12,7 @@ import React from 'react';
 import { Table } from 'coding-oa-uikit';
 
 import { SCAN_TYPES, PATH_TYPES } from '../../schemes/constants';
+import s from './style.scss';
 
 const { Column } = Table;
 
@@ -45,9 +46,10 @@ const List = (props: IProps) => {
             }}
         >
             <Column
-                title='路径'
-                dataIndex='dir_path'
-                key='dir_path'
+                title="路径"
+                dataIndex="dir_path"
+                key="dir_path"
+                render={(path: string) => <div className={s.dirPath}>{path}</div>}
             />
             <Column
                 title='格式'
