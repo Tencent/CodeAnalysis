@@ -46,12 +46,11 @@ class Luacheck(CodeLintModel):
         path_mgr = PathMgr()
         want_suffix = ".lua"
 
-        # update_task_progress(request, 'LuaCheck工具开始扫描', 40)
-        # luacheck在win下支持扫描目录，在mac和linux下需要安装luafilesystem才能支持扫描目录.暂不使用 --cache
+        # update_task_progress(request, 'LuaCheck工具开始分析', 40)
+        # luacheck在win下支持分析目录，在mac和linux下需要安装luafilesystem才能支持分析目录.暂不使用 --cache
         # 1. --read-globals coroutine._yield 是为了消除luacheck对coroutine._yield的误报，详细如下：
         # IIRC coroutine._yield is ngx_lua specific and not documented.
-        # Can use read_globals option to silence the warning: 
-        # add read_globals = {"coroutine._yield"} to config (.luacheckrc),
+        # Can use read_globals option to silence the warning: add read_globals = {"coroutine._yield"} to config (.luacheckrc),
         # or pass --read-globals coroutine._yield on the command line,
         # or put -- luacheck: read globals coroutine._yield before the line with the warning.
         # 2. --std max 设置各版本Lua标准全局变量，比如ngx, module()
@@ -66,7 +65,8 @@ class Luacheck(CodeLintModel):
             "212/self",
             "--read-globals",
             "coroutine._yield",
-            "--std max",
+            "--std",
+            "max",
         ]
         if sys.platform == "win32":
             scan_cmd.append(source_dir)
@@ -97,13 +97,14 @@ class Luacheck(CodeLintModel):
             if not toscans:
                 logger.debug("To-be-scanned files is empty ")
                 return []
-            # 在文件前后加上双引号，变成字符串，防止文件路径中有特殊字符比如(，luacheck无法扫描
+            # 在文件前后加上双引号，变成字符串，防止文件路径中有特殊字符比如(，luacheck无法分析
             toscans = [self.handle_path_with_space(path) for path in toscans]
             scan_cmd.extend(toscans)
+        scan_cmd = PathMgr().format_cmd_arg_list(scan_cmd)
+        self.print_log(scan_cmd)
+        SubProcController(scan_cmd, stdout_filepath=error_output, stderr_line_callback=self.print_log).wait()
 
-        SubProcController(scan_cmd, stdout_filepath=error_output).wait()
-
-        # update_task_progress(request, '扫描结果处理', 60)
+        # update_task_progress(request, '分析结果处理', 60)
         if sys.platform == "win32":
             xmlContent = open(error_output, "r", encoding="gbk").read()
             open(error_output, "w", encoding="utf-8").write(xmlContent)
