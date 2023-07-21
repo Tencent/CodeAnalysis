@@ -18,7 +18,7 @@ Jinja2==2.11.3
 markupsafe==2.0.1
 coreapi==2.3.3
 Markdown==3.3.4
-Pygments==2.8.1
+Pygments==2.15.0
 
 #for django permission
 django-guardian==2.3.0
