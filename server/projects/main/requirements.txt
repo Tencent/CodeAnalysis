@@ -24,7 +24,7 @@ celery-redbeat==2.0.0
 djangorestframework==3.11.2
 coreapi==2.3.3
 Markdown==3.3.4
-Pygments==2.8.1
+Pygments==2.15.0
 django-filter==2.4.0
 django-cors-headers==3.7.0
 
