@@ -35,3 +35,7 @@ footer: MIT Licensed | Copyright © 1998-present Tencent. All Rights Reserved.
 
 [https://git.code.tencent.com/Tencent_Open_Source/CodeAnalysis.git](https://git.code.tencent.com/Tencent_Open_Source/CodeAnalysis.git)
 
+
+### 金牌🏅️服务微信群
+
+![微信群](https://tencent.github.io/CodeAnalysis/media/WechatQRCode.png)
