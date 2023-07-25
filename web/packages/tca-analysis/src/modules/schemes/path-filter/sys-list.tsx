@@ -14,6 +14,7 @@ import { Table, Switch, message } from 'coding-oa-uikit';
 
 import { SCAN_TYPES, PATH_TYPES } from '../constants';
 import { delSysPath, addSysPath } from '@src/services/schemes';
+import s from './style.scss';
 
 const { Column } = Table;
 
@@ -47,7 +48,12 @@ const SysList = (props: IProps) => {
       scroll={{ y: 500 }}
       pagination={false}
     >
-      <Column title="路径" dataIndex="dir_path" key="dir_path" />
+      <Column
+        title="路径"
+        dataIndex="dir_path"
+        key="dir_path"
+        render={(path: string) => <div className={s.dirPath}>{path}</div>}
+      />
       <Column
         title="格式"
         dataIndex="path_type"

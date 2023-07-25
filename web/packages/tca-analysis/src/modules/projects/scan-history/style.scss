@@ -159,6 +159,7 @@ $info-color: #3d98ff;
 
   .header {
     display: flex;
+    justify-content: space-between;
     margin-bottom: 20px;
 
     .backIcon {
