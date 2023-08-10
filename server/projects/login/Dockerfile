@@ -1,10 +1,5 @@
 FROM python:3.7-slim-bullseye
 
-# RUN mv /etc/apt/sources.list /etc/apt/sources.list.bak && \
-#     echo 'deb http://mirrors.tencent.com/debian/ bullseye main non-free contrib' > /etc/apt/sources.list && \
-#     echo 'deb http://mirrors.tencent.com/debian/ bullseye-updates main non-free contrib' >> /etc/apt/sources.list && \
-#     echo 'deb http://mirrors.tencent.com/debian-security bullseye-security main non-free contrib' >> /etc/apt/sources.list
-
 ARG EXTRA_TOOLS="gnupg curl wget jq net-tools procps default-libmysqlclient-dev locales inotify-tools gcc telnet iputils-ping vim openssh-client"
 
 RUN set -ex && cd / \
@@ -25,6 +20,5 @@ WORKDIR /var/www/django/codedog
 COPY . .
 
 RUN mkdir -p log/ && \
-    mkdir ~/.pip/ && echo "[global]\nindex-url = https://mirrors.cloud.tencent.com/pypi/simple" >> ~/.pip/pip.conf && \
     pip install -U setuptools pip && \
     pip install -r requirements.txt
