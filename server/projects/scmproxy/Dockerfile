@@ -20,5 +20,6 @@ WORKDIR /var/www/django/codedog
 COPY . .
 
 RUN mkdir -p log/ && \
+    mkdir ~/.pip/ && echo "[global]\nindex-url = https://mirrors.cloud.tencent.com/pypi/simple" >> ~/.pip/pip.conf && \
     pip install -U setuptools pip && \
     pip install -r requirements.txt
