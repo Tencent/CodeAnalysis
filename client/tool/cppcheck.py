@@ -176,9 +176,9 @@ class Cppcheck(CodeLintModel):
         if not os.path.exists(scan_result_path):
             LogPrinter.info("result is empty ")
             cppcheck_result_list = []
-
-        # 格式化cppcheck结果
-        cppcheck_result_list = self._format_result(source_dir, scan_result_path, rules, supported_rules)
+        else:
+            # 格式化cppcheck结果
+            cppcheck_result_list = self._format_result(source_dir, scan_result_path, rules, supported_rules)
 
         # cppcheck + misra结果一起返回
         result_list = cppcheck_result_list + addon_misra_result_list
