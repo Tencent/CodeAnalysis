@@ -30,7 +30,7 @@ djangorestframework==3.11.2
 coreapi==2.3.3
 Markdown==3.3.4
 django-cors-headers==3.7.0
-Pygments==2.8.1
+Pygments==2.15.0
 
 # for document
 drf-yasg==1.17.0
