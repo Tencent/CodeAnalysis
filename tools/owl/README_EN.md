@@ -16,7 +16,7 @@ A dependency module feature scanning detection tool for static analysis.
 
 The current version of the tool has relatively simple functionality, and the working principle is straightforward. The tool scans a specific directory and matches specific files through a built-in feature code algorithm. It then collects the file addresses that match their feature codes and displays them or redirects them to a fixed JSON file for storage.
 
-! [](https://tva1.sinaimg.cn/large/e6c9d24egy1h2yvkgtmbwj20lo0ca0tl.jpg)
+![](https://tva1.sinaimg.cn/large/e6c9d24egy1h2yz7v68cbj217g0u0h0x.jpg)
 
 `Owl` is similar to antivirus software in that it works on the principle of antivirus software. `Owl` scans the entire project based on the feature codes of the dependency files, similar to the working principle of an antivirus virus library. Of course, if it strictly follows the standards of antivirus software, it may involve some assembly-related components. Currently, the functionality of `owl` is not that complex, but future versions will include the `codeql` code analysis engine to enhance the static analysis functionality using CodeQL's database.
 
