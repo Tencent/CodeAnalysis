@@ -18,7 +18,7 @@ The current version of the tool has relatively simple functionality, and the wor
 
 ![](https://tva1.sinaimg.cn/large/e6c9d24egy1h2yvkgtmbwj20lo0ca0tl.jpg)
 
-`Owl` is similar to antivirus software in that it works on the principle of antivirus software. `Owl` scans the entire project based on the feature codes of the dependency files, similar to the working principle of an antivirus virus library. Of course, if it strictly follows the standards of antivirus software, it may involve some assembly-related components. Currently, the functionality of `owl` is not that complex, but future versions will include the `codeql` code analysis engine to enhance the static analysis functionality using `CodeQL`'s database.
+`Owl` is similar to a antivirus software, it works on the principle of antivirus software. `Owl` scans the entire project based on the feature codes of the dependency files, similar to the working principle of an antivirus virus library. Of course, if it strictly follows the standards of antivirus software, it may involve some assembly-related components. Currently, the functionality of `owl` is not that complex, but future versions will include the `codeql` code analysis engine to enhance the static analysis functionality using `CodeQL`'s database.
 
 ### Quick Start
 
