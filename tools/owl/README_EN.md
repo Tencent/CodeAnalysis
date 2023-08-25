@@ -10,31 +10,31 @@ A dependency module feature scanning detection tool for static analysis.
 
 ### Introduction
 
-`Owl` is a static file feature detection tool provided by `TCA`, which can quickly find the source code file or dependency file that meets certain characteristics in the specified project directory. Why was this tool developed? For example, many times our project is too big, there are many dependent files in the project folder, such as a `Java` project introduces a `log4j` this` jar `dependency, there is a circular dependency problem in a file in the project. When there is a vulnerability in a dependency package, the tool can quickly scan the suspicious dependency files in the project directory, and give the address of the dependent files to help developers quickly locate the suspicious files.
+`Owl` is a static file feature detection tool provided by `TCA`, which can quickly find the source code file or dependency files that meet certain characteristics in the specified project directory. Why was this tool developed? For example, many times our projects are large, and there are many dependency files in the project folder. For instance, in a Java project, let’s say we have imported the `log4j` jar dependency, and there is a circular dependency issue in one of the project files. When a vulnerability is found in a particular dependency package, this tool can quickly scan the suspicious dependency files in the project directory and provide the location of the dependency file, helping developers to quickly locate the suspicious file.
 
-### Reason
+### Principle
 
-The current version of the function is relatively simple, the working principle is very simple, the tool will scan a specific directory through the built-in feature code algorithm to match a specific file, and then collect the file address that matches its feature code, and then show it, it can also be redirected to a fixed `json` file to save.
+The current version of the tool has relatively simple functionality, and the working principle is straightforward. The tool scans a specific directory and matches specific files through a built-in feature code algorithm. It then collects the file addresses that match their feature codes and displays them or redirects them to a fixed JSON file for storage.
 
 ! [](https://tva1.sinaimg.cn/large/e6c9d24egy1h2yvkgtmbwj20lo0ca0tl.jpg)
 
-`Owl` is similar to anti-virus software, and the working principle of anti-virus software is similar, `Owl` will scan the entire project according to the signature code of the dependent file, and the anti-virus library works similarly. Of course, if it is done strictly in accordance with the standard of anti-virus software, it may involve some assembler related, the current `owl` function is not so complex, the later version will join the codeql code analysis engine, through the codeql database to do static analysis function enhancement.
+`Owl` is similar to antivirus software in that it works on the principle of antivirus software. `Owl` scans the entire project based on the feature codes of the dependency files, similar to the working principle of an antivirus virus library. Of course, if it strictly follows the standards of antivirus software, it may involve some assembly-related components. Currently, the functionality of `owl` is not that complex, but future versions will include the `codeql` code analysis engine to enhance the static analysis functionality using CodeQL's database.
 
-### Start fast
+### Quick Start
 
-How to use `owl`? You can clone the warehouse then by the following command:
+How to use `owl`? You can clone the repository and then use the following command:
 
 ```bash
 git clone github.com:Tencent/CodeAnalysis.git
 ` ` `
 
-Then switch the directory to `tools\owl` as follows:
+Then navigate to the `tools\owl` directory, like this:
 
 ```bash
 cd CodeAnalysis/tools/owl
 ` ` `
 
-There is a `Makefile` file inside the repository that can quickly help you build binaries for the corresponding platform, for example:
+Inside the repository, there is a `Makefile` that can help you quickly build the binary file for the corresponding platform, for example:
 
 ```bash
 $: make help
@@ -44,12 +44,11 @@ make windows	| Compile executable binary for Windows platform
 make clean	| Clean up executable binary
 ` ` `
 
-** Note 📢 : ** If you do not have the `Go` environment configured on the machine, please configure the `Go` development environment before normal compilation, compilation cost binary you need to have `Go` cross-compilation knowledge, if there are problems welcome to `issued`.
-
+** Note 📢 : ** If you do not have the `Go` environment configured on the machine, please configure the `Go` development environment before executing the compilation. To compile into a local binary file, you need to have the knowledge of `Go` cross-compilation. If there are problems welcome to `issues`.
 
 ### How to use
 
-The completion of the program will get a binary file, the program name is` owl `, as follows` owl `execution effect, some subcommand parameters have been listed:
+After building the program, you will get a binary file named ` owl `. The following shows the execution result of ` owl `, with some subcommand parameters listed:
 
 ```bash
 $: ./owl
@@ -83,25 +82,25 @@ If you do not know how to use the subcommand, you can enter the `--help` paramet
 
 ! [](https://tva1.sinaimg.cn/large/e6c9d24egy1h2yz0laxdyj22ax0u07bb.jpg)
 
-For example, if you want to find log4j, you first need to compute the log4j signature code through owl, as follows:
+For example, if you want to search for `log4j`, firstly you need to calculate the feature code of `log4j` using `owl`. The command is as follows:
 
 ```bash
 $:. / owl md5 -- -- path = / Users/ding/Downloads/log4j - 1.2.17. Jar
 ` ` `
 
-** Note that the calculation of the feature code here must use the algorithm of the `owl` program, because the algorithm of the `owl` in the large file I use the fractional data block scheme to calculate, improve the running speed of the program, so if the use of other software algorithms then there will be problems! **
+** Note that the feature code calculation here must use the algorithm provided by the `owl` program. The algorithm in `owl` is designed for handling large files using a data block-based approach to improve program execution speed. So if you use algorithms from other software, there may be issues! **
 
 The results are as follows:
 
 ! [](https://tva1.sinaimg.cn/large/e6c9d24egy1h2yz54cg72j22gm0e0af2.jpg)
 
-You can also use the hexadecimal string feature to find:
+You can also use the hexadecimal string feature for searching:
 
 ```bash
 $: / owl hex - path = / Users/ding/Downloads/log4j - 1.2.17. Jar
 ` ` `
 
-The program will convert the corresponding file into a hexadecimal string display, as shown below:
+The program will convert the corresponding file into a hexadecimal string for display, as shown in the following image:
 
 ! [](https://tva1.sinaimg.cn/large/e6c9d24egy1h2yz7v68cbj217g0u0h0x.jpg)
 
@@ -116,8 +115,8 @@ Search for specific dependent files:
 ! [](https://tva1.sinaimg.cn/large/e6c9d24egy1h2yze6emx3j21yq0dajwn.jpg)
 
 
-** If there are too many search results, you can save the results through the `--out` parameter to save in a file, the file format is` json `! **
+** If there are too many search results, you can save the results through the `--out` parameter to save in a file, whose format is` json `! **
 
 ### Other
 
-If you have any questions, you can raise `issue` on `TCA`, and if you have questions about this tool, you can add `owl` label on `issue` 🤝.
+If you have any questions, you can raise `issue` on `TCA`, and if you have questions about this tool, you can add the `owl` tag on `issue` 🤝.
