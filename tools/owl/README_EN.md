@@ -44,7 +44,7 @@ make windows	| Compile executable binary for Windows platform
 make clean	| Clean up executable binary
 ```
 
-**Note 📢:** If you do not have the `Go` environment configured on the machine, please configure the `Go` development environment before executing the compilation. To compile into a local binary file, you need to have the knowledge of `Go` cross-compilation. If there are problems welcome to `issues`.
+**Note 📢:**  If you do not have the `Go` environment configured on the machine, please configure the `Go` development environment before executing the compilation. To compile into a local binary file, you need to have the knowledge of `Go` cross-compilation. If there are problems welcome to `issues`.
 
 ### How to use
 
