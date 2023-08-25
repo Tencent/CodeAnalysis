@@ -44,7 +44,7 @@ make windows	| Compile executable binary for Windows platform
 make clean	| Clean up executable binary
 ```
 
-** Note 📢 : ** If you do not have the `Go` environment configured on the machine, please configure the `Go` development environment before executing the compilation. To compile into a local binary file, you need to have the knowledge of `Go` cross-compilation. If there are problems welcome to `issues`.
+**Note 📢:** If you do not have the `Go` environment configured on the machine, please configure the `Go` development environment before executing the compilation. To compile into a local binary file, you need to have the knowledge of `Go` cross-compilation. If there are problems welcome to `issues`.
 
 ### How to use
 
@@ -85,10 +85,10 @@ If you do not know how to use the subcommand, you can enter the `--help` paramet
 For example, if you want to search for `log4j`, firstly you need to calculate the feature code of `log4j` using `owl`. The command is as follows:
 
 ```bash
-$:. / owl md5 -- -- path = / Users/ding/Downloads/log4j - 1.2.17. Jar
+$: ./owl md5 --path=/Users/ding/Downloads/log4j-1.2.17.jar
 ```
 
-** Note that the feature code calculation here must use the algorithm provided by the `owl` program. The algorithm in `owl` is designed for handling large files using a data block-based approach to improve program execution speed. So if you use algorithms from other software, there may be issues! **
+**Note that the feature code calculation here must use the algorithm provided by the `owl` program. The algorithm in `owl` is designed for handling large files using a data block-based approach to improve program execution speed. So if you use algorithms from other software, there may be issues!**
 
 The results are as follows:
 
@@ -97,7 +97,7 @@ The results are as follows:
 You can also use the hexadecimal string feature for searching:
 
 ```bash
-$: / owl hex - path = / Users/ding/Downloads/log4j - 1.2.17. Jar
+$: ./owl hex --path=/Users/ding/Downloads/log4j-1.2.17.jar
 ```
 
 The program will convert the corresponding file into a hexadecimal string for display, as shown in the following image:
@@ -115,8 +115,8 @@ Search for specific dependent files:
 ![](https://tva1.sinaimg.cn/large/e6c9d24egy1h2yze6emx3j21yq0dajwn.jpg)
 
 
-** If there are too many search results, you can save the results through the `--out` parameter to save in a file, whose format is` json `! **
+**If there are too many search results, you can save the results through the `--out` parameter to save in a file, whose format is` json `!**
 
-### Other
+### Others
 
-If you have any questions, you can raise `issue` on `TCA`, and if you have questions about this tool, you can add the `owl` tag on `issue` 🤝.
+If you have any questions, you can raise `issue` on `TCA`, and if you have questions about this tool, you can add `owl` tag on the `issue` 🤝.
