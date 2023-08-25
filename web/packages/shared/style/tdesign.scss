@@ -1,4 +1,4 @@
-@import "./color.scss";
+@import "./theme/color-variables.scss";
 
 :global(.t-progress__info) {
   display: flex;
@@ -8,7 +8,7 @@
 :global(.t-table__body) {
   &>tr {
     td>a.link-name {
-      color: $grey-8;
+      color: $t-grey-8;
 
       &.with-icon {
         display: flex;
@@ -17,7 +17,7 @@
 
       .path {
         font-size: 12px;
-        color: $grey-7;
+        color: $t-grey-7;
         max-width: 400px;
         word-break: break-all;
       }
@@ -25,37 +25,42 @@
     
     &:hover {
       td>a.link-name {
-        color: $blue-5  !important;
+        color: $t-blue-5 !important;
       }
     }
   }
 }
 
 :global(.t-tag) {
-
   &.warning {
-    color: $warging-color;
-    background-color: $warging-bg;
+    color: $tca-warging-color;
+    background-color: $tca-warging-bg;
   }
 
   &.success {
-    color: $success-color;
-    background-color: $success-bg;
+    color: $tca-success-color;
+    background-color: $tca-success-bg;
   }
 
   &.fatal {
-    color: $fatal-color;
-    background-color: $fatal-bg;
+    color: $tca-fatal-color;
+    background-color: $tca-fatal-bg;
   }
 
   &.error {
-    color: $error-color;
-    background-color: $error-bg;
+    color: $tca-error-color;
+    background-color: $tca-error-bg;
   }
 
   &.processing,
   &.info {
-    color: $tip-color;
-    background-color: $tip-bg;
+    color: $tca-tip-color;
+    background-color: $tca-tip-bg;
   }
+}
+
+// 避免notification组件折叠
+:global(.t-notification__content){
+  display: block;
+  max-height: none;
 }

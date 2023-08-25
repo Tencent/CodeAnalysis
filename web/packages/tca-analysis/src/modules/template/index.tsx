@@ -7,135 +7,130 @@
 /**
  * 分析模板入口文件
  */
-import React, { useEffect, useState } from 'react';
-import { useHistory, Link, useParams } from 'react-router-dom';
-import { toNumber, get, find, omit, omitBy } from 'lodash';
-import cn from 'classnames';
-import qs from 'qs';
+import React, { useEffect, useState, useCallback } from 'react';
+import { useParams } from 'react-router-dom';
+import { get } from 'lodash';
+import { t } from '@src/utils/i18n';
+import { Row, Col, Button, Loading } from 'tdesign-react';
 
-import { Table, Tag } from 'coding-oa-uikit';
+import { useURLParams } from '@tencent/micro-frontend-shared/hooks';
+import Search from '@tencent/micro-frontend-shared/tdesign-component/search';
+import PageHeader from '@tencent/micro-frontend-shared/tdesign-component/page-header';
 
-import { getQuery } from '@src/utils';
-import { DEFAULT_PAGER } from '@src/constant';
 import { getTmplList } from '@src/services/template';
 import { getLanguages, getTags } from '@src/services/schemes';
+import { TEMPLATE_FILTER_FIELDS as filterFields, TEMPLATE_SEARCH_FIELDS } from '@src/constant';
 
-import Search from './search';
+import TemplateCard from './tmpl-card';
 import Create from './create';
 import style from './style.scss';
 
-const { Column } = Table;
+const cardLayout = {
+  xs: 6,
+  sm: 6,
+  md: 6,
+  lg: 6,
+  xl: 6,
+  xxl: 4,
+};
+
+const DEFAULT_LOAD_SIZE = 60;
 
 const Template = () => {
-  const history = useHistory();
   const { orgSid } = useParams() as any;
   const [list, setList] = useState<any>([]);
-  const [count, setCount] = useState(DEFAULT_PAGER.count);
-  const [loading, setLoading] = useState(false);
   const [visible, setVisible] = useState(false);
   const [tags, setTags] = useState([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [loadingMore, setLoadingMore] = useState<boolean>(false);
+  const [pager, setPager] = useState<any>({
+    count: 0,
+    pageStart: 0,
+    pageSize: 12,
+  });
+  const { count, pageStart } = pager;
   const [languages, setLanguages] = useState<any>([]);
 
-  const query = getQuery();
-  const pageSize = toNumber(query.limit) || DEFAULT_PAGER.pageSize;
-  const pageStart = toNumber(query.offset) || DEFAULT_PAGER.pageStart;
-  const searchParams: any = omit(query, ['offset', 'limit']);
+  const { searchParams } = useURLParams(filterFields);
+
+  const getListData = useCallback((offset = 0, limit = DEFAULT_LOAD_SIZE, isMore = false) => {
+    setLoading(true);
+    const params = {
+      offset,
+      limit,
+      ...searchParams,
+    };
+    getTmplList(orgSid, params).then((res: any) => {
+      setPager({
+        count: res.count,
+        pageStart: offset + limit,
+        pageSize: limit,
+      });
+      const listData = res.results || [];
+      if (isMore) {
+        setList((prevList: any[]) => [...prevList, ...listData]);
+      } else {
+        setList(listData);
+      }
+    })
+      .finally(() => {
+        setLoading(false);
+        setLoadingMore(false);
+      });
+  }, [orgSid, searchParams]);
 
   useEffect(() => {
     getListData();
+  }, [getListData]);
 
+  useEffect(() => {
     (async () => {
       setTags(get(await getTags(orgSid), 'results', []));
       setLanguages(get(await getLanguages(), 'results', []));
     })();
-  }, []);
+  }, [orgSid]);
 
-  const getListData = (offset = pageStart, limit = pageSize, otherParams = searchParams) => {
-    const params = {
-      offset,
-      limit,
-      ...omitBy(otherParams, (item: any) => !item),
-    };
-
-    setLoading(true);
-    getTmplList(orgSid, params)
-      .then((response: any) => {
-        setCount(response.count);
-        history.push(`${location.pathname}?${qs.stringify(params)}`);
-        setList(response.results || []);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+  const onScroll = (e: any) => {
+    // 滚动条触底加载更多数据
+    if (e.target.scrollTop + e.target.clientHeight === e.target.scrollHeight) {
+      if (!loading && list.length < count) {
+        setLoadingMore(true);
+        getListData(pageStart, pageStart + DEFAULT_LOAD_SIZE, true);
+      }
+    }
   };
-
-  const onChangePageSize = (page: number, pageSize: number) => {
-    getListData((page - 1) * pageSize, pageSize);
-  };
-
-  // const onShowSizeChange = (current: number, size: number) => {
-  //     getListData(DEFAULT_PAGER.pageStart, size);
-  // };
 
   return (
-    <div className={style.template}>
+    <>
+      <PageHeader title={t('分析方案模板')} description={t('分析方案模版用于在创建分析方案时作为模版参考。分析方案模版全局可用，不用和某个代码库关联。')} action={
+        <Button theme="primary" onClick={() => setVisible(true)}>
+          创建模板
+        </Button>
+      } />
       <Search
+        fields={TEMPLATE_SEARCH_FIELDS}
         searchParams={searchParams}
-        loading={loading}
-        createTmpl={() => setVisible(true)}
-        callback={(params: any) => getListData(DEFAULT_PAGER.pageStart, pageSize, params)}
       />
-      <Table
-        dataSource={list}
-        rowKey={(item: any) => item.id}
-        loading={loading}
-        scroll={{ x: 1000 }}
-        // className={style.issueTable}
-        pagination={{
-          size: 'default',
-          current: Math.floor(pageStart / pageSize) + 1,
-          total: count,
-          pageSize,
-          showSizeChanger: true,
-          showTotal: (total, range) => `${range[0]} - ${range[1]} 条，共 ${total} 条`,
-          onChange: onChangePageSize,
-          // onShowSizeChange,
-        }}
+      <div
+        className={style.contentWrapper}
+        onScrollCapture={onScroll}
       >
-        <Column
-          title="模板名称"
-          dataIndex="name"
-          key="name"
-          render={(name: string, data: any) => (
-            <Link className="link-name" to={`${window.location.pathname}/${data.id}`}>
-              {name}
-            </Link>
-          )}
-        />
-        <Column
-          title="模板类型"
-          dataIndex="scheme_key"
-          key="scheme_key"
-          render={(scheme_key: string) => (
-            <Tag
-              className={cn(style.tmplTag, { [style.sys]: scheme_key === 'public' })}
-            >
-              {scheme_key === 'public' ? '系统' : '自定义'}
-            </Tag>
-          )}
-        />
-        <Column
-          title="语言"
-          dataIndex="languages"
-          key="languages"
-          render={(langs: any) => langs?.map((item: any) => (find(languages, { name: item })
-            ? find(languages, { name: item })?.display_name
-            : item))
-            .join(' | ')
-          }
-        />
-        <Column title="描述" dataIndex="description" key="description" />
-      </Table>
+        <Loading loading={loading && !loadingMore}>
+          <div className={style.content}>
+            <Row gutter={[16, 16]}>
+              {list.map((data: any) => (
+                <Col key={data.id} {...cardLayout}>
+                  <TemplateCard
+                    templateInfo={data}
+                    languages={languages}
+                  />
+                </Col>
+              ))}
+            </Row>
+            {loading && loadingMore && <div className={style.loading}><Loading size='small' loading={true} /></div>}
+          </div>
+        </Loading>
+      </div>
       <Create
         orgSid={orgSid}
         visible={visible}
@@ -143,7 +138,7 @@ const Template = () => {
         languages={languages}
         onClose={() => setVisible(false)}
       />
-    </div>
+    </>
   );
 };
 

@@ -11,7 +11,7 @@ import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import cn from 'classnames';
 import { get, findIndex, isEmpty, toNumber, find } from 'lodash';
-import { Tabs, Button } from 'coding-oa-uikit';
+import { Tabs, Button } from 'tdesign-react';
 
 import { useStateStore } from '@src/context/store';
 import Repos from '@src/components/repos';
@@ -32,7 +32,7 @@ import PullModal from './pull-tmpl-modal';
 
 import style from './style.scss';
 
-const { TabPane } = Tabs;
+const { TabPanel } = Tabs;
 
 const Schemes = () => {
   const history = useHistory();
@@ -153,20 +153,20 @@ const Schemes = () => {
                 <p className={style.tmplDesc}>
                   该分析方案由模板
                   <a
-                    href={`${getTmplBlankRouter(orgSid, teamName)}/${schemeInfo.refer_scheme.id}`}
+                    href={`${getTmplBlankRouter(orgSid)}/${schemeInfo.refer_scheme.id}`}
                     target="_blank" rel="noreferrer"
                   >
                     「{schemeInfo.refer_scheme.name}」
                   </a>
                   创建；若需同步模板配置，请点击
-                  <Button type="link" onClick={() => setPullModalVsb(true)}>
+                  <a onClick={() => setPullModalVsb(true)}>
                     同步
-                  </Button>
+                  </a>
                 </p>
               )}
             </div>
             <Tabs
-              activeKey={tab}
+              value={tab}
               className={style.tabs}
               onChange={(key) => {
                 history.push(`${getSchemeRouter(
@@ -176,8 +176,9 @@ const Schemes = () => {
                   schemeInfo.id,
                 )}/${key}`);
               }}
+              defaultValue='basic'
             >
-              <TabPane tab="基础配置" key="basic">
+              <TabPanel label="基础配置" value="basic">
                 <BaseInfo
                   orgSid={orgSid}
                   teamName={teamName}
@@ -201,8 +202,8 @@ const Schemes = () => {
                     }
                   }}
                 />
-              </TabPane>
-              <TabPane tab="规则配置" key="codelint">
+              </TabPanel>
+              <TabPanel label="规则配置" value="codelint">
                 <CodeLint
                   data={lintConfig}
                   orgSid={orgSid}
@@ -215,34 +216,31 @@ const Schemes = () => {
                     setLintConfig(data);
                   }}
                 />
-              </TabPane>
-              <TabPane tab="度量配置" key="codemetric">
+              </TabPanel>
+              <TabPanel label="度量配置" value="codemetric">
                 <CodeMetrics
                   orgSid={orgSid}
                   teamName={teamName}
                   repoId={repoId}
                   schemeId={schemeInfo.id}
                 />
-              </TabPane>
-              <TabPane tab="过滤配置" key="filters">
+              </TabPanel>
+              <TabPanel label="过滤配置" value="filters">
                 <PathFilter
                   orgSid={orgSid}
                   teamName={teamName}
                   repoId={repoId}
                   schemeId={schemeInfo.id}
                 />
-              </TabPane>
-              {/* <TabPane tab="权限配置" key="perms">
-                                            权限配置
-                                        </TabPane> */}
-              <TabPane tab="已关联分支" key="branchs">
+              </TabPanel>
+              <TabPanel label="已关联分支" value="branchs">
                 <Branchs
                   orgSid={orgSid}
                   teamName={teamName}
                   repoId={repoId}
                   schemeId={schemeInfo.id}
                 />
-              </TabPane>
+              </TabPanel>
             </Tabs>
           </div>
         </div>

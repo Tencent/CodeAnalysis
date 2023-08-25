@@ -2,6 +2,8 @@ import { registerApplication, start } from 'single-spa';
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
 import 'coding-oa-uikit/dist/coding-oa-uikit.css';
+import 'tdesign-react/es/style/index.css';
+
 
 import MicroApplication from '@src/meta/application';
 import applicationLoader from '@src/loader';

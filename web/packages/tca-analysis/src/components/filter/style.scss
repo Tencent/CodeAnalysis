@@ -1,0 +1,6 @@
+.filter-item {
+  min-width: auto!important;
+  :global(.t-form__label--left) {
+    padding-right: 0px;
+  }
+}

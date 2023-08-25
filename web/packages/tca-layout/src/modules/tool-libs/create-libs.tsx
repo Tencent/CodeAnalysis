@@ -12,7 +12,7 @@ import { userAuthAPI } from '@plat/api';
 
 import { formScmURLSecValidate } from '@tencent/micro-frontend-shared/util';
 import { addToolLib, getLibDetail, updateToolLib } from '@src/services/tools';
-import { TOOLLIB_REPO_TYPE_OPTIONS, RepoTypeEnum, SCM_MAP, LIB_ENV, LIB_TYPE } from '@src/constant';
+import { TOOLLIB_REPO_TYPE_OPTIONS, RepoTypeEnum, SCM_MAP, LIB_ENV_CHOICES, LIB_TYPE_CHOICES } from '@src/constant';
 
 import style from './style.scss';
 
@@ -163,7 +163,7 @@ const CreateToollibs = (props: CreateToollibsProps) => {
             >
               <Select>
                 {
-                  Object.entries(LIB_TYPE).map(([key, text]) => (
+                  Object.entries(LIB_TYPE_CHOICES).map(([key, text]) => (
                     <Option key={key} value={key}>{text}</Option>
                   ))
                 }
@@ -178,7 +178,7 @@ const CreateToollibs = (props: CreateToollibsProps) => {
         >
           <Select mode='multiple'>
             {
-              Object.entries(LIB_ENV).map(([key, text]) => (
+              Object.entries(LIB_ENV_CHOICES).map(([key, text]) => (
                 <Option key={key} value={key}>{text}</Option>
               ))
             }

@@ -1,15 +1,16 @@
-import React, { ReactNode, useEffect, useMemo, useState, useRef } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import React, { ReactNode, useEffect, useMemo, useState, useRef, useCallback } from 'react';
+import { useLocation, useHistory } from 'react-router-dom';
 import classnames from 'classnames';
-import { Layout, Menu, Button } from 'coding-oa-uikit';
-import Aleft from 'coding-oa-uikit/lib/icon/Aleft';
-import Aright from 'coding-oa-uikit/lib/icon/Aright';
-// 项目内引用
-import s from './style.scss';
-import OpenLinkSvg from './open-link.svg';
+import { useResponsive } from 'ahooks';
+import { Layout, Menu, Button, Divider } from 'tdesign-react';
+import { PageFirstIcon, PageLastIcon } from 'tdesign-icons-react';
 
-const { Sider } = Layout;
-const { SubMenu } = Menu;
+import { openURL } from '@tencent/micro-frontend-shared/util';
+// 项目内引用
+import OpenLinkSvg from './open-link.svg';
+import s from './style.scss';
+
+const { MenuItem, SubMenu } = Menu;
 
 const MenuLayoutExpanded = 'menu-layout-expanded';
 const MiniMenuLayoutExpanded = 'mini-menu-layout-expanded';
@@ -54,12 +55,30 @@ const getMatchOpenKeys = (menus: MenuItem[], selectedKey: string, collapse: bool
   return menuFilters.map(menu => menu.key);
 };
 
-
-const LayoutMenu = ({ menus, breakpoint, title, showTitleBottomBorder }: LayoutMenuProps) => {
+const LayoutMenu = ({ menus, breakpoint, title }: LayoutMenuProps) => {
   const [collapsed, setCollapsed] = useState(false);
   const [openKeys, setOpenKeys] = useState([]);
   const tmpCollapsed = useRef(false);
   const location = useLocation();
+  const history = useHistory();
+  const responsive = useResponsive();
+
+  useEffect(() => {
+    if (breakpoint) {
+      setCollapsed(responsive[breakpoint] === false);
+    }
+  }, [responsive, breakpoint]);
+
+  /** 跳转处理 */
+  const navigateHandle = useCallback((menu: MenuItem) => {
+    if (menu.link) {
+      if (menu.open) {
+        openURL(menu.link);
+      } else {
+        history.push(menu.link);
+      }
+    }
+  }, [history]);
 
   // 控制菜单collapsed样式
   useEffect(() => {
@@ -84,11 +103,6 @@ const LayoutMenu = ({ menus, breakpoint, title, showTitleBottomBorder }: LayoutM
       }
     };
   }, [collapsed]);
-
-  // 当处理完 openKeys 后，再更新 collapse
-  useEffect(() => {
-    setCollapsed(tmpCollapsed.current);
-  }, [openKeys]);
 
   // 聚合菜单项
   const aggMenuItems = useMemo(() => {
@@ -123,123 +137,61 @@ const LayoutMenu = ({ menus, breakpoint, title, showTitleBottomBorder }: LayoutM
     setOpenKeys(getMatchOpenKeys(menus, selectedKey, tmpCollapsed.current));
   }, [menus, selectedKey]);
 
-  // SubMenu 菜单项展开控制
-  const onOpenChange = (openKeys: string[]) => {
-    setOpenKeys(openKeys);
-  };
-
-  // 触发响应式布局断点时的回调
-  const onCollapse = (collapsed: any) => {
-    tmpCollapsed.current = collapsed;
-    // 待关闭扩展子项后再处理collapse
-    if (collapsed) {
-      setOpenKeys([]);
-    } else {
-      setOpenKeys(getMatchOpenKeys(menus, selectedKey, collapsed));
-    }
-  };
-
-  // 渲染链接类型菜单项
-  const renderLink = (menu: MenuItem, children: ReactNode) => {
-    if (menu.link) {
-      if (menu.open) {
-        return (
-          <a href={menu.link} target="_blank" rel="noreferrer">
-            {children}
-            {!collapsed && <img className={s.openLink} src={OpenLinkSvg} />}
-          </a>
-        );
-      }
-      return <Link to={menu.link}>{children}</Link>;
-    }
-    return <></>;
-  };
-
-  return <Layout className={classnames(s.menuLayout)}>
-    <Sider
-      className={s.menuLayoutAside}
+  return <Layout className={classnames(s.asideLayout)}>
+    <Menu
+      style={{ flexShrink: 0, height: '100%' }}
+      width="220px"
       theme="light"
-      width="220"
-      breakpoint={breakpoint}
-      onBreakpoint={onCollapse}
-      collapsedWidth="56"
+      className={s.layoutMenu}
       collapsed={collapsed}
-    >
-      <div className={s.menuLayoutAsideBody}>
-        {title && (
-          <div
-            className={classnames(
-              s.asideTitle,
-              showTitleBottomBorder ? s.asideTitleBottomBorder : '',
-            )}
-          >
-            {title}
-          </div>
-        )}
-        <Menu
-          selectedKeys={[selectedKey]}
-          openKeys={openKeys}
-          onOpenChange={onOpenChange}
-          className={s.menuLayoutItems}
-          theme="light"
-          mode="inline"
-        >
-          {menus.filter(menu => menu).map((menu) => {
-            if (menu.divider) {
-              return (
-                <Menu.Divider
-                  key={menu.key}
-                  className={classnames(
-                    s.menuDivider,
-                    collapsed ? s.menuDividerCollapsed : '',
-                  )}
-                />
-              );
-            }
-            if (menu.childrens) {
-              return (
-                <SubMenu
-                  className={s.subMenu}
-                  key={menu.key}
-                  icon={menu.icon}
-                  title={menu.title}
-                >
-                  {menu.childrens.filter(item => item).map(subMenu => subMenu.link && (
-                    <Menu.Item
-                      className={s.subItem}
-                      key={subMenu.key}
-                    >
-                      {renderLink(subMenu, subMenu.title)}
-                    </Menu.Item>
-                  ))}
-                </SubMenu>
-              );
-            }
-            if (menu.link) {
-              return (
-                <Menu.Item
-                  className={s.item}
-                  key={menu.key}
-                  title={menu.title}
-                >
-                  {renderLink(menu, <>{menu.icon}{!collapsed && menu.title}</>)}
-                </Menu.Item>
-              );
-            }
-            return <></>;
-          })}
-        </Menu>
-      </div>
-      {breakpoint && (
-        <div className={s.menuLayoutCollapseCtrl}>
-          <Button
-            type="text"
-            onClick={() => onCollapse(!collapsed)}
-            icon={!collapsed ? <Aleft /> : <Aright />}
-          />
+      value={selectedKey}
+      expanded={openKeys}
+      onExpand={values => setOpenKeys(values)}
+      logo={title && <div className={s.layoutMenuTitle}>{title}</div>}
+      operations={
+        breakpoint && <div className='tca-text-right'>
+          <Button variant="text" shape="square" icon={collapsed ? <PageLastIcon /> : <PageFirstIcon />} onClick={() => setCollapsed(!collapsed)} />
         </div>
-      )}
-    </Sider>
+      }
+    >
+      {menus.map((menu) => {
+        // 中线
+        if (menu.divider) {
+          return <Divider className={s.layoutMenuDivider} key={menu.key}></Divider>;
+        }
+
+        // 子菜单
+        if (menu.childrens?.length) {
+          return <SubMenu
+            className={s.layoutSubMenu}
+            key={menu.key}
+            value={menu.key}
+            icon={menu.icon}
+            title={menu.title}
+          >
+            {menu.childrens.map(subMenu => (<MenuItem
+              className={s.layoutMenuItem}
+              key={subMenu.key}
+              value={subMenu.key}
+              onClick={() => navigateHandle(subMenu)}
+            >
+              {subMenu.title} {menu.open && <img className={s.openLink} src={OpenLinkSvg} />}
+            </MenuItem>))}
+          </SubMenu>;
+        }
+
+        // 菜单项
+        return <MenuItem
+          className={s.layoutMenuItem}
+          key={menu.key}
+          value={menu.key}
+          icon={menu.icon}
+          onClick={() => navigateHandle(menu)}
+        >
+          {menu.title} {menu.open && <img className={s.layoutMenuItemOpenLink} src={OpenLinkSvg} />}
+        </MenuItem>;
+      })}
+    </Menu>
   </Layout>;
 };
 

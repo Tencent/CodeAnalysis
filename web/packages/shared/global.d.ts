@@ -1,4 +1,5 @@
 declare module '*.scss';
+declare module '*.png';
 type Store = import('redux').Store;
 type Reducer = import('redux').Reducer;
 

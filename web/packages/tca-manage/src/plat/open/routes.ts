@@ -7,7 +7,7 @@ const Orgs = lazy(() => import('./modules/orgs'));
 const Teams = lazy(() => import('./modules/teams'));
 const Jobs = lazy(() => import('@src/modules/jobs'));
 const Tools = lazy(() => import('@src/modules/tools'));
-const Nodes = lazy(() => import('@src/modules/nodes'));
+const NodeManager = lazy(() => import('@src/modules/nodes'));
 const NodeProcess = lazy(() => import('@src/modules/process'));
 const OAuth = lazy(() => import('@src/modules/oauth'));
 
@@ -27,11 +27,11 @@ const ROUTERS: RouteProps[] = [{
   path: '/manage/tools',
   component: Tools,
 }, {
-  path: '/manage/nodes/:nodeId/process',
+  path: '/manage/nodemgr/nodes/:nodeId/process',
   component: NodeProcess,
 }, {
-  path: '/manage/nodes',
-  component: Nodes,
+  path: '/manage/nodemgr/',
+  component: NodeManager,
 }, {
   path: '/manage/oauths',
   component: OAuth,

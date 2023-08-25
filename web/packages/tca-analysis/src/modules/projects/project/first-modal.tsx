@@ -19,7 +19,7 @@ import { getLanguages, getTags, getNodes } from '@src/services/schemes';
 import { initRepos } from '@src/services/projects';
 import NodeTag from '@src/components/node-tag';
 
-import { SCAN_LIST } from '../../schemes/constants';
+import { SCAN_LIST } from '@src/constant';
 import style from '../style.scss';
 
 import ScanModal from '@plat/modules/projects/scan-modal';

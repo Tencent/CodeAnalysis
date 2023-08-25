@@ -19,7 +19,7 @@ const DEFAULT_PROJECT_NAME = process.env.npm_package_name;
 const DEFAULT_PROJECT_VERSION = process.env.npm_package_version;
 /** 默认排除资源正则 */
 const DEFAULT_EXCLUDE = /^.*\.(html|txt|map)$/;
-/** 默认跟路径 */
+/** 默认根路径 */
 const DEFAULT_BASE_DIR = 'webpack_auto_upload_tmp';
 /** 默认重试次数 */
 const DEFAULT_RETRY = 3;
@@ -79,7 +79,7 @@ interface CosWebpackPluginProps {
   /** 是否上传 */
   uploadConfigJson?: StrBoolean;
   /** 上传资源文件时候的参数项 */
-  options?: Omit<PutObjectParams, 'Bucket'|'Region'|'Key'|'Body'>;
+  options?: Omit<PutObjectParams, 'Bucket' | 'Region' | 'Key' | 'Body'>;
 }
 
 interface Config {
@@ -110,7 +110,7 @@ interface Config {
   /** 资源是否不输出到目录，默认打开 */
   removeMode: boolean;
   /** 上传资源文件时候的参数项 */
-  options?: Omit<PutObjectParams, 'Bucket'|'Region'|'Key'|'Body'>;
+  options?: Omit<PutObjectParams, 'Bucket' | 'Region' | 'Key' | 'Body'>;
 }
 
 /** cos webpack plugin */

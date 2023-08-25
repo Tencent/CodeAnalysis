@@ -2,7 +2,7 @@ import React from 'react';
 import { useRouteMatch, Route, Redirect, Switch } from 'react-router-dom';
 // 项目内
 import Container from '@src/component/container';
-import Header from '@src/modules/layout/header';
+import Header from '@plat/modules/header';
 import SideBar from './sidebar';
 import Profile from './profile';
 import Auth from './auth';

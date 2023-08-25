@@ -1,0 +1,22 @@
+.layout-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0;
+  width: 100%;
+  background: var(--tca-bg-color-container);
+  box-shadow: 0 1px var(--tca-component-stroke);
+  z-index: var(--tca-z-top);
+
+  .left-content {
+    margin-left: 20px;
+  }
+}
+
+.layout-header-transparent{
+  background-color: transparent;
+  box-shadow:none
+}

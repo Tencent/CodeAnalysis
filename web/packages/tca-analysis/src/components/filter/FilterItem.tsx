@@ -6,7 +6,10 @@
 
 import React from 'react';
 import cn from 'classnames';
-import { Form } from 'coding-oa-uikit';
+import { Form } from 'tdesign-react';
+import s from './style.scss';
+
+const { FormItem } = Form;
 
 interface ItemProps {
   children: React.ReactNode;
@@ -17,14 +20,14 @@ interface ItemProps {
 const Item = (props: ItemProps & any) => {
   const { children, label, className, ...otherProps } = props;
   return (
-        <Form.Item
-            className={cn(className)}
+        <FormItem
+            className={cn(className, s.filterItem)}
             htmlFor=''  // 避免 label 触发事件
             label={label ? `${label}：` : null}
             {...otherProps}
         >
             {children}
-        </Form.Item>
+        </FormItem>
   );
 };
 

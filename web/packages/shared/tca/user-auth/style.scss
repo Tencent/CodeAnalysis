@@ -1,0 +1,40 @@
+.auth-title {
+  font-weight: 500;
+  padding: 12px;
+  display: flex;
+
+  .add-button {
+    margin-left: auto;
+  }
+}
+
+.list-container {
+  margin-bottom: 40px;
+}
+
+.icon {
+  display: block;
+  width: 36px;
+  height: 36px;
+}
+
+.platform {
+  display: flex;
+  align-items: center;
+
+  img {
+    margin-right: 10px;
+  }
+
+  &-title {
+    font-weight: 500;
+    display: inline-block;
+    margin-right: 8px;
+  }
+}
+
+.origin {
+  font-weight: 400;
+  color: #8592a6;
+  margin-left: 6px;
+}

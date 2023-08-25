@@ -7,17 +7,13 @@
 /**
  * 分析方案 - 代码检查
  */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
-import cn from 'classnames';
 import { intersection, isEmpty, concat } from 'lodash';
 
-import { Switch, message, Tooltip, Typography, Button } from 'coding-oa-uikit';
-import Items from 'coding-oa-uikit/lib/icon/Items';
-import Globe from 'coding-oa-uikit/lib/icon/Globe';
-import Pencil from 'coding-oa-uikit/lib/icon/Pencil';
-import AngleRight from 'coding-oa-uikit/lib/icon/AngleRight';
+import { Switch, message, Tooltip, Button } from 'tdesign-react';
 
+import Search from '@tencent/micro-frontend-shared/tdesign-component/search';
 import Loading from '@src/components/loading';
 import {
   updateLintConfig,
@@ -27,11 +23,11 @@ import {
   addCheckPackages,
   delCheckPackage,
 } from '@src/services/schemes';
-import { getSchemeRouter, getSchemeBlankRouter } from '@src/utils/getRoutePath';
+import { getSchemeRouter } from '@src/utils/getRoutePath';
 
-import Filter from '@src/components/filter';
-import SelectBorderless from '@src/components/select-borderless';
-import CompileConfig from './compile-modal';
+import { getPkgSearchFields } from '@src/constant';
+import CompileConfig from '@src/components/schemes/compile-modal';
+import PackageList from '@src/components/schemes/pkg-list';
 
 import style from './style.scss';
 
@@ -60,6 +56,8 @@ const CodeLint = (props: CodeLintProps) => {
   const [firstSort, setFirstSort] = useState(true);
   const { lang = [], label = [] } = searchParams;
 
+  const filterFields = getPkgSearchFields(languages, labels);
+
   const checkprofile = data.checkprofile || {};
 
   useEffect(() => {
@@ -74,7 +72,7 @@ const CodeLint = (props: CodeLintProps) => {
       setLoading(false);
       setAllPkgs(pkgs);
     })();
-  }, []);
+  }, [orgSid, teamName, repoId, schemeId]);
 
   useEffect(() => {
     setSearchParams({});
@@ -85,39 +83,9 @@ const CodeLint = (props: CodeLintProps) => {
       setLoading(false);
       setAllPkgs(pkgs);
     })();
-  }, [schemeId]);
+  }, [orgSid, teamName, repoId, schemeId]);
 
   useEffect(() => {
-    getList();
-
-    (async () => {
-      if (checkprofile.custom_checkpackage) {
-        setCustomPackage(checkprofile.custom_checkpackage);
-      }
-    })();
-  }, [schemeId, checkprofile.id]);
-
-  useEffect(() => {
-    if (firstSort && !isEmpty(selectedPkgs) && !isEmpty(allPkgs)) {
-      sortPkgs();
-      setFirstSort(false);
-    }
-  });
-
-  const onChangeEnabled = (checked: boolean) => {
-    updateConfig({ enabled: checked }).then(() => {
-      message.success(`已${checked ? '开启' : '关闭'}代码检查`);
-    });
-  };
-
-  const updateConfig = (params: any) => updateLintConfig(orgSid, teamName, repoId, schemeId, {
-    ...data,
-    ...params,
-  }).then((res) => {
-    callback(res);
-  });
-
-  const getList = async () => {
     if (checkprofile.id) {
       setLoading(true);
       getCheckPackages(orgSid, teamName, repoId, schemeId, {
@@ -133,23 +101,57 @@ const CodeLint = (props: CodeLintProps) => {
           if (isEmpty(lang)) {
             lang = schemeInfo.languages || [];
           }
-          setSearchParams({
-            ...searchParams,
+          setSearchParams((prevState: any) => ({
+            ...prevState,
             lang: [...new Set(lang)],
-          });
+          }));
         })
         .finally(() => {
           setLoading(false);
         });
     }
-  };
 
-  const sortPkgs = (sPkgs = selectedPkgs, aPkgs = allPkgs) => {
+    (async () => {
+      if (checkprofile.custom_checkpackage) {
+        setCustomPackage(checkprofile.custom_checkpackage);
+      }
+    })();
+  }, [
+    orgSid,
+    teamName,
+    repoId,
+    schemeId,
+    checkprofile.id,
+    checkprofile.custom_checkpackage,
+    schemeInfo.languages,
+  ]);
+
+  const sortPkgs = useCallback((sPkgs = selectedPkgs, aPkgs = allPkgs) => {
     setAllPkgs(concat(
       aPkgs.filter((item: any) => sPkgs.includes(item.id)),
       aPkgs.filter((item: any) => !sPkgs.includes(item.id)),
     ));
+  }, [allPkgs, selectedPkgs]);
+
+  useEffect(() => {
+    if (firstSort && !isEmpty(selectedPkgs) && !isEmpty(allPkgs)) {
+      sortPkgs();
+      setFirstSort(false);
+    }
+  }, [firstSort, selectedPkgs, allPkgs, sortPkgs]);
+
+  const onChangeEnabled = (checked: boolean) => {
+    updateConfig({ enabled: checked }).then(() => {
+      message.success(`已${checked ? '开启' : '关闭'}代码检查`);
+    });
   };
+
+  const updateConfig = (params: any) => updateLintConfig(orgSid, teamName, repoId, schemeId, {
+    ...data,
+    ...params,
+  }).then((res) => {
+    callback(res);
+  });
 
   const filter = (allValues: any, filterValues: any) => {
     if (isEmpty(filterValues)) return true;
@@ -172,60 +174,33 @@ const CodeLint = (props: CodeLintProps) => {
   };
 
   if (loading) {
-    return <Loading />;
+    return <Loading size='small' />;
   }
 
   return (
     <div className={style.codeLint}>
       <div className={style.switch}>
         <span className={style.label}>是否启用</span>
-        <Switch size="small" checked={data.enabled} onChange={onChangeEnabled} />
+        <Switch size="small" value={data.enabled} onChange={onChangeEnabled} />
       </div>
 
       {data.enabled && (
         <>
-          <div className={style.search}>
-            <Filter>
-              <Filter.Item label="语言">
-                <SelectBorderless
-                  multiple
-                  allowClear
-                  placeholder="全部"
-                  value={lang}
-                  data={languages.map((item: any) => ({
-                    value: item.name,
-                    text: item.display_name,
-                  }))}
-                  onChange={(value: any) => {
-                    setSearchParams({
-                      ...searchParams,
-                      lang: value,
-                    });
-                  }}
-                />
-              </Filter.Item>
-              <Filter.Item label="分类">
-                <SelectBorderless
-                  multiple
-                  allowClear
-                  placeholder="全部"
-                  value={label}
-                  data={labels.map((item: any) => ({
-                    value: item.name,
-                    text: item.name,
-                  }))}
-                  onChange={(value: any) => {
-                    setSearchParams({
-                      ...searchParams,
-                      label: value,
-                    });
-                  }}
-                />
-              </Filter.Item>
-            </Filter>
-            <div>
+          <Search
+            fields={filterFields}
+            searchParams={searchParams}
+            loading={false}
+            route={false}
+            callback={(params: any) => {
+              setSearchParams({
+                ...searchParams,
+                ...params,
+              });
+            }}
+            extraContent={<div>
               <Button
                 style={{ marginRight: 10 }}
+                variant="outline"
                 onClick={() => {
                   history.push(`${getSchemeRouter(
                     orgSid,
@@ -239,11 +214,12 @@ const CodeLint = (props: CodeLintProps) => {
                 添加规则
               </Button>
               <Tooltip
-                title='自定义规则包 + 官方规则包去重后的规则列表'
+                content='自定义规则包 + 官方规则包去重后的规则列表'
                 overlayStyle={{ maxWidth: '350px' }}
               >
                 <Button
                   style={{ marginRight: 10 }}
+                  variant="outline"
                   onClick={() => {
                     history.push(`${getSchemeRouter(
                       orgSid,
@@ -256,57 +232,25 @@ const CodeLint = (props: CodeLintProps) => {
                   查看已配置规则
                 </Button>
               </Tooltip>
-              <Button onClick={() => setVisible(true)}>编译配置</Button>
-            </div>
-          </div>
-          <div className={style.pkgWrapper}>
-            <div className={style.package}>
-              <div className={style.header}>
-                <span className={style.name}>自定义规则包</span>
-                <Switch checked={true} disabled />
-              </div>
-              <div style={{ marginBottom: 20 }}>
-                <span className={style.label}>自定义</span>
-              </div>
-              <div className={cn(style.description, style.common)}>
-                <Items className={style.icon} />
-                <p>自定义规则包中规则配置会默认覆盖其他官方包中相同规则的配置</p>
-              </div>
-              <div className={cn(style.language, style.common)}>
-                <Pencil className={style.icon} />
-                <p>自定义规则 {customPackage.checkrule_count} 条</p>
-              </div>
-              <div className={style.footer}>
-                <a
-                  href={`${getSchemeBlankRouter(
-                    orgSid,
-                    teamName,
-                    repoId,
-                    schemeId,
-                  )}/check-profiles/${checkprofile.id}/pkg/${customPackage.id}`} rel="noreferrer"
-                >
-                  查看详细规则 <AngleRight />
-                </a>
-              </div>
-            </div>
-
-            {allPkgs
+              <Button variant="outline" onClick={() => setVisible(true)}>编译配置</Button>
+            </div>}
+          />
+          <PackageList
+            pkgs={allPkgs
               .filter((item: any) => (filter(item.labels, label) && filter(item.languages, lang))
-                || selectedPkgs.includes(item.id))
-              .map((item: any) => (
-                <Item
-                  orgSid={orgSid}
-                  teamName={teamName}
-                  key={item.id}
-                  checked={selectedPkgs.includes(item.id)}
-                  item={item}
-                  repoId={repoId}
-                  schemeId={schemeId}
-                  checkprofileId={checkprofile.id}
-                  onChange={updatePkg}
-                />
-              ))}
-          </div>
+                || selectedPkgs.includes(item.id))}
+            selectedPkgs={selectedPkgs}
+            customPackage={customPackage}
+            updatePkg={(isAdd, id) => {
+              updatePkg(isAdd, id);
+            }}
+            getDetailLink={(pkgId: number) => (`${getSchemeRouter(
+              orgSid,
+              teamName,
+              repoId,
+              schemeId,
+            )}/check-profiles/${checkprofile.id}/pkg/${pkgId}`)}
+          />
         </>
       )}
       <CompileConfig
@@ -320,79 +264,6 @@ const CodeLint = (props: CodeLintProps) => {
         }}
         onClose={() => setVisible(false)}
       />
-    </div>
-  );
-};
-
-const Item = (props: any) => {
-  const { orgSid, teamName, item, checkprofileId, repoId, schemeId, checked, onChange } = props;
-  return (
-    <div className={style.package}>
-      <div className={style.header}>
-        {item.name.length > 18 ? (
-          <Tooltip title={item.name}>
-            <span className={style.name}>{item.name}</span>
-          </Tooltip>
-        ) : (
-          <span className={style.name}>{item.name}</span>
-        )}
-
-        <Switch checked={checked} onChange={value => onChange(value, item.id)} />
-      </div>
-      <div className={style.labelWrapper}>
-        {
-          item.need_compile && (
-            <span className={cn(style.label, style.build)}>
-              需要编译
-            </span>
-          )
-        }
-        {item.labels.map((label: any) => (
-          <span key={label} className={style.label}>
-            {label}
-          </span>
-        ))}
-      </div>
-      <div className={cn(style.description, style.common)}>
-        <Items className={style.icon} />
-        {item.description && item.description.length > 20 ? (
-          <Tooltip title={item.description}>
-            <Typography.Paragraph className={style.paragraph} ellipsis={{ rows: 2 }}>
-              {item.description}
-            </Typography.Paragraph>
-          </Tooltip>
-        ) : (
-          <Typography.Paragraph className={style.paragraph} ellipsis={{ rows: 2 }}>
-            {item.description}
-          </Typography.Paragraph>
-        )}
-      </div>
-      <div className={cn(style.language, style.common)}>
-        <Globe className={style.icon} />
-        <div>
-          适用于 {item.languages.length} 种语言
-          {item.languages.join('、').length > 20 ? (
-            <Tooltip title={item.languages.join('、')}>
-              <p className={style.languages}>{item.languages.join('、')}</p>
-            </Tooltip>
-          ) : (
-            <p className={style.languages}>{item.languages.join('、')}</p>
-          )}
-        </div>
-      </div>
-      <div className={style.footer}>
-        <a
-          target="_blank"
-          href={`${getSchemeBlankRouter(
-            orgSid,
-            teamName,
-            repoId,
-            schemeId,
-          )}/check-profiles/${checkprofileId}/pkg/${item.id}`} rel="noreferrer"
-        >
-          查看详细规则 <AngleRight />{' '}
-        </a>
-      </div>
     </div>
   );
 };
