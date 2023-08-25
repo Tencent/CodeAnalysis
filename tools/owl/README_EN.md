@@ -16,7 +16,7 @@ A dependency module feature scanning detection tool for static analysis.
 
 The current version of the tool has relatively simple functionality, and the working principle is straightforward. The tool scans a specific directory and matches specific files through a built-in feature code algorithm. It then collects the file addresses that match their feature codes and displays them or redirects them to a fixed JSON file for storage.
 
-![](https://tva1.sinaimg.cn/large/e6c9d24egy1h2yz7v68cbj217g0u0h0x.jpg)
+![](https://tva1.sinaimg.cn/large/e6c9d24egy1h2yvkgtmbwj20lo0ca0tl.jpg)
 
 `Owl` is similar to antivirus software in that it works on the principle of antivirus software. `Owl` scans the entire project based on the feature codes of the dependency files, similar to the working principle of an antivirus virus library. Of course, if it strictly follows the standards of antivirus software, it may involve some assembly-related components. Currently, the functionality of `owl` is not that complex, but future versions will include the `codeql` code analysis engine to enhance the static analysis functionality using CodeQL's database.
 
@@ -80,7 +80,7 @@ Use "owl [command] --help" for more information about a command.
 
 If you do not know how to use the subcommand, you can enter the `--help` parameter after the corresponding subcommand to get help information:
 
-! [](https://tva1.sinaimg.cn/large/e6c9d24egy1h2yz0laxdyj22ax0u07bb.jpg)
+![](https://tva1.sinaimg.cn/large/e6c9d24egy1h2yz0laxdyj22ax0u07bb.jpg)
 
 For example, if you want to search for `log4j`, firstly you need to calculate the feature code of `log4j` using `owl`. The command is as follows:
 
@@ -92,7 +92,7 @@ $:. / owl md5 -- -- path = / Users/ding/Downloads/log4j - 1.2.17. Jar
 
 The results are as follows:
 
-! [](https://tva1.sinaimg.cn/large/e6c9d24egy1h2yz54cg72j22gm0e0af2.jpg)
+![](https://tva1.sinaimg.cn/large/e6c9d24egy1h2yz54cg72j22gm0e0af2.jpg)
 
 You can also use the hexadecimal string feature for searching:
 
@@ -102,7 +102,7 @@ $: / owl hex - path = / Users/ding/Downloads/log4j - 1.2.17. Jar
 
 The program will convert the corresponding file into a hexadecimal string for display, as shown in the following image:
 
-! [](https://tva1.sinaimg.cn/large/e6c9d24egy1h2yz7v68cbj217g0u0h0x.jpg)
+![](https://tva1.sinaimg.cn/large/e6c9d24egy1h2yz7v68cbj217g0u0h0x.jpg)
 
 Now you can use the scanner to scan, the matching mode can be specified as` md5 `or` hex `, more modes may be added in the future, the command is as follows:
 
@@ -112,7 +112,7 @@ $: ./owl run --dir=/Users/ding/Downloads/ --mode=md5 --code=04a41f0a068986f0f734
 
 Search for specific dependent files:
 
-! [](https://tva1.sinaimg.cn/large/e6c9d24egy1h2yze6emx3j21yq0dajwn.jpg)
+![](https://tva1.sinaimg.cn/large/e6c9d24egy1h2yze6emx3j21yq0dajwn.jpg)
 
 
 ** If there are too many search results, you can save the results through the `--out` parameter to save in a file, whose format is` json `! **
