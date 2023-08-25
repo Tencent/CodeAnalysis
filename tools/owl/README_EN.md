@@ -14,11 +14,11 @@ A dependency module feature scanning detection tool for static analysis.
 
 ### Principle
 
-The current version of the tool has relatively simple functionality, and the working principle is straightforward. The tool scans a specific directory and matches specific files through a built-in feature code algorithm. It then collects the file addresses that match their feature codes and displays them or redirects them to a fixed JSON file for storage.
+The current version of the tool has relatively simple functionality, and the working principle is straightforward. The tool scans a specific directory and matches specific files through a built-in feature code algorithm. It then collects the file addresses that match their feature codes and displays them or redirects them to a fixed `JSON` file for storage.
 
 ![](https://tva1.sinaimg.cn/large/e6c9d24egy1h2yvkgtmbwj20lo0ca0tl.jpg)
 
-`Owl` is similar to antivirus software in that it works on the principle of antivirus software. `Owl` scans the entire project based on the feature codes of the dependency files, similar to the working principle of an antivirus virus library. Of course, if it strictly follows the standards of antivirus software, it may involve some assembly-related components. Currently, the functionality of `owl` is not that complex, but future versions will include the `codeql` code analysis engine to enhance the static analysis functionality using CodeQL's database.
+`Owl` is similar to antivirus software in that it works on the principle of antivirus software. `Owl` scans the entire project based on the feature codes of the dependency files, similar to the working principle of an antivirus virus library. Of course, if it strictly follows the standards of antivirus software, it may involve some assembly-related components. Currently, the functionality of `owl` is not that complex, but future versions will include the `codeql` code analysis engine to enhance the static analysis functionality using `CodeQL`'s database.
 
 ### Quick Start
 
@@ -26,13 +26,13 @@ How to use `owl`? You can clone the repository and then use the following comman
 
 ```bash
 git clone github.com:Tencent/CodeAnalysis.git
-` ` `
+```
 
 Then navigate to the `tools\owl` directory, like this:
 
 ```bash
 cd CodeAnalysis/tools/owl
-` ` `
+```
 
 Inside the repository, there is a `Makefile` that can help you quickly build the binary file for the corresponding platform, for example:
 
@@ -42,7 +42,7 @@ make darwin	| Compile executable binary for MacOS platform
 make linux	| Compile executable binary for Linux platform
 make windows	| Compile executable binary for Windows platform
 make clean	| Clean up executable binary
-` ` `
+```
 
 ** Note 📢 : ** If you do not have the `Go` environment configured on the machine, please configure the `Go` development environment before executing the compilation. To compile into a local binary file, you need to have the knowledge of `Go` cross-compilation. If there are problems welcome to `issues`.
 
@@ -76,7 +76,7 @@ Flags:
 -h, --help   help for owl
 
 Use "owl [command] --help" for more information about a command.
-` ` `
+```
 
 If you do not know how to use the subcommand, you can enter the `--help` parameter after the corresponding subcommand to get help information:
 
@@ -86,7 +86,7 @@ For example, if you want to search for `log4j`, firstly you need to calculate th
 
 ```bash
 $:. / owl md5 -- -- path = / Users/ding/Downloads/log4j - 1.2.17. Jar
-` ` `
+```
 
 ** Note that the feature code calculation here must use the algorithm provided by the `owl` program. The algorithm in `owl` is designed for handling large files using a data block-based approach to improve program execution speed. So if you use algorithms from other software, there may be issues! **
 
@@ -98,7 +98,7 @@ You can also use the hexadecimal string feature for searching:
 
 ```bash
 $: / owl hex - path = / Users/ding/Downloads/log4j - 1.2.17. Jar
-` ` `
+```
 
 The program will convert the corresponding file into a hexadecimal string for display, as shown in the following image:
 
@@ -108,7 +108,7 @@ Now you can use the scanner to scan, the matching mode can be specified as` md5 
 
 ```bash
 $: ./owl run --dir=/Users/ding/Downloads/ --mode=md5 --code=04a41f0a068986f0f73485cf507c0f40
-` ` `
+```
 
 Search for specific dependent files:
 
