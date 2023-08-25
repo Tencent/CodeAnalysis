@@ -53,27 +53,27 @@ After building the program, you will get a binary file named ` owl `. The follow
 ```bash
 $: ./owl
 
-_____  _    _  __
-(_)(\/\/)()
-)(_)()()(__
-(_____)(__/\__)(____) 🦉 v0.1.3
+			 _____  _    _  __
+			(  _  )( \/\/ )(  )
+			 )(_)(  )    (  )(__
+			(_____)(__/\__)(____) 🦉 v0.1.3
 
-A dependency module feature scanning detection tool for static analysis.
+ A dependency module feature scanning detection tool for static analysis.
 
 
 Usage:
-owl [command]
+  owl [command]
 
 Available Commands:
-completion  Generate the autocompletion script for the specified shell
-help        Help about any command
-hex         File hex encoding
-md5         Collection file md5
-run         Execute the scanner
-version     Version information
+  completion  Generate the autocompletion script for the specified shell
+  help        Help about any command
+  hex         File hex encoding
+  md5         Collection file md5
+  run         Execute the scanner
+  version     Version information
 
 Flags:
--h, --help   help for owl
+  -h, --help   help for owl
 
 Use "owl [command] --help" for more information about a command.
 ```
