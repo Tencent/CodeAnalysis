@@ -9,13 +9,14 @@
  */
 import React, { useEffect, useState, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
-import { get } from 'lodash';
+import { get, isEmpty } from 'lodash';
 import { t } from '@src/utils/i18n';
 import { Row, Col, Button, Loading } from 'tdesign-react';
 
 import { useURLParams } from '@tencent/micro-frontend-shared/hooks';
 import Search from '@tencent/micro-frontend-shared/tdesign-component/search';
 import PageHeader from '@tencent/micro-frontend-shared/tdesign-component/page-header';
+import Empty from '@tencent/micro-frontend-shared/tdesign-component/empty';
 
 import { getTmplList } from '@src/services/template';
 import { getLanguages, getTags } from '@src/services/schemes';
@@ -127,6 +128,7 @@ const Template = () => {
                 </Col>
               ))}
             </Row>
+            {!loading && isEmpty(list) && <Empty text='暂无模板' />}
             {loading && loadingMore && <div className={style.loading}><Loading size='small' loading={true} /></div>}
           </div>
         </Loading>

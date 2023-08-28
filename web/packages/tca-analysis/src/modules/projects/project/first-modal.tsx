@@ -12,7 +12,7 @@ import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import cn from 'classnames';
 import { get, pick, find } from 'lodash';
-import { Modal, Form, Input, Select, Radio, Row, Col, Checkbox, message, Tag, Alert } from 'coding-oa-uikit';
+import { Dialog, Button, Form, Input, Select, Radio, Row, Col, Checkbox, message, Tag, Alert } from 'tdesign-react';
 
 import { getProjectRouter } from '@src/utils/getRoutePath';
 import { getLanguages, getTags, getNodes } from '@src/services/schemes';
@@ -24,6 +24,7 @@ import style from '../style.scss';
 
 import ScanModal from '@plat/modules/projects/scan-modal';
 
+const { FormItem } = Form;
 const { Option } = Select;
 
 interface FirstModalProps {
@@ -63,6 +64,19 @@ const FirstModal = (props: FirstModalProps) => {
     })();
   }, [visible]);
 
+  /**
+   * 表单保存操作
+   * @param formData 参数
+   */
+  const onSubmitHandle = () => {
+    form.validate().then((result: any) => {
+      if (result === true) {
+        const data = form?.getFieldsValue(true);
+        onFinish(data);
+      }
+    });
+  };
+
   const onFinish = (data: any) => {
     const { funcList = [] } = data;
     data = data.type === 'create' ? {
@@ -88,7 +102,7 @@ const FirstModal = (props: FirstModalProps) => {
     setLoading(true);
     initRepos(orgSid, teamName, repoId, data).then((res) => {
       message.success('分析项目创建成功');
-      onReset();
+      onClose();
       history.push(`${getProjectRouter(orgSid, teamName, repoId, res.id)}/overview`);
       setScan({
         visible: true,
@@ -100,70 +114,68 @@ const FirstModal = (props: FirstModalProps) => {
       });
   };
 
-  const onReset = () => {
-    form.resetFields();
-    onClose();
-  };
-
   return (
     <>
-      <Modal
-        title='开启第一次代码分析'
-        width={520}
+      <Dialog
+        header='开启第一次代码分析'
         visible={visible}
         className={style.newProjectModal}
-        okButtonProps={{ loading }}
-        onCancel={onReset}
-        onOk={() => {
-          form.validateFields().then(onFinish);
-        }}
+        confirmBtn={
+          <Button
+            loading={loading}
+            onClick={() => onSubmitHandle()}
+          >
+            确认
+          </Button>
+        }
+        onClose={onClose}
       >
         {noNode && <Alert
           message={<p>团队未接入任何专机节点，可能导致分析失败。
             <a href={`/t/${orgSid}/nodes/`} target='_blank' rel="noreferrer">立即接入{'>>'}</a>
           </p>}
-          type="warning"
-          showIcon
+          theme="warning"
           className={style.alert}
         />}
         <Form
           layout='vertical'
+          labelAlign='top'
           form={form}
-          initialValues={{
+          initialData={{
             branch: 'master',
           }}
+          resetType='initial'
         >
-          <Form.Item
+          <FormItem
             name='branch'
             label='分支名称'
             rules={[{ required: true, message: '请输入分支名称' }]}
           >
             <Input placeholder='请输入分支名称' />
-          </Form.Item>
-          <Form.Item
+          </FormItem>
+          <FormItem
             name="type"
             label=""
-            initialValue="create"
+            initialData="create"
           >
             <Radio.Group style={{ width: '100%' }} >
               <Row gutter={12}>
-                <Col span={7}>
+                <Col span={6}>
                   <Radio value="create">创建分析方案</Radio>
                 </Col>
-                <Col span={7}>
+                <Col span={6}>
                   <Radio value="template">分析方案模板</Radio>
                 </Col>
               </Row>
             </Radio.Group>
-          </Form.Item>
-          <Form.Item
-            noStyle
+          </FormItem>
+          <FormItem
             shouldUpdate={(prevValues, currentValues) => prevValues.type !== currentValues.type
             }
           >
             {({ getFieldValue }) => (getFieldValue('type') === 'create' ? (
               <>
-                <Form.Item
+                <FormItem
                   name="languages"
                   label="分析语言"
                   rules={[{ required: true, message: '请选择分析语言' }]}
@@ -171,17 +183,16 @@ const FirstModal = (props: FirstModalProps) => {
                   <Select
                     placeholder="请选择分析语言"
                     style={{ width: '100%' }}
-                    mode='multiple'
-                    optionFilterProp='children'
+                    multiple
+                    filterable
                     showArrow
-                  >
-                    {languages.map((item: any) => (
-                      <Option key={item.name} value={item.name}>
-                        {item.display_name}
-                      </Option>
-                    ))}
-                  </Select>
-                </Form.Item>
+                    options={languages}
+                      keys={{
+                        value: 'name',
+                        label: 'display_name',
+                      }}
+                  />
+                </FormItem>
                 <NodeTag
                   name="tag"
                   label="运行环境"
@@ -189,10 +200,10 @@ const FirstModal = (props: FirstModalProps) => {
                   rules={[{ required: true, message: '请选择运行环境' }]}
                   tags={tags}
                 />
-                <Form.Item
+                <FormItem
                   name="funcList"
                   label="功能开启"
-                  initialValue={[
+                  initialData={[
                     'lint_enabled',
                     'cc_scan_enabled',
                     'dup_scan_enabled',
@@ -200,29 +211,18 @@ const FirstModal = (props: FirstModalProps) => {
                   ]}
                   style={{ marginBottom: 0 }}
                 >
-                  <Checkbox.Group>
-                    <Row gutter={16}>
-                      {SCAN_LIST.map((item: any) => (
-                        <Col span={6} key={item.value}>
-                          <Checkbox value={item.value}>
-                            {item.label}
-                          </Checkbox>
-                        </Col>
-                      ))}
-                    </Row>
-                  </Checkbox.Group>
-                </Form.Item>
+                  <Checkbox.Group options={SCAN_LIST} />
+                </FormItem>
               </>
             ) : (
-              <Form.Item
+              <FormItem
                 name="global_scheme_id"
                 rules={[{ required: true, message: '请选择模板' }]}
               >
                 <Select
-                  showSearch
+                  showArrow
                   placeholder="请选择分析方案模板"
-                  optionLabelProp="label"
-                  optionFilterProp="label"
+                  filterable
                 >
                   {templates.map((item: any) => (
                     <Option key={item.id} value={item.id} label={item.name}>
@@ -234,11 +234,11 @@ const FirstModal = (props: FirstModalProps) => {
                     </Option>
                   ))}
                 </Select>
-              </Form.Item>
+              </FormItem>
             ))}
-          </Form.Item>
+          </FormItem>
         </Form>
-      </Modal>
+      </Dialog>
       <ScanModal
         orgSid={orgSid}
         teamName={teamName}

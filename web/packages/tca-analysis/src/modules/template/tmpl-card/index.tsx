@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import cn from 'classnames';
 import { find } from 'lodash';
 import { Avatar, Tag, Tooltip, Divider } from 'tdesign-react';
-import { RootListIcon, TimeIcon } from 'tdesign-icons-react';
+import { RootListIcon, TimeIcon, FolderIcon } from 'tdesign-icons-react';
 import { useHistory } from 'react-router-dom';
 
 import { formatDate } from '@tencent/micro-frontend-shared/util';
@@ -42,9 +42,12 @@ const TemplateCard = ({ templateInfo, languages }: TemplateCardProps) => {
     }}>
       <div className={style.cardBody}>
         <div className={style.avatar}>
-          <Avatar shape="round" size="52px" className={templateInfo.scheme_key === 'public' ? style.systemTmpl : style.customTmpl}>
-            {templateInfo.name.slice(0, 1)}
-          </Avatar>
+          <Avatar
+            shape="round"
+            size="52px"
+            icon={<FolderIcon />}
+            className={templateInfo.scheme_key === 'public' ? style.systemTmpl : style.customTmpl}
+          />
         </div>
         <div className={style.title}>
           <h3>{templateInfo.name}</h3>
