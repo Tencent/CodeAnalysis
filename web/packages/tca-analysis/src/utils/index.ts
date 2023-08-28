@@ -8,7 +8,7 @@ import Moment from 'moment';
 import qs from 'qs';
 import { message } from 'coding-oa-uikit';
 import { get, throttle } from 'lodash';
-import { LOGIN_SERVER_API } from '@plat/api';
+import { LOGIN_SERVER_API } from '@src/constant/api';
 
 /**
  * 格式化时间，默认返回时间的年月日

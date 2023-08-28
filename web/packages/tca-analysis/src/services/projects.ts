@@ -9,7 +9,8 @@
  * author           luochunlan@coding.net
  * create at        2020-10-23
  */
-import { MAIN_SERVER, MAIN_SERVER_API, ANALYSIS_SERVER_API, get, put, post, del, postFile, getFile } from '@plat/api';
+import { get, put, post, del, postFile, getFile } from '@plat/api';
+import { MAIN_SERVER, MAIN_SERVER_API, ANALYSIS_SERVER_API } from '@src/constant/api';
 import {  getMainBaseURL, getAnalysisBaseURL } from './common';
 
 const getProjectBaseURL = (orgSid: string, teamName: string, repoId: string | number, projectId: number) => `${getMainBaseURL(orgSid, teamName)}/repos/${repoId}/projects/${projectId}`;

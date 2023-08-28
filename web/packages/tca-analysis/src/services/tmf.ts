@@ -1,6 +1,7 @@
 import { message } from 'coding-oa-uikit';
 
-import { MAIN_SERVER_API, post } from '@plat/api';
+import { post } from '@plat/api';
+import { MAIN_SERVER_API } from '@src/constant/api';
 
 const WINDOW_TMF_APP_INFO_NAME = '_tmfAppInfo';
 

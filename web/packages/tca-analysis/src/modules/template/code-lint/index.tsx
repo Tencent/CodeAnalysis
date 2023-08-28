@@ -65,6 +65,7 @@ const CodeLint = (props: CodeLintProps) => {
 
       if (tmplId) {
         setLoading(true);
+        setData(await getTmplLint(orgSid, tmplId));
         let pkgs = await getAllCheckPackages(orgSid, tmplId);
         pkgs = (pkgs || []).filter((item: any) => !item.disable);
 
@@ -72,14 +73,9 @@ const CodeLint = (props: CodeLintProps) => {
         setAllPkgs(pkgs);
       }
     })();
-  }, [orgSid, tmplId]);
 
-  useEffect(() => {
-    (async () => {
-      tmplId && setData(await getTmplLint(orgSid, tmplId));
-    })();
     setSearchParams({});
-  }, [tmplId, orgSid]);
+  }, [orgSid, tmplId]);
 
   useEffect(() => {
     if (checkprofile.id) {
@@ -217,7 +213,7 @@ const CodeLint = (props: CodeLintProps) => {
                     style={{ marginRight: 10 }}
                     onClick={() => {
                       history.push(`${getTmplRouter(orgSid)}/${tmplId}/check-profiles/${checkprofile.id}/pkg/${customPackage.id
-                      }/add-rule`);
+                        }/add-rule`);
                     }}
                     variant="outline"
                   >
@@ -246,7 +242,7 @@ const CodeLint = (props: CodeLintProps) => {
             readonly={isSysTmpl}
             pkgs={allPkgs
               .filter((item: any) => (filter(item.labels, label) && filter(item.languages, lang))
-              || selectedPkgs.includes(item.id))}
+                || selectedPkgs.includes(item.id))}
             selectedPkgs={selectedPkgs}
             customPackage={customPackage}
             updatePkg={updatePkg}

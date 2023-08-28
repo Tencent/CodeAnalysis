@@ -7,7 +7,7 @@
 /**
  * 分析方案 - 代码检查
  */
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { useHistory } from 'react-router-dom';
 import { intersection, isEmpty, concat } from 'lodash';
 
@@ -61,22 +61,11 @@ const CodeLint = (props: CodeLintProps) => {
   const checkprofile = data.checkprofile || {};
 
   useEffect(() => {
+    setSearchParams({});
     (async () => {
       const res = await getLabels();
       setLabels(res.results || []);
 
-      setLoading(true);
-      let pkgs = await getAllCheckPackages(orgSid, teamName, repoId, schemeId);
-      pkgs = (pkgs || []).filter((item: any) => !item.disable);
-
-      setLoading(false);
-      setAllPkgs(pkgs);
-    })();
-  }, [orgSid, teamName, repoId, schemeId]);
-
-  useEffect(() => {
-    setSearchParams({});
-    (async () => {
       setLoading(true);
       let pkgs = await getAllCheckPackages(orgSid, teamName, repoId, schemeId);
       pkgs = (pkgs || []).filter((item: any) => !item.disable);
@@ -158,6 +147,10 @@ const CodeLint = (props: CodeLintProps) => {
     return !isEmpty(intersection(allValues, filterValues));
   };
 
+  const filteredPkgs = useMemo(() => (allPkgs
+    .filter((item: any) => (filter(item.labels, label) && filter(item.languages, lang))
+      || selectedPkgs.includes(item.id))), [allPkgs, label, lang, selectedPkgs]);
+
   const updatePkg = async (isAdd: boolean, id: number) => {
     let pkgs: any[] = [];
 
@@ -208,7 +201,7 @@ const CodeLint = (props: CodeLintProps) => {
                     repoId,
                     schemeId,
                   )}/check-profiles/${checkprofile.id}/pkg/${customPackage.id
-                  }/add-rule`);
+                    }/add-rule`);
                 }}
               >
                 添加规则
@@ -236,9 +229,7 @@ const CodeLint = (props: CodeLintProps) => {
             </div>}
           />
           <PackageList
-            pkgs={allPkgs
-              .filter((item: any) => (filter(item.labels, label) && filter(item.languages, lang))
-                || selectedPkgs.includes(item.id))}
+            pkgs={filteredPkgs}
             selectedPkgs={selectedPkgs}
             customPackage={customPackage}
             updatePkg={(isAdd, id) => {
