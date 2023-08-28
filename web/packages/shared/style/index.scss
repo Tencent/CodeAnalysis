@@ -1,8 +1,18 @@
 :global {
-  @import "./color.scss";
   @import "./reset.scss";
   @import "./font.scss";
   @import "./common.scss";
-  @import "./uikit.scss";
-  @import "./tdesign.scss";
+}
+
+@import "./variables/_index.scss";
+@import "./theme/_index.scss";
+@import "./global/_index.scss";
+
+@import "./uikit.scss";
+@import "./tdesign.scss";
+
+// 定义全局默认字体、背景色
+:global(body){
+  color: var(--tca-text-color-primary) !important;
+  background-color: var(--tca-bg-color-container) !important;
 }

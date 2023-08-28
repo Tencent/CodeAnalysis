@@ -7,27 +7,26 @@ import Ticket from 'coding-oa-uikit/lib/icon/Ticket';
 import LayoutMenu from '@src/component/layout-menu';
 
 const SiderBar = () => <LayoutMenu
-    title={<div className="fs-18">{t('个人中心')}</div>}
-    menus={[
-      {
-        icon: <User />,
-        title: t('用户信息'),
-        link: '/user/profile',
-        key: 'profile',
-      },
-      {
-        icon: <Shield />,
-        title: t('凭证管理'),
-        link: '/user/auth',
-        key: 'auth',
-      },
-      {
-        icon: <Ticket />,
-        title: t('个人令牌'),
-        link: '/user/token',
-        key: 'token',
-      },
-    ]}
-  />;
+  menus={[
+    {
+      icon: <User className='layoutMenuItemIcon' />,
+      title: t('用户信息'),
+      link: '/user/profile',
+      key: 'profile',
+    },
+    {
+      icon: <Shield className='layoutMenuItemIcon' />,
+      title: t('凭证管理'),
+      link: '/user/auth',
+      key: 'auth',
+    },
+    {
+      icon: <Ticket className='layoutMenuItemIcon' />,
+      title: t('个人令牌'),
+      link: '/user/token',
+      key: 'token',
+    },
+  ]}
+/>;
 
 export default SiderBar;

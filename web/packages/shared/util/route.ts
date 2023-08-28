@@ -3,6 +3,7 @@
  */
 import qs from 'qs';
 import { pick, forEach, pickBy, toNumber, toString } from 'lodash';
+import { isTrue } from './check';
 import { URLSearch, Filter, FilterField, FilterFieldType } from './types';
 
 /**
@@ -109,7 +110,7 @@ export const getFilterFieldByURLSearch = (filterFields: FilterField[] = [], page
         filter[key] = value;
         break;
       case 'boolean':
-        filter[key] = value === 'true';
+        filter[key] = isTrue(value);
         break;
       case 'number':
         filter[key] = toNumber(value);

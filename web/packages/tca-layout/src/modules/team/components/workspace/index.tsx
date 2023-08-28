@@ -2,11 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { filter } from 'lodash';
 import cn from 'classnames';
-import { Tabs, Table } from 'coding-oa-uikit';
+import { Table } from 'coding-oa-uikit';
+import { Layout } from 'tdesign-react';
 import AlignLeft from 'coding-oa-uikit/lib/icon/AlignLeft';
 import Clock from 'coding-oa-uikit/lib/icon/Clock';
 import { formatDateTime } from '@tencent/micro-frontend-shared/util';
 import { getRepoName } from '@tencent/micro-frontend-shared/tca/util';
+import PageHeader from '@tencent/micro-frontend-shared/tdesign-component/page-header';
 
 // 项目内
 import { DEFAULT_PAGER } from '@src/constant';
@@ -15,7 +17,6 @@ import { getTeamRepos } from '@src/services/team';
 import style from './style.scss';
 
 const { Column } = Table;
-const { TabPane } = Tabs;
 
 const Workspace = () => {
   const { orgSid }: any = useParams();
@@ -57,9 +58,11 @@ const Workspace = () => {
   };
 
   return (
-    <Tabs activeKey={'repos'} className={style.workspace}>
-      <TabPane tab="工作台" disabled key="null" />
-      <TabPane tab="代码分析" key="repos">
+    <>
+      <PageHeader title="工作台" tab={{
+        options: [{ label: '代码库', value: 'repos' }],
+      }} />
+      <Layout.Content className='tca-px-lg'>
         <Table
           loading={loading}
           dataSource={list}
@@ -164,8 +167,8 @@ const Workspace = () => {
             render={time => time && formatDateTime(time)}
           />
         </Table>
-      </TabPane>
-    </Tabs>
+      </Layout.Content>
+    </>
   );
 };
 

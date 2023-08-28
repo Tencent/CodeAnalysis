@@ -152,6 +152,22 @@ export const delRule = (orgSid: string, id: number, data: any) => del(`${getTmpl
 export const getAllRules = (orgSid: string, id: number, query: any) => get(`${getTmplBaseURL(orgSid)}/${id}/allrules/`, query);
 
 /**
+ * 获取所有已配置的规则
+ * @param orgSid 团队唯一标识
+ * @param id
+ * @param query 筛选项
+ */
+export const getAllCheckRules = (orgSid: string, id: number, query: any) => get(`${getTmplBaseURL(orgSid)}/${id}/checkrules/`, query);
+
+/**
+ * 获取所有已配置规则的筛选项
+ * @param orgSid 团队唯一标识
+ * @param id
+ * @param query 筛选项
+ */
+export const getAllCheckRulesFilters = (orgSid: string, id: number, query: any) => get(`${getTmplBaseURL(orgSid)}/${id}/checkrules/filter/`, query);
+
+/**
  * 代码检查-规则配置-批量添加规则
  * @param orgSid 团队唯一标识
  * @param id
@@ -185,7 +201,7 @@ export const updateTmplMetrics = (orgSid: string, id: number, data: any) => put(
  * @param id
  * @param query
  */
-export const getTmplScanDir = (orgSid: string, id: number, query: any) => get(`${getTmplBaseURL(orgSid)}/${id}/scandirs/`, query);
+export const getTmplScanDir = (orgSid: string, id: number, query?: any) => get(`${getTmplBaseURL(orgSid)}/${id}/scandirs/`, query);
 
 /**
  * 添加过滤路径

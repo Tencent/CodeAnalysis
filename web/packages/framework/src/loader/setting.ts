@@ -27,12 +27,16 @@ class MicroApplicationSettingLoader implements SettingLoader {
       const res = await window.fetch(`${this.url}?time=${new Date().getTime()}`, { method: 'GET' });
       const setting: ISetting[] = await res.json();
       setting.forEach(({ code, value, description }) => {
-        const meta = document.createElement('meta');
-        meta.setAttribute('name', toUpper(code));
+        const name = toUpper(code);
+        let meta = document.querySelector(`meta[name=${name}]`);
+        if (!meta) {
+          meta = document.createElement('meta');
+          document.head.appendChild(meta);
+        }
+        meta.setAttribute('name', name);
         meta.setAttribute('content', value);
         meta.setAttribute('data-description', description);
         meta.setAttribute('data-type', 'SYSTEM');
-        document.head.appendChild(meta);
       });
       info('微前端Setting配置信息完成加载 ^ _ ^');
     } catch (e) {

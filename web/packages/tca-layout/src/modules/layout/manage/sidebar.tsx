@@ -4,8 +4,6 @@ import LayoutMenu from '@src/component/layout-menu';
 import { NAVS as menus } from '@plat/modules/manage';
 
 
-const SiderBar = () => <LayoutMenu breakpoint='md'
-  menus={menus}
-/>;
+const SiderBar = () => <LayoutMenu menus={menus} breakpoint='lg' />;
 
 export default SiderBar;

@@ -159,7 +159,7 @@ const NodeTable = ({ tagOptions }: NodeTableProps) => {
             {t('编辑')}
           </a>
           <a
-            onClick={() => history.push(`/manage/nodes/${row.id}/process`)}
+            onClick={() => history.push(`/manage/nodemgr/nodes/${row.id}/process`)}
           >
             {t('工具进程')}
           </a>

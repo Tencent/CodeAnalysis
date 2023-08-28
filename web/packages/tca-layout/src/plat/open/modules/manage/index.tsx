@@ -9,43 +9,43 @@ import Key from 'coding-oa-uikit/lib/icon/Key';
 
 export const NAVS = [
   {
-    icon: <Group />,
+    icon: <Group className='layoutMenuItemIcon' />,
     title: '用户管理',
     link: '/manage/users',
     key: 'users',
   },
   {
-    icon: <Panel />,
+    icon: <Panel className='layoutMenuItemIcon' />,
     title: '团队管理',
     link: '/manage/orgs',
     key: 'orgs',
   },
   {
-    icon: <Project />,
+    icon: <Project className='layoutMenuItemIcon' />,
     title: '项目管理',
     link: '/manage/teams',
     key: 'teams',
   },
   {
-    icon: <Scan />,
+    icon: <Scan className='layoutMenuItemIcon' />,
     title: '分析记录管理',
     link: '/manage/jobs',
     key: 'jobs',
   },
   {
-    icon: <Sitemap />,
+    icon: <Sitemap className='layoutMenuItemIcon' />,
     title: '节点管理',
-    link: '/manage/nodes',
-    key: 'nodes',
+    link: '/manage/nodemgr',
+    key: 'nodemgr',
   },
   {
-    icon: <Tiles />,
+    icon: <Tiles className='layoutMenuItemIcon' />,
     title: '工具管理',
     link: '/manage/tools',
     key: 'tools',
   },
   {
-    icon: <Key />,
+    icon: <Key className='layoutMenuItemIcon' />,
     title: 'OAuth管理',
     link: '/manage/oauths',
     key: 'oauth',

@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useHistory, Switch, Route, Redirect } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { message } from 'coding-oa-uikit';
-import Loading from '@tencent/micro-frontend-shared/component/loading';
+import { message } from 'tdesign-react';
+
+import Loading from '@tencent/micro-frontend-shared/tdesign-component/loading';
 
 // 项目内
-import Header from '@src/modules/layout/header';
+import Header from '@plat/modules/header';
 import Container from '@src/component/container';
 import Members from '@src/modules/team/components/members';
 import Profile from '@src/modules/team/components/profile';
@@ -18,9 +19,9 @@ import Toollibs from '@src/modules/tool-libs';
 import Nodes from '@src/modules/nodes';
 import NodeProcess from '@src/modules/nodes/process';
 import { getTeamInfo } from '@src/services/team';
-import { setPvOrgInfo } from '@src/utils/matomo';
 import Constant from '@src/reducer/constant';
 import { getTeamsRouter } from '@src/utils/getRoutePath';
+import { reportOrgInfo } from '@plat/util';
 
 // 模块内
 import Sidebar from './sidebar';
@@ -41,7 +42,7 @@ const TeamLayout = () => {
     setLoading(true);
     getTeamInfo(orgSid)
       .then((response: any) => {
-        setPvOrgInfo(response);
+        reportOrgInfo(response);
         if (response.status > 1) {
           message.error('您的团队还未审核通过');
           history.replace(getTeamsRouter());
@@ -62,7 +63,7 @@ const TeamLayout = () => {
       .finally(() => {
         setLoading(false);
       });
-  }, [orgSid]);
+  }, [orgSid, storeDispatch, history]);
 
   if (loading) {
     return <Loading />;
@@ -86,6 +87,7 @@ const TeamLayout = () => {
             <Route exact path="/t/:orgSid/toollibs" component={Toollibs} />
             <Route path="/t/:orgSid/nodes/:nodeId/process" component={NodeProcess} />
             <Route path="/t/:orgSid/nodes/" component={Nodes} />
+            <Route path={'/t/:orgSid/template'} component={null} />
             <Redirect to="/" />
           </Switch>
         </Container>

@@ -4,19 +4,23 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import classnames from 'classnames';
-import { PrimaryTable, PrimaryTableProps, PaginationProps, PageInfo } from 'tdesign-react';
+import { PrimaryTable, PrimaryTableProps, PaginationProps, PageInfo, TableRowData } from 'tdesign-react';
 import { getPaginationParams, getURLPathByFilterParams } from '@tencent/micro-frontend-shared/util';
 import { FilterField } from '@tencent/micro-frontend-shared/util/types';
 import s from './style.scss';
-interface RouteTableProps extends Omit<PrimaryTableProps, 'rowKey'> {
+interface RouteTableProps<T extends TableRowData = TableRowData> extends Omit<PrimaryTableProps<T>, 'rowKey'> {
+  /** row key */
   rowKey?: string
-  pagination: PaginationProps;
+  /** 分页器 */
+  pagination?: PaginationProps;
   filterFields?: FilterField[]
 }
 
-const RouteTable = (props: RouteTableProps) => {
+/** 路由table组件 */
+const RouteTable = <T extends TableRowData = TableRowData>(props: RouteTableProps<T>) => {
   const { pagination, filterFields = [], className, rowKey = 'id', hover = true, ...otherProps } = props;
   const history = useHistory();
+
   const onChange = (pageInfo: PageInfo) => {
     if (!pageInfo.pageSize) {
       throw new Error('pageSize is undefined');
@@ -24,15 +28,18 @@ const RouteTable = (props: RouteTableProps) => {
     const url = getURLPathByFilterParams(filterFields, getPaginationParams(pageInfo.current, pageInfo.pageSize));
     history.push(url);
   };
+
   return (
     <PrimaryTable
       className={classnames(s.routeTable, className)}
+      rowKey={rowKey}
+      hover={hover}
       scroll={{ type: 'lazy' }}
-      pagination={{
+      pagination={pagination ? {
         onChange,
         pageSizeOptions: [10, 20, 30, 50, 100],
         ...pagination,
-      }} rowKey={rowKey} hover={hover}
+      } : undefined}
       {...otherProps} />
   );
 };

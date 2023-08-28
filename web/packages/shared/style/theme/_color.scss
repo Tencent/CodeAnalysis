@@ -1,0 +1,290 @@
+@import "./color-variables.scss";
+
+:root, :root[theme-mode="light"]{
+  --tca-blue-1: #{$tca-blue-1};
+  --tca-blue-2: #{$tca-blue-2};
+  --tca-blue-3: #{$tca-blue-3};
+  --tca-blue-4: #{$tca-blue-4};
+  --tca-blue-5: #{$tca-blue-5};
+  --tca-blue-6: #{$tca-blue-6};
+  --tca-blue-7: #{$tca-blue-7};
+  --tca-blue-8: #{$tca-blue-8};
+  --tca-blue-9: #{$tca-blue-9};
+  --tca-blue-10: #{$tca-blue-10};
+
+  --tca-red-1: #{$tca-red-1};
+  --tca-red-2: #{$tca-red-2};
+  --tca-red-3: #{$tca-red-3};
+  --tca-red-4: #{$tca-red-4};
+  --tca-red-5: #{$tca-red-5};
+  --tca-red-6: #{$tca-red-6};
+  --tca-red-7: #{$tca-red-7};
+  --tca-red-8: #{$tca-red-8};
+  --tca-red-9: #{$tca-red-9};
+  --tca-red-10: #{$tca-red-10};
+
+  --tca-orange-1: #{$tca-orange-1};
+  --tca-orange-2: #{$tca-orange-2};
+  --tca-orange-3: #{$tca-orange-3};
+  --tca-orange-4: #{$tca-orange-4};
+  --tca-orange-5: #{$tca-orange-5};
+  --tca-orange-6: #{$tca-orange-6};
+  --tca-orange-7: #{$tca-orange-7};
+  --tca-orange-8: #{$tca-orange-8};
+  --tca-orange-9: #{$tca-orange-9};
+  --tca-orange-10: #{$tca-orange-10};
+
+  --tca-green-1: #{$tca-green-1};
+  --tca-green-2: #{$tca-green-2};
+  --tca-green-3: #{$tca-green-3};
+  --tca-green-4: #{$tca-green-4};
+  --tca-green-5: #{$tca-green-5};
+  --tca-green-6: #{$tca-green-6};
+  --tca-green-7: #{$tca-green-7};
+  --tca-green-8: #{$tca-green-8};
+  --tca-green-9: #{$tca-green-9};
+  --tca-green-10: #{$tca-green-10};
+}
+
+:root[theme-mode="dark"]{
+  --tca-blue-1: #{$tca-blue-dark-1};
+  --tca-blue-2: #{$tca-blue-dark-2};
+  --tca-blue-3: #{$tca-blue-dark-3};
+  --tca-blue-4: #{$tca-blue-dark-4};
+  --tca-blue-5: #{$tca-blue-dark-5};
+  --tca-blue-6: #{$tca-blue-dark-6};
+  --tca-blue-7: #{$tca-blue-dark-7};
+  --tca-blue-8: #{$tca-blue-dark-8};
+  --tca-blue-9: #{$tca-blue-dark-9};
+  --tca-blue-10: #{$tca-blue-dark-10};
+
+  --tca-red-1: #{$tca-red-dark-1};
+  --tca-red-2: #{$tca-red-dark-2};
+  --tca-red-3: #{$tca-red-dark-3};
+  --tca-red-4: #{$tca-red-dark-4};
+  --tca-red-5: #{$tca-red-dark-5};
+  --tca-red-6: #{$tca-red-dark-6};
+  --tca-red-7: #{$tca-red-dark-7};
+  --tca-red-8: #{$tca-red-dark-8};
+  --tca-red-9: #{$tca-red-dark-9};
+  --tca-red-10: #{$tca-red-dark-10};
+
+  --tca-orange-1: #{$tca-orange-dark-1};
+  --tca-orange-2: #{$tca-orange-dark-2};
+  --tca-orange-3: #{$tca-orange-dark-3};
+  --tca-orange-4: #{$tca-orange-dark-4};
+  --tca-orange-5: #{$tca-orange-dark-5};
+  --tca-orange-6: #{$tca-orange-dark-6};
+  --tca-orange-7: #{$tca-orange-dark-7};
+  --tca-orange-8: #{$tca-orange-dark-8};
+  --tca-orange-9: #{$tca-orange-dark-9};
+  --tca-orange-10: #{$tca-orange-dark-10};
+
+  --tca-green-1: #{$tca-green-dark-1};
+  --tca-green-2: #{$tca-green-dark-2};
+  --tca-green-3: #{$tca-green-dark-3};
+  --tca-green-4: #{$tca-green-dark-4};
+  --tca-green-5: #{$tca-green-dark-5};
+  --tca-green-6: #{$tca-green-dark-6};
+  --tca-green-7: #{$tca-green-dark-7};
+  --tca-green-8: #{$tca-green-dark-8};
+  --tca-green-9: #{$tca-green-dark-9};
+  --tca-green-10: #{$tca-green-dark-10};
+}
+
+// 色板
+:root{
+  --tca-brand-color-1: var(--tca-blue-1);
+  --tca-brand-color-2: var(--tca-blue-2);
+  --tca-brand-color-3: var(--tca-blue-3);
+  --tca-brand-color-4: var(--tca-blue-4);
+  --tca-brand-color-5: var(--tca-blue-5);
+  --tca-brand-color-6: var(--tca-blue-6);
+  --tca-brand-color-7: var(--tca-blue-7);
+  --tca-brand-color-8: var(--tca-blue-8);
+  --tca-brand-color-9: var(--tca-blue-9);
+  --tca-brand-color-10: var(--tca-blue-10);
+
+  --tca-warning-color-1: var(--tca-orange-1);
+  --tca-warning-color-2: var(--tca-orange-2);
+  --tca-warning-color-3: var(--tca-orange-3);
+  --tca-warning-color-4: var(--tca-orange-4);
+  --tca-warning-color-5: var(--tca-orange-5);
+  --tca-warning-color-6: var(--tca-orange-6);
+  --tca-warning-color-7: var(--tca-orange-7);
+  --tca-warning-color-8: var(--tca-orange-8);
+  --tca-warning-color-9: var(--tca-orange-9);
+  --tca-warning-color-10: var(--tca-orange-10);
+
+  --tca-error-color-1: var(--tca-red-1);
+  --tca-error-color-2: var(--tca-red-2);
+  --tca-error-color-3: var(--tca-red-3);
+  --tca-error-color-4: var(--tca-red-4);
+  --tca-error-color-5: var(--tca-red-5);
+  --tca-error-color-6: var(--tca-red-6);
+  --tca-error-color-7: var(--tca-red-7);
+  --tca-error-color-8: var(--tca-red-8);
+  --tca-error-color-9: var(--tca-red-9);
+  --tca-error-color-10: var(--tca-red-10);
+
+  --tca-success-color-1: var(--tca-green-1);
+  --tca-success-color-2: var(--tca-green-2);
+  --tca-success-color-3: var(--tca-green-3);
+  --tca-success-color-4: var(--tca-green-4);
+  --tca-success-color-5: var(--tca-green-5);
+  --tca-success-color-6: var(--tca-green-6);
+  --tca-success-color-7: var(--tca-green-7);
+  --tca-success-color-8: var(--tca-green-8);
+  --tca-success-color-9: var(--tca-green-9);
+  --tca-success-color-10: var(--tca-green-10);
+
+  --tca-grey-1: #{$tca-gray-1};
+  --tca-grey-2: #{$tca-gray-2};
+  --tca-grey-3: #{$tca-gray-3};
+  --tca-grey-4: #{$tca-gray-4};
+  --tca-grey-5: #{$tca-gray-5};
+  --tca-grey-6: #{$tca-gray-6};
+  --tca-grey-7: #{$tca-gray-7};
+  --tca-grey-8: #{$tca-gray-8};
+  --tca-grey-9: #{$tca-gray-9};
+  --tca-grey-10: #{$tca-gray-10};
+  --tca-grey-11: #{$tca-gray-11};
+  --tca-grey-12: #{$tca-gray-12};
+  --tca-grey-13: #{$tca-gray-13};
+  --tca-grey-14: #{$tca-gray-14};
+
+  --tca-gray-color-1: var(--tca-grey-1);
+  --tca-gray-color-2: var(--tca-grey-2);
+  --tca-gray-color-3: var(--tca-grey-3);
+  --tca-gray-color-4: var(--tca-grey-4);
+  --tca-gray-color-5: var(--tca-grey-5);
+  --tca-gray-color-6: var(--tca-grey-6);
+  --tca-gray-color-7: var(--tca-grey-7);
+  --tca-gray-color-8: var(--tca-grey-8);
+  --tca-gray-color-9: var(--tca-grey-9);
+  --tca-gray-color-10: var(--tca-grey-10);
+  --tca-gray-color-11: var(--tca-grey-11);
+  --tca-gray-color-12: var(--tca-grey-12);
+  --tca-gray-color-13: var(--tca-grey-13);
+  --tca-gray-color-14: var(--tca-grey-14);
+
+  --tca-cyan-1: #{$tca-cyan-1};
+  --tca-cyan-2: #{$tca-cyan-2};
+  --tca-cyan-3: #{$tca-cyan-3};
+  --tca-cyan-4: #{$tca-cyan-4};
+  --tca-cyan-5: #{$tca-cyan-5};
+  --tca-cyan-6: #{$tca-cyan-6};
+  --tca-cyan-7: #{$tca-cyan-7};
+  --tca-cyan-8: #{$tca-cyan-8};
+  --tca-cyan-9: #{$tca-cyan-9};
+  --tca-cyan-10: #{$tca-cyan-10};
+
+  --tca-purple-1: #{$tca-purple-1};
+  --tca-purple-2: #{$tca-purple-2};
+  --tca-purple-3: #{$tca-purple-3};
+  --tca-purple-4: #{$tca-purple-4};
+  --tca-purple-5: #{$tca-purple-5};
+  --tca-purple-6: #{$tca-purple-6};
+  --tca-purple-7: #{$tca-purple-7};
+  --tca-purple-8: #{$tca-purple-8};
+  --tca-purple-9: #{$tca-purple-9};
+  --tca-purple-10: #{$tca-purple-10};
+
+  --tca-yellow-1: #{$tca-yellow-1};
+  --tca-yellow-2: #{$tca-yellow-2};
+  --tca-yellow-3: #{$tca-yellow-3};
+  --tca-yellow-4: #{$tca-yellow-4};
+  --tca-yellow-5: #{$tca-yellow-5};
+  --tca-yellow-6: #{$tca-yellow-6};
+  --tca-yellow-7: #{$tca-yellow-7};
+  --tca-yellow-8: #{$tca-yellow-8};
+  --tca-yellow-9: #{$tca-yellow-9};
+  --tca-yellow-10: #{$tca-yellow-10};
+
+  --tca-pink-1: #{$tca-pink-1};
+  --tca-pink-2: #{$tca-pink-2};
+  --tca-pink-3: #{$tca-pink-3};
+  --tca-pink-4: #{$tca-pink-4};
+  --tca-pink-5: #{$tca-pink-5};
+  --tca-pink-6: #{$tca-pink-6};
+  --tca-pink-7: #{$tca-pink-7};
+  --tca-pink-8: #{$tca-pink-8};
+  --tca-pink-9: #{$tca-pink-9};
+  --tca-pink-10: #{$tca-pink-10};
+}
+
+// 旧色板
+:root{
+  --t-grey-1: #{$t-grey-1};
+  --t-grey-2: #{$t-grey-2};
+  --t-grey-3: #{$t-grey-3};
+  --t-grey-4: #{$t-grey-4};
+  --t-grey-5: #{$t-grey-5};
+  --t-grey-6: #{$t-grey-6};
+  --t-grey-7: #{$t-grey-7};
+  --t-grey-8: #{$t-grey-8};
+  --t-grey-9: #{$t-grey-9};
+
+  --t-blue-1: #{$t-blue-1};
+  --t-blue-2: #{$t-blue-2};
+  --t-blue-3: #{$t-blue-3};
+  --t-blue-4: #{$t-blue-4};
+  --t-blue-5: #{$t-blue-5};
+  --t-blue-6: #{$t-blue-6};
+  --t-blue-7: #{$t-blue-7};
+  --t-blue-8: #{$t-blue-8};
+
+  --t-red-1: #{$t-red-1};
+  --t-red-2: #{$t-red-2};
+  --t-red-3: #{$t-red-3};
+  --t-red-4: #{$t-red-4};
+  --t-red-5: #{$t-red-5};
+  --t-red-6: #{$t-red-6};
+  --t-red-7: #{$t-red-7};
+  --t-red-8: #{$t-red-8};
+
+  --t-orange-1: #{$t-orange-1};
+  --t-orange-2: #{$t-orange-2};
+  --t-orange-3: #{$t-orange-3};
+  --t-orange-4: #{$t-orange-4};
+  --t-orange-5: #{$t-orange-5};
+  --t-orange-6: #{$t-orange-6};
+  --t-orange-7: #{$t-orange-7};
+  --t-orange-8: #{$t-orange-8};
+
+  --t-yellow-1: #{$t-yellow-1};
+  --t-yellow-2: #{$t-yellow-2};
+  --t-yellow-3: #{$t-yellow-3};
+  --t-yellow-4: #{$t-yellow-4};
+  --t-yellow-5: #{$t-yellow-5};
+  --t-yellow-6: #{$t-yellow-6};
+  --t-yellow-7: #{$t-yellow-7};
+  --t-yellow-8: #{$t-yellow-8};
+
+  --t-green-1: #{$t-green-1};
+  --t-green-2: #{$t-green-2};
+  --t-green-3: #{$t-green-3};
+  --t-green-4: #{$t-green-4};
+  --t-green-5: #{$t-green-5};
+  --t-green-6: #{$t-green-6};
+  --t-green-7: #{$t-green-7};
+  --t-green-8: #{$t-green-8};
+
+  --t-cyan-1: #{$t-cyan-1};
+  --t-cyan-2: #{$t-cyan-2};
+  --t-cyan-3: #{$t-cyan-3};
+  --t-cyan-4: #{$t-cyan-4};
+  --t-cyan-5: #{$t-cyan-5};
+  --t-cyan-6: #{$t-cyan-6};
+  --t-cyan-7: #{$t-cyan-7};
+  --t-cyan-8: #{$t-cyan-8};
+
+  --t-purple-1: #{$t-purple-1};
+  --t-purple-2: #{$t-purple-2};
+  --t-purple-3: #{$t-purple-3};
+  --t-purple-4: #{$t-purple-4};
+  --t-purple-5: #{$t-purple-5};
+  --t-purple-6: #{$t-purple-6};
+  --t-purple-7: #{$t-purple-7};
+  --t-purple-8: #{$t-purple-8};
+}

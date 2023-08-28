@@ -1,129 +1,52 @@
 @import '@tencent/micro-frontend-shared/style/color.scss';
 
-.template {
-    padding: 0 30px;
+.tmpl-tag {
+  color: $cyan-6;
+  border: 1px solid $cyan-6;
+  background-color: #fff;
+  border-radius: 2px;
 
-    .tmpl-tag {
-        color: $cyan-6;
-        border: 1px solid $cyan-6;
-        background-color: #fff;
-        border-radius: 2px;
-
-        &.sys {
-            color: $grey-7;
-            border: 1px solid $grey-7;
-        }
-    }
+  &.sys {
+    color: $grey-7;
+    border: 1px solid $grey-7;
+  }
 }
 
-.search {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.content-wrapper {
+  height: calc(100vh - 160px);
+  padding: 24px;
+  overflow: auto;
 }
 
 .container {
-    height: calc(100% - 56px);
-    padding: 30px;
-    white-space: nowrap;
-
-    .label {
-        display: inline-block;
-        height: 20px;
-
-        line-height: 20px;
-        font-size: 12px;
-        color: #ffffff;
-        padding: 0 6px;
-        border-radius: 2px;
-        background-color: $blue-5;
-    }
-
-    .header {
-        display: flex;
-        align-items: center;
-        margin-bottom: 20px;
-
-        .title {
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 6px;
-        }
-
-        .desc {
-            color: $grey-7;
-        }
-
-        .backIcon {
-            width: 28px;
-            height: 28px;
-            color: $blue-5;
-            margin-right: 20px;
-            text-align: center;
-            background: #fff;
-            border-radius: 50%;
-            box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
-            cursor: pointer;
-            transition: all 0.3s;
-
-            svg {
-                font-size: 18px;
-                vertical-align: middle !important;
-            }
-
-            &:hover {
-                box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
-            }
-        }
-    }
+  height: calc(100% - 56px);
+  padding: 30px;
+  white-space: nowrap;
 }
 
-.scheme-form-vertical {
-    .form-desc {
-        margin-top: -20px;
-        margin-bottom: 0;
-        color: #919daf;
-        white-space: normal;
-    }
+.question-icon {
+  color: #919daf;
+  font-size: 16px;
+  margin-top: -2px;
+  margin-left: 2px;
+  transition: all 0.3s;
+  cursor: pointer;
 
-    .question-icon {
-        color: #919daf;
-        font-size: 16px;
-        margin-top: -2px;
-        margin-left: 2px;
-        transition: all 0.3s;
-        cursor: pointer;
-
-        &:hover {
-            color: $grey-8;
-        }
-    }
-
-    .ellipsis {
-        padding: 5px 6px;
-        margin-left: 10px;
-        border-radius: 2px;
-        transition: all 0.3s;
-        cursor: pointer;
-
-        &:hover,
-        &:active {
-            background-color: #f2f4f6;
-        }
-    }
-
-    :global(.ant-radio-group) {
-        width: 100%;
-    }
-
-    :global(.ant-select-disabled.ant-select-multiple .ant-select-selector) {
-        color: unset;
-        background-color: unset;
-    }
+  &:hover {
+    color: $grey-8;
+  }
 }
 
-.scheme-list {
-    :global(.ant-table-thead > tr:first-child > th) {
-        border-top: none;
-    }
+.loading {
+  text-align: center;
+  padding: 30px 0px;
+}
+
+.tmpl-title {
+  display: flex;
+  align-items: center;
+  
+  > span {
+    margin-left: 8px;
+  }
 }

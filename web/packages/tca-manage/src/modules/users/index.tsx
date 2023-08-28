@@ -1,13 +1,11 @@
 /**
  * 用户管理功能
- * biz-start
- * 目前适用于体验、开源
- * biz-end
  */
 import React, { useState } from 'react';
 import { t } from '@src/utils/i18n';
-import { Row, Col, Tabs, Button } from 'tdesign-react';
+import { Button } from 'tdesign-react';
 import { useURLParams, useFetch } from '@tencent/micro-frontend-shared/hooks';
+import PageHeader from '@tencent/micro-frontend-shared/tdesign-component/page-header';
 
 // 项目内
 import { userAPI } from '@plat/api';
@@ -16,9 +14,7 @@ import { userAPI } from '@plat/api';
 import UserTable from './user-table';
 import UserModal from './user-modal';
 import { UserData } from './types';
-import s from '../style.scss';
 
-const { TabPanel } = Tabs;
 
 const Users = () => {
   const { filter, currentPage, pageSize } = useURLParams();
@@ -35,18 +31,9 @@ const Users = () => {
 
   return (
     <>
-      <Row className={s.header} align='middle' >
-        <Col flex="auto">
-          <Tabs defaultValue="users" size='large'>
-            <TabPanel label={t('用户管理列表')} value="users" />
-          </Tabs>
-        </Col>
-        <Col>
-          <Button onClick={() => onCreateOrUpdateHandler()} theme="primary">
-            {t('创建用户')}
-          </Button>
-        </Col>
-      </Row>
+      <PageHeader title="用户列表" description="平台全部注册用户列表" action={<Button onClick={() => onCreateOrUpdateHandler()} theme="primary">
+        {t('创建用户')}
+      </Button>} />
       <UserModal
         visible={visible}
         onCancel={() => setVisible(false)}

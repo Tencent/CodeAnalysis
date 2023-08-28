@@ -1,11 +1,8 @@
 import React from 'react';
-import { Layout } from 'coding-oa-uikit';
 
 // 项目内
 import UserAuth from '@tencent/micro-frontend-shared/tca/user-auth';
 import { userAuthAPI } from '@plat/api';
-
-const { Content } = Layout;
 
 
 interface AuthProps {
@@ -14,9 +11,7 @@ interface AuthProps {
 }
 
 const Auth = ({ showOrigin }: AuthProps) => (
-  <Content className="pa-lg">
-    <UserAuth userAuthAPI={userAuthAPI} showOrigin={showOrigin} />
-  </Content>
+  <UserAuth userAuthAPI={userAuthAPI} showOrigin={showOrigin} />
 );
 
 export default Auth;

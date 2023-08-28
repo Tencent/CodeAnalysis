@@ -9,6 +9,7 @@ import { StoreProvider } from '../../hook-store';
 import { Store, StateProps, ActionProps, Middleware } from '../../hook-store/types';
 import '../../style/index.scss';
 import '../../style/zhiyan.css';
+import 'tdesign-react/es/style/index.css';
 
 /**
  * 国际化资源加载

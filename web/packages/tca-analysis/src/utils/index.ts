@@ -7,10 +7,8 @@
 import Moment from 'moment';
 import qs from 'qs';
 import { message } from 'coding-oa-uikit';
-import { get, uniqBy, throttle } from 'lodash';
+import { get, throttle } from 'lodash';
 import { LOGIN_SERVER_API } from '@plat/api';
-import { useStateStore } from '@src/context/store';
-import { getMetaContent } from '@tencent/micro-frontend-shared/util';
 
 /**
  * 格式化时间，默认返回时间的年月日
@@ -62,16 +60,6 @@ export const getUserName = (user: any) => {
 export const getQuery = () => qs.parse(window.location.search.replace('?', ''));
 
 /**
- * 获取项目成员
- */
-export const getProjectMembers = () => {
-  const { projectMembers } = useStateStore();
-  const { admins, users } = projectMembers;
-
-  return uniqBy([...admins, ...users], 'username');
-};
-
-/**
  * 获取meta标签content
  * @param key
  * @param defaultValue
@@ -91,5 +79,3 @@ export const reLogin = throttle((content?: string) => {
     clearTimeout(timer);
   }, 300);
 }, 1000);
-
-export const isEnableManage = () => getMetaContent('ENABLE_MANAGE', process.env.ENABLE_MANAGE) === 'TRUE';

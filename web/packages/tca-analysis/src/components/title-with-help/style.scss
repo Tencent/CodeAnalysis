@@ -1,0 +1,22 @@
+.form-label {
+  display: flex;
+  align-items: center;
+  
+  .help-icon {
+    color: #919daf;
+    margin-left: 2px;
+    transition: all 0.3s;
+    cursor: pointer;
+
+    &:hover {
+        color: #202d40;
+    }
+  }
+}
+
+.large-label {
+  font-size: 16px;
+  font-weight: 600;
+  color: #202d40;
+  margin-bottom: 8px;
+}

@@ -1,50 +1,34 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Table } from 'coding-oa-uikit';
+import Table from '@tencent/micro-frontend-shared/tdesign-component/table';
 import { formatDateTime } from '@tencent/micro-frontend-shared/util';
 
-const { Column } = Table;
-
-interface ListProps {
+interface TableProps {
   loading: boolean;
-  data: any[];
+  dataSource: any[];
   orgSid: string;
 }
 
-const List = ({ loading, data, orgSid }: ListProps) => (
-  <Table
-    loading={loading}
-    dataSource={data}
-    rowKey={(item: any) => item.id}
-    pagination={{
-      size: 'default',
-      showTotal: (total, range) => `${range[0]} - ${range[1]} 条，共 ${total} 条`,
-    }}
-  >
-    <Column
-      title="项目名称"
-      dataIndex="display_name"
-      key="display_name"
-      render={(display_name: string, data: any) => <Link className="link-name" to={`/t/${orgSid}/p/${data.name}/repos`}>{display_name}</Link>}
-    />
-    <Column
-      title="描述"
-      dataIndex="description"
-      key="description"
-    />
-    <Column
-      title="管理员"
-      dataIndex="admins"
-      key="admins"
-      render={admins => admins?.map((item: any) => item.nickname).join('、')}
-    />
-    <Column
-      title="创建时间"
-      dataIndex="created_time"
-      key="created_time"
-      render={time => time && formatDateTime(time)}
-    />
-  </Table>
+const List = ({ loading, dataSource, orgSid }: TableProps) => (<Table
+  loading={loading}
+  data={dataSource}
+  columns={[{
+    colKey: 'display_name',
+    title: '项目名称',
+    cell: ({ row }) => <Link className="link-name" to={`/t/${orgSid}/p/${row.name}/repos`}>{row.display_name}</Link>,
+  }, {
+    colKey: 'description',
+    title: '项目描述',
+  }, {
+    colKey: 'admins',
+    title: '管理员',
+    cell: ({ row }) => row.admins?.map((item: any) => item.nickname).join('、'),
+  }, {
+    colKey: 'created_time',
+    title: '创建时间',
+    cell: ({ row }) => formatDateTime(row.created_time),
+  }]}
+/>
 );
 
 export default List;

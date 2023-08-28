@@ -1,6 +1,6 @@
 import Cookies from 'universal-cookie';
 import { isEmpty, uniqBy } from 'lodash';
-import { message } from 'coding-oa-uikit';
+import { message } from 'tdesign-react';
 
 import Constant from '@src/constant';
 import { info, debug, warn } from '@src/utils';
@@ -83,12 +83,15 @@ export class MicroApplicationDevelopmentLoader implements MicroApplicationLoader
 
   public getApiList() {
     const apiList: Array<MicroDevApiList> = this.isPluginMode()
-      ? window.microDevApiList : cookies.get(Constant.MICRO_FRONTEND_API_LIST);
-    return uniqBy(apiList, 'name');
+      ? window.microDevApiList : cookies.get(Constant.MICRO_FRONTEND_API_LIST) || [];
+    return uniqBy(apiList.filter(i => i.enabled !== false), 'name');
   }
 
   public isPluginMode() {
-    return window.microDevApiList && window.microDevApiList.length > 0;
+    if (window.microDevApiList) {
+      return window.microDevApiList.filter(i => i.enabled !== false).length > 0;
+    }
+    return false;
   }
 }
 

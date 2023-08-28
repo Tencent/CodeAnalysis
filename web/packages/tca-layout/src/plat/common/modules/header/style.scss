@@ -1,0 +1,65 @@
+.headerMenuItem {
+  width: 28px !important;
+  height: 28px !important;
+}
+
+.headerUser {
+  display: flex;
+  padding: 0 12px;
+  margin-right: 8px;
+  height: 48px;
+  align-items: center;
+  cursor: pointer;
+  color: var(--td-text-color-primary);
+
+  &:hover {
+    background-color: var(--tca-bg-color-container-hover);
+  }
+}
+
+.headerDropItem {
+  display: flex;
+  align-items: center;
+  height: 28px;
+  .icon {
+    margin-right: 8px;
+  }
+  .rightValue{
+    position: absolute;
+    right: 16px;
+    margin-left: 8px;
+    color: var(--tca-text-color-placeholder);
+  }
+}
+
+.headerDropdownPopover {
+  .title {
+    color: var(--tca-text-color-placeholder);
+    width: 200px;
+    font-size: 12px;
+    line-height: 16px;
+    padding: 8px 14px;
+  }
+  .content{
+    max-height: 200px;
+    overflow-y: auto;
+  }
+
+  .item {
+    cursor: pointer;
+    height: 32px;
+    line-height: 32px;
+    padding: 0 14px;
+    transition: all 0.3s;
+    &:hover {
+      background-color: var(--tca-bg-color-container-hover);
+    }
+  }
+}
+
+.orgTextEllipsis {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 200px;
+}

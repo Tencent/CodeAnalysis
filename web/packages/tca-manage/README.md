@@ -71,7 +71,6 @@ yarn run dev
 |                   GIT_REVISION | git 版本号                             |
 |                    PUBLIC_PATH | 资源路径前缀     |
 |                   PLATFORM_ENV | 平台类型                      |
-|                  ENABLE_MANAGE | 开启后台版                      |
 |               ENABLE_EXTERNALS | 开启排除额外依赖（用于具有全局依赖时）           |
 |                 CONFIG_ENABLED | 开启config-webpack-plugin              |
 |                   PRODUCT_NAME | 产品名称                      |

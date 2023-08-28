@@ -24,10 +24,15 @@ export const jobAPI = {
     return get(`${JOB_API_URL}/`, data);
   },
   /** 取消job */
-  cancel: (jobId: number|string, data: any) => post(`${JOB_API_URL}/${jobId}/cancel/`, data),
+  cancel: (jobId: number | string, data: any) => post(`${JOB_API_URL}/${jobId}/cancel/`, data),
   /** job 归档列表 */
   getArchived: (params?: any) => {
     const data = { ...params, ...formatJobResultFilter(params.result) };
     return get(`${JOB_API_URL}/archive/`, data);
+  },
+  /** 子任务 归档列表 */
+  getArchivedTask: (params?: any) => {
+    const data = { ...params, ...formatJobResultFilter(params.result) };
+    return get(`${MAIN_SERVER_API}/tasks/archive/`, data);
   },
 };

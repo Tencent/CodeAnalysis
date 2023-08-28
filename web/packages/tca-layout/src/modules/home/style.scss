@@ -1,78 +1,8 @@
-@import "@tencent/micro-frontend-shared/style/color.scss";
-
 $content-max-width: 1180px;
 $foot-height: 150px;
 $content-min-height: $foot-height + 48px;
 
-.home section {
-  padding-bottom: 60px;
 
-  h2 {
-    font-size: 28px;
-    text-align: center;
-    padding-top: 60px;
-    margin-bottom: 32px;
-  }
-}
-
-.home .header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  padding: 0 20px;
-  width: 100%;
-  height: 60px;
-  line-height: 60px;
-  z-index: 100;
-  background: $white;
-  box-shadow: 0 1px $grey-3;
-  overflow: hidden;
-
-  .logo {
-    display: inline-block;
-
-    img {
-      vertical-align: middle;
-      height: 36px;
-      margin-bottom: 2px;
-    }
-
-    .title {
-      margin-left: 12px;
-      display: inline-block;
-      color: $grey-8;
-      font-weight: 500;
-    }
-
-    .beta {
-      display: inline-block;
-      margin-left: 12px;
-      color: $grey-8;
-      background-color: $grey-2;
-      border: none;
-      font-weight: 500;
-      vertical-align: text-bottom;
-    }
-  }
-
-  .right {
-    float: right;
-
-    .github {
-      img {
-        vertical-align: middle;
-        height: 24px;
-      }
-    }
-
-    .btn {
-      width: 100px;
-      height: 30px;
-      background: $blue-5;
-      color: $white;
-    }
-  }
-}
 
 .home .content {
   min-height: calc(100vh - #{$content-min-height});
@@ -81,6 +11,7 @@ $content-min-height: $foot-height + 48px;
   .banner-section {
     background-color: #091834;
     min-height: 438px;
+    margin-bottom: 40px;
     padding: 0 20px;
     overflow: hidden;
     position: relative;
@@ -117,13 +48,13 @@ $content-min-height: $foot-height + 48px;
       align-items: flex-end;
 
       .info {
-        color: $white;
+        color: var(--tca-grey-1);
         font-weight: 500;
         padding: 96px 96px 0px 96px;
       }
 
       .title {
-        color: $white;
+        color: var(--tca-grey-1);
         font-size: 48px;
         font-weight: 600;
         letter-spacing: 1.07px;
@@ -143,23 +74,10 @@ $content-min-height: $foot-height + 48px;
         .btn {
           margin-right: 16px;
           padding: 0px 50px;
-          color: #fff;
-          background: $blue-5;
           height: 50px;
           line-height: 48px;
           font-size: 20px;
-          font-weight: 600;
-        }
-
-        .second-btn {
-          margin-right: 16px;
-          padding: 0px 50px;
-          color: $blue-5;
-          border: 1px solid $blue-5;
-          height: 50px;
-          line-height: 48px;
-          font-size: 20px;
-          font-weight: 600;
+          font-weight: 500;
         }
       }
 
@@ -183,54 +101,32 @@ $content-min-height: $foot-height + 48px;
   }
 
   .info-section {
-    margin-bottom: 40px;
-    padding: 0 20px;
-    overflow: hidden;
-    position: relative;
+    padding-top: 60px;
 
     .section-container {
-      position: relative;
       margin: 0 auto;
+      padding: 0 96px;
       max-width: $content-max-width;
-      z-index: 11;
 
       .attention {
-        color: $red-5;
-      }
-
-      .info {
-        font-weight: 500;
-        padding: 96px 96px 0px 96px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
+        color: var(--tca-error-color);
       }
 
       .title {
-        font-size: 28px;
-        font-weight: 600;
-        letter-spacing: 1.07px;
+        margin-top: 8px;
         margin-bottom: 12px;
+        color: var(--tca-text-color-primary);
+        font-size: 28px;
+        font-weight: 500;
       }
 
       .p-content {
-        font-size: 16px;
         max-width: 600px;
+        font-size: 16px;
         line-height: 30px;
         font-weight: 400;
       }
 
-      .btn-area {
-        margin-top: 10px;
-
-        .btn {
-          color: $blue-5;
-          height: 50px;
-          line-height: 48px;
-          font-size: 20px;
-          font-weight: 600;
-        }
-      }
     }
   }
 
@@ -241,7 +137,7 @@ $content-min-height: $foot-height + 48px;
       height: 100%;
 
       .title {
-        color: #000;
+        color: var(--tca-text-color-primary);
         font-size: 42px;
         font-weight: 500;
         letter-spacing: 1.75px;
@@ -280,7 +176,7 @@ $content-min-height: $foot-height + 48px;
           }
 
           .tit {
-            color: #000;
+            color: var(--tca-text-color-primary);
             font-size: 18px;
             font-weight: 500;
             letter-spacing: 0;
@@ -288,7 +184,7 @@ $content-min-height: $foot-height + 48px;
           }
 
           .desc {
-            color: #202d40;
+            color: var(--tca-text-color-secondary);
             font-size: 14px;
             font-weight: normal;
             line-height: 24px;
@@ -298,6 +194,21 @@ $content-min-height: $foot-height + 48px;
         }
       }
     }
+  }
+}
+
+.home section {
+  padding-bottom: 40px;
+  // &:nth-child(odd){
+  //   background-color: var(--tca-bg-color-secondarycontainer);
+  // }
+  
+  h2 {
+    color: var(--tca-text-color-primary);
+    font-size: 28px;
+    text-align: center;
+    padding-top: 60px;
+    margin-bottom: 32px;
   }
 }
 
@@ -328,23 +239,23 @@ $content-min-height: $foot-height + 48px;
 }
 
 .scene {
-  :global(.ant-tabs-nav-list) {
+  :global(.t-tabs__nav-wrap) {
     margin: 0 auto;
   }
 
-  :global(.ant-tabs-content-holder) {
-    background: #f3f5f8;
-    box-shadow: inset 8px 8px 20px 0 rgb(55 99 170 / 11%), inset -8px -8px 20px 0 #fff;
+  :global(.t-tabs__content) {
+    // background: #f3f5f8;
+    // box-shadow: inset 8px 8px 20px 0 rgb(55 99 170 / 11%), inset -8px -8px 20px 0 #fff;
     padding: 40px 20px;
   }
 
-  .tab-content {
+  .tabContent {
     max-width: $content-max-width;
     margin: 0 auto;
     padding-left: 200px;
 
     .desc {
-      color: #495770;
+      color: var(--tca-text-color-secondary);
 
       .li {
         position: relative;
@@ -360,7 +271,7 @@ $content-min-height: $foot-height + 48px;
           width: 6px;
           height: 6px;
           border-radius: 50%;
-          background-color: #9ba6b7;
+          background-color: var(--tca-text-color-secondary);
         }
       }
     }
@@ -387,10 +298,10 @@ $content-min-height: $foot-height + 48px;
       .img-wrapper {
         display: inline-block;
         width: 200px;
-        height: 80px;
+        height: 88px;
         padding: 20px;
         background: #fff;
-        box-shadow: 8px 8px 20px 0 rgb(55 99 170 / 10%), -8px -8px 20px 0 #fff,
+        box-shadow: 8px 8px 20px 0 rgb(55 99 170 / 10%), -8px -8px 20px 0 var(--tca-bg-color-specialcomponent),
           inset 0 4px 20px 0 hsl(0deg 0% 100% / 50%);
         border-radius: 8px;
         box-sizing: border-box;
@@ -404,30 +315,3 @@ $content-min-height: $foot-height + 48px;
   }
 }
 
-.arrow {
-  color: rgba(255,255,255,0.55);
-  font-size: 20px;
-  height: 20px;
-  width: 20px;
-  position: absolute;
-  top: 50%;
-  display: block;
-  margin-top: -10px;
-  padding: 0;
-  border: 0;
-  outline: none;
-  cursor: pointer;
-  z-index: 2;
-
-  &:hover {
-    color: rgba(255,255,255,0.85);
-  }
-
-  &-left {
-    left: 10px;
-  }
-
-  &-right {
-    right: 10px;
-  }
-}

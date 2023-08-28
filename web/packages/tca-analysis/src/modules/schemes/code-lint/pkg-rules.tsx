@@ -7,18 +7,10 @@
 /**
  * 规则列表
  */
-import React, { useEffect, useState } from 'react';
-import cn from 'classnames';
-import qs from 'qs';
-import { useParams, useHistory, useLocation } from 'react-router-dom';
-import { toNumber, isEmpty, get, omit, omitBy, cloneDeep } from 'lodash';
-
-import { Table, Button, Modal, message, Radio, Tooltip, Tag } from 'coding-oa-uikit';
-import ArrowLeft from 'coding-oa-uikit/lib/icon/ArrowLeft';
-
+import React from 'react';
+import { useRequest } from 'ahooks';
+import { useParams } from 'react-router-dom';
 import { getSchemeRouter } from '@src/utils/getRoutePath';
-import { getQuery } from '@src/utils';
-import { DEFAULT_PAGER } from '@src/constant';
 import {
   getPackagesRule,
   getCheckPackagesDetail,
@@ -27,16 +19,9 @@ import {
   delRule,
   getRuleDetail,
   getRulesFilter,
+  modifyRule,
 } from '@src/services/schemes';
-import { SEVERITY } from '../constants';
-
-import RuleDetail from '../../projects/issues/rule-detail';
-import EditRuleModal from './edit-rule-modal';
-import Search from './search';
-
-import style from './style.scss';
-
-const { Column } = Table;
+import PkgRulesTable from '@src/components/schemes/pkg-details/pkg-rule-table';
 
 const PkgRules = () => {
   const {
@@ -45,394 +30,38 @@ const PkgRules = () => {
     repoId,
     schemeId,
   } = useParams() as any;
-  let { pkgId } = useParams() as any;
-  const history = useHistory();
-  const location = useLocation();
+  const { pkgId } = useParams() as any;
 
-  const [list, setList] = useState([]);
-  const [count, setCount] = useState(DEFAULT_PAGER.count);
-  const [filters, setFilters] = useState({});
-  const [loading, setLoading] = useState(false);
-  const [pkgDetail, setPkgDetail] = useState<any>({});
-  const [selectedRowKeys, setSelectedRowKeys] = useState<any>([]);
-  const [batchModalVsb, setBatchModalVsb] = useState(false);
-  const [severity, setSeverity] = useState();
-  const [ruleDetailVsb, setRuleDetailVsb] = useState(false);
-  const [ruleDetail, setRuleDetail] = useState({});
-  const [editRule, setEditRule] = useState({ data: {}, visible: false });
+  const { data: pkgDetail = {} } = useRequest(getCheckPackagesDetail, {
+    defaultParams: [orgSid, teamName, repoId, schemeId, pkgId],
+    refreshDeps: [orgSid, teamName, repoId, schemeId, pkgId],
+  });
 
-  const query = getQuery();
-  const pageSize = toNumber(query.limit) || DEFAULT_PAGER.pageSize;
-  const pageStart = toNumber(query.offset) || DEFAULT_PAGER.pageStart;
-
-  const searchParams: any = omit(query, ['offset', 'limit']);
-
-  pkgId = toNumber(pkgId);
-  const isCustomPkg = pkgDetail.package_type === 1;
-
-  useEffect(() => {
-    getPkgDetail();
-    getListData();
-    getPkgFilter();
-  }, [pkgId]);
-
-  const getPkgDetail = async () => {
-    const res = await getCheckPackagesDetail(
-      orgSid,
-      teamName,
-      repoId,
-      schemeId,
-      pkgId,
-    );
-    setPkgDetail(res);
-  };
-
-  const getPkgFilter = async () => {
-    const res = await getRulesFilter(orgSid, teamName, repoId, schemeId, pkgId);
-    setFilters(res);
-  };
-
-  const getListData = (
-    offset = pageStart,
-    limit = pageSize,
-    otherParams = searchParams,
-  ) => {
-    const params = {
-      offset,
-      limit,
-      ...omitBy(otherParams, item => !item),
-    };
-    setLoading(true);
-    getPackagesRule(orgSid, teamName, repoId, schemeId, pkgId, params)
-      .then((res: any) => {
-        let list = res.results || [];
-        history.push(`${location.pathname}?${qs.stringify(params)}`);
-
-        // 删除最后一页处理
-        if (isEmpty(list) && pageStart >= pageSize && res.count > 0) {
-          getListData(pageStart - pageSize, pageSize);
-          return;
-        }
-
-        list = list.map((item: any) => {
-          // 规则自定义处理
-          if (!isEmpty(item.custom_packagemap)) {
-            const rule = item.custom_packagemap[0] || {};
-            item.state = rule.state;
-            item.severity = rule.severity;
-            item.rule_params = rule.rule_params;
-          }
-          return item;
-        });
-        setSelectedRowKeys([]);
-        setCount(res.count);
-        setList(list);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  };
-
-  const onChangePageSize = (page: number, pageSize: number) => {
-    getListData((page - 1) * pageSize, pageSize);
-  };
-
-  const onShowSizeChange = (current: number, size: number) => {
-    getListData(DEFAULT_PAGER.pageStart, size);
-  };
-
-  const ruleStateHandle = (state: number, keys?: any) => {
-    const text = state === 2 ? '屏蔽' : '启用';
-    keys = keys || selectedRowKeys;
-
-    Modal.confirm({
-      title: `${text}规则`,
-      content: `您正在${text} ${
-        keys.length
-      } 条规则，${text}后， 在代码分析过程中将${
-        state === 2 ? '忽略' : '启用'
-      }这些规则，确定${text}？`,
-      onOk: () => {
-        modifyRuleState(orgSid, teamName, repoId, schemeId, {
-          packagemaps: keys,
-          state,
-        }).then(() => {
-          message.success('规则状态修改成功');
-          getListData(pageStart, pageSize);
-        });
-      },
-    });
-  };
-
-  const ruleSeverityHandle = () => {
-    modifyRuleSeverity(orgSid, teamName, repoId, schemeId, {
-      packagemaps: selectedRowKeys,
-      severity: toNumber(severity),
-    }).then(() => {
-      message.success('规则严重级别修改成功');
-      getListData(pageStart, pageSize);
-      setBatchModalVsb(false);
-    });
-  };
-
-  const delRules = (keys?: any) => {
-    keys = keys || selectedRowKeys;
-    Modal.confirm({
-      title: '移除规则',
-      content: `您正在移除 ${keys.length} 个规则，移除后， 如果官方规则包存在该规则，则会采用官方包规则配置；如果不存在，则这些规则发现的问题将会在下次全量分析后被关闭。 所有使用当前分析方案的项目都将被影响，请慎重操作！`,
-      onOk: () => {
-        delRule(orgSid, teamName, repoId, schemeId, {
-          packagemaps: keys,
-          reason: '用户移除',
-        }).then(() => {
-          message.success('移除规则成功');
-          getListData(pageStart, pageSize);
-        });
-      },
-      onCancel: () => {
-        setSelectedRowKeys([]);
-      },
-    });
-  };
-
-  const openRuleDetail = async (ruleId: number) => {
-    setRuleDetailVsb(true);
-    const res = await getRuleDetail(orgSid, teamName, repoId, schemeId, ruleId);
-    setRuleDetail(res);
-  };
+  const { data: filters = {} } = useRequest(getRulesFilter, {
+    defaultParams: [orgSid, teamName, repoId, schemeId, pkgId],
+    refreshDeps: [orgSid, teamName, repoId, schemeId, pkgId],
+  });
 
   return (
-    <div className={style.packageRules}>
-      <div className={style.header}>
-        <span
-          className={style.backIcon}
-          onClick={() => history.push(`${getSchemeRouter(orgSid, teamName, repoId, schemeId)}/codelint`)
-          }
-        >
-          <ArrowLeft />
-        </span>
-        <div style={{ flex: 1 }}>
-          <h3 className={style.title}>
-            {isCustomPkg ? '自定义规则包' : pkgDetail.name}
-          </h3>
-          <p className={style.desc}>
-            {isCustomPkg
-              ? '自定义规则包中规则配置会默认覆盖其他官方包中相同规则的配置'
-              : pkgDetail.description}
-          </p>
-        </div>
-        {isCustomPkg && (
-          <Button
-            type="primary"
-            onClick={() => history.push(`${location.pathname}/add-rule`)}
-          >
-            添加规则
-          </Button>
-        )}
-      </div>
-      <Search
-        loading={loading}
-        searchParams={cloneDeep(searchParams)}
-        filters={filters}
-        callback={(params: any) => {
-          getListData(DEFAULT_PAGER.pageStart, pageSize, params);
-        }}
-      />
-      <div className={style.rules}>
-        {!isEmpty(selectedRowKeys) && (
-          <div className={style.operation}>
-            <Button
-              type="link"
-              onClick={() => {
-                setBatchModalVsb(true);
-              }}
-              style={{ marginRight: 10 }}
-            >
-              修改严重级别
-            </Button>
-            {isCustomPkg ? (
-              <Button
-                type="link"
-                style={{ marginRight: 10 }}
-                onClick={() => delRules()}
-              >
-                移除规则
-              </Button>
-            ) : (
-              <>
-                <Button
-                  type="link"
-                  style={{ marginRight: 10 }}
-                  onClick={() => ruleStateHandle(2)}
-                >
-                  屏蔽规则
-                </Button>
-                <Button type="link" onClick={() => ruleStateHandle(1)}>
-                  启用规则
-                </Button>
-              </>
-            )}
-          </div>
-        )}
-        <Table
-          dataSource={list}
-          className={style.ruleTable}
-          scroll={{ x: 1500 }}
-          loading={loading}
-          rowKey={(item: any) => item.id}
-          rowSelection={{
-            selectedRowKeys,
-            onChange: keys => setSelectedRowKeys(keys),
-          }}
-          pagination={{
-            current: Math.floor(pageStart / pageSize) + 1,
-            total: count,
-            pageSize,
-            showSizeChanger: true,
-            showTotal: (total, range) => `${range[0]} - ${range[1]} 条，共 ${total} 条`,
-            onChange: onChangePageSize,
-            onShowSizeChange,
-          }}
-        >
-          <Column
-            title="规则名称"
-            width="12%"
-            dataIndex={['checkrule', 'real_name']}
-            render={(name, data: any) => (
-              <p
-                className={style.ruleName}
-                onClick={() => {
-                  openRuleDetail(get(data, 'checkrule.id'));
-                }}
-              >
-                {data.state === 2 && (
-                  <span className={style.disabledRule}>（已屏蔽）</span>
-                )}
-                {name}
-              </p>
-            )}
-          />
-          <Column
-            title="规则概要"
-            width="36%"
-            dataIndex={['checkrule', 'rule_title']}
-          />
-          <Column title="所属工具" dataIndex={['checktool', 'display_name']} />
-          <Column
-            title="规则参数"
-            dataIndex={['checkrule', 'rule_params']}
-            render={(params, data: any) => {
-              const value = data.rule_params || params;
-              return value && value.length > 30 ? (
-                <Tooltip title={value} overlayStyle={{ maxWidth: 350 }}>
-                  <p className={style.ruleDesc}>{value}</p>
-                </Tooltip>
-              ) : (
-                value
-              );
-            }}
-          />
-          <Column
-            title="分类"
-            width={100}
-            dataIndex={['checkrule', 'category_name']}
-          />
-          <Column
-            title="问题级别"
-            width={80}
-            dataIndex={['checkrule', 'severity']}
-            render={(severity, data: any) => SEVERITY[data.severity || severity]
-            }
-          />
-          <Column
-            title="是否需要编译"
-            width={120}
-            dataIndex={['checktool', 'build_flag']}
-            render={(buildFlag: boolean) => (
-              <Tag
-                style={{ margin: 0 }}
-                className={buildFlag && style.buildTag}
-              >
-                {buildFlag ? '需要' : '无需'}编译
-              </Tag>
-            )}
-          />
-          <Column
-            title="操作"
-            dataIndex="id"
-            width={120}
-            render={(id, item: any) => (
-              <>
-                <a
-                  style={{ marginRight: 10 }}
-                  onClick={() => {
-                    setEditRule({
-                      data: item,
-                      visible: true,
-                    });
-                  }}
-                >
-                  编辑
-                </a>
-                {isCustomPkg ? (
-                  <a
-                    className={style.errorTip}
-                    onClick={() => {
-                      setSelectedRowKeys([id]);
-                      delRules([id]);
-                    }}
-                  >
-                    移除
-                  </a>
-                ) : (
-                  <a
-                    className={cn({ [style.errorTip]: item.state === 1 })}
-                    onClick={() => {
-                      setSelectedRowKeys([id]);
-                      ruleStateHandle(item.state === 2 ? 1 : 2, [id]);
-                    }}
-                  >
-                    {item.state === 2 ? '取消屏蔽' : '屏蔽'}
-                  </a>
-                )}
-              </>
-            )}
-          />
-        </Table>
-      </div>
-      <Modal
-        visible={batchModalVsb}
-        title="修改严重级别"
-        onCancel={() => setBatchModalVsb(false)}
-        onOk={ruleSeverityHandle}
-      >
-        <p style={{ marginBottom: 10 }}>
-          已选定 {selectedRowKeys.length} 个规则，将其严重级别统一修改为：
-        </p>
-        <Radio.Group onChange={e => setSeverity(e.target.value)}>
-          {Object.keys(SEVERITY).map((key: any) => (
-            <Radio value={key} key={key}>
-              {SEVERITY[key]}
-            </Radio>
-          ))}
-        </Radio.Group>
-      </Modal>
-      <RuleDetail
-        visible={ruleDetailVsb}
-        onClose={() => setRuleDetailVsb(false)}
-        data={ruleDetail}
-      />
-      <EditRuleModal
-        orgSid={orgSid}
-        teamName={teamName}
-        repoId={repoId}
-        schemeId={schemeId}
-        visible={editRule.visible}
-        data={editRule.data}
-        onCancel={() => setEditRule({ visible: false, data: {} })}
-        callback={() => getListData(pageStart, pageSize)}
-      />
-    </div>
+    <PkgRulesTable
+      getRuleDetail={(ruleId: number) => getRuleDetail(orgSid, teamName, repoId, schemeId, ruleId)}
+      pkgDetail={pkgDetail}
+      filters={filters}
+      getPackagesRule={(filter: any) => getPackagesRule(
+        orgSid,
+        teamName,
+        repoId,
+        schemeId,
+        pkgId,
+        filter,
+      )}
+      refreshDeps={[orgSid, teamName, repoId, schemeId, pkgId]}
+      modifyRule={(editRuleInfo: any) => modifyRule(orgSid, teamName, repoId, schemeId, editRuleInfo)}
+      modifyRuleState={(editRuleInfo: any) => modifyRuleState(orgSid, teamName, repoId, schemeId, editRuleInfo)}
+      modifyRuleSeverity={(editRuleInfo: any) => modifyRuleSeverity(orgSid, teamName, repoId, schemeId, editRuleInfo)}
+      delRule={(delRuleInfo: any) => delRule(orgSid, teamName, repoId, schemeId, delRuleInfo)}
+      backLink={`${getSchemeRouter(orgSid, teamName, repoId, schemeId)}/codelint`}
+    />
   );
 };
 
