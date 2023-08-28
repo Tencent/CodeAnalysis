@@ -1,5 +1,6 @@
 import { lazy } from 'react';
 import { RouteProps } from 'react-router-dom';
+import 'tdesign-react/es/style/index.css';
 
 // 项目内
 import Teams from '@src/modules/team';

@@ -71,8 +71,8 @@
   }
 
   .content-wrapper {
-    height: calc(100vh - #{$header-height} - #{$top-height} - #{$filter-height});
-    padding: 30px;
+    height: calc(100vh - 160px);
+    padding: 24px;
     overflow: auto;
   }
 

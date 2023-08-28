@@ -283,13 +283,15 @@ export const webpackConfig = (options?: Options) => {
       devServer: {
         static: outDir,
         hot: true,
-        liveReload: false,
+        // liveReload: false,
         allowedHosts: 'all',
         host,
         port,
-        // client: {
-        //   webSocketURL,
-        // },
+        client: {
+          progress: true,
+          overlay: false,
+          // webSocketURL,
+        },
         historyApiFallback: true,
         compress: true,
         devMiddleware: {

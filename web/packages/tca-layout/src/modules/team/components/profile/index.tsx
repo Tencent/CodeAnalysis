@@ -10,6 +10,7 @@ import { formatDateTime } from '@tencent/micro-frontend-shared/util';
 import { useStateStore } from '@tencent/micro-frontend-shared/hook-store';
 import DeleteModal from '@tencent/micro-frontend-shared/component/modal/delete-modal';
 import Copy from '@tencent/micro-frontend-shared/component/copy';
+import PageHeader from '@tencent/micro-frontend-shared/tdesign-component/page-header';
 
 import { NAMESPACE, UserState } from '@src/store/user';
 import { getTeamInfo, updateTeamInfo, disableTeam } from '@src/services/team';
@@ -73,128 +74,129 @@ const Profile = () => {
   };
 
   return (
-    <div className={style.profile}>
-      <DeleteModal
-        actionType={t('禁用')}
-        objectType={t('团队')}
-        addtionInfo={t('后续如需恢复团队，请联系平台管理员在管理后台恢复')}
-        confirmName={data.name}
-        visible={deleteVisible}
-        onCancel={() => setDeleteVisible(false)}
-        onOk={handleDeleteTeam}
-      />
-      <h2 className="mb-lg">{data.name}</h2>
-      <div className={style.block}>
-        <h3 className="mb-md">{t('团队概览')}</h3>
-        <Row gutter={40}>
-          <Col span="8">
-            <Card>
-              <Statistic
-                prefix={<Group className="mr-xs" color="#f0850a" />}
-                title={t('成员数')}
-                value={data.user_count}
-                valueStyle={{ color: '#f0850a' }}
-              />
-            </Card>
-          </Col>
-          <Col span="8">
-            <Card>
-              <Statistic
-                prefix={<Project className="mr-xs" color="3d98ff" />}
-                title={t('项目数')}
-                value={data.team_count}
-                valueStyle={{ color: '#3d98ff' }}
-              />
-            </Card>
-          </Col>
-          <Col span="8">
-            <Card>
-              <Statistic
-                prefix={<Package className="mr-xs" color="3f8600" />}
-                title={t('代码库')}
-                value={data.repo_count}
-                valueStyle={{ color: '#3f8600' }}
-              />
-            </Card>
-          </Col>
-        </Row>
-      </div>
-      <div>
-        <h3 className="mb-md mt-lg">{t('团队信息')}</h3>
-        <Form
-          {...layout}
-          style={{ width: '530px' }}
-          form={form}
-          initialValues={data}
-          onFinish={onFinish}
-        >
-          <Form.Item
-            label={t('团队唯一标识')}
+    <>
+      <PageHeader title="团队概览" description="团队基本信息和概览数据" />
+      <div className={style.profile}>
+        <DeleteModal
+          actionType={t('禁用')}
+          objectType={t('团队')}
+          addtionInfo={t('后续如需恢复团队，请联系平台管理员在管理后台恢复')}
+          confirmName={data.name}
+          visible={deleteVisible}
+          onCancel={() => setDeleteVisible(false)}
+          onOk={handleDeleteTeam}
+        />
+        <div className={style.block}>
+          <Row gutter={40}>
+            <Col span="8">
+              <Card>
+                <Statistic
+                  prefix={<Group className="mr-xs" color="#f0850a" />}
+                  title={t('成员数')}
+                  value={data.user_count}
+                  valueStyle={{ color: '#f0850a' }}
+                />
+              </Card>
+            </Col>
+            <Col span="8">
+              <Card>
+                <Statistic
+                  prefix={<Project className="mr-xs" color="3d98ff" />}
+                  title={t('项目数')}
+                  value={data.team_count}
+                  valueStyle={{ color: '#3d98ff' }}
+                />
+              </Card>
+            </Col>
+            <Col span="8">
+              <Card>
+                <Statistic
+                  prefix={<Package className="mr-xs" color="3f8600" />}
+                  title={t('代码库')}
+                  value={data.repo_count}
+                  valueStyle={{ color: '#3f8600' }}
+                />
+              </Card>
+            </Col>
+          </Row>
+        </div>
+        <div>
+          <h3 className="mb-md mt-lg">{t('团队信息')}</h3>
+          <Form
+            {...layout}
+            style={{ width: '530px' }}
+            form={form}
+            initialValues={data}
+            onFinish={onFinish}
           >
-            <div>{data.org_sid} <Copy text={data.org_sid} /></div>
-          </Form.Item>
-          <Form.Item
-            label={t('团队名称')}
-            name="name"
-            rules={
-              isEdit
-                ? [{ required: true, message: t('团队名称为必填项') }]
-                : undefined
-            }
-          >
-            {isEdit ? <Input width={400} /> : <>{data.name}</>}
-          </Form.Item>
-          <Form.Item label={t('团队地址')} name="address">
-            {isEdit ? <Input width={400} /> : <>{data.address}</>}
-          </Form.Item>
-          <Form.Item
-            label={t('团队负责人')}
-            name="owner"
-            rules={
-              isEdit
-                ? [{ required: true, message: t('团队负责人为必填项') }]
-                : undefined
-            }
-          >
-            {isEdit ? <Input width={400} /> : <>{data.owner}</>}
-          </Form.Item>
-          {getExtraTeamInfos?.(isEdit, data)}
-          <Form.Item label={t('创建人')} name="creator">
-            <span>{data.creator?.nickname ?? ''}</span>
-          </Form.Item>
-          <Form.Item label={t('创建时间')} name="created_time">
-            <span>{formatDateTime(data.created_time)}</span>
-          </Form.Item>
-          <div style={{ marginTop: '30px' }}>
-            {isEdit ? (
-              <>
-                <Button type="primary" htmlType="submit" key="submit">
-                  {t('确定')}
+            <Form.Item
+              label={t('团队唯一标识')}
+            >
+              <div>{data.org_sid} <Copy text={data.org_sid} /></div>
+            </Form.Item>
+            <Form.Item
+              label={t('团队名称')}
+              name="name"
+              rules={
+                isEdit
+                  ? [{ required: true, message: t('团队名称为必填项') }]
+                  : undefined
+              }
+            >
+              {isEdit ? <Input width={400} /> : <>{data.name}</>}
+            </Form.Item>
+            <Form.Item label={t('团队地址')} name="address">
+              {isEdit ? <Input width={400} /> : <>{data.address}</>}
+            </Form.Item>
+            <Form.Item
+              label={t('团队负责人')}
+              name="owner"
+              rules={
+                isEdit
+                  ? [{ required: true, message: t('团队负责人为必填项') }]
+                  : undefined
+              }
+            >
+              {isEdit ? <Input width={400} /> : <>{data.owner}</>}
+            </Form.Item>
+            {getExtraTeamInfos?.(isEdit, data)}
+            <Form.Item label={t('创建人')} name="creator">
+              <span>{data.creator?.nickname ?? ''}</span>
+            </Form.Item>
+            <Form.Item label={t('创建时间')} name="created_time">
+              <span>{formatDateTime(data.created_time)}</span>
+            </Form.Item>
+            <div style={{ marginTop: '30px' }}>
+              {isEdit ? (
+                <>
+                  <Button type="primary" htmlType="submit" key="submit">
+                    {t('确定')}
+                  </Button>
+                  <Button className=" ml-12" htmlType="button" onClick={reset}>
+                    {t('取消')}
+                  </Button>
+                </>
+              ) : (
+                <Button
+                  key="edit"
+                  htmlType="button"
+                  type="primary"
+                  onClick={() => {
+                    setIsEdit(true);
+                    form.resetFields();
+                  }}
+                >
+                  {t('编辑')}
                 </Button>
-                <Button className=" ml-12" htmlType="button" onClick={reset}>
-                  {t('取消')}
-                </Button>
-              </>
-            ) : (
-              <Button
-                key="edit"
-                htmlType="button"
-                type="primary"
-                onClick={() => {
-                  setIsEdit(true);
-                  form.resetFields();
-                }}
-              >
-                {t('编辑')}
-              </Button>
-            )}
-            {ENABLE_DELETE_ORG && deletable && <Button className=" ml-12" htmlType="button" onClick={onDelete} danger type='primary'>
-              {t('禁用团队')}
-            </Button>}
-          </div>
-        </Form>
+              )}
+              {ENABLE_DELETE_ORG && deletable && <Button className=" ml-12" htmlType="button" onClick={onDelete} danger type='primary'>
+                {t('禁用团队')}
+              </Button>}
+            </div>
+          </Form>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

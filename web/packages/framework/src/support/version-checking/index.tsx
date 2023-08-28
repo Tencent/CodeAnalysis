@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { getMountedApps } from 'single-spa';
-import { message } from 'coding-oa-uikit';
+import { message } from 'tdesign-react';
 import xorBy from 'lodash/xorBy';
 import toInteger from 'lodash/toInteger';
 
@@ -49,24 +49,20 @@ const VersionChecking = () => {
       const mountedApps = getMountedApps();
       const diffs = await check(mountedApps);
       if (diffs.length > 0) {
-        message.open({
-          type: 'info',
-          content: (
-            <span
-              style={{
-                display: 'inline-block',
-                verticalAlign: 'middle',
-                marginLeft: '8px',
-              }}
-            >
-              发现新版本，自动更新中...
-            </span>
-          ),
-          duration: 1,
+        message.info({
+          content: <span
+            style={{
+              display: 'inline-block',
+              verticalAlign: 'middle',
+              marginLeft: '8px',
+            }}
+          >
+            发现新版本，自动更新中...
+          </span>,
           onClose: () => {
             window.location.reload();
           },
-          icon: <img width="24px" height="24px" src="/static/favicon.ico" />,
+          icon: <img width="28px" height="28px" src="/static/images/favicon.ico" />,
         });
       }
     })();

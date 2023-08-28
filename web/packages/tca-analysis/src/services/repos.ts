@@ -9,7 +9,8 @@
  * author           luochunlan@coding.net
  * create at        2020-10-23
  */
-import { MAIN_SERVER_API, get, post, put, del } from '@plat/api';
+import { get, post, put, del } from '@plat/api';
+import { MAIN_SERVER_API } from '@src/constant/api';
 import { getMainBaseURL } from './common';
 
 /**

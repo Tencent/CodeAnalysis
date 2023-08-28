@@ -1,0 +1,36 @@
+.rule-info {
+
+  padding: 10px;
+
+  span {
+    word-wrap: break-word;
+  }
+  
+  .row {
+    display: flex;
+    margin-bottom: 20px;
+
+    .col {
+      flex: 0 0 114px;
+      color: #8592a5;
+    }
+
+    .desc {
+      width: 340px;
+      word-wrap: break-word;
+      white-space: pre-wrap;
+    }
+  }
+}
+
+.error-tip {
+  color: #eb333f;
+
+  &:hover {
+    color: red;
+  }
+}
+
+.disabled-rule {
+  color: #646f80;
+}

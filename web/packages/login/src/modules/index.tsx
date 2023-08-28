@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { t } from '@src/utils/i18n';
-import { Tabs } from 'tdesign-react';
+import { Tabs, Card, Space } from 'tdesign-react';
+import { LockOnIcon } from 'tdesign-icons-react';
 
 // 项目内
 import { clearLoginLocalStorage } from '@src/utils';
@@ -20,13 +21,16 @@ const Login = () => {
   return (
     <div className={s.login}>
       <div className={s.content}>
-        <Tabs className={s.body} defaultValue={LoginTypeEnum.NORMAL_SIGNIN} size="large">
-          <TabPanel label={t('腾讯云代码分析账号密码登录')} value={LoginTypeEnum.NORMAL_SIGNIN}>
-            <NormalSignin />
-          </TabPanel>
-        </Tabs>
+        <Card className={s.body} shadow bordered={false} footer={<Language />}>
+          <Tabs defaultValue={LoginTypeEnum.NORMAL_SIGNIN} >
+            <TabPanel label={
+              <Space size={2} ><LockOnIcon size={20} style={{ marginBottom: 2 }} /> {t('账号登录')}</Space>
+            } value={LoginTypeEnum.NORMAL_SIGNIN}>
+              <NormalSignin />
+            </TabPanel>
+          </Tabs>
+        </Card>
       </div>
-      <Language />
     </div>
   );
 };

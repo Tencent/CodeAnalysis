@@ -182,7 +182,118 @@ export const ARCHIVE_JOB_MORE_SEARCH_FIELDS: SearchFormField[] = [
 /** 归档分析记录整体的筛选字段 */
 const ARCHIVE_JOB_ALL_SEARCH_FIELDS = ARCHIVE_JOB_SEARCH_FIELDS.concat(ARCHIVE_JOB_MORE_SEARCH_FIELDS);
 
+/** 归档分析记录筛选项 */
 export const ARCHIVE_JOB_FILTER_FIELDS: FilterField[] = flatMap(ARCHIVE_JOB_ALL_SEARCH_FIELDS, (filter: any) => {
+  if (filter.formType === 'rangepicker') {
+    return [{
+      name: `${filter.name}_gte`,
+      type: filter.type,
+    }, {
+      name: `${filter.name}_lte`,
+      type: filter.type,
+    }];
+  }
+  return {
+    name: filter.name,
+    type: filter.type,
+  };
+});
+
+/** 子任务执行状态 */
+export enum TaskStateEnum {
+  /** 等待中 */
+  WAITING,
+  /** 执行中 */
+  RUNNING,
+  /** 已结束 */
+  CLOSED,
+  /** 创建中 */
+  CREATING,
+  /** ACKING */
+  ACKING,
+}
+
+/** 子任务执行状态 kv */
+export const TASK_STATE_CHOICES = {
+  [TaskStateEnum.WAITING]: t('等待中'),
+  [TaskStateEnum.RUNNING]: t('执行中'),
+  [TaskStateEnum.CLOSED]: t('已结束'),
+  [TaskStateEnum.CREATING]: t('创建中'),
+  [TaskStateEnum.ACKING]: t('ACKING'),
+};
+
+
+/** 子任务执行状态 options */
+export const TASK_STATE_OPTIONS = generateOptions(TASK_STATE_CHOICES, true);
+
+/** 归档分析子任务基础筛选项 */
+export const ARCHIVE_TASK_SEARCH_FIELDS: SearchFormField[] = [{
+  label: '范围',
+  name: 'date',
+  type: 'time',
+  formType: 'datepicker',
+  defaultValue: DEFAULT_ARCHIVE_JOB_FILTER.date,
+}, {
+  name: 'period',
+  type: 'string',
+  formType: 'select',
+  options: PERIOD_OPTIONS,
+  defaultValue: DEFAULT_ARCHIVE_JOB_FILTER.period,
+}, {
+  name: 'task_name',
+  label: t('任务名称'),
+  type: 'string',
+  formType: 'input',
+  placeholder: t('可输入工具名称'),
+}, {
+  name: 'result_code_gte',
+  label: '结果码',
+  placeholder: '结果码 >=',
+  type: 'number',
+  formType: 'input',
+}, {
+  name: 'result_code_lte',
+  placeholder: '结果码 <=',
+  type: 'number',
+  formType: 'input',
+}];
+
+/** 归档分析子任务高级筛选项 */
+export const ARCHIVE_TASK_MORE_SEARCH_FIELDS: SearchFormField[] = [
+  {
+    name: 'job',
+    label: 'Job ID',
+    type: 'number',
+    formType: 'input',
+    placeholder: 'Job ID',
+  },
+  {
+    name: 'result_msg',
+    label: t('详情'),
+    type: 'string',
+    formType: 'input',
+    placeholder: t('结果详情'),
+  },
+  {
+    name: 'create_time',
+    label: '开始',
+    type: 'string',
+    formType: 'rangepicker',
+    placeholder: '任务开始日期',
+  }, {
+    name: 'end_time',
+    label: '结束',
+    type: 'string',
+    formType: 'rangepicker',
+    placeholder: '任务结束日期',
+  },
+];
+
+/** 归档分析记录整体的筛选字段 */
+const ARCHIVE_TASK_ALL_SEARCH_FIELDS = ARCHIVE_TASK_SEARCH_FIELDS.concat(ARCHIVE_TASK_MORE_SEARCH_FIELDS);
+
+/** 归档分析记录筛选项 */
+export const ARCHIVE_TASK_FILTER_FIELDS: FilterField[] = flatMap(ARCHIVE_TASK_ALL_SEARCH_FIELDS, (filter: any) => {
   if (filter.formType === 'rangepicker') {
     return [{
       name: `${filter.name}_gte`,

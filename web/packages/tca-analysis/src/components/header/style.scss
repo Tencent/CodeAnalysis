@@ -2,8 +2,7 @@
 
 .header {
     display: flex;
-    align-items: flex-start;
-    // margin-bottom: 20px;
+    margin-bottom: 20px;
 
     .back-icon {
         width: 28px;
@@ -44,5 +43,7 @@
   .description {
     color: $grey-7;
     margin-top: 6px;
+    width: 90%;
+    white-space: normal;
   }
 }

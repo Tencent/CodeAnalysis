@@ -1,0 +1,118 @@
+// 字体相关token
+:root {
+  // 字体family token
+  --tca-font-family: PingFang SC, Microsoft YaHei, Arial Regular;
+  --tca-font-family-medium: PingFang SC, Microsoft YaHei, Arial Medium;
+
+  // 字体大小 token
+  --tca-font-size-link-small: 12px;
+  --tca-font-size-link-medium: 14px;
+  --tca-font-size-link-large: 16px;
+  --tca-font-size-mark-small: 12px;
+  --tca-font-size-mark-medium: 14px;
+  --tca-font-size-body-small: 12px;
+  --tca-font-size-body-medium: 14px;
+  --tca-font-size-body-large: 16px;
+  --tca-font-size-title-small: 14px;
+  --tca-font-size-title-medium: 16px;
+  --tca-font-size-title-large: 20px;
+  --tca-font-size-headline-small: 24px;
+  --tca-font-size-headline-medium: 28px;
+  --tca-font-size-headline-large: 36px;
+  --tca-font-size-display-medium: 48px;
+  --tca-font-size-display-large: 64px;
+
+  // 字体行高 token
+  --tca-line-height-link-small: 20px;
+  --tca-line-height-link-medium: 22px;
+  --tca-line-height-link-large: 24px;
+  --tca-line-height-mark-small: 20px;
+  --tca-line-height-mark-medium: 22px;
+  --tca-line-height-body-small: 20px;
+  --tca-line-height-body-medium: 22px;
+  --tca-line-height-body-large: 24px;
+  --tca-line-height-title-small: 22px;
+  --tca-line-height-title-medium: 24px;
+  --tca-line-height-title-large: 28px;
+  --tca-line-height-headline-small: 32px;
+  --tca-line-height-headline-medium: 36px;
+  --tca-line-height-headline-large: 44px;
+  --tca-line-height-display-medium: 56px;
+  --tca-line-height-display-large: 72px;
+  // font token
+  --tca-font-link-small: var(--tca-font-size-link-small) /
+    var(--tca-line-height-link-small) var(--tca-font-family);
+  --tca-font-link-medium: var(--tca-font-size-link-medium) /
+    var(--tca-line-height-link-medium) var(--tca-font-family);
+  --tca-font-link-large: var(--tca-font-size-link-large) /
+    var(--tca-line-height-link-large) var(--tca-font-family);
+  --tca-font-mark-small: 600 var(--tca-font-size-mark-small) /
+    var(--tca-line-height-mark-small) var(--tca-font-family);
+  --tca-font-mark-medium: 600 var(--tca-font-size-mark-medium) /
+    var(--tca-line-height-mark-medium) var(--tca-font-family);
+  --tca-font-body-small: var(--tca-font-size-body-small) /
+    var(--tca-line-height-body-small) var(--tca-font-family);
+  --tca-font-body-medium: var(--tca-font-size-body-medium) /
+    var(--tca-line-height-body-medium) var(--tca-font-family);
+  --tca-font-body-large: var(--tca-font-size-body-large) /
+    var(--tca-line-height-body-large) var(--tca-font-family);
+  --tca-font-title-small: 600 var(--tca-font-size-title-small) /
+    var(--tca-line-height-title-small) var(--tca-font-family);
+  --tca-font-title-medium: 600 var(--tca-font-size-title-medium) /
+    var(--tca-line-height-title-medium) var(--tca-font-family);
+  --tca-font-title-large: 600 var(--tca-font-size-title-large) /
+    var(--tca-line-height-title-large) var(--tca-font-family);
+  --tca-font-headline-small: 600 var(--tca-font-size-headline-small) /
+    var(--tca-line-height-headline-small) var(--tca-font-family);
+  --tca-font-headline-medium: 600 var(--tca-font-size-headline-medium) /
+    var(--tca-line-height-headline-medium) var(--tca-font-family);
+  --tca-font-headline-large: 600 var(--tca-font-size-headline-large) /
+    var(--tca-line-height-headline-large) var(--tca-font-family);
+  --tca-font-display-medium: 600 var(--tca-font-size-display-medium) /
+    var(--tca-line-height-display-medium) var(--tca-font-family);
+  --tca-font-display-large: 600 var(--tca-font-size-display-large) /
+    var(--tca-line-height-display-large) var(--tca-font-family);
+}
+
+// td
+:root{
+  // 字体family token
+  --td-font-family: var(--tca-font-family);
+  --td-font-family-medium: var(--tcat-font-family-medium);
+
+  // 字体大小 token
+  --td-font-size-link-small: var(--tca-font-size-link-small);
+  --td-font-size-link-medium: var(--tca-font-size-link-medium);
+  --td-font-size-link-large: var(--tca-font-size-link-large);
+  --td-font-size-mark-small: var(--tca-font-size-mark-small);
+  --td-font-size-mark-medium: var(--tca-font-size-mark-medium);
+  --td-font-size-body-small: var(--tca-font-size-body-small);
+  --td-font-size-body-medium: var(--tca-font-size-body-medium);
+  --td-font-size-body-large: var(--tca-font-size-body-large);
+  --td-font-size-title-small: var(--tca-font-size-title-small);
+  --td-font-size-title-medium: var(--tca-font-size-title-medium);
+  --td-font-size-title-large: var(--tca-font-size-title-large);
+  --td-font-size-headline-small: var(--tca-font-size-headline-small);
+  --td-font-size-headline-medium: var(--tca-font-size-headline-medium);
+  --td-font-size-headline-large: var(--tca-font-size-headline-large);
+  --td-font-size-display-medium: var(--tca-font-size-display-medium);
+  --td-font-size-display-large: var(--tca-font-size-display-large);
+
+  // 字体行高 token
+  --td-line-height-link-small:var(--tca-line-height-link-small);
+  --td-line-height-link-medium:var(--tca-line-height-link-medium);
+  --td-line-height-link-large:var(--tca-line-height-link-large);
+  --td-line-height-mark-small:var(--tca-line-height-mark-small);
+  --td-line-height-mark-medium:var(--tca-line-height-mark-medium);
+  --td-line-height-body-small:var(--tca-line-height-body-small);
+  --td-line-height-body-medium:var(--tca-line-height-body-medium);
+  --td-line-height-body-large:var(--tca-line-height-body-large);
+  --td-line-height-title-small:var(--tca-line-height-title-small);
+  --td-line-height-title-medium:var(--tca-line-height-title-medium);
+  --td-line-height-title-large:var(--tca-line-height-title-large);
+  --td-line-height-headline-small:var(--tca-line-height-headline-small);
+  --td-line-height-headline-medium:var(--tca-line-height-headline-medium);
+  --td-line-height-headline-large: var(--tca-line-height-headline-large);
+  --td-line-height-display-medium: var(--tca-line-height-display-medium);
+  --td-line-height-display-large: var(--tca-line-height-display-large);
+}

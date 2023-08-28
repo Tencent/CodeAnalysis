@@ -1,0 +1,64 @@
+@import "@tencent/micro-frontend-shared/style/color.scss";
+
+.desc-tooltip {
+  max-width: 370px;
+
+  .example {
+    margin-left: 16px;
+  }
+}
+
+.dir-path {
+  white-space: normal;
+  overflow-wrap: break-word;
+  word-break: break-all;
+}
+
+.question-icon {
+  color: #919daf;
+  font-size: 16px;
+  margin-top: -2px;
+  margin-left: 2px;
+  transition: all 0.3s;
+  cursor: pointer;
+
+  &:hover {
+    color: $grey-8;
+  }
+}
+
+
+.danger-action {
+  color: red;
+}
+
+.import-modal {
+  .path-content {
+    height: 308px;
+    overflow: auto;
+    padding: 0;
+    background-color: #f5f7fa;
+
+    li {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px 0 12px;
+      height: 44px;
+      border-bottom: 1px solid #e6e9ed;
+
+      span {
+        &:first-child {
+          flex: 1;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+  
+        &:nth-child(2) {
+          width: 80px;
+          margin: 10px;
+        }
+      }   
+    }
+  }
+}

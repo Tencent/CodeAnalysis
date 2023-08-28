@@ -3,16 +3,15 @@ import { useDispatch } from 'react-redux';
 import { useDispatchStore } from '@tencent/micro-frontend-shared/hook-store';
 import { useFetch } from '@tencent/micro-frontend-shared/hooks';
 import { LogMgr } from '@tencent/micro-frontend-shared/util';
-import Loading from '@tencent/micro-frontend-shared/component/loading';
+import Loading from '@tencent/micro-frontend-shared/tdesign-component/loading';
 
 // 项目内
 import Constant from '@src/reducer/constant';
 import { UserAction, SET_USERINFO } from '@src/store/user';
-import { setPvUserInfo } from '@src/utils/matomo';
 import { getUserAvatarURL } from '@src/utils';
 import { UserAPI } from '@plat/api';
-import { initRequest } from '@plat/util';
-import { useVersionChangeRedirect } from '@plat/hooks';
+import { initRequest, reportUserInfo } from '@plat/util';
+import { useNotification, useVersionChangeRedirect } from '@plat/hooks';
 
 /**
  * 初始化页面时的一些请求
@@ -22,6 +21,7 @@ const LoadInitService: FC = ({ children }: any) => {
   const dispatch = useDispatchStore<UserAction>();
   const storeDispatch = useDispatch();
 
+  useNotification();
   useVersionChangeRedirect();
 
   useEffect(() => {
@@ -62,7 +62,7 @@ const LoadInitService: FC = ({ children }: any) => {
         });
         clearTimeout(timer);
       }, 200);
-      setPvUserInfo(userinfo);
+      reportUserInfo(userinfo);
     },
   });
 

@@ -17,9 +17,12 @@ export const TOOL_SEARCH_FIELDS: SearchFormField[] = [{
 }, {
   name: 'scope',
   type: 'number',
-  formType: 'checkbox',
-  formValue: ToolScopeEnum.CUSTOM,
-  placeholder: t('仅查看自定义工具'),
+  formType: 'select',
+  label: t('工具类型'),
+  options: [{
+    label: '自定义',
+    value: ToolScopeEnum.CUSTOM,
+  }],
 }];
 
 /** 高级搜索的筛选字段 */
