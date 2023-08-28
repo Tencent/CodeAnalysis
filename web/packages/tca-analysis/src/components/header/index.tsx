@@ -4,8 +4,7 @@
 
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-// import { isString } from 'lodash';
-import ArrowLeft from 'coding-oa-uikit/lib/icon/ArrowLeft';
+import { ArrowLeftIcon } from 'tdesign-icons-react';
 
 import style from './style.scss';
 
@@ -15,11 +14,12 @@ interface HeaderProps {
   title: string | React.ReactNode; // 标题
   description?: string;  // 标题描述
   onBack?: () => void; // 返回
+  extraContent?: React.ReactNode; // 按钮等额外内容
 }
 
 const Header = (props: HeaderProps) => {
   const history = useHistory();
-  const { link, title, size, description, onBack } = props;
+  const { link, title, size, description, onBack, extraContent } = props;
 
   return (
     <div className={style.header}>
@@ -28,10 +28,10 @@ const Header = (props: HeaderProps) => {
           className={style.backIcon}
           onClick={() => (onBack ? onBack() : history.push(link))}
         >
-          <ArrowLeft />
+          <ArrowLeftIcon />
         </span>
       )}
-      <div>
+      <div style={{ flex: 1 }}>
         {
           size === 'small' ? (
             <h4 className={style.smallTitle}>{title}</h4>
@@ -41,11 +41,11 @@ const Header = (props: HeaderProps) => {
         }
         {
           description && (
-            <span className={style.description}>{description}</span>
+            <div className={style.description}>{description}</div>
           )
         }
       </div>
-
+      {extraContent}
     </div>
   );
 };

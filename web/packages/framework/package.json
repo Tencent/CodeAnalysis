@@ -35,6 +35,7 @@
     "react-hotkeys-hook": "^3.4.3",
     "react-redux": "^7.2.5",
     "single-spa": "^5.9.3",
+    "tdesign-react": "^1.2.3",
     "universal-cookie": "^4.0.4"
   },
   "devDependencies": {

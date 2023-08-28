@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { get } from 'lodash';
 import { t } from '@src/utils/i18n';
-import { Row, Col, Tabs, DialogPlugin, MessagePlugin } from 'tdesign-react';
+import { DialogPlugin, MessagePlugin } from 'tdesign-react';
 import Search from '@tencent/micro-frontend-shared/tdesign-component/search';
+import PageHeader from '@tencent/micro-frontend-shared/tdesign-component/page-header';
 import { useURLParams, useFetch } from '@tencent/micro-frontend-shared/hooks';
 
 // 项目内
@@ -10,11 +11,8 @@ import { getTeams, putTeamStatus } from '@src/services/teams';
 
 // 模块内
 import { TEAM_FILTER_FIELDS as filterFields, TEAM_SEARCH_FIELDS, TeamStateEnum } from './constants';
-import s from '@src/modules/style.scss';
 import ProjectTeamTable from './team-table';
 import { DeleteModal } from '@tencent/micro-frontend-shared/tdesign-component/modal';
-
-const { TabPanel } = Tabs;
 
 const ProjectTeams = () => {
   const { filter, currentPage, pageSize, searchParams } = useURLParams(filterFields);
@@ -58,13 +56,7 @@ const ProjectTeams = () => {
 
   return (
     <>
-      <Row className={s.header} align="middle">
-        <Col flex="auto">
-          <Tabs defaultValue="project" size="large">
-            <TabPanel label={t('项目列表')} value="project" />
-          </Tabs>
-        </Col>
-      </Row>
+      <PageHeader title={t('项目列表')} description="平台各团队创建的项目列表" />
       <Search fields={TEAM_SEARCH_FIELDS} loading={false} searchParams={searchParams} />
       <div className="px-lg">
         <ProjectTeamTable

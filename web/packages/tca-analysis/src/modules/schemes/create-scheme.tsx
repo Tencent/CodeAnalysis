@@ -10,18 +10,19 @@
  * create at        2020-10-28
  */
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { pick, find, trim } from 'lodash';
-import { Form, Input, Checkbox, Radio, Row, Col, Select, message, Modal, Tag } from 'coding-oa-uikit';
+import { Form, Input, Checkbox, Radio, Select, message, Dialog, Tag } from 'tdesign-react';
 import cn from 'classnames';
 
-import { SCAN_LIST } from './constants';
+import { SCAN_LIST } from '@src/constant';
 import { createScheme, copyScheme } from '@src/services/schemes';
 import NodeTag from '@src/components/node-tag';
 
 import style from './style.scss';
 
 const { Option } = Select;
+const { FormItem } = Form;
 
 interface IProps {
   orgSid: string;
@@ -38,8 +39,26 @@ interface IProps {
 
 const CreatSchemeModal = (props: IProps) => {
   const { orgSid, teamName, visible, tags, languages, schemeList, repoId, templates, onClose, callback } = props;
-
   const [form] = Form.useForm();
+
+  useEffect(() => {
+    if (visible) {
+      form.reset();
+    }
+  }, [visible, form]);
+
+  /**
+   * 表单保存操作
+   * @param formData 参数
+   */
+  const onSubmitHandle = () => {
+    form.validate().then((result: any) => {
+      if (result === true) {
+        const data = form?.getFieldsValue(true);
+        onFinish(data);
+      }
+    });
+  };
 
   const onFinish = (data: any) => {
     if (find(schemeList, { name: trim(data.name) })) {
@@ -76,189 +95,146 @@ const CreatSchemeModal = (props: IProps) => {
   };
 
   return (
-    <Modal
-      title="新建分析方案"
-      width={520}
+    <Dialog
+      header="新建分析方案"
       className={style.schemeCreateModal}
       visible={visible}
-      onCancel={onClose}
-      afterClose={() => form.resetFields()}
-      onOk={() => {
-        form.validateFields().then(onFinish);
-      }}
+      onClose={onClose}
+      onConfirm={onSubmitHandle}
     >
-      <Form layout="vertical" form={form} onFinish={onFinish}>
-        <Form.Item
+      <Form layout="vertical" labelAlign='top' form={form} resetType='initial'>
+        <FormItem
           name="createType"
           label="创建方式"
-          initialValue="create"
+          initialData="create"
           rules={[{ required: true, message: '请选择创建方式' }]}
         >
-          <Radio.Group
-            onChange={(e: any) => {
-              form.resetFields();
-              form.setFieldsValue({ createType: e.target.value });
-            }}
-          >
-            <Row gutter={12}>
-              <Col span={7}>
-                <Radio value="create">普通创建</Radio>
-              </Col>
-              <Col span={7}>
-                <Radio value="template">模板创建</Radio>
-              </Col>
-              <Col span={10}>
-                <Radio value="copy">复制已有分析方案</Radio>
-              </Col>
-            </Row>
+          <Radio.Group>
+            <Radio value="create">普通创建</Radio>
+            <Radio value="template">模板创建</Radio>
+            <Radio value="copy">复制已有分析方案</Radio>
           </Radio.Group>
-        </Form.Item>
-        <Form.Item
-          noStyle
-          shouldUpdate={(prevValues, currentValues) => prevValues.createType !== currentValues.createType
-          }
-        >
+        </FormItem>
+        <Form.FormItem shouldUpdate={(prev, next) => prev.createType !== next.createType}>
           {({ getFieldValue }) => {
             switch (getFieldValue('createType')) {
               case 'copy':
-                return (
-                  <>
-                    <Form.Item
-                      name="ref_scheme"
-                      rules={[
-                        { required: true, message: '请选择分析方案ID' },
-                      ]}
-                    >
-                      <Select
-                        placeholder="请选择分析方案"
-                        style={{ width: '100%' }}
-                      >
-                        {schemeList.map(item => (
-                          <Option key={item.id} value={item.id}>
-                            {item.name}
-                          </Option>
-                        ))}
-                      </Select>
-                    </Form.Item>
-                    <Form.Item
-                      name="name"
-                      label="方案名称"
-                      rules={[
-                        { required: true, message: '请输入方案名称' },
-                        { max: 127, message: '方案名称过长' },
-                      ]}
-                    >
-                      <Input placeholder="请输入方案名称" />
-                    </Form.Item>
-                  </>
-                );
-
-              case 'template':
-                return (
-                  <>
-                    <Form.Item
-                      name="ref_scheme"
-                      rules={[{ required: true, message: '请选择模板' }]}
-                    >
-                      <Select
-                        placeholder="请选择模板"
-                        style={{ width: '100%' }}
-                        optionLabelProp="label"
-                        onChange={(value: string, item: any) => form.setFieldsValue({ name: item.label })
-                        }
-                      >
-                        {templates.map(item => (
-                          <Option key={item.id} value={item.id} label={item.name}>
-                            <div className={style.tmpl}>
-                              <span>{item.name}</span>
-                              <Tag className={cn(style.tmplTag, { [style.sys]: item.scheme_key === 'public' })}
-                              >{item.scheme_key === 'public' ? '系统' : '自定义'}</Tag>
-                            </div>
-                          </Option>
-                        ))}
-                      </Select>
-                    </Form.Item>
-                    <Form.Item
-                      name="name"
-                      label="方案名称"
-                      rules={[
-                        { required: true, message: '请输入方案名称' },
-                        { max: 127, message: '方案名称过长' },
-                      ]}
-                    >
-                      <Input placeholder="请输入方案名称" />
-                    </Form.Item>
-                  </>
-                );
-              default:
-                return (
-                  <>
-                    <Form.Item
-                      name="name"
-                      label="方案名称"
-                      rules={[
-                        { required: true, message: '请输入方案名称' },
-                        { max: 127, message: '方案名称过长' },
-                      ]}
-                    >
-                      <Input placeholder="请输入方案名称" />
-                    </Form.Item>
-
-                    <Form.Item
-                      name="languages"
-                      label="分析语言"
-                      rules={[{ required: true, message: '请选择分析语言' }]}
-                    >
-                      <Select
-                        placeholder="请选择分析语言"
-                        style={{ width: '100%' }}
-                        mode="multiple"
-                        optionFilterProp="children"
-                        showArrow
-                      >
-                        {languages.map(item => (
-                          <Option key={item.name} value={item.name}>
-                            {item.display_name}
-                          </Option>
-                        ))}
-                      </Select>
-                    </Form.Item>
-                    <NodeTag
-                      name="tag"
-                      label="运行环境"
-                      rules={[{ required: true, message: '请选择运行环境' }]}
-                      tags={tags}
+                return (<>
+                  <FormItem
+                    name="ref_scheme"
+                    rules={[
+                      { required: true, message: '请选择分析方案ID' },
+                    ]}
+                  >
+                    <Select
+                      placeholder="请选择分析方案"
+                      style={{ width: '100%' }}
+                      options={schemeList}
+                      keys={{
+                        value: 'id',
+                        label: 'name',
+                      }}
                     />
-                    <Form.Item
-                      name="funcList"
-                      label="功能开启"
-                      initialValue={[
-                        'lint_enabled',
-                        'cc_scan_enabled',
-                        'dup_scan_enabled',
-                        'cloc_scan_enabled',
-                      ]}
-                      style={{ marginBottom: 0 }}
+                  </FormItem>
+                  <FormItem
+                    name="name"
+                    label="方案名称"
+                    rules={[
+                      { required: true, message: '请输入方案名称' },
+                      { max: 127, message: '方案名称过长' },
+                    ]}
+                  >
+                    <Input placeholder="请输入方案名称" />
+                  </FormItem>
+                </>);
+              case 'template':
+                return (<>
+                  <FormItem
+                    name="ref_scheme"
+                    rules={[{ required: true, message: '请选择模板' }]}
+                  >
+                    <Select
+                      placeholder="请选择模板"
+                      style={{ width: '100%' }}
+                      onChange={(value: string, item: any) => form.setFieldsValue({ name: item.label })}
                     >
-                      <Checkbox.Group>
-                        <Row gutter={16}>
-                          {SCAN_LIST.map((item: any) => (
-                            <Col span={6} key={item.value}>
-                              <Checkbox value={item.value}>
-                                {item.label}
-                              </Checkbox>
-                            </Col>
-                          ))}
-                        </Row>
-                      </Checkbox.Group>
-                    </Form.Item>
-                  </>
-                );
+                      {templates.map(item => (
+                        <Option key={item.id} value={item.id} label={item.name} className={style.optionWrapper}>
+                          <div className={style.tmpl}>
+                            <span>{item.name}</span>
+                            <Tag className={cn(style.tmplTag, { [style.sys]: item.scheme_key === 'public' })}
+                            >{item.scheme_key === 'public' ? '系统' : '自定义'}</Tag>
+                          </div>
+                        </Option>
+                      ))}
+                    </Select>
+                  </FormItem>
+                  <FormItem
+                    name="name"
+                    label="方案名称"
+                    rules={[
+                      { required: true, message: '请输入方案名称' },
+                      { max: 127, message: '方案名称过长' },
+                    ]}
+                  >
+                    <Input placeholder="请输入方案名称" />
+                  </FormItem>
+                </>);
+              default:
+                return (<>
+                  <FormItem
+                    name="name"
+                    label="方案名称"
+                    rules={[
+                      { required: true, message: '请输入方案名称' },
+                      { max: 127, message: '方案名称过长' },
+                    ]}
+                  >
+                    <Input placeholder="请输入方案名称" />
+                  </FormItem>
+                  <FormItem
+                    name="languages"
+                    label="分析语言"
+                    rules={[{ required: true, message: '请选择分析语言' }]}
+                  >
+                    <Select
+                      placeholder="请选择分析语言"
+                      style={{ width: '100%' }}
+                      multiple
+                      filterable
+                      showArrow
+                      options={languages}
+                      keys={{
+                        value: 'name',
+                        label: 'display_name',
+                      }}
+                    />
+                  </FormItem>
+                  <NodeTag
+                    name="tag"
+                    label="运行环境"
+                    rules={[{ required: true, message: '请选择运行环境' }]}
+                    tags={tags}
+                  />
+                  <FormItem
+                    name="funcList"
+                    label="功能开启"
+                    initialData={[
+                      'lint_enabled',
+                      'cc_scan_enabled',
+                      'dup_scan_enabled',
+                      'cloc_scan_enabled',
+                    ]}
+                    style={{ marginBottom: 0 }}
+                  >
+                    <Checkbox.Group options={SCAN_LIST} />
+                  </FormItem>
+                </>);
             }
           }}
-        </Form.Item>
+        </Form.FormItem>
       </Form>
-    </Modal>
+    </Dialog>
   );
 };
 

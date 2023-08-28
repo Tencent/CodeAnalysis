@@ -39,6 +39,7 @@
     "@types/react-router-redux": "^4.0.50",
     "@types/react-virtualized-auto-sizer": "^1.0.0",
     "@types/react-window": "^1.8.2",
+    "ahooks": "^3.7.8",
     "classnames": "^2.3.1",
     "coding-oa-uikit": "^4.3.10",
     "d3": "5.16.0",
@@ -67,7 +68,8 @@
     "react-virtualized-auto-sizer": "^1.0.5",
     "react-window": "^1.8.6",
     "redux": "^4.0.5",
-    "universal-cookie": "^4.0.4"
+    "universal-cookie": "^4.0.4",
+    "tdesign-react": "^1.1.17"
   },
   "devDependencies": {
     "@tencent/micro-frontend-webpack": "^1.0.0"

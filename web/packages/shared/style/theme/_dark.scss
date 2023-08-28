@@ -1,0 +1,180 @@
+:root[theme-mode="dark"] {
+  // 文字 & 图标 颜色
+  --tca-font-white-1: rgba(255, 255, 255, 90%);
+  --tca-font-white-2: rgba(255, 255, 255, 55%);
+  --tca-font-white-3: rgba(255, 255, 255, 35%);
+  --tca-font-white-4: rgba(255, 255, 255, 22%);
+  --tca-font-gray-1: rgba(0, 0, 0, 90%);
+  --tca-font-gray-2: rgba(0, 0, 0, 60%);
+  --tca-font-gray-3: rgba(0, 0, 0, 40%);
+  --tca-font-gray-4: rgba(0, 0, 0, 26%);
+
+  // 基础颜色
+  --tca-brand-color: var(--tca-brand-color-8);     // 色彩-品牌-可操作
+  --tca-warning-color: var(--tca-warning-color-5); // 色彩-功能-警告
+  --tca-error-color: var(--tca-error-color-6);     // 色彩-功能-失败
+  --tca-success-color: var(--tca-success-color-5); // 色彩-功能-成功
+
+  // 基础颜色的扩展 用于 hover / 聚焦 / 禁用 / 点击 等状态
+  --tca-brand-color-hover: var(--tca-brand-color-7);     // hover态
+  --tca-brand-color-focus: var(--tca-brand-color-2);     // focus态，包括鼠标和键盘
+  --tca-brand-color-active: var(--tca-brand-color-9);    // 点击态
+  --tca-brand-color-disabled: var(--tca-brand-color-3);  // 禁用态
+  --tca-brand-color-light: var(--tca-brand-color-1);     // 浅色的选中态
+  --tca-brand-color-light-hover: var(--tca-brand-color-2);
+
+  // 警告色扩展
+  --tca-warning-color-hover: var(--tca-warning-color-4);
+  --tca-warning-color-focus: var(--tca-warning-color-2);
+  --tca-warning-color-active: var(--tca-warning-color-6);
+  --tca-warning-color-disabled: var(--tca-warning-color-3);
+  --tca-warning-color-light: var(--tca-warning-color-1);
+  --tca-warning-color-light-hover: var(--tca-warning-color-2);
+
+  // 失败/错误色扩展
+  --tca-error-color-hover: var(--tca-error-color-5);
+  --tca-error-color-focus: var(--tca-error-color-2);
+  --tca-error-color-active: var(--tca-error-color-7);
+  --tca-error-color-disabled: var(--tca-error-color-3);
+  --tca-error-color-light: var(--tca-error-color-1);
+  --tca-error-color-light-hover: var(--tca-error-color-2);
+
+  // 成功色扩展
+  --tca-success-color-hover: var(--tca-success-color-4);
+  --tca-success-color-focus: var(--tca-success-color-2);
+  --tca-success-color-active: var(--tca-success-color-6);
+  --tca-success-color-disabled: var(--tca-success-color-3);
+  --tca-success-color-light: var(--tca-success-color-1);
+  --tca-success-color-light-hover: var(--tca-success-color-2);
+
+  // 遮罩
+  --tca-mask-active: rgba(0, 0, 0, 40%); // 遮罩-弹出
+  --tca-mask-disabled: rgba(0, 0, 0, 60%); // 遮罩-禁用
+
+  // 背景色
+  --tca-bg-color-page: var(--tca-gray-color-14);                        // 色彩 - page
+  --tca-bg-color-container: var(--tca-gray-color-13);                   // 色彩 - 容器
+  --tca-bg-color-container-hover: var(--tca-gray-color-12);             // 色彩 - 容器 - hover
+  --tca-bg-color-container-active: var(--tca-gray-color-10);            // 色彩 - 容器 - active
+  --tca-bg-color-container-select: var(--tca-gray-color-9);             // 色彩 - 容器 - select
+  --tca-bg-color-secondarycontainer: var(--tca-gray-color-12);          // 色彩 - 次级容器
+  --tca-bg-color-secondarycontainer-hover: var(--tca-gray-color-11);    // 色彩 - 次级容器 - hover
+  --tca-bg-color-secondarycontainer-active: var(--tca-gray-color-9);   // 色彩 - 次级容器 - active
+  --tca-bg-color-component: var(--tca-gray-color-11);                   // 色彩  - 组件
+  --tca-bg-color-component-hover: var(--tca-gray-color-10);             // 色彩 - 组件 - hover
+  --tca-bg-color-component-active: var(--tca-gray-color-9);             // 色彩 - 组件 - active
+  --tca-bg-color-secondarycomponent: var(--tca-gray-color-10);          // 色彩 - 次级组件
+  --tca-bg-color-secondarycomponent-hover: var(--tca-gray-color-9);    // 色彩 - 次级组件 - hover
+  --tca-bg-color-secondarycomponent-active: var(--tca-gray-color-8);   // 色彩 - 次级组件 - active
+  --tca-bg-color-component-disabled: var(--tca-gray-color-12);          // 色彩 - 组件 - disabled
+
+  // 特殊组件背景色，目前只用于 button、input 组件多主题场景，浅色主题下固定为白色，深色主题下为 transparent 适配背景颜色
+  --tca-bg-color-specialcomponent: transparent;
+
+  // 文本颜色
+  --tca-text-color-primary: var(--tca-font-white-1);      // 色彩-文字-主要
+  --tca-text-color-secondary: var(--tca-font-white-2);    // 色彩-文字-次要
+  --tca-text-color-placeholder: var(--tca-font-white-3);  // 色彩-文字-占位符/说明
+  --tca-text-color-disabled: var(--tca-font-white-4);    // 色彩-文字-禁用
+  --tca-text-color-anti: #fff;                      // 色彩-文字-反色
+  --tca-text-color-brand: var(--tca-brand-color-8);           // 色彩-文字-品牌
+  --tca-text-color-link: var(--tca-brand-color-8);            // 色彩-文字-链接
+
+  // 分割线
+  --tca-border-level-1-color: var(--tca-gray-color-11);
+  --tca-component-stroke: var(--tca-gray-color-11);
+  // 边框
+  --tca-border-level-2-color: var(--tca-gray-color-9);
+  --tca-component-border: var(--tca-gray-color-9);
+
+  // 基础/下层 投影 hover 使用的组件包括：表格 /
+  --tca-shadow-1: 0 4px 6px rgba(0, 0, 0, 6%), 0 1px 10px rgba(0, 0, 0, 8%), 0 2px 4px rgba(0, 0, 0, 12%);
+  // 中层投影 下拉 使用的组件包括：下拉菜单 / 气泡确认框 / 选择器 /
+  --tca-shadow-2: 0 8px 10px rgba(0, 0, 0, 12%), 0 3px 14px rgba(0, 0, 0, 10%), 0 5px 5px rgba(0, 0, 0, 16%);
+  // 上层投影（警示/弹窗）使用的组件包括：全局提示 / 消息通知
+  --tca-shadow-3: 0 16px 24px rgba(0, 0, 0, 14%), 0 6px 30px rgba(0, 0, 0, 12%), 0 8px 10px rgba(0, 0, 0, 20%);
+  // 内投影 用于弹窗类组件（气泡确认框 / 全局提示 / 消息通知）的内描边
+
+  --tca-shadow-inset-top: inset 0 .5px 0 #5e5e5e;
+  --tca-shadow-inset-right: inset .5px 0 0 #5e5e5e;
+  --tca-shadow-inset-bottom: inset 0 -.5px 0 #5e5e5e;
+  --tca-shadow-inset-left: inset -.5px 0 0 #5e5e5e;
+
+  // table 特定阴影
+  --tca-table-shadow-color: rgba(0, 0, 0, 55%);
+
+  // 滚动条颜色
+  --tca-scrollbar-color: rgba(255, 255, 255, 10%);
+  // 滚动条悬浮颜色（ hover ）
+  --tca-scrollbar-hover-color: rgba(255, 255, 255, 30%);
+  // 滚动条轨道颜色，不能是带透明度，否则纵向滚动时，横向滚动条会穿透
+  --tca-scroll-track-color: #333;
+}
+
+// td
+:root[theme-mode="dark"] {
+  --td-brand-color-1: var(--tca-brand-color-1);
+  --td-brand-color-2: var(--tca-brand-color-2);
+  --td-brand-color-3: var(--tca-brand-color-3);
+  --td-brand-color-4: var(--tca-brand-color-4);
+  --td-brand-color-5: var(--tca-brand-color-5);
+  --td-brand-color-6: var(--tca-brand-color-6);
+  --td-brand-color-7: var(--tca-brand-color-7);
+  --td-brand-color-8: var(--tca-brand-color-8);
+  --td-brand-color-9: var(--tca-brand-color-9);
+  --td-brand-color-10: var(--tca-brand-color-10);
+  --td-warning-color-1: var(--tca-warning-color-1);
+  --td-warning-color-2: var(--tca-warning-color-2);
+  --td-warning-color-3: var(--tca-warning-color-3);
+  --td-warning-color-4: var(--tca-warning-color-4);
+  --td-warning-color-5: var(--tca-warning-color-5);
+  --td-warning-color-6: var(--tca-warning-color-6);
+  --td-warning-color-7: var(--tca-warning-color-7);
+  --td-warning-color-8: var(--tca-warning-color-8);
+  --td-warning-color-9: var(--tca-warning-color-9);
+  --td-warning-color-10: var(--tca-warning-color-10);
+  --td-error-color-1: var(--tca-error-color-1);
+  --td-error-color-2: var(--tca-error-color-2);
+  --td-error-color-3: var(--tca-error-color-3);
+  --td-error-color-4: var(--tca-error-color-4);
+  --td-error-color-5: var(--tca-error-color-5);
+  --td-error-color-6: var(--tca-error-color-6);
+  --td-error-color-7: var(--tca-error-color-7);
+  --td-error-color-8: var(--tca-error-color-8);
+  --td-error-color-9: var(--tca-error-color-9);
+  --td-error-color-10: var(--tca-error-color-10);
+  --td-success-color-1: var(--tca-success-color-1);
+  --td-success-color-2: var(--tca-success-color-2);
+  --td-success-color-3: var(--tca-success-color-3);
+  --td-success-color-4: var(--tca-success-color-4);
+  --td-success-color-5: var(--tca-success-color-5);
+  --td-success-color-6: var(--tca-success-color-6);
+  --td-success-color-7: var(--tca-success-color-7);
+  --td-success-color-8: var(--tca-success-color-8);
+  --td-success-color-9: var(--tca-success-color-9);
+  --td-success-color-10: var(--tca-success-color-10);
+  --td-gray-color-1: var(--tca-gray-color-1);
+  --td-gray-color-2: var(--tca-gray-color-2);
+  --td-gray-color-3: var(--tca-gray-color-3);
+  --td-gray-color-4: var(--tca-gray-color-4);
+  --td-gray-color-5: var(--tca-gray-color-5);
+  --td-gray-color-6: var(--tca-gray-color-6);
+  --td-gray-color-7: var(--tca-gray-color-7);
+  --td-gray-color-8: var(--tca-gray-color-8);
+  --td-gray-color-9: var(--tca-gray-color-9);
+  --td-gray-color-10: var(--tca-gray-color-10);
+  --td-gray-color-11: var(--tca-gray-color-11);
+  --td-gray-color-12: var(--tca-gray-color-12);
+  --td-gray-color-13: var(--tca-gray-color-13);
+  --td-gray-color-14: var(--tca-gray-color-14);
+
+  // 文字 & 图标 颜色
+  --td-font-white-1: var(--tca-font-white-1);
+  --td-font-white-2: var(--tca-font-white-2);
+  --td-font-white-3: var(--tca-font-white-3);
+  --td-font-white-4: var(--tca-font-white-4);
+  --td-font-gray-1: var(--tca-font-gray-1);
+  --td-font-gray-2: var(--tca-font-gray-2);
+  --td-font-gray-3: var(--tca-font-gray-3);
+  --td-font-gray-4: var(--tca-font-gray-4);
+}

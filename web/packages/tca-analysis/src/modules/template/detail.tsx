@@ -8,15 +8,15 @@
  * 模板详情
  */
 import React, { useEffect, useState } from 'react';
+import cn from 'classnames';
 import { useHistory, useParams } from 'react-router-dom';
 import { get, toNumber } from 'lodash';
-import { Tabs } from 'coding-oa-uikit';
-import ArrowLeft from 'coding-oa-uikit/lib/icon/ArrowLeft';
+import { Tabs, Loading, Button, message, Tag } from 'tdesign-react';
+import Header from '@src/components/header';
 
 import { getTmplRouter } from '@src/utils/getRoutePath';
 import { getLanguages, getTags } from '@src/services/schemes';
-import { getTmplInfo } from '@src/services/template';
-import Loading from '@src/components/loading';
+import { getTmplInfo, syncScheme } from '@src/services/template';
 
 import BaseInfo from './baseinfo';
 import CodeLint from './code-lint';
@@ -24,20 +24,22 @@ import CodeMetrics from './code-metrics';
 import PathFilter from './path-filter';
 import SchemeList from './schemes';
 import Permission from './permission';
+import SyncModal from './sync-modal';
 
 import style from './style.scss';
 
-const { TabPane } = Tabs;
+const { TabPanel } = Tabs;
 
 const Schemes = () => {
   const history = useHistory();
   const params: any = useParams();
-  const { orgSid, teamName }: any = params;
+  const { orgSid }: any = params;
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [data, setData] = useState({}) as any;
   const [tags, setTags] = useState([]);
   const [languages, setLanguages] = useState([]);
+  const [syncVsb, setSyncVsb] = useState(false);
 
   const tab = params.tabs || 'basic';
   const tmplId = toNumber(params.id);
@@ -48,13 +50,9 @@ const Schemes = () => {
       setTags(get(await getTags(orgSid), 'results', []));
       setLanguages(get(await getLanguages(), 'results', []));
     })();
-  }, []);
+  }, [orgSid]);
 
   useEffect(() => {
-    getInfo();
-  }, [tmplId]);
-
-  const getInfo = () => {
     setLoading(true);
     getTmplInfo(orgSid, tmplId)
       .then((res: any) => {
@@ -63,81 +61,110 @@ const Schemes = () => {
       .finally(() => {
         setLoading(false);
       });
+  }, [orgSid, tmplId]);
+
+  if (loading) {
+    return <div className={style.loading}><Loading size='small' /></div>;
+  }
+
+  const onSync = (keys: any) => {
+    if (keys.length > 0) {
+      syncScheme(orgSid, tmplId, {
+        sync_lint_build_conf: true,
+        sync_lint_rule_conf: true,
+        schemes: keys,
+      }).then(() => {
+        message.success('同步成功');
+        setSyncVsb(false);
+      });
+    } else {
+      message.warning('请选择需要同步的分析方案');
+    }
   };
 
   return (
-    <div className={style.scheme}>
-      {loading ? (
-        <Loading />
-      ) : (
-          <div className={style.container}>
-            <div className={style.header}>
-              <span
-                className={style.backIcon}
-                onClick={() => history.push(getTmplRouter(orgSid, teamName))}
-              >
-                <ArrowLeft />
-              </span>
-              <div style={{ flex: 1 }}>
-                <h3 className={style.title}>{data.name}</h3>
-                <p className={style.desc}>{data.description}</p>
-              </div>
-            </div>
-
-            <Tabs
-              activeKey={tab}
-              className={style.tabs}
-              onChange={(key) => {
-                history.push(`${getTmplRouter(orgSid, teamName)}/${tmplId}/${key}`);
-              }}
+    <div>
+      <div className={style.container}>
+        <Header
+          link={getTmplRouter(orgSid)}
+          title={<div className={style.tmplTitle}>
+            {data.name}
+            <Tag
+              size='small'
+              className={cn(style.tmplTag, { [style.sys]: data.scheme_key === 'public' })}
             >
-              <TabPane tab="基础配置" key="basic">
-                <BaseInfo
-                  orgSid={orgSid}
-                  isSysTmpl={isSysTmpl}
-                  data={data}
-                  tmplId={tmplId}
-                  tags={tags}
-                  languages={languages}
-                  callback={data => setData(data)}
-                />
-              </TabPane>
-              <TabPane tab="规则配置" key="codelint">
-                <CodeLint
-                  orgSid={orgSid}
-                  teamName={teamName}
-                  isSysTmpl={isSysTmpl}
-                  languages={languages}
-                  tmplInfo={data}
-                />
-              </TabPane>
-              <TabPane tab="度量配置" key="codemetric">
-                <CodeMetrics orgSid={orgSid} isSysTmpl={isSysTmpl} tmplId={tmplId} />
-              </TabPane>
-              <TabPane tab="过滤配置" key="filters">
-                <PathFilter orgSid={orgSid} isSysTmpl={isSysTmpl} tmplId={tmplId} />
-              </TabPane>
-              {!isSysTmpl && (
-                <TabPane tab="分析方案" key="schemes">
-                  <SchemeList
-                    teamName={teamName}
-                    orgSid={orgSid}
-                    tmplId={tmplId}
-                  />
-                </TabPane>
-              )}
-              {!isSysTmpl && (
-                <TabPane tab="权限管理" key="permconf">
-                  <Permission
-                    orgSid={orgSid}
-                    isSysTmpl={isSysTmpl}
-                    tmplId={tmplId}
-                  />
-                </TabPane>
-              )}
-            </Tabs>
-          </div>
-      )}
+              {data.scheme_key === 'public' ? '系统模板' : '自定义模板'}
+            </Tag>
+          </div>}
+          description={data.description}
+          extraContent={!isSysTmpl && <Button
+            theme="primary"
+            onClick={() => {
+              setSyncVsb(true);
+            }}
+          >
+            同步
+          </Button>}
+        />
+        {!isSysTmpl && <SyncModal
+            onlySync
+            tmplId={tmplId}
+            visible={syncVsb}
+            onClose={() => setSyncVsb(false)}
+            onOk={onSync}
+          />}
+        <Tabs
+          value={tab}
+          className={style.tabs}
+          size='large'
+          onChange={(key) => {
+            history.push(`${getTmplRouter(orgSid)}/${tmplId}/${key}`);
+          }}
+        >
+          <TabPanel label="基础配置" value="basic">
+            <BaseInfo
+              orgSid={orgSid}
+              isSysTmpl={isSysTmpl}
+              data={data}
+              tmplId={tmplId}
+              tags={tags}
+              languages={languages}
+              callback={data => setData(data)}
+            />
+          </TabPanel>
+          <TabPanel label="规则配置" value="codelint">
+            <CodeLint
+              orgSid={orgSid}
+              isSysTmpl={isSysTmpl}
+              languages={languages}
+              tmplInfo={data}
+            />
+          </TabPanel>
+          <TabPanel label="度量配置" value="codemetric">
+            <CodeMetrics orgSid={orgSid} isSysTmpl={isSysTmpl} tmplId={tmplId} />
+          </TabPanel>
+          <TabPanel label="过滤配置" value="filters">
+            <PathFilter orgSid={orgSid} isSysTmpl={isSysTmpl} tmplId={tmplId} />
+          </TabPanel>
+          {!isSysTmpl && (
+            <TabPanel label="分析方案" value="schemes">
+              <SchemeList
+                orgSid={orgSid}
+                tmplId={tmplId}
+              />
+            </TabPanel>
+          )}
+          {!isSysTmpl && (
+            <TabPanel label="权限管理" value="permconf">
+              <Permission
+                orgSid={orgSid}
+                isSysTmpl={isSysTmpl}
+                tmplId={tmplId}
+              />
+            </TabPanel>
+          )}
+        </Tabs>
+      </div>
     </div>
   );
 };

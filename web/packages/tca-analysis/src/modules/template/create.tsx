@@ -11,15 +11,15 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { pick, trim } from 'lodash';
-import { Form, Input, Checkbox, Row, Col, Select, message, Modal } from 'coding-oa-uikit';
+import { Form, Input, Textarea, Checkbox, Row, Col, Select, message, Dialog } from 'tdesign-react';
 
-import { SCAN_LIST } from '../schemes/constants';
+import { SCAN_LIST } from '@src/constant';
 import { createTmpl } from '@src/services/template';
 import NodeTag from '@src/components/node-tag';
 
 import style from './style.scss';
 
-const { Option } = Select;
+const { FormItem } = Form;
 
 interface IProps {
   orgSid: string;
@@ -35,43 +35,54 @@ const CreatSchemeModal = (props: IProps) => {
 
   const [form] = Form.useForm();
 
-  const onFinish = (data: any) => {
-    const { funcList = [] } = data;
-    createTmpl(orgSid, {
-      ...pick(data, ['name', 'languages', 'tag', 'description']),
-      ...SCAN_LIST.map(item => ({ [item.value]: funcList.includes(item.value) })).reduce(
-        (acc, cur) => ({ ...acc, ...cur }),
-        {},
-      ),
-      build_cmd: null,
-      envs: null,
-      pre_cmd: null,
-      name: trim(data.name),
-    }).then((res: any) => {
-      message.success('创建成功');
-      onReset();
-      history.push(`${location.pathname}/${res.id}`);
+  /**
+   * 表单保存操作
+   * @param formData 参数
+   */
+  const onSubmitHandle = () => {
+    form.validate().then((result: any) => {
+      if (result === true) {
+        const data = form.getFieldsValue(true);
+        const { funcList = [] } = data;
+        createTmpl(orgSid, {
+          ...pick(data, ['name', 'languages', 'tag', 'description']),
+          ...SCAN_LIST.map(item => ({ [item.value]: funcList.includes(item.value) })).reduce(
+            (acc, cur) => ({ ...acc, ...cur }),
+            {},
+          ),
+          build_cmd: null,
+          envs: null,
+          pre_cmd: null,
+          name: trim(data.name),
+        }).then((res: any) => {
+          message.success('创建成功');
+          onReset();
+          history.push(`${location.pathname}/${res.id}`);
+        });
+      }
     });
   };
 
   const onReset = () => {
-    form.resetFields();
+    form.reset();
     onClose();
   };
 
   return (
-    <Modal
-      title="创建分析模板"
-      width={520}
+    <Dialog
+      header="创建分析模板"
       className={style.schemeCreateModal}
       visible={visible}
-      onCancel={onReset}
-      onOk={() => {
-        form.validateFields().then(onFinish);
-      }}
+      onClose={onReset}
+      onConfirm={onSubmitHandle}
     >
-      <Form layout="vertical" form={form} onFinish={onFinish}>
-        <Form.Item
+      <Form
+        layout="vertical"
+        form={form}
+        labelAlign='top'
+        resetType='initial'
+      >
+        <FormItem
           name="name"
           label="模板名称"
           rules={[
@@ -80,8 +91,8 @@ const CreatSchemeModal = (props: IProps) => {
           ]}
         >
           <Input placeholder="请输入模板名称" />
-        </Form.Item>
-        <Form.Item
+        </FormItem>
+        <FormItem
           name="languages"
           label="分析语言"
           rules={[{ required: true, message: '请选择分析语言' }]}
@@ -89,33 +100,32 @@ const CreatSchemeModal = (props: IProps) => {
           <Select
             placeholder="请选择分析语言"
             style={{ width: '100%' }}
-            mode='multiple'
-            optionFilterProp='children'
+            multiple
             showArrow
-          >
-            {languages.map(item => (
-              <Option key={item.name} value={item.name}>
-                {item.display_name}
-              </Option>
-            ))}
-          </Select>
-        </Form.Item>
+            filterable
+            options={languages}
+            keys={{
+              value: 'name',
+              label: 'display_name',
+            }}
+          />
+        </FormItem>
         <NodeTag
           name="tag"
           label="运行环境"
           rules={[{ required: true, message: '请选择运行环境' }]}
           tags={tags}
         />
-        <Form.Item
+        <FormItem
           name="description"
           label="模板描述"
         >
-          <Input.TextArea rows={3} placeholder="请输入模板描述" />
-        </Form.Item>
-        <Form.Item
+          <Textarea rows={3} placeholder="请输入模板描述" />
+        </FormItem>
+        <FormItem
           name="funcList"
           label="功能开启"
-          initialValue={[
+          initialData={[
             'lint_enabled',
             'cc_scan_enabled',
             'dup_scan_enabled',
@@ -134,9 +144,9 @@ const CreatSchemeModal = (props: IProps) => {
               ))}
             </Row>
           </Checkbox.Group>
-        </Form.Item>
+        </FormItem>
       </Form>
-    </Modal >
+    </Dialog>
   );
 };
 

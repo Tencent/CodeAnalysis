@@ -1,0 +1,88 @@
+// size/margin/padding相关 token
+:root {
+  --tca-size-1: 2px;
+  --tca-size-2: 4px;
+  --tca-size-3: 6px;
+  --tca-size-4: 8px;
+  --tca-size-5: 12px;
+  --tca-size-6: 16px;
+  --tca-size-7: 20px;
+  --tca-size-8: 24px;
+  --tca-size-9: 28px;
+  --tca-size-10: 32px;
+  --tca-size-11: 36px;
+  --tca-size-12: 40px;
+  --tca-size-13: 48px;
+  --tca-size-14: 56px;
+  --tca-size-15: 64px;
+  --tca-size-16: 72px;
+
+  //全局 component 组件尺寸高度相关 token
+  --tca-comp-size-xxxs: var(--tca-size-6);
+  --tca-comp-size-xxs: var(--tca-size-7);
+  --tca-comp-size-xs: var(--tca-size-8);
+  --tca-comp-size-s: var(--tca-size-9);
+  --tca-comp-size-m: var(--tca-size-10);
+  --tca-comp-size-l: var(--tca-size-11);
+  --tca-comp-size-xl: var(--tca-size-12);
+  --tca-comp-size-xxl: var(--tca-size-13);
+  --tca-comp-size-xxxl: var(--tca-size-14);
+  --tca-comp-size-xxxxl: var(--tca-size-15);
+  --tca-comp-size-xxxxxl: var(--tca-size-16);
+
+  //全局 popup 弹出层整体边距 token
+  --tca-pop-padding-s: var(--tca-size-2);
+  --tca-pop-padding-m: var(--tca-size-3);
+  --tca-pop-padding-l: var(--tca-size-4);
+  --tca-pop-padding-xl: var(--tca-size-5);
+  --tca-pop-padding-xxl: var(--tca-size-6);
+
+  //全局 component 组件左右边距 token
+  --tca-comp-paddingLR-xxs: var(--tca-size-1);
+  --tca-comp-paddingLR-xs: var(--tca-size-2);
+  --tca-comp-paddingLR-s: var(--tca-size-4);
+  --tca-comp-paddingLR-m: var(--tca-size-5);
+  --tca-comp-paddingLR-l: var(--tca-size-6);
+  --tca-comp-paddingLR-xl: var(--tca-size-8);
+  --tca-comp-paddingLR-xxl: var(--tca-size-10);
+
+  //全局 component 组件上下边距 token
+  --tca-comp-paddingTB-xxs: var(--tca-size-1);
+  --tca-comp-paddingTB-xs: var(--tca-size-2);
+  --tca-comp-paddingTB-s: var(--tca-size-4);
+  --tca-comp-paddingTB-m: var(--tca-size-5);
+  --tca-comp-paddingTB-l: var(--tca-size-6);
+  --tca-comp-paddingTB-xl: var(--tca-size-8);
+  --tca-comp-paddingTB-xxl: var(--tca-size-10);
+
+  //全局 component 组件间距 token
+  --tca-comp-margin-xxs: var(--tca-size-1);
+  --tca-comp-margin-xs: var(--tca-size-2);
+  --tca-comp-margin-s: var(--tca-size-4);
+  --tca-comp-margin-m: var(--tca-size-5);
+  --tca-comp-margin-l: var(--tca-size-6);
+  --tca-comp-margin-xl: var(--tca-size-7);
+  --tca-comp-margin-xxl: var(--tca-size-8);
+  --tca-comp-margin-xxxl: var(--tca-size-10);
+  --tca-comp-margin-xxxxl: var(--tca-size-12);
+}
+
+:root{
+  // td
+  --td-size-1: var(--tca-size-1);
+  --td-size-2: var(--tca-size-2);
+  --td-size-3: var(--tca-size-3);
+  --td-size-4: var(--tca-size-4);
+  --td-size-5: var(--tca-size-5);
+  --td-size-6: var(--tca-size-6);
+  --td-size-7: var(--tca-size-7);
+  --td-size-8: var(--tca-size-8);
+  --td-size-9: var(--tca-size-9);
+  --td-size-10: var(--tca-size-10);
+  --td-size-11: var(--tca-size-11);
+  --td-size-12: var(--tca-size-12);
+  --td-size-13: var(--tca-size-13);
+  --td-size-14: var(--tca-size-14);
+  --td-size-15: var(--tca-size-15);
+  --td-size-16: var(--tca-size-16);
+}

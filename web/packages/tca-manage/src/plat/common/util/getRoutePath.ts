@@ -20,7 +20,7 @@ export const getJobRouter = (jobInfo: any, archived = false) => {
   const repoId = jobInfo?.project?.repo_id;
   const projectId = jobInfo?.project?.id;
   const jobId = jobInfo?.id;
-  return `/t/${orgSid}/p/${teamName}/code-analysis/repos/${repoId}/projects/${projectId}/scan-history/${jobId}/detail${archived ? '?archived=true' : ''}`;
+  return `/t/${orgSid}/p/${teamName}/code-analysis/repos/${repoId}/projects/${projectId}/scan-history/${jobId}/detail${archived ? '?jobArchived=true' : ''}`;
 };
 
 /** 获取工具详情路由地址 */
