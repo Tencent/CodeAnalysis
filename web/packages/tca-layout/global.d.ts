@@ -3,7 +3,7 @@ declare module '*.svg';
 declare module '*.png';
 declare module '*.ico';
 
-declare const ENABLE_MANAGE: boolean;
+declare const ENABLE_MANAGE: string;
 
 interface Window {
   microHook: WindowMicroHook;

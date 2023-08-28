@@ -3,52 +3,72 @@
   left: 0;
   top: 0;
   display: flex;
-  padding: 128px 0 80px;
+  padding: 80px;
   width: 100%;
-  min-width: 400px;
   height: 100%;
-
   justify-content: center;
-  background: no-repeat 50% url(./assets/login_bg.png);
-  background-size: cover;
+  background-color: #edf0f599;
+  overflow: hidden;
+
+  &::before, &::after{
+    content: "";
+    position: absolute;
+    z-index: 9;
+  }
+
+  &::before {
+    width: 800px;
+    height: 800px;
+    right: -400px;
+    top: -400px;
+    background: radial-gradient(50% 50% at 50% 50%, #126bff 0, rgba(253, 216, 53, 0) 100%);
+    opacity: 0.1;
+  }
+
+  &::after {
+    width: 1280px;
+    height: 1280px;
+    left: -640px;
+    bottom: -640px;
+    background: radial-gradient(50% 50% at 50% 50%, #126bff 0, rgba(18, 107, 255, 0) 100%);
+    opacity: 0.1;
+  }
 
   .content {
-    width: 400px;
+    margin: 0 auto;
+    position: relative;
+    width: 100%;
+    z-index: 10;
     .body {
-      min-height: 400px;
-      background-color: transparent;
-      
+      position: absolute;
+      width: 400px;
+      top: 45%;
+      left: 50%;
+      transform: translate(-50%, -50%);
       :global(.t-tabs__nav-scroll) {
         justify-content: center;
       }
+      :global(.t-card__footer-wrapper) {
+        text-align: center;
+      }
     }
-  }
-
-  .language-dropdown {
-    position: absolute;
-    bottom: 30px;
-    left: 50%;
-    text-align: center;
-    transform: translateX(-50%);
-  }
-
-  .iconQQ {
-    width: 11px;
-    height: 12px;
-    background-image: url(./assets/login.svg);
-    background-position: 41.42% 83.33%;
-    background-size: 1636.3636363636363% 1050%;
-    background-repeat: no-repeat;
-    margin-right: 5px;
-    display: inline-block;
+    
   }
 }
 
 .login-box {
-  text-align: center;
-  height: 300px;
-  margin: 16px 0px;
+  height: 314px;
+  margin-top: 16px;
   padding: 20px;
+  &.login-box-center{
+    text-align: center;
+  }
+}
+
+.bind-content{
+  .login-box{
+    margin-top: 0;
+  }
 }
 
 .associate-items {
@@ -68,4 +88,12 @@
 
 .hidden {
   display: none;
+}
+
+.footer {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  bottom: 20px;
+  text-align: center;
 }

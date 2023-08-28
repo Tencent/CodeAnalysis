@@ -20,6 +20,13 @@ export const getProjectListRouter = (orgSid: string) => `/t/${orgSid}/projects`;
 export const getProjectOverviewRouter = (orgSid: string, name: string) => `/t/${orgSid}/p/${name}/profile`;
 
 /**
+ * 获取团队基础路由前缀
+ * @param orgSid
+ * @param name
+ */
+export const getGroupBaseRouter = (orgSid: string) => `/t/${orgSid}`;
+
+/**
  * 获取基础路由前缀
  * @param orgSid
  * @param name
@@ -92,12 +99,9 @@ export const getSchemeBlankRouter = (
   schemeId?: string | number,
 ) => formatBlankHref(getSchemeRouter(orgSid, name, repoId, schemeId));
 
-export const getTmplRouter = (orgSid: string, teamName: string) => `${getBaseRouter(orgSid, teamName)}/template`;
+export const getTmplRouter = (orgSid: string) => `${getGroupBaseRouter(orgSid)}/template`;
 
-export const getTmplBlankRouter = (
-  orgSid: string,
-  teamName: string,
-) => formatBlankHref(getTmplRouter(orgSid, teamName));
+export const getTmplBlankRouter = (orgSid: string) => formatBlankHref(getTmplRouter(orgSid));
 
 /**
  * 工具管理路由

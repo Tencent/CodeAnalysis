@@ -1,7 +1,8 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { t } from '@src/utils/i18n';
-import { Modal, Form, Input, Checkbox, Select, message } from 'coding-oa-uikit';
+import { Form, Input, Checkbox, Select, message } from 'coding-oa-uikit';
+import { Alert, Dialog } from 'tdesign-react';
 
 // 项目内
 import { createTool } from '@src/services/tools';
@@ -47,17 +48,21 @@ const CreateToolModal = ({ orgId, visible, onClose }: CreateToolModalProps) => {
   };
 
   return (
-    <Modal
-      title={t('创建工具')}
+    <Dialog
+      top={40}
+      header={t('创建工具')}
       width={600}
       visible={visible}
-      // okButtonProps={{ loading }}
-      afterClose={form.resetFields}
-      onCancel={onClose}
-      onOk={() => {
+      onClosed={form.resetFields}
+      onClose={onClose}
+      onConfirm={() => {
         form.validateFields().then(onFinish);
       }}
     >
+      <Alert className='tca-mb-md' theme="error"
+        title="扩展集成工具免责声明"
+        message="被扩展集成进腾讯云代码分析系统的任何非官方工具，该类工具对于腾讯云代码分析系统等于黑盒，腾讯云代码分析系统不对该类工具负责，由该类工具方承担所有责任（包括但不限于分发被分析代码，产生代码以及相关信息泄漏）。"
+      />
       <Form {...layout} form={form} initialValues={{ scm_type: RepoTypeEnum.GIT }}>
         <Form.Item
           label={t('工具名称')}
@@ -135,7 +140,7 @@ const CreateToolModal = ({ orgId, visible, onClose }: CreateToolModalProps) => {
           <Checkbox>{t('是否为编译型工具')}</Checkbox>
         </Form.Item>
       </Form>
-    </Modal>
+    </Dialog>
   );
 };
 

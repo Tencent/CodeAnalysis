@@ -1,36 +1,34 @@
 import React, { useEffect, useState } from 'react';
-import { t } from '@src/utils/i18n';
 import CopyToClipboard from 'react-copy-to-clipboard';
-import { Layout, Row, Col, Input, Button, message, notification, Divider, Tag, Popconfirm } from 'coding-oa-uikit';
-import Copy from 'coding-oa-uikit/lib/icon/Copy';
-import Sync from 'coding-oa-uikit/lib/icon/Sync';
+import { Layout, Input, InputAdornment, Button, Popconfirm, Space, message, NotificationPlugin } from 'tdesign-react';
+import { FileCopyIcon, RefreshIcon } from 'tdesign-icons-react';
+
 import { useStateStore } from '@tencent/micro-frontend-shared/hook-store';
+import PageHeader from '@tencent/micro-frontend-shared/tdesign-component/page-header';
 
 // 项目内
+import { getApiDocURL } from '@plat/util';
+
 import { UserState, NAMESPACE } from '@src/store/user';
 import { LevelEnum } from '@src/constant';
 import { userTokenAPI } from '@src/services/user';
-import { getApiDocURL } from '@plat/util';
 
 // 模块内
-import s from '../style.scss';
-
-const { Content } = Layout;
 
 const { get: getUserToken, put: putUserToken } = userTokenAPI();
 
 const UPDATE_TOKEN_NOTIFICATION = (
   <>
     <p>注意：需要更新相关配置，并重启服务。</p>
-    <p className={s.confirmNote}>
+    <p className='tca-fs-12' style={{ color: 'var(--tca-text-color-secondary)' }}>
       可能需要更新Token的位置包括：
       <br />
       - 客户端codedog.ini配置
-      <br/>
+      <br />
       - 客户端config.ini配置
-      <br/>
+      <br />
       - 客户端节点命令行启动参数
-      <br/>
+      <br />
       - 调用腾讯云代码分析API的请求头部参数
     </p>
   </>
@@ -38,7 +36,7 @@ const UPDATE_TOKEN_NOTIFICATION = (
 
 const UPDATE_TOKEN_CONFIRMATION = (<>
   <p>确认要刷新个人令牌吗？</p>
-  <p className={s.confirmNote}>刷新后，所有用到token的地方都需要更新，请谨慎操作！</p>
+  <p className='tca-fs-12' style={{ color: 'var(--tca-text-color-secondary)' }}>刷新后，所有用到token的地方都需要更新，请谨慎操作！</p>
 </>);
 
 const Token = () => {
@@ -52,95 +50,64 @@ const Token = () => {
         setToken(token);
       });
     }
-  }, []);
+  }, [level]);
 
   /** 刷新个人token */
   const onUpdateTokenHandler = () => {
     putUserToken(null).then(({ token }: any) => {
-      notification.success({
-        key: 'update_token',
-        message: 'Token已刷新',
-        description: UPDATE_TOKEN_NOTIFICATION,
-        duration: 10,
+      NotificationPlugin.error({
+        title: 'Token 已刷新',
+        content: UPDATE_TOKEN_NOTIFICATION,
+        duration: 10000,
+        offset: [-24, 24],
+        closeBtn: true,
       });
       setToken(token);
     });
   };
 
   return (
-    <Content className="pa-lg">
-      <div className={s.header}>
-        <Row>
-          <Col flex="auto">
-            <h3 className=" fs-18">{t('个人令牌')}</h3>
-          </Col>
-          <Col flex="200px" className=" text-right" />
-        </Row>
-      </div>
-      <div className="my-md">
-        个人访问令牌可用于访问{' '}
-        <a href={getApiDocURL()} target="_blank" rel="noreferrer">
-          腾讯云代码分析 API
-        </a> 和启动客户端分析
-        ，仅<Tag className={s.userTag} color='volcano'>超级 VIP 用户</Tag>可获取令牌
-      </div>
-      {level === LevelEnum.SUPER_VIP && (
-        <div className="mb-md" style={{ maxWidth: '500px' }}>
-          <Input
-            className="mb-md"
-            addonBefore={'用户名'}
-            value={username}
-            addonAfter={
+    <>
+      <PageHeader title="个人令牌" description={<>
+        个人访问令牌可用于访问 <a href={getApiDocURL()} target="_blank" rel="noreferrer">腾讯云代码分析 API</a>{' '}
+        和启动客户端分析，仅<span style={{ color: 'var(--tca-warning-color)' }}>超级 VIP 用户</span>可获取令牌
+      </>} />
+      <Layout.Content className='tca-pa-lg'>
+        <div style={{ width: 500 }}>
+          {level === LevelEnum.SUPER_VIP && <>
+            <InputAdornment className="tca-mb-md" prepend="用户名" append={<CopyToClipboard
+              text={username}
+              onCopy={() => {
+                message.success(`已复制令牌用户名：${username}`);
+              }}
+            >
+              <Button variant='text' shape="circle" icon={<FileCopyIcon />} />
+            </CopyToClipboard>}>
+              <Input value={username} />
+            </InputAdornment>
+            {token && <InputAdornment prepend="Token" append={<Space size={4}>
               <CopyToClipboard
-                text={username}
+                text={token}
                 onCopy={() => {
-                  message.success(`已复制令牌用户名：${username}`);
+                  message.success(`已复制令牌：${token}`);
                 }}
               >
-                <Button size="small" type="text" shape="circle" icon={<Copy />} />
+                <Button variant='text' shape="circle" icon={<FileCopyIcon />} />
               </CopyToClipboard>
-            }
-          />
-          {token && (
-            <Input.Password
-              addonBefore={'Token'}
-              addonAfter={
-                <>
-                  <CopyToClipboard
-                    text={token}
-                    onCopy={() => {
-                      message.success(`已复制令牌：${token}`);
-                    }}
-                  >
-                    <Button
-                      size="small"
-                      type="text"
-                      shape="circle"
-                      icon={<Copy />}
-                    />
-                  </CopyToClipboard>
-                  <Divider type="vertical" />
-                  <Popconfirm
-                    title={UPDATE_TOKEN_CONFIRMATION}
-                    onConfirm={() => onUpdateTokenHandler()}
-                    okText="确认"
-                    getPopupContainer={() => document.body}
-                  >
-                    <Button
-                      size="small"
-                      type="text"
-                      shape="circle"
-                      icon={<Sync />}
-                    />
-                  </Popconfirm>
-                </>
-              }
-              value={token}
-            />
-          )}
+              <Popconfirm
+                theme='danger'
+                content={UPDATE_TOKEN_CONFIRMATION}
+                onConfirm={onUpdateTokenHandler}
+              >
+                <Button variant='text' shape="circle" icon={<RefreshIcon />} />
+              </Popconfirm>
+            </Space>}>
+              <Input type="password" value={token} />
+            </InputAdornment>}
+          </>}
         </div>
-      )}
-    </Content>
+      </Layout.Content>
+    </>
   );
 };
 

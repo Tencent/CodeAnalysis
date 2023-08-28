@@ -1,5 +1,11 @@
 import { generateOptions } from '../../util';
-import { PLATFORM_CHOICES_DEFAULT, PLATFORM_NAME_ENUM_DEFAULT } from './common-constant';
+import { PLATFORM_CHOICES_DEFAULT, PLATFORM_NAME_ENUM_DEFAULT, PLATFORM_ICON_ENUM_DEFAULT } from './common-constant';
+import codingIcon from './icons/coding.svg';
+import giteeIcon from './icons/gitee.svg';
+import githubIcon from './icons/github.svg';
+import gitlabIcon from './icons/gitlab.svg';
+import tgitIcon from './icons/tgit.svg';
+import defaultIcon from './icons/default.svg';
 
 /** 凭证类型枚举 */
 export enum AuthTypeEnum {
@@ -113,4 +119,14 @@ export const SCM_PLATFORM_NAME_CHOICES = {
     scm_platform_name: ScmPlatformNameEnum.GITLAB,
     auth_type: AuthTypeEnum.OAUTH,
   },
+};
+
+export const SCM_PLATFORM_ICONS = {
+  [ScmPlatformEnum.DEFAULT]: PLATFORM_ICON_ENUM_DEFAULT,
+  [ScmPlatformEnum.GIT_TENCENT]: tgitIcon,
+  [ScmPlatformEnum.CODING]: codingIcon,
+  [ScmPlatformEnum.GITHUB]: githubIcon,
+  [ScmPlatformEnum.GITEE]: giteeIcon,
+  [ScmPlatformEnum.GITLAB]: gitlabIcon,
+  [ScmPlatformEnum.OTHER]: defaultIcon,
 };

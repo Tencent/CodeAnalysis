@@ -2,13 +2,8 @@ import { formatUserAuthAPI, UserAuthAPI } from '@tencent/micro-frontend-shared/t
 import { FetchManager, FetchAPIManager } from '@tencent/micro-frontend-shared/util/fetch';
 
 // 项目内
+import { MAIN_SERVER_API } from '@src/constant/api';
 import { reLogin } from '@src/utils';
-
-export const MAIN_SERVER = '/server/main';
-export const MAIN_SERVER_API = '/server/main/api/v3';
-export const ANALYSIS_SERVER_API = '/server/analysis/api/v3';
-export const ANALYSIS_SERVER_CODEDOG_API = '/api/codedog/analysis/v3/';
-export const LOGIN_SERVER_API = '/server/credential/api/v3';
 
 /** 重新定义 fetch manager */
 export const fetchManager = new FetchManager({

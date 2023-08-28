@@ -1,5 +1,5 @@
 import isEmpty from 'lodash/isEmpty';
-import { message } from 'coding-oa-uikit';
+import { message } from 'tdesign-react';
 
 import Constant, { DEFAULT_MICRO_FRONTEND_API } from '@src/constant';
 import { getMetaEnv, debug, info, warn } from '@src/utils';

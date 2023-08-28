@@ -9,7 +9,7 @@
  */
 
 import React from 'react';
-import { Form } from 'coding-oa-uikit';
+import { Form } from 'tdesign-react';
 
 import Item from './FilterItem';
 
@@ -23,6 +23,8 @@ const Filter = (props: FilterProps & any) => {
         <Form
             {...otherProps}
             layout="inline"
+            labelAlign='left'
+            labelWidth='auto'
         >
             {children}
         </Form>

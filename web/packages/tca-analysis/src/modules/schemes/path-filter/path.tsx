@@ -5,12 +5,10 @@
 // ==============================================================================
 
 import React, { useState, useEffect } from 'react';
-import cn from 'classnames';
-import { isEmpty, pick, isArray } from 'lodash';
+import { isEmpty, pick } from 'lodash';
 import { saveAs } from 'file-saver';
 
-import { Dropdown, Menu, Tooltip, Modal, message, Upload, Button } from 'coding-oa-uikit';
-import EllipsisH from 'coding-oa-uikit/lib/icon/EllipsisH';
+import { message, Radio } from 'tdesign-react';
 
 import {
   getScanDir,
@@ -18,12 +16,14 @@ import {
   delAllScanDir,
   importScanDir,
   getSysPath,
+  delSysPath,
+  addSysPath,
+  updateScanDir,
+  delScanDir,
 } from '@src/services/schemes';
-import { SCAN_TYPES, PATH_TYPES } from '../constants';
-
-import List from './cus-list';
-import SysList from './sys-list';
-import AddModal from './modal';
+import PathFilterList from '@src/components/schemes/path-filter-list';
+import UpdateModal from '@src/components/schemes/path-filter-list/update-modal';
+import PathOperation from '@src/components/schemes/path-filter-list/path-operation';
 
 import style from './style.scss';
 
@@ -46,10 +46,9 @@ const Path = (props: PathProps) => {
   const [cusList, setCusList] = useState([]);
   const [pager, setPager] = useState(initialPager);
   const { pageSize, pageStart } = pager;
+  const [editData, setEditData] = useState<any>({});
 
   const [visible, setVisible] = useState(false);
-  const [importModalVsb, setImportModalVsb] = useState(false);
-  const [importModalData, setImportModalData] = useState([]);
 
   const [sysList, setSysList] = useState([]);
 
@@ -109,41 +108,37 @@ const Path = (props: PathProps) => {
   /**
    * 批量导入路径配置
    */
-  const importScanDirHandle = (dirs: object) => {
+  const importScanDirHandle = (dirs: object, cb: any) => {
     importScanDir(orgSid, teamName, repoId, schemeId, dirs).then((response: any) => {
       message.success(`${response.detail || '导入成功'}`);
       getListData(initialPager.pageStart, pageSize);
-      setImportModalVsb(false);
+      cb(false);
     });
   };
 
   /**
-   * 手动上传处理
-   * @param file
+   * 编辑/添加过滤路径
    */
-  const handleUpload = (file: any) => {
-    if (file) {
-      const reader = new FileReader();
-      reader.readAsText(file, 'UTF-8');
-      reader.onload = function () {
-        setImportModalVsb(true);
-        if (this.result) {
-          setImportModalData(JSON.parse(this.result as string));
-        }
-      };
-    }
-    return false;
+  const handleUpdateScanDir = (data: any) => {
+    const promise = !isEmpty(editData)
+      ? updateScanDir(orgSid, teamName, repoId, schemeId, editData.id, data)
+      : addScanDir(orgSid, teamName, repoId, schemeId, data);
+
+    promise
+      .then(() => {
+        message.success(`${!isEmpty(editData) ? '编辑' : '添加'}成功，若需将改动同步到对应的分析方案请点击同步按钮`, 5000);
+        setVisible(false);
+        getListData(pageStart, pageSize);
+      });
   };
 
   /**
-   * 添加过滤路径
-   * @param data
+   * 删除路径配置
    */
-  const onAdd = (data: any) => {
-    addScanDir(orgSid, teamName, repoId, schemeId, data).then(() => {
+  const onDelScanDir = (id: any) => {
+    delScanDir(orgSid, teamName, repoId, schemeId, id).then(() => {
+      message.success('删除成功');
       getListData(pageStart, pageSize);
-      message.success('添加成功');
-      setVisible(false);
     });
   };
 
@@ -151,131 +146,67 @@ const Path = (props: PathProps) => {
    * 清空过滤路径
    */
   const onDelAll = () => {
-    Modal.confirm({
-      title: '清空自定义过滤路径',
-      content: '确定清空该分析方案的所有过滤路径配置？',
-      onOk: () => {
-        delAllScanDir(orgSid, teamName, repoId, schemeId).then(() => {
-          message.success('清空成功');
-          getListData(initialPager.pageStart, pageSize);
-        });
-      },
+    delAllScanDir(orgSid, teamName, repoId, schemeId).then(() => {
+      message.success('清空成功');
+      getListData(initialPager.pageStart, pageSize);
     });
   };
+
+  const editSysPath = (checked: boolean, id: number) => {
+    const promise = checked
+      ? delSysPath(orgSid, teamName, repoId, schemeId, id)
+      : addSysPath(orgSid, teamName, repoId, schemeId, id);
+    promise.then(() => {
+      message.success(`${checked ? '开启' : '关闭'}成功`);
+      getListData();
+    });
+  };
+
+  const onEditModal = (data: object) => {
+    setVisible(true);
+    setEditData(data);
+  };
+
 
   return (
     <div className={style.path}>
       <div className={style.header}>
-        <div className={style.tab}>
-          <span
-            className={cn(style.tabItem, { [style.active]: tab === 'cus' })}
-            onClick={() => setTab('cus')}
-          >
-            自定义
-          </span>
-          <span
-            className={cn(style.tabItem, { [style.active]: tab === 'sys' })}
-            onClick={() => setTab('sys')}
-          >
-            系统默认
-          </span>
-        </div>
+        <Radio.Group variant="default-filled" defaultValue='cus' onChange={(value: string) => setTab(value)}>
+          <Radio.Button value='cus'>自定义</Radio.Button>
+          <Radio.Button value='sys'>系统默认</Radio.Button>
+        </Radio.Group>
         {tab === 'cus' && (
-          <div className={style.operation}>
-            <Button onClick={() => setVisible(true)}>添加过滤路径</Button>
-            <Dropdown
-              placement='bottomRight'
-              overlay={
-                <Menu className={style.menu} onClick={({ domEvent }) => domEvent.stopPropagation()}>
-                  <Menu.Item key='import'>
-                    <Upload
-                      beforeUpload={handleUpload}
-                      fileList={[]}
-                    >
-                      <Tooltip
-                        placement="left"
-                        overlayClassName={style.importTooltip}
-                        getPopupContainer={() => document.body}
-                        title={
-                          <span>
-                            配置提示：<br />
-                      参数：dir_path表示路径；<br />
-                      path_type表示路径类型，1为通配符，2为正则表达式；<br />
-                      scan_type表示过滤类型，1为只分析，2为只屏蔽；<br />
-                      [{'{"dir_path": "xxx", "path_type": 1, "scan_type": 1}'},…]
-                    </span>
-                        }>
-                        <span>导入路径配置</span>
-                      </Tooltip>
-                    </Upload>
-                  </Menu.Item>
-                  {
-                    !isEmpty(cusList) && ([
-                      <Menu.Item key='export' onClick={exportScanDir}>导出路径配置</Menu.Item>,
-                      <Menu.Item
-                        key='delAll'
-                        onClick={onDelAll}
-                        className={style.delAll}
-                      >一键清空路径配置</Menu.Item>,
-                    ])
-                  }
-                </Menu>
-              }>
-              <Button className={style.more} onClick={(e: any) => e.stopPropagation()}>
-                <EllipsisH />
-              </Button>
-            </Dropdown>
-            <Modal
-              visible={importModalVsb}
-              title='批量添加过滤路径'
-              className={style.importModal}
-              onCancel={() => setImportModalVsb(false)}
-              onOk={(e) => {
-                e.stopPropagation();
-                importScanDirHandle({ scandirs: importModalData });
-              }}
-            >
-              <ul className={style.pathContent}>
-                {
-                  isArray(importModalData) && importModalData.map((item: any, index: number) => (
-                    <li key={`index-${index}`}>
-                      <span title={item.dir_path}>{item.dir_path}</span>
-                      <span>{PATH_TYPES[item.path_type] || item.path_type}</span>
-                      <span>{SCAN_TYPES[item.scan_type] || item.scan_type}</span>
-                    </li>
-                  ))
-                }
-              </ul>
-              <p>共：{importModalData.length}条路径</p>
-            </Modal>
-          </div>
+          <PathOperation
+            onAddModal={() => {
+              setEditData({});
+              setVisible(true);
+            }}
+            exportScanDir={exportScanDir}
+            importScanDir={importScanDirHandle}
+            onDelAll={onDelAll}
+          />
         )}
       </div>
-      <AddModal
-        isEditModal={false}
+      <UpdateModal
         visible={visible}
-        onHide={() => setVisible(false)}
-        onUpdateScanDir={onAdd}
+        onHideModal={() => setVisible(false)}
+        onUpdateScanDir={handleUpdateScanDir}
+        data={editData}
       />
       {tab === 'sys' ? (
-        <SysList
-          orgSid={orgSid}
-          teamName={teamName}
-          repoId={repoId}
-          schemeId={schemeId}
+        <PathFilterList
           data={sysList}
-          getListData={getSysList}
+          isSysPath
+          onEditSysPath={editSysPath}
         />
       ) : (
-          <List
-            orgSid={orgSid}
-            teamName={teamName}
-            repoId={repoId}
-            schemeId={schemeId}
-            data={cusList}
-            pager={pager}
-            getListData={getListData}
-          />
+        <PathFilterList
+          data={cusList}
+          pager={pager}
+          onDel={onDelScanDir}
+          onGetScanDirs={getListData}
+          onEditModal={onEditModal}
+        />
       )}
     </div>
   );

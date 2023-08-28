@@ -58,7 +58,7 @@ export const fetch = (input: RequestInfo, init?: RequestInit, customParams?: Fet
       init.headers = Object.assign({}, init.headers, headers);
     }
   }
-  const fetchPromise = new Promise((resolve, reject) => {
+  const fetchPromise = new Promise<any>((resolve, reject) => {
     window.fetch(input, init).then((response) => {
       // 如果请求被中断，则return
       if (custom.isAbort) {
@@ -106,7 +106,7 @@ export const fetch = (input: RequestInfo, init?: RequestInit, customParams?: Fet
  * @param custom 自定义request参数
  * @returns Promise
  */
-const fetchTimeout = (custom: RequestCustom) => new Promise((resolve, reject) => {
+const fetchTimeout = (custom: RequestCustom) => new Promise<any>((resolve, reject) => {
   const timer = setTimeout(() => {
     clearTimeout(timer);
     // 如果还未收到响应结果，则执行超时逻辑，中断结果

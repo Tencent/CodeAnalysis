@@ -1,0 +1,21 @@
+// border-radius相关 token
+:root {
+  --tca-radius-small: 2px;
+  --tca-radius-default: 3px;
+  --tca-radius-medium: 6px;
+  --tca-radius-large: 9px;
+  --tca-radius-extraLarge: 12px;
+  --tca-radius-round: 999px;
+  --tca-radius-circle: 50%;
+}
+
+// td
+:root {
+  --td-radius-small: var(--tca-radius-small);
+  --td-radius-default: var(--tca-radius-default);
+  --td-radius-medium: var(--tca-radius-medium);
+  --td-radius-large: var(--tca-radius-large);
+  --td-radius-extraLarge: var(--tca-radius-extraLarge);
+  --td-radius-round: var(--tca-radius-round);
+  --td-radius-circle: var(--tca-radius-circle);
+}

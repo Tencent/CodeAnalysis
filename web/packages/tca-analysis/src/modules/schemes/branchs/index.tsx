@@ -7,23 +7,19 @@
 /**
  * 分析方案 - 已关联分支
  */
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import { useRequest } from 'ahooks';
 import { Link } from 'react-router-dom';
-import cn from 'classnames';
-import moment from 'moment';
 
-import { Table, Avatar } from 'coding-oa-uikit';
-import UserIcon from 'coding-oa-uikit/lib/icon/User';
+import { Avatar } from 'tdesign-react';
 
 import { getBranchs } from '@src/services/schemes';
-import { DEFAULT_PAGER } from '@src/constant';
 
-import commonStyle from '../style.scss';
+import Table from '@tencent/micro-frontend-shared/tdesign-component/table';
+import { useURLParams } from '@tencent/micro-frontend-shared/hooks';
+import { formatDateTime, getUserImgUrl } from '@src/utils';
 import style from './style.scss';
-import { getUserImgUrl } from '@src/utils';
 import { getProjectRouter } from '@src/utils/getRoutePath';
-
-const { Column } = Table;
 
 interface BranchsProps {
   orgSid: string;
@@ -34,96 +30,68 @@ interface BranchsProps {
 
 const Branchs = (props: BranchsProps) => {
   const { orgSid, teamName, repoId, schemeId } = props;
-  const [list, setList] = useState<any>([]);
-  const [pager, setPager] = useState(DEFAULT_PAGER);
-  const { count, pageSize, pageStart } = pager;
+  const { currentPage, pageSize, filter } = useURLParams();
 
-  useEffect(() => {
-    getListData(DEFAULT_PAGER.pageStart, DEFAULT_PAGER.pageSize);
-  }, [schemeId]);
+  const { data = {}, loading } = useRequest(() => getBranchs(orgSid, teamName, repoId, schemeId, filter), {
+    refreshDeps: [orgSid, teamName, repoId, schemeId, filter],
+  });
 
-  const getListData = (offset: number, limit: number) => {
-    getBranchs(orgSid, teamName, repoId, schemeId, { offset, limit }).then((response) => {
-      setPager({
-        pageSize: limit,
-        pageStart: offset,
-        count: response.count,
-      });
-
-      setList(response.results || []);
-    });
-  };
-
-  const onChangePageSize = (page: number, pageSize: number) => {
-    getListData((page - 1) * pageSize, pageSize);
-  };
-
-  const onShowSizeChange = (current: number, size: number) => {
-    getListData(DEFAULT_PAGER.pageStart, size);
-  };
+  const columns = [
+    {
+      colKey: 'branch',
+      title: '分支名称',
+      cell: ({ row }: any) => (
+        <Link
+          className={style.linkName}
+          to={`${getProjectRouter(orgSid, teamName, repoId, row.id)}/overview`}
+        >
+          {row.branch}
+        </Link>
+      ),
+    },
+    {
+      colKey: 'creator',
+      title: '创建人',
+      cell: ({ row }: any) => {
+        const { creator = '' } = row;
+        const userinfo = row.creator_info
+          ? row.creator_info
+          : { uid: creator, nickname: creator };
+        return (
+          creator && (
+            <>
+              <Avatar
+                size="small"
+                image={userinfo.avatar_url || getUserImgUrl(userinfo.uid)}
+                alt={userinfo.nickname}
+              />
+              <span className=" inline-block vertical-middle ml-sm">
+                {userinfo.nickname}
+              </span>
+            </>
+          )
+        );
+      },
+    },
+    {
+      colKey: 'created_time',
+      title: '创建时间',
+      cell: ({ row }: any) => row.created_time && formatDateTime(row.created_time),
+    },
+  ];
 
   return (
     <Table
-      size="small"
-      dataSource={list}
-      rowKey={(item: any) => item.id}
-      className={cn(commonStyle.schemeTable, style.branchs)}
+      rowKey='id'
+      data={data.results || []}
+      columns={columns}
+      loading={loading}
       pagination={{
-        size: 'default',
-        current: Math.floor(pageStart / pageSize) + 1,
-        total: count,
+        current: currentPage,
+        total: data.count || 0,
         pageSize,
-        showSizeChanger: true,
-        showTotal: (total, range) => `${range[0]} - ${range[1]} 条，共 ${total} 条`,
-        onChange: onChangePageSize,
-        onShowSizeChange,
       }}
-    >
-      <Column
-      title="分支名称"
-      dataIndex="branch"
-      key="branch"
-      render={(branch: string, item: any) => (
-        <Link
-          className={style.linkName}
-          to={`${getProjectRouter(orgSid, teamName, repoId, item.id)}/overview`}
-        >
-          {branch}
-        </Link>
-      )}
-      />
-      <Column
-        title="创建人"
-        dataIndex="creator"
-        key="creator"
-        render={(creator, project: any) => {
-          const userinfo = project.creator_info
-            ? project.creator_info
-            : { uid: creator, nickname: creator };
-          return (
-            creator && (
-              <>
-                <Avatar
-                  size="small"
-                  src={userinfo.avatar_url || getUserImgUrl(userinfo.uid)}
-                  alt={userinfo.nickname}
-                  icon={<UserIcon />}
-                />
-                <span className=" inline-block vertical-middle ml-sm">
-                  {userinfo.nickname}
-                </span>
-              </>
-            )
-          );
-        }}
-      />
-      <Column
-        title="创建时间"
-        dataIndex="created_time"
-        key="created_time"
-        render={time => time && moment(time, 'YYYY-MM-DD HH:mm').format('YYYY-MM-DD HH:mm')}
-      />
-    </Table>
+    />
   );
 };
 

@@ -4,7 +4,8 @@
 // See LICENSE for details
 // ==============================================================================
 
-import { MAIN_SERVER_API, ANALYSIS_SERVER_API, LOGIN_SERVER_API, get, put, post, del } from '@plat/api';
+import { get, put, post, del } from '@plat/api';
+import { MAIN_SERVER_API, ANALYSIS_SERVER_API, LOGIN_SERVER_API } from '@src/constant/api';
 
 export const getBaseURL = (orgSid: string, teamName: string) => `/orgs/${orgSid}/teams/${teamName}`;
 

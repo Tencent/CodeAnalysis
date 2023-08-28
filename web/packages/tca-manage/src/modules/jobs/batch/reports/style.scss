@@ -1,0 +1,18 @@
+.batchReportTable {
+  .jobResultSummary {
+    text-align: center;
+    font-size: 12px;
+  
+    .running {
+      color: var(--tca-brand-color);
+    }
+  
+    .success {
+      color: var(--tca-success-color);
+    }
+  
+    .failed {
+      color: var(--tca-error-color);
+    }
+  }
+}

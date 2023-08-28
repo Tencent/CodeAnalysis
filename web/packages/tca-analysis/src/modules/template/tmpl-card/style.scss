@@ -1,0 +1,59 @@
+@import '@tencent/micro-frontend-shared/style/color.scss';
+
+.card-container {
+
+  padding: 16px 24px;
+  border: 1px solid var(--td-component-border);
+  border-radius: 6px;
+  transition: box-shadow .3s,-webkit-box-shadow .3s;
+
+  &:hover {
+    box-shadow: 0 3px 10px -5px rgba(8,26,81,.08), 0 8px 24px 2px rgba(8,26,81,.04), 0 4px 20px 4px rgba(8,26,81,.05);
+    cursor: pointer;
+  }
+
+  .card-body {
+    display: flex;
+
+    .avatar {
+      flex: none;
+
+      .system-tmpl {
+        color: $grey-7;
+        background-color: $grey-2;
+      }
+
+      .custom-tmpl {
+        color: $cyan-6;
+        background-color: $cyan-2;
+      }
+    }
+
+    .title {
+      flex: auto;
+      padding: 2px 20px;
+      min-width: 0px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+      .description {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        color: $grey-7;
+      }
+    }
+
+    .tag {
+      flex: none;
+    }
+  }
+
+  .footer {
+    margin-top: 16px;
+    color: $grey-6;
+    display: flex;
+    align-items: center;
+  }
+}
