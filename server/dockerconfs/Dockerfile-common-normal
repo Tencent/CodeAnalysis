@@ -5,7 +5,6 @@ ARG EXTRA_TOOLS="gnupg curl wget jq vim-tiny net-tools procps python3-dev defaul
 RUN set -ex && cd / \
     && apt-get update \
     && apt-get install -y --no-install-recommends $EXTRA_TOOLS \
-    && apt-get update \
     && apt-get install -y mariadb-client \
     && apt-get clean \
     && echo "LC_ALL=zh_CN.UTF-8" >> /etc/environment \
@@ -14,6 +13,7 @@ RUN set -ex && cd / \
     && locale-gen \
     && ln -sf /usr/share/zoneinfo/Asia/Hong_Kong /etc/localtime \
     && rm -rf /var/cache/apt/* /root/.cache
+    && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /var/www/django/codedog
 
