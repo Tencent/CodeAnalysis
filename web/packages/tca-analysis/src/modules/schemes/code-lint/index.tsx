@@ -201,7 +201,7 @@ const CodeLint = (props: CodeLintProps) => {
                     repoId,
                     schemeId,
                   )}/check-profiles/${checkprofile.id}/pkg/${customPackage.id
-                    }/add-rule`);
+                  }/add-rule`);
                 }}
               >
                 添加规则

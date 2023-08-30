@@ -42,7 +42,7 @@ export const getPkgSearchFields = (languages: any[], labels: any []): SearchForm
 }, {
   name: 'label',
   label: '分类',
-  formType: 'select',
+  formType: 'multiselect',
   type: 'string',
   options: labels,
   keys: {
