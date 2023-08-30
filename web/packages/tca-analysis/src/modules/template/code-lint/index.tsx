@@ -213,7 +213,7 @@ const CodeLint = (props: CodeLintProps) => {
                     style={{ marginRight: 10 }}
                     onClick={() => {
                       history.push(`${getTmplRouter(orgSid)}/${tmplId}/check-profiles/${checkprofile.id}/pkg/${customPackage.id
-                        }/add-rule`);
+                      }/add-rule`);
                     }}
                     variant="outline"
                   >
@@ -242,7 +242,7 @@ const CodeLint = (props: CodeLintProps) => {
             readonly={isSysTmpl}
             pkgs={allPkgs
               .filter((item: any) => (filter(item.labels, label) && filter(item.languages, lang))
-                || selectedPkgs.includes(item.id))}
+              || selectedPkgs.includes(item.id))}
             selectedPkgs={selectedPkgs}
             customPackage={customPackage}
             updatePkg={updatePkg}
