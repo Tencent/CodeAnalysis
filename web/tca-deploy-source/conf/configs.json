@@ -41,12 +41,12 @@
     "prefix": [
       "/static/tca-analysis/"
     ],
-    "commitId": "9a5f5ded6d36c8b5c6c58873cdbec5a859031b25",
+    "commitId": "da5c38a8b30acfa24a161b93e618cc0aa10c8a07",
     "match": "^/t/[^/]+/p/[^/]+/(code-analysis|repos|template|profile|group)|^/t/[^/]+/template",
     "js": [
       "/static/tca-analysis/runtime~tca-analysis-cce61881.js",
       "/static/tca-analysis/vendors~tca-analysis-d3ec28a1.js",
-      "/static/tca-analysis/tca-analysis-238d5597.js"
+      "/static/tca-analysis/tca-analysis-00fae01c.js"
     ],
     "css": [
       "/static/tca-analysis/vendors~tca-analysis-7ab9f253.css",
