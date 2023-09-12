@@ -117,4 +117,4 @@ python3 codepuppy.py localscan
 
 ### 3. git lfs带宽和存储配额不够问题
 - 优先考虑切换为腾讯工蜂源（参考基础配置第4点）
-- 如果git拉取工具时，出现git lfs拉取失败，可能是lfs带宽和存储配额不够，可以打开对应的工具github页面，通过`Download ZIP`的方式下载工具压缩包，再解压到`client/data/tools`目录下。
+- 如果git拉取工具时，出现git lfs拉取失败，可能是lfs带宽和存储配额不够，可以打开对应的工具github页面，通过`Download ZIP`的方式下载工具压缩包，再解压到`tools`目录下。
