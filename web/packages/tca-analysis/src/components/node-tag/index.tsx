@@ -1,7 +1,5 @@
 import React from 'react';
-import { Form } from 'coding-oa-uikit';
-import { ColProps } from 'coding-oa-uikit/lib/grid';
-import { Rule } from 'coding-oa-uikit/lib/form';
+import { Form, FormRule } from 'tdesign-react';
 
 import TagSelect, { TagSelectProps } from './select';
 
@@ -10,20 +8,18 @@ interface NodeTagProps extends TagSelectProps {
   name: string;
   /** Form.Item label */
   label: string | React.ReactNode
-  /** Form.Item 布局样式 */
-  labelCol?: ColProps;
-  /** Form.Item 布局样式 */
-  wrapperCol?: ColProps;
   /** Form.Item 校验规则 */
-  rules?: Rule[];
+  rules?: FormRule[];
 }
+
+const { FormItem } = Form;
 
 /** 运行环境表单项 */
 const NodeTag = ({
-  label, name, labelCol, wrapperCol, rules, ...other
-}: NodeTagProps) => <Form.Item labelCol={labelCol} wrapperCol={wrapperCol} label={label} name={name} rules={rules}>
+  label, name, rules, ...other
+}: NodeTagProps) => <FormItem label={label} name={name} rules={rules}>
     <TagSelect {...other} />
-  </Form.Item>;
+  </FormItem>;
 
 NodeTag.Select = TagSelect;
 

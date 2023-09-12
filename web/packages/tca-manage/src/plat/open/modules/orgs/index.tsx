@@ -1,19 +1,17 @@
 import React, { useState } from 'react';
 import { t } from '@src/utils/i18n';
-import { Row, Col, Tabs, DialogPlugin, MessagePlugin } from 'tdesign-react';
+import { DialogPlugin, MessagePlugin } from 'tdesign-react';
 import Search from '@tencent/micro-frontend-shared/tdesign-component/search';
+import PageHeader from '@tencent/micro-frontend-shared/tdesign-component/page-header';
 import { useURLParams, useFetch } from '@tencent/micro-frontend-shared/hooks';
 
 // 项目内
 import { getOrgs, putOrgStatus } from '@src/services/orgs';
 import { DeleteModal } from '@tencent/micro-frontend-shared/tdesign-component/modal';
-import s from '@src/modules/style.scss';
 
 // 模块内
 import { ORG_FILTER_FIELDS as filterFields, ORG_SEARCH_FIELDS, OrgStatusEnum } from './constants';
 import OrgTable from './org-table';
-
-const { TabPanel } = Tabs;
 
 const Orgs = () => {
   const { filter, currentPage, pageSize, searchParams } = useURLParams(filterFields);
@@ -59,13 +57,7 @@ const Orgs = () => {
 
   return (
     <>
-      <Row className={s.header} align="middle">
-        <Col flex="auto">
-          <Tabs defaultValue="project" size="large">
-            <TabPanel label={t('团队列表')} value="project" />
-          </Tabs>
-        </Col>
-      </Row>
+      <PageHeader title={t('团队列表')} description="平台注册登录的团队列表" />
       <Search fields={ORG_SEARCH_FIELDS} loading={false} searchParams={searchParams} />
       <div className="px-lg">
         <OrgTable

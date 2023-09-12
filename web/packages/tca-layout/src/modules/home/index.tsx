@@ -1,11 +1,8 @@
 /**
  * 首页
- * biz-start
- * 目前适用于全平台
- * biz-end
  */
 import React from 'react';
-import { Layout } from 'coding-oa-uikit';
+import { Layout } from 'tdesign-react';
 
 // 项目内
 import Container from '@src/component/container';

@@ -13,7 +13,7 @@ import { Button, message, Modal } from 'coding-oa-uikit';
 import SelectBorderless from '@src/components/select-borderless';
 import { SEVERITY, RESOLUTIONS } from '../constants';
 
-import { getProjectMembers } from '@src/utils';
+import { useProjectMembers } from '@src/utils/hooks';
 import {
   updateIssueAuthor,
   updateIssueSeverity,
@@ -60,7 +60,7 @@ const DetailRight = (props: DetailRightProps) => {
     scrollToLine,
   } = props;
   const isHandled = data.state === 2;
-  const members = getProjectMembers();
+  const members = useProjectMembers();
 
   useEffect(() => {
     getRecords();

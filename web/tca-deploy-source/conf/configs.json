@@ -5,15 +5,16 @@
     "prefix": [
       "/static/tca-layout/"
     ],
-    "commitId": "97c427aa243e40017ba84765e463e4ad4e985ab6",
+    "commitId": "13bb58f5de803505e909e935fa1e66f1cf9d0982",
     "match": "/",
     "js": [
-      "/static/tca-layout/runtime~tca-layout-70929dfa.js",
-      "/static/tca-layout/vendors~tca-layout-3cce0bd3.js",
-      "/static/tca-layout/tca-layout-308fe57e.js"
+      "/static/tca-layout/runtime~tca-layout-24d1d2f0.js",
+      "/static/tca-layout/vendors~tca-layout-f8efbfc7.js",
+      "/static/tca-layout/tca-layout-b729bbda.js"
     ],
     "css": [
-      "/static/tca-layout/tca-layout-02355b29.css"
+      "/static/tca-layout/vendors~tca-layout-0a1d2263.css",
+      "/static/tca-layout/tca-layout-a32f1c93.css"
     ]
   },
   {
@@ -22,16 +23,16 @@
     "prefix": [
       "/static/login/"
     ],
-    "commitId": "97c427aa243e40017ba84765e463e4ad4e985ab6",
+    "commitId": "13bb58f5de803505e909e935fa1e66f1cf9d0982",
     "match": "^/login",
     "js": [
-      "/static/login/runtime~login-8392b500.js",
-      "/static/login/vendors~login-697c8011.js",
-      "/static/login/login-a33ce90b.js"
+      "/static/login/runtime~login-341aae88.js",
+      "/static/login/vendors~login-9324cff4.js",
+      "/static/login/login-eb8363d9.js"
     ],
     "css": [
-      "/static/login/vendors~login-c0a83f78.css",
-      "/static/login/login-d1b28ba7.css"
+      "/static/login/vendors~login-bf08ad65.css",
+      "/static/login/login-36d8c4fe.css"
     ]
   },
   {
@@ -40,15 +41,16 @@
     "prefix": [
       "/static/tca-analysis/"
     ],
-    "commitId": "97c427aa243e40017ba84765e463e4ad4e985ab6",
-    "match": "^/t/[^/]+/p/[^/]+/(code-analysis|repos|template|profile|group)",
+    "commitId": "da5c38a8b30acfa24a161b93e618cc0aa10c8a07",
+    "match": "^/t/[^/]+/p/[^/]+/(code-analysis|repos|template|profile|group)|^/t/[^/]+/template",
     "js": [
-      "/static/tca-analysis/runtime~tca-analysis-10861cc0.js",
-      "/static/tca-analysis/vendors~tca-analysis-fd35fa3f.js",
-      "/static/tca-analysis/tca-analysis-fba9093f.js"
+      "/static/tca-analysis/runtime~tca-analysis-cce61881.js",
+      "/static/tca-analysis/vendors~tca-analysis-d3ec28a1.js",
+      "/static/tca-analysis/tca-analysis-00fae01c.js"
     ],
     "css": [
-      "/static/tca-analysis/tca-analysis-f7d9e90f.css"
+      "/static/tca-analysis/vendors~tca-analysis-7ab9f253.css",
+      "/static/tca-analysis/tca-analysis-9d8f7588.css"
     ]
   },
   {
@@ -57,16 +59,16 @@
     "prefix": [
       "/static/tca-manage/"
     ],
-    "commitId": "97c427aa243e40017ba84765e463e4ad4e985ab6",
+    "commitId": "13bb58f5de803505e909e935fa1e66f1cf9d0982",
     "match": "^/manage",
     "js": [
-      "/static/tca-manage/runtime~tca-manage-a7728255.js",
-      "/static/tca-manage/vendors~tca-manage-565cccad.js",
-      "/static/tca-manage/tca-manage-68db86a4.js"
+      "/static/tca-manage/runtime~tca-manage-2301a3f9.js",
+      "/static/tca-manage/vendors~tca-manage-78d6e659.js",
+      "/static/tca-manage/tca-manage-d2ae8d7c.js"
     ],
     "css": [
-      "/static/tca-manage/vendors~tca-manage-0061904f.css",
-      "/static/tca-manage/tca-manage-7d737fd2.css"
+      "/static/tca-manage/vendors~tca-manage-31c3432c.css",
+      "/static/tca-manage/tca-manage-a5f35e06.css"
     ]
   }
 ]

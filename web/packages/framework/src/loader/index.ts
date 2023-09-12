@@ -1,5 +1,5 @@
 import isEmpty from 'lodash/isEmpty';
-import { message } from 'coding-oa-uikit';
+import { message } from 'tdesign-react';
 // 项目内
 import MicroApplication from '@src/meta/application';
 import { debug } from '@src/utils';

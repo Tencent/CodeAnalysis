@@ -7,248 +7,57 @@
 /**
  * 规则列表 - 添加规则
  */
-import React, { useEffect, useState } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
-import qs from 'qs';
-import { toNumber, isEmpty, difference, omitBy, omit, cloneDeep } from 'lodash';
-import { Table, Button, message, Tag } from 'coding-oa-uikit';
+import React, { useState } from 'react';
+import { useRequest } from 'ahooks';
+import { useParams } from 'react-router-dom';
 
-import Header from '@src/components/header';
 import { getSchemeRouter } from '@src/utils/getRoutePath';
-import { getQuery } from '@src/utils';
-import { DEFAULT_PAGER } from '@src/constant';
 import {
   getAllRules,
   addRule,
   getRuleDetail,
   getAllCheckPackages,
-  getLanguages,
-  getCheckTools,
 } from '@src/services/schemes';
+import AllRuleTable from '@src/components/schemes/pkg-details/all-rule-table';
 
-import RuleDetail from '../../projects/issues/rule-detail';
-import Search from './all-rules-search';
-
-import style from './style.scss';
-
-const { Column } = Table;
 
 const AllRules = () => {
   const params: any = useParams();
-  const history = useHistory();
-  const { orgSid, teamName, repoId, schemeId } = params;
-
-  const [list, setList] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [count, setCount] = useState(DEFAULT_PAGER.count);
-  const [selectedRowKeys, setSelectedRowKeys] = useState<any>([]);
-  const [selectedKeys, setSelectedKeys] = useState([]);
-  const [ruleDetailVsb, setRuleDetailVsb] = useState(false);
-  const [ruleDetail, setRuleDetail] = useState({});
-  const [checkTools, setCheckTools] = useState([]);
+  const { orgSid, teamName, repoId, schemeId, checkProfileId, pkgId } = params;
 
   const [allPkgs, setAllPkgs] = useState([]);
-  const [languages, setLanguages] = useState([]);
 
-  const query = getQuery();
-  const pageSize = toNumber(query.limit) || DEFAULT_PAGER.pageSize;
-  const pageStart = toNumber(query.offset) || DEFAULT_PAGER.pageStart;
-  const searchParams: any = omit(query, ['offset', 'limit']);
-
-  const checkProfileId = toNumber(params.checkProfileId);
-  const pkgId = toNumber(params.pkgId);
-
-  const getAllPkgs = async () => {
-    let pkgs = await getAllCheckPackages(orgSid, teamName, repoId, schemeId);
-    pkgs = (pkgs || []).filter((item: any) => !item.disable);
-    setAllPkgs(pkgs);
-  };
-
-  const getListData = async (
-    offset = pageStart,
-    limit = pageSize,
-    otherParams = searchParams,
-  ) => {
-    const params = {
-      offset,
-      limit,
-      ...omitBy(otherParams, item => !item),
-    };
-
-    setLoading(true);
-    getAllRules(orgSid, teamName, repoId, schemeId, params)
-      .then((res: any) => {
-        const list = res.results || [];
-        history.push(`${window.location.pathname}?${qs.stringify(params)}`);
-
-        setSelectedKeys(list
-          .filter((item: any) => item.select_state === 1)
-          .map((item: any) => item.id));
-        setSelectedRowKeys(list
-          .filter((item: any) => item.select_state === 1)
-          .map((item: any) => item.id));
-        setCount(res.count);
-        setList(list);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  };
-
-  useEffect(() => {
-    getListData();
-    getAllPkgs();
-    getCheckTools(orgSid, {
-      limit: 1000,
-      checkprofile_id: checkProfileId,
-    }).then((res: any) => {
-      setCheckTools(res.results || []);
-    });
-
-    (async () => {
-      const resLanguages = await getLanguages();
-      setLanguages(resLanguages.results || []);
-    })();
-  }, [pkgId]);
-
-  const onChangePageSize = (page: number, pageSize: number) => {
-    getListData((page - 1) * pageSize, pageSize);
-  };
-
-  const onShowSizeChange = (current: number, size: number) => {
-    getListData(DEFAULT_PAGER.pageStart, size);
-  };
-
-  const addRules = () => {
-    addRule(orgSid, teamName, repoId, schemeId, {
-      checkrules: difference(selectedRowKeys, selectedKeys),
-    }).then(() => {
-      message.success('添加成功');
-      getListData(pageStart, pageSize);
-    });
-  };
-
-  /**
-   * 一键添加指定工具所有规则
-   * @param toolId
-   */
-  const addToolsRules = (toolId: number) => {
-    addRule(orgSid, teamName, repoId, schemeId, {
-      checktool: toolId,
-    }).then(() => {
-      message.success('批量添加成功');
-      getListData(pageStart, pageSize);
-    });
-  };
-
-  const openRuleDetail = async (ruleId: number) => {
-    setRuleDetailVsb(true);
-    const res = await getRuleDetail(orgSid, teamName, repoId, schemeId, ruleId);
-    setRuleDetail(res);
-  };
+  useRequest(getAllCheckPackages, {
+    defaultParams: [orgSid, teamName, repoId, schemeId],
+    onSuccess: (result: any, _params: any) => {
+      const pkgs = result?.filter((item: any) => !item.disable) || [];
+      setAllPkgs(pkgs);
+    },
+  });
 
   return (
-    <div className={style.packageRules}>
-      <Header
-        title="批量添加规则"
-        link={
-          params.pkgId
-          // 从自定义规则包进入
-            ? `${getSchemeRouter(
-              orgSid,
-              teamName,
-              repoId,
-              schemeId,
-            )}/check-profiles/${checkProfileId}/pkg/${pkgId}`
-            // 从已配置规则进入
-            : `${getSchemeRouter(
-              orgSid,
-              teamName,
-              repoId,
-              schemeId,
-            )}/check-profiles/${checkProfileId}/checkrules`
-        }
-      />
-      <Search
-        filters={{
-          allPkgs,
-          languages,
-          checkTools,
-        }}
-        searchParams={cloneDeep(searchParams)}
-        loading={loading}
-        addToolsRules={addToolsRules}
-        callback={(params: any) => {
-          getListData(DEFAULT_PAGER.pageStart, pageSize, params);
-        }}
-      />
-
-      <div className={style.rules}>
-        {!isEmpty(difference(selectedRowKeys, selectedKeys)) && (
-          <div className={style.operation}>
-            <Button type="link" onClick={addRules} style={{ marginRight: 10 }}>
-              批量添加 {difference(selectedRowKeys, selectedKeys).length} 条规则
-            </Button>
-          </div>
-        )}
-        <Table
-          dataSource={list}
-          className={style.ruleTable}
-          rowKey={(item: any) => item.id}
-          rowSelection={{
-            selectedRowKeys,
-            onChange: keys => setSelectedRowKeys(keys),
-            getCheckboxProps: item => ({ disabled: item.select_state === 1 }),
-          }}
-          pagination={{
-            current: Math.floor(pageStart / pageSize) + 1,
-            total: count,
-            pageSize,
-            showSizeChanger: true,
-            showTotal: (total, range) => `${range[0]} - ${range[1]} 条，共 ${total} 条`,
-            onChange: onChangePageSize,
-            onShowSizeChange,
-          }}
-        >
-          <Column
-            title="规则名称"
-            dataIndex="real_name"
-            render={(name, data: any) => (
-              <p
-                className={style.ruleName}
-                onClick={() => {
-                  openRuleDetail(data.id);
-                }}
-              >
-                {name}
-              </p>
-            )}
-          />
-          <Column title="规则概要" dataIndex="rule_title" />
-          <Column title="所属工具" dataIndex={['checktool', 'display_name']} />
-          <Column title="分类" dataIndex="category_name" />
-          <Column title="问题级别" dataIndex="severity_name" width={80}/>
-          <Column
-            title="是否需要编译"
-            width={120}
-            dataIndex={['checktool', 'build_flag']}
-            render={(buildFlag: boolean) => (
-              <Tag
-                style={{ margin: 0 }}
-                className={buildFlag && style.buildTag}
-              >
-                {buildFlag ? '需要' : '无需'}编译
-              </Tag>
-            )}
-          />
-        </Table>
-      </div>
-      <RuleDetail
-        visible={ruleDetailVsb}
-        onClose={() => setRuleDetailVsb(false)}
-        data={ruleDetail}
-      />
-    </div>
+    <AllRuleTable
+      allPkgs={allPkgs}
+      refreshDeps={[orgSid, teamName, repoId, schemeId]}
+      getRuleDetail={(ruleId: number) => getRuleDetail(orgSid, teamName, repoId, schemeId, ruleId)}
+      getAllRules={(filter: any) => getAllRules(orgSid, teamName, repoId, schemeId, filter)}
+      addRule={(ruleInfo: any) => addRule(orgSid, teamName, repoId, schemeId, ruleInfo)}
+      backLink={params.pkgId
+        // 从自定义规则包进入
+        ? `${getSchemeRouter(
+          orgSid,
+          teamName,
+          repoId,
+          schemeId,
+        )}/check-profiles/${checkProfileId}/pkg/${pkgId}`
+      // 从已配置规则进入
+        : `${getSchemeRouter(
+          orgSid,
+          teamName,
+          repoId,
+          schemeId,
+        )}/check-profiles/${checkProfileId}/checkrules`}
+    />
   );
 };
 

@@ -9,15 +9,14 @@
  */
 
 import React from 'react';
-import LoadingIcon from 'coding-oa-uikit/lib/icon/Loading';
+import { Loading, LoadingProps } from 'tdesign-react';
 
 import style from './style.scss';
 
-const Loading = () => (
+const SingleLoading = (props: LoadingProps) => (
         <div className={style.loading}>
-            <LoadingIcon className={style.icon}/>
-             加载中
+            <Loading {...props} />
         </div>
 );
 
-export default Loading;
+export default SingleLoading;

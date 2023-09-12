@@ -3,12 +3,10 @@
  */
 
 import React from 'react';
-import { LoadingIcon } from 'tdesign-icons-react';
-import s from './style.scss';
+import { Loading as TLoading, LoadingProps } from 'tdesign-react';
 
-const Loading = () => <div className={s.loading}>
-  <LoadingIcon className={s.icon} />
-  加载中
+const Loading = ({ loading = true, text = '加载中', size = 'small' }: LoadingProps) => <div className='tca-text-center tca-pa-md'>
+  <TLoading loading={loading} text={text} size={size} />
 </div>;
 
 export default Loading;

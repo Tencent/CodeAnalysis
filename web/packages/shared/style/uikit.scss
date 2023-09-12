@@ -1,16 +1,16 @@
-@import "./color.scss";
+@import "./theme/color-variables.scss";
 
 :global(.ant-tabs-nav) {
   margin-bottom: 0 !important;
 
   &::before {
-    border-bottom-color: $grey-3  !important;
+    border-bottom-color: $t-grey-3  !important;
   }
 }
 
 :global(.ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn) {
   font-weight: 600;
-  color: $grey-8;
+  color: $t-grey-8;
 }
 
 :global(.ant-tabs-tab) {
@@ -20,7 +20,7 @@
   transition: all 0.3s;
 
   &:hover {
-    color: $grey-8;
+    color: $t-grey-8;
     font-weight: 600;
   }
 }
@@ -29,23 +29,23 @@
 
   &:active,
   &:focus {
-    color: $grey-8;
+    color: $t-grey-8;
     font-weight: 600;
   }
 }
 
 :global(.ant-avatar) {
-  background: $grey-5;
+  background: $t-grey-5;
 }
 
 :global(.ant-table-tbody) {
   &>tr {
     td>a.link-name {
-      color: $grey-8;
+      color: $t-grey-8;
 
       .path {
         font-size: 12px;
-        color: $grey-7;
+        color: $t-grey-7;
         max-width: 400px;
         word-break: break-all;
       }
@@ -53,7 +53,7 @@
 
     &:hover {
       td>a.link-name {
-        color: $blue-5  !important;
+        color: $t-blue-5  !important;
       }
     }
   }
@@ -63,28 +63,28 @@
   padding: 0px 8px;
 
   &.warning {
-    color: $warging-color;
-    background-color: $warging-bg;
+    color: $tca-warging-color;
+    background-color: $tca-warging-bg;
   }
 
   &.success {
-    color: $success-color;
-    background-color: $success-bg;
+    color: $tca-success-color;
+    background-color: $tca-success-bg;
   }
 
   &.fatal {
-    color: $fatal-color;
-    background-color: $fatal-bg;
+    color: $tca-fatal-color;
+    background-color: $tca-fatal-bg;
   }
 
   &.error {
-    color: $error-color;
-    background-color: $error-bg;
+    color: $tca-error-color;
+    background-color: $tca-error-bg;
   }
 
   &.processing,
   &.info {
-    color: $tip-color;
-    background-color: $tip-bg;
+    color: $tca-tip-color;
+    background-color: $tca-tip-bg;
   }
 }

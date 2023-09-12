@@ -44,7 +44,7 @@ make windows	| Compile executable binary for Windows platform
 make clean	| Clean up executable binary
 ```
 
-**注意📢：** 如果你机器上没有配置`Go`语言环境，请下配置`Go`开发环境然后才能正常执行编译，编译成本地二进制你需要具备`Go`交叉编译知识，如果有问题欢迎提`issued`。
+**注意📢：** 如果你机器上没有配置`Go`语言环境，请下配置`Go`开发环境然后才能正常执行编译，编译成本地二进制你需要具备`Go`交叉编译知识，如果有问题欢迎提`issues`。
 
 
 ### 如何使用

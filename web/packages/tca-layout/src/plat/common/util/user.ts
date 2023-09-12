@@ -1,7 +1,7 @@
 import { get } from 'lodash';
 
 // 项目内
-import { LOGIN_SERVER_API } from '../api';
+// import { LOGIN_SERVER_API } from '../api';
 
 /** 用户工具管理 */
 export class UserManager {
@@ -28,8 +28,8 @@ export class UserManager {
     throw new Error('user 解析 uid failed');
   }
 
-  static getUserAvatarURL(user: any) {
-    const uid = UserManager.getUID(user);
-    return `${LOGIN_SERVER_API}/login/users/${uid}/`;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  static getUserAvatarURL(_: any) {
+    return '';
   }
 }

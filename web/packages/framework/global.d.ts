@@ -12,7 +12,9 @@ interface WindowMicroHook {
 }
 
 interface MicroDevApiList {
-  name: string; url: string
+  name: string;
+  url: string;
+  enabled?: boolean;
 }
 
 interface Window {

@@ -8,8 +8,8 @@
  * 拉取模板模态框
  */
 
-import React, { useState } from 'react';
-import { Checkbox, message, Modal } from 'coding-oa-uikit';
+import React, { useState, useEffect } from 'react';
+import { Checkbox, message, Dialog } from 'tdesign-react';
 
 import { pullTmpl } from '@src/services/schemes';
 
@@ -33,6 +33,12 @@ const PullTmplModal = (props: PullTmplModalIProps) => {
   const { visible, orgSid, teamName, repoId, schemeId, onClose, callback } = props;
   const [data, setData] = useState<any>([]);
 
+  useEffect(() => {
+    if (visible) {
+      setData([]);
+    }
+  }, [visible]);
+
   const onOk = () => {
     pullTmpl(orgSid, teamName, repoId, schemeId, {
       sync_basic_conf: data.includes('sync_basic_conf'),
@@ -49,26 +55,23 @@ const PullTmplModal = (props: PullTmplModalIProps) => {
   };
 
   return (
-        <Modal
-            title="拉取模板配置"
-            width={580}
-            visible={visible}
-            onCancel={onClose}
-            afterClose={() => setData([])}
-            onOk={onOk}
-        >
-            <Checkbox.Group
-                value={data}
-                onChange={(value: any) => setData(value)}
-                style={{ width: '100%' }}
-            >
-                {Object.entries(config).map(([key, value]: [string, string]) => (
-                    <Checkbox value={key} style={{ marginRight: 10 }} key={key}>
-                        {value}
-                    </Checkbox>
-                ))}
-            </Checkbox.Group>
-        </Modal>
+    <Dialog
+      header="拉取模板配置"
+      width={580}
+      visible={visible}
+      onClose={onClose}
+      onConfirm={onOk}
+    >
+      <Checkbox.Group
+        value={data}
+        onChange={(value: any) => setData(value)}
+        style={{ width: '100%' }}
+        options={Object.entries(config).map(([key, value]: [string, string]) => ({
+          label: value,
+          value: key,
+        }))}
+      />
+    </Dialog>
   );
 };
 

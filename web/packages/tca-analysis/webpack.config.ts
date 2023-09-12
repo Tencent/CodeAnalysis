@@ -3,7 +3,7 @@ import { merge } from 'webpack-merge';
 
 const { config } = webpackConfig({
   configWebpackOptions: {
-    match: '^/t/[^/]+/p/[^/]+/(code-analysis|repos|template|profile|group)',
+    match: '^/t/[^/]+/p/[^/]+/(code-analysis|repos|template|profile|group)|^/t/[^/]+/template',
   },
   envConfig: {
     envs: {

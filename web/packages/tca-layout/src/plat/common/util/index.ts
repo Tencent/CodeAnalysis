@@ -1,10 +1,10 @@
 import { throttle } from 'lodash';
 import { message } from 'coding-oa-uikit';
-import { getMetaContent, isTrue } from '@tencent/micro-frontend-shared/util';
+import { isTrue } from '@tencent/micro-frontend-shared/util';
 
 export * from './init-request';
 export * from './user';
-export * from './matomo';
+export * from './monitor';
 
 /**
  * 重新登录
@@ -20,7 +20,7 @@ export const reLogin = throttle((content: string, href = `/login?redirect_uri=${
 }, 1000);
 
 /** 判断是否是管理后台 */
-export const isEnableManage = () => isTrue(getMetaContent('ENABLE_MANAGE', process.env.ENABLE_MANAGE));
+export const isEnableManage = () => isTrue(ENABLE_MANAGE);
 
 /** 获取帮助文档首页链接 */
 export const getDocURL = () => '/document/';

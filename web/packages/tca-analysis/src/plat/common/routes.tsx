@@ -11,6 +11,7 @@ const PTOverview = lazy(() => import('@src/modules/project-team/overview'));
 const PTGroup = lazy(() => import('@src/modules/project-team/group'));
 const AllRules = lazy(() => import('@src/modules/template/code-lint/all-rules'));
 const PkgRules = lazy(() => import('@src/modules/template/code-lint/pkg-rules'));
+const CheckRules = lazy(() => import('@src/modules/template/code-lint/rules'));
 const TemplateDetail = lazy(() => import('@src/modules/template/detail'));
 const Template = lazy(() => import('@src/modules/template'));
 // const PkgRules = lazy(() => import('@src/modules/template/code-lint/pkg-rules'));
@@ -36,6 +37,10 @@ const ROUTERS: RouteProps[] = [{
   path: `${TMPL_ROUTE_PREFIX}/:id/check-profiles/:checkProfileId/pkg/:pkgId/add-rule`,
   exact: true,
   component: AllRules,
+}, {
+  path: `${TMPL_ROUTE_PREFIX}/:id/check-profiles/:checkProfileId/checkrules`,
+  exact: true,
+  component: CheckRules,
 }, {
   path: `${TMPL_ROUTE_PREFIX}/:id/check-profiles/:checkProfileId/pkg/:pkgId`,
   exact: true,

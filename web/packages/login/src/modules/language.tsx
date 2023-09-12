@@ -4,8 +4,6 @@ import i18n from 'i18next';
 import Cookies from 'universal-cookie';
 import { MessagePlugin, Dropdown, Button } from 'tdesign-react';
 import { InternetIcon, ChevronUpIcon } from 'tdesign-icons-react';
-// 项目内
-import s from '@src/style.scss';
 
 const { DropdownMenu, DropdownItem } = Dropdown;
 
@@ -36,9 +34,9 @@ const LanguageUI = () => {
     <Dropdown
       placement="top"
     >
-      <Button variant='text' className={s.languageDropdown}>
+      <Button variant='text'>
         <span style={{ display: 'flex', alignItems: 'center' }}>
-          <InternetIcon/> {langText} <ChevronUpIcon />
+          <InternetIcon /> {langText} <ChevronUpIcon />
         </span>
       </Button>
       <DropdownMenu>

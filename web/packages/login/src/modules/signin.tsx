@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import { t } from '@src/utils/i18n';
 import { get } from 'lodash';
 import { Form, Input, Button, MessagePlugin, SubmitContext, FormInstanceFunctions } from 'tdesign-react';
-import { DesktopIcon, LockOnIcon } from 'tdesign-icons-react';
+import { UserCircleIcon, LockOnIcon } from 'tdesign-icons-react';
 import { getURLSearch } from '@tencent/micro-frontend-shared/util';
 // 项目内
 import { postPasswordInfo } from '@src/services/common';
@@ -39,12 +39,13 @@ const NormalSignin = () => {
         onSubmit={onSubmit}
       >
         <FormItem
+          className="mb-lg"
           name="username"
           rules={[{ required: true, message: t('请输入唯一用户名') }]}
         >
-          <Input clearable={true} prefixIcon={<DesktopIcon />} placeholder={t('用户名')} />
+          <Input clearable={true} prefixIcon={<UserCircleIcon />} placeholder={t('用户名')} />
         </FormItem>
-        <FormItem name="password" rules={[{ required: true, message: t('请输入密码') }]}>
+        <FormItem className="mb-lg" name="password" rules={[{ required: true, message: t('请输入密码') }]}>
           <Input type='password' prefixIcon={<LockOnIcon />} clearable={true} placeholder={t('密码')} onEnter={() => {
             formRef.current.submit();
           }} />
