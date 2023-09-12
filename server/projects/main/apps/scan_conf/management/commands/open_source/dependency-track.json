@@ -4,23 +4,6 @@
         "display_name": "DependencyTrack",
         "description": "About Dependency-Track is an intelligent Component Analysis platform that allows organizations to identify and reduce risk in the software supply chain.",
         "license": "Apache2.0",
-        "libscheme_set": [
-            {
-                "condition": null,
-                "tool_libs": [
-                    {
-                        "name": "LINUX_PYTHON37",
-                        "source": "system"
-                    },
-                    {
-                        "name": "LINUX_JDK_17",
-                        "source": "system"
-                    }
-                ],
-                "scheme_os": "linux",
-                "default_flag": true
-            }
-        ],
         "image_url": null,
         "task_processes": [
             "analyze",
