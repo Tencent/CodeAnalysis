@@ -29,6 +29,7 @@ TCA 增强分析模块，需要用户额外部署 License 鉴权微服务，并�
 - 收件邮箱：
 ```
 v_cocohwang@tencent.com
+v_jiayizhan@tencent.com
 yalechen@tencent.com
 tommyzhang@tencent.com
 ```
