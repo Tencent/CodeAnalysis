@@ -125,6 +125,7 @@ LICENSE=<Client License>
 - 收件邮箱：
 ```
 v_cocohwang@tencent.com
+v_jiayizhan@tencent.com
 yalechen@tencent.com
 tommyzhang@tencent.com
 ```
@@ -185,6 +186,32 @@ ps aux|grep cls
 # 重启微服务
 kill -USR2 <pid>
 ```
+
+#### 网络异常
+如果以上部署步骤已经完成，但是增强功能还是出现 `License check failed! Please check the license. License Server is not available!` 异常。可以按照以下步骤进行排查：
+
+- 进入任务页面，点击异常工具，下载该工具的执行日志。如果日志中出现以下日志，则表明网络访问CLS异常；
+```log
+method(head) call fails on error: <urlopen error [Errno 111] Connection refused>
+```
+- 继续验证。如果是 Docker 或者 Docker-Compose 部署方式的话，进入 TCA Client 所在容器中。如果是远嘛部署，则来到 TCA Client 所在机器上。执行以下命令确认网络是否通路：
+```bash
+ping <config.ini中填写的 CLS IP或者域名>
+telnet <config.ini中填写的 CLS IP或者域名> <对应端口>
+```
+- 如果网络不通，请排查：
+  * 防火墙是否开启对应端口；
+  * CLS 对应域名是否在host中设置；
+  * 是否IP设置错误。
+
+##### 案例分享
+背景：
+小明以 Docker 方式部署 TCA，并在相同宿主机上部署 CLS 服务，然后在 config.ini 中设置的 URL 中的 IP 为 `127.0.0.1`, 重启后启动增强功能任务遇到上述网络不通异常。  
+原因：
+原因是此时的 `127.0.0.1` 指向的是 TCA Client 容器自身，而不是部署在宿主机上的 CLS 服务。  
+解决方案：
+将 `127.0.0.1` 改成宿主机自身IP即可。
+
 #### CLS 更新
 
 1. 使用以下命令查找 cls 进程并杀掉进程
