@@ -1,32 +1,33 @@
-# 增强分析模块部署
-TCA 除开集成业界知名的分析工具之外，也有自主研发的独立工具，作为 TCA 的增强分析模块。
+# Enhanced Analysis Module Deployment
 
-TCA 增强分析模块，需要用户额外部署 License 鉴权微服务，并邮件申请 License 。
+In addition to integrating well-known analysis tools in the industry, TCA also has its own independently developed tools, which serve as the enhanced analysis module of TCA.
+
+The TCA enhanced analysis module requires users to additionally deploy the License authentication microservice and apply for a License by email.
 
 ::: tip
-**1. License申请完全免费！**
-2. 优先企业或高校申请License。
+**1. License application is completely free!**
+2. Enterprises or universities are given priority in applying for a License.
 :::
 
-## 概念
-- 独立工具：TCA 自主研发的代码分析工具；
-- CLS(Common License Server)： TCA 独立工具的 License 鉴权微服务。
+## Concepts
+- Independent tools: Code analysis tools independently developed by TCA;
+- CLS(Common License Server): The License authentication microservice for TCA independent tools.
 
-## 模块功能
-- 支持Objective-C/C++代码规范检查；
-- 支持分析项目的依赖组件；
-- 支持分析依赖组件是否存在漏洞等问题；
-- 支持Java/Kotlin API和函数调用链分析；
-- 支持代码安全、空指针检查、内存泄漏等规则。
+## Module Features
+- Supports Objective-C/C++ code specification check;
+- Supports analysis of project dependency components;
+- Supports analysis of whether dependency components have vulnerabilities and other issues;
+- Supports Java/Kotlin API and function call chain analysis;
+- Supports code safety, null pointer check, memory leak, and other rules.
 
-**持续更新中……**
+**Continuously updating...**
 
-## TCA 体验版增强能力申请
-如果用户平常使用的是 [TCA 体验版公共服务](https://tca.tencent.com/)，并想在体验版上体验到增强分析模块的分析能力，可以按照下面步骤进行申请配置：
+## TCA Trial Version Enhanced Capability Application
+If you usually use the [TCA trial version public service](https://tca.tencent.com/) and want to experience the enhanced analysis module's analysis capabilities on the trial version, you can apply and configure as follows:
 
-1. 向 TCA 团队邮件申请 Client License
+1. Apply for the Client License by email to the TCA team
 
-- 收件邮箱：
+- Recipient email:
 ```
 v_cocohwang@tencent.com
 v_jiayizhan@tencent.com
@@ -34,50 +35,49 @@ yalechen@tencent.com
 tommyzhang@tencent.com
 ```
 
-- 申请邮件格式如下：
+- The application email format is as follows:
 
-主题：**TCA 独立工具 Client License 申请**
+Subject: **TCA Independent Tool Client License Application**
 
-正文：
+Content:
 | | | 
 |  :----:  | :----:  |
-| 申请人名称  | xxx |
-| 申请人所在组织名称 | xxx |
-| 申请人所在组织类型 | 可选选项：公司/学校/个人 |
-| 申请人邮箱 | xxx |
-| 申请人手机号码 | xxx |
-| 是否私有化部署 | 否 |
-| 体验申请用途 | xxx |
+| Applicant's Name  | xxx |
+| Name of the Organization the Applicant Belongs to | xxx |
+| Type of Organization the Applicant Belongs to | Optional: Company/School/Individual |
+| Applicant's Email | xxx |
+| Applicant's Mobile Number | xxx |
+| Is it Privately Deployed | No |
+| Purpose of Experience Application | xxx |
 
-2. 收到 TCA 团队回复邮件之后，在 TCA Client目录的 [`config.ini`](https://github.com/Tencent/CodeAnalysis/blob/main/client/config.ini) 中配置 CLS 微服务信息，比如
+2. After receiving the reply email from the TCA team, configure the CLS microservice information in the `config.ini` of the TCA Client directory, for example
 
 ```ini
 [LICENSE_CONFIG]
-; [可选]使用独立工具时，需要填写，默认不需要
-; License服务的域名和端口
+; [optional] Fill in when using independent tools, no need by default
+; Domain name and port of the License service
 URL=https://tca.tencent.com
 BASE_PATH=server/license
 LICENSE=<Client License>
 ```
 
-配置完成之后，便可以在 TCA 体验版上正常使用增强分析模块能力了。
+After the configuration is complete, you can normally use the enhanced analysis module capabilities on the TCA trial version.
 
+## TCA Private Deployment Enhanced Capability Application
+If you are using TCA in an enterprise intranet environment and want to experience the enhanced analysis module capabilities of TCA on the intranet, you can apply as follows.
 
-## TCA 私有化部署增强能力申请
-如果用户是在企业内网环境内使用 TCA，并想在内网体验 TCA 的增强分析模块能力，可以参考下面步骤申请。
-
-### 准备
-- 一台 CLS 微服务专属机器，CLS 微服务需要跟该机器绑定
+### Preparation
+- A dedicated machine for the CLS microservice, the CLS microservice needs to be bound to this machine
 
 ::: warning
-**注意：不能随意删除CLS目录**
+**Note: The CLS directory cannot be deleted at will**
 :::
 
-### 步骤
-1. 在 TCA 源码中[`server/cls`](https://github.com/Tencent/CodeAnalysis/tree/main/server/cls) 目录下执行以下命令，获取 `Server ID` 和 `Client License`
+### Steps
+1. Execute the following command in the `server/cls` directory of the TCA source code to obtain the `Server ID` and `Client License`
 
 ::: warning
-**注意：需要在 CLS 目录下执行命令**
+**Note: The command needs to be executed in the CLS directory**
 :::
 
 ```shell
@@ -87,144 +87,145 @@ $ ./cls server
 xxx
 2022-04-13 18:35:29.454552966 +0800 CST [INFO] License Server ID: xxx
 ```
-- `Server ID`: 机器码，用于向 TCA 团队申请 License 授权
-- `Client License`: 提供给 TCA Client，方便 TCA Client 进行工具鉴权（重要，建议备份留底）
+- `Server ID`: Machine code, used to apply for License authorization from the TCA team
+- `Client License`: Provided to the TCA Client to facilitate tool authentication (important, it is recommended to back up)
 
-2. 在 TCA Client目录的 [`config.ini`](https://github.com/Tencent/CodeAnalysis/blob/main/client/config.ini) 中配置 CLS 微服务信息，比如
+2. Configure the CLS microservice information in the `config.ini` of the TCA Client directory, for example
 
 ```ini
 [LICENSE_CONFIG]
-; [可选]使用独立工具时，需要填写，默认不需要
-; License服务的域名和端口
-URL=http://<IP或者域名>:<port>
+; [optional] Fill in when using independent tools, no need by default
+; Domain name and port of the License service
+URL=http://<IP or domain name>:<port>
 BASE_PATH=
 LICENSE=<Client License>
 ```
 
 ::: warning
-注意：URL对应值的最后不需要跟斜杆`/`.
+Note: The URL corresponding value does not need to follow the slash `/` at the end.
 :::
 
 ::: warning
-不同的部署方式可以根据下面方法修改`config.ini`配置
+Different deployment methods can modify the `config.ini` configuration according to the following methods:
 
-- 源码部署：
-  - 修改源码目录下的`client/config.ini`
-  - 重启客户端：`./quick_install.sh local start client`
-- Docker部署：
-  - 方式1: 修改源码目录下的`.docker_temp/configs/client/config.ini`，并重启`tca-services`容器
-  - 方式2: 进入`tca-service`容器后，修改`/CodeAnalysis/client/config.ini`，并退出重启`tca-services`容器
-  - 重启容器方式：`docker restart tca-service`
-- Docker-Compose部署:
-  - 修改源码目录下的`client/config.ini`，并重启`client`容器
-  - 重启容器方式：`docker-compose restart client`
+- Source code deployment:
+  - Modify the `client/config.ini` in the source code directory
+  - Restart the client: `./quick_install.sh local start client`
+- Docker deployment:
+  - Method 1: Modify the `.docker_temp/configs/client/config.ini` in the source code directory and restart the `tca-services` container
+  - Method 2: Enter the `tca-service` container, modify `/CodeAnalysis/client/config.ini`, and exit and restart the `tca-services` container
+  - Restart the container method: `docker restart tca-service`
+- Docker-Compose deployment:
+  - Modify the `client/config.ini` in the source code directory and restart the `client` container
+  - Restart the container method: `docker-compose restart client`
 :::
 
-3. 向 TCA 团队邮件申请 License
+3. Apply for a License by email to the TCA team
 
-- 收件邮箱：
+- Recipient email:
 ```
 v_cocohwang@tencent.com
+v_jiayizhan@tencent.com
 yalechen@tencent.com
 tommyzhang@tencent.com
 ```
 
-- 申请邮件格式如下：
+- The application email format is as follows:
 
-主题：**TCA 独立工具 License 申请**
+Subject: **TCA Independent Tool License Application**
 
-正文：
+Content:
 | | | 
 |  :----:  | :----:  |
-| 申请人名称  | xxx |
-| 申请人所在组织名称 | xxx |
-| 申请人所在组织类型 | 可选选项：公司/学校/个人 |
-| 申请人邮箱 | xxx |
-| 申请人手机号码 | xxx |
-| 是否私有化部署 | 是 |
-| 首次登记的机器码 | xxx |
-| 体验申请用途 | xxx |
+| Applicant's Name  | xxx |
+| Name of the Organization the Applicant Belongs to | xxx |
+| Type of Organization the Applicant Belongs to | Optional: Company/School/Individual |
+| Applicant's Email | xxx |
+| Applicant's Mobile Number | xxx |
+| Is it Privately Deployed | Yes |
+| First Registered Machine Code | xxx |
+| Purpose of Experience Application | xxx |
 | Client License | xxx |
 
-- `首次登记的机器码`: 步骤一中输出的`Server ID`
-- `Client License`: 步骤一中输出的`Client License`
+- `First Registered Machine Code`: The `Server ID` output in step one
+- `Client License`: The `Client License` output in step one
 
-4. 收到 TCA 团队回复邮件之后，在 CLS 目录下的 [`config.yaml`](https://github.com/Tencent/CodeAnalysis/blob/main/server/cls/config.yaml) 文件中填写License  
+4. After receiving the reply email from the TCA team, fill in the License in the `config.yaml` file in the CLS directory  
 
 ::: warning
-注意：遵从 yaml 格式，比如：
-- 键值对中，冒号 `:` 后面跟一个空白字符，示例 `key: value`。
+Note: Follow the yaml format, for example:
+- In key-value pairs, there is a blank character after the colon `:`, for example `key: value`.
 :::
 
-5. 执行以下命令启动 CLS
+5. Execute the following command to start CLS
 
 ```shell
 ./cls server -d
 ```
 
-6. 验证 CLS 进程正常启动
+6. Verify that the CLS process starts normally
 
 ```bash
-# 查找是否存在CLS进程
+# Find if there is a CLS process
 ps aux|grep cls
 ```
 
 ::: warning
-注意：如果以上命令没有发现 CLS 的进程，则说明 CLS 没有正常启动。  
-请尝试更改 [`config.yaml`](https://github.com/Tencent/CodeAnalysis/blob/main/server/cls/config.yaml) 文件中的 port 为其他 port，比如8080，目前默认是80端口，然后重新执行步骤5的命令。
+Note: If the above command does not find the CLS process, it means that CLS did not start normally.  
+Please try to change the port in the `config.yaml` file to another port, such as 8080, the default is port 80, and then re-execute the command in step 5.
 :::
 
-7. 启动 TCA 分析任务
-在 TCA 平台的分析方案里面勾选独立工具相关的规则包，比如依赖组件分析规则包，然后启动一次分析任务，执行正常则表明设置生效。
+7. Start the TCA analysis task
+Check the independent tool-related rule package in the analysis plan on the TCA platform, such as the dependency component analysis rule package, and then start an analysis task. If it runs normally, it means the setting takes effect.
 
-### CLS 运维
-#### 自动重启
+### CLS Operation and Maintenance
+#### Automatic Restart
 ```shell
-# 查找CLS进程ID
+# Find the CLS process ID
 ps aux|grep cls
-# 重启微服务
+# Restart the microservice
 kill -USR2 <pid>
 ```
 
-#### 网络异常
-如果以上部署步骤已经完成，但是增强功能还是出现 `License check failed! Please check the license. License Server is not available!` 异常。可以按照以下步骤进行排查：
+#### Network Exception
+If the above deployment steps have been completed, but the enhanced function still encounters the `License check failed! Please check the license. License Server is not available!` exception. You can troubleshoot as follows:
 
-- 进入任务页面，点击异常工具，下载该工具的执行日志。如果日志中出现以下日志，则表明网络访问CLS异常；
+- Enter the task page, click on the abnormal tool, and download the execution log of the tool. If the following logs appear in the log, it means that the network access to CLS is abnormal;
 ```log
 method(head) call fails on error: <urlopen error [Errno 111] Connection refused>
 ```
-- 继续验证。如果是 Docker 或者 Docker-Compose 部署方式的话，进入 TCA Client 所在容器中。如果是远嘛部署，则来到 TCA Client 所在机器上。执行以下命令确认网络是否通路：
+- Continue to verify. If it is Docker or Docker-Compose deployment method, enter the TCA Client container. If it is a remote code deployment, go to the TCA Client machine. Execute the following command to confirm whether the network is accessible:
 ```bash
-ping <config.ini中填写的 CLS IP或者域名>
-telnet <config.ini中填写的 CLS IP或者域名> <对应端口>
+ping <CLS IP or domain name filled in config.ini>
+telnet <CLS IP or domain name filled in config.ini> <corresponding port>
 ```
-- 如果网络不通，请排查：
-  * 防火墙是否开启对应端口；
-  * CLS 对应域名是否在host中设置；
-  * 是否IP设置错误。
+- If the network is not accessible, please check:
+  * Whether the firewall has opened the corresponding port;
+  * Whether the corresponding domain name of CLS is set in the host;
+  * Whether the IP setting is wrong.
 
-##### 案例分享
-背景：
-小明以 Docker 方式部署 TCA，并在相同宿主机上部署 CLS 服务，然后在 config.ini 中设置的 URL 中的 IP 为 `127.0.0.1`, 重启后启动增强功能任务遇到上述网络不通异常。  
-原因：
-原因是此时的 `127.0.0.1` 指向的是 TCA Client 容器自身，而不是部署在宿主机上的 CLS 服务。  
-解决方案：
-将 `127.0.0.1` 改成宿主机自身IP即可。
+##### Case Sharing
+Background:
+Xiao Ming deployed TCA in Docker mode and deployed the CLS service on the same host. Then he set the IP in the URL in config.ini to `127.0.0.1`, restarted and started the enhanced function task and encountered the above network disconnection exception.  
+Reason:
+The reason is that the `127.0.0.1` at this time points to the TCA Client container itself, not the CLS service deployed on the host.  
+Solution:
+Change `127.0.0.1` to the host's own IP.
 
-#### CLS 更新
+#### CLS Update
 
-1. 使用以下命令查找 cls 进程并杀掉进程
+1. Use the following command to find the cls process and kill the process
 ```shell
-# 查找CLS进程ID
+# Find the CLS process ID
 ps aux|grep cls
-# 重启微服务
+# Restart the microservice
 kill -9 <pid>
 ```
-2. 下载最新版的 cls 并覆盖掉其中的 cls 二进制文件  
+2. Download the latest version of cls and replace the cls binary file in it  
 ::: warning
-注意：不能删除原来的 cls 目录，只需要替换其中的 cls 二进制文件即可。
+Note: You cannot delete the original cls directory, you only need to replace the cls binary file in it.
 :::
-3. 使用以下命令重启 cls 服务
+3. Use the following command to restart the cls service
 ```shell
 ./cls server -d
-```
+``

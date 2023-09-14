@@ -125,6 +125,7 @@ LICENSE=<Client License>
 - 收件邮箱：
 ```
 v_cocohwang@tencent.com
+v_jiayizhan@tencent.com
 yalechen@tencent.com
 tommyzhang@tencent.com
 ```
