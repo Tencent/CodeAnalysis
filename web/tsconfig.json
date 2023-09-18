@@ -12,6 +12,12 @@
     "resolveJsonModule": true,
     "skipLibCheck": true,
   },
-  "include": ["packages/**/*"],
-  "exclude": ["node_modules", "dist"],
+  "include": [
+    "packages/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "packages/**/dist",
+    "packages/**/dist-admin"
+  ],
 }

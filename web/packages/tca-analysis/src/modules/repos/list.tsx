@@ -5,9 +5,8 @@ import React, { useState } from 'react';
 import cn from 'classnames';
 import { Link, useHistory } from 'react-router-dom';
 import Highlighter from 'react-highlight-words';
-import { Table, Tooltip, Popover, Input, Button, message, Space } from 'coding-oa-uikit';
-// import StarIcon from 'coding-oa-uikit/lib/icon/Star';
-// import CancelStarIcon from 'coding-oa-uikit/lib/icon/CancelStar';
+import { TablePaginationConfig } from 'coding-oa-uikit/lib/table';
+import { Tooltip, Popover, Input, Button, message, Space } from 'coding-oa-uikit';
 import PencilIcon from 'coding-oa-uikit/lib/icon/Pencil';
 import ScanIcon from 'coding-oa-uikit/lib/icon/Scan';
 import ShieldIcon from 'coding-oa-uikit/lib/icon/Shield';
@@ -15,10 +14,10 @@ import MemberSettingsIcon from 'coding-oa-uikit/lib/icon/MemberSettings';
 import ClockIcon from 'coding-oa-uikit/lib/icon/Clock';
 import AlignLeftIcon from 'coding-oa-uikit/lib/icon/AlignLeft';
 
+import Table from '@tencent/micro-frontend-shared/component/table';
 import { formatDateTime } from '@tencent/micro-frontend-shared/util';
 import { getRepoName } from '@tencent/micro-frontend-shared/tca/util';
 import { putRepo } from '@src/services/repos';
-// import { subscribedRepo, cancelSubscribedRepo, putRepo } from '@src/services/repos';
 import { getProjectRouter } from '@src/utils/getRoutePath';
 
 import MemberConfig from './member-config';
@@ -34,10 +33,7 @@ interface RepoListProps {
   searchWords: string;  // 搜索关键字
   loading: boolean;
   list: Array<any>;
-  count: number;
-  pageStart: number;
-  pageSize: number;
-  onChangePageSize: (page: number, pageSize: number) => void;
+  pagination: TablePaginationConfig;
   callback: () => void;
   /** 关闭仓库成员配置 */
   closeMemberConf?: boolean;
@@ -45,8 +41,7 @@ interface RepoListProps {
 
 const RepoList = (props: RepoListProps) => {
   const {
-    orgSid, teamName, searchWords, loading, list, count, pageStart, pageSize,
-    onChangePageSize, callback, closeMemberConf,
+    orgSid, teamName, searchWords, loading, list, pagination, callback, closeMemberConf,
   } = props;
   const history = useHistory();
   const [visible, setVisible] = useState(false);  // 修改别名
@@ -107,14 +102,7 @@ const RepoList = (props: RepoListProps) => {
             setHoverRowId(undefined);
           }, // 鼠标移出行
         })}
-        pagination={{
-          current: Math.floor(pageStart / pageSize) + 1,
-          total: count,
-          pageSize,
-          showSizeChanger: false,
-          showTotal: (total: any, range: any) => `${range[0]} - ${range[1]} 条数据，共 ${total} 条`,
-          onChange: onChangePageSize,
-        }}
+        pagination={pagination}
         scroll={{ x: true }}
       >
         <Column

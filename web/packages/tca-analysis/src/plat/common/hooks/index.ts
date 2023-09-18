@@ -2,6 +2,9 @@ import { useMemo } from 'react';
 import { get } from 'lodash';
 import { useSelector } from 'react-redux';
 
+export { default as useParams } from './useParams';
+export * from './useParams';
+
 /** 判断登录用户是否是管理员 hook */
 export const useLoginUserIsAdmin = (usernames: string[]) => {
   // 判断是否有权限删除分析项目
