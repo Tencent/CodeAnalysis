@@ -1,8 +1,7 @@
 import React, { Suspense } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { hot } from 'react-hot-loader';
-import Loading from '@tencent/micro-frontend-shared/component/loading';
-// 项目内
+
+import Loading from '@tencent/micro-frontend-shared/tdesign-component/loading';
 import routes, { RouteListener } from '@plat/routes';
 import { BASE_ROUTE_PREFIX } from '@src/constant';
 import Routers from '@src/routes';
@@ -26,4 +25,4 @@ const Root = () => (
   </Suspense>
 );
 
-export default hot(module)(Root);
+export default Root;

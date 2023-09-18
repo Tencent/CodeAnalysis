@@ -12,6 +12,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import cn from 'classnames';
 import { get, findIndex, isEmpty, toNumber, find } from 'lodash';
 import { Tabs, Button } from 'tdesign-react';
+import PlusIcon from 'coding-oa-uikit/lib/icon/Plus';
 
 import { useStateStore } from '@src/context/store';
 import Repos from '@src/components/repos';
@@ -116,12 +117,10 @@ const Schemes = () => {
       ) : isEmpty(schemes) ? (
         <div className={style.noData}>
           <img src={noDataSvg} />
-          <div>
-            暂无方案，请
-            <Button type="link" onClick={() => setVisible(true)}>
-              新建分析方案
-            </Button>
-          </div>
+          <div>暂无方案</div>
+          <Button icon={<PlusIcon />} onClick={() => setVisible(true)}>
+            新建分析方案
+          </Button>
         </div>
       ) : (
         <div className={style.schemeContainer}>

@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { useHistory } from 'react-router-dom';
 import { t } from '@src/utils/i18n';
 import { get, isEmpty } from 'lodash';
 import { Space, Button, MessagePlugin, PrimaryTableCol, TableRowData } from 'tdesign-react';
@@ -45,8 +44,6 @@ const NodeTable = ({ tagOptions }: NodeTableProps) => {
 
   const [{ data, isLoading }, reload] = useFetch(nodeAPI.get, [filter]);
   const { results: listData = [], count = 0 } = data || {};
-
-  const history = useHistory();
 
   const onCreateOrUpdateHandle = (node: any = null) => {
     setVisible(true);
@@ -159,7 +156,9 @@ const NodeTable = ({ tagOptions }: NodeTableProps) => {
             {t('编辑')}
           </a>
           <a
-            onClick={() => history.push(`/manage/nodemgr/nodes/${row.id}/process`)}
+            href={`/manage/nodemgr/nodes/${row.id}/process`}
+            target='_blank'
+            rel='noreferrer'
           >
             {t('工具进程')}
           </a>

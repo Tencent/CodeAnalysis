@@ -42,7 +42,7 @@ const MultiProcessModal = ({ visible, selectedNodes, onOk, onCancel }: MultiProc
 
   return (
     <Dialog
-      header={t('批量编辑节点信息')}
+      header={t('批量配置工具进程')}
       visible={visible}
       onClose={onCancel}
       width={1000}

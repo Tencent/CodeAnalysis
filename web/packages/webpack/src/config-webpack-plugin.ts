@@ -25,6 +25,7 @@ const {
   WEBPACK_CONFIG_PROJECT_NAME,
   WEBPACK_CONFIG_PROJECT_DESC,
   WEBPACK_CONFIG_MATCH,
+  WEBPACK_CONFIG_USE_LIST,
 } = process.env;
 
 /** 是否dev */
@@ -136,9 +137,9 @@ class ConfigWebpackPlugin {
       }, (assets) => {
         const keys = Object.keys(assets);
         if (keys.length) {
-          const config  = this.generateConfig(keys);
+          const config = this.generateConfig(keys);
           const configTxt = JSON.stringify(config);
-          compilation.emitAsset(`${this.config.productName}.json`,  new webpack.sources.RawSource(configTxt));
+          compilation.emitAsset(`${this.config.productName}.json`, new webpack.sources.RawSource(configTxt));
           log(green(`[config] ${configTxt}`));
         }
       });
@@ -185,6 +186,9 @@ class ConfigWebpackPlugin {
         }
       });
     });
+    if (isTrue(WEBPACK_CONFIG_USE_LIST)) {
+      return [config];
+    }
     return config;
   }
 

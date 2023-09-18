@@ -132,6 +132,7 @@ const FirstModal = (props: FirstModalProps) => {
       >
         {noNode && <Alert
           message={<p>团队未接入任何专机节点，可能导致分析失败。
+            <br/>
             <a href={`/t/${orgSid}/nodes/`} target='_blank' rel="noreferrer">立即接入{'>>'}</a>
           </p>}
           theme="warning"

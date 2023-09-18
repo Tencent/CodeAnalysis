@@ -1,16 +1,14 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { get } from 'lodash';
-import { Dialog, PageInfo, Table } from 'tdesign-react';
+import { PageInfo, Table, PrimaryTableProps } from 'tdesign-react';
 import { t } from '@src/utils/i18n';
 import { formatDateTime } from '@tencent/micro-frontend-shared/util';
 
 type FetchApi<ApiArgs extends any[]> = (...args: ApiArgs) => Promise<unknown>;
 
-interface OperationRecordModalProps {
+interface OperationRecordTableProps extends PrimaryTableProps {
   id: number | string;
-  visible: boolean;
   getRecordListApi: FetchApi<any>;
-  onCancel: () => void;
 }
 
 export const DEFAULT_PAGER = {
@@ -19,7 +17,7 @@ export const DEFAULT_PAGER = {
   currentPage: 1,
 };
 
-const OperationRecordModal = ({ id, getRecordListApi, visible, onCancel }: OperationRecordModalProps) => {
+const OperationRecordTable = ({ id, getRecordListApi, ...otherProps }: OperationRecordTableProps) => {
   const [operationRecord, setOperationRecord] = useState<any>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [pager, setPager] = useState<any>(DEFAULT_PAGER);
@@ -41,11 +39,11 @@ const OperationRecordModal = ({ id, getRecordListApi, visible, onCancel }: Opera
   }, [getRecordListApi, id]);
 
   useEffect(() => {
-    if (visible && id) {
+    if (id) {
       setLoading(true);
       getRecordList(DEFAULT_PAGER.currentPage, DEFAULT_PAGER.pageSize);
     }
-  }, [visible, id, getRecordList]);
+  }, [id, getRecordList]);
 
   const onChangePage = ({ current, pageSize }: PageInfo) => {
     setLoading(true);
@@ -82,31 +80,21 @@ const OperationRecordModal = ({ id, getRecordListApi, visible, onCancel }: Opera
   ];
 
   return (
-    <Dialog
-      header={t('操作记录')}
-      placement='top'
-      visible={visible}
-      onClose={onCancel}
-      onClosed={() => setOperationRecord([])}
-      footer={null}
-      width='900px'
-    >
-      <Table
-        data={operationRecord}
-        loading={loading}
-        columns={columns}
-        pagination={{
-          current: currentPage,
-          total: count,
-          pageSize,
-          onChange: onChangePage,
-        }}
-        maxHeight='600px'
-        size='small'
-        rowKey='id'
-      />
-    </Dialog>
+    <Table
+      data={operationRecord}
+      loading={loading}
+      columns={columns}
+      pagination={{
+        current: currentPage,
+        total: count,
+        pageSize,
+        onChange: onChangePage,
+      }}
+      size='small'
+      rowKey='id'
+      {...otherProps}
+    />
   );
 };
 
-export default OperationRecordModal;
+export default OperationRecordTable;
