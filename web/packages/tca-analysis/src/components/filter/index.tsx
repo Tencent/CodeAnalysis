@@ -9,7 +9,7 @@
  */
 
 import React from 'react';
-import { Form } from 'tdesign-react';
+import { Form } from 'coding-oa-uikit';
 
 import Item from './FilterItem';
 
@@ -20,14 +20,12 @@ interface FilterProps {
 const Filter = (props: FilterProps & any) => {
   const { children, ...otherProps } = props;
   return (
-        <Form
-            {...otherProps}
-            layout="inline"
-            labelAlign='left'
-            labelWidth='auto'
-        >
-            {children}
-        </Form>
+    <Form
+      {...otherProps}
+      layout="inline"
+    >
+      {children}
+    </Form>
   );
 };
 

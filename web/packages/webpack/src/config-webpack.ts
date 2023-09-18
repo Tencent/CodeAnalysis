@@ -12,6 +12,8 @@ import SpeedMeasurePlugin from 'speed-measure-webpack-plugin';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 /** tsconfig-paths 插件 */
 import TsconfigPathsPlugin from 'tsconfig-paths-webpack-plugin';
+/** 快速更新插件 */
+import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
 /** 自定义插件，用于生成资源文件地址 */
 import ConfigWebpackPlugin from './config-webpack-plugin';
 import eslintWebpackPlugin from './config-eslint-webpack-plugin';
@@ -107,11 +109,6 @@ export const webpackConfig = (options?: Options) => {
       fallback: {
         path: require.resolve('path-browserify'),
       },
-      alias: {
-        // '@src': path.resolve(BASE_PATH, 'src'),
-        // '@plat': path.resolve(BASE_PATH, `src/plat/${PLATFORM_ENV}`),
-        'react-dom': '@hot-loader/react-dom',
-      },
       modules: ['node_modules'],
       plugins: [new TsconfigPathsPlugin({
         // 读取 tsconfig paths 定义别名
@@ -146,8 +143,8 @@ export const webpackConfig = (options?: Options) => {
               '@babel/proposal-class-properties',
               '@babel/proposal-object-rest-spread',
               '@babel/plugin-transform-runtime',
-              'react-hot-loader/babel',
-            ],
+              IS_DEV && require.resolve('react-refresh/babel'),
+            ].filter(Boolean),
             // rootMode: 'upward',
           },
         },
@@ -283,12 +280,12 @@ export const webpackConfig = (options?: Options) => {
       devServer: {
         static: outDir,
         hot: true,
-        // liveReload: false,
+        liveReload: false,
         allowedHosts: 'all',
         host,
         port,
         client: {
-          progress: true,
+          // progress: true,
           overlay: false,
           // webSocketURL,
         },
@@ -303,6 +300,7 @@ export const webpackConfig = (options?: Options) => {
       },
       plugins: [
         eslintWebpackPlugin,
+        new ReactRefreshWebpackPlugin(),
       ],
     });
   } else {
@@ -314,6 +312,7 @@ export const webpackConfig = (options?: Options) => {
         'react-redux': 'ReactRedux',
         classnames: 'Classnames',
         'coding-oa-uikit': 'CodingOAUikit',
+        'tdesign-react': 'TdesignReact',
         lodash: 'Lodash',
       } : undefined,
     });

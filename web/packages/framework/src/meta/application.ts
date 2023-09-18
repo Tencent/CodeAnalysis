@@ -97,7 +97,7 @@ export default class MicroApplication implements BaseMicroApplication<MicroAppli
   }
 
   public loadResources(): Promise<any> {
-    info('加载js、css资源文件');
+    info(`加载 ${this.props.name} js、css资源文件`);
     return Promise.all([this.loadStyle(), this.loadScript()]);
   }
 

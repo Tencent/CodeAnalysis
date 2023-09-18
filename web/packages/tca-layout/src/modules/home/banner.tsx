@@ -6,7 +6,7 @@ import { Button } from 'tdesign-react';
 import ChevronUp from 'coding-oa-uikit/lib/icon/ArrowCircleUp';
 
 // 项目内
-import routes from '@plat/routes';
+import { ROOT_ROUTERS } from '@src/routes';
 import { isEnableManage } from '@plat/util';
 import { SHOW_MANAGE_BTN, SHOW_GROUP_QR_CODE } from '@plat/modules/home';
 
@@ -16,7 +16,7 @@ import { getManageRouter } from '@src/utils/getRoutePath';
 import s from './style.scss';
 
 // 获取当前第一个路由
-const path = routes[0]?.path || '/';
+const path = ROOT_ROUTERS[0]?.path || '/';
 const router = path instanceof Array ? path[0] : path;
 
 const Banner = () => {

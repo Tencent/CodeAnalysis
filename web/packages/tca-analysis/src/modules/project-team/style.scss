@@ -1,0 +1,23 @@
+@import "@tencent/micro-frontend-shared/style/color.scss";
+
+.content {
+  padding: 24px;
+}
+
+.member-item {
+  margin-bottom: 30px;
+  padding: 0 8px;
+
+  .tit {
+    margin-bottom: 20px;
+    font-size: 16px;
+    font-weight: 500;
+    margin-left: -8px;
+  }
+
+  .group {
+    padding: 8px 16px;
+    background: $grey-1;
+    border-radius: 2px;
+  }
+}

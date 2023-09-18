@@ -10,9 +10,10 @@
     align-items: center;
     justify-content: center;
     height: calc(100% - 280px);
-
-    img {
-      margin-bottom: 30px;
+    
+    > div {
+      margin: 10px 0px;
+      color: var(--tca-grey-8);
     }
   }
 }
