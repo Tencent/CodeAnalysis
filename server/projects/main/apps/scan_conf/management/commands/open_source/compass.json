@@ -116,7 +116,7 @@
             {
                 "real_name": "VUL_INFO",
                 "display_name": "低危漏洞",
-                "severity": "error",
+                "severity": "info",
                 "category": "security",
                 "rule_title": "依赖组件存在低危漏洞",
                 "rule_params": null,
