@@ -1,0 +1,2940 @@
+[
+    {
+        "name": "海外产品代码安全",
+        "description": "海外产品源码安全扫描，包括代码安全检查和开源组件检查两类规则。",
+        "revision": null,
+        "package_type": "official",
+        "languages": [
+            "cpp",
+            "cs",
+            "css",
+            "Go",
+            "html",
+            "java",
+            "js",
+            "kotlin",
+            "Lua",
+            "oc",
+            "php",
+            "python",
+            "ruby",
+            "scala",
+            "swift",
+            "ts",
+            "visualbasic",
+            "abap",
+            "apex",
+            "cobol",
+            "flex",
+            "pli",
+            "plsql",
+            "rpg",
+            "tsql",
+            "xml",
+            "dart",
+            "shell",
+            "protobuf",
+            "rust",
+            "sql",
+            "wasm"
+        ],
+        "labels": [
+            "安全"
+        ],
+        "checkrule_set": [
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2020-0001",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2020-0003",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2020-0004",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2020-0005",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2020-0006",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2020-0007",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2020-0008",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2020-0009",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2020-0010",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2020-0012",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2020-0013",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2020-0014",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2020-0015",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2020-0016",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2020-0017",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2020-0019",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2020-0020",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2020-0021",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2020-0022",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2020-0023",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2020-0024",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2020-0025",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2020-0026",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2020-0027",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2020-0028",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2020-0032",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2020-0033",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2020-0034",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2020-0035",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2020-0036",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2020-0037",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2020-0038",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2020-0039",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2020-0040",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2020-0041",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2020-0042",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2020-0043",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2020-0045",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2020-0046",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2020-0047",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2020-0048",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2020-0049",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2020-0050",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2021-0051",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2021-0052",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2021-0053",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2021-0054",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2021-0057",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2021-0058",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2021-0059",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2021-0060",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2021-0061",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2021-0063",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2021-0064",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2021-0065",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2021-0066",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2021-0067",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2021-0068",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2021-0069",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2021-0070",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2021-0071",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2021-0072",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2021-0073",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2021-0075",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2021-0076",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2021-0077",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2021-0078",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2021-0079",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2021-0081",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2021-0082",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2021-0083",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2021-0084",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2021-0085",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2021-0086",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2021-0087",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2021-0088",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2021-0089",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2021-0090",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2021-0094",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2021-0095",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2021-0096",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2021-0097",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2021-0098",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2021-0099",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2021-0100",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2021-0101",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2021-0102",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2021-0103",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2021-0104",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2021-0105",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2021-0106",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2021-0107",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2021-0108",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2021-0109",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2021-0110",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2021-0112",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2021-0113",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2021-0142",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2021-0154",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2021-0159",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2021-0160",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2021-0163",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2021-0172",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2021-0178",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2021-0223",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2021-0224",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2021-0226",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2021-0227",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2021-0228",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2021-0234",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2021-0235",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2021-0237",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2021-0238",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2021-0239",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2021-0240",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2021-0241",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2021-0242",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2021-0243",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2021-0245",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2021-0258",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2021-0263",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2021-0264",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2021-0265",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2021-0317",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2021-0319",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2021-0347",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2021-0356",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2021-0412",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0166",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0171",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0177",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0187",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0189",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0190",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0191",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0192",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0193",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0197",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0201",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0203",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0209",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0211",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0212",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0213",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0217",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0220",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0229",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0230",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0233",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0236",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0244",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0246",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0247",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0248",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0251",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0252",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0253",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0254",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0256",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0272",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0273",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0274",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0288",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0289",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0294",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0300",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0316",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0318",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0322",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0345",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0346",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0355",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0370",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0379",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0380",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0384",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0386",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0391",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0400",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0402",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0411",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0414",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0417",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0422",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0425",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0433",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0434",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0435",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0438",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0444",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0460",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0461",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0462",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0463",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0470",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0475",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0476",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0477",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0492",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0493",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0503",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0515",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0519",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0520",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0521",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0522",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0523",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0524",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0525",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0526",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0527",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0528",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0531",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0532",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0533",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0534",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0535",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0536",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0537",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0558",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0563",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0564",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0569",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0572",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0574",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0586",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0587",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0588",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0603",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0619",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0621",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0629",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0643",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0646",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0701",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0706",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0755",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0761",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0762",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0942",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0945",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0952",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0956",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0957",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0962",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0963",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0965",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0968",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0969",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0972",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0978",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0979",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0980",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-0988",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-1002",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-1004",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-1008",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-1026",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-1027",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-1031",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-1037",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-1038",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-1039",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-1040",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-1043",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-1045",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-1052",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-1053",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-1059",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-1071",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-1083",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-1086",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-1095",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-1098",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-1113",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-1114",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-1117",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-1118",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-1129",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-1130",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-1143",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-1144",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-1148",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-1155",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-1159",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-1165",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-1166",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-1167",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-1175",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-1178",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-1180",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-1184",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-1187",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-1188",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-1201",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2022-1213",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2023-1268",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2023-1269",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2023-1295",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2023-1494",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2023-1495",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2023-1497",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2023-1505",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2023-1515",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2023-1519",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2023-1526",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2023-1534",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2023-1535",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2023-1546",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2023-1547",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2023-1548",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2023-1549",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2023-1557",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2023-1558",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2023-1559",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2023-1566",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2023-1567",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2023-1568",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2023-1569",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2023-1570",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2023-1571",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2023-1572",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2023-1573",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2023-1574",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2023-1578",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2023-1589",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2023-1595",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2023-1597",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2023-1600",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2023-1602",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2023-1611",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2023-1621",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2023-1623",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2023-1631",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2023-1640",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2023-1664",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2023-1681",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2023-1702",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2023-1703",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2023-1704",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2023-1705",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2023-1709",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2023-1713",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2023-1717",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2023-1732",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2023-1733",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2023-1737",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2023-1751",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2023-1752",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2023-1753",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2023-1765",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2023-1766",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2023-1772",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2023-1788",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2023-1792",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2023-1821",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2023-1826",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2023-1832",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2023-1839",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2023-1840",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2023-1841",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2023-1842",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2023-1857",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2023-1859",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2023-1860",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2023-1861",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2023-1867",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2023-1872",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2023-1874",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2023-1878",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2023-1881",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2023-1882",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2023-1883",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2023-1904",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2023-1914",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2023-1923",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2023-1930",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2023-1941",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2023-1987",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2023-1988",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2023-1989",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2023-1990",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2023-1992",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2023-1998",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2023-2000",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2023-2003",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2023-2024",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2023-2041",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2023-2042",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2023-2043",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2023-2044",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2023-2045",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2023-2048",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-2023-2052",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "trivy",
+                "checkrule": "SEC_WARN",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "trivy",
+                "checkrule": "VUL_WARN",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "trivy",
+                "checkrule": "SEC_INFO",
+                "severity": "info",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "trivy",
+                "checkrule": "VUL_INFO",
+                "severity": "info",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "trivy",
+                "checkrule": "SEC_ERROR",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "trivy",
+                "checkrule": "VUL_ERROR",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "audit",
+                "checkrule": "VUL_WARN",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "audit",
+                "checkrule": "VUL_INFO",
+                "severity": "info",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "audit",
+                "checkrule": "VUL_ERROR",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "VCG",
+                "checkrule": "CPP-Critical",
+                "severity": "fatal",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "VCG",
+                "checkrule": "CPP-High",
+                "severity": "fatal",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "VCG",
+                "checkrule": "CPP-Low",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "VCG",
+                "checkrule": "CPP-Medium",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "VCG",
+                "checkrule": "CPP-Potential Issue",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "VCG",
+                "checkrule": "CPP-Standard",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "VCG",
+                "checkrule": "CPP-Suspicious Comment",
+                "severity": "info",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "tca_plugin_dependency_check",
+                "checkrule": "VUL_WARN",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "tca_plugin_dependency_check",
+                "checkrule": "VUL_INFO",
+                "severity": "info",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "tca_plugin_dependency_check",
+                "checkrule": "VUL_ERROR",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            }
+        ],
+        "open_saas": false,
+        "envs": null
+    }
+]
