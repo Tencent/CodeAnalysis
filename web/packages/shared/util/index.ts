@@ -5,6 +5,7 @@ export * from './size';
 export * from './check';
 export * from './blob';
 export * from './url';
+export * from './user';
 export { default as LogMgr } from './log';
 
 

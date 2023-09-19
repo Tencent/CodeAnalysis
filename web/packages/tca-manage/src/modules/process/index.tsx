@@ -239,6 +239,7 @@ const Process = () => {
             rowKey='id'
             data={processTableData}
             columns={columns}
+            maxHeight='calc(100vh - 520px)'
           />
         </Card>
       </div>

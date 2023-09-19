@@ -1,9 +1,12 @@
 import { webpackConfig } from '@tencent/micro-frontend-webpack/src/index';
 import { merge } from 'webpack-merge';
 
+/** 代码分析微前端默认路由匹配配置 */
+const DEFAULT_ROUTE_MATCH = '^/t/[^/]+/p/[^/]+/(code-analysis|repos|template|profile|group)|^/t/[^/]+/template';
+
 const { config } = webpackConfig({
   configWebpackOptions: {
-    match: '^/t/[^/]+/p/[^/]+/(code-analysis|repos|template|profile|group)|^/t/[^/]+/template',
+    match: process.env.PRODUCT_ROUTE_MATCH || DEFAULT_ROUTE_MATCH,
   },
   envConfig: {
     envs: {

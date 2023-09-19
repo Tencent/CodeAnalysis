@@ -1,8 +1,7 @@
 import React from 'react';
-import MicroInit from '@tencent/micro-frontend-shared/component/micro-init';
-import MicroLayout from '@tencent/micro-frontend-shared/component/micro-layout';
+import MicroInit from '@tencent/micro-frontend-shared/tdesign-component/micro-init';
+import MicroLayout from '@tencent/micro-frontend-shared/tdesign-component/micro-layout';
 import { isTrue } from '@tencent/micro-frontend-shared/util';
-// import { StoreProvider } from './context/store';
 
 // 项目内
 import Root from './root';

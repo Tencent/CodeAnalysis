@@ -22,7 +22,9 @@ export const modTsConfigPaths = (file: string, platformEnv = '') => {
   if (platformEnv) {
     const data = fs.readFileSync(file, 'utf-8');
     // 将tsconfig paths中的 @plat/* 别名替换内容
-    const tsconfig = data.replace(/"@plat\/\*":[^\n\r,]*/g, `"@plat/*": ["src/plat/${platformEnv}/*"]`);
+    // const tsconfig = data.replace(/"@plat\/\*":[^\n\r,]*/g, `"@plat/*": ["src/plat/${platformEnv}/*"]`);
+    // 兼容多路径
+    const tsconfig = data.replace(/"@plat\/\*[\w\W][^\]]+\]/g, `"@plat/*": ["src/plat/${platformEnv}/*", "src/plat/common/*"]`);
     fs.writeFileSync(file, tsconfig, 'utf-8');
   }
 };

@@ -4,7 +4,7 @@
     "baseUrl": ".",
     "paths": {
       "@src/*": ["src/*"],
-      "@plat/*": ["src/plat/open/*"]
+      "@plat/*": ["src/plat/open/*", "src/plat/common/*"]
     }
   },
   "include": ["src", "global.d.ts"],

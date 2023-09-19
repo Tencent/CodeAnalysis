@@ -58,7 +58,7 @@ function document_frontend() {
 # 子微前端的构建资源打包
 function sub_microfrontend() {
   status "开始构建 $1 ..."
-  GIT_REVISION=$GIT_REVISION PUBLIC_PATH=/static/$1/ ENABLE_EXTERNALS=TRUE yarn build --scope "$1"
+  PLATFORM_ENV=open GIT_REVISION=$GIT_REVISION PUBLIC_PATH=/static/$1/ ENABLE_EXTERNALS=TRUE yarn build --scope "$1"
   status "构建完成，开始打包到 tca-deploy-source"
   cd "${ROOT_PATH}"/packages/"${1}"/dist
   zip -r "${1}".zip ./* --exclude '*.map' --exclude 'stats.json' --exclude '*.txt' --exclude '*.html'
@@ -88,9 +88,9 @@ function run_config() {
     configs+=', '$(cat "${ROOT_PATH}"/packages/"${pkg_name}"/dist/"$pkg_name".json)
   done
   # 存在 jq 命令则格式化 json 文件
-  if command -v jq &> /dev/null; then
+  if command -v jq &>/dev/null; then
     echo '['"${configs:2}"']' | jq . >"${CONF_PATH}"/configs.json
-  else 
+  else
     echo '['"${configs:2}"']' >"${CONF_PATH}"/configs.json
   fi
 }
