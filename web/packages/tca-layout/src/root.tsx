@@ -1,13 +1,19 @@
 import React, { Suspense } from 'react';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
-import { hot } from 'react-hot-loader/root';
+import { get } from 'lodash';
+
 import Loading from '@tencent/micro-frontend-shared/tdesign-component/loading';
 
 import Home from '@src/modules/home';
 import LoadInitService from './load-init-service';
 
 // 项目内
-import routes from '@plat/routes';
+import { ROOT_ROUTERS } from '@src/routes';
+
+/** 路由 */
+const routes = ROOT_ROUTERS.map(item => <Route key={`${item.path}`} {...item} />);
+/** 重定向路由 */
+const redirectRoute = <Redirect from="/" to={get(ROOT_ROUTERS, '0.path.0') || get(ROOT_ROUTERS, '0.path')} />;
 
 const Root = () => (
   <Router>
@@ -17,8 +23,7 @@ const Root = () => (
         <Route path="/login" render={() => ''} />
         <LoadInitService>
           <Switch>
-            {routes.map(item => <Route key={`${item.path}`} {...item} />)}
-            <Redirect from="/" to={routes[0].path instanceof Array ? routes[0].path[0] : routes[0].path} />,
+            {routes}{redirectRoute}
           </Switch>
         </LoadInitService>
       </Switch>
@@ -26,4 +31,4 @@ const Root = () => (
   </Router>
 );
 
-export default hot(Root);
+export default Root;

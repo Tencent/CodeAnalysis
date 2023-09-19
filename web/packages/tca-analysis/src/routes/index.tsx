@@ -6,7 +6,7 @@
 
 // import React, { useEffect, useState, lazy } from 'react';
 import React, { useEffect, useState } from 'react';
-import { Route, Switch, useParams, useHistory } from 'react-router-dom';
+import { Route, Switch, useHistory } from 'react-router-dom';
 import { toNumber, isEmpty, find } from 'lodash';
 
 import { useDispatchStore } from '@src/context/store';
@@ -25,7 +25,7 @@ import {
 import { getRepos, getProjectTeamMembers } from '@src/services/common';
 import { getRepo } from '@src/services/repos';
 
-import Loading from '@src/components/loading';
+import Loading from '@tencent/micro-frontend-shared/tdesign-component/loading';
 
 import Projects from '@src/modules/projects';
 import PkgRules from '@src/modules/schemes/code-lint/pkg-rules';
@@ -54,21 +54,21 @@ import ScanDetail from '@src/modules/projects/scan-history/detail';
 // const CCIssuesDetail = lazy(() => import('@src/modules/projects/metric/ccissues/detail'));
 // const DupDetail = lazy(() => import('@src/modules/projects/metric/dupfiles/detail'));
 // const ScanDetail = lazy(() => import('@src/modules/projects/scan-history/detail'));
+import { useParams } from '@plat/hooks';
 
 
 const PATH_NAME = ['/repos/create', '/template'];
 
 const Routers = () => {
   const history = useHistory();
-  const { orgSid, teamName }: any = useParams();
-  let { repoId }: any = useParams();
+  const { orgSid, teamName, repoId: repoStrId } = useParams();
   const [repos, setRepos] = useState([]);
 
   const dispatch = useDispatchStore();
   const [loading, setLoading] = useState(true);
   const [isWelcome, setIsWelcome] = useState(PATH_NAME.every((path: any) => !window.location.pathname.match(path)));
 
-  repoId = toNumber(repoId);
+  const repoId = toNumber(repoStrId);
 
   const getPageStatus = (pathname: string) => setIsWelcome(PATH_NAME.every((path: any) => !pathname.match(path)));
 

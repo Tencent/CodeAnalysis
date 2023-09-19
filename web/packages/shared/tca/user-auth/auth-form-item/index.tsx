@@ -90,7 +90,6 @@ const UserAuthFormItem = ({
       <Select
         style={selectStyle}
         placeholder={placeholder}
-        getPopupContainer={() => document.body}
         optionLabelProp="label"
         allowClear={allowClear}
       >

@@ -37,6 +37,7 @@ const {
   WEBPACK_COS_VERSION,
   WEBPACK_COS_IGNORE_ERROR,
   WEBPACK_COS_EXIST_CHECK,
+  WEBPACK_COS_IGNORE_EXIST_CHECK_FILENAMES,
   WEBPACK_COS_REMOVE_MODE,
 } = process.env;
 
@@ -64,6 +65,8 @@ interface CosWebpackPluginProps {
   useVersion?: StrBoolean;
   /** 文件存在校验，默认开启 */
   existCheck?: StrBoolean;
+  /** 忽略文件存在校验文件名称列表，即强制上传 */
+  ignoreExistCheckFileNames?: string[];
   /** 是否开启gzip压缩，默认开启 */
   gzip?: StrBoolean;
   /** 上传文件请求重试次数，默认3次 */
@@ -97,6 +100,8 @@ interface Config {
   useVersion: boolean;
   /** 文件存在校验，默认开启 */
   existCheck: boolean;
+  /** 忽略文件存在校验文件名称列表，即强制上传 */
+  ignoreExistCheckFileNames: string[];
   /** 是否开启gzip压缩，默认开启 */
   gzip: boolean;
   /** 上传文件请求重试次数，默认3次 */
@@ -124,7 +129,7 @@ class CosWebpackPlugin {
 
   constructor(options?: CosWebpackPluginProps) {
     const {
-      cos, bucket, baseDir, project, version, useVersion, existCheck,
+      cos, bucket, baseDir, project, version, useVersion, existCheck, ignoreExistCheckFileNames,
       gzip, retry, exclude, enableLog, ignoreError, removeMode, ...other
     }: CosWebpackPluginProps = options || {};
     // 获取 domain type
@@ -147,6 +152,7 @@ class CosWebpackPlugin {
       version: version || WEBPACK_COS_VERSION || DEFAULT_PROJECT_VERSION,
       useVersion: isTrue(useVersion || WEBPACK_COS_USE_VERSION || false),
       existCheck: isTrue(existCheck || WEBPACK_COS_EXIST_CHECK || true),
+      ignoreExistCheckFileNames: ignoreExistCheckFileNames || WEBPACK_COS_IGNORE_EXIST_CHECK_FILENAMES?.split(',') || [],
       gzip: isTrue(gzip || true),
       retry: retry === undefined ? DEFAULT_RETRY : retry,
       exclude: exclude || DEFAULT_EXCLUDE,
@@ -183,48 +189,38 @@ class CosWebpackPlugin {
   }
 
   apply(compiler: Compiler) {
+    let assetFiles: AssetFile[] = [];
+
     // compiler.hooks.emit Compilation.assets will be frozen in future，因此改用 processAssets 时处理
     compiler.hooks.compilation.tap(PLUGIN_NAME, (compilation) => {
-      compilation.hooks.processAssets.tapAsync({
+      compilation.hooks.processAssets.tap({
         name: PLUGIN_NAME,
         stage: Compilation.PROCESS_ASSETS_STAGE_REPORT,
-      }, (assets, callback) => {
-        const assetFiles = this.pickWaitUploadAssetFiles(assets);
-        if (assetFiles.length) {
-          log(green(`COS 上传开始，资源总数${assetFiles.length}......`));
-          this.uploadAssetFiles(assetFiles)
-            .then(() => {
-              log(green(`COS 上传完成，资源总数${assetFiles.length}\n`));
-              callback();
-            })
-            .catch((err) => {
-              const msg = red(`COS 上传出错... code: ${err.code} name: ${err.name} message: ${err.message}\n`);
-              log(msg);
-              if (!this.config.ignoreError) {
-                throw new Error(msg);
-              }
-            });
-        } else {
-          callback();
-        }
+      }, (assets) => {
+        assetFiles = this.pickWaitUploadAssetFiles(assets);
       });
     });
-    // compiler.hooks.emit.tapAsync(PLUGIN_NAME, (compilation, callback) => {
-    //   const assetFiles = this.pickWaitUploadAssetFiles(compilation);
-    //   log(green(`COS 上传开始，资源总数${assetFiles.length}......`));
-    //   this.uploadAssetFiles(assetFiles)
-    //     .then(() => {
-    //       log(green(`COS 上传完成，资源总数${assetFiles.length}\n`));
-    //       callback();
-    //     })
-    //     .catch((err) => {
-    //       const msg = red(`COS 上传出错... code: ${err.code} name: ${err.name} message: ${err.message}\n`);
-    //       log(msg);
-    //       if (!this.config.ignoreError) {
-    //         throw new Error(msg);
-    //       }
-    //     });
-    // });
+
+    // 避免构建异常资源上传cos
+    compiler.hooks.afterEmit.tapAsync(PLUGIN_NAME, (_, callback) => {
+      if (assetFiles.length) {
+        log(green(`COS 上传开始，资源总数${assetFiles.length}......`));
+        this.uploadAssetFiles(assetFiles)
+          .then(() => {
+            log(green(`COS 上传完成，资源总数${assetFiles.length}\n`));
+            callback();
+          })
+          .catch((err) => {
+            const msg = red(`COS 上传出错... code: ${err.code} name: ${err.name} message: ${err.message}\n`);
+            log(msg);
+            if (!this.config.ignoreError) {
+              throw new Error(msg);
+            }
+          });
+      } else {
+        callback();
+      }
+    });
   }
 
   /** 从资源中匹配待上传的资源文件 */
@@ -263,7 +259,11 @@ class CosWebpackPlugin {
   private uploadAssetFileByExistCheck(file: AssetFile, idx: number, fileCount: number) {
     return new Promise<boolean>((resole, reject) => {
       const uploadName = this.getUploadName(file.name);
-      if (this.config.existCheck) {
+      if (!this.config.existCheck || this.config.ignoreExistCheckFileNames.includes(file.name)) {
+        // 则直接上传文件
+        this.uploadAssetFile(file, uploadName, idx, fileCount).then(resole)
+          .catch(reject);
+      } else {
         // 存在性校验
         this.getBucketByUploadName(uploadName).then((contents) => {
           if (contents?.length > 0) {
@@ -279,10 +279,6 @@ class CosWebpackPlugin {
             this.uploadAssetFile(file, uploadName, idx, fileCount).then(resole)
               .catch(reject);
           });
-      } else {
-        // 关闭existCheck，则直接上传文件
-        this.uploadAssetFile(file, uploadName, idx, fileCount).then(resole)
-          .catch(reject);
       }
     });
   }
