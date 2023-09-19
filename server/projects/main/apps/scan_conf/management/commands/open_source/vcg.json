@@ -1,0 +1,858 @@
+[
+    {
+        "name": "VCG",
+        "display_name": "VCG",
+        "description": "VisualCodeGrepper - Code security scanning tool.",
+        "license": "GPL-3.0 license",
+        "libscheme_set": [],
+        "image_url": null,
+        "task_processes": [
+            "analyze",
+            "datahandle"
+        ],
+        "scan_app": "codelint",
+        "scm_url": "tca-vcg",
+        "run_cmd": "python src/main.py",
+        "envs": "python_version = 3",
+        "build_flag": false,
+        "checkrule_set": [
+            {
+                "real_name": "COBOL-Critical",
+                "display_name": "COBOL-Critical",
+                "severity": "fatal",
+                "category": "security",
+                "rule_title": "COBOL-Critical",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "cobol"
+                ],
+                "solution": "参考错误信息",
+                "owner": null,
+                "labels": [],
+                "description": "COBOL-Critical",
+                "disable": false
+            },
+            {
+                "real_name": "COBOL-High",
+                "display_name": "COBOL-High",
+                "severity": "fatal",
+                "category": "security",
+                "rule_title": "COBOL-High",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "cobol"
+                ],
+                "solution": "参考错误信息",
+                "owner": null,
+                "labels": [],
+                "description": "COBOL-High",
+                "disable": false
+            },
+            {
+                "real_name": "COBOL-Low",
+                "display_name": "COBOL-Low",
+                "severity": "warning",
+                "category": "security",
+                "rule_title": "COBOL-Low",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "cobol"
+                ],
+                "solution": "参考错误信息",
+                "owner": null,
+                "labels": [],
+                "description": "COBOL-Low",
+                "disable": false
+            },
+            {
+                "real_name": "COBOL-Medium",
+                "display_name": "COBOL-Medium",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "COBOL-Medium",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "cobol"
+                ],
+                "solution": "参考错误信息",
+                "owner": null,
+                "labels": [],
+                "description": "COBOL-Medium",
+                "disable": false
+            },
+            {
+                "real_name": "COBOL-Potential Issue",
+                "display_name": "COBOL-Potential Issue",
+                "severity": "warning",
+                "category": "security",
+                "rule_title": "COBOL-Potential Issue",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "cobol"
+                ],
+                "solution": "参考错误信息",
+                "owner": null,
+                "labels": [],
+                "description": "COBOL-Potential Issue",
+                "disable": false
+            },
+            {
+                "real_name": "COBOL-Standard",
+                "display_name": "COBOL-Standard",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "COBOL-Standard",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "cobol"
+                ],
+                "solution": "参考错误信息",
+                "owner": null,
+                "labels": [],
+                "description": "COBOL-Standard",
+                "disable": false
+            },
+            {
+                "real_name": "COBOL-Suspicious Comment",
+                "display_name": "COBOL-Suspicious Comment",
+                "severity": "info",
+                "category": "security",
+                "rule_title": "COBOL-Suspicious Comment",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "cobol"
+                ],
+                "solution": "参考错误信息",
+                "owner": null,
+                "labels": [],
+                "description": "COBOL-Suspicious Comment",
+                "disable": false
+            },
+            {
+                "real_name": "CPP-Critical",
+                "display_name": "CPP-Critical",
+                "severity": "fatal",
+                "category": "security",
+                "rule_title": "CPP-Critical",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "参考错误信息",
+                "owner": null,
+                "labels": [],
+                "description": "CPP-Critical",
+                "disable": false
+            },
+            {
+                "real_name": "CPP-High",
+                "display_name": "CPP-High",
+                "severity": "fatal",
+                "category": "security",
+                "rule_title": "CPP-High",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "参考错误信息",
+                "owner": null,
+                "labels": [],
+                "description": "CPP-High",
+                "disable": false
+            },
+            {
+                "real_name": "CPP-Low",
+                "display_name": "CPP-Low",
+                "severity": "warning",
+                "category": "security",
+                "rule_title": "CPP-Low",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "参考错误信息",
+                "owner": null,
+                "labels": [],
+                "description": "CPP-Low",
+                "disable": false
+            },
+            {
+                "real_name": "CPP-Medium",
+                "display_name": "CPP-Medium",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "CPP-Medium",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "参考错误信息",
+                "owner": null,
+                "labels": [],
+                "description": "CPP-Medium",
+                "disable": false
+            },
+            {
+                "real_name": "CPP-Potential Issue",
+                "display_name": "CPP-Potential Issue",
+                "severity": "warning",
+                "category": "security",
+                "rule_title": "CPP-Potential Issue",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "参考错误信息",
+                "owner": null,
+                "labels": [],
+                "description": "CPP-Potential Issue",
+                "disable": false
+            },
+            {
+                "real_name": "CPP-Standard",
+                "display_name": "CPP-Standard",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "CPP-Standard",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "参考错误信息",
+                "owner": null,
+                "labels": [],
+                "description": "CPP-Standard",
+                "disable": false
+            },
+            {
+                "real_name": "CPP-Suspicious Comment",
+                "display_name": "CPP-Suspicious Comment",
+                "severity": "info",
+                "category": "security",
+                "rule_title": "CPP-Suspicious Comment",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "cpp"
+                ],
+                "solution": "参考错误信息",
+                "owner": null,
+                "labels": [],
+                "description": "CPP-Suspicious Comment",
+                "disable": false
+            },
+            {
+                "real_name": "CS-Critical",
+                "display_name": "CS-Critical",
+                "severity": "fatal",
+                "category": "security",
+                "rule_title": "CS-Critical",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "cs"
+                ],
+                "solution": "参考错误信息",
+                "owner": null,
+                "labels": [],
+                "description": "CS-Critical",
+                "disable": false
+            },
+            {
+                "real_name": "CS-High",
+                "display_name": "CS-High",
+                "severity": "fatal",
+                "category": "security",
+                "rule_title": "CS-High",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "cs"
+                ],
+                "solution": "参考错误信息",
+                "owner": null,
+                "labels": [],
+                "description": "CS-High",
+                "disable": false
+            },
+            {
+                "real_name": "CS-Low",
+                "display_name": "CS-Low",
+                "severity": "warning",
+                "category": "security",
+                "rule_title": "CS-Low",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "cs"
+                ],
+                "solution": "参考错误信息",
+                "owner": null,
+                "labels": [],
+                "description": "CS-Low",
+                "disable": false
+            },
+            {
+                "real_name": "CS-Medium",
+                "display_name": "CS-Medium",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "CS-Medium",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "cs"
+                ],
+                "solution": "参考错误信息",
+                "owner": null,
+                "labels": [],
+                "description": "CS-Medium",
+                "disable": false
+            },
+            {
+                "real_name": "CS-Potential Issue",
+                "display_name": "CS-Potential Issue",
+                "severity": "warning",
+                "category": "security",
+                "rule_title": "CS-Potential Issue",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "cs"
+                ],
+                "solution": "参考错误信息",
+                "owner": null,
+                "labels": [],
+                "description": "CS-Potential Issue",
+                "disable": false
+            },
+            {
+                "real_name": "CS-Standard",
+                "display_name": "CS-Standard",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "CS-Standard",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "cs"
+                ],
+                "solution": "参考错误信息",
+                "owner": null,
+                "labels": [],
+                "description": "CS-Standard",
+                "disable": false
+            },
+            {
+                "real_name": "CS-Suspicious Comment",
+                "display_name": "CS-Suspicious Comment",
+                "severity": "info",
+                "category": "security",
+                "rule_title": "CS-Suspicious Comment",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "cs"
+                ],
+                "solution": "参考错误信息",
+                "owner": null,
+                "labels": [],
+                "description": "CS-Suspicious Comment",
+                "disable": false
+            },
+            {
+                "real_name": "JAVA-Critical",
+                "display_name": "JAVA-Critical",
+                "severity": "fatal",
+                "category": "security",
+                "rule_title": "JAVA-Critical",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "java"
+                ],
+                "solution": "参考错误信息",
+                "owner": null,
+                "labels": [],
+                "description": "JAVA-Critical",
+                "disable": false
+            },
+            {
+                "real_name": "JAVA-High",
+                "display_name": "JAVA-High",
+                "severity": "fatal",
+                "category": "security",
+                "rule_title": "JAVA-High",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "java"
+                ],
+                "solution": "参考错误信息",
+                "owner": null,
+                "labels": [],
+                "description": "JAVA-High",
+                "disable": false
+            },
+            {
+                "real_name": "JAVA-Low",
+                "display_name": "JAVA-Low",
+                "severity": "warning",
+                "category": "security",
+                "rule_title": "JAVA-Low",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "java"
+                ],
+                "solution": "参考错误信息",
+                "owner": null,
+                "labels": [],
+                "description": "JAVA-Low",
+                "disable": false
+            },
+            {
+                "real_name": "JAVA-Medium",
+                "display_name": "JAVA-Medium",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "JAVA-Medium",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "java"
+                ],
+                "solution": "参考错误信息",
+                "owner": null,
+                "labels": [],
+                "description": "JAVA-Medium",
+                "disable": false
+            },
+            {
+                "real_name": "JAVA-Potential Issue",
+                "display_name": "JAVA-Potential Issue",
+                "severity": "warning",
+                "category": "security",
+                "rule_title": "JAVA-Potential Issue",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "java"
+                ],
+                "solution": "参考错误信息",
+                "owner": null,
+                "labels": [],
+                "description": "JAVA-Potential Issue",
+                "disable": false
+            },
+            {
+                "real_name": "JAVA-Standard",
+                "display_name": "JAVA-Standard",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "JAVA-Standard",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "java"
+                ],
+                "solution": "参考错误信息",
+                "owner": null,
+                "labels": [],
+                "description": "JAVA-Standard",
+                "disable": false
+            },
+            {
+                "real_name": "JAVA-Suspicious Comment",
+                "display_name": "JAVA-Suspicious Comment",
+                "severity": "info",
+                "category": "security",
+                "rule_title": "JAVA-Suspicious Comment",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "java"
+                ],
+                "solution": "参考错误信息",
+                "owner": null,
+                "labels": [],
+                "description": "JAVA-Suspicious Comment",
+                "disable": false
+            },
+            {
+                "real_name": "PHP-Critical",
+                "display_name": "PHP-Critical",
+                "severity": "fatal",
+                "category": "security",
+                "rule_title": "PHP-Critical",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "php"
+                ],
+                "solution": "参考错误信息",
+                "owner": null,
+                "labels": [],
+                "description": "PHP-Critical",
+                "disable": false
+            },
+            {
+                "real_name": "PHP-High",
+                "display_name": "PHP-High",
+                "severity": "fatal",
+                "category": "security",
+                "rule_title": "PHP-High",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "php"
+                ],
+                "solution": "参考错误信息",
+                "owner": null,
+                "labels": [],
+                "description": "PHP-High",
+                "disable": false
+            },
+            {
+                "real_name": "PHP-Low",
+                "display_name": "PHP-Low",
+                "severity": "warning",
+                "category": "security",
+                "rule_title": "PHP-Low",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "php"
+                ],
+                "solution": "参考错误信息",
+                "owner": null,
+                "labels": [],
+                "description": "PHP-Low",
+                "disable": false
+            },
+            {
+                "real_name": "PHP-Medium",
+                "display_name": "PHP-Medium",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "PHP-Medium",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "php"
+                ],
+                "solution": "参考错误信息",
+                "owner": null,
+                "labels": [],
+                "description": "PHP-Medium",
+                "disable": false
+            },
+            {
+                "real_name": "PHP-Potential Issue",
+                "display_name": "PHP-Potential Issue",
+                "severity": "warning",
+                "category": "security",
+                "rule_title": "PHP-Potential Issue",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "php"
+                ],
+                "solution": "参考错误信息",
+                "owner": null,
+                "labels": [],
+                "description": "PHP-Potential Issue",
+                "disable": false
+            },
+            {
+                "real_name": "PHP-Standard",
+                "display_name": "PHP-Standard",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "PHP-Standard",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "php"
+                ],
+                "solution": "参考错误信息",
+                "owner": null,
+                "labels": [],
+                "description": "PHP-Standard",
+                "disable": false
+            },
+            {
+                "real_name": "PHP-Suspicious Comment",
+                "display_name": "PHP-Suspicious Comment",
+                "severity": "info",
+                "category": "security",
+                "rule_title": "PHP-Suspicious Comment",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "php"
+                ],
+                "solution": "参考错误信息",
+                "owner": null,
+                "labels": [],
+                "description": "PHP-Suspicious Comment",
+                "disable": false
+            },
+            {
+                "real_name": "PLSQL-Critical",
+                "display_name": "PLSQL-Critical",
+                "severity": "fatal",
+                "category": "security",
+                "rule_title": "PLSQL-Critical",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "plsql"
+                ],
+                "solution": "参考错误信息",
+                "owner": null,
+                "labels": [],
+                "description": "PLSQL-Critical",
+                "disable": false
+            },
+            {
+                "real_name": "PLSQL-High",
+                "display_name": "PLSQL-High",
+                "severity": "fatal",
+                "category": "security",
+                "rule_title": "PLSQL-High",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "plsql"
+                ],
+                "solution": "参考错误信息",
+                "owner": null,
+                "labels": [],
+                "description": "PLSQL-High",
+                "disable": false
+            },
+            {
+                "real_name": "PLSQL-Low",
+                "display_name": "PLSQL-Low",
+                "severity": "warning",
+                "category": "security",
+                "rule_title": "PLSQL-Low",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "plsql"
+                ],
+                "solution": "参考错误信息",
+                "owner": null,
+                "labels": [],
+                "description": "PLSQL-Low",
+                "disable": false
+            },
+            {
+                "real_name": "PLSQL-Medium",
+                "display_name": "PLSQL-Medium",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "PLSQL-Medium",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "plsql"
+                ],
+                "solution": "参考错误信息",
+                "owner": null,
+                "labels": [],
+                "description": "PLSQL-Medium",
+                "disable": false
+            },
+            {
+                "real_name": "PLSQL-Potential Issue",
+                "display_name": "PLSQL-Potential Issue",
+                "severity": "warning",
+                "category": "security",
+                "rule_title": "PLSQL-Potential Issue",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "plsql"
+                ],
+                "solution": "参考错误信息",
+                "owner": null,
+                "labels": [],
+                "description": "PLSQL-Potential Issue",
+                "disable": false
+            },
+            {
+                "real_name": "PLSQL-Standard",
+                "display_name": "PLSQL-Standard",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "PLSQL-Standard",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "plsql"
+                ],
+                "solution": "参考错误信息",
+                "owner": null,
+                "labels": [],
+                "description": "PLSQL-Standard",
+                "disable": false
+            },
+            {
+                "real_name": "PLSQL-Suspicious Comment",
+                "display_name": "PLSQL-Suspicious Comment",
+                "severity": "info",
+                "category": "security",
+                "rule_title": "PLSQL-Suspicious Comment",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "plsql"
+                ],
+                "solution": "参考错误信息",
+                "owner": null,
+                "labels": [],
+                "description": "PLSQL-Suspicious Comment",
+                "disable": false
+            },
+            {
+                "real_name": "VB-Critical",
+                "display_name": "VB-Critical",
+                "severity": "fatal",
+                "category": "security",
+                "rule_title": "VB-Critical",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "visualbasic"
+                ],
+                "solution": "参考错误信息",
+                "owner": null,
+                "labels": [],
+                "description": "VB-Critical",
+                "disable": false
+            },
+            {
+                "real_name": "VB-High",
+                "display_name": "VB-High",
+                "severity": "fatal",
+                "category": "security",
+                "rule_title": "VB-High",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "visualbasic"
+                ],
+                "solution": "参考错误信息",
+                "owner": null,
+                "labels": [],
+                "description": "VB-High",
+                "disable": false
+            },
+            {
+                "real_name": "VB-Low",
+                "display_name": "VB-Low",
+                "severity": "warning",
+                "category": "security",
+                "rule_title": "VB-Low",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "visualbasic"
+                ],
+                "solution": "参考错误信息",
+                "owner": null,
+                "labels": [],
+                "description": "VB-Low",
+                "disable": false
+            },
+            {
+                "real_name": "VB-Medium",
+                "display_name": "VB-Medium",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "VB-Medium",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "visualbasic"
+                ],
+                "solution": "参考错误信息",
+                "owner": null,
+                "labels": [],
+                "description": "VB-Medium",
+                "disable": false
+            },
+            {
+                "real_name": "VB-Potential Issue",
+                "display_name": "VB-Potential Issue",
+                "severity": "warning",
+                "category": "security",
+                "rule_title": "VB-Potential Issue",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "visualbasic"
+                ],
+                "solution": "参考错误信息",
+                "owner": null,
+                "labels": [],
+                "description": "VB-Potential Issue",
+                "disable": false
+            },
+            {
+                "real_name": "VB-Standard",
+                "display_name": "VB-Standard",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "VB-Standard",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "visualbasic"
+                ],
+                "solution": "参考错误信息",
+                "owner": null,
+                "labels": [],
+                "description": "VB-Standard",
+                "disable": false
+            },
+            {
+                "real_name": "VB-Suspicious Comment",
+                "display_name": "VB-Suspicious Comment",
+                "severity": "info",
+                "category": "security",
+                "rule_title": "VB-Suspicious Comment",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "visualbasic"
+                ],
+                "solution": "参考错误信息",
+                "owner": null,
+                "labels": [],
+                "description": "VB-Suspicious Comment",
+                "disable": false
+            }
+        ],
+        "open_user": true,
+        "open_saas": false,
+        "virtual_name": "240",
+        "show_display_name": true
+    }
+]

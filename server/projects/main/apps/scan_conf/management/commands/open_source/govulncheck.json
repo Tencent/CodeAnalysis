@@ -1,0 +1,42 @@
+[
+    {
+        "name": "govulncheck",
+        "display_name": "Govulncheck",
+        "description": "Govulncheck reports known vulnerabilities that affect Go code. It uses static analysis of source code or a binary's symbol table to narrow down reports to only those that could affect the application.",
+        "license": "BSD-3-Clause license",
+        "libscheme_set": [],
+        "image_url": null,
+        "task_processes": [
+            "analyze",
+            "datahandle"
+        ],
+        "scan_app": "codelint",
+        "scm_url": "tca-govulncheck",
+        "run_cmd": "python src/main.py",
+        "envs": "python_version=3",
+        "build_flag": false,
+        "checkrule_set": [
+            {
+                "real_name": "GO-Vulnerability",
+                "display_name": "GO-Vulnerability",
+                "severity": "error",
+                "category": "security",
+                "rule_title": "参考链接https://pkg.go.dev/vuln/list",
+                "rule_params": null,
+                "custom": false,
+                "languages": [
+                    "Go"
+                ],
+                "solution": "Option 1: Upgrade to a fixed version. If there is a fix available, we can remove a vulnerable dependency by upgrading to a fixed version of the module.\nOption 2: Stop using the vulnerable symbol(s). We could choose to remove all calls to the vulnerable function in our code. We would need to find an alternative or implement it ourselves.",
+                "owner": null,
+                "labels": [],
+                "description": "参考链接https://pkg.go.dev/vuln/list",
+                "disable": false
+            }
+        ],
+        "open_user": true,
+        "open_saas": false,
+        "virtual_name": "237",
+        "show_display_name": true
+    }
+]
