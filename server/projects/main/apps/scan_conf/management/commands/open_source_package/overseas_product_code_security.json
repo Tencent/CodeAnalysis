@@ -1,0 +1,189 @@
+[
+    {
+        "name": "海外产品代码安全",
+        "description": "海外产品源码安全扫描，包括代码安全检查和开源组件检查两类规则。",
+        "revision": null,
+        "package_type": "official",
+        "languages": [
+            "cpp",
+            "cs",
+            "css",
+            "Go",
+            "html",
+            "java",
+            "js",
+            "kotlin",
+            "Lua",
+            "oc",
+            "php",
+            "python",
+            "ruby",
+            "scala",
+            "swift",
+            "ts",
+            "visualbasic",
+            "abap",
+            "apex",
+            "cobol",
+            "flex",
+            "pli",
+            "plsql",
+            "rpg",
+            "tsql",
+            "xml",
+            "dart",
+            "shell",
+            "protobuf",
+            "rust",
+            "sql",
+            "wasm"
+        ],
+        "labels": [
+            "安全"
+        ],
+        "checkrule_set": [
+            {
+                "checktool": "govulncheck",
+                "checkrule": "GO-Vulnerability",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "trivy",
+                "checkrule": "SEC_WARN",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "trivy",
+                "checkrule": "VUL_WARN",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "trivy",
+                "checkrule": "SEC_INFO",
+                "severity": "info",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "trivy",
+                "checkrule": "VUL_INFO",
+                "severity": "info",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "trivy",
+                "checkrule": "SEC_ERROR",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "trivy",
+                "checkrule": "VUL_ERROR",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "audit",
+                "checkrule": "VUL_WARN",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "audit",
+                "checkrule": "VUL_INFO",
+                "severity": "info",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "audit",
+                "checkrule": "VUL_ERROR",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "VCG",
+                "checkrule": "CPP-Critical",
+                "severity": "fatal",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "VCG",
+                "checkrule": "CPP-High",
+                "severity": "fatal",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "VCG",
+                "checkrule": "CPP-Low",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "VCG",
+                "checkrule": "CPP-Medium",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "VCG",
+                "checkrule": "CPP-Potential Issue",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "VCG",
+                "checkrule": "CPP-Standard",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "VCG",
+                "checkrule": "CPP-Suspicious Comment",
+                "severity": "info",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "tca_plugin_dependency_check",
+                "checkrule": "VUL_WARN",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "tca_plugin_dependency_check",
+                "checkrule": "VUL_INFO",
+                "severity": "info",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "tca_plugin_dependency_check",
+                "checkrule": "VUL_ERROR",
+                "severity": "error",
+                "rule_params": null,
+                "state": "enabled"
+            }
+        ],
+        "open_saas": false,
+        "envs": null
+    }
+]
