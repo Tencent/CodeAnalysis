@@ -387,16 +387,12 @@ class ConfigLoader(object):
         task_envs_str = task_params.get('envs', None)
         task_envs = StringMgr.str_to_dict(task_envs_str) if task_envs_str else {}
 
-        if condition:
-            if task_envs:
-                if self.__envs_match_condition(task_envs, condition):
-                    return True
-                else:
-                    return False
-            else:
-                return False
-        else:
-            return True
+        # 当条件和环境变量都存在时，才判断是否符合当前方案条件
+        # 条件和环境变量任一不存在，都判定为不符合
+        if condition and task_envs:
+            if self.__envs_match_condition(task_envs, condition):
+                return True
+        return False
 
     def __envs_match_condition(self, task_envs, condition):
         """
