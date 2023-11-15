@@ -41,7 +41,7 @@ rsa==4.7.2
 django-guardian==2.3.0
 
 # for file upload and download
-urllib3==1.26.11
+urllib3==1.26.18
 
 # for database import and export module
 django-import-export==2.5.0
