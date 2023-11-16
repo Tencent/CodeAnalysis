@@ -2,8 +2,8 @@
     {
         "name": "clang-tidy-16",
         "display_name": "Clang-Tidy-16",
-        "description": "clang-tidy 16.0.0",
-        "license": "MIT",
+        "description": "clang-tidy v16.0.0，是一个基于clang的c++检查工具。它提供一个可扩展的框架，用于诊断和修复典型的编程错误，比如样式冲突、接口误用或可以通过静态分析推断出的错误。",
+        "license": "Apache License v2.0 with LLVM Exceptions",
         "image_url": null,
         "task_processes": [
             "analyze",
