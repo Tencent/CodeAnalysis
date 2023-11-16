@@ -1,0 +1,32 @@
+[
+    {
+        "name": "【C/C++】信创迁移优化",
+        "description": "助力产品迁移适配信创（ARM64）场景并进行性能提升。",
+        "revision": null,
+        "package_type": "official",
+        "languages": [
+            "cpp"
+        ],
+        "labels": [
+            "推荐"
+        ],
+        "checkrule_set": [
+            {
+                "checktool": "clang-tidy-16",
+                "checkrule": "arm-asm-check",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            },
+            {
+                "checktool": "clang-tidy-16",
+                "checkrule": "arm-cacheline-align",
+                "severity": "warning",
+                "rule_params": null,
+                "state": "enabled"
+            }
+        ],
+        "open_saas": false,
+        "envs": null
+    }
+]
