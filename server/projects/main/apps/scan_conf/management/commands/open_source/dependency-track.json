@@ -112,9 +112,7 @@
                 "disable": false
             }
         ],
-        "open_user": false,
-        "open_saas": false,
-        "virtual_name": "236",
-        "show_display_name": false
+        "open_user": true,
+        "open_saas": false
     }
 ]

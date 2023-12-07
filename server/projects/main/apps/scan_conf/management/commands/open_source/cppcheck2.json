@@ -7940,8 +7940,6 @@
             }
         ],
         "open_user": true,
-        "open_saas": true,
-        "virtual_name": "2",
-        "show_display_name": true
+        "open_saas": true
     }
 ]
