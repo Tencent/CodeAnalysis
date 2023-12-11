@@ -167,8 +167,6 @@
             }
         ],
         "open_user": true,
-        "open_saas": false,
-        "virtual_name": "138",
-        "show_display_name": true
+        "open_saas": false
     }
 ]

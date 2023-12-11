@@ -205,8 +205,6 @@
             }
         ],
         "open_user": true,
-        "open_saas": false,
-        "virtual_name": "内置4",
-        "show_display_name": false
+        "open_saas": false
     }
 ]
