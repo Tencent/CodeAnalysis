@@ -12,6 +12,7 @@ luacheck: static analysis for Lua.
 
 import sys
 import os
+import threading
 
 try:
     import xml.etree.cElementTree as ET
@@ -24,6 +25,7 @@ from task.codelintmodel import CodeLintModel
 from util.subprocc import SubProcController
 from util.pathfilter import FilterPathUtil
 from util.logutil import LogPrinter
+from util.scanlang.callback_queue import CallbackQueue
 
 logger = LogPrinter
 
@@ -40,12 +42,11 @@ class Luacheck(CodeLintModel):
         incr_scan = params["incr_scan"]
         path_exclude = params.path_filters.get("wildcard_exclusion", [])
         path_include = params.path_filters.get("wildcard_inclusion", [])
-        error_output = os.path.join(work_dir, "luacheck_result.xml")
         LUACHECK_HOME = os.environ.get("LUACHECK_HOME")
         pos = len(source_dir) + 1
         path_mgr = PathMgr()
         want_suffix = ".lua"
-
+        issues = []
         # update_task_progress(request, 'LuaCheck工具开始分析', 40)
         # luacheck在win下支持分析目录，在mac和linux下需要安装luafilesystem才能支持分析目录.暂不使用 --cache
         # 1. --read-globals coroutine._yield 是为了消除luacheck对coroutine._yield的误报，详细如下：
@@ -80,7 +81,10 @@ class Luacheck(CodeLintModel):
                 scan_cmd.append("--exclude-files")
                 for path in path_exclude:
                     scan_cmd.append(os.path.join(source_dir, path))
+            error_output = os.path.join(work_dir, "luacheck_result.xml")
+            issues.extend(LuaCheckRunner().run_luacheck(scan_cmd, error_output, pos, rules))
         else:
+            # 单文件分析
             toscans = []
             if incr_scan:
                 diffs = SCMMgr(params).get_scm_diff()
@@ -92,19 +96,34 @@ class Luacheck(CodeLintModel):
             else:
                 toscans = path_mgr.get_dir_files(source_dir, want_suffix)
             # filter include and exclude path
-            relpos = len(source_dir) + 1
-            toscans = FilterPathUtil(params).get_include_files(toscans, relpos)
+            toscans = FilterPathUtil(params).get_include_files(toscans, pos)
             if not toscans:
                 logger.debug("To-be-scanned files is empty ")
                 return []
             # 在文件前后加上双引号，变成字符串，防止文件路径中有特殊字符比如(，luacheck无法分析
             toscans = [self.handle_path_with_space(path) for path in toscans]
-            scan_cmd.extend(toscans)
-        scan_cmd = PathMgr().format_cmd_arg_list(scan_cmd)
-        self.print_log(scan_cmd)
-        SubProcController(scan_cmd, stdout_filepath=error_output, stderr_line_callback=self.print_log).wait()
+            # 多线程分析
+            issues = ThreadRunner(scan_cmd, work_dir, pos, rules).run(toscans)
+        logger.info(issues)
+        return issues
 
-        # update_task_progress(request, '分析结果处理', 60)
+    def handle_path_with_space(self, path):
+        """
+        处理文件路径中包含特殊字符比如(的情况
+        :param path:
+        :return:
+        """
+        return '"' + path + '"'
+
+class LuaCheckRunner(object):
+    def __init__(self):
+        pass
+
+    def run_luacheck(self, scan_cmd, error_output, pos, rules):
+        """
+        执行luacheck并处理结果
+        """
+        SubProcController(scan_cmd, stdout_filepath=error_output, stderr_line_callback=logger.info).wait()
         if sys.platform == "win32":
             xmlContent = open(error_output, "r", encoding="gbk").read()
             open(error_output, "w", encoding="utf-8").write(xmlContent)
@@ -121,16 +140,40 @@ class Luacheck(CodeLintModel):
                 line = int(msg.split(":")[1])
                 column = int(msg.split(":")[2])
                 issues.append({"path": path, "rule": rule, "msg": msg, "line": line, "column": column})
-        logger.debug(issues)
         return issues
 
-    def handle_path_with_space(self, path):
-        """
-        处理文件路径中包含特殊字符比如(的情况
-        :param path:
-        :return:
-        """
-        return '"' + path + '"'
+
+class ThreadRunner(object):
+    # 多线程执行 luacheck 类
+    def __init__(self, scan_cmd, work_dir, pos, rules):
+        self.scan_cmd = scan_cmd
+        self.work_dir = work_dir
+        self.issues = []
+        self.pos = pos
+        self.rules = rules
+        self.mutex = threading.Lock()  # 线程锁
+
+    def __run_luacheck_on_file(self, index, file_path):
+        scan_cmd = self.scan_cmd.copy()
+        scan_cmd.append(file_path)
+        scan_cmd = PathMgr().format_cmd_arg_list(scan_cmd)
+        error_output = os.path.join(self.work_dir, str(index) + "luacheck_result.xml")
+        return LuaCheckRunner().run_luacheck(scan_cmd, error_output, self.pos, self.rules)
+
+    def __scan_file_callback_(self, index, file_path):
+        file_result = self.__run_luacheck_on_file(index, file_path)
+        self.mutex.acquire()  # 上锁
+        self.issues.extend(file_result)
+        self.mutex.release()  # 解锁
+
+    def run(self, toscans):
+        # 多线程执行类
+        callback_queue = CallbackQueue(min_threads=20, max_threads=1000)
+        for index, path in enumerate(toscans):
+            LogPrinter.info("path: %s" % path)
+            callback_queue.append(self.__scan_file_callback_, index, path)
+        callback_queue.wait_for_all_callbacks_to_be_execute_and_destroy()
+        return self.issues
 
 
 tool = Luacheck
