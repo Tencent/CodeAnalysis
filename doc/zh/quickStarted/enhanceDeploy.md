@@ -21,46 +21,8 @@ TCA 增强分析模块，需要用户额外部署 License 鉴权微服务，并�
 
 **持续更新中……**
 
-## TCA 体验版增强能力申请
-如果用户平常使用的是 [TCA 体验版公共服务](https://tca.tencent.com/)，并想在体验版上体验到增强分析模块的分析能力，可以按照下面步骤进行申请配置：
-
-1. 向 TCA 团队邮件申请 Client License
-
-- 收件邮箱：
-```
-v_cocohwang@tencent.com
-v_jiayizhan@tencent.com
-yalechen@tencent.com
-tommyzhang@tencent.com
-```
-
-- 申请邮件格式如下：
-
-主题：**TCA 独立工具 Client License 申请**
-
-正文：
-| | | 
-|  :----:  | :----:  |
-| 申请人名称  | xxx |
-| 申请人所在组织名称 | xxx |
-| 申请人所在组织类型 | 可选选项：公司/学校/个人 |
-| 申请人邮箱 | xxx |
-| 申请人手机号码 | xxx |
-| 是否私有化部署 | 否 |
-| 体验申请用途 | xxx |
-
-2. 收到 TCA 团队回复邮件之后，在 TCA Client目录的 [`config.ini`](https://github.com/Tencent/CodeAnalysis/blob/main/client/config.ini) 中配置 CLS 微服务信息，比如
-
-```ini
-[LICENSE_CONFIG]
-; [可选]使用独立工具时，需要填写，默认不需要
-; License服务的域名和端口
-URL=https://tca.tencent.com
-BASE_PATH=server/license
-LICENSE=<Client License>
-```
-
-配置完成之后，便可以在 TCA 体验版上正常使用增强分析模块能力了。
+## TCA 官网版增强能力申请
+如果用户平常使用的是 [TCA 官网版公共服务](https://tca.tencent.com/)，并想在官网版上体验到增强分析模块的分析能力，可以按照[这篇帮助文档](https://tca.tencent.com/document/zh/guide/%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%8E%A5%E5%85%A5/License%E9%85%8D%E7%BD%AE.html)进行申请配置。
 
 
 ## TCA 私有化部署增强能力申请
