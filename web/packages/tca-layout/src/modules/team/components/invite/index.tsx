@@ -15,7 +15,7 @@ const OrgInvite = () => {
     addMemberByInvite(decodeURIComponent(code))
       .then((res: any) => {
         message.success('已加入团队');
-        history.replace(`/t/${res.orgSid}/profile`);
+        history.replace(`/t/${res.org_sid}/profile`);
       })
       .catch(() => {
         message.error('加入团队失败');

@@ -16,11 +16,12 @@ export const ROOT_ROUTERS: RouteProps[] = [{
   path: '/user',
   component: User,
 }, {
+  path: '/invite/:code',
+  component: Invite,
+  exact: true,
+}, {
   path: '/t/:orgSid',
   component: Team,
-}, {
-  path: '/t/invite/:code',
-  component: Invite,
 }, {
   path: '/cb_git_auth/:scmPlatformName',
   component: GitOAuth,
