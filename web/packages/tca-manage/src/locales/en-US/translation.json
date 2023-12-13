@@ -177,13 +177,13 @@
   "已禁用团队": "Team disabled",
   "恢复团队": "recovery team",
   "确定要恢复已禁用的团队吗？": "Are you sure you want to restore the disabled team?",
-  "已恢复团队": "已恢复团队",
-  "查看项目": "查看项目",
-  "禁用团队": "禁用团队",
-  "已禁用项目": "已禁用项目",
-  "恢复项目": "恢复项目",
-  "确定要恢复已禁用的项目吗？": "确定要恢复已禁用的项目吗？",
-  "已恢复项目": "已恢复项目",
-  "项目": "项目",
-  "禁用项目": "禁用项目"
+  "已恢复团队": "Team restored",
+  "查看项目": "View items",
+  "禁用团队": "Disable team",
+  "已禁用项目": "Disabled items",
+  "恢复项目": "restore items",
+  "确定要恢复已禁用的项目吗？": "Are you sure you want to restore disabled items?",
+  "已恢复项目": "Project restored",
+  "项目": "project",
+  "禁用项目": "Disabled items"
 }
