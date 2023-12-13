@@ -1,0 +1,15 @@
+{
+  "$schema": "https://inlang.com/schema/project-settings",
+  "sourceLanguageTag": "zh-CN",
+  "languageTags": ["zh-CN", "en-US"],
+  "modules": [
+    "https://cdn.jsdelivr.net/npm/@inlang/plugin-i18next@latest/dist/index.js"
+  ],
+  "plugin.inlang.i18next": {
+    "pathPattern": {
+      "tca-manage": "./web/packages/tca-manage/src/locales/{languageTag}/translation.json",
+      "tca-layout": "./web/packages/tca-layout/src/locales/{languageTag}/translation.json",
+      "tca-analysis": "./web/packages/tca-analysis/src/locales/{languageTag}/translation.json"
+    }
+  }
+}
