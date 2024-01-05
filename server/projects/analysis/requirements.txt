@@ -15,7 +15,7 @@ redis==4.5.4
 
 # for password
 pyaes==1.6.1
-pycryptodome==3.9.8
+pycryptodome==3.19.1
 rsa==4.7.2
 
 #for django permission
