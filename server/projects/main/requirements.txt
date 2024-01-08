@@ -33,7 +33,7 @@ drf-yasg==1.17.1
 
 # for password
 pyaes==1.6.1
-pycryptodome==3.9.8
+pycryptodome==3.19.1
 cryptography==41.0.6
 rsa==4.7.2
 
