@@ -10,7 +10,7 @@ pymysql==1.0.2
 
 # for django template
 django-widget-tweaks==1.4.8
-Jinja2==2.11.3
+Jinja2==3.1.3
 markupsafe==2.0.1
 
 # for celery
