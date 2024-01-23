@@ -208,75 +208,75 @@ const IssueModal = (props: IssueModalProps) => {
           })}
         >
           {// 本行有问题 || 问题行为0，即文件问题显示在第一行之前
-          (fileError || issueLines.includes(line)) && (
-            <div className={style.ruleWrapper}>
-              <div
-                className={style.rule}
-                onClick={() => {
-                  if (issueIndex > -1) {
-                    const list = cloneDeep(expanded);
-                    list[issueIndex] = !expanded[issueIndex];
-                    setExpanded(list);
-                  }
-                }}
-              >
-                <span className={style.ruleContent}>
-                  {expanded[issueIndex] || fileError ? (
-                    <CaretDown />
-                  ) : (
-                    <CaretRight />
-                  )}
-                  【{detail.checkrule_real_name}】规则描述：
-                  {ruleDetail.rule_title}
-                </span>
-                <span>
-                  {issueIndex !== 0 && !fileError && (
-                    <Tooltip
-                      title="上一处问题"
-                      getPopupContainer={() => document.body}
-                    >
-                      <Button
-                        type="link"
-                        icon={<AngleUp />}
-                        onClick={(e: any) => {
-                          e.stopPropagation();
-                          if (issueIndex > -1) {
-                            scrollToItem(issueLines[issueIndex - 1]);
-                            const nextIssueDetail = getCurIssueDetail(issueLines[issueIndex - 1]);
-                            if (nextIssueDetail) {
-                              setCurIssueLine(nextIssueDetail.line);
+            (fileError || issueLines.includes(line)) && (
+              <div className={style.ruleWrapper}>
+                <div
+                  className={style.rule}
+                  onClick={() => {
+                    if (issueIndex > -1) {
+                      const list = cloneDeep(expanded);
+                      list[issueIndex] = !expanded[issueIndex];
+                      setExpanded(list);
+                    }
+                  }}
+                >
+                  <span className={style.ruleContent}>
+                    {expanded[issueIndex] || fileError ? (
+                      <CaretDown />
+                    ) : (
+                      <CaretRight />
+                    )}
+                    【{detail.checkrule_real_name}】规则描述：
+                    {ruleDetail.rule_title}
+                  </span>
+                  <span>
+                    {issueIndex !== 0 && !fileError && (
+                      <Tooltip
+                        title="上一处问题"
+                        getPopupContainer={() => document.body}
+                      >
+                        <Button
+                          type="link"
+                          icon={<AngleUp />}
+                          onClick={(e: any) => {
+                            e.stopPropagation();
+                            if (issueIndex > -1) {
+                              scrollToItem(issueLines[issueIndex - 1]);
+                              const nextIssueDetail = getCurIssueDetail(issueLines[issueIndex - 1]);
+                              if (nextIssueDetail) {
+                                setCurIssueLine(nextIssueDetail.line);
+                              }
                             }
-                          }
-                        }}
-                      />
-                    </Tooltip>
-                  )}
-                  {issueIndex < issueLines.length - 1 && !fileError && (
-                    <Tooltip
-                      title="下一处问题"
-                      getPopupContainer={() => document.body}
-                    >
-                      <Button
-                        type="link"
-                        icon={<AngleDown />}
-                        onClick={(e: any) => {
-                          e.stopPropagation();
-                          if (issueIndex > -1) {
-                            scrollToItem(issueLines[issueIndex + 1]);
-                            const nextIssueDetail = getCurIssueDetail(issueLines[issueIndex + 1]);
-                            if (nextIssueDetail) {
-                              setCurIssueLine(nextIssueDetail.line);
+                          }}
+                        />
+                      </Tooltip>
+                    )}
+                    {issueIndex < issueLines.length - 1 && !fileError && (
+                      <Tooltip
+                        title="下一处问题"
+                        getPopupContainer={() => document.body}
+                      >
+                        <Button
+                          type="link"
+                          icon={<AngleDown />}
+                          onClick={(e: any) => {
+                            e.stopPropagation();
+                            if (issueIndex > -1) {
+                              scrollToItem(issueLines[issueIndex + 1]);
+                              const nextIssueDetail = getCurIssueDetail(issueLines[issueIndex + 1]);
+                              if (nextIssueDetail) {
+                                setCurIssueLine(nextIssueDetail.line);
+                              }
                             }
-                          }
-                        }}
-                      />
-                    </Tooltip>
-                  )}
-                </span>
-              </div>
-              <div className={style.issueMsg}>
-                错误原因：{detail.msg}&nbsp;
-                {!isEmpty(curIssueDetail?.issue_refers) && (
+                          }}
+                        />
+                      </Tooltip>
+                    )}
+                  </span>
+                </div>
+                <div className={style.issueMsg}>
+                  错误原因：{detail.msg}&nbsp;
+                  {!isEmpty(curIssueDetail?.issue_refers) && (
                     <Button
                       type="link"
                       onClick={() => {
@@ -286,19 +286,19 @@ const IssueModal = (props: IssueModalProps) => {
                     >
                       {showRefers && !isEmpty(curIssueRefers) ? '关闭' : '展开'}追溯
                     </Button>
-                )}
+                  )}
                 </div>
-              {(expanded[issueIndex] || fileError)
-                && ruleDetail.checkruledesc?.desc && (
-                  <div className={style.ruleDesc}>
-                    <h4>规则详细说明</h4>
-                    <ReactMarkdown>
-                      {ruleDetail.checkruledesc?.desc}
-                    </ReactMarkdown>
-                  </div>
-              )}
-            </div>
-          )}
+                {(expanded[issueIndex] || fileError)
+                  && ruleDetail.checkruledesc?.desc && (
+                    <div className={style.ruleDesc}>
+                      <h4>规则详细说明</h4>
+                      <ReactMarkdown>
+                        {ruleDetail.checkruledesc?.desc}
+                      </ReactMarkdown>
+                    </div>
+                  )}
+              </div>
+            )}
           <Highlight className={language}>
             {content.length > CODE_MAX_CHAR_LENGTH
               ? `${content.substring(0, CODE_MAX_CHAR_LENGTH)}...`
@@ -400,10 +400,10 @@ const IssueModal = (props: IssueModalProps) => {
         <div className={style.modalTitle}>
           <p>
             {detail.file_path?.split('/').pop()}
-            <span className={style.modalDesc}>
+            <p className={style.modalDesc}>
               文件路径：{detail.file_path}
-            </span>
-            <Copy text={detail.file_path} className={style.copyIcon} />
+              <Copy text={detail.file_path} className={style.copyIcon} />
+            </p>
           </p>
           {/* todo: 全屏查看issue */}
           {/* <Tooltip title='点击跳转新窗口打开详情页'>
