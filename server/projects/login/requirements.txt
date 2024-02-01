@@ -17,7 +17,7 @@ PyJWT==2.4.0
 
 # for password
 pyaes==1.6.1
-pycryptodome==3.9.8
+pycryptodome==3.19.1
 cryptography===41.0.6
 
 # for exception log

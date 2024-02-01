@@ -84,7 +84,7 @@ const Members = () => {
   /** 邀请成员，生成邀请链接 */
   const onAddMemberHandle = (role: number) => {
     getInviteCode(orgSid, { role }).then(({ invite_code: inviteCode }) => {
-      const inviUrl = `${window.location.origin}/t/invite/${encodeURIComponent(inviteCode)}`;
+      const inviUrl = `${window.location.origin}/invite/${encodeURIComponent(inviteCode)}`;
       setInviteUrl(inviUrl);
       setInviteVisb(true);
     });

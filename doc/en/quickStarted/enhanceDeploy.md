@@ -22,46 +22,8 @@ The TCA enhanced analysis module requires users to additionally deploy the Licen
 
 **Continuously updating...**
 
-## TCA Trial Version Enhanced Capability Application
-If you usually use the [TCA trial version public service](https://tca.tencent.com/) and want to experience the enhanced analysis module's analysis capabilities on the trial version, you can apply and configure as follows:
-
-1. Apply for the Client License by email to the TCA team
-
-- Recipient email:
-```
-v_cocohwang@tencent.com
-v_jiayizhan@tencent.com
-yalechen@tencent.com
-tommyzhang@tencent.com
-```
-
-- The application email format is as follows:
-
-Subject: **TCA Independent Tool Client License Application**
-
-Content:
-| | | 
-|  :----:  | :----:  |
-| Applicant's Name  | xxx |
-| Name of the Organization the Applicant Belongs to | xxx |
-| Type of Organization the Applicant Belongs to | Optional: Company/School/Individual |
-| Applicant's Email | xxx |
-| Applicant's Mobile Number | xxx |
-| Is it Privately Deployed | No |
-| Purpose of Experience Application | xxx |
-
-2. After receiving the reply email from the TCA team, configure the CLS microservice information in the `config.ini` of the TCA Client directory, for example
-
-```ini
-[LICENSE_CONFIG]
-; [optional] Fill in when using independent tools, no need by default
-; Domain name and port of the License service
-URL=https://tca.tencent.com
-BASE_PATH=server/license
-LICENSE=<Client License>
-```
-
-After the configuration is complete, you can normally use the enhanced analysis module capabilities on the TCA trial version.
+## TCA official website version enhanced capability application
+If users usually use [TCA official website version public service](https://tca.tencent.com/) and want to experience the analysis capabilities of the enhanced analysis module on the official website version, they can follow [this help document](https://tca.tencent.com/document/zh/guide/%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%8E%A5%E5%85%A5/License%E9%85%8D%E7%BD%AE.html) to apply for configuration.
 
 ## TCA Private Deployment Enhanced Capability Application
 If you are using TCA in an enterprise intranet environment and want to experience the enhanced analysis module capabilities of TCA on the intranet, you can apply as follows.

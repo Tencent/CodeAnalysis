@@ -10,7 +10,7 @@ pymysql==1.0.2
 
 # for django template
 django-widget-tweaks==1.4.8
-Jinja2==2.11.3
+Jinja2==3.1.3
 markupsafe==2.0.1
 
 # for celery
@@ -33,7 +33,7 @@ drf-yasg==1.17.1
 
 # for password
 pyaes==1.6.1
-pycryptodome==3.9.8
+pycryptodome==3.19.1
 cryptography==41.0.6
 rsa==4.7.2
 

@@ -222,8 +222,6 @@
             }
         ],
         "open_user": true,
-        "open_saas": false,
-        "virtual_name": "ql_go",
-        "show_display_name": false
+        "open_saas": false
     }
 ]

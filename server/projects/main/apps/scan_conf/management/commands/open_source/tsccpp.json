@@ -1920,8 +1920,6 @@
               "disable": false
             }
         ],
-        "open_user": true,
-        "virtual_name": "",
-        "show_display_name": true
+        "open_user": true
     }
 ]

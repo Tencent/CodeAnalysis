@@ -445,8 +445,6 @@
             }
         ],
         "open_user": true,
-        "open_saas": false,
-        "virtual_name": "136",
-        "show_display_name": false
+        "open_saas": false
     }
 ]
