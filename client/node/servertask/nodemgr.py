@@ -118,7 +118,10 @@ class HeartBeat(object):
             host_ip = HostNetMgr().get_host_ip()
             data = {"puppy_ip": host_ip}
             # LogPrinter.info(f">>> data: {data}")
-            self._server.heart_beat(data)
+            try:
+                self._server.heart_beat(data)
+            except Exception as err:
+                LogPrinter.exception(f"heart beat error: {str(err)}")
             time.sleep(self._beat_interval)
 
     def start(self):
