@@ -34,7 +34,7 @@ drf-yasg==1.17.1
 # for password
 pyaes==1.6.1
 pycryptodome==3.19.1
-cryptography==42.0.2
+cryptography==42.0.4
 rsa==4.7.2
 
 # for django permission
