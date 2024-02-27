@@ -36,8 +36,11 @@ class JobHeartBeatThread(threading.Thread):
 
     def run(self):
         while self._event.is_set():
+            try:
+                self._server.job_heart_beat(self._org_sid, self._team_name, self._repo_id, self._project_id, self._job_id)
+            except Exception as err:
+                logger.exception(f"job heartbeat error: {str(err)}")
             time.sleep(self._sleep_interval)
-            self._server.job_heart_beat(self._org_sid, self._team_name, self._repo_id, self._project_id, self._job_id)
 
 
 class JobHeartBeat(object):

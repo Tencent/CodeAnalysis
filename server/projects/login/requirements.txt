@@ -3,7 +3,7 @@
 gunicorn==20.1.0
 
 # for django
-Django==3.1.14
+Django==3.2.24
 
 # for django using mysql server
 pymysql==1.0.2
@@ -17,8 +17,8 @@ PyJWT==2.4.0
 
 # for password
 pyaes==1.6.1
-pycryptodome==3.9.8
-cryptography===41.0.6
+pycryptodome==3.19.1
+cryptography===42.0.4
 
 # for exception log
 sentry-sdk==1.14.0
