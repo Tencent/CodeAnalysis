@@ -87,7 +87,7 @@ Different deployment methods can modify the `config.ini` configuration according
 - Recipient email:
 ```
 v_cocohwang@tencent.com
-v_jiayizhan@tencent.com
+v_xiohuang@tencent.com
 yalechen@tencent.com
 tommyzhang@tencent.com
 ```
