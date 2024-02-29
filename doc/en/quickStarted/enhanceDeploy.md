@@ -156,7 +156,7 @@ If the above deployment steps have been completed, but the enhanced function sti
 ```log
 method(head) call fails on error: <urlopen error [Errno 111] Connection refused>
 ```
-- Continue to verify. If it is Docker or Docker-Compose deployment method, enter the TCA Client container. If it is a remote code deployment, go to the TCA Client machine. Execute the following command to confirm whether the network is accessible:
+- Continue to verify. If it is Docker or Docker-Compose deployment method, enter the TCA Client container. If it is a source code deployment, go to the TCA Client machine. Execute the following command to confirm whether the network is accessible:
 ```bash
 ping <CLS IP or domain name filled in config.ini>
 telnet <CLS IP or domain name filled in config.ini> <corresponding port>
