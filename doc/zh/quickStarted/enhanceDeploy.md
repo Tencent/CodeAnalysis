@@ -156,7 +156,7 @@ kill -USR2 <pid>
 ```log
 method(head) call fails on error: <urlopen error [Errno 111] Connection refused>
 ```
-- 继续验证。如果是 Docker 或者 Docker-Compose 部署方式的话，进入 TCA Client 所在容器中。如果是远嘛部署，则来到 TCA Client 所在机器上。执行以下命令确认网络是否通路：
+- 继续验证。如果是 Docker 或者 Docker-Compose 部署方式的话，进入 TCA Client 所在容器中。如果是源码部署，则来到 TCA Client 所在机器上。执行以下命令确认网络是否通路：
 ```bash
 ping <config.ini中填写的 CLS IP或者域名>
 telnet <config.ini中填写的 CLS IP或者域名> <对应端口>
