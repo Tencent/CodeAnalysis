@@ -55,7 +55,7 @@ function readIni()
     echo $RESULT
 }
 
-# TODO: 根据client中的配置来决定是下载github的还是工蜂的
+# 根据client中的配置来决定是下载github的还是工蜂的
 function download_lib() {
     user=$(readIni ${TCA_ROOT}/client/config.ini "TOOL_LOAD_ACCOUNT" "USERNAME")
     if [[ "${user}" == "" ]] ; then
