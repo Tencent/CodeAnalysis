@@ -22,6 +22,8 @@ __pycache__
 # Cython
 *.pyx
 *.c
+*.pyd
+*.so
 
 
 # Other
