@@ -43,6 +43,9 @@ If you are using TCA in an enterprise intranet environment and want to experienc
 :::
 
 ```shell
+# If the cls binary is not found in this directory, you can execute the following command to synchronize.
+$ bahs ./scripts/base/install_bin.sh
+$ cd server/cls
 $ ./cls server
 2022-04-13 18:35:29.356510559 +0800 CST [INFO] Version: 20220328.1
 2022-04-13 18:35:29.44083463 +0800 CST [INFO] The client license is:
