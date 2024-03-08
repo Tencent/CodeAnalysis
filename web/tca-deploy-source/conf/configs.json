@@ -59,10 +59,10 @@
     "prefix": [
       "/static/tca-manage/"
     ],
-    "commitId": "6154d99d26c5c11c06ff08a1136d0ffa8e9b992e",
+    "commitId": "26c27872fb3a0336fb563d758c91e8d4f262f352",
     "match": "^/manage",
     "js": [
-      "/static/tca-manage/runtime~tca-manage-698b71eb.js",
+      "/static/tca-manage/runtime~tca-manage-258a6221.js",
       "/static/tca-manage/vendors~tca-manage-6bc9760a.js",
       "/static/tca-manage/tca-manage-8e14bec4.js"
     ],
