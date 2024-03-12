@@ -18,9 +18,10 @@ from django.core.cache import cache
 from django.forms.models import model_to_dict
 from django.http import HttpResponse
 from django.shortcuts import redirect, get_object_or_404
+from django.contrib.auth import authenticate
 from rest_framework import filters, generics
 from rest_framework import status
-from rest_framework.exceptions import NotAuthenticated, ParseError
+from rest_framework.exceptions import NotAuthenticated, ParseError, ValidationError
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.throttling import ScopedRateThrottle
@@ -31,6 +32,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 from login import serializers
 from login.lib import cdcrypto as crypto
 from login.models import UserInfo, UserAuth
+from login.core import UserManager
 
 logger = logging.getLogger(__name__)
 
@@ -206,10 +208,20 @@ class OAInfoAPIView(TokenObtainPairView):
             credential = data.get("password", "")
             params = {}
             logger.debug("Current Login User: %s" % identifier)
-            auth = UserAuth.objects.filter(identifier=identifier,
-                                           identity_type="oapassword",
-                                           credential=crypto.encrypt(credential, settings.PASSWORD_KEY)).first()
+
+            auth = authenticate(username=identifier, password=credential)
+
+            # 判断账号是否存在，如果不存在就创建
+            if not (auth and UserManager.get_or_create_account(identifier)):
+                auth = False
+
+            if not auth:
+                auth = UserAuth.objects.filter(identifier=identifier,
+                                        identity_type="oapassword",
+                                        credential=crypto.encrypt(credential, settings.PASSWORD_KEY)).first()
+
             if auth:
+                auth = UserAuth.objects.filter(user=identifier).first()
                 serializer = self.get_serializer(data={"uid": auth.uid})
                 serializer.is_valid(raise_exception=True)
                 params["access_token"] = serializer.validated_data["access"]
