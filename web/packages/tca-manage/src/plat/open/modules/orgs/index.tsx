@@ -28,7 +28,7 @@ const Orgs = () => {
 
   /** 删除团队操作 */
   const handleDeleteOrg = () => {
-    putOrgStatus(curOrg.org_sid, { status: OrgStatusEnum.INACTIVE }).then(() => {
+    putOrgStatus(curOrg.org_sid, { status: OrgStatusEnum.FORBIDEN }).then(() => {
       MessagePlugin.success(t('已禁用团队'));
       reload();
       setDeleteVisible(false);
