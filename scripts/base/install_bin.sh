@@ -79,10 +79,31 @@ function deepmove() {
     # 遍历
     for target in $(find $src_dir -type f); do
         relpath=$(realpath "$target" --relative-to=$src_dir)
-        LOG_INFO "update lib: $relpath" 
-        cp $target $dst_dir/$relpath
+        # 先判断md5值，有变化才复制覆盖
+        isSame $target $dst_dir/$relpath
+        ret=$?
+        if [[ $ret == 1 ]]; then
+            LOG_INFO "update lib: $relpath"
+            cp $target $dst_dir/$relpath
+        fi
     done
     rm -r $src_dir
+}
+
+function isSame() {
+    src_file=${1}
+    dst_file=${2}
+
+    ret=1
+
+    src_md5=$(md5sum $src_file | awk '{ print $1 }')
+    dst_md5=$(md5sum $dst_file | awk '{ print $1 }')
+    # LOG_INFO $src_md5 $dst_md5
+    if [[ $src_md5 == $dst_md5 ]]; then
+        return 0
+    else
+        return 1
+    fi
 }
 
 function interactive_install_bin() {
