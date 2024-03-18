@@ -44,7 +44,7 @@ TCA 增强分析模块，需要用户额外部署 License 鉴权微服务，并�
 
 ```shell
 # 如果在该目录下没有找到 cls 二进制文件，可以执行以下命令进行同步
-$ bahs ./scripts/base/install_bin.sh
+$ bash ./scripts/base/install_bin.sh
 $ cd server/cls
 $ ./cls server
 2022-04-13 18:35:29.356510559 +0800 CST [INFO] Version: 20220328.1
