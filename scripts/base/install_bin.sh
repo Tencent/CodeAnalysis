@@ -94,8 +94,6 @@ function isSame() {
     src_file=${1}
     dst_file=${2}
 
-    ret=1
-
     src_md5=$(md5sum $src_file | awk '{ print $1 }')
     dst_md5=$(md5sum $dst_file | awk '{ print $1 }')
     # LOG_INFO $src_md5 $dst_md5
