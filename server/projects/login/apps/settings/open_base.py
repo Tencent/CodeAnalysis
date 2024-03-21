@@ -56,7 +56,8 @@ if os.environ.get("LDAP_ENABLE", False):
     LDAP_BASE_DN = os.environ.get("LDAP_BASE_DN")
     LDAP_USER_SEARCH_FILTER = os.environ.get("LDAP_USER_SEARCH_FILTER"),
 
-
+    AUTH_LDAP_BIND_DN = os.environ.get("LDAP_BIND_DN")
+    AUTH_LDAP_BIND_PASSWORD = os.environ.get("LDAP_BIND_PASSWORD")
     AUTH_LDAP_SERVER_URI = "ldap://%s:%s" % (LDAP_SERVER, LDAP_PORT)
 
     AUTH_LDAP_USER_SEARCH = LDAPSearch(
@@ -66,7 +67,7 @@ if os.environ.get("LDAP_ENABLE", False):
     )
 
     # 这里的配置是将ldap中的字段映射到django的字段, 请按照实际情况修改
-    AUTH_LDAP_USER_ATTR_MAP = {'nickname': 'givenName', 'uid': 'cn', 'mail': 'mail', 'mobile': 'phone'}
+    AUTH_LDAP_USER_ATTR_MAP = {'nickname': 'givenName', 'uid': 'cn', 'mail': 'mail', 'mobile': 'mobile'}
 
     # 下面两个配置一般不需要更改，如果要改请了解清楚
     AUTH_LDAP_ALWAYS_UPDATE_USER = True
