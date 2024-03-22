@@ -5,7 +5,7 @@ RUN mv /etc/apt/sources.list /etc/apt/sources.list.bak && \
     echo 'deb http://mirrors.tencent.com/debian/ bullseye-updates main non-free contrib' >> /etc/apt/sources.list && \
     echo 'deb http://mirrors.tencent.com/debian-security bullseye-security main non-free contrib' >> /etc/apt/sources.list
 
-ARG EXTRA_TOOLS="gnupg curl wget jq vim-tiny net-tools procps python3-dev default-libmysqlclient-dev locales inotify-tools gcc subversion git telnet iputils-ping vim openssh-client"
+ARG EXTRA_TOOLS="gnupg curl wget jq vim-tiny net-tools procps python3-dev default-libmysqlclient-dev locales inotify-tools gcc subversion git telnet iputils-ping vim openssh-client libsasl2-dev libldap2-dev libssl-dev"
 
 RUN set -ex && cd / \
     && apt-get update \
