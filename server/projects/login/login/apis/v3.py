@@ -21,7 +21,7 @@ from django.shortcuts import redirect, get_object_or_404
 from django.contrib.auth import authenticate
 from rest_framework import filters, generics
 from rest_framework import status
-from rest_framework.exceptions import NotAuthenticated, ParseError, ValidationError
+from rest_framework.exceptions import NotAuthenticated, ParseError
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.throttling import ScopedRateThrottle
