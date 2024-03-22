@@ -20,6 +20,9 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 import os
 from os.path import join
 
+import ldap
+from django_auth_ldap.config import LDAPSearch
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 # SECURITY WARNING: keep the secret key used in production secret!
@@ -40,6 +43,35 @@ INSTALLED_APPS = [
     'rest_framework',
     'login',
 ]
+
+if os.environ.get("LDAP_ENABLE", False):
+    # 代码不能覆盖全部 ldap 使用方式, 如果出现错误又不知道怎么配置, 看下面文档
+    # https://django-auth-ldap.readthedocs.io/en/latest/example.html
+
+    AUTHENTICATION_BACKENDS = [
+        'django_auth_ldap.backend.LDAPBackend',
+    ]
+    LDAP_SERVER = os.environ.get("LDAP_SERVER")
+    LDAP_PORT = os.environ.get("LDAP_PORT")
+    LDAP_BASE_DN = os.environ.get("LDAP_BASE_DN")
+    LDAP_USER_SEARCH_FILTER = os.environ.get("LDAP_USER_SEARCH_FILTER"),
+
+    AUTH_LDAP_BIND_DN = os.environ.get("LDAP_BIND_DN")
+    AUTH_LDAP_BIND_PASSWORD = os.environ.get("LDAP_BIND_PASSWORD")
+    AUTH_LDAP_SERVER_URI = "ldap://%s:%s" % (LDAP_SERVER, LDAP_PORT)
+
+    AUTH_LDAP_USER_SEARCH = LDAPSearch(
+        "%s" % LDAP_BASE_DN,
+        ldap.SCOPE_SUBTREE,
+        "%s" % LDAP_USER_SEARCH_FILTER
+    )
+
+    # 这里的配置是将ldap中的字段映射到django的字段, 请按照实际情况修改
+    AUTH_LDAP_USER_ATTR_MAP = {'nickname': 'givenName', 'uid': 'cn', 'mail': 'mail', 'mobile': 'mobile'}
+
+    # 下面两个配置一般不需要更改，如果要改请了解清楚
+    AUTH_LDAP_ALWAYS_UPDATE_USER = True
+    AUTH_LDAP_CACHE_TIMEOUT = 600
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

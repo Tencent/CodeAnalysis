@@ -22,3 +22,7 @@ cryptography===42.0.4
 
 # for exception log
 sentry-sdk==1.14.0
+
+# ldap
+django-auth-ldap==4.1.0
+python-ldap==3.4.3
