@@ -8,7 +8,7 @@ source $TCA_SCRIPT_ROOT/utils.sh
 
 # 代码库根目录
 TCA_ROOT=$( cd "$(dirname $TCA_SCRIPT_ROOT)"; pwd )
-LIB_GITHUB_URL=${LIB_GITHUB_URL:-"https://github.com/TCATools/tca_lib/releases/download/v20240304.1/tca_lib-v1.0.zip"}
+LIB_GITHUB_URL=${LIB_GITHUB_URL:-"https://github.com/TCATools/tca_lib/releases/download/v20240328.1/tca_lib-v1.1.zip"}
 LIB_GONGFENG_URL=${LIB_GONGFENG_URL:-"https://git.code.tencent.com/TCA/tca-tools/tca_lib.git"}
 LIB_DIR_NAME="tca_lib"
 
