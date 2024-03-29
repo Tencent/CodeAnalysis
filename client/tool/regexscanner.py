@@ -90,7 +90,6 @@ class RegexScanner(CodeLintModel):
             rule_name = rule['name']
             if not rule.get('params'):
                 logger.error(f"{rule_name} rule parameter is empty, check for existing rules.")
-                # 没有参数的规则，可能为工具内部隐藏规则
                 rules["rules"].append({"name":rule_name})
                 no_params_rules.append(rule_name)
                 continue
@@ -103,7 +102,6 @@ class RegexScanner(CodeLintModel):
             regex = rule_params_dict.get("regex", "")
             regex_not = rule_params_dict.get("regex_not", "")
             if not regex:
-                # 没有正则的规则，可能为工具内部隐藏规则
                 rules["rules"].append({"name":rule_name})
                 continue
             regexes = self.__get_regexes_exp("regex", rule_params_dict)
