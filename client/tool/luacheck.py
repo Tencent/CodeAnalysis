@@ -136,9 +136,15 @@ class LuaCheckRunner(object):
                 rule = error.attrib.get("type")
                 if rules and rule not in rules:
                     continue
-                msg = error.attrib.get("message")[pos:]
-                line = int(msg.split(":")[1])
-                column = int(msg.split(":")[2])
+                # 2024/4/18 移除msg中的行列号信息
+                message = error.attrib.get("message")
+                if message is None:
+                    continue
+                msg = message.split(":", 3)[3]
+                # msg中 on line 后面也会跟着行号
+                msg = msg.split("on line ")[0].strip()
+                line = int(message.split(":")[1])
+                column = int(message.split(":")[2])
                 issues.append({"path": path, "rule": rule, "msg": msg, "line": line, "column": column})
         return issues
 
