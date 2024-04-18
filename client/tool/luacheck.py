@@ -140,9 +140,9 @@ class LuaCheckRunner(object):
                 message = error.attrib.get("message")
                 if message is None:
                     continue
-                msg = message.split(":")[3]
+                msg = message.split(":", 3)[3]
                 # msg中 on line 后面也会跟着行号
-                msg = msg.split("on line ")[0]
+                msg = msg.split("on line ")[0].strip()
                 line = int(message.split(":")[1])
                 column = int(message.split(":")[2])
                 issues.append({"path": path, "rule": rule, "msg": msg, "line": line, "column": column})
