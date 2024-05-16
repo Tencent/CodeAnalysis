@@ -76,3 +76,7 @@
 ## 许可
 
 TCA 使用 [MIT 许可证](LICENSE)
+
+### TCA 团队成员
+
+![腾讯云代码分析团队成员](https://tencent.github.io/CodeAnalysis/media/TeamMembers.png)

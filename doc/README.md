@@ -39,3 +39,7 @@ footer: MIT Licensed | Copyright © 1998-present Tencent. All Rights Reserved.
 ### 金牌🏅️服务微信群
 
 ![微信群](https://tencent.github.io/CodeAnalysis/media/WechatQRCode.png)
+
+### 团队成员
+
+![团队成员](https://tencent.github.io/CodeAnalysis/media/TeamMembers.png)

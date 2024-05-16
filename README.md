@@ -78,3 +78,7 @@ Using TCA can help team find normative, structural, security vulnerabilities and
 ## License
 
 TCA is [MIT licensed](LICENSE)
+
+### TCA Team Member
+
+![腾讯云代码分析团队成员](https://tencent.github.io/CodeAnalysis/media/TeamMembers.png)
