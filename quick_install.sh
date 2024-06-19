@@ -5,6 +5,7 @@ TCA_PROJECT_PATH=${TCA_PROJECT_PATH:-"$CURRENT_SCRIPT_PATH"}
 TCA_SCRIPT_ROOT=${TCA_SCRIPT_ROOT:-"$TCA_PROJECT_PATH/scripts"}
 
 source $TCA_SCRIPT_ROOT/utils.sh
+source $TCA_SCRIPT_ROOT/base/install_git_lfs.sh
 source $TCA_SCRIPT_ROOT/base/install_bin.sh
 source $TCA_SCRIPT_ROOT/base/install_docker.sh
 
