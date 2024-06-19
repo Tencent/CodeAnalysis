@@ -213,8 +213,8 @@ class ScmOauthSetting(models.Model):
     scm_platform = models.IntegerField(verbose_name="凭证所属平台", choices=SCM_PLATFORM_CHOICES,
                                        default=ScmPlatformEnum.GIT_OA)
     client_id = models.CharField(verbose_name="客户端ID", max_length=128)
-    client_secret = models.CharField(verbose_name="客户端密码", max_length=128)
-    redirect_uri = models.CharField(verbose_name="回调地址", max_length=64)
+    client_secret = models.CharField(verbose_name="客户端密码", max_length=512)
+    redirect_uri = models.CharField(verbose_name="回调地址", max_length=128)
     scm_platform_desc = models.CharField(max_length=32, verbose_name="补充其他所属平台", blank=True, null=True)
 
     @property
