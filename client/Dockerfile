@@ -10,7 +10,7 @@ RUN apt-get update \
     && echo "LANG=zh_CN.UTF-8" > /etc/locale.conf \
     && locale-gen \
     && ln -sf /usr/share/zoneinfo/Asia/Hong_Kong /etc/localtime \
-    && rm -rf /var/cache/apt/* /root/.cache \
+    && rm -rf /var/cache/apt/* /root/.cache
 
 ARG TARGETARCH
 RUN if [ "$TARGETARCH" = "amd64" ]; then \
