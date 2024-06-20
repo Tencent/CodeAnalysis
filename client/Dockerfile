@@ -1,4 +1,4 @@
-FROM python:3.7.12-slim
+FROM python:3.7-slim-bullseye
 
 ARG EXTRA_TOOLS="curl wget python3-dev git git-lfs vim-tiny gcc locales subversion telnet procps openssh-client libreadline-dev"
 
