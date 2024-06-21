@@ -52,7 +52,7 @@ jobs:
 
     # 3. 下载二进制文件
     - name: Download Binary Files
-      run: source ./scripts/base/install_bin.sh
+      run: bash ./scripts/base/install_bin.sh
 
     # 4. 设置 docker 环境
     - name: Set up QEMU
