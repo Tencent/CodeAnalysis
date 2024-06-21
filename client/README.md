@@ -49,7 +49,9 @@
 参考Docker官方文档：[Docker下载和安装](https://docs.docker.com/get-started/)
 
 ### 2. 构建docker镜像
-在`client`目录下，执行以下命令：`docker build -t tca-client .`
+在`client`目录下，执行以下命令：
+- `docker build --build-arg TARGETARCH={ARCH} -t tca-client .`
+> 变量`{ARCH}`替换为需要构建的架构，可选值：amd64, arm64.
 
 ### 3. 执行docker容器，扫描代码，可选以下两种方式
 
