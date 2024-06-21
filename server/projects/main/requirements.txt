@@ -6,11 +6,11 @@ gunicorn==22.0.0
 Django==3.2.25
 
 # for django using mysql server
-pymysql==1.0.2
+pymysql==1.1.1
 
 # for django template
 django-widget-tweaks==1.4.8
-Jinja2==3.1.3
+Jinja2==3.1.4
 markupsafe==2.0.1
 
 # for celery
@@ -41,7 +41,7 @@ rsa==4.7.2
 django-guardian==2.3.0
 
 # for file upload and download
-urllib3==1.26.18
+urllib3==1.26.19
 
 # for database import and export module
 django-import-export==2.5.0

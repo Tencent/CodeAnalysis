@@ -1,4 +1,4 @@
-FROM python:3.7.12-slim
+FROM python:3.7-slim-bullseye
 
 ARG EXTRA_TOOLS="curl wget python3-dev git git-lfs vim-tiny gcc locales subversion telnet procps openssh-client libreadline-dev"
 
@@ -10,8 +10,15 @@ RUN apt-get update \
     && echo "LANG=zh_CN.UTF-8" > /etc/locale.conf \
     && locale-gen \
     && ln -sf /usr/share/zoneinfo/Asia/Hong_Kong /etc/localtime \
-    && cd /lib/x86_64-linux-gnu && ln -sf libreadline.so.8.1 libreadline.so.6 \
     && rm -rf /var/cache/apt/* /root/.cache
+
+ARG TARGETARCH
+RUN if [ "$TARGETARCH" = "amd64" ]; then \
+      cd /lib/x86_64-linux-gnu && ln -sf libreadline.so.8.1 libreadline.so.6; \
+    elif [ "$TARGETARCH" = "arm64" ]; then \
+      cd /lib/aarch64-linux-gnu && ln -sf libreadline.so.8.1 libreadline.so.6; \
+    fi && \
+    echo "TARGETARCH is $TARGETARCH"
 
 WORKDIR /workspace/client
 

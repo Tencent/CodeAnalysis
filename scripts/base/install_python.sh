@@ -49,12 +49,12 @@ function pre_install_for_python() {
     LOG_INFO "[PythonInstall] Pre install tools"
     case "$LINUX_OS" in
         centos|rhel|sles|tlinux|tencentos)
-            tools="wget zlib-devel bzip2-devel openssl-devel ncurses-devel sqlite-devel readline-devel tk-devel gcc make libffi-devel xz-devel"
+            tools="wget zlib-devel bzip2-devel openssl-devel ncurses-devel sqlite-devel readline-devel tk-devel gcc make libffi-devel xz-devel openldap-devel"
             LOG_INFO "    Start run: yum install tools: $tools"
 	        yum -q -y install $tools || error_exit "[PythonInstall] pre install tools failed"
         ;;
         ubuntu|debian|raspbian)
-            tools="wget build-essential zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libssl-dev libsqlite3-dev libreadline-dev libffi-dev libbz2-dev tk-dev gcc make"
+            tools="wget build-essential zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libssl-dev libsqlite3-dev libreadline-dev libffi-dev libbz2-dev tk-dev gcc make libsasl2-dev libldap2-dev libssl-dev"
             LOG_INFO "    Start run: apt-get update and apt-get install $tools"
             apt-get update -qq >/dev/null || error_exit "[PythonInstall] pre install tools failed"
             DEBIAN_FRONTEND=noninteractive apt-get -y install -qq $tools >/dev/null || error_exit "[PythonInstall] pre install tools failed"
