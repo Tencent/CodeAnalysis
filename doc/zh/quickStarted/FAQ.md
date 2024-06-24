@@ -193,6 +193,26 @@ ln -s /usr/local/python3/bin/gunicorn /usr/local/bin/gunicorn
 ln -s /usr/local/python3/bin/celery /usr/local/bin/celery
 ```
 
+#### 1.9 脚本安装过程报错，出现格式问题
+
+使用docker方式部署项目时，提示 
+```
+fatal: 无法访间 'https://git,code.tencent,com/TcA/tca-tools/tca lib,git/': URL using bad/illegal format or missing URl.
+Download lib failed
+```
+该如何处理。
+
+出错原因可能是Windows系统、和macOs系统、linux系统的行分隔符不同，可以先查看当前文件的换行符是 CRLF 还是LF，
+如果要部署在Windows系统系统上，行分隔符应该为CRLF格式，部署在linux和macOS系统预期是LF格式，如果不一致需要进行手动修改。
+
+修改方式可以选择：
+1、使用pycharm打开项目，依次点击”File”->”Settings”->”Editor”->”Code Style”->”General”
+在面板中，可以找到”Line separator”选项，根据要部署的系统选择行分隔符格式。
+2、也可以使用dos2unix、unix2dos等转换命令，例如从Windows系统打包到Linux系统，当前行分隔符为CRLF，需要对脚本执行 ``dos2unix fileName``指令进行转换 ，注意使用该指令前需要先进行安装。
+
+完成以上操作之后再对代码进行打包，即可部署运行。
+
+
 ### 2. 服务启动与初始化
 
 #### 2.1 服务占用端口异常
