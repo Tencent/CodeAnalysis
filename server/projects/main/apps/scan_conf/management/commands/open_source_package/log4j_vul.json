@@ -40,13 +40,6 @@
                 "state": "disabled"
             },
             {
-                "checktool": "codedog_0Day_checker",
-                "checkrule": "log4j",
-                "severity": "error",
-                "rule_params": null,
-                "state": "enabled"
-            },
-            {
                 "checktool": "jafc_beta",
                 "checkrule": "FindLog4j",
                 "severity": "error",
