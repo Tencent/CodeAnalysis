@@ -85,35 +85,19 @@ LICENSE=<Client License>
   - 重启容器方式：`docker-compose restart client`
 :::
 
-3. 向 TCA 团队邮件申请 License
-
-- 收件邮箱：
-```
-v_cocohwang@tencent.com
-v_xiohuang@tencent.com
-yalechen@tencent.com
-tommyzhang@tencent.com
-```
-
-- 申请邮件格式如下：
-
-主题：**TCA 独立工具 License 申请**
-
-正文：
-| | | 
-|  :----:  | :----:  |
-| 申请人名称  | xxx |
-| 申请人所在组织名称 | xxx |
-| 申请人所在组织类型 | 可选选项：公司/学校/个人 |
-| 申请人邮箱 | xxx |
-| 申请人手机号码 | xxx |
-| 是否私有化部署 | 是 |
-| 首次登记的机器码 | xxx |
-| 体验申请用途 | xxx |
-| Client License | xxx |
-
-- `首次登记的机器码`: 步骤一中输出的`Server ID`
-- `Client License`: 步骤一中输出的`Client License`
+3. 在 TCA 云官网上提交私有云 License 申请  
+- (1) 在 [TCA 云官网](https://tca.tencent.com/)上注册或登录账号;
+- (2) 进入需要申请私有云 License 申请的团队（如果没有的话需要创建对应团队）；
+- (3) 在团队页面上，依次进入【节点管理】->【私有云 License 配置】页面，然后点击右上角的【申请License】按钮，填写相关信息即可提交申请。具体的信息内容如下：
+  - 申请人名称
+  - 申请人所在组织名称
+  - 申请人所在组织类型：公司/高校/个人
+  - 申请人邮箱
+  - 申请人手机号码
+  - Server ID：步骤一中输出的`Server ID`，首次登记的机器码
+  - Client License：步骤一中输出的`Client License`
+  - 应用场景
+- (4) 然后等待申请License审核通过，即可拷贝出该私有云 License 继续进行下面第4步的操作。
 
 4. 收到 TCA 团队回复邮件之后，在 CLS 目录下的 [`config.yaml`](https://github.com/Tencent/CodeAnalysis/blob/main/server/cls/config.yaml) 文件中填写License  
 
