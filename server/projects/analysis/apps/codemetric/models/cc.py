@@ -137,7 +137,7 @@ class CyclomaticComplexityFile(CDBaseModel):
 
 
 class CyclomaticComplexity(CDBaseModel):
-    """重复代码问题
+    """圈复杂度问题
     """
 
     class ChangeTypeEnum(object):

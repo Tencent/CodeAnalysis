@@ -18,6 +18,8 @@ from apps.codeproj.apis import v1 as apis
 urlpatterns = [
     path("", apis.ProjectCreateApiView.as_view(),
          name="apiv1_project_create"),
+    path("<int:project_id>/", apis.ProjectDetailApiView.as_view(),
+         name="apiv1_project_detail"),
     path("<int:project_id>/scans/", apis.ProjectScanListCreateApiView.as_view(),
          name="apiv1_project_scan_list"),
     path("<int:project_id>/scans/<int:scan_id>/", apis.ProjectScanResultDetailApiView.as_view(),
