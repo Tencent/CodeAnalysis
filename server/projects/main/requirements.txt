@@ -21,7 +21,7 @@ redis==4.5.4
 celery-redbeat==2.0.0
 
 # for rest api
-djangorestframework==3.11.2
+djangorestframework==3.15.2
 coreapi==2.3.3
 Markdown==3.3.4
 Pygments==2.15.0
