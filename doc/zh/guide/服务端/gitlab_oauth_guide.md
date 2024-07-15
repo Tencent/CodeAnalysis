@@ -123,7 +123,7 @@ bash ./quick_install.sh local start  #启动服务（会自动关闭之前的服
 ![gitlab_oauth_disposition](../../../images/gitlab_oauth_disposition_02.png)
 
 #### （3）创建配置
-将application中的Application ID、Secret 和 Callback URL分别填入进去
+将application中的Application ID、Secret 和 Callback URL分别填入
 ![gitlab_oauth_disposition](../../../images/gitlab_oauth_disposition_03.png)
 
 #### （4）前往个人凭证管理，点击认证
@@ -146,7 +146,8 @@ Client authentication failed due to unknown client, no client authentication inc
 #### 解决方案：
 
 ![gitlab_oauth_QA](../../../images/gitlab_oauth_QA_02.png)
-如图，GITLAB_OAUTH_URL没有配置，默认使用 https://gitlab.com/oauth/authorize。
+
+如图，GITLAB_OAUTH_URL没有配置，默认使用 https://gitlab.com/oauth/authorize 。
 
 需要根据项目部署方式，修改配置信息。
 
