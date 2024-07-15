@@ -249,6 +249,10 @@ class RepositoryManager(object):
         deleted_time = now()
         repo.scm_url = ("%s [deleted by %s(%s)]" % (repo.scm_url, user.username, deleted_time))[:198]
         repo.save()
+        models.Project.objects.filter(repo_id=repo_id).delete()
+        logger.info("[User: %s] 在 %s 删除了代码库 %s-%s 关联的扫描项目" % (user.username, deleted_time, repo_id, old_scm_url))
+        models.ScanScheme.objects.filter(repo_id=repo_id).delete()
+        logger.info("[User: %s] 在 %s 删除了代码库 %s-%s 关联的扫描方案" % (user.username, deleted_time, repo_id, old_scm_url))
         logger.info("[User: %s] 在 %s 删除了代码库 %s-%s" % (user.username, deleted_time, repo_id, old_scm_url))
         repo.delete(user=user)
         OperationRecordHandler.add_repo_operation_record(
