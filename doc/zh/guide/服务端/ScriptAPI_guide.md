@@ -92,10 +92,10 @@ python ScriptsAPI.py --base_url=http://<my_ip>/ --method=update_scheme_settings 
 ```
 
 #### 4. 结果展示
-![create_repository](../../../images/api_update_scheme_settings_response.png)
+![update_scheme_settings](../../../images/api_update_scheme_settings_response.png)
 
 
-![create_repository](../../../images/api_update_scheme_settings_cons.png)
+![update_scheme_settings](../../../images/api_update_scheme_settings_cons.png)
 
 
 
@@ -130,10 +130,10 @@ python ScriptsAPI.py --base_url=http://<my_ip>/ --method=create_project --org_si
 ```
 
 #### 4. 结果展示
-![create_repository](../../../images/api_create_project_response.png)
+![create_project](../../../images/api_create_project_response.png)
 
 
-![create_repository](../../../images/api_create_project_cons.png)
+![create_project](../../../images/api_create_project_cons.png)
 
 
 ### 四、启动任务
@@ -165,10 +165,10 @@ python ScriptsAPI.py --base_url=http://<my_ip>/ --method=create_scans --org_sid=
 ```
 
 #### 4. 结果展示
-![create_repository](../../../images/api_create_scans_response.png)
+![create_scans](../../../images/api_create_scans_response.png)
 
 
-![create_repository](../../../images/api_create_scans_cons.png)
+![create_scans](../../../images/api_create_scans_cons.png)
 
 
 ### 五、轮询任务结果
@@ -200,15 +200,15 @@ python ScriptsAPI.py --base_url=http://<my_ip>/ --method=get_scan_cons --org_sid
 ```
 
 #### 4. 结果展示
-![create_repository](../../../images/api_get_scan_cons_1.png)
-![create_repository](../../../images/api_get_scan_cons_2.png)
+![get_scan_cons](../../../images/api_get_scan_cons_1.png)
+![get_scan_cons](../../../images/api_get_scan_cons_2.png)
 此时分析项目正在执行中，调用访问任务结果的api接口后会不断进行轮询，直到项目执行完毕。
 
-![create_repository](../../../images/api_get_scan_cons_3.png)
-![create_repository](../../../images/api_get_scan_cons_4.png)
+![get_scan_cons](../../../images/api_get_scan_cons_3.png)
+![get_scan_cons](../../../images/api_get_scan_cons_4.png)
 
 如果参数填写出现错误，会给出提示。
-![create_repository](../../../images/api_get_scan_cons_5.png)
+![get_scan_cons](../../../images/api_get_scan_cons_5.png)
 
 
 ### 六、获取分析概览
@@ -239,10 +239,10 @@ python ScriptsAPI.py --base_url=http://<my_ip>/ --method=get_overview --org_sid=
 ```
 
 #### 4. 结果展示
-![create_repository](../../../images/api_get_overview_1.png)
-![create_repository](../../../images/api_get_overview_2.png)
-![create_repository](../../../images/api_get_overview_3.png)
-![create_repository](../../../images/api_get_overview_4.png)
+![get_overview](../../../images/api_get_overview_1.png)
+![get_overview](../../../images/api_get_overview_2.png)
+![get_overview](../../../images/api_get_overview_3.png)
+![get_overview](../../../images/api_get_overview_4.png)
 
 
 ### 七、查看扫描问题列表
@@ -273,10 +273,10 @@ python ScriptsAPI.py --base_url=http://<my_ip>/ --method=get_issues --org_sid=E5
 ```
 
 #### 4. 结果展示
-![create_repository](../../../images/api_get_issues_response.png)
+![get_issues](../../../images/api_get_issues_response.png)
 
 
-![create_repository](../../../images/api_get_issues_cons.png)
+![get_issues](../../../images/api_get_issues_cons.png)
 
 
 ### 八、查看问题详情
@@ -308,10 +308,10 @@ python ScriptsAPI.py --base_url=http://<my_ip>/ --method=get_issue_detail --org_
 ```
 
 #### 4. 结果展示
-![create_repository](../../../images/api_get_issue_detail_response.png)
+![get_issue_detail](../../../images/api_get_issue_detail_response.png)
 
 
-![create_repository](../../../images/api_get_issue_detail_cons.png)
+![get_issue_detail](../../../images/api_get_issue_detail_cons.png)
 
 
 ### 九、查看指定项目的圈复杂度问题列表
@@ -342,10 +342,10 @@ python ScriptsAPI.py --base_url=http://<my_ip>/ --method=get_ccissues --org_sid=
 ```
 
 #### 4. 结果展示
-![create_repository](../../../images/api_get_ccissues_response.png)
+![get_ccissues](../../../images/api_get_ccissues_response.png)
 
 
-![create_repository](../../../images/api_get_ccissues_cons.png)
+![get_ccissues](../../../images/api_get_ccissues_cons.png)
 
 
 
@@ -377,10 +377,10 @@ python ScriptsAPI.py --base_url=http://<my_ip>/ --method=get_dupfiles --org_sid=
 ```
 
 #### 4. 结果展示
-![create_repository](../../../images/api_get_dupfiles_response.png)
+![get_dupfiles](../../../images/api_get_dupfiles_response.png)
 
 
-![create_repository](../../../images/api_get_dupfiles_cons.png)
+![get_dupfiles](../../../images/api_get_dupfiles_cons.png)
 
 
 
