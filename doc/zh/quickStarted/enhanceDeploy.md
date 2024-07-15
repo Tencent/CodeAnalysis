@@ -43,6 +43,8 @@ TCA 增强分析模块，需要用户额外部署 License 鉴权微服务，并�
 :::
 
 ```shell
+# 安装 Git LFS
+$ bash ./scripts/base/install_git_lfs.sh
 # 如果在该目录下没有找到 cls 二进制文件，可以执行以下命令进行同步
 $ bash ./scripts/base/install_bin.sh
 $ cd server/cls

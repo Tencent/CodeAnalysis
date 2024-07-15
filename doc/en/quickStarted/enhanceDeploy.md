@@ -43,6 +43,8 @@ If you are using TCA in an enterprise intranet environment and want to experienc
 :::
 
 ```shell
+# install Git LFS
+$ bash ./scripts/base/install_git_lfs.sh
 # If the cls binary is not found in this directory, you can execute the following command to synchronize.
 $ bash ./scripts/base/install_bin.sh
 $ cd server/cls
