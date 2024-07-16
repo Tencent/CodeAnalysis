@@ -31,6 +31,7 @@ jobs:
           pwd
           bash ./scripts/base/install_git_lfs.sh
           bash ./scripts/base/install_bin.sh
+          ls -al doc/images
 
       - name: Setup Node 16
         uses: actions/setup-node@v3
