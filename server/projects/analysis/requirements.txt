@@ -36,7 +36,7 @@ Pygments==2.15.0
 drf-yasg==1.17.0
 
 # for file upload and download
-urllib3==1.26.18
+urllib3==1.26.19
 
 django-filter==2.4.0
 

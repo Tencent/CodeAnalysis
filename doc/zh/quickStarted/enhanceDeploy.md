@@ -43,6 +43,8 @@ TCA 增强分析模块，需要用户额外部署 License 鉴权微服务，并�
 :::
 
 ```shell
+# 安装 Git LFS
+$ bash ./scripts/base/install_git_lfs.sh
 # 如果在该目录下没有找到 cls 二进制文件，可以执行以下命令进行同步
 $ bash ./scripts/base/install_bin.sh
 $ cd server/cls
@@ -85,7 +87,7 @@ LICENSE=<Client License>
   - 重启容器方式：`docker-compose restart client`
 :::
 
-3. 在 TCA 云官网上提交私有云 License 申请  
+3. 在 TCA 云官网上提交私有云 License 申请
 - (1) 在 [TCA 云官网](https://tca.tencent.com/)上注册或登录账号;
 - (2) 进入需要申请私有云 License 申请的团队（如果没有的话需要创建对应团队）；
 - (3) 在团队页面上，依次进入【节点管理】->【私有云 License 配置】页面，然后点击右上角的【申请License】按钮，填写相关信息即可提交申请。具体的信息内容如下：
@@ -99,7 +101,7 @@ LICENSE=<Client License>
   - 应用场景
 - (4) 然后等待申请License审核通过，即可拷贝出该私有云 License 继续进行下面第4步的操作。
 
-4. 收到 TCA 团队回复邮件之后，在 CLS 目录下的 [`config.yaml`](https://github.com/Tencent/CodeAnalysis/blob/main/server/cls/config.yaml) 文件中填写License  
+4. 在 CLS 目录下的 [`config.yaml`](https://github.com/Tencent/CodeAnalysis/blob/main/server/cls/config.yaml) 文件中填写License  
 
 ::: warning
 注意：遵从 yaml 格式，比如：
