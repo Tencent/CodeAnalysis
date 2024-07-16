@@ -29,9 +29,7 @@ jobs:
         run: |
           set -ex
           pwd
-          bash ./scripts/base/install_git_lfs.sh
           bash ./scripts/base/install_bin.sh
-          ls -al doc/images
 
       - name: Setup Node 16
         uses: actions/setup-node@v3
@@ -67,7 +65,6 @@ jobs:
           rm -rf old
           yarn build
           cp -af ../media dist
-          ls -al dist/assets/
 
       # 查看 workflow 的文档来获取更多信息
       # @see https://github.com/crazy-max/ghaction-github-pages
@@ -81,7 +78,3 @@ jobs:
         env:
           # @see https://docs.github.com/cn/actions/reference/authentication-in-a-workflow#about-the-github_token-secret
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: debug
-        run: |
-          ls -al doc/dist/assets/
