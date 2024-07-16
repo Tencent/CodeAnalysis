@@ -8,8 +8,8 @@
 ```bash
 pip install requests
 ```
-#### 5. 执行脚本python ScriptsAPI.py
-#### 6. 设置参数method，选择要执行的api接口，并根据接口添加所需参数。
+#### 5. 设置参数method，选择要执行的api接口，并根据接口添加所需参数。
+#### 6. 执行脚本python ScriptsAPI.py
 
 ## 方法总览
 
@@ -54,14 +54,8 @@ POST /server/main/api/orgs/<org_sid>/teams/<team_name>/repos/
 
 #### 3. 操作示例
 ```bash
-python ScriptsAPI.py --base_url=http://<my_ip>/ --method=create_repository --org_sid=E5BbtAHm2Bh --team_name=project --scm_url=https://github.com/Tencent/CodeAnalysis.git --scm_type=git
+python ScriptsAPI.py --base_url=${TCA_BASE_URL} --method=create_repository --org_sid=${TCA_ORG_SID} --team_name=${TCA_TEAM_NAME} --scm_url=${TCA_SCM_URL} --scm_type=${TCA_SCM_TYPE}
 ```
-
-#### 4. 结果展示
-![create_repository](../../../images/api_create_repository_response.png)
-
-
-![create_repository](../../../images/api_create_repository_cons.png)
 
 
 ### 二、设置指定代码库的指定方案的代码度量配置
@@ -88,14 +82,8 @@ PUT /server/main/api/orgs/<org_sid>/teams/<team_name>/repos/<repo_id>/schemes/<s
 
 #### 3. 操作示例
 ```bash
-python ScriptsAPI.py --base_url=http://<my_ip>/ --method=update_scheme_settings --org_sid=E5BbtAHm2Bh --team_name=project --repo_id=47 --scheme_id=9
+python ScriptsAPI.py --base_url=${TCA_BASE_URL} --method=update_scheme_settings --org_sid=${TCA_ORG_SID} --team_name=${TCA_TEAM_NAME} --repo_id=${TCA_REPO_ID} --scheme_id=${TCA_SCHEME_ID}
 ```
-
-#### 4. 结果展示
-![update_scheme_settings](../../../images/api_update_scheme_settings_response.png)
-
-
-![update_scheme_settings](../../../images/api_update_scheme_settings_cons.png)
 
 
 
@@ -126,14 +114,8 @@ POST /server/main/api/orgs/<org_sid>/teams/<team_name>/repos/<repo_id>/projects/
 
 #### 3. 操作示例
 ```bash
-python ScriptsAPI.py --base_url=http://<my_ip>/ --method=create_project --org_sid=E5BbtAHm2Bh --team_name=project --repo_id=47 --scan_scheme_id=42 --branch=main
+python ScriptsAPI.py --base_url=${TCA_BASE_URL} --method=create_project --org_sid=${TCA_ORG_SID} --team_name=${TCA_TEAM_NAME} --repo_id=${TCA_REPO_ID} --scan_scheme_id=${TCA_SCAN_SCHEME_ID} --branch=${TCA_BRANCH}
 ```
-
-#### 4. 结果展示
-![create_project](../../../images/api_create_project_response.png)
-
-
-![create_project](../../../images/api_create_project_cons.png)
 
 
 ### 四、启动任务
@@ -161,14 +143,9 @@ POST /server/main/api/orgs/<org_sid>/teams/<team_name>/repos/<repo_id>/projects/
 
 #### 3. 操作示例
 ```bash
-python ScriptsAPI.py --base_url=http://<my_ip>/ --method=create_scans --org_sid=E5BbtAHm2Bh --team_name=project --repo_id=47 --project_id=48 
+python ScriptsAPI.py --base_url=${TCA_BASE_URL} --method=create_scans --org_sid=${TCA_ORG_SID} --team_name=${TCA_TEAM_NAME} --repo_id=${TCA_REPO_ID} --project_id=${TCA_PROJECT_ID}
 ```
 
-#### 4. 结果展示
-![create_scans](../../../images/api_create_scans_response.png)
-
-
-![create_scans](../../../images/api_create_scans_cons.png)
 
 
 ### 五、轮询任务结果
@@ -196,19 +173,8 @@ GET /server/main/api/orgs/<org_sid>/teams/<team_name>/repos/<repo_id>/projects/<
 
 #### 3. 操作示例
 ```bash
-python ScriptsAPI.py --base_url=http://<my_ip>/ --method=get_scan_cons --org_sid=E5BbtAHm2Bh --team_name=project --repo_id=47 --project_id=48 --job_id=20
+python ScriptsAPI.py --base_url=${TCA_BASE_URL} --method=get_scan_cons --org_sid=${TCA_ORG_SID} --team_name=${TCA_TEAM_NAME} --repo_id=${TCA_REPO_ID} --project_id=${TCA_PROJECT_ID} --job_id=${TCA_JOB_ID}
 ```
-
-#### 4. 结果展示
-![get_scan_cons](../../../images/api_get_scan_cons_1.png)
-![get_scan_cons](../../../images/api_get_scan_cons_2.png)
-此时分析项目正在执行中，调用访问任务结果的api接口后会不断进行轮询，直到项目执行完毕。
-
-![get_scan_cons](../../../images/api_get_scan_cons_3.png)
-![get_scan_cons](../../../images/api_get_scan_cons_4.png)
-
-如果参数填写出现错误，会给出提示。
-![get_scan_cons](../../../images/api_get_scan_cons_5.png)
 
 
 ### 六、获取分析概览
@@ -235,14 +201,9 @@ GET /server/analysis/api/orgs/<org_sid>/teams/<team_name>/repos/<repo_id>/projec
 
 #### 3. 操作示例
 ```bash
-python ScriptsAPI.py --base_url=http://<my_ip>/ --method=get_overview --org_sid=E5BbtAHm2Bh --team_name=project --repo_id=47 --project_id=48
+python ScriptsAPI.py --base_url=${TCA_BASE_URL} --method=get_overview --org_sid=${TCA_ORG_SID} --team_name=${TCA_TEAM_NAME} --repo_id=${TCA_REPO_ID} --project_id=${TCA_PROJECT_ID}
 ```
 
-#### 4. 结果展示
-![get_overview](../../../images/api_get_overview_1.png)
-![get_overview](../../../images/api_get_overview_2.png)
-![get_overview](../../../images/api_get_overview_3.png)
-![get_overview](../../../images/api_get_overview_4.png)
 
 
 ### 七、查看扫描问题列表
@@ -269,14 +230,8 @@ GET /server/analysis/api/orgs/<org_sid>/teams/<team_name>/repos/<repo_id>/projec
 
 #### 3. 操作示例
 ```bash
-python ScriptsAPI.py --base_url=http://<my_ip>/ --method=get_issues --org_sid=E5BbtAHm2Bh --team_name=project --repo_id=48 --project_id=49
+python ScriptsAPI.py --base_url=${TCA_BASE_URL} --method=get_issues --org_sid=${TCA_ORG_SID} --team_name=${TCA_TEAM_NAME} --repo_id=${TCA_REPO_ID} --project_id=${TCA_PROJECT_ID}
 ```
-
-#### 4. 结果展示
-![get_issues](../../../images/api_get_issues_response.png)
-
-
-![get_issues](../../../images/api_get_issues_cons.png)
 
 
 ### 八、查看问题详情
@@ -304,14 +259,8 @@ GET /server/analysis/api/orgs/<org_sid>/teams/<team_name>/repos/<repo_id>/projec
 
 #### 3. 操作示例
 ```bash
-python ScriptsAPI.py --base_url=http://<my_ip>/ --method=get_issue_detail --org_sid=E5BbtAHm2Bh --team_name=project --repo_id=48 --project_id=49 --issue_id=185
+python ScriptsAPI.py --base_url=${TCA_BASE_URL} --method=get_issue_detail --org_sid=${TCA_ORG_SID} --team_name=${TCA_TEAM_NAME} --repo_id=${TCA_REPO_ID} --project_id=${TCA_PROJECT_ID} --issue_id=${TCA_ISSUE_ID}
 ```
-
-#### 4. 结果展示
-![get_issue_detail](../../../images/api_get_issue_detail_response.png)
-
-
-![get_issue_detail](../../../images/api_get_issue_detail_cons.png)
 
 
 ### 九、查看指定项目的圈复杂度问题列表
@@ -338,14 +287,8 @@ GET /server/analysis/api/orgs/<org_sid>/teams/<team_name>/repos/<repo_id>/projec
 
 #### 3. 操作示例
 ```bash
-python ScriptsAPI.py --base_url=http://<my_ip>/ --method=get_ccissues --org_sid=E5BbtAHm2Bh --team_name=project --repo_id=48 --project_id=49
+python ScriptsAPI.py --base_url=${TCA_BASE_URL} --method=get_ccissues --org_sid=${TCA_ORG_SID} --team_name=${TCA_TEAM_NAME} --repo_id=${TCA_REPO_ID} --project_id=${TCA_PROJECT_ID}
 ```
-
-#### 4. 结果展示
-![get_ccissues](../../../images/api_get_ccissues_response.png)
-
-
-![get_ccissues](../../../images/api_get_ccissues_cons.png)
 
 
 
@@ -373,19 +316,8 @@ GET /server/analysis/api/orgs/<org_sid>/teams/<team_name>/repos/<repo_id>/projec
 
 #### 3. 操作示例
 ```bash
-python ScriptsAPI.py --base_url=http://<my_ip>/ --method=get_dupfiles --org_sid=E5BbtAHm2Bh --team_name=project --repo_id=48 --project_id=49
+python ScriptsAPI.py --base_url=${TCA_BASE_URL} --method=get_dupfiles --org_sid=${TCA_ORG_SID} --team_name=${TCA_TEAM_NAME} --repo_id=${TCA_REPO_ID} --project_id=${TCA_PROJECT_ID}
 ```
-
-#### 4. 结果展示
-![get_dupfiles](../../../images/api_get_dupfiles_response.png)
-
-
-![get_dupfiles](../../../images/api_get_dupfiles_cons.png)
-
-
-
-
-
 
 
 
