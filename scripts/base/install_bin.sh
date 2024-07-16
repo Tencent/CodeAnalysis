@@ -80,9 +80,14 @@ function deepmove() {
     # 遍历
     for target in $(find $src_dir -type f); do
         relpath=$(realpath "$target" --relative-to=$src_dir)
-        # 先判断md5值，有变化才复制覆盖
-        isSame $target $dst_dir/$relpath
-        ret=$?
+        if [ ! -e "$dst_dir/$relpath" ]; then
+            # 目标位置不存在
+            ret=1
+        else
+            # 先判断md5值，有变化才复制覆盖
+            isSame $target $dst_dir/$relpath
+            ret=$?
+        fi
         if [[ $ret == 1 ]]; then
             LOG_INFO "update lib: $relpath"
             cp $target $dst_dir/$relpath
