@@ -29,6 +29,7 @@ jobs:
         run: |
           set -ex
           pwd
+          bash ./scripts/base/install_git_lfs.sh
           bash ./scripts/base/install_bin.sh
 
       - name: Setup Node 16
