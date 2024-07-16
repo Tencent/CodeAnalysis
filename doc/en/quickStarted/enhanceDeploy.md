@@ -43,6 +43,8 @@ If you are using TCA in an enterprise intranet environment and want to experienc
 :::
 
 ```shell
+# install Git LFS
+$ bash ./scripts/base/install_git_lfs.sh
 # If the cls binary is not found in this directory, you can execute the following command to synchronize.
 $ bash ./scripts/base/install_bin.sh
 $ cd server/cls
@@ -99,7 +101,7 @@ Different deployment methods can modify the `config.ini` configuration according
   - Application scenario
 - (4) Then wait for the application license to be reviewed and approved, you can copy the private cloud license and continue with the following step 4.
 
-4. After receiving the reply email from the TCA team, fill in the License in the `config.yaml` file in the CLS directory  
+4. Fill in the License in the `config.yaml` file in the CLS directory  
 
 ::: warning
 Note: Follow the yaml format, for example:
