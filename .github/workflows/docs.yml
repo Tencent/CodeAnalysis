@@ -27,7 +27,9 @@ jobs:
       # 下载二进制文件
       - name: Download Binary Files
         run: |
+          set -ex
           pwd
+          git lfs uninstall
           bash ./scripts/base/install_bin.sh
 
       - name: Setup Node 16
