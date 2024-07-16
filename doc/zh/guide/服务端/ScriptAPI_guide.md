@@ -8,8 +8,8 @@
 ```bash
 pip install requests
 ```
-#### 5. 执行脚本python ScriptsAPI.py
-#### 6. 设置参数method，选择要执行的api接口，并根据接口添加所需参数。
+#### 5. 设置参数method，选择要执行的api接口，并根据接口添加所需参数。
+#### 6. 执行脚本python ScriptsAPI.py
 
 ## 方法总览
 
@@ -54,7 +54,7 @@ POST /server/main/api/orgs/<org_sid>/teams/<team_name>/repos/
 
 #### 3. 操作示例
 ```bash
-python ScriptsAPI.py --base_url=http://<my_ip>/ --method=create_repository --org_sid=E5BbtAHm2Bh --team_name=project --scm_url=https://github.com/Tencent/CodeAnalysis.git --scm_type=git
+python ScriptsAPI.py --base_url=${TCA_BASE_URL} --method=create_repository --org_sid=${TCA_ORG_SID} --team_name=${TCA_TEAM_NAME} --scm_url=${TCA_SCM_URL} --scm_type=${TCA_SCM_TYPE}
 ```
 
 
@@ -82,7 +82,7 @@ PUT /server/main/api/orgs/<org_sid>/teams/<team_name>/repos/<repo_id>/schemes/<s
 
 #### 3. 操作示例
 ```bash
-python ScriptsAPI.py --base_url=http://<my_ip>/ --method=update_scheme_settings --org_sid=E5BbtAHm2Bh --team_name=project --repo_id=47 --scheme_id=9
+python ScriptsAPI.py --base_url=${TCA_BASE_URL} --method=update_scheme_settings --org_sid=${TCA_ORG_SID} --team_name=${TCA_TEAM_NAME} --repo_id=${TCA_REPO_ID} --scheme_id=${TCA_SCHEME_ID}
 ```
 
 
@@ -114,7 +114,7 @@ POST /server/main/api/orgs/<org_sid>/teams/<team_name>/repos/<repo_id>/projects/
 
 #### 3. 操作示例
 ```bash
-python ScriptsAPI.py --base_url=http://<my_ip>/ --method=create_project --org_sid=E5BbtAHm2Bh --team_name=project --repo_id=47 --scan_scheme_id=42 --branch=main
+python ScriptsAPI.py --base_url=${TCA_BASE_URL} --method=create_project --org_sid=${TCA_ORG_SID} --team_name=${TCA_TEAM_NAME} --repo_id=${TCA_REPO_ID} --scan_scheme_id=${TCA_SCAN_SCHEME_ID} --branch=${TCA_BRANCH}
 ```
 
 
@@ -143,7 +143,7 @@ POST /server/main/api/orgs/<org_sid>/teams/<team_name>/repos/<repo_id>/projects/
 
 #### 3. 操作示例
 ```bash
-python ScriptsAPI.py --base_url=http://<my_ip>/ --method=create_scans --org_sid=E5BbtAHm2Bh --team_name=project --repo_id=47 --project_id=48 
+python ScriptsAPI.py --base_url=${TCA_BASE_URL} --method=create_scans --org_sid=${TCA_ORG_SID} --team_name=${TCA_TEAM_NAME} --repo_id=${TCA_REPO_ID} --project_id=${TCA_PROJECT_ID}
 ```
 
 
@@ -173,7 +173,7 @@ GET /server/main/api/orgs/<org_sid>/teams/<team_name>/repos/<repo_id>/projects/<
 
 #### 3. 操作示例
 ```bash
-python ScriptsAPI.py --base_url=http://<my_ip>/ --method=get_scan_cons --org_sid=E5BbtAHm2Bh --team_name=project --repo_id=47 --project_id=48 --job_id=20
+python ScriptsAPI.py --base_url=${TCA_BASE_URL} --method=get_scan_cons --org_sid=${TCA_ORG_SID} --team_name=${TCA_TEAM_NAME} --repo_id=${TCA_REPO_ID} --project_id=${TCA_PROJECT_ID} --job_id=${TCA_JOB_ID}
 ```
 
 
@@ -201,7 +201,7 @@ GET /server/analysis/api/orgs/<org_sid>/teams/<team_name>/repos/<repo_id>/projec
 
 #### 3. 操作示例
 ```bash
-python ScriptsAPI.py --base_url=http://<my_ip>/ --method=get_overview --org_sid=E5BbtAHm2Bh --team_name=project --repo_id=47 --project_id=48
+python ScriptsAPI.py --base_url=${TCA_BASE_URL} --method=get_overview --org_sid=${TCA_ORG_SID} --team_name=${TCA_TEAM_NAME} --repo_id=${TCA_REPO_ID} --project_id=${TCA_PROJECT_ID}
 ```
 
 
@@ -230,7 +230,7 @@ GET /server/analysis/api/orgs/<org_sid>/teams/<team_name>/repos/<repo_id>/projec
 
 #### 3. 操作示例
 ```bash
-python ScriptsAPI.py --base_url=http://<my_ip>/ --method=get_issues --org_sid=E5BbtAHm2Bh --team_name=project --repo_id=48 --project_id=49
+python ScriptsAPI.py --base_url=${TCA_BASE_URL} --method=get_issues --org_sid=${TCA_ORG_SID} --team_name=${TCA_TEAM_NAME} --repo_id=${TCA_REPO_ID} --project_id=${TCA_PROJECT_ID}
 ```
 
 
@@ -259,7 +259,7 @@ GET /server/analysis/api/orgs/<org_sid>/teams/<team_name>/repos/<repo_id>/projec
 
 #### 3. 操作示例
 ```bash
-python ScriptsAPI.py --base_url=http://<my_ip>/ --method=get_issue_detail --org_sid=E5BbtAHm2Bh --team_name=project --repo_id=48 --project_id=49 --issue_id=185
+python ScriptsAPI.py --base_url=${TCA_BASE_URL} --method=get_issue_detail --org_sid=${TCA_ORG_SID} --team_name=${TCA_TEAM_NAME} --repo_id=${TCA_REPO_ID} --project_id=${TCA_PROJECT_ID} --issue_id=${TCA_ISSUE_ID}
 ```
 
 
@@ -287,7 +287,7 @@ GET /server/analysis/api/orgs/<org_sid>/teams/<team_name>/repos/<repo_id>/projec
 
 #### 3. 操作示例
 ```bash
-python ScriptsAPI.py --base_url=http://<my_ip>/ --method=get_ccissues --org_sid=E5BbtAHm2Bh --team_name=project --repo_id=48 --project_id=49
+python ScriptsAPI.py --base_url=${TCA_BASE_URL} --method=get_ccissues --org_sid=${TCA_ORG_SID} --team_name=${TCA_TEAM_NAME} --repo_id=${TCA_REPO_ID} --project_id=${TCA_PROJECT_ID}
 ```
 
 
@@ -316,7 +316,7 @@ GET /server/analysis/api/orgs/<org_sid>/teams/<team_name>/repos/<repo_id>/projec
 
 #### 3. 操作示例
 ```bash
-python ScriptsAPI.py --base_url=http://<my_ip>/ --method=get_dupfiles --org_sid=E5BbtAHm2Bh --team_name=project --repo_id=48 --project_id=49
+python ScriptsAPI.py --base_url=${TCA_BASE_URL} --method=get_dupfiles --org_sid=${TCA_ORG_SID} --team_name=${TCA_TEAM_NAME} --repo_id=${TCA_REPO_ID} --project_id=${TCA_PROJECT_ID}
 ```
 
 
