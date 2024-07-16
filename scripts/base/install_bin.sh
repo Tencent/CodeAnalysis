@@ -90,6 +90,11 @@ function deepmove() {
         fi
         if [[ $ret == 1 ]]; then
             LOG_INFO "update lib: $relpath"
+            # 判断目标位置的目录是否存在
+            parent_dir=$(dirname "$dst_dir/$relpath")
+            if [ ! -d "$parent_dir" ]; then
+                mkdir -p "${parent_dir}"
+            fi
             cp $target $dst_dir/$relpath
         fi
     done
