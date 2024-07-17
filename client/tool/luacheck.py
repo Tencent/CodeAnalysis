@@ -131,21 +131,22 @@ class LuaCheckRunner(object):
         issues = []
         for file in raw_warning.iter(tag="testcase"):
             # tag, attrib
-            path = file.attrib.get("classname")[pos:]
+            path = file.attrib.get("classname")
             for error in file.findall("failure"):
                 rule = error.attrib.get("type")
                 if rules and rule not in rules:
                     continue
                 # 2024/4/18 移除msg中的行列号信息
                 message = error.attrib.get("message")
-                if message is None:
+                if message is None or not message.startswith(path):
                     continue
-                infos = message.split(":", 3)
+                message = message[len(path)+1:]
+                infos = message.split(":", 2)
                 # msg中 on line 后面也会跟着行号
-                msg = infos[3].split("on line ")[0].strip()
-                line = int(infos[1])
-                column = int(infos[2])
-                issues.append({"path": path, "rule": rule, "msg": msg, "line": line, "column": column})
+                msg = infos[2].split("on line ")[0].strip()
+                line = int(infos[0])
+                column = int(infos[1])
+                issues.append({"path": path[pos:], "rule": rule, "msg": msg, "line": line, "column": column})
         return issues
 
 
