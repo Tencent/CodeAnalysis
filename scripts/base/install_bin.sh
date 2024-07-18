@@ -8,8 +8,8 @@ source $TCA_SCRIPT_ROOT/utils.sh
 
 # 代码库根目录
 TCA_ROOT=$( cd "$(dirname $TCA_SCRIPT_ROOT)"; pwd )
-LIB_GITHUB_URL=${LIB_GITHUB_URL:-"https://github.com/TCATools/tca_lib/releases/download/v20240716.1/tca_lib-v1.4.zip"}
-LIB_GONGFENG_URL=${LIB_GONGFENG_URL:-"https://git.code.tencent.com/TCA/tca-tools/tca_lib.git"}
+LIB_GITHUB_URL=${LIB_GITHUB_URL:-"https://github.com/TCATools/tca_lib/releases/download/v20240716.3/tca_lib-v1.5.zip"}
+LIB_GONGFENG_URL=${LIB_GONGFENG_URL:-"https://git.code.tencent.com/TCA/tca-tools/tca_lib.git#v20240716.3"}
 LIB_DIR_NAME="tca_lib"
 
 
@@ -38,7 +38,8 @@ function downloader() {
         # 使用工蜂默认密码
         user=$2
         password=$3
-        git clone ${url:0:8}${user}:${password}@${url:8}
+        # ${url: -11} 中间要有空格，才能是截取后几位
+        git clone -b ${url: -11} ${url:0:8}${user}:${password}@${url:8:-12}
         cmd_ret=$?
         if [[ ${cmd_ret} == 0 ]] ; then
             rm -rf "${TCA_ROOT}/${LIB_DIR_NAME}/.git"
@@ -79,11 +80,21 @@ function deepmove() {
     # 遍历
     for target in $(find $src_dir -type f); do
         relpath=$(realpath "$target" --relative-to=$src_dir)
-        # 先判断md5值，有变化才复制覆盖
-        isSame $target $dst_dir/$relpath
-        ret=$?
+        if [ ! -e "$dst_dir/$relpath" ]; then
+            # 目标位置不存在
+            ret=1
+        else
+            # 先判断md5值，有变化才复制覆盖
+            isSame $target $dst_dir/$relpath
+            ret=$?
+        fi
         if [[ $ret == 1 ]]; then
             LOG_INFO "update lib: $relpath"
+            # 判断目标位置的目录是否存在
+            parent_dir=$(dirname "$dst_dir/$relpath")
+            if [ ! -d "$parent_dir" ]; then
+                mkdir -p "${parent_dir}"
+            fi
             cp $target $dst_dir/$relpath
         fi
     done
