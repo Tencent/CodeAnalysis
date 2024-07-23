@@ -42,7 +42,9 @@ function downloader() {
         git clone -b ${url: -11} ${url:0:8}${user}:${password}@${url:8:-12}
         cmd_ret=$?
         if [[ ${cmd_ret} == 0 ]] ; then
+            # 清理lib中无关文件
             rm -rf "${TCA_ROOT}/${LIB_DIR_NAME}/.git"
+            rm "${TCA_ROOT}/${LIB_DIR_NAME}/.gitattributes"
             ret=0
         fi
     fi
@@ -116,6 +118,13 @@ function isSame() {
 }
 
 function interactive_install_bin() {
+
+    # 判断是否设置 USE_LOCAL_TOOL=True，是的话就忽略
+    isLocal=$(readIni ${TCA_ROOT}/client/config.ini "COMMON" "USE_LOCAL_TOOL"|tr '[:upper:]' '[:lower:]')
+    if [[ $isLocal == "true" ]]; then
+        return 0
+    fi
+
     download_lib
     deepmove "${TCA_ROOT}/${LIB_DIR_NAME}" $TCA_ROOT
 }
