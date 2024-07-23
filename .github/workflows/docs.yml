@@ -24,6 +24,13 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@v3
 
+      # 下载二进制文件
+      - name: Download Binary Files
+        run: |
+          set -ex
+          pwd
+          bash ./scripts/base/install_bin.sh
+
       - name: Setup Node 16
         uses: actions/setup-node@v3
         with:
