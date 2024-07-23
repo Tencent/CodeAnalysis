@@ -52,7 +52,7 @@ cos-python-sdk-v5==1.7.4
 minio==7.1.0
 
 # for exception log
-sentry-sdk==1.14.0
+sentry-sdk==2.8.0
 
 psutil==5.8.0
 croniter==1.3.4
