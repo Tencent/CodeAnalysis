@@ -25,7 +25,7 @@ Jenkins插件有以下两种获取方式：
 ```shell
 bash ./scripts/base/install_bin.sh
 ```
-将`client`目录下的`config.ini`文件中的`<Server IP地址>`替换部署的开源版TCA的IP（可包含端口号）
+将`client`目录下的`config.ini`文件中的`<Server IP地址>`替换部署的开源版TCA的IP地址（可包含端口号）
 
 ## 使用插件
 ### 在 TCA 创建团队和项目
@@ -66,6 +66,8 @@ Value：`GITPATH`        Value：xxxx（路径不包含git）
 
 配置完成后点击【Save】保存。
 
+![](../../../images/jenkins_tca_plugin_config.png)
+
 #### 方式二：pipeline语法配置 TCA 插件
 在步骤中添加TCA插件参数配置语句，下面的配置语句可作为参考
 
@@ -93,8 +95,6 @@ pipeline{
 `scanPlan`: 指定创建出来的分析方案的名称（选填）
 `threshold`: 设置质量门禁值
 `total`: 是否全量扫描，填`ture`为全量扫描，不填或填`false`为增量扫描
-
-![](../../../images/jenkins_tca_plugin_config.png)
 
 ### 启动构建并查看结果
 点击【Build Now】启动构建。  
@@ -125,7 +125,7 @@ fi
 当质量门禁不通过时，会终止流水线（退出码：255）。
 
 ### pipeline脚本使用质量门禁
-以下是pipeline使用质量门禁进行相应操作的示例，你可以在if和else部分写入你想要运行的脚本
+以下是pipeline脚本使用质量门禁进行相应操作的示例，你可以在if和else部分写入你想要运行的脚本
 
 ```pipeline
 pipeline{
