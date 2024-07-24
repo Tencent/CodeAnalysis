@@ -85,16 +85,16 @@ pipeline{
 }
 
 ```
-`codeAnalysisPath`: 拉取代码所在的绝对路径
-`teamId`：团队ID
-`projectName`: 项目名称
-`token`: 在 TCA 的【个人中心】->【个人令牌】中获取
-`branchName`: 需要扫描的代码分支名称
-`languageType`: 项目需要扫描的语言
-`refSchemeID`: 需要使用的分析方案模板ID，在分析方案模板的“基础属性”中获取，将根据此模板创建分析方案（选填）
-`scanPlan`: 指定创建出来的分析方案的名称（选填）
-`threshold`: 设置质量门禁值
-`total`: 是否全量扫描，填`ture`为全量扫描，不填或填`false`为增量扫描
+`codeAnalysisPath`: 拉取代码所在的绝对路径  
+`teamId`：团队ID  
+`projectName`: 项目名称  
+`token`: 在 TCA 的【个人中心】->【个人令牌】中获取  
+`branchName`: 需要扫描的代码分支名称  
+`languageType`: 项目需要扫描的语言  
+`refSchemeID`: 需要使用的分析方案模板ID，在分析方案模板的“基础属性”中获取，将根据此模板创建分析方案（选填）  
+`scanPlan`: 指定创建出来的分析方案的名称（选填）  
+`threshold`: 设置质量门禁值  
+`total`: 是否全量扫描，填`ture`为全量扫描，不填或填`false`为增量扫描  
 
 ### 启动构建并查看结果
 点击【Build Now】启动构建。  
