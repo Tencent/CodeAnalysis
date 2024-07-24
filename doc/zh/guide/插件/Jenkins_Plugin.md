@@ -7,7 +7,7 @@
 ### 获取Jenkins插件
 Jenkins插件有以下两种获取方式：
 
-**方式一**：在 TCA 源码的`plugin/jenkins_plugin`目录下，执行命令`mvm package -DskipTests`，打包完成后进入target目录会看到`Jenkins_plugin.hpi` 的安装包。
+**方式一**：在 TCA 源码的`plugin/jenkins_plugin`目录下，执行命令`mvn package -DskipTests`，打包完成后进入target目录会看到`Jenkins_plugin.hpi` 的安装包。
 
 **方式二**：从TCA release 安装包中，获取`jenkins_plugin.hpi`：[https://github.com/Tencent/CodeAnalysis/releases](https://github.com/Tencent/CodeAnalysis/releases)。
 
