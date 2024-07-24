@@ -8,7 +8,7 @@ global:
   imagePullPolicy: IfNotPresent
   ## E.g.
   ## imagePullSecrets:
-  ##   - myRegistryKeySecretName
+  ##   -name: myRegistryKeySecretName
   ##
   imagePullSecrets: []
 

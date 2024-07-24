@@ -49,6 +49,11 @@ The command removes all the Kubernetes components associated with the chart and 
 | `global.imagePullPolicy`                                | Global Docker image registry                            | `""`           |
 | `global.imagePullSecrets`                               | Global Docker registry secret names as an array         | `[]`           |
 
+To create a secret to pull an image from a private container image registry or repository:
+```Bash
+$ kubectl create secret docker-registry ${SECRET_NAME} --docker-server=${DOCKER_SERVER} --docker-username=${DOCKER_USERNAME} --docker-password=${DOCKER_PASSWORD} --docker-email=${DOCKER_EMAIL}
+```
+
 ### TCA Metric parameters
 | Name                                                    | Description                                             | Value          |
 | ------------------------------------------------------- | ------------------------------------------------------- | -------------- |

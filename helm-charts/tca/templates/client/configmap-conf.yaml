@@ -39,7 +39,7 @@ data:
     [LICENSE_CONFIG]
     ; [可选]使用自研工具时，需要填写，默认不需要
     ; license服务器url, base_path, license
-    URL=
+    URL={{ .Values.tca.commonConfig.clsServerUrl }}
     BASE_PATH=
-    LICENSE=
+    LICENSE={{ .Values.tca.commonConfig.clsServerLicense }}
     
