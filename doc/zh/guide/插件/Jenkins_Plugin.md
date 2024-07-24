@@ -11,7 +11,6 @@ Jenkins插件有以下两种获取方式：
 
 **方式二**：从TCA release 安装包中，获取`jenkins_plugin.hpi`：[https://github.com/Tencent/CodeAnalysis/releases](https://github.com/Tencent/CodeAnalysis/releases)。
 
-
 ### 在Jenkins安装插件
 在Jenkins中通过【Manage Plugin】-> 【Advanced】->【Deploy plugin】的方式选择 Jenkins_plugin.hpi文件上传安装，并重启Jenkins。  
 ![](../../../images/jenkins_manage_plugins.png)
