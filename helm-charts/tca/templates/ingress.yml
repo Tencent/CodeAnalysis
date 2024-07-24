@@ -9,6 +9,7 @@ metadata:
     chart: {{ template "tca.chart" . }}
     release: {{ .Release.Name }}
 spec:
+  ingressClassName: nginx
   rules:
     - host: {{ .Values.tca.commonConfig.publicUrl }}
       http:
