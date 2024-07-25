@@ -21,7 +21,7 @@ redis==4.5.4
 celery-redbeat==2.0.0
 
 # for rest api
-djangorestframework==3.11.2
+djangorestframework==3.14.0
 coreapi==2.3.3
 Markdown==3.3.4
 Pygments==2.15.0
@@ -29,7 +29,7 @@ django-filter==2.4.0
 django-cors-headers==3.7.0
 
 # for Document
-drf-yasg==1.17.1
+drf-yasg==1.21.5
 
 # for password
 pyaes==1.6.1

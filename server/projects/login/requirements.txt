@@ -9,7 +9,7 @@ Django==3.2.25
 pymysql==1.1.1
 
 # for rest api
-djangorestframework==3.11.2
+djangorestframework==3.14.0
 
 # for login
 djangorestframework-simplejwt==5.1.0
