@@ -334,19 +334,13 @@ If the node pool resources are insufficient, expand the capacity of the node poo
 | `extraNodePools.nodepool.resources.requests.memory`            | Required memory resources                               |
 
 #### Procedure for expanding a node pool
-1、Initially, deploy the project exclusively utilizing the default node pool.
-
-2、To expand the node pool, navigate to "Background Management > Node Management > Label Management" and add label information.
-
-3、Update the extra node pool configuration in the project file by navigating to "CodeAnalysis/helm-charts/tca/values.yaml" . 
-
-4、To add configuration information for extra node pools, refer to the "TCA client node pool expansion config" section under "extraNodePools" in the client section of the TCA.
-
-5、Please note that the "extraNodePools.nodepool" tag can be customized to match the user's requirements for the node pool name. This tag should be the same as the tag name added in Step 2.
-
-6、To enable the current node pool, modify the "enabled" value to "true".
-
-7、Update project deployment.
+1. Initially, deploy the project exclusively utilizing the default node pool.
+2. To expand the node pool, navigate to "Background Management > Node Management > Label Management" and add label information.
+3. Update the extra node pool configuration in the project file by navigating to "CodeAnalysis/helm-charts/tca/values.yaml" .
+4. To add configuration information for extra node pools, refer to the "TCA client node pool expansion config" section under "extraNodePools" in the client section of the TCA.
+5. Please note that the "extraNodePools.nodepool" tag can be customized to match the user's requirements for the node pool name. This tag should be the same as the tag name added in Step 2.
+6. To enable the current node pool, modify the "enabled" value to "true".
+7. Update project deployment.
 
 ### TCA Gateway Configuration parameters
 | Name                                         | Description                                                              | Value                     |
