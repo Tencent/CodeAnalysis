@@ -12,13 +12,6 @@
         ],
         "checkrule_set": [
             {
-                "checktool": "codedog_0Day_checker",
-                "checkrule": "logback_cve_2021_42550",
-                "severity": "error",
-                "rule_params": null,
-                "state": "enabled"
-            },
-            {
                 "checktool": "semgrep",
                 "checkrule": "detected-logback-core",
                 "severity": "error",

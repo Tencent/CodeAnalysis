@@ -43,6 +43,8 @@ If you are using TCA in an enterprise intranet environment and want to experienc
 :::
 
 ```shell
+# install Git LFS
+$ bash ./scripts/base/install_git_lfs.sh
 # If the cls binary is not found in this directory, you can execute the following command to synchronize.
 $ bash ./scripts/base/install_bin.sh
 $ cd server/cls
@@ -85,37 +87,21 @@ Different deployment methods can modify the `config.ini` configuration according
   - Restart the container method: `docker-compose restart client`
 :::
 
-3. Apply for a License by email to the TCA team
+3. Submit a private cloud license application on the TCA Cloud official website
+- (1) Register or log in to an account on the [TCA Cloud official website](https://tca.tencent.com/);
+- (2) Enter the team that needs to apply for a private cloud license (if there is no team, you need to create a corresponding team);
+- (3) On the team page, enter the [Node Management]->[Private Cloud License Configuration] page in turn, then click the [Apply for License] button in the upper right corner, fill in the relevant information and submit the application. The specific information is as follows:
+  - Applicant name
+  - Applicant's organization name
+  - Applicant's organization type: company/university/individual
+  - Applicant's email address
+  - Applicant's mobile phone number
+  - Server ID: `Server ID` output in step 1, the machine code for the first registration
+  - Client License: `Client License` output in step 1
+  - Application scenario
+- (4) Then wait for the application license to be reviewed and approved, you can copy the private cloud license and continue with the following step 4.
 
-- Recipient email:
-```
-v_cocohwang@tencent.com
-v_xiohuang@tencent.com
-yalechen@tencent.com
-tommyzhang@tencent.com
-```
-
-- The application email format is as follows:
-
-Subject: **TCA Independent Tool License Application**
-
-Content:
-| | | 
-|  :----:  | :----:  |
-| Applicant's Name  | xxx |
-| Name of the Organization the Applicant Belongs to | xxx |
-| Type of Organization the Applicant Belongs to | Optional: Company/School/Individual |
-| Applicant's Email | xxx |
-| Applicant's Mobile Number | xxx |
-| Is it Privately Deployed | Yes |
-| First Registered Machine Code | xxx |
-| Purpose of Experience Application | xxx |
-| Client License | xxx |
-
-- `First Registered Machine Code`: The `Server ID` output in step one
-- `Client License`: The `Client License` output in step one
-
-4. After receiving the reply email from the TCA team, fill in the License in the `config.yaml` file in the CLS directory  
+4. Fill in the License in the `config.yaml` file in the CLS directory  
 
 ::: warning
 Note: Follow the yaml format, for example:

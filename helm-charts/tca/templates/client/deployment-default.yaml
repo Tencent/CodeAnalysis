@@ -1,3 +1,4 @@
+{{- if .Values.tca.client.enabled }}
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
@@ -10,6 +11,7 @@ metadata:
   name: {{ template "tca.fullname" . }}-client
 spec:
   serviceName: ""
+  replicas: {{ .Values.tca.client.replicas }}
   selector:
     matchLabels:
       k8s-app: {{ template "tca.fullname" . }}-client
@@ -42,7 +44,7 @@ spec:
           image: "{{ .Values.tca.client.image.repository }}:{{ .Values.tca.client.image.tag }}"
           imagePullPolicy: {{ .Values.global.imagePullPolicy }}
           command: ["python3"]
-          args: ["codepuppy.py", "start", "-t", "$(CODEDOG_TOKEN)", "--create-from", "docker", "--tag", "CodeDog_Linux"]
+          args: ["codepuppy.py", "start", "-t", "$(CODEDOG_TOKEN)", "--create-from", "docker", "--tag", "{{ .Values.tca.client.tag }}"]
           envFrom:
             - configMapRef:
                 name: client-env
@@ -56,7 +58,7 @@ spec:
               exec:
                 command:
                   - sleep
-                  - '20' 
+                  - '20'
           resources:
 {{ toYaml .Values.tca.client.resources | indent 12 }}
           volumeMounts:
@@ -71,40 +73,4 @@ spec:
                 path: config.ini
             name: {{ template "tca.fullname" . }}-client-config
           name: client-config-conf
----
-{{- if .Values.tca.client.autoscaling.enabled }}
-apiVersion: autoscaling/v2beta2
-kind: HorizontalPodAutoscaler
-metadata:
-  name: {{ template "tca.fullname" . }}-client
-  labels:
-    k8s-app: {{ template "tca.fullname" . }}-client
-    app: {{ template "tca.name" . }}
-    chart: {{ template "tca.chart" . }}
-    release: {{ .Release.Name }}
-    heritage: {{ .Release.Service }}
-spec:
-  scaleTargetRef:
-    apiVersion: apps/v1
-    kind: StatefulSet
-    name: {{ template "tca.fullname" . }}-client
-  minReplicas: {{ .Values.tca.client.autoscaling.minReplicas }}
-  maxReplicas: {{ .Values.tca.client.autoscaling.maxReplicas }}
-  metrics:
-    {{- if .Values.tca.client.autoscaling.targetMemory }}
-    - type: Resource
-      resource:
-        name: memory
-        target:
-          type: Utilization
-          averageUtilization: {{ .Values.tca.client.autoscaling.targetMemory }}
-    {{- end }}
-    {{- if .Values.tca.client.autoscaling.targetCPU }}
-    - type: Resource
-      resource:
-        name: cpu
-        target:
-          type: Utilization
-          averageUtilization: {{ .Values.tca.client.autoscaling.targetCPU }}
-    {{- end }}
 {{- end }}

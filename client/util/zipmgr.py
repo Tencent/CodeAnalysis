@@ -119,14 +119,24 @@ class Zip(object):
     def decompress(self, zip_file, path):
         logger.info("zip模块执行解压操作...")
         # 20190927 bug-fixed, 防止在当前目录下删除当前目录，出现权限异常情况
-        os.chdir("..")
-        if os.path.exists(path):
-            PathMgr().rmpath(path)
+        cur_dir = os.getcwd()
+        cur_dir_is_changed = False
+        if PathMgr().format_path(cur_dir) == PathMgr().format_path(path):
+            logger.info("Decompress dir is current dir, can not delete it directory, change to parent directory first.")
+            # 如果要删除的是当前工作目录，先切换到上层目录，再删除
+            os.chdir("..")
+            cur_dir_is_changed = True
 
-        self.decompress_by_7z(zip_file, path, print_enable=True)
+        try:
+            if os.path.exists(path):
+                PathMgr().rmpath(path)
 
-        if os.path.exists(WORK_DIR):
-            os.chdir(WORK_DIR)
+            self.decompress_by_7z(zip_file, path, print_enable=True)
+        finally:
+            # 恢复进入到当前工作目录
+            logger.info("Go back to the current working directory.")
+            if cur_dir_is_changed and os.path.exists(cur_dir):
+                os.chdir(cur_dir)
         return True
 
     def subprocc_log(self, line):

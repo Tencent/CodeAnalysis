@@ -37,6 +37,8 @@ class CodePuppy(object):
         self._params = CmdArgParser.parse_args()
         # 日志输出设置
         self.__setup_logger()
+        # 打印版本信息
+        self.__print_client_version()
 
         if getattr(sys, 'frozen', False) and hasattr(sys, '_MEIPASS'):
             LogPrinter.info('running in a PyInstaller bundle')
@@ -48,6 +50,12 @@ class CodePuppy(object):
 
         # 默认git配置
         GitConfig.set_default_config()
+
+    def __print_client_version(self):
+        """打印TCA客户端版本信息"""
+        LogPrinter.info("=" * 39)
+        LogPrinter.info(f"*** TCA Client v{settings.VERSION}({settings.EDITION.name} Beta) ***")
+        LogPrinter.info("=" * 39)
 
     def __setup_logger(self):
         """日志打印配置

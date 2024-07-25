@@ -35,6 +35,9 @@ ADMINS = []
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get("ANALYSIS_SECRET_KEY", "25n=e*_e=4q!ert$4u#9v&^2n+)_#mi7&7ll@x29@j=w=k^q@^")
 
+# 设置默认主键类型，适配django3.2
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+
 # 数据库配置，可参考django数据库配置
 DATABASES = {
     "default": {

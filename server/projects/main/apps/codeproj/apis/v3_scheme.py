@@ -104,7 +104,8 @@ class ScanSchemeChildrenListApiView(generics.ListAPIView, V3GetModelMixinAPIView
         scan_scheme = self.get_scheme()
         # 获取活跃的分析方案
         return models.ScanScheme.objects.filter(refer_scheme=scan_scheme, repo__isnull=False,
-                                                status=models.ScanScheme.StatusEnum.ACTIVE)
+                                                status=models.ScanScheme.StatusEnum.ACTIVE).exclude(
+            repo__deleted_time__isnull=False)
 
 
 class ScanSchemePushApiView(generics.GenericAPIView, V3GetModelMixinAPIView):
