@@ -7,7 +7,7 @@
 ### 获取Jenkins插件
 Jenkins插件有以下两种获取方式：
 
-**方式一**：在 TCA 源码的`plugin/jenkins_plugin`目录下，执行命令`mvn package -DskipTests`，打包完成后进入target目录会看到`Jenkins_plugin.hpi` 的安装包。
+**方式一**：在 TCA 源码的`plugin/jenkins_plugin`目录下，执行命令`mvn package -DskipTests`，打包完成后进入target目录会看到`tca_jenkins_plugin.hpi` 的安装包。
 
 **方式二**：从TCA release 安装包中，获取`jenkins_plugin.hpi`：[https://github.com/Tencent/CodeAnalysis/releases](https://github.com/Tencent/CodeAnalysis/releases)。
 
@@ -52,7 +52,7 @@ Value：`GITPATH`        Value：xxxx（路径不包含git）
 
 在构建任务的【Build】中选择【TCA】插件并配置以下参数： 
 
-`CodeAnalysis`: 拉取代码所在的绝对路径  
+`CodeAnalysis目录绝对路径`: 拉取到本地的CodeAnalysis开源仓库目录的绝对路径(例如：/User/CodeAnalysis)  
 `团队ID`: 在 TCA 中创建的团队的标识ID，可在TCA【团队概览】中获取“团队唯一标识”  
 `项目名称`: 在 TCA 中创建的项目的标识ID，可在TCA【项目概览】中获取“项目唯一标识”  
 `Token`: 在 TCA 的【个人中心】->【个人令牌】中获取  
@@ -84,7 +84,7 @@ pipeline{
 }
 
 ```
-`codeAnalysisPath`: 拉取代码所在的绝对路径  
+`codeAnalysisPath`: 拉取到本地的CodeAnalysis开源仓库目录的绝对路径(例如：/User/CodeAnalysis) 
 `teamId`：团队ID  
 `projectName`: 项目名称  
 `token`: 在 TCA 的【个人中心】->【个人令牌】中获取  
@@ -133,7 +133,7 @@ pipeline{
     stages{
       stage('Build'){
         steps{
-            TCA_Builder(codeAnalysisPath: '/zhuay/CodeAnalysis/', teamId: 'A15aEovCEcC', projectName: 'demo', token: '0712b895f30c5e958ec71a7c22e1b1a2ad1d5c6b', branchName: 'master', languageType: 'Java', refSchemeID: '1', scanPlan: 'model', threshold: '90', total:true)
+            TCA_Builder(codeAnalysisPath: '/zhuay/CodeAnalysis/', teamId: 'xxxx', projectName: 'demo', token: 'xxxxxxxxxxxx', branchName: 'master', languageType: 'Java', refSchemeID: '1', scanPlan: 'model', threshold: '90', total:true)
             script{
                 def tca_status = readFile('tca_threshold.txt')
                 if (tca_status == "success") {
