@@ -49,6 +49,11 @@ The command removes all the Kubernetes components associated with the chart and 
 | `global.imagePullPolicy`                                | Global Docker image registry                            | `""`           |
 | `global.imagePullSecrets`                               | Global Docker registry secret names as an array         | `[]`           |
 
+To create a secret to pull an image from a private container image registry or repository:
+```Bash
+$ kubectl create secret docker-registry ${SECRET_NAME} --docker-server=${DOCKER_SERVER} --docker-username=${DOCKER_USERNAME} --docker-password=${DOCKER_PASSWORD} --docker-email=${DOCKER_EMAIL}
+```
+
 ### TCA Metric parameters
 | Name                                                    | Description                                             | Value          |
 | ------------------------------------------------------- | ------------------------------------------------------- | -------------- |
@@ -302,13 +307,45 @@ Helm will deploy `mariadb` by default. Reference: [bitnami/mariadb](https://gith
 | `tca.scmproxy.image.tag`                     | TCA scmproxy image tag                                                   | `latest`                  |
 | `tca.scmproxy.privateScmUrl`                 | TCA scmproxy private scm url                                             | `""`                      |
 
-
 ### TCA Client Configuration parameters
-| Name                                         | Description                                                              | Value                     |
-| -------------------------------------------- | ------------------------------------------------------------------------ | ------------------------- |
-| `tca.client.image.repository`                | TCA client image repository                                              | `tencenttca/tca-client`   |
-| `tca.client.image.repository`                | TCA client image tag                                                     | `latest`                  |
-| `tca.client.enabeld`                         | Enabled starting TCA client with helm                                    | `true`                    |
+#### Default node pool configuration
+| Name                                           | Description                                  | Value                    |
+|------------------------------------------------|----------------------------------------------| ------------------------ |
+| `tca.client.image.repository`                  | TCA client image repository                  | `tencenttca/tca-client`  |
+| `tca.client.image.tag`                         | TCA client image tag                         | `latest`                 |
+| `tca.client.enabeld`                           | Enabled starting TCA client with helm        | `true`                   |
+| `tca.client.replicas`                          | The number of nodes in the default node pool | `1`                    |
+| `tca.client.tag`                               | Tag of the extra node pool                   | `Codedog_Linux`         |
+| `tca.client.resources.limits.cpu`              | The upper limit of cpu usage                 | `2000m`                 |
+| `tca.client.resources.limits.memory`           | The upper limit of memory usage              | `4Gi`                   |
+| `tca.client.resources.requests.cpu`            | Required cpu resources                       | `1000m`                 |
+| `tca.client.resources.requests.memory`         | Required memory resources                    | `2Gi`                   |
+
+#### Client Node pool expansion operations guide
+You can configure node resources on the client. 
+If you do not manually configure node resources, the default node pool is used.
+If the node pool resources are insufficient, expand the capacity of the node pool at any time. For details, refer to 'Procedure for expanding a node pool'.
+
+#### TCA client node pool expansion config
+| Name                                                         | Description                                    |
+|--------------------------------------------------------------|---------------------------------------|
+| `extraNodePools.nodepool`                                      | Name of the extended node pool        |
+| `extraNodePools.nodepool.tag`                                  | Tag of the extra node pool            |
+| `extraNodePools.nodepool.enabled`                              | Enabled extending node pool with helm |
+| `extraNodePools.nodepool.replicas`                             | The number of nodes in the extra node pool                              |
+| `extraNodePools.nodepool.resources.limits.cpu`                 | The upper limit of cpu usage                           |
+| `extraNodePools.nodepool.resources.limits.memory`              | The upper limit of memory usage                            |
+| `extraNodePools.nodepool.resources.requests.cpu`               | Required cpu resources                              |
+| `extraNodePools.nodepool.resources.requests.memory`            | Required memory resources                               |
+
+#### Procedure for expanding a node pool
+1. Initially, deploy the project exclusively utilizing the default node pool.
+2. To expand the node pool, navigate to "Background Management > Node Management > Label Management" and add label information.
+3. Update the extra node pool configuration in the project file by navigating to "CodeAnalysis/helm-charts/tca/values.yaml" .
+4. To add configuration information for extra node pools, refer to the "TCA client node pool expansion config" section under "extraNodePools" in the client section of the TCA.
+5. Please note that the "extraNodePools.nodepool" tag can be customized to match the user's requirements for the node pool name. This tag should be the same as the tag name added in Step 2.
+6. To enable the current node pool, modify the "enabled" value to "true".
+7. Update project deployment.
 
 ### TCA Gateway Configuration parameters
 | Name                                         | Description                                                              | Value                     |
