@@ -68,7 +68,7 @@ Value：`GITPATH`        Value：xxxx（路径不包含git）
 ![](../../../images/jenkins_tca_plugin_config.png)
 
 #### 方式二：pipeline语法配置 TCA 插件
-在步骤中添加TCA插件参数配置语句，下面的配置语句可作为参考
+在步骤中添加TCA插件参数配置语句，下面的配置语句可作为参考(如果从release中获取插件可能会出现 No such DSL method 'TCA'的错误，解决方法可参考 https://github.com/Tencent/CodeAnalysis/issues/1150)
 
 ```pipeline
 pipeline{
@@ -77,7 +77,7 @@ pipeline{
     stages{
       stage('Build'){
         steps{
-            TCA_Builder(codeAnalysisPath: '/zhuay/CodeAnalysis/', teamId: 'xxxx', projectName: 'demo', token: 'xxxxxxxxxxxx', branchName: 'master', languageType: 'Java', refSchemeID: '1', scanPlan: 'model', threshold: '90', total:true)
+            TCA(codeAnalysisPath: '/zhuay/CodeAnalysis/', teamId: 'xxxx', projectName: 'demo', token: 'xxxxxxxxxxxx', branchName: 'master', languageType: 'Java', refSchemeID: '1', scanPlan: 'model', threshold: '90', total:true)
         }
       }
     }
@@ -133,7 +133,7 @@ pipeline{
     stages{
       stage('Build'){
         steps{
-            TCA_Builder(codeAnalysisPath: '/zhuay/CodeAnalysis/', teamId: 'xxxx', projectName: 'demo', token: 'xxxxxxxxxxxx', branchName: 'master', languageType: 'Java', refSchemeID: '1', scanPlan: 'model', threshold: '90', total:true)
+            TCA(codeAnalysisPath: '/zhuay/CodeAnalysis/', teamId: 'xxxx', projectName: 'demo', token: 'xxxxxxxxxxxx', branchName: 'master', languageType: 'Java', refSchemeID: '1', scanPlan: 'model', threshold: '90', total:true)
             script{
                 def tca_status = readFile('tca_threshold.txt')
                 if (tca_status == "success") {
