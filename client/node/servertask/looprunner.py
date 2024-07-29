@@ -42,9 +42,10 @@ class LoopRunner(TaskRunner):
         self._token = args.token
         self._tag = args.tag
         self._org_sid = args.org_sid
-        self._create_from = args.create_from
+        self._create_from = args.create_from if args.create_from else "codedog_client"
         self._server_url = LocalConfig.get_server_url()
-        # 打印连接的sever地址
+        # 打印启动渠道和连接的sever地址
+        LogPrinter.info(f"start from {self._create_from}.")
         LogPrinter.info("using server: %s" % self._server_url)
         # 初始化与codedog服务器通信的api server实例
         self._server = RetryDogServer(self._server_url, self._token).get_api_server()
