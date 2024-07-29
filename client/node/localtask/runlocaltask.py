@@ -79,7 +79,7 @@ class RunTaskMgr(object):
                 RequestModify.modify_local_task_request(task_request, self._task_name_id_maps, self._job_id,
                                                         self._scm_auth_info.ssh_file,
                                                         self._token, self._server_url, self._source_dir, self._scm_info,
-                                                        self._scm_auth_info)
+                                                        self._scm_auth_info, self._create_from)
                 codecount_handler = LocalCountLine(task_request)
                 codecount_handler.start_thread()
             else:
@@ -88,14 +88,14 @@ class RunTaskMgr(object):
                                                                           self._scm_auth_info,
                                                                           self._token, self._server_url,
                                                                           self._source_dir, self._scm_info,
-                                                                          self._origin_os_env)
+                                                                          self._origin_os_env, self._create_from)
 
         for task_request in execute_request_list:
             # 完善task request字段
             RequestModify.modify_local_task_request(task_request, self._task_name_id_maps, self._job_id,
                                                     self._scm_auth_info.ssh_file, self._token,
                                                     self._server_url, self._source_dir, self._scm_info,
-                                                    self._scm_auth_info)
+                                                    self._scm_auth_info, self._create_from)
 
         # 通过环境变量获取并发执行开关
         concurrent_task_env = os.getenv("TCA_CONCURRENT_SCAN")
@@ -189,7 +189,7 @@ class RunTaskMgr(object):
                 task_list = rt_data["tasks"]
                 for task_request in task_list:
                     RequestModify.modify_pri_task_request(task_request, self._token, self._server_url, self._source_dir,
-                                                          self._scm_info, self._scm_auth_info)
+                                                          self._scm_info, self._scm_auth_info, self._create_from)
                     # 执行单个任务分析
                     task = SingleTaskRuner(task_request, env=self._origin_os_env).run()
                     self._local_task_dirs.append(task_request["task_dir"])

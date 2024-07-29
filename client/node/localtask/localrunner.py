@@ -344,6 +344,7 @@ class LocalRunner(TaskRunner):
     def run(self):
         """执行本地项目扫描
         """
+        LogPrinter.info(f"start from {self._create_from}.")
         self._job_start_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time()))
 
         try:
