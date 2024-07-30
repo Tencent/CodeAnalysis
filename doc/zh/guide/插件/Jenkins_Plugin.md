@@ -68,7 +68,7 @@ Value：`GITPATH`        Value：xxxx（路径不包含git）
 ![](../../../images/jenkins_tca_plugin_config.png)
 
 #### 方式二：pipeline语法配置 TCA 插件
-在步骤中添加TCA插件参数配置语句，下面的配置语句可作为参考；注意：如果是release版本v1.11.0及之前的老版本（包含源代码构建生成和release获取）插件，语法参数略有差别，语法参数略有差别，请参考[issue1150](https://github.com/Tencent/CodeAnalysis/issues/1150)
+在步骤中添加TCA插件参数配置语句，下面的配置语句可作为参考；注意：如果是release版本v1.11.0及之前的老版本（包含源代码构建生成和release获取）插件，语法参数略有差别，请参考[issue1150](https://github.com/Tencent/CodeAnalysis/issues/1150)
 
 ```pipeline
 pipeline{
