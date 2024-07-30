@@ -24,7 +24,7 @@ Jenkins插件有以下两种获取方式：
 ```shell
 bash ./scripts/base/install_bin.sh
 ```
-将`client`目录下的`config.ini`文件中的`<Server IP地址>`替换部署的开源版TCA的IP地址（可包含端口号）
+将`client`目录下的`config.ini`文件中的`<Server IP地址>`替换为部署的开源版TCA的IP地址（可包含端口号）
 
 ## 使用插件
 ### 在 TCA 创建团队和项目
