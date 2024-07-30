@@ -52,7 +52,7 @@ Value：`GITPATH`        Value：xxxx（路径不包含git）
 
 在构建任务的【Build】中选择【TCA】插件并配置以下参数： 
 
-`CodeAnalysis目录绝对路径`: 拉取到本地的CodeAnalysis开源仓库目录的绝对路径(例如：/data/CodeAnalysis)  
+`CodeAnalysis目录绝对路径`: 拉取到本地的CodeAnalysis开源仓库目录的绝对路径(例如：/data/CodeAnalysis/)  
 `团队ID`: 在 TCA 中创建的团队的标识ID，可在TCA【团队概览】中获取“团队唯一标识”  
 `项目名称`: 在 TCA 中创建的项目的标识ID，可在TCA【项目概览】中获取“项目唯一标识”  
 `Token`: 在 TCA 的【个人中心】->【个人令牌】中获取  
@@ -83,7 +83,7 @@ pipeline{
 }
 
 ```
-`codeAnalysisPath`: 拉取到本地的CodeAnalysis开源仓库目录的绝对路径(例如：/data/CodeAnalysis)  
+`codeAnalysisPath`: 拉取到本地的CodeAnalysis开源仓库目录的绝对路径(例如：/data/CodeAnalysis/)  
 `teamId`：团队ID  
 `projectName`: 项目名称  
 `token`: 在 TCA 的【个人中心】->【个人令牌】中获取  
