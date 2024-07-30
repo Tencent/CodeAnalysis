@@ -84,7 +84,7 @@ pipeline{
 }
 
 ```
-`codeAnalysisPath`: 拉取到本地的CodeAnalysis开源仓库目录的绝对路径(例如：/Users/data/CodeAnalysis) 
+`codeAnalysisPath`: 拉取到本地的CodeAnalysis开源仓库目录的绝对路径(例如：/Users/data/CodeAnalysis)  
 `teamId`：团队ID  
 `projectName`: 项目名称  
 `token`: 在 TCA 的【个人中心】->【个人令牌】中获取  
