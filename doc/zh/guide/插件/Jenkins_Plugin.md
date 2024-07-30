@@ -24,7 +24,7 @@ Jenkins插件有以下两种获取方式：
 ```shell
 bash ./scripts/base/install_bin.sh
 ```
-将`client`目录下的`config.ini`文件中的`<Server IP地址>`替换部署的开源版TCA的IP地址（可包含端口号）
+将`client`目录下的`config.ini`文件中的`<Server IP地址>`替换为部署的开源版TCA的IP地址（可包含端口号）
 
 ## 使用插件
 ### 在 TCA 创建团队和项目
@@ -52,7 +52,7 @@ Value：`GITPATH`        Value：xxxx（路径不包含git）
 
 在构建任务的【Build】中选择【TCA】插件并配置以下参数： 
 
-`CodeAnalysis目录绝对路径`: 拉取到本地的CodeAnalysis开源仓库目录的绝对路径(例如：/User/CodeAnalysis)  
+`CodeAnalysis目录绝对路径`: 拉取到本地的CodeAnalysis开源仓库目录的绝对路径(例如：/data/CodeAnalysis/)  
 `团队ID`: 在 TCA 中创建的团队的标识ID，可在TCA【团队概览】中获取“团队唯一标识”  
 `项目名称`: 在 TCA 中创建的项目的标识ID，可在TCA【项目概览】中获取“项目唯一标识”  
 `Token`: 在 TCA 的【个人中心】->【个人令牌】中获取  
@@ -68,7 +68,7 @@ Value：`GITPATH`        Value：xxxx（路径不包含git）
 ![](../../../images/jenkins_tca_plugin_config.png)
 
 #### 方式二：pipeline语法配置 TCA 插件
-在步骤中添加TCA插件参数配置语句，下面的配置语句可作为参考
+在步骤中添加TCA插件参数配置语句，下面的配置语句可作为参考；注意：如果是release版本v1.11.0及之前的老版本（包含源代码构建生成和release获取）插件，语法参数略有差别，请参考[issue1150](https://github.com/Tencent/CodeAnalysis/issues/1150)
 
 ```pipeline
 pipeline{
@@ -77,14 +77,14 @@ pipeline{
     stages{
       stage('Build'){
         steps{
-            TCA_Builder(codeAnalysisPath: '/zhuay/CodeAnalysis/', teamId: 'xxxx', projectName: 'demo', token: 'xxxxxxxxxxxx', branchName: 'master', languageType: 'Java', refSchemeID: '1', scanPlan: 'model', threshold: '90', total:true)
+            TCA(codeAnalysisPath: '/data/CodeAnalysis/', teamId: 'xxxx', projectName: 'demo', token: 'xxxxxxxxxxxx', branchName: 'master', languageType: 'Java', refSchemeID: '1', scanPlan: 'model', threshold: '90', total:true)
         }
       }
     }
 }
 
 ```
-`codeAnalysisPath`: 拉取到本地的CodeAnalysis开源仓库目录的绝对路径(例如：/User/CodeAnalysis) 
+`codeAnalysisPath`: 拉取到本地的CodeAnalysis开源仓库目录的绝对路径(例如：/data/CodeAnalysis/)  
 `teamId`：团队ID  
 `projectName`: 项目名称  
 `token`: 在 TCA 的【个人中心】->【个人令牌】中获取  
@@ -133,7 +133,7 @@ pipeline{
     stages{
       stage('Build'){
         steps{
-            TCA_Builder(codeAnalysisPath: '/zhuay/CodeAnalysis/', teamId: 'xxxx', projectName: 'demo', token: 'xxxxxxxxxxxx', branchName: 'master', languageType: 'Java', refSchemeID: '1', scanPlan: 'model', threshold: '90', total:true)
+            TCA(codeAnalysisPath: '/data/CodeAnalysis/', teamId: 'xxxx', projectName: 'demo', token: 'xxxxxxxxxxxx', branchName: 'master', languageType: 'Java', refSchemeID: '1', scanPlan: 'model', threshold: '90', total:true)
             script{
                 def tca_status = readFile('tca_threshold.txt')
                 if (tca_status == "success") {
