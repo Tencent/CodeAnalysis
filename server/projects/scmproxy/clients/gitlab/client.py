@@ -137,7 +137,7 @@ class GitLabAPIClient(BaseClient):
         return : str - 版本号
         """
         r = self.get(GITLAB_APIS["get_revision"].format(
-            project_id=self._enquote_project_path, branch_name=self._branch))
+            project_id=self._enquote_project_path, branch_name=quote(self._branch, safe="")))
         data = self.get_json(r)
         return data["commit"]["id"]
 

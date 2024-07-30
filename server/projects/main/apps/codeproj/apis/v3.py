@@ -966,7 +966,6 @@ class ProjectScanPuppyiniApiView(generics.GenericAPIView, V3GetModelMixinAPIView
             config_dict.update({
                 'org_sid': project.repo.organization.org_sid,
                 'team_name': project.repo.project_team.name,
-                'codedog_env': slz.validated_data.get("codedog_env") or settings.MAIN_SERVER_URL,
                 'token': token.key,
                 'source_dir': slz.validated_data["source_dir"],
                 'branch': project.branch,
