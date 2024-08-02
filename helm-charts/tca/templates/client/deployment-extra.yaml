@@ -1,0 +1,86 @@
+{{ $myChartName := .Release.Name }}
+{{ $myChartService := .Release.Service }}
+{{ $Values := .Values}}
+{{ $BasePath := $.Template.BasePath}}
+{{ $Image := .Values.tca.client.image }}
+
+{{- range $key, $value := .Values.tca.client.extraNodePools }}
+{{- if $value.enabled }}
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    k8s-app: {{ template "tca.fullname" $ }}-client-{{ $key }}
+    app: {{ template "tca.name" $ }}
+    chart: {{ template "tca.chart" $ }}
+    release: {{ $myChartName }}
+    heritage: {{ $myChartService }}
+  name: {{ template "tca.fullname" $ }}-client-{{ $key }}
+spec:
+  serviceName: ""
+  replicas: {{ $value.replicas }}
+  selector:
+    matchLabels:
+      k8s-app: {{ template "tca.fullname" $ }}-client-{{ $key }}
+      release: {{ $myChartName }}
+  template:
+    metadata:
+      labels:
+        k8s-app: {{ template "tca.fullname" $ }}-client-{{ $key }}
+        release: {{ $myChartName }}
+    spec:
+      shareProcessNamespace: true
+      {{- with $Values.global.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- if $Values.tca.podAntiAffinity.enable }}
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 1
+              podAffinityTerm:
+                topologyKey: "{{ .Values.tca.podAntiAffinity.topologyKey }}"
+                labelSelector:
+                  matchLabels:
+                    k8s-app: {{ template "tca.fullname" $ }}-client-{{ $key }}
+                    release: {{ $myChartName }}
+      {{- end }}
+      containers:
+        - name: {{ template "tca.fullname" $ }}-client-{{ $key }}
+          image: "{{ $Image.repository }}:{{ $Image.tag }}"
+          imagePullPolicy: {{ $Values.global.imagePullPolicy }}
+          command: ["python3"]
+          args: ["codepuppy.py", "start", "-t", "$(CODEDOG_TOKEN)", "--create-from", "docker", "--tag", "{{ $value.tag }}"]
+          envFrom:
+            - configMapRef:
+                name: client-env
+          env:
+            - name: _HASH_ENV_
+              value: {{ include (print $BasePath "/client/configmap-env.yaml") $ | sha256sum }}
+            - name: _HASH_CONFIG_
+              value: {{ include (print $BasePath "/client/configmap-conf.yaml") $ | sha256sum }}
+          lifecycle:
+            preStop:
+              exec:
+                command:
+                  - sleep
+                  - '20'
+          resources:
+{{ toYaml $value.resources | indent 12 }}
+          volumeMounts:
+            - mountPath: /workspace/client/config.ini
+              subPath: config.ini
+              name: client-config-conf
+      volumes:
+        - configMap:
+            items:
+              - key: config.ini
+                mode: 420
+                path: config.ini
+            name: {{ template "tca.fullname" $ }}-client-config
+          name: client-config-conf
+
+{{- end }}
+{{- end }}
