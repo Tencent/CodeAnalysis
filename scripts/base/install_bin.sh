@@ -39,7 +39,9 @@ function downloader() {
         user=$2
         password=$3
         # ${url: -11} 中间要有空格，才能是截取后几位
-        git clone -b ${url: -11} ${url:0:8}${user}:${password}@${url:8:-12}
+        # 2024/8/2 适配低版本的shell写法
+        length=${#url}
+        git clone -b ${url: -11} ${url:0:8}${user}:${password}@${url:8:length-20}
         cmd_ret=$?
         if [[ ${cmd_ret} == 0 ]] ; then
             # 清理lib中无关文件
