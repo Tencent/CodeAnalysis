@@ -11,4 +11,7 @@ spec:
     - port: http
       path: /prometheus/metrics
       interval: 30s
+    - port: http
+      path: api/nodes/nodestate/metrics/
+      interval: 1m
 {{- end }}
