@@ -206,12 +206,13 @@ Helm will deploy `mariadb` by default. Reference: [bitnami/mariadb](https://gith
 | `tca.web.logPath`                            | TCA Web nginx log path                                                   | `/var/log/nginx`          |
 
 ### TCA Main configuration parameters
-| Name                                         | Description                                                              | Value                     |
-| -------------------------------------------- | ------------------------------------------------------------------------ | ------------------------- |
-| `tca.main.image.repository`                  | TCA Main image repository                                                | `tencenttca/tca-main`     |
-| `tca.main.image.tag`                         | TCA Main image tag                                                       | `latest`                  |
-| `tca.main.server.processnum`                 | TCA Main server process num                                              | `8`                       |
-| `tca.main.worker.num`                        | TCA Main worker num for async starting analysis and handle periodic task | `2`                       |
+| Name                                         | Description                                                              | Value                 |
+| -------------------------------------------- | ------------------------------------------------------------------------ |-----------------------|
+| `tca.main.image.repository`                  | TCA Main image repository                                                | `tencenttca/tca-main` |
+| `tca.main.image.tag`                         | TCA Main image tag                                                       | `latest`              |
+| `tca.main.server.processnum`                 | TCA Main server process num                                              | `8`                   |
+| `tca.main.worker.num`                        | TCA Main worker num for async starting analysis and handle periodic task | `2`                   |
+| `tca.main.server.multiprocDir`               | TCA Main server storing monitoring indicator data path                   | `multiproc-tmp`       |
 
 #### TCA Main setting configuration
 | Name                                         | Description                                                              | Value                     |
@@ -231,12 +232,14 @@ Helm will deploy `mariadb` by default. Reference: [bitnami/mariadb](https://gith
 
 
 ### TCA Analysis Configuration parameters
-| Name                                         | Description                                                              | Value                     |
-| -------------------------------------------- | ------------------------------------------------------------------------ | ------------------------- |
-| `tca.analysis.image.repository`              | TCA Analysis image repository                                            | `tencenttca/tca-analysis` |
-| `tca.analysis.image.tag`                     | TCA Analysis image tag                                                   | `latest`                  |
-| `tca.analysis.server.processnum`             | TCA Analysis server process num                                          | `8`                       |
-| `tca.analysis.worker.num`                    | TCA Analysis worker num for async saving lint and metric data            | `2`                       |
+| Name                                         | Description                                                   | Value                     |
+|----------------------------------------------|---------------------------------------------------------------|---------------------------|
+| `tca.analysis.image.repository`              | TCA Analysis image repository                                 | `tencenttca/tca-analysis` |
+| `tca.analysis.image.tag`                     | TCA Analysis image tag                                        | `latest`                  |
+| `tca.analysis.server.processnum`             | TCA Analysis server process num                               | `8`                       |
+| `tca.analysis.worker.num`                    | TCA Analysis worker num for async saving lint and metric data | `2`                       |
+| `tca.analysis.server.multiprocDir`           | TCA Analysis server storing monitoring indicator data path    | `multiproc-tmp`           |
+
 
 #### TCA Analysis setting configuration
 | Name                                         | Description                                                              | Value                     |
@@ -254,11 +257,12 @@ Helm will deploy `mariadb` by default. Reference: [bitnami/mariadb](https://gith
 
 
 ### TCA Login Configuration parameters
-| Name                                         | Description                                                              | Value                     |
-| -------------------------------------------- | ------------------------------------------------------------------------ | ------------------------- |
-| `tca.login.image.repository`                 | TCA Login image repository                                               | `tencenttca/tca-login`    |
-| `tca.login.image.tag`                        | TCA Login image tag                                                      | `latest`                  |
-| `tca.login.server.processnum`                | TCA Login server process num                                             | `8`                       |
+| Name                             | Description                                              | Value                    |
+|----------------------------------|----------------------------------------------------------|--------------------------|
+| `tca.login.image.repository`     | TCA Login image repository                               | `tencenttca/tca-login`   |
+| `tca.login.image.tag`            | TCA Login image tag                                      | `latest`                 |
+| `tca.login.server.processnum`    | TCA Login server process num                             | `8`                      |
+| `tca.login.server.multiprocDir`  | TCA Login server storing monitoring indicator data path  | `multiproc-tmp`          |
 
 
 #### TCA Login setting configuration
@@ -271,10 +275,11 @@ Helm will deploy `mariadb` by default. Reference: [bitnami/mariadb](https://gith
 | `tca.login.settings.customDB.user`           | TCA Login custom mysql server user                                       | `""`                      |
 
 ### TCA File Configuration parameters
-| Name                                         | Description                                                              | Value                     |
-| -------------------------------------------- | ------------------------------------------------------------------------ | ------------------------- |
-| `tca.file.image.repository`                  | TCA file image repository                                                | `tencenttca/tca-file`     |
-| `tca.file.image.tag`                         | TCA file image tag                                                       | `latest`                  |
+| Name                            | Description                                             | Value                 |
+|---------------------------------|---------------------------------------------------------|-----------------------|
+| `tca.file.image.repository`     | TCA file image repository                               | `tencenttca/tca-file` |
+| `tca.file.image.tag`            | TCA file image tag                                      | `latest`              |
+| `tca.file.server.multiprocDir`  | TCA file server storing monitoring indicator data path  | `multiproc-tmp`       |
 
 #### TCA File setting configuration
 | Name                                         | Description                                                              | Value                     |
