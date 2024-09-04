@@ -5,4 +5,4 @@ pluginManagement {
     }
 }
 
-rootProject.name = "TCA"
+rootProject.name = "jetbrains_plugin"
