@@ -1,0 +1,26 @@
+version: v2.0
+
+stages:
+  - name: "stage1"
+    jobs:
+      job1:
+        runs-on:
+          pool-name: docker-on-devcloud  #docker-on-devcloud、docker、local、agentless
+          container:
+            image: mirrors.tencent.com/ci/tlinux3_ci:2.1.0
+          needs:
+            jdk: "1.8.0_161"
+        steps:
+          - uses: syncLocalCode@latest
+            name: 同步文件到云端插件
+            with:
+              syncGitRepository: false
+          - uses: CodeccCheckAtomDebug@4.*
+            name: 腾讯代码分析
+            with:
+              beAutoLang: true
+              # languages: # 工程语言, 可取值："C_CPP", "JAVA", "C_SHARP", "JS", "OC", "PYTHON", "PHP", "RUBY", "GOLANG", "SWIFT", "TYPESCRIPT", "KOTLIN", "LUA", "OTHERS"
+              #   - "JAVA"
+              checkerSetType: "openScan" #openScan对应按开源治理要求配置规则集，epcScan对应按PCG EPC要求配置，normal对应自主配置规则集
+              toolScanType: "0" # 扫描方式。0是全量扫描，1是增量扫描。
+              fileCacheEnable: true # 由于IDE中代码可能没有上传Git，因此需要开启代码缓存，便于在CodeCC查看代码详情
