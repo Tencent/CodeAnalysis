@@ -41,4 +41,5 @@
 <!--        注册监听文件打开操作的监听器-->
         <listener class="com.TCA.Listener.FileListener" topic="com.intellij.openapi.fileEditor.FileEditorManagerListener"/>
     </projectListeners>
+    <idea-version since-build="211"/>
 </idea-plugin>
