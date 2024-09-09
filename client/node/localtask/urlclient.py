@@ -27,7 +27,7 @@ class CodeDogTrialUrl(object):
         """
         获取用户信息页url
         """
-        return urljoin(self._base_url, "user/profile")
+        return urljoin(self._base_url, "user/token")
 
     def get_proj_overview_url(self):
         """
