@@ -1,0 +1,1 @@
+const e=JSON.parse('{"key":"v-fb43c324","path":"/en/quickStarted/dockercomposeDeploy.html","title":"Docker-Compose快速部署","lang":"en-US","frontmatter":{},"headers":[],"git":{"updatedTime":1725872649000,"contributors":[{"name":"Jero","email":"lingh0927@hotmail.com","commits":1}]},"filePathRelative":"en/quickStarted/dockercomposeDeploy.md"}');export{e as data};
