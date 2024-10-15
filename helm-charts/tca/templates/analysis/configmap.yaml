@@ -18,6 +18,7 @@ data:
   ANALYSIS_DEBUG_MODE: {{ .Values.tca.analysis.settings.base.debugMode | quote }}
   ANALYSIS_DB_NAME: {{ .Values.tca.analysis.settings.dbName }}
   ANALYSIS_REDIS_DBID: {{ .Values.tca.analysis.settings.redisDBId | quote }}
+  MY_PROMETHEUS_MULTIPROC_DIR: {{ .Values.tca.analysis.server.multiprocDir }}
   # DB相关配置，优先使用 Values.tca.analysis.settings.customDB 配置，默认使用 tca.database
   ANALYSIS_DB_USER: {{ .Values.tca.analysis.settings.customDB.user | default ( include "tca.database.username" . ) }}
   ANALYSIS_DB_PASSWORD: {{ .Values.tca.analysis.settings.customDB.password | default ( include "tca.database.password" . ) }}

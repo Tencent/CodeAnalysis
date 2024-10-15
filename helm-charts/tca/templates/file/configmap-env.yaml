@@ -28,6 +28,7 @@ data:
   FILE_MINIO_ACCESS_KEY: {{ .Values.tca.file.settings.minio.accessKey | quote }}
   FILE_MINIO_SECRET_KEY: {{ .Values.tca.file.settings.minio.secretKey | quote }}
   FILE_DB_NAME: {{ .Values.tca.file.settings.dbName | quote }}
+  MY_PROMETHEUS_MULTIPROC_DIR: {{ .Values.tca.file.server.multiprocDir }}
   # DB相关配置，优先使用 Values.tca.file.settings.customDB 配置，默认使用 tca.database
   FILE_DB_USER: {{ .Values.tca.file.settings.customDB.user | default ( include "tca.database.username" . ) }}
   FILE_DB_PASSWORD: {{ .Values.tca.file.settings.customDB.password | default ( include "tca.database.password" . ) }}

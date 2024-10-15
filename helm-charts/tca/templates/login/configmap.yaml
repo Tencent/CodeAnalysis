@@ -18,6 +18,7 @@ data:
   DJANGO_SETTINGS_MODULE: {{ .Values.tca.login.settings.base.module }}
   LOGIN_DEBUG_MODE: {{ .Values.tca.login.settings.base.debugMode | quote }}
   LOGIN_DB_NAME: {{ .Values.tca.login.settings.dbName }}
+  MY_PROMETHEUS_MULTIPROC_DIR: {{ .Values.tca.login.server.multiprocDir }}
   # DB相关配置，优先使用 Values.tca.login.settings.customDB 配置，默认使用 tca.database
   LOGIN_DB_USER: {{ .Values.tca.login.settings.customDB.user | default ( include "tca.database.username" . ) }}
   LOGIN_DB_PASSWORD: {{ .Values.tca.login.settings.customDB.password | default ( include "tca.database.password" . ) }}
