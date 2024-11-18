@@ -10,6 +10,7 @@ source $TCA_SCRIPT_ROOT/utils.sh
 TCA_ROOT=$( cd "$(dirname $TCA_SCRIPT_ROOT)"; pwd )
 LIB_GITHUB_URL=${LIB_GITHUB_URL:-"https://github.com/TCATools/tca_lib/releases/download/v20241015.1/tca_lib-v1.8.zip"}
 LIB_GONGFENG_URL=${LIB_GONGFENG_URL:-"https://git.code.tencent.com/TCA/tca-tools/tca_lib.git#v20241015.1"}
+LIB_CNB_URL=${LIB_CNB_URL:-"https://cnb.cool/tca/tools/tca_lib.git#v20241015.1"}
 LIB_DIR_NAME="tca_lib"
 
 
@@ -38,10 +39,15 @@ function downloader() {
         # 使用工蜂默认密码
         user=$2
         password=$3
+        auth=""
+        if [[ "${user}" != "" ]] ; then
+            auth=${user}:${password}@
+        fi
+
         # ${url: -11} 中间要有空格，才能是截取后几位
         # 2024/8/2 适配低版本的shell写法
         length=${#url}
-        git clone -b ${url: -11} ${url:0:8}${user}:${password}@${url:8:length-20}
+        git clone -b ${url: -11} ${url:0:8}${auth}${url:8:length-20}
         cmd_ret=$?
         if [[ ${cmd_ret} == 0 ]] ; then
             # 清理lib中无关文件
@@ -62,12 +68,17 @@ function readIni()
 
 # 根据client中的配置来决定是下载github的还是工蜂的
 function download_lib() {
-    user=$(readIni ${TCA_ROOT}/client/config.ini "TOOL_LOAD_ACCOUNT" "USERNAME")
-    if [[ "${user}" == "" ]] ; then
+    config_url=$(readIni ${TCA_ROOT}/client/config.ini "COMMON" "TOOL_CONFIG_URL")
+    if [[ $config_url == *"github.com"* ]]; then
         downloader $LIB_GITHUB_URL
     else
-        # 工蜂
-        downloader $LIB_GONGFENG_URL $user $(readIni ${TCA_ROOT}/client/config.ini "TOOL_LOAD_ACCOUNT" "PASSWORD")
+        if [[ $config_url == *"cnb.cool"* ]]; then
+            downloader $LIB_CNB_URL
+        else
+            # 工蜂
+            user=$(readIni ${TCA_ROOT}/client/config.ini "TOOL_LOAD_ACCOUNT" "USERNAME")
+            downloader $LIB_GONGFENG_URL $user $(readIni ${TCA_ROOT}/client/config.ini "TOOL_LOAD_ACCOUNT" "PASSWORD")
+        fi
     fi
     ret=$?
     if [[ $ret == 0 ]]; then
