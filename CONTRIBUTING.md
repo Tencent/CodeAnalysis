@@ -38,4 +38,4 @@ Before submitting a pull request, please make sure the followings are done:
 6. Now, you can submit your pull request on `dev` branch.
 
 ## License
-[MIT LICENSE](LICENSE) is the open source license of TCA. Code contributed by anyone is protected by this license. Please make sure that you can accept the license before contributing your code.
+[MIT LICENSE](LICENSE.txt) is the open source license of TCA. Code contributed by anyone is protected by this license. Please make sure that you can accept the license before contributing your code.

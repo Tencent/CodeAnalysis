@@ -6,7 +6,7 @@
     <em>代号：CodeDog</em>
 </p>
 
-[![license](https://img.shields.io/badge/License-MIT-brightgreen.svg?style=flat)](LICENSE) [![docs](https://img.shields.io/badge/docs-read-brightgreen.svg?style=flat)](https://tencent.github.io/CodeAnalysis/)
+[![license](https://img.shields.io/badge/License-MIT-brightgreen.svg?style=flat)](LICENSE.txt) [![docs](https://img.shields.io/badge/docs-read-brightgreen.svg?style=flat)](https://tencent.github.io/CodeAnalysis/)
 
 ## TCA-官方网址
 
@@ -75,7 +75,7 @@
 
 ## 许可
 
-TCA 使用 [MIT 许可证](LICENSE)
+TCA 使用 [MIT 许可证](LICENSE.txt)
 
 ### TCA 团队成员
 
