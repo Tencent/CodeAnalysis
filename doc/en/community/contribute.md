@@ -43,4 +43,4 @@ TCA有两个主要分支：
 6. 现在，您可以向 `dev` 分支提交Pull Request。
 
 ## 许可
-[MIT LICENSE](https://github.com/Tencent/CodeAnalysis/blob/main/LICENSE) 是 TCA 的开源许可证。任何人贡献的代码都受此许可证保护。在贡献代码之前，请确保您可以接受许可。
+[MIT LICENSE](https://github.com/Tencent/CodeAnalysis/blob/main/LICENSE.txt) 是 TCA 的开源许可证。任何人贡献的代码都受此许可证保护。在贡献代码之前，请确保您可以接受许可。

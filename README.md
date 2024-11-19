@@ -6,7 +6,7 @@
     <em>code-named: CodeDog</em>
 </p>
 
-[![license](https://img.shields.io/badge/License-MIT-brightgreen.svg?style=flat)](LICENSE) [![docs](https://img.shields.io/badge/docs-read-brightgreen.svg?style=flat)](https://tencent.github.io/CodeAnalysis/)
+[![license](https://img.shields.io/badge/License-MIT-brightgreen.svg?style=flat)](LICENSE.txt) [![docs](https://img.shields.io/badge/docs-read-brightgreen.svg?style=flat)](https://tencent.github.io/CodeAnalysis/)
 
 English | [简体中文](README_ZH.md)
 
@@ -77,7 +77,7 @@ Using TCA can help team find normative, structural, security vulnerabilities and
 
 ## License
 
-TCA is [MIT licensed](LICENSE)
+TCA is [MIT licensed](LICENSE.txt)
 
 ### TCA Team Member
 
