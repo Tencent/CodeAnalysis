@@ -43,7 +43,7 @@ class RequestModify(object):
             task_params['ignore_merged_issue'] = True
 
     @staticmethod
-    def modify_task_request(task_request, token, server_url, source_dir, scm_info, scm_auth_info):
+    def modify_task_request(task_request, token, server_url, source_dir, scm_info, scm_auth_info, create_from):
         """
         向task_request中添加参数
         :param task_request: dict, 任务参数
@@ -51,6 +51,8 @@ class RequestModify(object):
         """
         # 添加task_scene信息,标记任务运行场景
         task_request['task_params']['task_scene'] = TaskScene.LOCAL
+        # 添加create_from参数
+        task_request['task_params']['created_from'] = create_from
         # 将token, server_url放到task_params中,供task进度上报和代码行上报使用
         task_request['task_params']['token'] = Crypto(settings.PASSWORD_KEY).encrypt(token)
         task_request['task_params']['server_url'] = server_url
@@ -70,13 +72,13 @@ class RequestModify(object):
 
     @staticmethod
     def modify_local_task_request(task_request, task_name_id_maps, job_id, ssh_file, token, server_url,
-                                  source_dir, scm_info, scm_auth_info):
+                                  source_dir, scm_info, scm_auth_info, create_from):
         """
         本地任务,向task_request中添加参数
         :param task_request:
         :return:
         """
-        RequestModify.modify_task_request(task_request, token, server_url, source_dir, scm_info, scm_auth_info)
+        RequestModify.modify_task_request(task_request, token, server_url, source_dir, scm_info, scm_auth_info, create_from)
         # 添加 task_dir 信息
         task_name = task_request["task_name"]
         task_id = task_name_id_maps.get(task_name)
@@ -90,13 +92,13 @@ class RequestModify(object):
         task_request['task_params']['ssh_file'] = ssh_file
 
     @staticmethod
-    def modify_pri_task_request(task_request, token, server_url, source_dir, scm_info, scm_auth_info):
+    def modify_pri_task_request(task_request, token, server_url, source_dir, scm_info, scm_auth_info, create_from):
         """
         私有任务,向task_request中添加参数
         :param task_request:
         :return:
         """
-        RequestModify.modify_task_request(task_request, token, server_url, source_dir, scm_info, scm_auth_info)
+        RequestModify.modify_task_request(task_request, token, server_url, source_dir, scm_info, scm_auth_info, create_from)
 
         # 在request中添加 task_dir 信息
         task_id = task_request["id"]

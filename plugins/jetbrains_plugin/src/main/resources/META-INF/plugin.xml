@@ -1,0 +1,45 @@
+<idea-plugin>
+    <id>org.example.TCA</id>
+<!--    插件名称-->
+    <name>TCA</name>
+    <vendor email="support@company.com" url="https://www.yourcompany.com">Company</vendor>
+<!--    插件描述-->
+    <description>
+        TCA plugin
+        TCA plugin
+        TCA plugin
+        TCA plugin
+    </description>
+    <depends>com.intellij.modules.platform</depends>
+<!--    idea扩展点-->
+    <extensions defaultExtensionNs="com.intellij">
+<!--        注册工具窗口-->
+        <toolWindow id="TCA" factoryClass="com.TCA.Window.MenuFactory" anchor="bottom" icon="/icons/run.svg"/>
+<!--        注册设置页面-->
+        <applicationConfigurable
+                parentId="tools"
+                instance="com.TCA.Setting.AppSettingsConfigurable"
+                id="com.example.ApplicationSettingsConfigurable"
+                displayName="TCA-分析参数配置"/>
+<!--        注册设置服务-->
+        <applicationService serviceImplementation="com.TCA.Setting.AppSettings"/>
+    </extensions>
+
+<!--    注册动作-->
+    <actions>
+<!--        注册右键idea左侧结构树菜单中的启动分析动作-->
+        <action id="StartAnalysisByMenu" class="com.TCA.Action.MenuSelect" text="当前路径启动分析" description="当前路径启动分析">
+            <add-to-group group-id="ProjectViewPopupMenu" anchor="last"/>
+        </action>
+<!--        注册右键idea代码编辑区域菜单中的启动分析动作-->
+        <action id="StartAnalysisByPopupMenu" class="com.TCA.Action.MenuSelect" text="当前路径启动分析" description="当前路径启动分析">
+            <add-to-group group-id="EditorPopupMenu" anchor="last"/>
+        </action>
+    </actions>
+
+    <projectListeners>
+<!--        注册监听文件打开操作的监听器-->
+        <listener class="com.TCA.Listener.FileListener" topic="com.intellij.openapi.fileEditor.FileEditorManagerListener"/>
+    </projectListeners>
+    <idea-version since-build="211"/>
+</idea-plugin>

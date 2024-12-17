@@ -20,7 +20,7 @@ logger = logging.getLogger(__name__)
 class CodeCountTask(object):
     @staticmethod
     def run_count_line_task(request_list, task_name_id_maps, job_id, scm_auth_info, token, server_url, source_dir,
-                            scm_info, origin_os_env):
+                            scm_info, origin_os_env, create_from):
         """
         统计代码行
         :param request_list:
@@ -38,7 +38,7 @@ class CodeCountTask(object):
         RequestModify.modify_local_task_request(request, task_name_id_maps, job_id,
                                                 scm_auth_info.ssh_file,
                                                 token, server_url, source_dir, scm_info,
-                                                scm_auth_info)
+                                                scm_auth_info, create_from)
         # 执行单个任务扫描
         logger.info("启动 linecount 工具统计代码行...")
         task = SingleTaskRuner(request, env=origin_os_env).run()

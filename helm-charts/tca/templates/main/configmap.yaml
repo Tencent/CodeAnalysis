@@ -23,6 +23,7 @@ data:
   HTTPS_CLONE_FLAG: {{ .Values.tca.main.settings.base.httpsCloneFlag | quote }}
   MAIN_DB_NAME: {{ .Values.tca.main.settings.dbName }}
   MAIN_REDIS_DBID: {{ .Values.tca.main.settings.redisDBId | quote }}
+  MY_PROMETHEUS_MULTIPROC_DIR: {{ .Values.tca.main.server.multiprocDir }}
   # DB相关配置，优先使用 Values.tca.main.settings.customDB 配置，默认使用 tca.database
   MAIN_DB_USER: {{ .Values.tca.main.settings.customDB.user | default ( include "tca.database.username" . ) }}
   MAIN_DB_PASSWORD: {{ .Values.tca.main.settings.customDB.password | default ( include "tca.database.password" . ) }}

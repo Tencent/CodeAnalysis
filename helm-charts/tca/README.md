@@ -49,6 +49,11 @@ The command removes all the Kubernetes components associated with the chart and 
 | `global.imagePullPolicy`                                | Global Docker image registry                            | `""`           |
 | `global.imagePullSecrets`                               | Global Docker registry secret names as an array         | `[]`           |
 
+To create a secret to pull an image from a private container image registry or repository:
+```Bash
+$ kubectl create secret docker-registry ${SECRET_NAME} --docker-server=${DOCKER_SERVER} --docker-username=${DOCKER_USERNAME} --docker-password=${DOCKER_PASSWORD} --docker-email=${DOCKER_EMAIL}
+```
+
 ### TCA Metric parameters
 | Name                                                    | Description                                             | Value          |
 | ------------------------------------------------------- | ------------------------------------------------------- | -------------- |
@@ -201,12 +206,13 @@ Helm will deploy `mariadb` by default. Reference: [bitnami/mariadb](https://gith
 | `tca.web.logPath`                            | TCA Web nginx log path                                                   | `/var/log/nginx`          |
 
 ### TCA Main configuration parameters
-| Name                                         | Description                                                              | Value                     |
-| -------------------------------------------- | ------------------------------------------------------------------------ | ------------------------- |
-| `tca.main.image.repository`                  | TCA Main image repository                                                | `tencenttca/tca-main`     |
-| `tca.main.image.tag`                         | TCA Main image tag                                                       | `latest`                  |
-| `tca.main.server.processnum`                 | TCA Main server process num                                              | `8`                       |
-| `tca.main.worker.num`                        | TCA Main worker num for async starting analysis and handle periodic task | `2`                       |
+| Name                                         | Description                                                              | Value                 |
+| -------------------------------------------- | ------------------------------------------------------------------------ |-----------------------|
+| `tca.main.image.repository`                  | TCA Main image repository                                                | `tencenttca/tca-main` |
+| `tca.main.image.tag`                         | TCA Main image tag                                                       | `latest`              |
+| `tca.main.server.processnum`                 | TCA Main server process num                                              | `8`                   |
+| `tca.main.worker.num`                        | TCA Main worker num for async starting analysis and handle periodic task | `2`                   |
+| `tca.main.server.multiprocDir`               | TCA Main server storing monitoring indicator data path                   | `multiproc-tmp`       |
 
 #### TCA Main setting configuration
 | Name                                         | Description                                                              | Value                     |
@@ -226,12 +232,14 @@ Helm will deploy `mariadb` by default. Reference: [bitnami/mariadb](https://gith
 
 
 ### TCA Analysis Configuration parameters
-| Name                                         | Description                                                              | Value                     |
-| -------------------------------------------- | ------------------------------------------------------------------------ | ------------------------- |
-| `tca.analysis.image.repository`              | TCA Analysis image repository                                            | `tencenttca/tca-analysis` |
-| `tca.analysis.image.tag`                     | TCA Analysis image tag                                                   | `latest`                  |
-| `tca.analysis.server.processnum`             | TCA Analysis server process num                                          | `8`                       |
-| `tca.analysis.worker.num`                    | TCA Analysis worker num for async saving lint and metric data            | `2`                       |
+| Name                                         | Description                                                   | Value                     |
+|----------------------------------------------|---------------------------------------------------------------|---------------------------|
+| `tca.analysis.image.repository`              | TCA Analysis image repository                                 | `tencenttca/tca-analysis` |
+| `tca.analysis.image.tag`                     | TCA Analysis image tag                                        | `latest`                  |
+| `tca.analysis.server.processnum`             | TCA Analysis server process num                               | `8`                       |
+| `tca.analysis.worker.num`                    | TCA Analysis worker num for async saving lint and metric data | `2`                       |
+| `tca.analysis.server.multiprocDir`           | TCA Analysis server storing monitoring indicator data path    | `multiproc-tmp`           |
+
 
 #### TCA Analysis setting configuration
 | Name                                         | Description                                                              | Value                     |
@@ -249,11 +257,12 @@ Helm will deploy `mariadb` by default. Reference: [bitnami/mariadb](https://gith
 
 
 ### TCA Login Configuration parameters
-| Name                                         | Description                                                              | Value                     |
-| -------------------------------------------- | ------------------------------------------------------------------------ | ------------------------- |
-| `tca.login.image.repository`                 | TCA Login image repository                                               | `tencenttca/tca-login`    |
-| `tca.login.image.tag`                        | TCA Login image tag                                                      | `latest`                  |
-| `tca.login.server.processnum`                | TCA Login server process num                                             | `8`                       |
+| Name                             | Description                                              | Value                    |
+|----------------------------------|----------------------------------------------------------|--------------------------|
+| `tca.login.image.repository`     | TCA Login image repository                               | `tencenttca/tca-login`   |
+| `tca.login.image.tag`            | TCA Login image tag                                      | `latest`                 |
+| `tca.login.server.processnum`    | TCA Login server process num                             | `8`                      |
+| `tca.login.server.multiprocDir`  | TCA Login server storing monitoring indicator data path  | `multiproc-tmp`          |
 
 
 #### TCA Login setting configuration
@@ -266,10 +275,11 @@ Helm will deploy `mariadb` by default. Reference: [bitnami/mariadb](https://gith
 | `tca.login.settings.customDB.user`           | TCA Login custom mysql server user                                       | `""`                      |
 
 ### TCA File Configuration parameters
-| Name                                         | Description                                                              | Value                     |
-| -------------------------------------------- | ------------------------------------------------------------------------ | ------------------------- |
-| `tca.file.image.repository`                  | TCA file image repository                                                | `tencenttca/tca-file`     |
-| `tca.file.image.tag`                         | TCA file image tag                                                       | `latest`                  |
+| Name                            | Description                                             | Value                 |
+|---------------------------------|---------------------------------------------------------|-----------------------|
+| `tca.file.image.repository`     | TCA file image repository                               | `tencenttca/tca-file` |
+| `tca.file.image.tag`            | TCA file image tag                                      | `latest`              |
+| `tca.file.server.multiprocDir`  | TCA file server storing monitoring indicator data path  | `multiproc-tmp`       |
 
 #### TCA File setting configuration
 | Name                                         | Description                                                              | Value                     |
@@ -302,13 +312,45 @@ Helm will deploy `mariadb` by default. Reference: [bitnami/mariadb](https://gith
 | `tca.scmproxy.image.tag`                     | TCA scmproxy image tag                                                   | `latest`                  |
 | `tca.scmproxy.privateScmUrl`                 | TCA scmproxy private scm url                                             | `""`                      |
 
-
 ### TCA Client Configuration parameters
-| Name                                         | Description                                                              | Value                     |
-| -------------------------------------------- | ------------------------------------------------------------------------ | ------------------------- |
-| `tca.client.image.repository`                | TCA client image repository                                              | `tencenttca/tca-client`   |
-| `tca.client.image.repository`                | TCA client image tag                                                     | `latest`                  |
-| `tca.client.enabeld`                         | Enabled starting TCA client with helm                                    | `true`                    |
+#### Default node pool configuration
+| Name                                           | Description                                  | Value                    |
+|------------------------------------------------|----------------------------------------------| ------------------------ |
+| `tca.client.image.repository`                  | TCA client image repository                  | `tencenttca/tca-client`  |
+| `tca.client.image.tag`                         | TCA client image tag                         | `latest`                 |
+| `tca.client.enabeld`                           | Enabled starting TCA client with helm        | `true`                   |
+| `tca.client.replicas`                          | The number of nodes in the default node pool | `1`                    |
+| `tca.client.tag`                               | Tag of the extra node pool                   | `Codedog_Linux`         |
+| `tca.client.resources.limits.cpu`              | The upper limit of cpu usage                 | `2000m`                 |
+| `tca.client.resources.limits.memory`           | The upper limit of memory usage              | `4Gi`                   |
+| `tca.client.resources.requests.cpu`            | Required cpu resources                       | `1000m`                 |
+| `tca.client.resources.requests.memory`         | Required memory resources                    | `2Gi`                   |
+
+#### Client Node pool expansion operations guide
+You can configure node resources on the client. 
+If you do not manually configure node resources, the default node pool is used.
+If the node pool resources are insufficient, expand the capacity of the node pool at any time. For details, refer to 'Procedure for expanding a node pool'.
+
+#### TCA client node pool expansion config
+| Name                                                         | Description                                    |
+|--------------------------------------------------------------|---------------------------------------|
+| `extraNodePools.nodepool`                                      | Name of the extended node pool        |
+| `extraNodePools.nodepool.tag`                                  | Tag of the extra node pool            |
+| `extraNodePools.nodepool.enabled`                              | Enabled extending node pool with helm |
+| `extraNodePools.nodepool.replicas`                             | The number of nodes in the extra node pool                              |
+| `extraNodePools.nodepool.resources.limits.cpu`                 | The upper limit of cpu usage                           |
+| `extraNodePools.nodepool.resources.limits.memory`              | The upper limit of memory usage                            |
+| `extraNodePools.nodepool.resources.requests.cpu`               | Required cpu resources                              |
+| `extraNodePools.nodepool.resources.requests.memory`            | Required memory resources                               |
+
+#### Procedure for expanding a node pool
+1. Initially, deploy the project exclusively utilizing the default node pool.
+2. To expand the node pool, navigate to "Background Management > Node Management > Label Management" and add label information.
+3. Update the extra node pool configuration in the project file by navigating to "CodeAnalysis/helm-charts/tca/values.yaml" .
+4. To add configuration information for extra node pools, refer to the "TCA client node pool expansion config" section under "extraNodePools" in the client section of the TCA.
+5. Please note that the "extraNodePools.nodepool" tag can be customized to match the user's requirements for the node pool name. This tag should be the same as the tag name added in Step 2.
+6. To enable the current node pool, modify the "enabled" value to "true".
+7. Update project deployment.
 
 ### TCA Gateway Configuration parameters
 | Name                                         | Description                                                              | Value                     |

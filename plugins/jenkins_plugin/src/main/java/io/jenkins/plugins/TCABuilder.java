@@ -19,6 +19,7 @@ import hudson.tasks.Builder;
 import hudson.util.FormValidation;
 import jenkins.tasks.SimpleBuildStep;
 import org.apache.commons.lang.StringUtils;
+import org.jenkinsci.Symbol;
 import org.json.JSONObject;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.DataBoundSetter;
@@ -230,6 +231,7 @@ public class TCABuilder extends Builder implements SimpleBuildStep {
     }
 
     @Extension
+    @Symbol("TCA")
     public static final class DescriptorImpl extends BuildStepDescriptor<Builder> {
         public FormValidation doCheckCodeAnalysisPath(@QueryParameter String value) throws IOException, ServletException {
             if (StringUtils.isBlank(value)){

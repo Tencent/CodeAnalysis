@@ -1,6 +1,6 @@
 FROM python:3.7-slim-bullseye
 
-ARG EXTRA_TOOLS="gnupg curl wget jq net-tools procps default-libmysqlclient-dev locales inotify-tools gcc telnet iputils-ping vim openssh-client"
+ARG EXTRA_TOOLS="gnupg curl wget jq net-tools procps default-libmysqlclient-dev locales inotify-tools gcc telnet iputils-ping vim openssh-client ncat"
 
 RUN set -ex && cd / \
     && apt-get update \

@@ -31,7 +31,10 @@ def ActionWarpper(func):
         result = rsp.data.decode("utf-8")
         # 正常返回
         if 200 <= rsp.status < 300:
-            return json.loads(result)
+            if result:
+                return json.loads(result)
+            else:
+                return result
         else:
             # 其他错误，如请求参数错误
             logger.error(result)
@@ -120,6 +123,10 @@ class AnalyseClient(BaseClient):
             "create_project": {
                 "path": "api/projects/",
                 "method": "post",
+            },
+            "delete_project": {
+                "path": "api/projects/%d/",
+                "method": "delete",
             },
             "create_scan": {
                 "path": "api/projects/%d/scans/",

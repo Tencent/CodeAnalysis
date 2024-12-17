@@ -6,10 +6,10 @@ gunicorn==22.0.0
 Django==3.2.25
 
 # for django using mysql server
-pymysql==1.0.2
+pymysql==1.1.1
 
 # for rest api
-djangorestframework==3.11.2
+djangorestframework==3.14.0
 django-filter==2.4.0
 django-import-export==2.5.0
 django-cors-headers==3.7.0
@@ -24,7 +24,7 @@ Pygments==2.15.0
 django-guardian==2.3.0
 
 # for document
-drf-yasg==1.17.0
+drf-yasg==1.21.5
 
 # for celery
 celery==5.2.3
@@ -44,7 +44,7 @@ PyJWT==2.4.0
 pyaes==1.6.1
 rsa==4.7.2
 pycryptodome==3.19.1
-cryptography==42.0.4
+cryptography==43.0.1
 PyJWT==2.4.0
 
 # for storage sdk
@@ -52,7 +52,11 @@ cos-python-sdk-v5==1.7.4
 minio==7.1.0
 
 # for exception log
-sentry-sdk==1.14.0
+sentry-sdk==2.8.0
 
 psutil==5.8.0
 croniter==1.3.4
+
+# ldap
+django-auth-ldap==4.1.0
+python-ldap==3.4.3

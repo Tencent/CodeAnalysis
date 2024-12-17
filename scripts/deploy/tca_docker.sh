@@ -42,7 +42,7 @@ function get_image() {
 function deploy_container() {
     LOG_INFO "Deploy tca container command:"
     set -x
-    docker run -it --env TCA_INIT_DATA=$TCA_INIT_DATA \
+    docker run -it --ulimit nofile=10240:10240 --env TCA_INIT_DATA=$TCA_INIT_DATA \
         --name $TCA_CONTAINER_NAME --publish 80:80 --publish 8000:8000 --publish 9001:9001 \
         -v $TCA_DOCKER_LOG_PATH:/var/log/tca/ \
         -v $TCA_DOCKER_DATA_PATH:/var/opt/tca/ \

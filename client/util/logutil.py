@@ -35,16 +35,3 @@ class LogPrinter(object):
     @staticmethod
     def exception(msg, *args, **kwargs):
         logger.exception(msg, *args, exc_info=True, **kwargs)
-
-    @staticmethod
-    def print_logo():
-        logger.info("-" * 30)
-        logger.info(" #######    ####      # ")
-        logger.info("    #      #    #     # ")
-        logger.info("    #     #          ### ")
-        logger.info("    #     #          # # ")
-        logger.info("    #     #         #####")
-        logger.info("    #      #    #   #   #")
-        logger.info("    #       ####   ##   ##")
-        logger.info("-" * 30)
-

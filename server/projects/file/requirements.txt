@@ -6,10 +6,10 @@ gunicorn==22.0.0
 Django==3.2.25
 
 # for django using mysql server
-pymysql==1.0.2
+pymysql==1.1.1
 
 # for rest api
-djangorestframework==3.11.2
+djangorestframework==3.14.0
 
 # for celery
 celery==5.2.3
@@ -17,7 +17,7 @@ importlib-metadata==4.13.0
 redis==4.5.4
 
 # for exception log
-sentry-sdk==1.14.0
+sentry-sdk==2.8.0
 
 # for storage
 cos-python-sdk-v5==1.7.4

@@ -8,7 +8,7 @@ global:
   imagePullPolicy: IfNotPresent
   ## E.g.
   ## imagePullSecrets:
-  ##   - myRegistryKeySecretName
+  ##   -name: myRegistryKeySecretName
   ##
   imagePullSecrets: []
 
@@ -221,10 +221,12 @@ tca:
     ## 
     server:
       ## @param tca.main.server.port A port for main server listening
-      ## @param tca.analysis.server.processNum The number of processes main server is running
+      ## @param tca.main.server.processNum The number of processes main server is running
+      ## @param tca.main.server.multiprocDir Path for storing monitoring indicator data
       ##
       port: 80
       processNum: 8
+      multiprocDir: "multiproc-tmp"
       resources:
         limits:
           cpu: "1000m"
@@ -333,9 +335,11 @@ tca:
     server:
       ## @param tca.analysis.server.port A port for analysis server listening
       ## @param tca.analysis.server.processNum The number of processes analysis server is running
+      ## @param tca.analysis.server.multiprocDir Path for storing monitoring indicator data
       ##
       port: 80
       processNum: 8
+      multiprocDir: "multiproc-tmp"
       resources:
         limits:
           cpu: "1000m"
@@ -430,9 +434,11 @@ tca:
     server:
       ## @param tca.login.server.port A port for login server listening
       ## @param tca.login.server.processNum The number of processes login server is running
+      ## @param tca.login.server.multiprocDir Path for storing monitoring indicator data
       ##
       port: 80
       processNum: 8
+      multiprocDir: "multiproc-tmp"
       resources:
         limits:
           cpu: "1000m"
@@ -493,9 +499,11 @@ tca:
     server:
       ## @param tca.file.server.port A port for file server listening
       ## @param tca.file.server.processNum The number of processes file server is running
+      ## @param tca.file.server.multiprocDir Path for storing monitoring indicator data
       ##
       port: 8804
       processNum: 8
+      multiprocDir: "multiproc-tmp"
       resources:
         limits: 
           cpu: "1000m"
@@ -632,27 +640,44 @@ tca:
   ## TCA client: TCA client analysing code
   ##
   client:
+    ## @param tca.client.enabled Enable default TCA client starting
+    ## @param tca.client.replicas Indicates the number of nodes in the default node pool
+    ## @param tca.client.tag Tag of the default node pool
+    ## @param tca.client.resources Cpu and memory resource configuration of the default node pool
+    ##
     image:
       repository: tencenttca/tca-client
       tag: latest
-    ## @param tca.client.enabled Enable TCA client starting
-    ##
     enabled: true
+    replicas: 1
+    tag: Codedog_Linux
     resources:
       limits:
-        cpu: "4000m"
-        memory: "8Gi"
+        cpu: "2000m"
+        memory: "4Gi"
       requests:
         cpu: "1000m"
         memory: "2Gi"
-    ## TCA client auto scaling config
-    ## 
-    autoscaling: 
-      enabled: true
-      minReplicas: 2
-      maxReplicas: 4
-      targetCPU: ""
-      targetMemory: ""
+
+    ## TCA client node pool expansion config
+    ## @param tca.client.extraNodePools.nodepool Name of the extended node pool
+    ## @param tca.client.extraNodePools.{nodePoolName}.tag Tag of the extra node pool
+    ## @param tca.client.extraNodePools.{nodePoolName}.enabled Enable extra TCA client starting
+    ## @param tca.client.extraNodePools.{nodePoolName}.replicas Indicates the number of nodes in the extra node pool
+    ## @param tca.client.extraNodePools.{nodePoolName}.resources Cpu and memory resource configuration of the extra node pool
+    ##
+    extraNodePools:
+      nodepool:
+        tag: NodePoolTag
+        enabled: false
+        replicas: 2
+        resources:
+          limits:
+            cpu: "2000m"
+            memory: "4Gi"
+          requests:
+            cpu: "1000m"
+            memory: "2Gi"
 
   ## TCA gateway: TCA gateway for all servers
   ##

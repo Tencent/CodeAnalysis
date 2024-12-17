@@ -20,8 +20,7 @@ from node import app
 from node.app import settings
 from node.common.cmdarg import CmdArgParser
 from node.toolloader.loadtool import ToolLoader, ToolConfigLoader
-from tool.util.pythontool import PythonTool
-from util.exceptions import ConfigError
+from node.common.printversion import VersionPrinter
 from util.gitconfig import GitConfig
 from util.logutil import LogPrinter
 from util.textutil import StringMgr
@@ -38,11 +37,11 @@ class CodePuppy(object):
         # 日志输出设置
         self.__setup_logger()
 
-        if getattr(sys, 'frozen', False) and hasattr(sys, '_MEIPASS'):
-            LogPrinter.info('running in a PyInstaller bundle')
-        else:  # 源码执行时，检查是否为python3.7版本
-            if not PythonTool.is_local_python_command_available("python3", python_version="3.7"):
-                raise ConfigError("python3 command(Python Version 3.7) is not available, please install first.")
+        # 打印版本信息
+        VersionPrinter.print_client_version()
+        # 检查python版本
+        VersionPrinter.check_python_version()
+
         # 运行环境默认编码检查
         self.__check_encoding()
 
@@ -70,7 +69,6 @@ class CodePuppy(object):
             handler.setFormatter(formatter)
             root_logger = logging.getLogger()
             root_logger.addHandler(handler)
-        LogPrinter.info(f"Tencent Cloud Code Analysis ({settings.EDITION.name} Beta)")
 
     def __check_encoding(self):
         """检查默认编码,如果为空,设置为en_US.UTF-8
@@ -82,7 +80,7 @@ class CodePuppy(object):
             code, encoding = locale.getdefaultlocale()
             # LogPrinter.debug('locale is %s.%s' % (code, encoding))
         except Exception as err:
-            LogPrinter.error('locale.getdefaultlocale() encounter err: %s' % str(err))
+            LogPrinter.warning('locale.getdefaultlocale() encounter err: %s' % str(err))
             encoding = None
 
         if encoding is None:
@@ -94,7 +92,6 @@ class CodePuppy(object):
 
     def main(self):
         args = self._params
-        LogPrinter.print_logo()
 
         if args.command == 'localscan':
             '''执行本地项目扫描'''

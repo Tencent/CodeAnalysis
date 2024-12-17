@@ -70,4 +70,7 @@
             <url>https://repo.jenkins-ci.org/public/</url>
         </pluginRepository>
     </pluginRepositories>
+    <build>
+        <finalName>tca_jenkins_plugin</finalName>
+    </build>
 </project>

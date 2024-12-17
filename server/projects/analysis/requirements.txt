@@ -6,7 +6,7 @@ gunicorn==22.0.0
 Django==3.2.25
 
 #for django using mysql server
-pymysql==1.0.2
+pymysql==1.1.1
 
 # for celery
 celery==5.2.3
@@ -26,17 +26,17 @@ Jinja2==3.1.4
 markupsafe==2.0.1
 
 # for rest api
-djangorestframework==3.11.2
+djangorestframework==3.14.0
 coreapi==2.3.3
 Markdown==3.3.4
 django-cors-headers==3.7.0
 Pygments==2.15.0
 
 # for document
-drf-yasg==1.17.0
+drf-yasg==1.21.5
 
 # for file upload and download
-urllib3==1.26.18
+urllib3==1.26.19
 
 django-filter==2.4.0
 
@@ -44,7 +44,7 @@ django-filter==2.4.0
 django-import-export==2.5.0
 
 # for exception log
-sentry-sdk==1.14.0
+sentry-sdk==2.8.0
 
 # for monitor
 django-prometheus==2.0.0

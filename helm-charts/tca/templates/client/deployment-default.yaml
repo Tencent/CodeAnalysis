@@ -1,0 +1,76 @@
+{{- if .Values.tca.client.enabled }}
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    k8s-app: {{ template "tca.fullname" . }}-client
+    app: {{ template "tca.name" . }}
+    chart: {{ template "tca.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+  name: {{ template "tca.fullname" . }}-client
+spec:
+  serviceName: ""
+  replicas: {{ .Values.tca.client.replicas }}
+  selector:
+    matchLabels:
+      k8s-app: {{ template "tca.fullname" . }}-client
+      release: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        k8s-app: {{ template "tca.fullname" . }}-client
+        release: {{ .Release.Name }}
+    spec:
+      shareProcessNamespace: true
+      {{- with .Values.global.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- if .Values.tca.podAntiAffinity.enable }}
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 1
+              podAffinityTerm:
+                topologyKey: "{{ .Values.tca.podAntiAffinity.topologyKey }}"
+                labelSelector:
+                  matchLabels:
+                    k8s-app: {{ template "tca.fullname" . }}-client
+                    release: {{ .Release.Name }}
+      {{- end }}
+      containers:
+        - name: {{ template "tca.fullname" . }}-client
+          image: "{{ .Values.tca.client.image.repository }}:{{ .Values.tca.client.image.tag }}"
+          imagePullPolicy: {{ .Values.global.imagePullPolicy }}
+          command: ["python3"]
+          args: ["codepuppy.py", "start", "-t", "$(CODEDOG_TOKEN)", "--create-from", "docker", "--tag", "{{ .Values.tca.client.tag }}"]
+          envFrom:
+            - configMapRef:
+                name: client-env
+          env:
+            - name: _HASH_ENV_
+              value: {{ include (print $.Template.BasePath "/client/configmap-env.yaml") . | sha256sum }}
+            - name: _HASH_CONFIG_
+              value: {{ include (print $.Template.BasePath "/client/configmap-conf.yaml") . | sha256sum }}
+          lifecycle:
+            preStop:
+              exec:
+                command:
+                  - sleep
+                  - '20'
+          resources:
+{{ toYaml .Values.tca.client.resources | indent 12 }}
+          volumeMounts:
+            - mountPath: /workspace/client/config.ini
+              subPath: config.ini
+              name: client-config-conf
+      volumes:
+        - configMap:
+            items:
+              - key: config.ini
+                mode: 420
+                path: config.ini
+            name: {{ template "tca.fullname" . }}-client-config
+          name: client-config-conf
+{{- end }}
