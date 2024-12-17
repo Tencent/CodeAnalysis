@@ -149,7 +149,7 @@ class ConfigWebpackPlugin {
     compiler.hooks.done.tap(PLUGIN_NAME, ({ compilation }: Stats) => {
       // 用于dev，生成api.json url
       if (IS_DEV) {
-        const { devServer } = compilation.options;
+        const { devServer } = compilation.options as any;
         const https = devServer?.https || false;
         const host = devServer?.host || 'localhost';
         const port = devServer?.port || '8080';
