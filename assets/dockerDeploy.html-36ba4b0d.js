@@ -1,0 +1,1 @@
+const t=JSON.parse('{"key":"v-0b07a1bf","path":"/zh/quickStarted/dockerDeploy.html","title":"Docker快速部署（平台体验首推）","lang":"zh-CN","frontmatter":{},"headers":[],"git":{"updatedTime":1734417352000,"contributors":[{"name":"nickctang","email":"nickctang@qq.com","commits":1}]},"filePathRelative":"zh/quickStarted/dockerDeploy.md"}');export{t as data};
