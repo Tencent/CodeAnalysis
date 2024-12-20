@@ -1,0 +1,1 @@
+const e=JSON.parse('{"key":"v-5c7ce0e5","path":"/en/guide/%E6%9C%8D%E5%8A%A1%E7%AB%AF/deploy_without_migrate.html","title":"","lang":"en-US","frontmatter":{},"headers":[],"git":{"updatedTime":1734688580000,"contributors":[{"name":"freyaLo","email":"Freya_Lo@163.com","commits":1}]},"filePathRelative":"en/guide/服务端/deploy_without_migrate.md"}');export{e as data};
