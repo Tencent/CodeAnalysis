@@ -16,7 +16,7 @@ jobs:
           git remote add origin https://github.com/${GITHUB_REPOSITORY}.git
           git fetch --all
           for branch in `git branch -a | grep remotes | grep -v HEAD`; do
-            git branch --track ${branch#remotes/origin/}} $branch
+            git branch --track ${branch#remotes/origin/} $branch
           done
         env:
           GITHUB_REPOSITORY: Tencent/CodeAnalysis
