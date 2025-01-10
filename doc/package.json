@@ -9,9 +9,9 @@
   "type": "module",
   "license": "MIT",
   "scripts": {
-    "dev": "vuepress dev",
+    "dev": "bash ./sync_images.sh & vuepress dev",
     "build:comment": "echo '构建帮助文档，默认base前缀为document，可根据部署需要进行相应调整'",
-    "build": "BASE=${BASE:-CodeAnalysis} vuepress build -d ./dist"
+    "build": "bash ./sync_images.sh & BASE=${BASE:-CodeAnalysis} vuepress build -d ./dist"
   },
   "devDependencies": {
     "@vuepress/plugin-search": "2.0.0-beta.63",

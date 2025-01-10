@@ -16,7 +16,7 @@ jobs:
           git remote add origin https://github.com/${GITHUB_REPOSITORY}.git
           git fetch --all
           for branch in `git branch -a | grep remotes | grep -v HEAD`; do
-            git branch --track ${branch##*/} $branch
+            git branch --track ${branch#remotes/origin/} $branch
           done
         env:
           GITHUB_REPOSITORY: Tencent/CodeAnalysis
@@ -24,26 +24,25 @@ jobs:
       - name: Push to TGIT
         run: |
           remote_repo="https://${TGIT_USERNAME}:${TGIT_PASSWORD}@git.code.tencent.com/${TGIT_REPOSITORY}.git"
-          git remote add tencent "${remote_repo}"
+          git remote add tgit "${remote_repo}"
           git show-ref
           git branch --verbose
-          git push --all --force tencent
-          git push --tags --force tencent
+          git push --all --force tgit
+          git push --tags --force tgit
         env:
           TGIT_REPOSITORY: Tencent_Open_Source/CodeAnalysis
           TGIT_USERNAME: ${{ secrets.USERNAME }}
           TGIT_PASSWORD: ${{ secrets.PASSWORD }}
+        continue-on-error: true
 
-      - name: Push to Gitee
+      - name: Push to CNB
         run: |
-          remote_repo="https://${GITEE_USERNAME}:${GITEE_PASSWORD}@gitee.com/${GITEE_REPOSITORY}.git"
-          git remote add gitee "${remote_repo}"
-          git show-ref
-          git branch --verbose
-          git push --all --force gitee
-          git push --tags --force gitee
+          remote_repo="https://${CNB_USERNAME}:${CNB_PASSWORD}@cnb.cool/${CNB_REPOSITORY}.git"
+          git remote add cnb "${remote_repo}"
+          git push --all --force cnb
+          git push --tags --force cnb
         env:
-          GITEE_REPOSITORY: zhang9w0v5/CodeAnalysis
-          GITEE_USERNAME: ${{ secrets.GITEE_USERNAME }}
-          GITEE_PASSWORD: ${{ secrets.GITEE_PASSWORD }}
+          CNB_REPOSITORY: tca/code-analysis
+          CNB_USERNAME: ${{ secrets.CNB_USERNAME }}
+          CNB_PASSWORD: ${{ secrets.CNB_PASSWORD }}
           
