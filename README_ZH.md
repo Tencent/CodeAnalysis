@@ -8,9 +8,13 @@
 
 [![license](https://img.shields.io/badge/License-MIT-brightgreen.svg?style=flat)](LICENSE.txt) [![docs](https://img.shields.io/badge/docs-read-brightgreen.svg?style=flat)](https://tencent.github.io/CodeAnalysis/)
 
+[English](README.md) | [简体中文](README_ZH.md)
+
 ## TCA-官方网址
 
-[https://cloud.tencent.com/product/tcap](https://cloud.tencent.com/product/tcap)
+[tca.tencent.com](http://tca.tencent.com)
+
+[cloud.tencent.com/product/tcap](https://cloud.tencent.com/product/tcap)
 
 ## TCA-Github代码库
 
@@ -33,10 +37,6 @@
 ![组件图](https://tencent.github.io/CodeAnalysis/media/Components.png)
 
 ![流程图](https://tencent.github.io/CodeAnalysis/media/Flow.png)
-
-## 体验
-
-[官方版本](http://tca.tencent.com)
 
 ## 关键功能
 

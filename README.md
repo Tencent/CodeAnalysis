@@ -8,11 +8,13 @@
 
 [![license](https://img.shields.io/badge/License-MIT-brightgreen.svg?style=flat)](LICENSE.txt) [![docs](https://img.shields.io/badge/docs-read-brightgreen.svg?style=flat)](https://tencent.github.io/CodeAnalysis/)
 
-English | [简体中文](README_ZH.md)
+[English](README.md) | [简体中文](README_ZH.md)
 
 ## TCA Official Website
 
-[https://cloud.tencent.com/product/tcap](https://cloud.tencent.com/product/tcap)
+[tca.tencent.com](http://tca.tencent.com)
+
+[cloud.tencent.com/product/tcap](https://cloud.tencent.com/product/tcap)
 
 ## TCA Github Pages
 
@@ -35,10 +37,6 @@ Using TCA can help team find normative, structural, security vulnerabilities and
 ![组件图](https://tencent.github.io/CodeAnalysis/media/Components.png)
 
 ![流程图](https://tencent.github.io/CodeAnalysis/media/Flow.png)
-
-## Experience
-
-[Apply Link](http://tca.tencent.com)
 
 ## Key Features
 
