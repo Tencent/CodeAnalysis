@@ -20,13 +20,6 @@
             },
             {
                 "checktool": "semgrep",
-                "checkrule": "log4j-message-lookup-injection",
-                "severity": "error",
-                "rule_params": null,
-                "state": "disabled"
-            },
-            {
-                "checktool": "semgrep",
                 "checkrule": "detected-log4j-core",
                 "severity": "error",
                 "rule_params": null,
