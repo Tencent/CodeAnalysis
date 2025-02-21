@@ -28,10 +28,6 @@
 
 [https://github.com/TCATools](https://github.com/TCATools)
 
-## TCA-国内镜像工蜂代码库
-
-[https://git.code.tencent.com/Tencent_Open_Source/CodeAnalysis.git](https://git.code.tencent.com/Tencent_Open_Source/CodeAnalysis.git)
-
 ## TCA
 
 腾讯云代码分析（Tencent Cloud Code Analysis，简称TCA，内部曾用研发代号CodeDog）是集众多分析工具的云原生、分布式、高性能的代码综合分析跟踪平台，包含服务端、Web端和客户端三个组件，已集成一批自研工具，同时也支持动态集成业界各编程语言的分析工具。
