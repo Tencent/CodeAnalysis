@@ -229,7 +229,7 @@ class Golangcilint(CodeLintModel):
             os.remove(config_file)
         copyfile(os.path.join(config_home, ".golangci.example.yml"), config_file)
         f = open(config_file)
-        config = yaml.load(f, Loader=yaml.FullLoader)
+        config = yaml.safe_load(f)
         f.close()
 
         config["linters"]["enable"] = [rule for rule in rules]

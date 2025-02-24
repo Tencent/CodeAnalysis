@@ -73,7 +73,7 @@ if __name__ == '__main__':
     # print("\n[ 全量加载 ] :")
     # start_time = time.time()
     # with open(file_path, 'r', encoding='utf-8') as fp:
-    #     data = yaml.load(fp)
+    #     data = yaml.safe_load(fp)
     # use_time = time.time() - start_time
     # print("-" * 50)
     # print(json.dumps(data[section_name], indent=2))

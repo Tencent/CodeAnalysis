@@ -142,7 +142,7 @@ class DartAnalyzer(CodeLintModel):
             os.remove(config_file)
         copyfile(os.path.join(envs.get("DART_HOME"), "analysis_options.yaml"), config_file)
         f = open(config_file)
-        config = yaml.load(f, Loader=yaml.FullLoader)
+        config = yaml.safe_load(f)
         f.close()
 
         # 设置过滤
