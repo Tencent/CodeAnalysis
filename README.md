@@ -8,21 +8,25 @@
 
 [![license](https://img.shields.io/badge/License-MIT-brightgreen.svg?style=flat)](LICENSE.txt) [![docs](https://img.shields.io/badge/docs-read-brightgreen.svg?style=flat)](https://tencent.github.io/CodeAnalysis/)
 
-English | [简体中文](README_ZH.md)
+[English](README.md) | [简体中文](README_ZH.md)
 
-## TCA Official Website
+## TCA Official
+
+[https://tca.tencent.com](http://tca.tencent.com)
 
 [https://cloud.tencent.com/product/tcap](https://cloud.tencent.com/product/tcap)
+
+## TCA CNB Pages
+
+[https://cnb.cool/tca/code-analysis](https://cnb.cool/tca/code-analysis)
+
+[https://cnb.cool/tca](https://cnb.cool/tca)
 
 ## TCA Github Pages
 
 [https://tencent.github.io/CodeAnalysis/](https://tencent.github.io/CodeAnalysis/)
 
 [https://github.com/TCATools](https://github.com/TCATools)
-
-## Repo Mirror
-
-[https://git.code.tencent.com/Tencent_Open_Source/CodeAnalysis.git](https://git.code.tencent.com/Tencent_Open_Source/CodeAnalysis.git)
 
 ## What is TCA
 
@@ -35,10 +39,6 @@ Using TCA can help team find normative, structural, security vulnerabilities and
 ![组件图](https://tencent.github.io/CodeAnalysis/media/Components.png)
 
 ![流程图](https://tencent.github.io/CodeAnalysis/media/Flow.png)
-
-## Experience
-
-[Apply Link](http://tca.tencent.com)
 
 ## Key Features
 

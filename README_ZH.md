@@ -8,19 +8,25 @@
 
 [![license](https://img.shields.io/badge/License-MIT-brightgreen.svg?style=flat)](LICENSE.txt) [![docs](https://img.shields.io/badge/docs-read-brightgreen.svg?style=flat)](https://tencent.github.io/CodeAnalysis/)
 
-## TCA-官方网址
+[English](README.md) | [简体中文](README_ZH.md)
+
+## TCA-官方
+
+[https://tca.tencent.com](http://tca.tencent.com)
 
 [https://cloud.tencent.com/product/tcap](https://cloud.tencent.com/product/tcap)
+
+## TCA-CNB代码库
+
+[https://cnb.cool/tca/code-analysis](https://cnb.cool/tca/code-analysis)
+
+[https://cnb.cool/tca](https://cnb.cool/tca)
 
 ## TCA-Github代码库
 
 [https://tencent.github.io/CodeAnalysis/](https://tencent.github.io/CodeAnalysis/)
 
 [https://github.com/TCATools](https://github.com/TCATools)
-
-## TCA-国内镜像工蜂代码库
-
-[https://git.code.tencent.com/Tencent_Open_Source/CodeAnalysis.git](https://git.code.tencent.com/Tencent_Open_Source/CodeAnalysis.git)
 
 ## TCA
 
@@ -33,10 +39,6 @@
 ![组件图](https://tencent.github.io/CodeAnalysis/media/Components.png)
 
 ![流程图](https://tencent.github.io/CodeAnalysis/media/Flow.png)
-
-## 体验
-
-[官方版本](http://tca.tencent.com)
 
 ## 关键功能
 
