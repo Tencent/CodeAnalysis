@@ -12,21 +12,21 @@
 
 ## TCA-官方
 
-[https://tca.tencent.com](http://tca.tencent.com)
+[官方网址：https://tca.tencent.com](http://tca.tencent.com)
 
-[https://cloud.tencent.com/product/tcap](https://cloud.tencent.com/product/tcap)
+[官方介绍：https://cloud.tencent.com/product/tcap](https://cloud.tencent.com/product/tcap)
 
-## TCA-CNB代码库
+## TCA-CNB代码库（境内）
 
-[https://cnb.cool/tca/code-analysis](https://cnb.cool/tca/code-analysis)
+[境内开源：https://cnb.cool/tca/code-analysis](https://cnb.cool/tca/code-analysis)
 
-[https://cnb.cool/tca](https://cnb.cool/tca)
+[境内开源：https://cnb.cool/tca](https://cnb.cool/tca)
 
-## TCA-Github代码库
+## TCA-Github代码库（境外）
 
-[https://tencent.github.io/CodeAnalysis/](https://tencent.github.io/CodeAnalysis/)
+[境外开源：https://tencent.github.io/CodeAnalysis/](https://tencent.github.io/CodeAnalysis/)
 
-[https://github.com/TCATools](https://github.com/TCATools)
+[境外开源：https://github.com/TCATools](https://github.com/TCATools)
 
 ## TCA
 

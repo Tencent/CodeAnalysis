@@ -12,21 +12,21 @@
 
 ## TCA Official
 
-[https://tca.tencent.com](http://tca.tencent.com)
+[Official website: https://tca.tencent.com](http://tca.tencent.com)
 
-[https://cloud.tencent.com/product/tcap](https://cloud.tencent.com/product/tcap)
+[Official introduction: https://cloud.tencent.com/product/tcap](https://cloud.tencent.com/product/tcap)
 
 ## TCA CNB Pages
 
-[https://cnb.cool/tca/code-analysis](https://cnb.cool/tca/code-analysis)
+[Domestic: https://cnb.cool/tca/code-analysis](https://cnb.cool/tca/code-analysis)
 
-[https://cnb.cool/tca](https://cnb.cool/tca)
+[Domestic: https://cnb.cool/tca](https://cnb.cool/tca)
 
 ## TCA Github Pages
 
-[https://tencent.github.io/CodeAnalysis/](https://tencent.github.io/CodeAnalysis/)
+[Overseas: https://tencent.github.io/CodeAnalysis/](https://tencent.github.io/CodeAnalysis/)
 
-[https://github.com/TCATools](https://github.com/TCATools)
+[Overseas: https://github.com/TCATools](https://github.com/TCATools)
 
 ## What is TCA
 
