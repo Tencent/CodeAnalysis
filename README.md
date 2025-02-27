@@ -12,7 +12,7 @@
 
 ## TCA Official
 
-[Official website: https://tca.tencent.com](http://tca.tencent.com)
+[Official website: https://tca.tencent.com](https://tca.tencent.com)
 
 [Official introduction: https://cloud.tencent.com/product/tcap](https://cloud.tencent.com/product/tcap)
 

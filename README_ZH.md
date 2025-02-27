@@ -12,7 +12,7 @@
 
 ## TCA-官方
 
-[官方网址：https://tca.tencent.com](http://tca.tencent.com)
+[官方网址：https://tca.tencent.com](https://tca.tencent.com)
 
 [官方介绍：https://cloud.tencent.com/product/tcap](https://cloud.tencent.com/product/tcap)
 
