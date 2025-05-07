@@ -26,13 +26,6 @@
                 "state": "enabled"
             },
             {
-                "checktool": "jaff_beta",
-                "checkrule": "DynamicPermissionsActionImageCapture",
-                "severity": "warning",
-                "rule_params": null,
-                "state": "enabled"
-            },
-            {
                 "checktool": "regexscan",
                 "checkrule": "Dynamic_permissions",
                 "severity": "warning",

@@ -14,13 +14,6 @@
         "checkrule_set": [
             {
                 "checktool": "jaff",
-                "checkrule": "AudioRecordInit",
-                "severity": "warning",
-                "rule_params": null,
-                "state": "enabled"
-            },
-            {
-                "checktool": "jaff",
                 "checkrule": "camera1API",
                 "severity": "warning",
                 "rule_params": null,
@@ -162,13 +155,6 @@
             {
                 "checktool": "jafc",
                 "checkrule": "DynamicAPIWifiRttManager",
-                "severity": "warning",
-                "rule_params": null,
-                "state": "enabled"
-            },
-            {
-                "checktool": "jaff",
-                "checkrule": "DynamicPermissionsActionImageCapture",
                 "severity": "warning",
                 "rule_params": null,
                 "state": "enabled"
