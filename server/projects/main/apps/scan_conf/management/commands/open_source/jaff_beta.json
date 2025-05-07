@@ -22,7 +22,7 @@
                 "severity": "warning",
                 "category": "correctness",
                 "rule_title": "动态权限API检测 - CameraManager",
-                "rule_params": "class = CameraManager\nmethod = openCamera\nmsg = 该API会触发动态权限申请，请检查代码逻辑是否在拒绝权限后正常运行。",
+                "rule_params": "",
                 "custom": true,
                 "languages": [
                     "java"
@@ -39,7 +39,7 @@
                 "severity": "warning",
                 "category": "security",
                 "rule_title": "录音API扫描",
-                "rule_params": "class = AudioRecord\nmethod = startRecording\nmsg = 确认录音操作是否在合适的场景中。",
+                "rule_params": "",
                 "custom": true,
                 "languages": [
                     "java"
@@ -56,7 +56,7 @@
                 "severity": "warning",
                 "category": "security",
                 "rule_title": "录音API扫描",
-                "rule_params": "class = MediaRecorder\nmethod = prepare;start\nmsg = 确认录音操作是否在合适的场景中。",
+                "rule_params": "",
                 "custom": true,
                 "languages": [
                     "java"
@@ -73,7 +73,7 @@
                 "severity": "warning",
                 "category": "correctness",
                 "rule_title": "动态权限API检测 - Environment.getExternalStorageDirectory",
-                "rule_params": "class = Environment\nmethod = getExternalStorageDirectory\nmsg = 该API会触发动态权限申请，请检查代码逻辑是否在拒绝权限后正常运行。",
+                "rule_params": "",
                 "custom": true,
                 "languages": [
                     "java"
@@ -90,7 +90,7 @@
                 "severity": "warning",
                 "category": "correctness",
                 "rule_title": "动态权限API检测 - LocationManager",
-                "rule_params": "class = LocationManager\nmsg = LocationManager的API可能会触发动态权限申请，请检查代码逻辑是否在拒绝权限后正常运行。",
+                "rule_params": "",
                 "custom": true,
                 "languages": [
                     "java"
@@ -107,7 +107,7 @@
                 "severity": "warning",
                 "category": "correctness",
                 "rule_title": "动态权限API检测 - SubscriptionManager",
-                "rule_params": "class = SubscriptionManager\nmethod = getActiveSubscriptionInfo;getActiveSubscriptionInfoForSimSlotIndex;getActiveSubscriptionInfoList;getActiveSubscriptionInfoCount\nmsg = 该API会触发动态权限申请，请检查代码逻辑是否在拒绝权限后正常运行。",
+                "rule_params": "",
                 "custom": true,
                 "languages": [
                     "java"
@@ -124,7 +124,7 @@
                 "severity": "warning",
                 "category": "correctness",
                 "rule_title": "动态权限API检测 - TelephonyManager",
-                "rule_params": "class = TelephonyManager\nmsg = TelephonyManager的API可能会触发动态权限申请，请检查代码逻辑是否在拒绝权限后正常运行。",
+                "rule_params": "",
                 "custom": true,
                 "languages": [
                     "java"
@@ -141,7 +141,7 @@
                 "severity": "warning",
                 "category": "correctness",
                 "rule_title": "动态权限API检测 - TwilightManager",
-                "rule_params": "class = TwilightManager\nmethod = getLastKnownLocationForProvider\nmsg = 该API会触发动态权限申请，请检查代码逻辑是否在拒绝权限后正常运行。",
+                "rule_params": "",
                 "custom": true,
                 "languages": [
                     "java"
@@ -158,7 +158,7 @@
                 "severity": "warning",
                 "category": "correctness",
                 "rule_title": "动态权限API检测 - WallpaperManager",
-                "rule_params": "class = WallpaperManager\nmethod = getFastDrawable;peekFastDrawable;getWallpaperFile\nmsg = 该API会触发动态权限申请，请检查代码逻辑是否在拒绝权限后正常运行。",
+                "rule_params": "",
                 "custom": true,
                 "languages": [
                     "java"
@@ -175,7 +175,7 @@
                 "severity": "warning",
                 "category": "correctness",
                 "rule_title": "动态权限API检测 - WifiRttManager",
-                "rule_params": "class = WifiRttManager\nmethod = startRanging\nmsg = 该API会触发动态权限申请，请检查代码逻辑是否在拒绝权限后正常运行。",
+                "rule_params": "",
                 "custom": true,
                 "languages": [
                     "java"
@@ -192,7 +192,7 @@
                 "severity": "error",
                 "category": "security",
                 "rule_title": "扫描log4j api调用位置，辅助升级log4j",
-                "rule_params": "class = org.apache.logging.log4j.Logger\nmethod = error;warn;info;debug;fatal;trace;log\nmsg = 扫描log4j api调用位置，辅助升级log4j",
+                "rule_params": "",
                 "custom": true,
                 "languages": [
                     "java"
@@ -209,7 +209,7 @@
                 "severity": "error",
                 "category": "security",
                 "rule_title": "扫描log4j LogManager api调用位置，辅助升级log4j",
-                "rule_params": "class = org.apache.logging.log4j.LogManager\nmethod = getLogger\nmsg = 扫描log4j api调用位置，辅助升级log4j",
+                "rule_params": "",
                 "custom": true,
                 "languages": [
                     "java"
@@ -226,7 +226,7 @@
                 "severity": "warning",
                 "category": "security",
                 "rule_title": "camera1API隐患检查",
-                "rule_params": "class = android.hardware.Camera\nmethod = open;getParameters\nmsg = App调用sdk的Camera1的API，即时不拍照，Vivo也会弹出前置摄像头，因此希望开发人员谨慎使用。注意PR风险。",
+                "rule_params": "",
                 "custom": true,
                 "languages": [
                     "java"
@@ -243,7 +243,7 @@
                 "severity": "warning",
                 "category": "security",
                 "rule_title": "通讯录API扫描",
-                "rule_params": "class = ContactsContract\nmethod = Contacts;RawContacts;Data\nmsg = 请检查该API的调用是否在合适的场景下，防止在错误的场景下调用导致公关风险",
+                "rule_params": "",
                 "custom": true,
                 "languages": [
                     "java"
@@ -260,7 +260,7 @@
                 "severity": "warning",
                 "category": "correctness",
                 "rule_title": "动态权限API-CalendarContract检测",
-                "rule_params": "class = CalendarContract\nmsg = 发现项目中代码以及组件中对危险权限的API调用，提示开发人员对旧的代码逻辑进行检查，防止无容错等逻辑导致程序异常",
+                "rule_params": "",
                 "custom": true,
                 "languages": [
                     "java"
@@ -277,24 +277,7 @@
                 "severity": "warning",
                 "category": "correctness",
                 "rule_title": "动态权限API-IMAGE_CAPTURE检测",
-                "rule_params": "class = IMAGE_CAPTURE\nmsg = 发现项目中代码以及组件中对危险权限的API调用，提示开发人员对旧的代码逻辑进行检查，防止无容错等逻辑导致程序异常",
-                "custom": true,
-                "languages": [
-                    "java"
-                ],
-                "solution": "发现项目中代码以及组件中对危险权限的API调用，提示开发人员对旧的代码逻辑进行检查，防止无容错等逻辑导致程序异常",
-                "owner": null,
-                "labels": [],
-                "description": "##### 规则背景\nAndroid 6.0版本(Api 23)推出动态权限管理，应用的相关功能每次在使用危险权限时需要动态的申请并得到用户的授权才能使用。\n\n\n##### 规则扫描内容\n发现项目中代码以及组件中对危险权限的API调用，提示开发人员对旧的代码逻辑进行检查，防止无容错等逻辑导致程序异常",
-                "disable": false
-            },
-            {
-                "real_name": "DynamicPermissionsActionImageCapture",
-                "display_name": "DynamicPermissionsActionImageCapture",
-                "severity": "warning",
-                "category": "correctness",
-                "rule_title": "动态权限API-ACTION_IMAGE_CAPTURE检测",
-                "rule_params": "class = ACTION_IMAGE_CAPTURE\nmsg = 发现项目中代码以及组件中对危险权限的API调用，提示开发人员对旧的代码逻辑进行检查，防止无容错等逻辑导致程序异常",
+                "rule_params": "",
                 "custom": true,
                 "languages": [
                     "java"
@@ -311,7 +294,7 @@
                 "severity": "info",
                 "category": "other",
                 "rule_title": "文件读写模式扫描规则",
-                "rule_params": "class = MODE_WORLD_READABLE\nmsg = 文件读写模式，MODE_WORLD_READABLE， MODE_WORLD_WRITEABLE废弃了，Android N行为变更。",
+                "rule_params": "",
                 "custom": true,
                 "languages": [
                     "java"
@@ -328,7 +311,7 @@
                 "severity": "info",
                 "category": "other",
                 "rule_title": "文件读写模式扫描规则",
-                "rule_params": "class = MODE_WORLD_WRITEABLE\nmsg = 文件读写模式，MODE_WORLD_READABLE， MODE_WORLD_WRITEABLE废弃了，Android N行为变更。",
+                "rule_params": "",
                 "custom": true,
                 "languages": [
                     "java"
@@ -345,7 +328,7 @@
                 "severity": "info",
                 "category": "other",
                 "rule_title": "文件共享扫描规则",
-                "rule_params": "class = MediaStore.ACTION_IMAGE_CAPTUR\nmsg = 敏感API：文件共享\n使用请谨慎",
+                "rule_params": "",
                 "custom": true,
                 "languages": [
                     "java"
@@ -362,7 +345,7 @@
                 "severity": "info",
                 "category": "other",
                 "rule_title": "文件共享扫描规则",
-                "rule_params": "class = vnd.android.package-archive\nmsg = 敏感API：文件共享\n使用请谨慎",
+                "rule_params": "",
                 "custom": true,
                 "languages": [
                     "java"
@@ -379,7 +362,7 @@
                 "severity": "warning",
                 "category": "security",
                 "rule_title": "定位API扫描",
-                "rule_params": "class = LocationManager\nmethod = requestLocationUpdates\nmsg = 请检查该API的调用是否在合适的场景下，防止在错误的场景下调用导致公关风险",
+                "rule_params": "",
                 "custom": true,
                 "languages": [
                     "java"
@@ -396,7 +379,7 @@
                 "severity": "warning",
                 "category": "security",
                 "rule_title": "短信API扫描",
-                "rule_params": "class = SmsManager\nmethod = sendTextMessage\nmsg = 请检查该API的调用是否在合适的场景下，防止在错误的场景下调用导致公关风险",
+                "rule_params": "",
                 "custom": true,
                 "languages": [
                     "java"
@@ -413,7 +396,7 @@
                 "severity": "warning",
                 "category": "security",
                 "rule_title": "短信API扫描",
-                "rule_params": "class = SmsMessage\nmethod = createFromPdu\nmsg = 请检查该API的调用是否在合适的场景下，防止在错误的场景下调用导致公关风险",
+                "rule_params": "",
                 "custom": true,
                 "languages": [
                     "java"
