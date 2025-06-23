@@ -1,0 +1,20 @@
+# .cnb.yml
+"**": # 触发的分支名，默认所有分支，按需修改
+  push: # push触发，也可以用merge_request等触发
+  - docker:
+    # 声明缓存目录，/data/tca_cache/tools 为TCA 工具存储目录
+    volumes:
+      - /data/tca_cache/tools:copy-on-write
+
+  stages:
+  # 代码分析
+    - name: TCA
+      image: tencentcom/tca-plugin:latest
+      settings:
+        mode: local # 分析模式，可选值：local、node, 默认值：node
+        org_sid: KHU3jAAtFDq # 团队编号，从TCA官网获取(注意：TCA上是团队标识)
+        team_name: tca # 项目名称，从TCA官网获取
+        scheme_id: 442 # 分析方案id，从TCA官网获取
+      settingsFrom:
+        # 密钥文件引用。请检查使用此配置的代码库是否具有访问密钥文件的权限，否则会导致构建失败！
+        - https://cnb.cool/tca/code-analysis-keys/-/blob/main/tca-private-keys.yml
