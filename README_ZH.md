@@ -16,7 +16,7 @@
 
 [官方介绍：https://cloud.tencent.com/product/tcap](https://cloud.tencent.com/product/tcap)
 
-## TCA-CNB代码库（境内）
+## TCA-CNB代码库（境内-高速网络）
 
 [境内开源：https://cnb.cool/tca/code-analysis](https://cnb.cool/tca/code-analysis)
 
