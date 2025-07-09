@@ -1,14 +1,16 @@
 # .cnb.yml
 "**": # 触发的分支名，默认所有分支，按需修改
-  push: # push触发，也可以用merge_request等触发
-    # - docker:
-    #     # 该模式无需缓存
-    #     # 声明缓存目录，/data/tca_cache/tools 为TCA 工具存储目录
-    #     volumes:
-    #       - /data/tca_cache/tools:copy-on-write
+  push:  # push 触发，可按需修改为 pull_request 等
     - stages:
+      # 获取 git 变更文件列表，供TCA增量分析使用
+      - name: git-change-list
+        image: cnbcool/git-change-list:latest
+        settings:
+          # 变更文件列表输出到文件中
+          changed: changed.txt
       # 代码分析
       - name: TCA
         image: tencentcom/tca-plugin:latest
         settings:
+          from_file: changed.txt
           block: false
