@@ -42,7 +42,7 @@ jobs:
           git push --all --force cnb
           git push --tags --force cnb
         env:
-          CNB_REPOSITORY: tca/code-analysis
+          CNB_REPOSITORY: tencent/cloud/tca/code-analysis
           CNB_USERNAME: ${{ secrets.CNB_USERNAME }}
           CNB_PASSWORD: ${{ secrets.CNB_PASSWORD }}
           
