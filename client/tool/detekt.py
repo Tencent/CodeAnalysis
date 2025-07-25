@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- encoding: utf-8 -*-
-# Copyright (c) 2021-2024 THL A29 Limited
+# Copyright (c) 2021-2025 THL A29 Limited
 #
 # This source code file is made available under MIT License
 # See LICENSE for details
@@ -91,7 +91,7 @@ class Detekt(CodeLintModel):
         if enabled_rules:
             copyfile(os.path.join(detekt_home, "detekt-config-example.yml"), config_file)
             config = open(config_file)
-            content = yaml.load(config, Loader=yaml.FullLoader)
+            content = yaml.safe_load(config)
             for item in content.values():
                 if not isinstance(item, dict):
                     continue
@@ -115,7 +115,7 @@ class Detekt(CodeLintModel):
             else:
                 # 若是配置字符串
                 user_config = json.loads(user_plugins_config)
-                content = yaml.load(open(config_file))
+                content = yaml.safe_load(open(config_file))
                 content.update(user_config)
                 config = open(config_file, "w")
                 # content中可能部分为unicode编码，dump时候可能会报错，这里是

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (c) 2021-2024 THL A29 Limited
+# Copyright (c) 2021-2025 THL A29 Limited
 #
 # This source code file is made available under MIT License
 # See LICENSE for details
@@ -137,7 +137,7 @@ class GitLabAPIClient(BaseClient):
         return : str - 版本号
         """
         r = self.get(GITLAB_APIS["get_revision"].format(
-            project_id=self._enquote_project_path, branch_name=self._branch))
+            project_id=self._enquote_project_path, branch_name=quote(self._branch, safe="")))
         data = self.get_json(r)
         return data["commit"]["id"]
 

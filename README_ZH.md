@@ -6,21 +6,27 @@
     <em>代号：CodeDog</em>
 </p>
 
-[![license](https://img.shields.io/badge/License-MIT-brightgreen.svg?style=flat)](LICENSE) [![docs](https://img.shields.io/badge/docs-read-brightgreen.svg?style=flat)](https://tencent.github.io/CodeAnalysis/)
+[![license](https://img.shields.io/badge/License-MIT-brightgreen.svg?style=flat)](LICENSE.txt) [![docs](https://img.shields.io/badge/docs-read-brightgreen.svg?style=flat)](https://tencent.github.io/CodeAnalysis/)
 
-## TCA-官方网址
+[English](README.md) | [简体中文](README_ZH.md)
 
-[https://cloud.tencent.com/product/tcap](https://cloud.tencent.com/product/tcap)
+## TCA-官方
 
-## TCA-Github代码库
+[官方网址：https://tca.tencent.com](https://tca.tencent.com)
 
-[https://tencent.github.io/CodeAnalysis/](https://tencent.github.io/CodeAnalysis/)
+[官方介绍：https://cloud.tencent.com/product/tcap](https://cloud.tencent.com/product/tcap)
 
-[https://github.com/TCATools](https://github.com/TCATools)
+## TCA-CNB代码库（境内-高速网络）
 
-## TCA-国内镜像工蜂代码库
+[境内开源：https://cnb.cool/tencent/cloud/tca/code-analysis](https://cnb.cool/tencent/cloud/tca/code-analysis)
 
-[https://git.code.tencent.com/Tencent_Open_Source/CodeAnalysis.git](https://git.code.tencent.com/Tencent_Open_Source/CodeAnalysis.git)
+[境内开源：https://cnb.cool/tencent/cloud/tca](https://cnb.cool/tencent/cloud/tca)
+
+## TCA-Github代码库（境外）
+
+[境外开源：https://tencent.github.io/CodeAnalysis/](https://tencent.github.io/CodeAnalysis/)
+
+[境外开源：https://github.com/TCATools](https://github.com/TCATools)
 
 ## TCA
 
@@ -33,10 +39,6 @@
 ![组件图](https://tencent.github.io/CodeAnalysis/media/Components.png)
 
 ![流程图](https://tencent.github.io/CodeAnalysis/media/Flow.png)
-
-## 体验
-
-[官方版本](http://tca.tencent.com)
 
 ## 关键功能
 
@@ -75,7 +77,7 @@
 
 ## 许可
 
-TCA 使用 [MIT 许可证](LICENSE)
+TCA 使用 [MIT 许可证](LICENSE.txt)
 
 ### TCA 团队成员
 

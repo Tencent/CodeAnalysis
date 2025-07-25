@@ -2,3 +2,5 @@ node_modules
 .temp
 .cache
 dist
+tca_lib*
+images

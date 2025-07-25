@@ -24,7 +24,9 @@
         "rule_title": "Apex unit tests should System.assert() or assertEquals() or assertNotEquals()",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "apex"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -38,7 +40,9 @@
         "rule_title": "Apex unit tests should not use @isTest(seeAllData = true)",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "apex"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -52,7 +56,9 @@
         "rule_title": "Avoid using 'for' statements without curly braces",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "apex"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -66,7 +72,9 @@
         "rule_title": "Avoid using 'if...else' statements without curly braces",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "apex"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -80,7 +88,9 @@
         "rule_title": "Avoid using if statements without curly braces",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "apex"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -94,7 +104,9 @@
         "rule_title": "Avoid using 'while' statements without curly braces",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "apex"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -108,7 +120,9 @@
         "rule_title": "Deeply nested if..then statements are hard to read",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "apex"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -122,7 +136,9 @@
         "rule_title": "Avoid really long classes.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "apex"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -136,7 +152,9 @@
         "rule_title": "Avoid long parameter lists.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "apex"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -150,7 +168,9 @@
         "rule_title": "This class has a bunch of public methods and attributes",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "apex"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -164,7 +184,9 @@
         "rule_title": "The constructor has an NCSS line count of {0}",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "apex"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -178,7 +200,9 @@
         "rule_title": "The method ''{0}()'' has an NCSS line count of {1}",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "apex"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -192,7 +216,9 @@
         "rule_title": "The type has an NCSS line count of {0}",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "apex"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -206,7 +232,9 @@
         "rule_title": "The {0} ''{1}'' has a Standard Cyclomatic Complexity of {2}.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "apex"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -220,7 +248,9 @@
         "rule_title": "Too many fields",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "apex"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -234,7 +264,9 @@
         "rule_title": "Avoid DML statements inside loops",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "apex"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -248,7 +280,9 @@
         "rule_title": "Avoid Soql queries inside loops",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "apex"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -262,7 +296,9 @@
         "rule_title": "Apex classes should use random IV/key",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "apex"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -276,7 +312,9 @@
         "rule_title": "Validate CRUD permission before SOQL/DML operation",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "apex"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -290,7 +328,9 @@
         "rule_title": "Avoid making DML operations in Apex class constructor/init method",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "apex"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -304,7 +344,9 @@
         "rule_title": "Calling potentially dangerous method",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "apex"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -318,7 +360,9 @@
         "rule_title": "Apex callouts should use encrypted communication channels",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "apex"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -332,7 +376,9 @@
         "rule_title": "Apex classes should safely redirect to a known location",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "apex"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -346,7 +392,9 @@
         "rule_title": "Apex classes should declare a sharing model if DML or SOQL/SOSL is used",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "apex"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -360,7 +408,9 @@
         "rule_title": "Avoid untrusted/unescaped variables in DML query",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "apex"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -374,7 +424,9 @@
         "rule_title": "Suggest named credentials for authentication",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "apex"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -388,7 +440,9 @@
         "rule_title": "Apex classes should escape Strings in error messages",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "apex"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -402,7 +456,9 @@
         "rule_title": "Apex classes should escape/sanitize Strings obtained from URL parameters",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "apex"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -416,7 +472,9 @@
         "rule_title": "Avoid using global modifier",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "apex"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -430,7 +488,9 @@
         "rule_title": "Avoid logic in triggers",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "apex"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -444,7 +504,9 @@
         "rule_title": "Class names should begin with an uppercase character",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "apex"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -458,7 +520,9 @@
         "rule_title": "Method name does not begin with a lower case character.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "apex"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -472,7 +536,9 @@
         "rule_title": "Classes should not have non-constructor methods with the same name as the class",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "apex"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -486,7 +552,9 @@
         "rule_title": "{0} variable {1} should begin with {2}",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "apex"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -500,7 +568,9 @@
         "rule_title": "Avoid assignments in operands",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "js"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -514,7 +584,9 @@
         "rule_title": "Avoid trailing commas in object or array literals",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "js"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -528,7 +600,9 @@
         "rule_title": "A function should not mix 'return' statements with and without a result.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "js"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -542,7 +616,9 @@
         "rule_title": "Use '==='/'!==' to compare with true/false or Numbers",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "js"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -556,7 +632,9 @@
         "rule_title": "Avoid using global variables",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "js"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -570,7 +648,9 @@
         "rule_title": "The numeric literal ''{0}'' will have at different value at runtime.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "js"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -584,7 +664,9 @@
         "rule_title": "The for-in loop variable ''{0}'' should be explicitly scoped with 'var' to avoid pollution.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "js"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -598,7 +680,9 @@
         "rule_title": "A ''return'', ''break'', ''continue'', or ''throw'' statement should be the last in a block.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "js"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -612,7 +696,9 @@
         "rule_title": "Always provide a base when using parseInt() functions",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "js"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -626,7 +712,9 @@
         "rule_title": "Avoid using 'for' statements without curly braces",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "js"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -640,7 +728,9 @@
         "rule_title": "Avoid using 'if...else' statements without curly braces",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "js"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -654,7 +744,9 @@
         "rule_title": "Avoid using if statements without curly braces",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "js"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -668,7 +760,9 @@
         "rule_title": "Avoid using 'while' statements without curly braces",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "js"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -682,7 +776,9 @@
         "rule_title": "Avoid using with - it's bad news",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "js"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -696,7 +792,9 @@
         "rule_title": "The else block is unnecessary",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "js"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -710,7 +808,9 @@
         "rule_title": "Unnecessary block.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "js"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -724,7 +824,9 @@
         "rule_title": "Unnecessary parentheses.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "js"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -738,7 +840,9 @@
         "rule_title": "super should be called at the start of the method",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -752,7 +856,9 @@
         "rule_title": "super should be called at the end of the method",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -766,7 +872,9 @@
         "rule_title": "Do not hardcode /sdcard.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -780,7 +888,9 @@
         "rule_title": "Avoid using a branching statement as the last in a loop.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -794,7 +904,9 @@
         "rule_title": "Avoid creating BigDecimal with a decimal (float/double) literal. Use a String literal",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -808,7 +920,9 @@
         "rule_title": "Using multiple unary operators may be a bug, and/or is confusing.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -822,7 +936,9 @@
         "rule_title": "Avoid using java.lang.ThreadGroup; it is not thread safe",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -836,7 +952,9 @@
         "rule_title": "Do not hard code the IP address ${variableName}",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -850,7 +968,9 @@
         "rule_title": "Do not start a literal by 0 unless it's an octal value",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -864,7 +984,9 @@
         "rule_title": "Don't create instances of already existing BigInteger and BigDecimal (ZERO, ONE, TEN)",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -878,7 +1000,9 @@
         "rule_title": "Avoid instantiating Boolean objects; reference Boolean.TRUE or Boolean.FALSE or call Boolean.valueOf() instead.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -892,7 +1016,9 @@
         "rule_title": "Method call on object which may be null",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -906,7 +1032,9 @@
         "rule_title": "Always check the return of one of the navigation method (next,previous,first,last) of a ResultSet.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -920,7 +1048,9 @@
         "rule_title": "Check the value returned by the skip() method of an InputStream to see if the requested number of bytes has been skipped.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -934,7 +1064,9 @@
         "rule_title": "This usage of the Collection.toArray() method will throw a ClassCastException.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -948,7 +1080,9 @@
         "rule_title": "These nested if statements could be combined",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -962,7 +1096,9 @@
         "rule_title": "Don't call Thread.run() explicitly, use Thread.start()",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -976,7 +1112,9 @@
         "rule_title": "Don't use floating point for loop indices. If you must use floating point, use double.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -990,7 +1128,9 @@
         "rule_title": "Double checked locking is not thread safe in Java.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -1004,7 +1144,9 @@
         "rule_title": "No need to explicitly extend Object.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -1018,7 +1160,9 @@
         "rule_title": "This for loop could be simplified to a while loop",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -1032,7 +1176,9 @@
         "rule_title": "Avoid modifying an outer loop incrementer in an inner loop for update expression",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -1046,7 +1192,9 @@
         "rule_title": "The null check here is misplaced; if the variable is null there will be a NullPointerException",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -1060,7 +1208,9 @@
         "rule_title": "Ensure you override both equals() and hashCode()",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -1074,7 +1224,9 @@
         "rule_title": "Avoid returning from a finally block",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -1088,7 +1240,9 @@
         "rule_title": "Ternary operators that can be simplified with || or &&",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -1102,7 +1256,9 @@
         "rule_title": "Do not use 'if' statements that are always true or always false",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -1116,7 +1272,9 @@
         "rule_title": "Avoid using 'for' statements without curly braces",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -1130,7 +1288,9 @@
         "rule_title": "Avoid using 'if...else' statements without curly braces",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -1144,7 +1304,9 @@
         "rule_title": "Avoid using if statements without curly braces",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -1158,7 +1320,9 @@
         "rule_title": "Avoid using 'while' statements without curly braces",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -1172,7 +1336,9 @@
         "rule_title": "clone() method must be public if the class implements Cloneable",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -1186,7 +1352,9 @@
         "rule_title": "clone() method should be implemented only if implementing Cloneable interface",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -1200,7 +1368,9 @@
         "rule_title": "The return type of the clone() method must be the class name when implements Cloneable",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -1214,7 +1384,9 @@
         "rule_title": "clone() method should throw CloneNotSupportedException",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -1228,7 +1400,9 @@
         "rule_title": "Object clone() should be implemented with super.clone()",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -1242,7 +1416,9 @@
         "rule_title": "The {0} ''{1}'' has a Cyclomatic Complexity of {2}.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -1256,7 +1432,9 @@
         "rule_title": "Avoid really long classes.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -1270,7 +1448,9 @@
         "rule_title": "Avoid really long methods.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -1284,7 +1464,9 @@
         "rule_title": "Avoid long parameter lists.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -1298,7 +1480,9 @@
         "rule_title": "This class has a bunch of public methods and attributes",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -1312,7 +1496,9 @@
         "rule_title": "The {0} ''{1}'' has a Modified Cyclomatic Complexity of {2}.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -1326,7 +1512,9 @@
         "rule_title": "The constructor with {0} parameters has an NCSS line count of {1}",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -1340,7 +1528,9 @@
         "rule_title": "The method {0}() has an NCSS line count of {1}",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -1354,7 +1544,9 @@
         "rule_title": "The type has an NCSS line count of {0}",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -1368,7 +1560,9 @@
         "rule_title": "The method {0}() has an NPath complexity of {1}",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -1382,7 +1576,9 @@
         "rule_title": "The {0} ''{1}'' has a Standard Cyclomatic Complexity of {2}.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -1396,7 +1592,9 @@
         "rule_title": "Too many fields",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -1410,7 +1608,9 @@
         "rule_title": "This class has too many methods, consider refactoring it.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -1424,7 +1624,9 @@
         "rule_title": "Invalid words or phrases found",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -1438,7 +1640,9 @@
         "rule_title": "Missing commented default access modifier",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -1452,7 +1656,9 @@
         "rule_title": "Comment is required",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -1466,7 +1672,9 @@
         "rule_title": "Comment is too large",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -1480,7 +1688,9 @@
         "rule_title": "Avoid assignments in operands",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -1494,7 +1704,9 @@
         "rule_title": "Each class should declare at least one constructor",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -1508,7 +1720,9 @@
         "rule_title": "You should modify visibility of class or methods using getDeclaredConstructors(), getDeclaredConstructor(Class[]), setAccessible() or PrivilegedAction.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -1522,7 +1736,9 @@
         "rule_title": "Avoid using final local variables, turn them into fields",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -1536,7 +1752,9 @@
         "rule_title": "Avoid using Literals in Conditional Statements",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -1550,7 +1768,9 @@
         "rule_title": "Avoid prefixing parameters by in, out or inOut. Uses Javadoc to document this behavior.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -1564,7 +1784,9 @@
         "rule_title": "The use of native code is not recommended.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -1578,7 +1800,9 @@
         "rule_title": "Do not use the short type",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -1592,7 +1816,9 @@
         "rule_title": "Use of modifier volatile is not recommended.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -1606,7 +1832,9 @@
         "rule_title": "It is a good practice to call super() in a constructor",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -1620,7 +1848,9 @@
         "rule_title": "Found ''{0}''-anomaly for variable ''{1}'' (lines ''{2}''-''{3}'').",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -1634,7 +1864,9 @@
         "rule_title": "Use explicit scoping instead of the default package private level",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -1648,7 +1880,9 @@
         "rule_title": "Do not explicitly trigger a garbage collection.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -1662,7 +1896,9 @@
         "rule_title": "Avoid importing anything from the 'sun.*' packages",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -1676,7 +1912,9 @@
         "rule_title": "Assigning an Object to null is a code smell.  Consider refactoring.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -1690,7 +1928,9 @@
         "rule_title": "Use one line for each declaration, it enhances code readability.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -1704,7 +1944,9 @@
         "rule_title": "A method should have only one exit point, and that should be the last statement in the method",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -1718,7 +1960,9 @@
         "rule_title": "Suspicious decimal characters following octal escape in string literal",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -1732,7 +1976,9 @@
         "rule_title": "Avoid unnecessary constructors - the compiler will generate these for you",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -1746,7 +1992,9 @@
         "rule_title": "This statement may have some unnecessary parentheses",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -1760,7 +2008,9 @@
         "rule_title": "If you run in Java5 or newer and have concurrent access, you should use the ConcurrentHashMap implementation",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -1774,7 +2024,9 @@
         "rule_title": "Rather than using a lot of String arguments, consider using a container object for those values.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -1788,7 +2040,9 @@
         "rule_title": "High amount of different objects as members denotes a high coupling",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -1802,7 +2056,9 @@
         "rule_title": "A high number of imports can indicate a high degree of coupling within an object.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -1816,11 +2072,13 @@
         "rule_title": "Potential violation of Law of Demeter",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
-        "description": "The Law of Demeter is a simple rule, that says \"only talk to friends\". It helps to reduce coupling between classes or objects. See also the references: Andrew Hunt, David Thomas, and Ward Cunningham. The Pragmatic Programmer. From Journeyman to Master. Addison-Wesley Longman, Amsterdam, October 1999.; K.J. Lieberherr and I.M. Holland. Assuring good style for object-oriented programs. Software, IEEE, 6(5):38–48, 1989.; http://www.ccs.neu.edu/home/lieber/LoD.html; http://en.wikipedia.org/wiki/Law_of_Demeter\nhttps://pmd.github.io/pmd-5.8.1/pmd-java/rules/java/coupling.html#LawOfDemeter\n\n\npublic class Foo {\n    /**\n     * This example will result in two violations.\n     */\n    public void example(Bar b) {\n        // this method call is ok, as b is a parameter of \"example\"\n        C c = b.getC();\n        \n        // this method call is a violation, as we are using c, which we got from B.\n        // We should ask b directly instead, e.g. \"b.doItOnC();\"\n        c.doIt();\n        \n        // this is also a violation, just expressed differently as a method chain without temporary variables.\n        b.getC().doIt();\n        \n        // a constructor call, not a method call.\n        D d = new D();\n        // this method call is ok, because we have create the new instance of D locally.\n        d.doSomethingElse(); \n    }\n}\n\n        "
+        "description": "The Law of Demeter is a simple rule, that says \"only talk to friends\". It helps to reduce coupling between classes or objects. See also the references: Andrew Hunt, David Thomas, and Ward Cunningham. The Pragmatic Programmer. From Journeyman to Master. Addison-Wesley Longman, Amsterdam, October 1999.; K.J. Lieberherr and I.M. Holland. Assuring good style for object-oriented programs. Software, IEEE, 6(5):38\u201348, 1989.; http://www.ccs.neu.edu/home/lieber/LoD.html; http://en.wikipedia.org/wiki/Law_of_Demeter\nhttps://pmd.github.io/pmd-5.8.1/pmd-java/rules/java/coupling.html#LawOfDemeter\n\n\npublic class Foo {\n    /**\n     * This example will result in two violations.\n     */\n    public void example(Bar b) {\n        // this method call is ok, as b is a parameter of \"example\"\n        C c = b.getC();\n        \n        // this method call is a violation, as we are using c, which we got from B.\n        // We should ask b directly instead, e.g. \"b.doItOnC();\"\n        c.doIt();\n        \n        // this is also a violation, just expressed differently as a method chain without temporary variables.\n        b.getC().doIt();\n        \n        // a constructor call, not a method call.\n        D d = new D();\n        // this method call is ok, because we have create the new instance of D locally.\n        d.doSomethingElse(); \n    }\n}\n\n        "
       },
       {
         "real_name": "rulesets/java/coupling.xml/LooseCoupling",
@@ -1830,7 +2088,9 @@
         "rule_title": "Avoid using implementation types like ''{0}''; use the interface instead",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -1844,7 +2104,9 @@
         "rule_title": "Use of ''{0}'' outside of package hierarchy ''{1}'' is not recommended; use recommended classes instead",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -1858,7 +2120,9 @@
         "rule_title": "This abstract class does not have any abstract methods",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -1872,7 +2136,9 @@
         "rule_title": "No abstract method which means that the keyword is most likely used to prevent instantiation. Use a private or protected constructor instead.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -1886,7 +2152,9 @@
         "rule_title": "Avoid instantiation through private constructors from outside of the constructor's class.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -1900,7 +2168,9 @@
         "rule_title": "Avoid autogenerated methods to access private fields and methods of inner / outer classes",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -1914,7 +2184,9 @@
         "rule_title": "Possible unsafe assignment to a non-final static field in a constructor.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -1928,7 +2200,9 @@
         "rule_title": "Deeply nested if..then statements are hard to read",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -1942,7 +2216,9 @@
         "rule_title": "An instanceof check is being performed on the caught exception.  Create a separate catch clause for this exception type.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -1956,7 +2232,9 @@
         "rule_title": "Avoid protected fields in a final class.  Change to private or package access.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -1970,7 +2248,9 @@
         "rule_title": "Avoid protected methods in a final class that doesn't extend anything other than Object.  Change to private or package access.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -1984,7 +2264,9 @@
         "rule_title": "Avoid reassigning parameters such as ''{0}''",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -1998,7 +2280,9 @@
         "rule_title": "Use block level rather than method level synchronization",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -2012,7 +2296,9 @@
         "rule_title": "Avoid equality comparisons with Double.NaN",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -2026,7 +2312,9 @@
         "rule_title": "A class which only has private constructors should be final",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -2040,7 +2328,9 @@
         "rule_title": "Ensure that resources like this {0} object are closed after use",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -2054,7 +2344,9 @@
         "rule_title": "Use equals() to compare object references.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -2068,7 +2360,9 @@
         "rule_title": "Avoid if (x != y) ..; else ..;",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -2082,7 +2376,9 @@
         "rule_title": "Avoid constants in interfaces. Interfaces define types, constants are implementation details better placed in classes or enums. See Effective Java, item 19.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -2096,7 +2392,9 @@
         "rule_title": "Overridable {0} called during object construction",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -2110,7 +2408,9 @@
         "rule_title": "The default label should be the last label in a switch statement",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -2124,7 +2424,9 @@
         "rule_title": "An empty method in an abstract class should be abstract instead",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -2138,7 +2440,9 @@
         "rule_title": "Avoid using equals() to compare against null",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -2152,7 +2456,9 @@
         "rule_title": "Fields should be declared at the top of the class, before any method declarations, constructors, initializers or inner classes.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -2166,7 +2472,9 @@
         "rule_title": "This final field could be made static",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -2180,7 +2488,9 @@
         "rule_title": "Possible God class",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -2194,7 +2504,9 @@
         "rule_title": "Avoid idempotent operations (like assigning a variable to itself).",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -2208,7 +2520,9 @@
         "rule_title": "Private field ''{0}'' could be made final; it is only initialized in the declaration or constructor.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -2222,7 +2536,9 @@
         "rule_title": "Avoid instantiating an object just to call getClass() on it; use the .class public member instead",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -2236,7 +2552,9 @@
         "rule_title": "Use opposite operator instead of the logic complement operator.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -2250,7 +2568,9 @@
         "rule_title": "A switch statement does not contain a break",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -2264,7 +2584,9 @@
         "rule_title": "Class cannot be instantiated and does not provide any static methods or fields",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -2278,7 +2600,9 @@
         "rule_title": "A non-case label was present in a switch statement",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -2292,7 +2616,9 @@
         "rule_title": "Non-static initializers are confusing",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -2306,7 +2632,9 @@
         "rule_title": "Singleton is not thread safe",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -2320,7 +2648,9 @@
         "rule_title": "This call to Collection.toArray() may be optimizable",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -2334,7 +2664,9 @@
         "rule_title": "Position literals first in String comparisons for EqualsIgnoreCase",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -2348,7 +2680,9 @@
         "rule_title": "Position literals first in String comparisons",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -2362,7 +2696,9 @@
         "rule_title": "New exception is thrown in catch block, original stack trace may be lost",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -2376,7 +2712,9 @@
         "rule_title": "Return an empty array rather than 'null'.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -2390,7 +2728,9 @@
         "rule_title": "When instantiating a SimpleDateFormat object, specify a Locale",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -2404,7 +2744,9 @@
         "rule_title": "Avoid unnecessary comparisons in boolean expressions",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -2418,7 +2760,9 @@
         "rule_title": "Avoid unnecessary if..then..else statements when returning booleans",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -2432,7 +2776,9 @@
         "rule_title": "No need to check for null before an instanceof",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -2446,7 +2792,9 @@
         "rule_title": "Class contains multiple getInstance methods. Please review.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -2460,7 +2808,9 @@
         "rule_title": "getInstance method always creates a new object and hence does not comply to Singleton Design Pattern behaviour. Please review",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -2474,7 +2824,9 @@
         "rule_title": "Perhaps ''{0}'' could be replaced by a local variable.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -2488,7 +2840,9 @@
         "rule_title": "A high ratio of statements to labels in a switch statement.  Consider refactoring.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -2502,7 +2856,9 @@
         "rule_title": "Switch statements should have a default label",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -2516,7 +2872,9 @@
         "rule_title": "A switch with less than three branches is inefficient, use a 'if statement' instead.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -2530,7 +2888,9 @@
         "rule_title": "Document empty constructor",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -2544,7 +2904,9 @@
         "rule_title": "Document empty method body",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -2558,7 +2920,9 @@
         "rule_title": "Consider simply returning the value vs storing it in local variable ''{0}''",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -2572,7 +2936,9 @@
         "rule_title": "Static DateFormatter objects should be accessed in a synchronized manner",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -2586,7 +2952,9 @@
         "rule_title": "Substitute calls to size() == 0 (or size() != 0, size() > 0, size() < 1) with calls to isEmpty()",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -2600,7 +2968,9 @@
         "rule_title": "When doing a String.toLowerCase()/toUpperCase() call, use a Locale",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -2614,7 +2984,9 @@
         "rule_title": "Call Thread.notifyAll() rather than Thread.notify()",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -2628,7 +3000,9 @@
         "rule_title": "All methods are static.  Consider using a utility class instead. Alternatively, you could add a private constructor or make the class abstract to silence this warning.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -2642,7 +3016,9 @@
         "rule_title": "Consider using varargs for methods or constructors which take an array the last parameter.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -2656,7 +3032,9 @@
         "rule_title": "Avoid empty catch blocks",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -2670,7 +3048,9 @@
         "rule_title": "Avoid empty finally blocks",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -2684,7 +3064,9 @@
         "rule_title": "Avoid empty 'if' statements",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -2698,7 +3080,9 @@
         "rule_title": "Empty initializer was found",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -2712,7 +3096,9 @@
         "rule_title": "Avoid empty block statements.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -2726,7 +3112,9 @@
         "rule_title": "An empty statement (semicolon) not part of a loop",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -2740,7 +3128,9 @@
         "rule_title": "Empty static initializer was found",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -2754,7 +3144,9 @@
         "rule_title": "Avoid empty switch statements",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -2768,7 +3160,9 @@
         "rule_title": "Avoid empty synchronized blocks",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -2782,7 +3176,9 @@
         "rule_title": "Avoid empty try blocks",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -2796,7 +3192,9 @@
         "rule_title": "Avoid empty 'while' statements",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -2810,7 +3208,9 @@
         "rule_title": "Avoid calling finalize() explicitly",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -2824,7 +3224,9 @@
         "rule_title": "Avoid empty finalize methods",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -2838,7 +3240,9 @@
         "rule_title": "Last statement in finalize method should be a call to super.finalize()",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -2852,7 +3256,9 @@
         "rule_title": "Finalize should do something besides just calling super.finalize()",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -2866,7 +3272,9 @@
         "rule_title": "Finalize methods should not be overloaded",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -2880,7 +3288,9 @@
         "rule_title": "If you override finalize(), make it protected",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -2894,7 +3304,9 @@
         "rule_title": "Avoid importing anything from the package 'java.lang'",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -2908,7 +3320,9 @@
         "rule_title": "Avoid duplicate imports such as ''{0}''",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -2922,7 +3336,9 @@
         "rule_title": "No need to import a type that lives in the same package",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -2936,7 +3352,9 @@
         "rule_title": "Too many static imports may lead to messy code",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -2950,7 +3368,9 @@
         "rule_title": "Unnecessary use of fully qualified name ''{0}'' due to existing {2}import ''{1}''",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -2964,7 +3384,9 @@
         "rule_title": "Avoid unused imports such as ''{0}''",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -2978,7 +3400,9 @@
         "rule_title": "System.exit() should not be used in J2EE/JEE apps",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -2992,7 +3416,9 @@
         "rule_title": "To be compliant to J2EE, a webapp should not use any thread.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -3006,7 +3432,9 @@
         "rule_title": "The Local Home interface of a Session EJB should be suffixed by 'LocalHome'",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -3020,7 +3448,9 @@
         "rule_title": "The Local Interface of a Session EJB should be suffixed by 'Local'",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -3034,7 +3464,9 @@
         "rule_title": "SessionBean or MessageBean should be suffixed by Bean",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -3048,7 +3480,9 @@
         "rule_title": "Remote Interface of a Session EJB should NOT be suffixed",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -3062,7 +3496,9 @@
         "rule_title": "Remote Home interface of a Session EJB should be suffixed by 'Home'",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -3076,7 +3512,9 @@
         "rule_title": "EJB's shouldn't have non-final static fields",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -3090,7 +3528,9 @@
         "rule_title": "In J2EE, getClassLoader() might not work as expected.  Use Thread.currentThread().getContextClassLoader() instead.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -3104,7 +3544,9 @@
         "rule_title": "Found non-transient, non-static member. Please mark as transient or provide accessors.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -3118,7 +3560,9 @@
         "rule_title": "Classes implementing Serializable should set a serialVersionUID",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -3132,7 +3576,9 @@
         "rule_title": "JUnit assertions should include a message",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -3146,7 +3592,9 @@
         "rule_title": "You may have misspelled a JUnit framework method (setUp or tearDown)",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -3160,7 +3608,9 @@
         "rule_title": "You have a suite() method that is not both public and static, so JUnit won't call it to get your TestSuite.  Is that what you wanted to do?",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -3174,7 +3624,9 @@
         "rule_title": "JUnit tests should not contain more than ${maximumAsserts} assert(s).",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -3188,7 +3640,9 @@
         "rule_title": "JUnit tests should include assert() or fail()",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -3202,7 +3656,9 @@
         "rule_title": "assertTrue(!expr) can be replaced by assertFalse(expr)",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -3216,7 +3672,9 @@
         "rule_title": "This class name ends with 'Test' but contains no test cases",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -3230,7 +3688,9 @@
         "rule_title": "assertTrue(true) or similar statements are unnecessary",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -3244,7 +3704,9 @@
         "rule_title": "Use assertEquals(x, y) instead of assertTrue(x.equals(y))",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -3258,7 +3720,9 @@
         "rule_title": "Use assertNull(x) instead of assertTrue(x==null), or assertNotNull(x) vs assertFalse(x==null)",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -3272,7 +3736,9 @@
         "rule_title": "Use assertSame(x, y) instead of assertTrue(x==y), or assertNotSame(x,y) vs assertFalse(x==y)",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -3286,7 +3752,9 @@
         "rule_title": "Use assertTrue(x)/assertFalse(x) instead of assertEquals(true, x)/assertEquals(false, x)   or assertEquals(Boolean.TRUE, x)/assertEquals(Boolean.FALSE, x).",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -3300,7 +3768,9 @@
         "rule_title": "debug logging that involves string concatenation should be guarded with isDebugEnabled() checks",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -3314,7 +3784,9 @@
         "rule_title": "There is log block not surrounded by if",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -3328,7 +3800,9 @@
         "rule_title": "Logger should be defined private static final and have the correct class",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -3342,7 +3816,9 @@
         "rule_title": "Use the correct logging statement for logging exceptions",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -3356,7 +3832,9 @@
         "rule_title": "Avoid printStackTrace(); use a logger call instead.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -3370,7 +3848,9 @@
         "rule_title": "There is log block not surrounded by if",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -3384,7 +3864,9 @@
         "rule_title": "Invalid message format",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -3398,7 +3880,9 @@
         "rule_title": "The Logger variable declaration does not contain the static and final modifiers",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -3412,7 +3896,9 @@
         "rule_title": "Class contains more than one logger.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -3426,7 +3912,9 @@
         "rule_title": "{0} is used",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -3440,7 +3928,9 @@
         "rule_title": "The {0} ''{1}'' has a Cyclomatic Complexity of {2}.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -3454,7 +3944,9 @@
         "rule_title": "Avoid using assert as an identifier; it became a reserved word in JDK 1.4",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -3468,7 +3960,9 @@
         "rule_title": "Avoid using enum as an identifier; it's a reserved word in JDK 1.5",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -3482,7 +3976,9 @@
         "rule_title": "Avoid instantiating Byte objects. Call Byte.valueOf() instead",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -3496,7 +3992,9 @@
         "rule_title": "Avoid instantiating Integer objects. Call Integer.valueOf() instead.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -3510,7 +4008,9 @@
         "rule_title": "JUnit 4 indicates test suites via annotations, not the suite method.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -3524,7 +4024,9 @@
         "rule_title": "JUnit 4 tests that clean up tests should use the @After annotation",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -3538,7 +4040,9 @@
         "rule_title": "JUnit 4 tests that set up tests should use the @Before annotation",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -3552,7 +4056,9 @@
         "rule_title": "JUnit 4 tests that execute tests should use the @Test annotation",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -3566,7 +4072,9 @@
         "rule_title": "In JUnit4, use the @Test(expected) annotation to denote tests that should throw exceptions",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -3580,7 +4088,9 @@
         "rule_title": "Avoid instantiating Long objects.Call Long.valueOf() instead",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -3594,7 +4104,9 @@
         "rule_title": "Consider replacing this Enumeration with the newer java.util.Iterator",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -3608,7 +4120,9 @@
         "rule_title": "Consider replacing this Hashtable with the newer java.util.Map",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -3622,7 +4136,9 @@
         "rule_title": "Consider replacing this Vector with the newer java.util.List",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -3636,7 +4152,9 @@
         "rule_title": "Avoid instantiating Short objects. Call Short.valueOf() instead",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -3650,7 +4168,9 @@
         "rule_title": "Abstract classes should be named 'AbstractXXX'",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -3664,7 +4184,9 @@
         "rule_title": "Avoid using dollar signs in variable/method/class/interface names",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -3678,7 +4200,9 @@
         "rule_title": "Field {0} has the same name as a method",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -3692,7 +4216,9 @@
         "rule_title": "It is somewhat confusing to have a field name matching the declaring class name",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -3706,7 +4232,9 @@
         "rule_title": "A 'getX()' method which returns a boolean should be named 'isX()'",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -3720,7 +4248,9 @@
         "rule_title": "Class names should begin with an uppercase character",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -3734,7 +4264,9 @@
         "rule_title": "Generics names should be a one letter long and upper case.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -3748,7 +4280,9 @@
         "rule_title": "Avoid excessively long variable names like {0}",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -3762,7 +4296,9 @@
         "rule_title": "Method name does not begin with a lower case character.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -3776,7 +4312,9 @@
         "rule_title": "Classes should not have non-constructor methods with the same name as the class",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -3790,7 +4328,9 @@
         "rule_title": "Avoid naming non-fields with the prefix 'm_'",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -3804,7 +4344,9 @@
         "rule_title": "All classes and interfaces must belong to a named package",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -3818,7 +4360,9 @@
         "rule_title": "Package name contains upper case characters",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -3832,7 +4376,9 @@
         "rule_title": "Avoid short class names like {0}",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -3846,7 +4392,9 @@
         "rule_title": "Avoid using short method names",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -3860,7 +4408,9 @@
         "rule_title": "Avoid variables with short names like {0}",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -3874,7 +4424,9 @@
         "rule_title": "The field name indicates a constant but its modifiers do not",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -3888,7 +4440,9 @@
         "rule_title": "The method name and parameter number are suspiciously close to equals(Object)",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -3902,7 +4456,9 @@
         "rule_title": "The method name and return type are suspiciously close to hashCode()",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -3916,7 +4472,9 @@
         "rule_title": "{0} variable {1} should begin with {2}",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -3930,7 +4488,9 @@
         "rule_title": "Do not add empty strings",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -3944,7 +4504,9 @@
         "rule_title": "System.arraycopy is more efficient",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -3958,7 +4520,9 @@
         "rule_title": "Avoid instantiating new objects inside loops",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -3972,7 +4536,9 @@
         "rule_title": "Local variable ''{0}'' could be declared final",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -3986,7 +4552,9 @@
         "rule_title": "Parameter ''{0}'' is not assigned and could be declared final",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -4000,7 +4568,9 @@
         "rule_title": "Avoid declaring a variable if it is unreferenced before a possible exit point.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -4014,7 +4584,9 @@
         "rule_title": "Avoid using redundant field initializer for ''${variableName}''",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -4028,7 +4600,9 @@
         "rule_title": "This call to String.startsWith can be rewritten using String.charAt(0)",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -4042,7 +4616,9 @@
         "rule_title": "Unnecessary wrapper object creation",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -4056,7 +4632,9 @@
         "rule_title": "Use ArrayList instead of Vector",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -4070,7 +4648,9 @@
         "rule_title": "Use asList instead of tight loops",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -4084,7 +4664,9 @@
         "rule_title": "Prefer StringBuffer over += for concatenating strings",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -4098,7 +4680,9 @@
         "rule_title": "Avoid catching generic exceptions such as NullPointerException, RuntimeException, Exception in try-catch block",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -4112,7 +4696,9 @@
         "rule_title": "Avoid catching NullPointerException; consider removing the cause of the NPE.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -4126,7 +4712,9 @@
         "rule_title": "A catch statement should never catch throwable since it includes errors.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -4140,7 +4728,9 @@
         "rule_title": "Avoid statements in a catch block that invoke accessors on the exception without using the information",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -4154,7 +4744,9 @@
         "rule_title": "A catch statement that catches an exception only to rethrow it should be avoided.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -4168,7 +4760,9 @@
         "rule_title": "A catch statement that catches an exception only to wrap it in a new instance of the same type of exception and throw it should be avoided",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -4182,7 +4776,9 @@
         "rule_title": "Avoid throwing null pointer exceptions.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -4196,7 +4792,9 @@
         "rule_title": "Avoid throwing raw exception types.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -4210,7 +4808,9 @@
         "rule_title": "Exceptions should not extend java.lang.Error",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -4224,7 +4824,9 @@
         "rule_title": "A throw statement in a finally block makes the control flow hard to understand.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -4238,7 +4840,9 @@
         "rule_title": "Avoid using exceptions as flow control.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -4252,7 +4856,9 @@
         "rule_title": "A method/constructor shouldn't explicitly throw java.lang.Exception",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -4266,7 +4872,9 @@
         "rule_title": "Avoid appending characters as strings in StringBuffer.append.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -4280,7 +4888,9 @@
         "rule_title": "The String literal {0} appears {1} times in this file; the first occurrence is on line {2}",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -4294,7 +4904,9 @@
         "rule_title": "StringBuffers can grow quite a lot, and so may become a source of memory leak (if the owning class has a long life time).",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -4308,7 +4920,9 @@
         "rule_title": "StringBuffer (or StringBuilder).append is called consecutively without reusing the target variable.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -4322,7 +4936,9 @@
         "rule_title": "StringBuffer (or StringBuilder).append is called {0} consecutive times with literal Strings. Use a single append with a single combined String.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -4336,7 +4952,9 @@
         "rule_title": "String.trim().length()==0 is an inefficient way to validate an empty String.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -4350,7 +4968,9 @@
         "rule_title": "Avoid concatenating nonliterals in a StringBuffer/StringBuilder constructor or append().",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -4364,7 +4984,9 @@
         "rule_title": "StringBuffer constructor is initialized with size {0}, but has at least {1} characters appended.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -4378,7 +5000,9 @@
         "rule_title": "Do not instantiate a StringBuffer or StringBuilder with a char",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -4392,7 +5016,9 @@
         "rule_title": "Avoid instantiating String objects; this is usually unnecessary.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -4406,7 +5032,9 @@
         "rule_title": "Avoid calling toString() on String objects; this is unnecessary.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -4420,7 +5048,9 @@
         "rule_title": "Using equalsIgnoreCase() is cleaner than using toUpperCase/toLowerCase().equals().",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -4434,7 +5064,9 @@
         "rule_title": "Use equals() to compare strings instead of ''=='' or ''!=''",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -4448,7 +5080,9 @@
         "rule_title": "String.indexOf(char) is faster than String.indexOf(String).",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -4462,7 +5096,9 @@
         "rule_title": "No need to call String.valueOf to append to a string.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -4476,7 +5112,9 @@
         "rule_title": "This is an inefficient use of StringBuffer.toString; call StringBuffer.length instead.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -4490,7 +5128,9 @@
         "rule_title": "The user-supplied array ''{0}'' is stored directly.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -4504,7 +5144,9 @@
         "rule_title": "Returning ''{0}'' may expose an internal array.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -4518,7 +5160,9 @@
         "rule_title": "clone() method should be implemented only if implementing Cloneable interface",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -4532,7 +5176,9 @@
         "rule_title": "Avoid using implementation types like ''{0}''; use the interface instead",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -4546,7 +5192,9 @@
         "rule_title": "A method/constructor shouldn't explicitly throw java.lang.Exception",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -4560,7 +5208,9 @@
         "rule_title": "Avoid unused imports such as ''{0}''",
         "rule_params": "",
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -4574,7 +5224,9 @@
         "rule_title": "Avoid unnecessary temporaries when converting primitives to Strings",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -4588,7 +5240,9 @@
         "rule_title": "Unnecessary final modifier in final class / private methods",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -4602,7 +5256,9 @@
         "rule_title": "Avoid modifiers which are implied by the context",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -4616,7 +5272,9 @@
         "rule_title": "Avoid unnecessary return statements",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -4630,7 +5288,9 @@
         "rule_title": "Invoke equals() on the object you''ve already ensured is not null",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -4644,7 +5304,9 @@
         "rule_title": "An operation on an Immutable object (String, BigDecimal or BigInteger) won't change the object itself",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -4658,7 +5320,9 @@
         "rule_title": "Overriding method merely calls super",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -4672,7 +5336,9 @@
         "rule_title": "Useless parentheses.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -4686,7 +5352,9 @@
         "rule_title": "Useless qualified this usage in the same class.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -4700,7 +5368,9 @@
         "rule_title": "Avoid unused {0} parameters such as ''{1}''.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -4714,7 +5384,9 @@
         "rule_title": "Avoid unused local variables such as ''{0}''.",
         "rule_params": "",
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -4728,7 +5400,9 @@
         "rule_title": "Avoid unused private fields such as ''{0}''.",
         "rule_params": "",
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -4742,7 +5416,9 @@
         "rule_title": "Avoid unused private methods such as ''{0}''.",
         "rule_params": "",
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -4756,7 +5432,9 @@
         "rule_title": "Do not nest JSF component custom actions inside a custom action that iterates over its body.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -4770,7 +5448,9 @@
         "rule_title": "Avoid duplicate imports such as ''{0}''",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -4784,7 +5464,9 @@
         "rule_title": "IFrames must have a src attribute.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -4798,11 +5480,13 @@
         "rule_title": "JSP file should use UTF-8 encoding",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
-        "description": "A missing 'meta' tag or page directive will trigger this rule, as well as a non-UTF-8 charset.\nhttps://pmd.github.io/pmd-5.8.1/pmd-jsp/rules/jsp/basic.html#JspEncoding\n\n\t\t\t\n                Most browsers should be able to interpret the following headers:\n                \n                <%@ page contentType=\"text/html; charset=UTF-8\" pageEncoding=\"UTF-8\" %>\n                    \n                <meta http-equiv=\"Content-Type\"  content=\"text/html; charset=UTF-8\" />\n            \n\t\t"
+        "description": "A missing 'meta' tag or page directive will trigger this rule, as well as a non-UTF-8 charset.\nhttps://pmd.github.io/pmd-5.8.1/pmd-jsp/rules/jsp/basic.html#JspEncoding\n\n\t\t\t\n                Most browsers should be able to interpret the following headers:\n                \n                <%@ page contentType=\"text/html; charset=UTF-8\" pageEncoding=\"UTF-8\" %>\n                    \n                <meta http-equiv=\"Content-Type\"\u00a0 content=\"text/html; charset=UTF-8\" />\n            \n\t\t"
       },
       {
         "real_name": "rulesets/jsp/basic.xml/NoClassAttribute",
@@ -4812,7 +5496,9 @@
         "rule_title": "Do not use an attribute called 'class'.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -4826,7 +5512,9 @@
         "rule_title": "Use JSP comments instead of HTML comments",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -4840,11 +5528,13 @@
         "rule_title": "Avoiding inlining HTML script content",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
-        "description": "Avoid inlining HTML script content. Consider externalizing the HTML script using the 'src' attribute on the \"script\" element. Externalized script could be reused between pages. Browsers can also cache the script, reducing overall download bandwidth.\nhttps://pmd.github.io/pmd-5.8.1/pmd-jsp/rules/jsp/basic.html#NoInlineScript\n\n            \n                Most browsers should be able to interpret the following headers:\n                \n                <%@ page contentType=\"text/html; charset=UTF-8\" pageEncoding=\"UTF-8\" %>\n                    \n                <meta http-equiv=\"Content-Type\"  content=\"text/html; charset=UTF-8\" />\n            \n        "
+        "description": "Avoid inlining HTML script content. Consider externalizing the HTML script using the 'src' attribute on the \"script\" element. Externalized script could be reused between pages. Browsers can also cache the script, reducing overall download bandwidth.\nhttps://pmd.github.io/pmd-5.8.1/pmd-jsp/rules/jsp/basic.html#NoInlineScript\n\n            \n                Most browsers should be able to interpret the following headers:\n                \n                <%@ page contentType=\"text/html; charset=UTF-8\" pageEncoding=\"UTF-8\" %>\n                    \n                <meta http-equiv=\"Content-Type\"\u00a0 content=\"text/html; charset=UTF-8\" />\n            \n        "
       },
       {
         "real_name": "rulesets/jsp/basic.xml/NoInlineStyleInformation",
@@ -4854,7 +5544,9 @@
         "rule_title": "Avoid having style information in JSP files.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -4868,7 +5560,9 @@
         "rule_title": "Do not do a forward from within a JSP file.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -4882,7 +5576,9 @@
         "rule_title": "Avoid having long scripts (e.g. Javascript) inside a JSP file.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -4896,7 +5592,9 @@
         "rule_title": "Avoid having scriptlets inside a JSP file.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -4910,7 +5608,9 @@
         "rule_title": "Using unsanitized JSP expression can lead to Cross Site Scripting (XSS) attacks",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "java"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -4924,7 +5624,9 @@
         "rule_title": "The {0} ''{1}'' has a Cyclomatic Complexity of {2}.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "plsql"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -4938,7 +5640,9 @@
         "rule_title": "Avoid really long methods ({0} lines found).",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "plsql"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -4952,7 +5656,9 @@
         "rule_title": "Avoid really long Oracle object specifications and bodies ({0} lines found).",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "plsql"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -4966,7 +5672,9 @@
         "rule_title": "Avoid really long Object Type and Package bodies ({0} lines found).",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "plsql"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -4980,7 +5688,9 @@
         "rule_title": "Avoid really long Package Specifications ({0} lines found).",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "plsql"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -4994,7 +5704,9 @@
         "rule_title": "Avoid long parameter lists.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "plsql"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -5008,7 +5720,9 @@
         "rule_title": "Avoid really long Object Type specifications ({0} lines found).",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "plsql"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -5022,7 +5736,9 @@
         "rule_title": "The method {0}() has an NCSS line count of {1}",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "plsql"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -5036,7 +5752,9 @@
         "rule_title": "The Oracle object has an NCSS line count of {0}",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "plsql"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -5050,7 +5768,9 @@
         "rule_title": "The method {0}() has an NPath complexity of {1}",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "plsql"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -5064,7 +5784,9 @@
         "rule_title": "Too many fields",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "plsql"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -5078,7 +5800,9 @@
         "rule_title": "This object has too many methods, consider refactoring it.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "plsql"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -5092,7 +5816,9 @@
         "rule_title": "TO_DATE without date format",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "plsql"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -5106,7 +5832,9 @@
         "rule_title": "TO_DATE(TO_CHAR(variable)) instead of TRUNC(variable)",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "plsql"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -5120,7 +5848,9 @@
         "rule_title": "TO_TIMESTAMP without date format",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "plsql"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -5134,7 +5864,9 @@
         "rule_title": "Pragma should be used only inside the declaration block before 'BEGIN'.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "plsql"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -5148,7 +5880,9 @@
         "rule_title": "WHEN OTHERS THEN NULL - when you do this, Tom Kyte cries",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "plsql"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -5162,7 +5896,9 @@
         "rule_title": "By default, Maven only recognized the following types: $validTypes.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "xml"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -5176,7 +5912,9 @@
         "rule_title": "Do not use project's version to express a dependency's version.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "xml"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -5344,7 +6082,9 @@
         "rule_title": "Potentialy mistyped CDATA section with extra [ at beginning or ] at the end.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "xml"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -5358,7 +6098,9 @@
         "rule_title": "Axis navigation has the largest impact when writing an XPath query.",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "xml"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],
@@ -5372,7 +6114,9 @@
         "rule_title": "The xpath concat() function accepts as many arguments as required, you may be able to factorize this expression",
         "rule_params": null,
         "custom": false,
-        "languages": [],
+        "languages": [
+          "xml"
+        ],
         "solution": null,
         "owner": null,
         "labels": [],

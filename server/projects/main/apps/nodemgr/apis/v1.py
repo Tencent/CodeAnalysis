@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (c) 2021-2024 THL A29 Limited
+# Copyright (c) 2021-2025 THL A29 Limited
 #
 # This source code file is made available under MIT License
 # See LICENSE for details
@@ -22,6 +22,8 @@ from rest_framework.generics import get_object_or_404
 from rest_framework.permissions import IsAdminUser
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from prometheus_client import CollectorRegistry, Gauge, generate_latest
+from django.http import HttpResponse
 
 # 项目内 import
 from apps.authen.backends import TCANodeTokenBackend
@@ -120,3 +122,40 @@ class NodeRegisterApiView(generics.GenericAPIView):
                 raise ParseError("未指定团队org_sid，无法注册节点")
         data = NodeManager.register_node(request, slz.validated_data)
         return Response(data)
+
+
+class NodeStateExporterApiView(APIView):
+    """节点状态查询接口
+
+    ### GET
+    应用场景：查询所有节点池中的全部节点数、活跃节点数以及空闲节点数，为Prometheus节点状态监控提供metrics。
+    """
+    authentication_classes = []
+    permission_classes = []
+
+    def get(self, request, *args, **kwargs):
+        REGISTRY = CollectorRegistry()
+        LABELS = ['tag']  # 标签定义
+
+        # 指标定义
+        nodes_total = Gauge('nodes_total', 'Total number of nodes', LABELS, registry=REGISTRY)
+        nodes_active = Gauge('nodes_active', 'Number of active nodes', LABELS, registry=REGISTRY)
+        nodes_free = Gauge('nodes_free', 'Number of free nodes', LABELS, registry=REGISTRY)
+
+        try:
+            # 先获取所有的tag
+            tags = models.ExecTag.objects.all()
+            for tag in tags:
+                # 遍历tag，也就是每一个节点池，统计每个节点池的节点总数和空闲节点数,在filter添加tag过滤条件
+                total = models.Node.objects.filter(exec_tags=tag.id).count()
+                active = models.Node.objects.filter(exec_tags=tag.id, enabled=1).count()
+                free = models.Node.objects.filter(exec_tags=tag.id, enabled=1, state=0).count()  # 获取state字段为0的数据的条数
+
+                nodes_total.labels(tag.name).set(total)
+                nodes_active.labels(tag.name).set(active)
+                nodes_free.labels(tag.name).set(free)
+
+            return HttpResponse(generate_latest(REGISTRY), status=200, content_type="text/plain")
+        except Exception as e:
+            logger.exception(e)
+            return HttpResponse('# HELP Error occured', status=500, content_type="text/plain")

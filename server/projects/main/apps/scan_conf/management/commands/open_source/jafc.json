@@ -39,7 +39,7 @@
                 "severity": "warning",
                 "category": "correctness",
                 "rule_title": "查找android.net.ConnectivityManager相关API",
-                "rule_params": "class = android.net.ConnectivityManager\nmethod = getNetworkInfo;getAllNetworks\nmsg = 查找android.net.ConnectivityManager相关API",
+                "rule_params": "",
                 "custom": true,
                 "languages": [
                     "java"
@@ -56,7 +56,7 @@
                 "severity": "warning",
                 "category": "correctness",
                 "rule_title": "动态权限API检测 - CameraManager",
-                "rule_params": "class = CameraManager\nmethod = openCamera\nmsg = 该API会触发动态权限申请，请检查代码逻辑是否在拒绝权限后正常运行。",
+                "rule_params": "",
                 "custom": true,
                 "languages": [
                     "java"
@@ -73,7 +73,7 @@
                 "severity": "warning",
                 "category": "correctness",
                 "rule_title": "动态权限API检测 - Environment.getExternalStorageDirectory",
-                "rule_params": "class = Environment\nmethod = getExternalStorageDirectory\nmsg = 该API会触发动态权限申请，请检查代码逻辑是否在拒绝权限后正常运行。",
+                "rule_params": "",
                 "custom": true,
                 "languages": [
                     "java"
@@ -90,7 +90,7 @@
                 "severity": "warning",
                 "category": "correctness",
                 "rule_title": "动态权限API检测 - LocationManager",
-                "rule_params": "class = android.location.LocationManager\nmsg = android.location.LocationManager的API可能会触发动态权限申请，请检查代码逻辑是否在拒绝权限后正常运行。",
+                "rule_params": "",
                 "custom": true,
                 "languages": [
                     "java"
@@ -107,7 +107,7 @@
                 "severity": "warning",
                 "category": "correctness",
                 "rule_title": "动态权限API检测 - SubscriptionManager",
-                "rule_params": "class = SubscriptionManager\nmethod = getActiveSubscriptionInfo;getActiveSubscriptionInfoForSimSlotIndex;getActiveSubscriptionInfoList;getActiveSubscriptionInfoCount\nmsg = 该API会触发动态权限申请，请检查代码逻辑是否在拒绝权限后正常运行。",
+                "rule_params": "",
                 "custom": true,
                 "languages": [
                     "java"
@@ -124,7 +124,7 @@
                 "severity": "warning",
                 "category": "correctness",
                 "rule_title": "动态权限API检测 - TelephonyManager",
-                "rule_params": "class = TelephonyManager\nmsg = TelephonyManager的API可能会触发动态权限申请，请检查代码逻辑是否在拒绝权限后正常运行。",
+                "rule_params": "",
                 "custom": true,
                 "languages": [
                     "java"
@@ -141,7 +141,7 @@
                 "severity": "warning",
                 "category": "correctness",
                 "rule_title": "动态权限API检测 - TwilightManager",
-                "rule_params": "class = TwilightManager\nmethod = getLastKnownLocationForProvider\nmsg = 该API会触发动态权限申请，请检查代码逻辑是否在拒绝权限后正常运行。",
+                "rule_params": "",
                 "custom": true,
                 "languages": [
                     "java"
@@ -158,7 +158,7 @@
                 "severity": "warning",
                 "category": "correctness",
                 "rule_title": "动态权限API检测 - WallpaperManager",
-                "rule_params": "class = WallpaperManager\nmethod = getFastDrawable;peekFastDrawable;getWallpaperFile\nmsg = 该API会触发动态权限申请，请检查代码逻辑是否在拒绝权限后正常运行。",
+                "rule_params": "",
                 "custom": true,
                 "languages": [
                     "java"
@@ -175,7 +175,7 @@
                 "severity": "warning",
                 "category": "correctness",
                 "rule_title": "动态权限API检测 - WifiRttManager",
-                "rule_params": "class = WifiRttManager\nmethod = startRanging\nmsg = 该API会触发动态权限申请，请检查代码逻辑是否在拒绝权限后正常运行。",
+                "rule_params": "",
                 "custom": true,
                 "languages": [
                     "java"
@@ -192,7 +192,7 @@
                 "severity": "fatal",
                 "category": "security",
                 "rule_title": "fight_IMEI使用监控",
-                "rule_params": "class=android.telephony.TelephonyManager\nmethod=getDeviceId;getImei\nmsg=Android Q 系统禁止使用IMEI，请按邮件申请备案。",
+                "rule_params": "",
                 "custom": true,
                 "languages": [
                     "java"
@@ -262,7 +262,7 @@
                 "severity": "error",
                 "category": "security",
                 "rule_title": "扫描log4j api调用位置，辅助升级log4j",
-                "rule_params": "class = org.apache.logging.log4j.Logger\nmethod = error;warn;info;debug;fatal;trace;log\nmsg = 扫描log4j api调用位置，辅助升级log4j",
+                "rule_params": "",
                 "custom": true,
                 "languages": [
                     "java"
@@ -279,7 +279,7 @@
                 "severity": "error",
                 "category": "security",
                 "rule_title": "扫描log4j LogManager api调用位置，辅助升级log4j",
-                "rule_params": "class = org.apache.logging.log4j.LogManager\nmethod = getLogger\nmsg = 扫描log4j api调用位置，辅助升级log4j",
+                "rule_params": "",
                 "custom": true,
                 "languages": [
                     "java"
@@ -296,7 +296,7 @@
                 "severity": "warning",
                 "category": "correctness",
                 "rule_title": "查找android.net.NetworkInfo相关API",
-                "rule_params": "class = android.net. NetworkInfo\nmethod = getExtraInfo\nmsg = 查找android.net.NetworkInfo相关API",
+                "rule_params": "",
                 "custom": true,
                 "languages": [
                     "java"

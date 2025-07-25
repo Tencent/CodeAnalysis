@@ -1,5 +1,5 @@
 # -*- encoding: utf-8 -*-
-# Copyright (c) 2021-2024 THL A29 Limited
+# Copyright (c) 2021-2025 THL A29 Limited
 #
 # This source code file is made available under MIT License
 # See LICENSE for details
@@ -35,16 +35,3 @@ class LogPrinter(object):
     @staticmethod
     def exception(msg, *args, **kwargs):
         logger.exception(msg, *args, exc_info=True, **kwargs)
-
-    @staticmethod
-    def print_logo():
-        logger.info("-" * 30)
-        logger.info(" #######    ####      # ")
-        logger.info("    #      #    #     # ")
-        logger.info("    #     #          ### ")
-        logger.info("    #     #          # # ")
-        logger.info("    #     #         #####")
-        logger.info("    #      #    #   #   #")
-        logger.info("    #       ####   ##   ##")
-        logger.info("-" * 30)
-
