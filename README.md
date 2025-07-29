@@ -77,7 +77,9 @@ Using TCA can help team find normative, structural, security vulnerabilities and
 
 ## License
 
-TCA is [MIT licensed](LICENSE.txt)
+TCA is [MIT licensed](LICENSE.txt).
+
+The copyright notice pertaining to the Tencent code in this repo was previously in the name of “THL A29 Limited.”  That entity has now been de-registered.  You should treat all previously distributed copies of the code as if the copyright notice was in the name of “Tencent.”
 
 ### TCA Team Member
 
