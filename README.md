@@ -16,11 +16,11 @@
 
 [Official introduction: https://cloud.tencent.com/product/tcap](https://cloud.tencent.com/product/tcap)
 
-## TCA CNB Pages
+## TCA CNB Pages(Better Internet Speed)
 
-[Domestic: https://cnb.cool/tca/code-analysis](https://cnb.cool/tca/code-analysis)
+[Domestic: https://cnb.cool/tencent/cloud/tca/code-analysis](https://cnb.cool/tencent/cloud/tca/code-analysis)
 
-[Domestic: https://cnb.cool/tca](https://cnb.cool/tca)
+[Domestic: https://cnb.cool/tencent/cloud/tca](https://cnb.cool/tencent/cloud/tca)
 
 ## TCA Github Pages
 

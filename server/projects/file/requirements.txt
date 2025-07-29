@@ -20,7 +20,7 @@ redis==4.5.4
 sentry-sdk==2.8.0
 
 # for storage
-cos-python-sdk-v5==1.7.4
+cos-python-sdk-v5==1.9.29
 minio==7.1.0
 
 # for password
