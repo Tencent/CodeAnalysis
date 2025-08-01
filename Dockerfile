@@ -27,7 +27,7 @@ RUN set -ex && cd / \
     && ln -sf /usr/share/zoneinfo/Asia/Hong_Kong /etc/localtime
 
 RUN pip install -U setuptools pip \
-    && pip install gunicorn==20.1.0 celery==5.2.3 supervisor==4.2.4 
+    && pip install gunicorn==23.0.0 celery==5.2.3 supervisor==4.2.4
 
 COPY ./ /CodeAnalysis/
 WORKDIR /CodeAnalysis/

@@ -72,8 +72,8 @@ function install_python(){
 	echo '完成!'
 
 	## for server deploy
-	info '安装 [pip install gunicorn==20.1.0] 并生成软链'
-	pip install gunicorn==20.1.0
+	info '安装 [pip install gunicorn==23.0.0] 并生成软链'
+	pip install gunicorn==23.0.0
 	ln -s /usr/local/python3/bin/gunicorn /usr/local/bin/gunicorn
 	echo -e "\033[1;42;37m[$(date "+%Y/%m/%d %H:%M:%S")] [Check]: 检查 gunicorn\033[0m"
 	gunicorn -v
