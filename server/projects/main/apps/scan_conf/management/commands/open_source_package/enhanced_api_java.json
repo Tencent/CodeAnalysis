@@ -34,20 +34,6 @@
                 "state": "enabled"
             },
             {
-                "checktool": "jaaf",
-                "checkrule": "DeriveCheckIQConfigProcessorHandler",
-                "severity": "warning",
-                "rule_params": null,
-                "state": "enabled"
-            },
-            {
-                "checktool": "jaaf",
-                "checkrule": "DeriveCheckIQConfigProcessorThread",
-                "severity": "warning",
-                "rule_params": null,
-                "state": "enabled"
-            },
-            {
                 "checktool": "jaff",
                 "checkrule": "DynamicAPICameraManager",
                 "severity": "warning",
