@@ -70,7 +70,7 @@ class ScmError(object):
             r"Not a valid object name .*": "Revision doesn't exist.",
         }
         for pattern, msg in err_msg_dict.items():
-            if re.search(pattern, err_msg):
+            if re.search(pattern, err_msg, re.IGNORECASE):
                 return msg
         return err_msg
 
